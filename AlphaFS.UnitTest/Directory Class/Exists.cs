@@ -21,10 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using Alphaleonis.Win32.Filesystem;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using File = Alphaleonis.Win32.Filesystem.File;
-using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
 {
@@ -41,10 +37,10 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Exists_PathContainsLeadingTrailingSpace_LocalAndUNC_Success()
+      public void AlphaFS_Directory_Exists_WithLeadingOrTrailingSpace_LocalAndUNC_Success()
       {
-         Directory_Exists_PathContainsLeadingTrailingSpace(false);
-         Directory_Exists_PathContainsLeadingTrailingSpace(true);
+         Directory_Exists_WithLeadingOrTrailingSpace(false);
+         Directory_Exists_WithLeadingOrTrailingSpace(true);
       }
 
 
@@ -54,83 +50,52 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string tempPath = Path.GetTempPath("Directory-Exists-" + Path.GetRandomFileName());
+         string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = PathUtils.AsUncPath(tempPath);
 
-         string symlinkPath = tempPath + "-symlink";
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
-
-         bool exists = Directory.Exists(tempPath);
-
-         Assert.IsFalse(exists, "Directory should not exist.");
-         Assert.IsFalse(Directory.Exists(symlinkPath), "Directory symlink should not exist.");
-
-         try
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Exists"))
          {
-            Directory.CreateDirectory(tempPath);
+            string folder = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-            exists = Directory.Exists(tempPath);
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The directory exists, but is expected not to be.");
 
-            Assert.IsTrue(exists, "Directory should exist.");
-            
-            
-            Assert.IsFalse(Directory.Exists(symlinkPath), "Directory symlink should not exist.");
-            File.CreateSymbolicLink(symlinkPath, tempPath, SymbolicLinkTarget.Directory);
-            Assert.IsTrue(Directory.Exists(symlinkPath), "Directory symlink should exist.");
+            System.IO.Directory.CreateDirectory(folder);
 
-
-            Directory.Delete(symlinkPath);
-            Assert.IsTrue(Directory.Exists(tempPath), "Deleting a symlink should not delete the underlying directory.");
-            Assert.IsFalse(Directory.Exists(symlinkPath), "Cleanup failed: Directory symlink should have been removed.");
-
-            Directory.Delete(tempPath, true);
-            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            Assert.IsTrue(false);
-         }
-         finally
-         {
-            if (Directory.Exists(symlinkPath))
-               Directory.Delete(symlinkPath);
-
-            if (Directory.Exists(tempPath))
-               Directory.Delete(tempPath, true);
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The directory does not exists, but is expected to be.");
          }
 
          Console.WriteLine();
       }
 
 
-      private void Directory_Exists_PathContainsLeadingTrailingSpace(bool isNetwork)
+      private void Directory_Exists_WithLeadingOrTrailingSpace(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
          string tempPath = UnitTestConstants.SysRoot32;
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
          string path = tempPath + "   ";
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
 
-         Assert.IsTrue(Directory.Exists(path), "Directory should exist.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to be.");
 
 
          path = "   " + tempPath + "   ";
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+         Console.WriteLine("Input Directory Path: [{0}]\n", path);
 
-         Assert.IsTrue(Directory.Exists(path), "Directory should exist.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to be.");
 
 
          path = "   " + tempPath;
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+         Console.WriteLine("Input Directory Path: [{0}]\n", path);
 
-         Assert.IsTrue(Directory.Exists(path), "Directory should exist.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to be.");
       }
    }
 }

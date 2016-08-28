@@ -34,6 +34,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_SetAccessControl_LocalAndUNC_Success()
       {
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
          Directory_SetAccessControl(false);
          Directory_SetAccessControl(true);
       }
@@ -42,10 +45,7 @@ namespace AlphaFS.UnitTest
       private void Directory_SetAccessControl(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
+         
          string tempPath = Path.Combine(Path.GetTempPath(), "Directory.SetAccessControl()-" + Path.GetRandomFileName());
 
          if (isNetwork)

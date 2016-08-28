@@ -14,6 +14,7 @@
     <AssemblyOriginatorKeyFile>..\AlphaFS.snk</AssemblyOriginatorKeyFile>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
     <DelaySign>false</DelaySign>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net35 Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -1494,306 +1494,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpReadWriteAllBytes
-
-      #region Create file with trailing dot/space
-
-      private void DumpFileTrailingDotSpace(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         const string characterDot = ".";
-         const string characterSpace = " ";
-         string random = Path.GetRandomFileName();
-         string tempPathDot = Path.GetTempPath("File.Create()-" + random + "-file-with-dot-" + characterDot);
-         string tempPathSpace = Path.GetTempPath("File.Create()-" + random + "-file-with-space-" + characterSpace);
-         if (!isLocal) tempPathDot = Path.LocalToUnc(tempPathDot);
-         if (!isLocal) tempPathSpace = Path.LocalToUnc(tempPathSpace);
-
-         Console.WriteLine("Input File Path (with dot)  : [{0}]", tempPathDot);
-         Console.WriteLine("Input File Path (with space): [{0}]", tempPathSpace);
-
-         Assert.IsTrue(tempPathDot.EndsWith(characterDot), "Path should have a trailing dot.");
-         Assert.IsTrue(tempPathSpace.EndsWith(characterSpace), "Path should have a trailing space.");
-
-         #region Path.GetFullPath(), Path Normalization
-
-         string sysIo = System.IO.Path.GetFullPath(tempPathDot);
-         Assert.IsFalse(sysIo.EndsWith(characterDot), "Path should not have a trailing dot.");
-
-         sysIo = System.IO.Path.GetFullPath(tempPathSpace);
-         Assert.IsFalse(sysIo.EndsWith(characterSpace), "Path should not have a trailing space.");
-
-
-         string alphaFs = Path.GetFullPath(tempPathDot);
-         Assert.IsFalse(alphaFs.EndsWith(characterDot), "Path should not have a trailing dot.");
-
-         alphaFs = Path.GetFullPath(tempPathSpace);
-         Assert.IsFalse(alphaFs.EndsWith(characterSpace), "Path should not have a trailing space.");
-
-
-         Assert.AreEqual(sysIo, alphaFs, "Paths should be the same.");
-
-         #endregion // Path.GetFullPath(), Path Normalization
-
-         #region Path.GetLongPath(), No Path Normalization
-
-         alphaFs = Path.GetLongPath(tempPathDot);
-         Assert.IsTrue(alphaFs.EndsWith(characterDot), "Path should have a trailing dot.");
-
-         alphaFs = Path.GetLongPath(tempPathSpace);
-         Assert.IsTrue(alphaFs.EndsWith(characterSpace), "Path should have a trailing space.");
-
-         Assert.AreNotEqual(alphaFs, sysIo, "Paths should not be the same.");
-
-         #endregion // Path.GetLongPath(), No Path Normalization
-
-         #region Path.GetRegularPath(), No Path Normalization
-
-         alphaFs = Path.GetRegularPath(tempPathDot);
-         Assert.IsTrue(alphaFs.EndsWith(characterDot), "Path should have a trailing dot.");
-
-         alphaFs = Path.GetRegularPath(tempPathSpace);
-         Assert.IsTrue(alphaFs.EndsWith(characterSpace), "Path should have a trailing space.");
-
-         Assert.AreNotEqual(alphaFs, sysIo, "Paths should not be the same.");
-
-         #endregion // Path.GetRegularPath(), No Path Normalization
-
-         Console.WriteLine();
-
-         #region File() Class
-
-         UnitTestConstants.StopWatcher(true);
-
-         #region TrailingDot
-
-         #region System.IO
-
-         // tempPathDot contains a trailing dot but gets stripped on path normalization.
-         // System.IO handles the file without the trailing dot. Therefore, the file exists.
-         // AlphaFS has the same behaviour as .NET for default methods.
-
-         using (FileStream fs = System.IO.File.Create(tempPathDot)) { fs.WriteByte(1); }
-         Assert.IsTrue(System.IO.File.Exists(tempPathDot), "File should exist.");
-         Assert.IsTrue(File.Exists(tempPathDot), "File should be visible to AlphaFS.");
-         Assert.IsFalse(File.Exists(tempPathDot, PathFormat.FullPath), "File should be invisible to AlphaFS.");
-
-         using (StreamWriter sw = System.IO.File.AppendText(tempPathDot))
-            sw.WriteLine(UnitTestConstants.TextHelloWorld);
-
-         string lineSysIo;
-         using (StreamReader sr = System.IO.File.OpenText(tempPathDot))
-            lineSysIo = sr.ReadToEnd();
-
-         System.IO.File.Delete(tempPathDot);
-         Assert.IsFalse(System.IO.File.Exists(tempPathDot), "File should not exist.");
-
-         #endregion // System.IO
-
-         #region AlphaFS
-
-         using (FileStream fs = File.Create(tempPathDot, PathFormat.FullPath)) { fs.WriteByte(1); } // Create file without path normalization.
-         Assert.IsTrue(File.Exists(tempPathDot, PathFormat.FullPath), "File should exist and visible to AlphaFS.");
-         Assert.IsFalse(System.IO.File.Exists(tempPathDot), "File should be invisible to System.IO.");
-
-         using (StreamWriter sw = File.AppendText(tempPathDot, PathFormat.FullPath))
-            sw.WriteLine(UnitTestConstants.TextHelloWorld);
-
-         string lineAlphaFs;
-         using (StreamReader sr = File.OpenText(tempPathDot, PathFormat.FullPath))
-            lineAlphaFs = sr.ReadToEnd();
-
-         File.Delete(tempPathDot, true, PathFormat.FullPath); // Delete file without path normalization.
-         Assert.IsFalse(File.Exists(tempPathDot, PathFormat.FullPath), "File should not exist.");
-
-         #endregion // AlphaFS
-
-         Assert.AreEqual(lineSysIo, lineAlphaFs);
-
-         #endregion // TrailingDot
-
-         #region TrailingSpace
-
-         #region System.IO
-
-         // tempPathSpace contains a trailing space but gets stripped on path normalization.
-         // System.IO handles the file without the trailing space. Therefore, the file exists.
-         // AlphaFS has the same behaviour as .NET for default methods.
-
-         using (FileStream fs = System.IO.File.Create(tempPathSpace)) { fs.WriteByte(1); }
-         Assert.IsTrue(System.IO.File.Exists(tempPathSpace), "File should exist.");
-         Assert.IsTrue(File.Exists(tempPathSpace), "File should be visible to AlphaFS.");
-         Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.FullPath), "File should be invisible to AlphaFS.");
-
-         using (StreamWriter sw = System.IO.File.AppendText(tempPathSpace))
-            sw.WriteLine(UnitTestConstants.TextHelloWorld);
-
-         using (StreamReader sr = System.IO.File.OpenText(tempPathSpace))
-            lineSysIo = sr.ReadToEnd();
-
-         System.IO.File.Delete(tempPathSpace);
-         Assert.IsFalse(System.IO.File.Exists(tempPathSpace), "File should not exist.");
-
-         #endregion // System.IO
-
-         #region AlphaFS
-
-         using (FileStream fs = File.Create(tempPathSpace, PathFormat.FullPath)) { fs.WriteByte(1); } // Create file without path normalization.
-         Assert.IsTrue(File.Exists(tempPathSpace, PathFormat.FullPath), "File should exist and visible to AlphaFS.");
-         Assert.IsFalse(System.IO.File.Exists(tempPathSpace), "File should be invisible to System.IO.");
-
-         using (StreamWriter sw = File.AppendText(tempPathSpace, PathFormat.FullPath))
-            sw.WriteLine(UnitTestConstants.TextHelloWorld);
-
-         using (StreamReader sr = File.OpenText(tempPathSpace, PathFormat.FullPath))
-            lineAlphaFs = sr.ReadToEnd();
-
-         File.Delete(tempPathSpace, true, PathFormat.FullPath); // Delete file without path normalization.
-         Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.FullPath), "File should not exist.");
-
-         #endregion // AlphaFS
-
-         Assert.AreEqual(lineSysIo, lineAlphaFs);
-
-         #endregion // TrailingSpace
-
-         Console.WriteLine("\tClass File(){0}", UnitTestConstants.Reporter());
-
-         #endregion // File() Class
-
-         #region FileInfo() Class
-
-         UnitTestConstants.StopWatcher(true);
-
-         #region TrailingDot
-
-         #region System.IO
-
-         // tempPathDot contains a trailing dot but gets stripped on path normalization.
-         // System.IO handles the file without the trailing dot. Therefore, the file exists.
-         // AlphaFS has the same behaviour as .NET for default methods.
-
-         System.IO.FileInfo sysIoFi = new System.IO.FileInfo(tempPathDot);
-         Assert.IsTrue(sysIoFi.Name.EndsWith(characterDot), "Path should have a trailing dot.");
-
-         using (FileStream fs = sysIoFi.Create())
-         {
-            fs.WriteByte(100);
-
-            Assert.IsTrue(sysIoFi.Exists, "File should exist.");
-            Assert.IsTrue(File.Exists(tempPathDot), "File should be visible to AlphaFS.");
-            Assert.IsFalse(File.Exists(tempPathDot, PathFormat.FullPath), "File should be invisible to AlphaFS.");
-         }
-
-         using (StreamWriter sw = sysIoFi.AppendText())
-            sw.WriteLine(UnitTestConstants.TextHelloWorld);
-
-         using (StreamReader sr = System.IO.File.OpenText(tempPathDot))
-            lineSysIo = sr.ReadToEnd();
-
-         sysIoFi.Delete();
-         Assert.IsFalse(System.IO.File.Exists(tempPathDot), "File should not exist.");
-
-         #endregion // System.IO
-
-         #region AlphaFS
-
-         FileInfo alphaFsFi = new FileInfo(tempPathDot, PathFormat.FullPath);
-         Assert.IsTrue(alphaFsFi.Name.EndsWith(characterDot), "Path should have a trailing dot.");
-
-         using (FileStream fs = alphaFsFi.Create())
-         {
-            fs.WriteByte(100);
-
-            Assert.IsTrue(alphaFsFi.Exists, "File should exist.");
-            Assert.IsTrue(File.Exists(tempPathDot, PathFormat.FullPath), "File should be visible to AlphaFS.");
-            Assert.IsFalse(File.Exists(tempPathDot), "File should be invisible to AlphaFS.");
-         }
-
-         using (StreamWriter sw = alphaFsFi.AppendText())
-            sw.WriteLine(UnitTestConstants.TextHelloWorld);
-
-         using (StreamReader sr = File.OpenText(tempPathDot, PathFormat.FullPath))
-            lineAlphaFs = sr.ReadToEnd();
-
-         alphaFsFi.Delete();
-         alphaFsFi.Refresh(); // Must Refresh() to get actual state.
-         Assert.IsFalse(File.Exists(tempPathDot, PathFormat.FullPath), "File should not exist.");
-
-         #endregion // AlphaFS
-
-         Assert.AreEqual(lineSysIo, lineAlphaFs);
-
-         #endregion // TrailingDot
-
-         #region TrailingSpace
-
-         #region System.IO
-
-         // tempPathSpace contains a trailing space but gets stripped on path normalization.
-         // System.IO handles the file without the trailing space. Therefore, the file exists.
-         // AlphaFS has the same behaviour as .NET for default methods.
-
-         sysIoFi = new System.IO.FileInfo(tempPathSpace);
-         Assert.IsTrue(sysIoFi.Name.EndsWith(characterSpace), "Path should have a trailing space.");
-
-         using (FileStream fs = sysIoFi.Create())
-         {
-            fs.WriteByte(100);
-
-            Assert.IsTrue(sysIoFi.Exists, "File should exist.");
-            Assert.IsTrue(File.Exists(tempPathSpace), "File should be visible to AlphaFS.");
-            Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.FullPath), "File should be invisible to AlphaFS.");
-         }
-
-         using (StreamWriter sw = sysIoFi.AppendText())
-            sw.WriteLine(UnitTestConstants.TextHelloWorld);
-
-         using (StreamReader sr = System.IO.File.OpenText(tempPathSpace))
-            lineSysIo = sr.ReadToEnd();
-
-         sysIoFi.Delete();
-         Assert.IsFalse(System.IO.File.Exists(tempPathSpace), "File should not exist.");
-
-         #endregion // System.IO
-
-         #region AlphaFS
-
-         alphaFsFi = new FileInfo(tempPathSpace, PathFormat.FullPath);
-         Assert.IsTrue(alphaFsFi.Name.EndsWith(characterSpace), "Path should have a trailing space.");
-
-         using (FileStream fs = alphaFsFi.Create())
-         {
-            fs.WriteByte(100);
-
-            Assert.IsTrue(alphaFsFi.Exists, "File should exist.");
-            Assert.IsTrue(File.Exists(tempPathSpace, PathFormat.FullPath), "File should be visible to AlphaFS.");
-            Assert.IsFalse(File.Exists(tempPathSpace), "File should be invisible to AlphaFS.");
-         }
-
-         using (StreamWriter sw = alphaFsFi.AppendText())
-            sw.WriteLine(UnitTestConstants.TextHelloWorld);
-
-         using (StreamReader sr = File.OpenText(tempPathSpace, PathFormat.FullPath))
-            lineAlphaFs = sr.ReadToEnd();
-
-         alphaFsFi.Delete();
-         alphaFsFi.Refresh(); // Must Refresh() to get actual state.
-         Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.FullPath), "File should not exist.");
-
-         #endregion // AlphaFS
-
-         Assert.AreEqual(lineSysIo, lineAlphaFs);
-
-         #endregion // TrailingSpace
-
-         Console.WriteLine("\tClass FileInfo(){0}", UnitTestConstants.Reporter());
-
-         #endregion // FileInfo() Class
-
-         Console.WriteLine();
-      }
-
-      #endregion // Create file with trailing dot/space
       
       #endregion // Unit Tests
 
@@ -1802,7 +1502,7 @@ namespace AlphaFS.UnitTest
       #region AppendAllLines
 
       [TestMethod]
-      public void AppendAllLines()
+      public void File_AppendAllLines()
       {
          Console.WriteLine("File.AppendAllLines()");
 
@@ -1811,7 +1511,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AppendAllLinesThenReadAllLinesShouldReturnSameCollection()
+      public void File_AppendAllLinesThenReadAllLinesShouldReturnSameCollection()
       {
          var file = Path.GetTempFileName();
          var sample = new []{ "line one", "line two" };
@@ -1832,7 +1532,7 @@ namespace AlphaFS.UnitTest
       #region AppendAllText
 
       [TestMethod]
-      public void AppendAllText()
+      public void File_AppendAllText()
       {
          Console.WriteLine("File.AppendAllText()");
          Console.WriteLine("\n\tDefault AlphaFS Encoding: [{0}]", NativeMethods.DefaultFileEncoding.EncodingName);
@@ -1882,7 +1582,7 @@ namespace AlphaFS.UnitTest
       #region AppendText
 
       [TestMethod]
-      public void AppendText()
+      public void File_AppendText()
       {
          Console.WriteLine("File.AppendText()");
 
@@ -1964,7 +1664,7 @@ namespace AlphaFS.UnitTest
       #region Copy
 
       [TestMethod]
-      public void Copy()
+      public void File_Copy()
       {
          Console.WriteLine("File.Copy()");
 
@@ -1977,11 +1677,11 @@ namespace AlphaFS.UnitTest
       #region CreateText
 
       [TestMethod]
-      public void CreateText()
+      public void File_CreateText()
       {
          Console.WriteLine("File.CreateText()");
 
-         AppendText();
+         File_AppendText();
       }
 
       #endregion // CreateText
@@ -1989,7 +1689,7 @@ namespace AlphaFS.UnitTest
       #region Delete
 
       [TestMethod]
-      public void Delete()
+      public void File_Delete()
       {
          Console.WriteLine("File.Delete()");
 
@@ -2002,7 +1702,7 @@ namespace AlphaFS.UnitTest
       #region Encrypt
 
       [TestMethod]
-      public void Encrypt()
+      public void File_Encrypt()
       {
          Console.WriteLine("File.Encrypt()");
 
@@ -2067,7 +1767,7 @@ namespace AlphaFS.UnitTest
       #region GetAttributes
 
       [TestMethod]
-      public void GetAttributes()
+      public void File_GetAttributes()
       {
          Console.WriteLine("File.GetAttributes()");
 
@@ -2081,7 +1781,7 @@ namespace AlphaFS.UnitTest
       #region Move
 
       [TestMethod]
-      public void Move()
+      public void File_Move()
       {
          Console.WriteLine("File.Move()");
 
@@ -2094,7 +1794,7 @@ namespace AlphaFS.UnitTest
       #region OpenWrite
 
       [TestMethod]
-      public void OpenWrite()
+      public void File_OpenWrite()
       {
          Console.WriteLine("File.OpenWrite()\n");
 
@@ -2135,7 +1835,7 @@ namespace AlphaFS.UnitTest
       #region ReadAllBytes
 
       [TestMethod]
-      public void ReadAllBytes()
+      public void File_ReadAllBytes()
       {
          Console.WriteLine("File.ReadAllBytes()");
 
@@ -2148,7 +1848,7 @@ namespace AlphaFS.UnitTest
       #region ReadAllLines
 
       [TestMethod]
-      public void ReadAllLines()
+      public void File_ReadAllLines()
       {
          Console.WriteLine("File.ReadAllLines()");
 
@@ -2161,7 +1861,7 @@ namespace AlphaFS.UnitTest
       #region ReadAllText
 
       [TestMethod]
-      public void ReadAllText()
+      public void File_ReadAllText()
       {
          Console.WriteLine("File.ReadAllText()\n");
 
@@ -2184,11 +1884,11 @@ namespace AlphaFS.UnitTest
       #region ReadLines
 
       [TestMethod]
-      public void ReadLines()
+      public void File_ReadLines()
       {
          Console.WriteLine("File.ReadLines()");
 
-         ReadAllLines();
+         File_ReadAllLines();
       }
 
       #endregion // ReadLines
@@ -2196,7 +1896,7 @@ namespace AlphaFS.UnitTest
       #region SetAccessControl
 
       [TestMethod]
-      public void SetAccessControl()
+      public void File_SetAccessControl()
       {
          Console.WriteLine("File.SetAccessControl()");
 
@@ -2273,9 +1973,12 @@ namespace AlphaFS.UnitTest
       #region SetCreationTime
 
       [TestMethod]
-      public void SetCreationTime()
+      public void File_SetCreationTime()
       {
          Console.WriteLine("File.SetXxxTimeXxx()");
+
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
 
          DumpSetXxxTimeXxx(true);
          DumpSetXxxTimeXxx(false);
@@ -2286,11 +1989,11 @@ namespace AlphaFS.UnitTest
       #region WriteAllBytes
 
       [TestMethod]
-      public void WriteAllBytes()
+      public void File_WriteAllBytes()
       {
          Console.WriteLine("File.WriteAllBytes()");
 
-         ReadAllBytes();
+         File_ReadAllBytes();
       }
 
       #endregion // WriteAllBytes
@@ -2298,7 +2001,7 @@ namespace AlphaFS.UnitTest
       #region WriteAllLines
 
       [TestMethod]
-      public void WriteAllLines()
+      public void File_WriteAllLines()
       {
          Console.WriteLine("File.WriteAllLines()");
          Console.WriteLine("\n Default AlphaFS Encoding: [{0}]", NativeMethods.DefaultFileEncoding.EncodingName);
@@ -2331,7 +2034,7 @@ namespace AlphaFS.UnitTest
       #region WriteAllText
 
       [TestMethod]
-      public void WriteAllText()
+      public void File_WriteAllText()
       {
          Console.WriteLine("File.WriteAllText()");
          Console.WriteLine("\n\tDefault AlphaFS Encoding: [{0}]", NativeMethods.DefaultFileEncoding.EncodingName);
@@ -2385,9 +2088,12 @@ namespace AlphaFS.UnitTest
       #region SetTimestamps
 
       [TestMethod]
-      public void AlphaFS_SetTimestamps()
+      public void AlphaFS_File_SetTimestamps()
       {
          Console.WriteLine("File.SetTimestamps()");
+
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
 
          DumpSetTimestamps(true);
          DumpSetTimestamps(false);
@@ -2398,7 +2104,7 @@ namespace AlphaFS.UnitTest
       #region TransferTimestamps
 
       [TestMethod]
-      public void AlphaFS_TransferTimestamps()
+      public void AlphaFS_File_TransferTimestamps()
       {
          Console.WriteLine("File.TransferTimestamps()");
 
@@ -2407,24 +2113,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // TransferTimestamps
-
-      #region AlphaFS___FileTrailingDotSpace
-
-      [TestMethod]
-      public void AlphaFS___FileTrailingDotSpace()
-      {
-         Console.WriteLine(".NET does not support the creation/manipulation of files with a trailing dot or space.");
-         Console.WriteLine("These will be stripped due to path normalization.");
-
-         Console.WriteLine("\nThe AlphaFS File() class contains overloaded methods which have the");
-         Console.WriteLine("isFullPath parameter that enables you to bypass this .NET limitation.\n");
-
-         DumpFileTrailingDotSpace(true);
-         DumpFileTrailingDotSpace(false);
-      }
-
-      #endregion // AlphaFS___FileTrailingDotSpace
-
+      
       #endregion // AlphaFS
    }
 }

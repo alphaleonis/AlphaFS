@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <param name="path">The path to the file or directory, this can also be an UNC path.</param>
-      /// <param name="options">Options for controlling the operation.</param>
+      /// <param name="options">Options for controlling the full path retrieval.</param>
       [SecurityCritical]
       internal static string GetLongPathCore(string path, GetFullPathOptions options)
       {
@@ -216,7 +216,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <param name="path">The path.</param>
-      /// <param name="options">Options for controlling the operation.</param>
+      /// <param name="options">Options for controlling the full path retrieval.</param>
       /// <param name="allowEmpty">When <see langword="false"/>, throws an <see cref="ArgumentException"/>.</param>
       [SecurityCritical]
       internal static string GetRegularPathCore(string path, GetFullPathOptions options, bool allowEmpty)

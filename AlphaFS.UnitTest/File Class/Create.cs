@@ -45,6 +45,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void File_Create_WithFileSecurity_LocalAndUNC_Success()
       {
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
          File_Create_WithFileSecurity(false);
          File_Create_WithFileSecurity(true);
       }
@@ -97,10 +100,7 @@ namespace AlphaFS.UnitTest
       private void File_Create_WithFileSecurity(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
+         
          string tempPath = SysIOPath.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);

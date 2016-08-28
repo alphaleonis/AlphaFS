@@ -115,7 +115,7 @@ namespace AlphaFS.UnitTest
       #region Refresh
 
       [TestMethod]
-      public void Refresh()
+      public void FileInfo_Refresh()
       {
          Console.WriteLine("FileInfo.Refresh()");
 

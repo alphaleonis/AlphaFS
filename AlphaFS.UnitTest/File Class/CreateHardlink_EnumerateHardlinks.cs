@@ -32,6 +32,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_CreateHardlink_And_EnumerateHardlinks_Local_Success()
       {
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
          File_CreateEnumerateHardlinks(false);
          File_CreateEnumerateHardlinks(true);
       }
@@ -40,10 +43,7 @@ namespace AlphaFS.UnitTest
       private void File_CreateEnumerateHardlinks(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
+         
          string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
          {

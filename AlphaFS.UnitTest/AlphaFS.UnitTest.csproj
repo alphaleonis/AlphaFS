@@ -173,6 +173,7 @@
     <Compile Include="AlphaFS_ClassesTest.cs" />
     <Compile Include="Directory Class\CreateDirectory.cs" />
     <Compile Include="Directory Class\DirectoryTest.cs" />
+    <Compile Include="Path Class\GetFullPath.cs" />
     <Compile Include="Path Class\IsPathRooted.cs" />
     <Compile Include="Path Class\GetExtension.cs" />
     <Compile Include="Path Class\GetDirectoryName.cs" />

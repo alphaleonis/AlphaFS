@@ -21,9 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using Alphaleonis.Win32.Filesystem;
-using File = Alphaleonis.Win32.Filesystem.File;
-using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
 {
@@ -34,100 +31,71 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void File_Exists_LocalAndUNC_Success()
       {
-         File_Exists(false, Path.GetTempPath("File-Exists-" + Path.GetRandomFileName()));
-         File_Exists(true, Path.GetTempPath("File-Exists-" + Path.GetRandomFileName()));
+         File_Exists(false);
+         File_Exists(true);
       }
 
 
       [TestMethod]
-      public void File_Exists_PathContainsLeadingTrailingSpace_LocalAndUNC_Success()
+      public void AlphaFS_File_Exists_WithLeadingOrTrailingSpace_LocalAndUNC_Success()
       {
-         File_Exists_LeadingTrailingSpace(false, UnitTestConstants.NotepadExe);
-         File_Exists_LeadingTrailingSpace(true, UnitTestConstants.NotepadExe);
+         File_Exists_WithLeadingOrTrailingSpace(false);
+         File_Exists_WithLeadingOrTrailingSpace(true);
       }
 
 
 
 
-      private void File_Exists(bool isNetwork, string tempPath)
+      private void File_Exists(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
+         string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = PathUtils.AsUncPath(tempPath);
 
-         string symlinkPath = tempPath + "-symlink";
 
-         Console.WriteLine("\nInput File Path: [{0}]\n", tempPath);
-
-         bool exists = File.Exists(tempPath);
-
-         Assert.IsFalse(exists, "File should not exist.");
-         Assert.IsFalse(File.Exists(symlinkPath), "File symlink should not exist.");
-
-         try
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.Exists"))
          {
-            using (File.Create(tempPath)) { }
+            string file = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
-            exists = File.Exists(tempPath);
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file exists, but is expected not to be.");
 
-            Assert.IsTrue(exists, "File should exist.");
+            using (System.IO.File.Create(file)) {}
 
-
-            Assert.IsFalse(File.Exists(symlinkPath), "File symlink should not exist.");
-            File.CreateSymbolicLink(symlinkPath, tempPath, SymbolicLinkTarget.File);
-            Assert.IsTrue(File.Exists(symlinkPath), "File symlink should exist.");
-
-
-            File.Delete(symlinkPath);
-            Assert.IsTrue(File.Exists(tempPath), "Deleting a symlink should not delete the underlying file.");
-            Assert.IsFalse(File.Exists(symlinkPath), "Cleanup failed: File symlink should have been removed.");
-
-            File.Delete(tempPath, true);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            Assert.IsTrue(false);
-         }
-         finally
-         {
-            if (File.Exists(symlinkPath))
-               File.Delete(symlinkPath);
-
-            if (File.Exists(tempPath))
-               File.Delete(tempPath, true);
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file does not exists, but is expected to be.");
          }
 
          Console.WriteLine();
       }
 
 
-      private void File_Exists_LeadingTrailingSpace(bool isNetwork, string tempPath)
+      private void File_Exists_WithLeadingOrTrailingSpace(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
+         string tempPath = UnitTestConstants.NotepadExe;
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = PathUtils.AsUncPath(tempPath);
 
 
          string path = tempPath + "   ";
          Console.WriteLine("\nInput File Path: [{0}]\n", path);
 
-         Assert.IsTrue(File.Exists(path), "File should exist.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(path), "The file does not exist, but is expected to be.");
 
 
          path = "   " + tempPath + "   ";
-         Console.WriteLine("\nInput File Path: [{0}]\n", path);
+         Console.WriteLine("Input File Path: [{0}]\n", path);
 
-         Assert.IsTrue(File.Exists(path), "File should exist.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(path), "The file does not exist, but is expected to be.");
 
 
          path = "   " + tempPath;
-         Console.WriteLine("\nInput File Path: [{0}]\n", path);
+         Console.WriteLine("Input File Path: [{0}]\n", path);
 
-         Assert.IsTrue(File.Exists(path), "File should exist.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(path), "The file does not exist, but is expected to be.");
 
          Console.WriteLine();
       }

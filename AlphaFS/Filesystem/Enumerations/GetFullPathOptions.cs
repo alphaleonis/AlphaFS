@@ -25,7 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>A bitfield of flags for specifying options for various internal operations that convert paths to full paths.</summary>
    [Flags]
-   internal enum GetFullPathOptions
+   public enum GetFullPathOptions
    {
       /// <summary>No special options applies.</summary>
       None = 0,
@@ -50,6 +50,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Also check for wildcard (? and *) characters.</summary>
       CheckAdditional = 64,
+
+      /// <summary>Do not trim the trailing dot or space.</summary>
+      KeepDotOrSpace = 128,
 
       /// <summary>Performs both <see cref="CheckInvalidPathChars"/> and <see cref="CheckAdditional"/> checks.</summary>
       FullCheck = CheckInvalidPathChars | CheckAdditional

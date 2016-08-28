@@ -31,6 +31,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo_LocalUNC_Success()
       {
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
          File_CreateSymbolicLink_GetLinkTargetInfo(false);
          File_CreateSymbolicLink_GetLinkTargetInfo(true);
       }
@@ -39,10 +42,7 @@ namespace AlphaFS.UnitTest
       private void File_CreateSymbolicLink_GetLinkTargetInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
+         
          string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);

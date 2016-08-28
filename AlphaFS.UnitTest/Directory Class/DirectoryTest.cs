@@ -1837,179 +1837,10 @@ namespace AlphaFS.UnitTest
          return acl.GetAccessRules(false, true, typeof(SecurityIdentifier)).Count > 0;
       }
 
-      private void DumpDirectoryTrailingDotSpace(bool isLocal)
-      {
-         #region Setup
-
-         Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         const string characterDot = ".";
-         const string characterSpace = " ";
-         string random = Path.GetRandomFileName();
-         string tempPathDot = Path.GetTempPath("Directory.CreateDirectory()-" + random + "-directory-with-dot-" + characterDot);
-         string tempPathSpace = Path.GetTempPath("Directory.CreateDirectory()-" + random + "-directory-with-space-" + characterSpace);
-         if (!isLocal) tempPathDot = Path.LocalToUnc(tempPathDot);
-         if (!isLocal) tempPathSpace = Path.LocalToUnc(tempPathSpace);
-
-         Console.WriteLine("Input Directory Path (with dot)  : [{0}]", tempPathDot);
-         Console.WriteLine("Input Directory Path (with space): [{0}]", tempPathSpace);
-
-         Assert.IsTrue(tempPathDot.EndsWith(characterDot), "Path should have a trailing dot.");
-         Assert.IsTrue(tempPathSpace.EndsWith(characterSpace), "Path should have a trailing space.");
-
-         #endregion // Setup
-
-         try
-         {
-            #region Path.GetFullPath(), Path Normalization
-
-            string sysIo = System.IO.Path.GetFullPath(tempPathDot);
-            Assert.IsFalse(sysIo.EndsWith(characterDot), "Path should not have a trailing dot.");
-
-            sysIo = System.IO.Path.GetFullPath(tempPathSpace);
-            Assert.IsFalse(sysIo.EndsWith(characterSpace), "Path should not have a trailing space.");
-
-
-            string alphaFs = Path.GetFullPath(tempPathDot);
-            Assert.IsFalse(alphaFs.EndsWith(characterDot), "Path should not have a trailing dot.");
-
-            alphaFs = Path.GetFullPath(tempPathSpace);
-            Assert.IsFalse(alphaFs.EndsWith(characterSpace), "Path should not have a trailing space.");
-
-
-            Assert.AreEqual(sysIo, alphaFs, "Paths should be the same.");
-
-            #endregion // Path.GetFullPath(), Path Normalization
-
-            #region Path.GetLongPath(), No Path Normalization
-
-            alphaFs = Path.GetLongPath(tempPathDot);
-            Assert.IsTrue(alphaFs.EndsWith(characterDot), "Path should have a trailing dot.");
-
-            alphaFs = Path.GetLongPath(tempPathSpace);
-            Assert.IsTrue(alphaFs.EndsWith(characterSpace), "Path should have a trailing space.");
-
-            Assert.AreNotEqual(alphaFs, sysIo, "Paths should not be the same.");
-
-            #endregion // Path.GetLongPath(), No Path Normalization
-
-            #region Path.GetRegularPath(), No Path Normalization
-
-            alphaFs = Path.GetRegularPath(tempPathDot);
-            Assert.IsTrue(alphaFs.EndsWith(characterDot), "Path should have a trailing dot.");
-
-            alphaFs = Path.GetRegularPath(tempPathSpace);
-            Assert.IsTrue(alphaFs.EndsWith(characterSpace), "Path should have a trailing space.");
-
-            Assert.AreNotEqual(alphaFs, sysIo, "Paths should not be the same.");
-
-            #endregion // Path.GetRegularPath(), No Path Normalization
-
-            Console.WriteLine();
-
-            #region Directory() Class
-
-            UnitTestConstants.StopWatcher(true);
-
-            #region TrailingDot
-
-            #region System.IO
-
-            // tempPathDot contains a trailing dot but gets stripped on path normalization.
-            // System.IO handles the directory without the trailing dot. Therefore, the directory exists.
-            // AlphaFS has the same behaviour as .NET for default methods.
-
-            System.IO.DirectoryInfo sysIoDi = System.IO.Directory.CreateDirectory(tempPathDot);
-            Assert.IsFalse(sysIoDi.Name.EndsWith(characterDot), "Path should not have a trailing dot.");
-            Assert.IsTrue(System.IO.Directory.Exists(tempPathDot), "Directory should exist.");
-            Assert.IsTrue(Directory.Exists(tempPathDot), "Directory should exist.");
-
-            System.IO.Directory.Delete(tempPathDot);
-            Assert.IsFalse(System.IO.Directory.Exists(tempPathDot), "Directory should not exist.");
-
-            #endregion // System.IO
-
-            #region AlphaFS
-
-            DirectoryInfo alphaFsDi = Directory.CreateDirectory(tempPathDot, false, PathFormat.FullPath);
-            Assert.IsTrue(alphaFsDi.Name.EndsWith(characterDot), "Path should have a trailing dot.");
-            Assert.IsFalse(Directory.Exists(tempPathDot), "Directory should not exist.");
-            Assert.IsTrue(Directory.Exists(tempPathDot, PathFormat.FullPath), "Directory should exist.");
-
-            DirectoryInfo alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-dot-" + characterDot, false);
-            Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
-
-            alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-space-" + characterSpace, false);
-            Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
-
-            Directory.Delete(tempPathDot, true, true, PathFormat.FullPath);
-            Assert.IsFalse(Directory.Exists(tempPathDot, PathFormat.FullPath), "Directory should not exist.");
-
-            #endregion // AlphaFS
-
-            #endregion // TrailingDot
-
-            #region TrailingSpace
-
-            #region System.IO
-
-            // tempPathSpace contains a trailing space but gets stripped on path normalization.
-            // System.IO handles the file without the trailing space. Therefore, the file exists.
-            // AlphaFS has the same behaviour as .NET for default methods.
-
-            sysIoDi = System.IO.Directory.CreateDirectory(tempPathSpace);
-            Assert.IsFalse(sysIoDi.Name.EndsWith(characterSpace), "Path should not have a trailing dot.");
-            Assert.IsTrue(System.IO.Directory.Exists(tempPathSpace), "Directory should exist.");
-            Assert.IsTrue(Directory.Exists(tempPathSpace), "Directory should exist.");
-
-            System.IO.Directory.Delete(tempPathSpace);
-            Assert.IsFalse(System.IO.Directory.Exists(tempPathSpace), "Directory should not exist.");
-
-            #endregion // System.IO
-
-            #region AlphaFS
-
-            alphaFsDi = Directory.CreateDirectory(tempPathSpace, false, PathFormat.FullPath);
-            Assert.IsTrue(alphaFsDi.Name.EndsWith(characterSpace), "Path should have a trailing space.");
-            Assert.IsFalse(Directory.Exists(tempPathSpace), "Directory should exist.");  // Because trailing space is removed.
-            Assert.IsTrue(Directory.Exists(tempPathSpace, PathFormat.FullPath), "Directory should exist.");
-
-            alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-space-" + characterSpace, false);
-            Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
-
-            alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-dot-" + characterDot, false);
-            Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
-
-            Directory.Delete(tempPathSpace, true, true, PathFormat.FullPath);
-            Assert.IsFalse(Directory.Exists(tempPathSpace, PathFormat.FullPath), "Directory should not exist.");
-
-            #endregion // AlphaFS
-
-            #endregion // TrailingSpace
-
-            Console.WriteLine("\tClass DirectoryInfo()\t{0}", UnitTestConstants.Reporter());
-
-            #endregion // Directory() Class
-         }
-         finally
-         {
-            if (Directory.Exists(tempPathDot, PathFormat.FullPath))
-               Directory.Delete(tempPathDot, true, true);
-
-            if (Directory.Exists(tempPathSpace, PathFormat.FullPath))
-               Directory.Delete(tempPathSpace, true, true);
-
-            Assert.IsFalse(Directory.Exists(tempPathDot), "Cleanup failed: Directory should have been removed.");
-            Assert.IsFalse(Directory.Exists(tempPathSpace), "Cleanup failed: Directory should have been removed.");
-         }
-
-         Console.WriteLine();
-      }
-
-
       #region .NET
 
       [TestMethod]
-      public void EnumerateDirectories()
+      public void Directory_EnumerateDirectories()
       {
          Console.WriteLine("Directory.EnumerateDirectories()");
 
@@ -2018,7 +1849,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void EnumerateFiles()
+      public void Directory_EnumerateFiles()
       {
          Console.WriteLine("Directory.EnumerateFiles()");
 
@@ -2027,7 +1858,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void EnumerateFileSystemEntries()
+      public void Directory_EnumerateFileSystemEntries()
       {
          Console.WriteLine("Directory.EnumerateFileSystemEntries()");
 
@@ -2036,14 +1867,14 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void NET_GetCurrentDirectory()
+      public void Directory_GetCurrentDirectory_NET()
       {
          Console.WriteLine("Directory.GetCurrentDirectory()");
          Console.WriteLine("\nThe .NET method is used.");
       }
       
       [TestMethod]
-      public void GetDirectoryRoot()
+      public void Directory_GetDirectoryRoot()
       {
          Console.WriteLine("Directory.GetDirectoryRoot()");
 
@@ -2118,7 +1949,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void GetFileSystemEntries()
+      public void Directory_GetFileSystemEntries()
       {
          Console.WriteLine("Directory.GetFileSystemEntries()");
 
@@ -2127,7 +1958,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void GetFileSystemEntries_LongPathWithPrefix_ShouldReturnCorrectEntries()
+      public void Directory_GetFileSystemEntries_LongPathWithPrefix_ShouldReturnCorrectEntries()
       {
          using (var tempDir = new TemporaryDirectory("GetFileSystemEntries"))
          {
@@ -2144,7 +1975,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void GetFileSystemEntries_LongPathWithoutPrefix_ShouldReturnCorrectEntries()
+      public void Directory_GetFileSystemEntries_LongPathWithoutPrefix_ShouldReturnCorrectEntries()
       {
          using (var tempDir = new TemporaryDirectory("GetFileSystemEntries"))
          {
@@ -2161,7 +1992,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void GetLogicalDrives()
+      public void Directory_GetLogicalDrives()
       {
          Console.WriteLine("Directory.GetLogicalDrives()");
 
@@ -2169,7 +2000,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void GetParent()
+      public void Directory_GetParent()
       {
          Console.WriteLine("Directory.GetParent()");
 
@@ -2223,7 +2054,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void Move()
+      public void Directory_Move()
       {
          Console.WriteLine("Directory.Move()");
 
@@ -2232,16 +2063,19 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void SetCreationTime()
+      public void Directory_SetCreationTime()
       {
          Console.WriteLine("Directory.SetXxxTime()");
+
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
 
          DumpSetXxxTime(true);
          DumpSetXxxTime(false);
       }
 
       [TestMethod]
-      public void NET_SetCurrentDirectory()
+      public void Directory_SetCurrentDirectory_NET()
       {
          Console.WriteLine("Directory.SetCurrentDirectory()");
          Console.WriteLine("\nThe .NET method is used.");
@@ -2252,7 +2086,7 @@ namespace AlphaFS.UnitTest
       #region AlphaFS
 
       [TestMethod]
-      public void AlphaFS_Copy()
+      public void AlphaFS_Directory_Copy()
       {
          Console.WriteLine("Directory.Copy()");
 
@@ -2261,7 +2095,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AlphaFS_CountFileSystemObjects()
+      public void AlphaFS_Directory_CountFileSystemObjects()
       {
          Console.WriteLine("Directory.CountFileSystemObjects()");
 
@@ -2369,7 +2203,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AlphaFS_DeleteEmptySubdirectories()
+      public void AlphaFS_Directory_DeleteEmptySubdirectories()
       {
          Console.WriteLine("Directory.DeleteEmptySubdirectories()");
 
@@ -2427,7 +2261,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AlphaFS_Encrypt()
+      public void AlphaFS_Directory_Encrypt()
       {
          Console.WriteLine("Directory.Encrypt()");
 
@@ -2436,7 +2270,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AlphaFS_EnableEncryption()
+      public void AlphaFS_Directory_EnableEncryption()
       {
          Console.WriteLine("Directory.EnableEncryption()");
 
@@ -2445,7 +2279,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AlphaFS_EnumerateFileIdBothDirectoryInfo()
+      public void AlphaFS_Directory_EnumerateFileIdBothDirectoryInfo()
       {
          Console.WriteLine("Directory.EnumerateFileIdBothDirectoryInfo()");
 
@@ -2454,7 +2288,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AlphaFS_GetProperties()
+      public void AlphaFS_Directory_GetProperties()
       {
          Console.WriteLine("Directory.GetProperties()");
 
@@ -2463,7 +2297,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AlphaFS_HasInheritedPermissions()
+      public void AlphaFS_Directory_HasInheritedPermissions()
       {
          Console.WriteLine("Directory.HasInheritedPermissions()\n");
 
@@ -2492,34 +2326,24 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AlphaFS_SetTimestamps()
+      public void AlphaFS_Directory_SetTimestamps()
       {
          Console.WriteLine("Directory.SetTimestamps()");
+
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
 
          DumpSetTimestamps(true);
          DumpSetTimestamps(false);
       }
 
       [TestMethod]
-      public void AlphaFS_TransferTimestamps()
+      public void AlphaFS_Directory_TransferTimestamps()
       {
          Console.WriteLine("Directory.TransferTimestamps()");
 
          DumpTransferTimestamps(true);
          DumpTransferTimestamps(false);
-      }
-
-      [TestMethod]
-      public void AlphaFS___DirectoryTrailingDotSpace()
-      {
-         Console.WriteLine(".NET does not support the creation/manipulation of directory with a trailing dot or space.");
-         Console.WriteLine("These will be stripped due to path normalization.");
-
-         Console.WriteLine("\nThe AlphaFS Directory() class contains overloaded methods which have the");
-         Console.WriteLine("isFullPath parameter that enables you to bypass this .NET limitation.\n");
-
-         DumpDirectoryTrailingDotSpace(true);
-         DumpDirectoryTrailingDotSpace(false);
       }
 
       #endregion // AlphaFS
