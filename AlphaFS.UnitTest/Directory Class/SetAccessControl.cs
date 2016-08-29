@@ -45,24 +45,25 @@ namespace AlphaFS.UnitTest
       private void Directory_SetAccessControl(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         
-         string tempPath = Path.Combine(Path.GetTempPath(), "Directory.SetAccessControl()-" + Path.GetRandomFileName());
 
+         string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = PathUtils.AsUncPath(tempPath);
 
-         try
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.SetAccessControl"))
          {
-            Directory.CreateDirectory(tempPath);
+            string folder = rootDir.RandomFileFullPath;
+            Directory.CreateDirectory(folder);
 
-            DirectorySecurity sysIO = System.IO.Directory.GetAccessControl(tempPath);
+            var sysIO = System.IO.Directory.GetAccessControl(folder);
             AuthorizationRuleCollection sysIOaccessRules = sysIO.GetAccessRules(true, true, typeof(NTAccount));
 
-            DirectorySecurity alphaFS = Directory.GetAccessControl(tempPath);
+            var alphaFS = Directory.GetAccessControl(folder);
             AuthorizationRuleCollection alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(NTAccount));
 
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
             Console.WriteLine("\n\tSystem.IO rules found: [{0}]\n\tAlphaFS rules found  : [{1}]", sysIOaccessRules.Count, alphaFSaccessRules.Count);
             Assert.AreEqual(sysIOaccessRules.Count, alphaFSaccessRules.Count);
 
@@ -76,12 +77,12 @@ namespace AlphaFS.UnitTest
             // and second parameter removes the existing inherited permissions 
             Console.WriteLine("\n\tRemove inherited properties and persist it.");
             alphaFS.SetAccessRuleProtection(true, false);
-            Directory.SetAccessControl(tempPath, alphaFS, AccessControlSections.Access);
+            Directory.SetAccessControl(folder, alphaFS, AccessControlSections.Access);
 
 
             // Re-read, using instance methods.
-            System.IO.DirectoryInfo sysIOdi = new System.IO.DirectoryInfo(tempPath);
-            DirectoryInfo alphaFSdi = new DirectoryInfo(tempPath);
+            System.IO.DirectoryInfo sysIOdi = new System.IO.DirectoryInfo(folder);
+            DirectoryInfo alphaFSdi = new DirectoryInfo(folder);
 
             sysIO = sysIOdi.GetAccessControl(AccessControlSections.Access);
             alphaFS = alphaFSdi.GetAccessControl(AccessControlSections.Access);
@@ -93,25 +94,15 @@ namespace AlphaFS.UnitTest
             // Restore inherited properties.
             Console.WriteLine("\n\tRestore inherited properties and persist it.");
             alphaFS.SetAccessRuleProtection(false, true);
-            Directory.SetAccessControl(tempPath, alphaFS, AccessControlSections.Access);
+            Directory.SetAccessControl(folder, alphaFS, AccessControlSections.Access);
 
 
             // Re-read.
-            sysIO = System.IO.Directory.GetAccessControl(tempPath, AccessControlSections.Access);
-            alphaFS = Directory.GetAccessControl(tempPath, AccessControlSections.Access);
+            sysIO = System.IO.Directory.GetAccessControl(folder, AccessControlSections.Access);
+            alphaFS = Directory.GetAccessControl(folder, AccessControlSections.Access);
 
             // Sanity check.
             UnitTestConstants.TestAccessRules(sysIO, alphaFS);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            Assert.IsTrue(false);
-         }
-         finally
-         {
-            Directory.Delete(tempPath, true);
-            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          }
 
          Console.WriteLine();

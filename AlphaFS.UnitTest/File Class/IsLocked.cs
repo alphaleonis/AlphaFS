@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "File.IsLocked"))
          {
-            string file = rootDir.RandomFileFullPath;
+            string file = rootDir.RandomFileFullPath + ".txt";
             var fi = new System.IO.FileInfo(file);
 
 

@@ -49,7 +49,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "File-GetCompressedSize"))
          {
-            string file = rootDir.RandomFileFullPath;
+            string file = rootDir.RandomFileFullPath + ".txt";
 
             long streamLength;
             int thousand = 100 * UnitTestConstants.TenNumbers.Length;

@@ -104,8 +104,8 @@ namespace AlphaFS.UnitTest
             Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" +
                                                           System.IO.Path.GetRandomFileName() + emspace);
 #else
-// MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-         string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + Path.GetRandomFileName());
+         // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
+         string tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + System.IO.Path.GetRandomFileName());
 #endif
 
          if (isNetwork)
@@ -152,12 +152,12 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "Directory-CreateWithFileSecurity"))
          {
-            string file = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput Folder Path: [{0}]\n", file);
+            string file = rootDir.RandomFileFullPath + ".txt";
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", file);
 
 
-            string pathExpected = rootDir.RandomFileFullPath;
-            string pathActual = rootDir.RandomFileFullPath;
+            string pathExpected = rootDir.RandomFileFullPath + ".txt";
+            string pathActual = rootDir.RandomFileFullPath + ".txt";
 
             var expectedFileSecurity = new System.Security.AccessControl.DirectorySecurity();
             expectedFileSecurity.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.AccessControlType.Allow));
@@ -191,7 +191,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory"))
          {
-            string file = rootDir.RandomFileFullPath;
+            string file = rootDir.RandomFileFullPath + ".txt";
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
             var gotException = false;
@@ -223,7 +223,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory"))
          {
-            string file = rootDir.RandomFileFullPath;
+            string file = rootDir.RandomFileFullPath + ".txt";
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
             var gotException = false;

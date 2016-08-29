@@ -21,7 +21,6 @@
 
 using System;
 using System.Threading;
-using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -33,8 +32,8 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void File_GetXxxTimeXxx_LocalAndUNC_Success()
       {
-         DumpGetXxxTimeXxx(true);
-         DumpGetXxxTimeXxx(false);
+         File_GetXxxTimeXxx(false);
+         File_GetXxxTimeXxx(true);
       }
 
 
@@ -70,112 +69,134 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
-      private void DumpGetXxxTimeXxx(bool isLocal)
+      [TestMethod]
+      public void AlphaFS_File_SetTimestampsXxx_LocalAndUNC_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(!isLocal);
-
-         string path = UnitTestConstants.NotepadExe;
-         if (!isLocal) path = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(path);
-
-         Console.WriteLine("\nInput File Path: [{0}]\n", path);
-         UnitTestConstants.StopWatcher(true);
+         File_SetTimestampsXxx(false);
+         File_SetTimestampsXxx(true);
+      }
 
 
-         DateTime actual = Alphaleonis.Win32.Filesystem.File.GetCreationTime(path);
-         DateTime expected = System.IO.File.GetCreationTime(path);
-         Console.WriteLine("\tGetCreationTime()     : [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual);
-
-         actual = Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(path);
-         expected = System.IO.File.GetCreationTimeUtc(path);
-         Console.WriteLine("\tGetCreationTimeUtc()  : [{0}]    System.IO: [{1}]\n", actual, expected);
-         Assert.AreEqual(expected, actual);
 
 
-         actual = Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(path);
-         expected = System.IO.File.GetLastAccessTime(path);
-         Console.WriteLine("\tGetLastAccessTime()   : [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual);
+      private void File_GetXxxTimeXxx(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         actual = Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(path);
-         expected = System.IO.File.GetLastAccessTimeUtc(path);
-         Console.WriteLine("\tGetLastAccessTimeUtc(): [{0}]    System.IO: [{1}]\n", actual, expected);
-         Assert.AreEqual(expected, actual);
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         actual = Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(path);
-         expected = System.IO.File.GetLastWriteTime(path);
-         Console.WriteLine("\tGetLastWriteTime()    : [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual);
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.GetXxxTimeXxx"))
+         {
+            string file = UnitTestConstants.NotepadExe;
 
-         actual = Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(path);
-         expected = System.IO.File.GetLastWriteTimeUtc(path);
-         Console.WriteLine("\tGetLastWriteTimeUtc() : [{0}]    System.IO: [{1}]\n", actual, expected);
-         Assert.AreEqual(expected, actual);
-         
-
-         Console.WriteLine("\tGetChangeTime()       : [{0}]    System.IO: [N/A]", Alphaleonis.Win32.Filesystem.File.GetChangeTime(path));
-         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]    System.IO: [N/A]", Alphaleonis.Win32.Filesystem.File.GetChangeTimeUtc(path));
-
-         Console.WriteLine();
-         Console.WriteLine(UnitTestConstants.Reporter());
-         Console.WriteLine();
-         
-
-         
-         
-         // We can not compare ChangeTime against .NET because it does not exist.
-         // Creating a file and renaming it triggers ChangeTime, so test for that.
-
-         path = Alphaleonis.Win32.Filesystem.Path.GetTempPath("File-GetChangeTimeXxx()-file-" + Path.GetRandomFileName());
-         if (!isLocal) path = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(path);
-
-         System.IO.FileInfo fi = new System.IO.FileInfo(path);
-         using (fi.Create()) { }
-         string fileName = fi.Name;
-
-         DateTime lastAccessTimeActual = System.IO.File.GetLastAccessTime(path);
-         DateTime lastAccessTimeUtcActual = System.IO.File.GetLastAccessTimeUtc(path);
-
-         DateTime changeTimeActual = Alphaleonis.Win32.Filesystem.File.GetChangeTime(path);
-         DateTime changeTimeUtcActual = Alphaleonis.Win32.Filesystem.File.GetChangeTimeUtc(path);
-
-         Console.WriteLine("\nTesting ChangeTime on a temp file.");
-         Console.WriteLine("\nInput File Path: [{0}]\n", path);
-         Console.WriteLine("\tGetChangeTime()       : [{0}]\t", changeTimeActual);
-         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t", changeTimeUtcActual);
-
-         fi.MoveTo(fi.FullName.Replace(fileName, fileName + "-Renamed"));
-
-         // Pause for at least a second so that the difference in time can be seen.
-         int sleep = new Random().Next(2000, 4000);
-         Thread.Sleep(sleep);
-
-         fi.MoveTo(fi.FullName.Replace(fileName + "-Renamed", fileName));
-
-         DateTime lastAccessTimeExpected = System.IO.File.GetLastAccessTime(path);
-         DateTime lastAccessTimeUtcExpected = System.IO.File.GetLastAccessTimeUtc(path);
-         DateTime changeTimeExpected = Alphaleonis.Win32.Filesystem.File.GetChangeTime(path);
-         DateTime changeTimeUtcExpected = Alphaleonis.Win32.Filesystem.File.GetChangeTimeUtc(path);
-
-         Console.WriteLine("\nTrigger ChangeTime by renaming the file.");
-         Console.WriteLine("For Unit Test, ChangeTime should differ approximately: [{0}] seconds.\n", sleep / 1000);
-         Console.WriteLine("\tGetChangeTime()       : [{0}]\t", changeTimeExpected);
-         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t\n", changeTimeUtcExpected);
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
-         Assert.AreNotEqual(changeTimeActual, changeTimeExpected);
-         Assert.AreNotEqual(changeTimeUtcActual, changeTimeUtcExpected);
+            Assert.AreEqual(System.IO.File.GetCreationTime(file), Alphaleonis.Win32.Filesystem.File.GetCreationTime(file));
+            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(file), Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(file));
+            Assert.AreEqual(System.IO.File.GetLastAccessTime(file), Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(file));
+            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(file), Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(file));
+            Assert.AreEqual(System.IO.File.GetLastWriteTime(file), Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(file));
+            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(file), Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(file));
 
-         Assert.AreEqual(lastAccessTimeExpected, lastAccessTimeActual);
-         Assert.AreEqual(lastAccessTimeUtcExpected, lastAccessTimeUtcActual);
+
+            // We can not compare ChangeTime against .NET because it does not exist.
+            // Creating a file and renaming it triggers ChangeTime, so test for that.
+
+            file = rootDir.RandomFileFullPath + ".txt";
+            if (isNetwork) file = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(file);
+            Console.WriteLine("Input File Path: [{0}]\n", file);
+
+            var fileInfo = new System.IO.FileInfo(file);
+            using (fileInfo.Create()) { }
+            string fileName = fileInfo.Name;
 
 
-         fi.Delete();
-         fi.Refresh(); // Must Refresh() to get actual state.
-         Assert.IsFalse(fi.Exists, "Cleanup failed: File should have been removed.");
+            DateTime changeTimeActual = Alphaleonis.Win32.Filesystem.File.GetChangeTime(file);
+            DateTime changeTimeUtcActual = Alphaleonis.Win32.Filesystem.File.GetChangeTimeUtc(file);
+
+
+            // Sleep for three seconds.
+            var delay = 3;
+
+            fileInfo.MoveTo(fileInfo.FullName.Replace(fileName, fileName + "-Renamed"));
+            Thread.Sleep(delay*1000);
+            fileInfo.MoveTo(fileInfo.FullName.Replace(fileName + "-Renamed", fileName));
+
+
+            var newChangeTime = changeTimeActual.AddSeconds(3);
+            Assert.AreEqual(changeTimeActual.AddSeconds(3), newChangeTime);
+
+            newChangeTime = changeTimeUtcActual.AddSeconds(3);
+            Assert.AreEqual(changeTimeUtcActual.AddSeconds(3), newChangeTime);
+         }
+      }
+
+
+      private void File_SetTimestampsXxx(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+         var rnd = new Random();
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.SetTimestampsXxx"))
+         {
+            string file = rootDir.RandomFileFullPath + ".txt";
+            string symlinkPath = System.IO.Path.Combine(rootDir.Directory.FullName, System.IO.Path.GetRandomFileName()) + "-symlink";
+
+            Console.WriteLine("\nInput File Path: [{0}]", file);
+
+
+            using (System.IO.File.Create(file)) { }
+            Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(symlinkPath, file, Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.File);
+
+
+            DateTime creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+            DateTime lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+            DateTime lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+
+
+            Alphaleonis.Win32.Filesystem.File.SetTimestamps(file, creationTime, lastAccessTime, lastWriteTime);
+
+
+            Assert.AreEqual(System.IO.File.GetCreationTime(file), creationTime);
+            Assert.AreEqual(System.IO.File.GetLastAccessTime(file), lastAccessTime);
+            Assert.AreEqual(System.IO.File.GetLastWriteTime(file), lastWriteTime);
+
+
+            Alphaleonis.Win32.Filesystem.File.SetTimestamps(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, Alphaleonis.Win32.Filesystem.PathFormat.RelativePath);
+            Assert.AreEqual(System.IO.File.GetCreationTime(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetCreationTime(symlinkPath));
+            Assert.AreEqual(System.IO.File.GetLastAccessTime(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(symlinkPath));
+            Assert.AreEqual(System.IO.File.GetLastWriteTime(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(symlinkPath));
+
+
+            creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+            lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+            lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+
+
+            Alphaleonis.Win32.Filesystem.File.SetTimestampsUtc(file, creationTime, lastAccessTime, lastWriteTime);
+
+
+            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(file), creationTime);
+            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(file), lastAccessTime);
+            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(file), lastWriteTime);
+
+
+            Alphaleonis.Win32.Filesystem.File.SetTimestampsUtc(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, Alphaleonis.Win32.Filesystem.PathFormat.RelativePath);
+            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(symlinkPath));
+            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(symlinkPath));
+            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(symlinkPath));
+         }
+
          Console.WriteLine();
       }
    }

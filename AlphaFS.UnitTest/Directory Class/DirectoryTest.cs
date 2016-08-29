@@ -1568,93 +1568,6 @@ namespace AlphaFS.UnitTest
          }
       }
 
-      private void DumpSetTimestamps(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string path = Path.Combine(Path.GetTempPath(), "Directory.SetTimestamps()-directory-" + Path.GetRandomFileName());
-         if (!isLocal) path = Path.LocalToUnc(path);
-         string symlinkPath = path + "-symlink";
-         var rnd = new Random();
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", path);
-
-         Directory.CreateDirectory(path);
-         File.CreateSymbolicLink(symlinkPath, path, SymbolicLinkTarget.Directory);
-
-         DateTime creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-         DateTime lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-         DateTime lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-
-         Console.WriteLine("\nSet timestamps to:\n");
-         Console.WriteLine("\tCreationTime  : [{0}]", creationTime);
-         Console.WriteLine("\tLastAccessTime: [{0}]", lastAccessTime);
-         Console.WriteLine("\tLastWriteTime : [{0}]", lastWriteTime);
-         Console.WriteLine();
-
-         Directory.SetTimestamps(path, creationTime, lastAccessTime, lastWriteTime);
-
-         DateTime actual = Directory.GetCreationTime(path);
-         DateTime expected = System.IO.Directory.GetCreationTime(path);
-         Console.WriteLine("\tGetCreationTime()   AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         actual = Directory.GetLastAccessTime(path);
-         expected = System.IO.Directory.GetLastAccessTime(path);
-         Console.WriteLine("\tGetLastAccessTime() AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         actual = Directory.GetLastWriteTime(path);
-         expected = System.IO.Directory.GetLastWriteTime(path);
-         Console.WriteLine("\tGetLastWriteTime()  AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         Directory.SetTimestamps(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, PathFormat.RelativePath);
-         Assert.AreEqual(System.IO.Directory.GetCreationTime(symlinkPath), Directory.GetCreationTime(symlinkPath), "AlphaFS != System.IO");
-         Assert.AreEqual(System.IO.Directory.GetLastAccessTime(symlinkPath), Directory.GetLastAccessTime(symlinkPath), "AlphaFS != System.IO");
-         Assert.AreEqual(System.IO.Directory.GetLastWriteTime(symlinkPath), Directory.GetLastWriteTime(symlinkPath), "AlphaFS != System.IO");
-
-
-
-         creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-         lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-         lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-
-         Console.WriteLine("\nSet timestampsUtc to:\n");
-         Console.WriteLine("\tCreationTimeUtc  : [{0}]", creationTime);
-         Console.WriteLine("\tLastAccessTimeUtc: [{0}]", lastAccessTime);
-         Console.WriteLine("\tLastWriteTimeUtc : [{0}]", lastWriteTime);
-         Console.WriteLine();
-
-         Directory.SetTimestampsUtc(path, creationTime, lastAccessTime, lastWriteTime);
-
-         actual = Directory.GetCreationTimeUtc(path);
-         expected = System.IO.Directory.GetCreationTimeUtc(path);
-         Console.WriteLine("\tGetCreationTimeUtc()   AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         actual = Directory.GetLastAccessTimeUtc(path);
-         expected = System.IO.Directory.GetLastAccessTimeUtc(path);
-         Console.WriteLine("\tGetLastAccessTimeUtc() AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         actual = Directory.GetLastWriteTimeUtc(path);
-         expected = System.IO.Directory.GetLastWriteTimeUtc(path);
-         Console.WriteLine("\tGetLastWriteTimeUtc()  AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         Directory.SetTimestamps(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, PathFormat.RelativePath);
-         Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(symlinkPath), Directory.GetCreationTimeUtc(symlinkPath), "AlphaFS != System.IO");
-         Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(symlinkPath), Directory.GetLastAccessTimeUtc(symlinkPath), "AlphaFS != System.IO");
-         Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(symlinkPath), Directory.GetLastWriteTimeUtc(symlinkPath), "AlphaFS != System.IO");
-
-
-         Directory.Delete(symlinkPath);
-         Assert.IsFalse(Directory.Exists(symlinkPath), "Cleanup failed: Directory symlink should have been removed.");
-         Directory.Delete(path);
-         Assert.IsTrue(!Directory.Exists(path), "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
-      }
-
       private void DumpSetXxxTime(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
@@ -2323,18 +2236,6 @@ namespace AlphaFS.UnitTest
             }
          }
          Console.Write("\n{0}", UnitTestConstants.Reporter());
-      }
-
-      [TestMethod]
-      public void AlphaFS_Directory_SetTimestamps()
-      {
-         Console.WriteLine("Directory.SetTimestamps()");
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-         DumpSetTimestamps(true);
-         DumpSetTimestamps(false);
       }
 
       [TestMethod]

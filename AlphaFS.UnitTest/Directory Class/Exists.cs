@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Exists"))
          {
-            string folder = rootDir.RandomFileFullPath;
+            string folder = rootDir.RandomFileFullPath + ".txt";
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
             Assert.IsFalse(Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The directory exists, but is expected not to be.");

@@ -50,7 +50,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "File-GetSize"))
          {
-            string file = rootDir.RandomFileFullPath;
+            string file = rootDir.RandomFileFullPath + ".txt";
 
             long streamLength;
             int ten = UnitTestConstants.TenNumbers.Length;

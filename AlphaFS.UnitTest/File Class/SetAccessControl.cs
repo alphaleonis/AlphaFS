@@ -19,11 +19,10 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using Alphaleonis.Win32.Filesystem;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
@@ -47,26 +46,27 @@ namespace AlphaFS.UnitTest
       private void File_SetAccessControl(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         
-         string tempPath = Path.Combine(Path.GetTempPath(), "File.SetAccessControl()-" + Path.GetRandomFileName());
 
+         string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = PathUtils.AsUncPath(tempPath);
 
-         try
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.SetAccessControl"))
          {
-            using (File.Create(tempPath))
-            {
-            }
+            string file = rootDir.RandomFileFullPath + ".txt";
 
-            FileSecurity sysIO = System.IO.File.GetAccessControl(tempPath);
+
+            using (System.IO.File.Create(file)) {}
+
+            var sysIO = System.IO.File.GetAccessControl(file);
             AuthorizationRuleCollection sysIOaccessRules = sysIO.GetAccessRules(true, true, typeof(NTAccount));
 
-            FileSecurity alphaFS = File.GetAccessControl(tempPath);
+            var alphaFS = Alphaleonis.Win32.Filesystem.File.GetAccessControl(file);
             AuthorizationRuleCollection alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(NTAccount));
 
 
-            Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+            Console.WriteLine("\nInput File Path: [{0}]", file);
             Console.WriteLine("\n\tSystem.IO rules found: [{0}]\n\tAlphaFS rules found  : [{1}]", sysIOaccessRules.Count, alphaFSaccessRules.Count);
             Assert.AreEqual(sysIOaccessRules.Count, alphaFSaccessRules.Count);
 
@@ -80,12 +80,12 @@ namespace AlphaFS.UnitTest
             // and second parameter removes the existing inherited permissions 
             Console.WriteLine("\n\tRemove inherited properties and persist it.");
             alphaFS.SetAccessRuleProtection(true, false);
-            File.SetAccessControl(tempPath, alphaFS, AccessControlSections.Access);
+            Alphaleonis.Win32.Filesystem.File.SetAccessControl(file, alphaFS, AccessControlSections.Access);
 
 
             // Re-read, using instance methods.
-            System.IO.FileInfo sysIOfi = new System.IO.FileInfo(tempPath);
-            FileInfo alphaFSfi = new FileInfo(tempPath);
+            var sysIOfi = new System.IO.FileInfo(file);
+            var alphaFSfi = new Alphaleonis.Win32.Filesystem.FileInfo(file);
 
             sysIO = sysIOfi.GetAccessControl(AccessControlSections.Access);
             alphaFS = alphaFSfi.GetAccessControl(AccessControlSections.Access);
@@ -97,25 +97,15 @@ namespace AlphaFS.UnitTest
             // Restore inherited properties.
             Console.WriteLine("\n\tRestore inherited properties and persist it.");
             alphaFS.SetAccessRuleProtection(false, true);
-            File.SetAccessControl(tempPath, alphaFS, AccessControlSections.Access);
+            Alphaleonis.Win32.Filesystem.File.SetAccessControl(file, alphaFS, AccessControlSections.Access);
 
 
             // Re-read.
-            sysIO = System.IO.File.GetAccessControl(tempPath, AccessControlSections.Access);
-            alphaFS = File.GetAccessControl(tempPath, AccessControlSections.Access);
+            sysIO = System.IO.File.GetAccessControl(file, AccessControlSections.Access);
+            alphaFS = Alphaleonis.Win32.Filesystem.File.GetAccessControl(file, AccessControlSections.Access);
 
             // Sanity check.
             UnitTestConstants.TestAccessRules(sysIO, alphaFS);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            Assert.IsTrue(false);
-         }
-         finally
-         {
-            File.Delete(tempPath, true);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
          }
       }
    }

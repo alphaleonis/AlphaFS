@@ -60,7 +60,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "File-Create"))
          {
-            string file = rootDir.RandomFileFullPath;
+            string file = rootDir.RandomFileFullPath + ".txt";
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
@@ -94,12 +94,12 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "File-CreateWithFileSecurity"))
          {
-            string file = rootDir.RandomFileFullPath;
+            string file = rootDir.RandomFileFullPath + ".txt";
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
-            string pathExpected = rootDir.RandomFileFullPath;
-            string pathActual = rootDir.RandomFileFullPath;
+            string pathExpected = rootDir.RandomFileFullPath + ".txt";
+            string pathActual = rootDir.RandomFileFullPath + ".txt";
 
             var expectedFileSecurity = new System.Security.AccessControl.FileSecurity();
             expectedFileSecurity.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.AccessControlType.Allow));

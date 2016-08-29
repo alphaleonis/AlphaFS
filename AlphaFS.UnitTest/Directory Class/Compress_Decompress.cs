@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Decompress"))
          {
-            string rootFolder = rootDir.RandomFileFullPath;
+            string rootFolder = rootDir.RandomFileFullPath + ".txt";
 
             string folderAaa = System.IO.Path.Combine(rootFolder, "folder-aaa");
             string folderBbb = System.IO.Path.Combine(rootFolder, "folder-bbb");
