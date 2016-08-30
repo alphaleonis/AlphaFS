@@ -1112,77 +1112,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpGetSetAttributes
 
-      #region DumpTransferTimestamps
-
-      private void DumpTransferTimestamps(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string path = Path.Combine(Path.GetTempPath(), "File.TransferTimestamps()-" + Path.GetRandomFileName());
-         string path2 = Path.Combine(Path.GetTempPath(), "File.TransferTimestamps()-" + Path.GetRandomFileName());
-
-         if (!isLocal)
-         {
-            path = Path.LocalToUnc(path);
-            path2 = Path.LocalToUnc(path2);
-         }
-
-         Console.WriteLine("\nInput Path1: [{0}]", path);
-         Console.WriteLine("\nInput Path2: [{0}]", path2);
-
-         using (File.Create(path)) { }
-         using (File.Create(path2)) { }
-
-         try
-         {
-            Thread.Sleep(new Random().Next(250, 500));
-            int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-            DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-
-            Thread.Sleep(new Random().Next(250, 500));
-            seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-            DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-
-            Thread.Sleep(new Random().Next(250, 500));
-            seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-            DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-
-            File.SetTimestamps(path, creationTime, lastAccessTime, lastWriteTime);
-
-            Console.WriteLine("\n\tPath1 dates and times:");
-            Console.WriteLine("\t\tCreationTime  : [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
-            Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", lastAccessTime.ToLongDateString(), lastAccessTime.ToLongTimeString());
-            Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", lastWriteTime.ToLongDateString(), lastWriteTime.ToLongTimeString());
-
-            Console.WriteLine("\n\tPath2 current dates and times:");
-            Console.WriteLine("\t\tCreationTime  : [{0} {1}]", File.GetCreationTime(path2).ToLongDateString(), File.GetCreationTime(path2).ToLongTimeString());
-            Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", File.GetLastAccessTime(path2).ToLongDateString(), File.GetLastAccessTime(path2).ToLongTimeString());
-            Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", File.GetLastWriteTime(path2).ToLongDateString(), File.GetLastWriteTime(path2).ToLongTimeString());
-
-            File.TransferTimestamps(path, path2);
-
-            Console.WriteLine("\n\tPath2 dates and times after TransferTimestamps():");
-            Console.WriteLine("\t\tCreationTime  : [{0} {1}]", File.GetCreationTime(path2).ToLongDateString(), File.GetCreationTime(path2).ToLongTimeString());
-            Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", File.GetLastAccessTime(path2).ToLongDateString(), File.GetLastAccessTime(path2).ToLongTimeString());
-            Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", File.GetLastWriteTime(path2).ToLongDateString(), File.GetLastWriteTime(path2).ToLongTimeString());
-
-            Assert.AreEqual(File.GetCreationTime(path), File.GetCreationTime(path2));
-            Assert.AreEqual(File.GetLastAccessTime(path), File.GetLastAccessTime(path2));
-            Assert.AreEqual(File.GetLastWriteTime(path), File.GetLastWriteTime(path2));
-         }
-         finally
-         {
-            File.Delete(path);
-            File.Delete(path2);
-
-            Assert.IsFalse(File.Exists(path), "Cleanup failed: File should have been removed.");
-            Assert.IsFalse(File.Exists(path), "Cleanup failed: File should have been removed.");
-         }
-
-         Console.WriteLine("\n");
-      }
-
-      #endregion // DumpTransferTimestamps
-
       #region DumpReadAllLines
 
       private void DumpReadAllLines(bool isLocal)
@@ -1769,22 +1698,5 @@ namespace AlphaFS.UnitTest
       #endregion // WriteAllText
 
       #endregion // .NET
-
-      #region AlphaFS
-
-      #region TransferTimestamps
-
-      [TestMethod]
-      public void AlphaFS_File_TransferTimestamps()
-      {
-         Console.WriteLine("File.TransferTimestamps()");
-
-         DumpTransferTimestamps(true);
-         DumpTransferTimestamps(false);
-      }
-
-      #endregion // TransferTimestamps
-      
-      #endregion // AlphaFS
    }
 }

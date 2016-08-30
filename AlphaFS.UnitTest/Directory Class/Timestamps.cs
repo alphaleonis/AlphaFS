@@ -77,6 +77,14 @@ namespace AlphaFS.UnitTest
       }
 
 
+      [TestMethod]
+      public void AlphaFS_Directory_TransferTimestamps_LocalAndUNC_Success()
+      {
+         Directory_TransferTimestamps(false);
+         Directory_TransferTimestamps(true);
+      }
+
+
 
 
       private void Directory_GetXxxTimeXxx(bool isNetwork)
@@ -152,6 +160,12 @@ namespace AlphaFS.UnitTest
             string folder = rootDir.RandomFileFullPath;
             string symlinkPath = System.IO.Path.Combine(rootDir.Directory.FullName, System.IO.Path.GetRandomFileName()) + "-symlink";
 
+            string folder2 = rootDir.RandomFileFullPath;
+            System.IO.Directory.CreateDirectory(folder2);
+            if (isNetwork)
+               folder2 = PathUtils.AsUncPath(folder2);
+
+
             Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
@@ -172,6 +186,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(System.IO.Directory.GetLastWriteTime(folder), lastWriteTime);
 
 
+            // SymbolicLink
             Alphaleonis.Win32.Filesystem.Directory.SetTimestamps(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, Alphaleonis.Win32.Filesystem.PathFormat.RelativePath);
             Assert.AreEqual(System.IO.Directory.GetCreationTime(symlinkPath), Alphaleonis.Win32.Filesystem.Directory.GetCreationTime(symlinkPath));
             Assert.AreEqual(System.IO.Directory.GetLastAccessTime(symlinkPath), Alphaleonis.Win32.Filesystem.Directory.GetLastAccessTime(symlinkPath));
@@ -191,10 +206,54 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(folder), lastWriteTime);
 
 
+            // SymbolicLink
             Alphaleonis.Win32.Filesystem.Directory.SetTimestampsUtc(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, Alphaleonis.Win32.Filesystem.PathFormat.RelativePath);
             Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(symlinkPath));
             Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(symlinkPath));
             Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(symlinkPath));
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_TransferTimestamps(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.TransferTimestamps"))
+         {
+            string folder = rootDir.RandomFileFullPath;
+            string folder2 = rootDir.RandomFileFullPath;
+            if (isNetwork)
+            {
+               folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
+               folder2 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder2);
+            }
+
+            System.IO.Directory.CreateDirectory(folder);
+            Thread.Sleep(1500);
+            System.IO.Directory.CreateDirectory(folder2);
+
+
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("\nInput Directory2 Path: [{0}]", folder2);
+
+
+            Assert.AreNotEqual(System.IO.Directory.GetCreationTime(folder), System.IO.Directory.GetCreationTime(folder2));
+            Assert.AreNotEqual(System.IO.Directory.GetLastAccessTime(folder), System.IO.Directory.GetLastAccessTime(folder2));
+            Assert.AreNotEqual(System.IO.Directory.GetLastWriteTime(folder), System.IO.Directory.GetLastWriteTime(folder2));
+
+            Alphaleonis.Win32.Filesystem.Directory.TransferTimestamps(folder, folder2);
+
+            Assert.AreEqual(System.IO.Directory.GetCreationTime(folder), System.IO.Directory.GetCreationTime(folder2));
+            Assert.AreEqual(System.IO.Directory.GetLastAccessTime(folder), System.IO.Directory.GetLastAccessTime(folder2));
+            Assert.AreEqual(System.IO.Directory.GetLastWriteTime(folder), System.IO.Directory.GetLastWriteTime(folder2));
          }
 
          Console.WriteLine();

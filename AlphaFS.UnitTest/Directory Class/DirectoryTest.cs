@@ -1683,67 +1683,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n");
       }
 
-      private void DumpTransferTimestamps(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string path = Path.Combine(Path.GetTempPath(), "Directory.TransferTimestamps()-" + Path.GetRandomFileName());
-         string path2 = Path.Combine(Path.GetTempPath(), "Directory.TransferTimestamps()-" + Path.GetRandomFileName());
-
-         if (!isLocal)
-         {
-            path = Path.LocalToUnc(path);
-            path2 = Path.LocalToUnc(path2);
-         }
-
-         Console.WriteLine("\nInput Path1: [{0}]", path);
-         Console.WriteLine("\nInput Path2: [{0}]", path2);
-
-         Directory.CreateDirectory(path);
-         Directory.CreateDirectory(path2);
-
-         Thread.Sleep(new Random().Next(250, 500));
-         int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-
-         Directory.SetTimestamps(path, creationTime, lastAccessTime, lastWriteTime);
-
-         Console.WriteLine("\n\tPath1 dates and times:");
-         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", creationTime, creationTime.ToLongTimeString());
-         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", lastAccessTime, lastAccessTime.ToLongTimeString());
-         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", lastWriteTime, lastWriteTime.ToLongTimeString());
-
-         Console.WriteLine("\n\tPath2 current dates and times:");
-         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", Directory.GetCreationTime(path2), Directory.GetCreationTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", Directory.GetLastAccessTime(path2), Directory.GetLastAccessTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", Directory.GetLastWriteTime(path2), Directory.GetLastWriteTime(path2).ToLongTimeString());
-
-         Directory.TransferTimestamps(path, path2);
-
-         Console.WriteLine("\n\tPath2 dates and times after TransferTimestamps():");
-         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", Directory.GetCreationTime(path2), Directory.GetCreationTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", Directory.GetLastAccessTime(path2), Directory.GetLastAccessTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", Directory.GetLastWriteTime(path2), Directory.GetLastWriteTime(path2).ToLongTimeString());
-
-         Assert.AreEqual(Directory.GetCreationTime(path), Directory.GetCreationTime(path2));
-         Assert.AreEqual(Directory.GetLastAccessTime(path), Directory.GetLastAccessTime(path2));
-         Assert.AreEqual(Directory.GetLastWriteTime(path), Directory.GetLastWriteTime(path2));
-
-         Directory.Delete(path);
-         Assert.IsTrue(!Directory.Exists(path));
-         Directory.Delete(path2);
-         Assert.IsTrue(!Directory.Exists(path2));
-
-         Console.WriteLine("\n");
-      }
-
       private bool HasInheritedPermissions(string path)
       {
          DirectorySecurity acl = Directory.GetAccessControl(path);
@@ -2236,15 +2175,6 @@ namespace AlphaFS.UnitTest
             }
          }
          Console.Write("\n{0}", UnitTestConstants.Reporter());
-      }
-
-      [TestMethod]
-      public void AlphaFS_Directory_TransferTimestamps()
-      {
-         Console.WriteLine("Directory.TransferTimestamps()");
-
-         DumpTransferTimestamps(true);
-         DumpTransferTimestamps(false);
       }
 
       #endregion // AlphaFS

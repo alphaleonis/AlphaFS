@@ -70,10 +70,18 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_SetTimestampsXxx_LocalAndUNC_Success()
+      public void AlphaFS_File_SetTimestampsXxx_And_TransferTimestamps_LocalAndUNC_Success()
       {
-         File_SetTimestampsXxx(false);
-         File_SetTimestampsXxx(true);
+         File_SetTimestampsXxx_TransferTimestamps(false);
+         File_SetTimestampsXxx_TransferTimestamps(true);
+      }
+
+
+      [TestMethod]
+      public void AlphaFS_File_TransferTimestamps_LocalAndUNC_Success()
+      {
+         File_TransferTimestamps(false);
+         File_TransferTimestamps(true);
       }
 
 
@@ -136,7 +144,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_SetTimestampsXxx(bool isNetwork)
+      private void File_SetTimestampsXxx_TransferTimestamps(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -172,6 +180,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(System.IO.File.GetLastWriteTime(file), lastWriteTime);
 
 
+            // SymbolicLink
             Alphaleonis.Win32.Filesystem.File.SetTimestamps(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, Alphaleonis.Win32.Filesystem.PathFormat.RelativePath);
             Assert.AreEqual(System.IO.File.GetCreationTime(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetCreationTime(symlinkPath));
             Assert.AreEqual(System.IO.File.GetLastAccessTime(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(symlinkPath));
@@ -191,10 +200,54 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(file), lastWriteTime);
 
 
+            // SymbolicLink
             Alphaleonis.Win32.Filesystem.File.SetTimestampsUtc(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, Alphaleonis.Win32.Filesystem.PathFormat.RelativePath);
             Assert.AreEqual(System.IO.File.GetCreationTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(symlinkPath));
             Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(symlinkPath));
             Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(symlinkPath));
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void File_TransferTimestamps(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.TransferTimestamps"))
+         {
+            string file = rootDir.RandomFileFullPath;
+            string file2 = rootDir.RandomFileFullPath;
+            if (isNetwork)
+            {
+               file = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(file);
+               file2 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(file2);
+            }
+
+            using (System.IO.File.Create(file)) {}
+            Thread.Sleep(1500);
+            using (System.IO.File.Create(file2)) { }
+
+
+            Console.WriteLine("\nInput File Path: [{0}]", file);
+            Console.WriteLine("\nInput File Path: [{0}]", file2);
+
+
+            Assert.AreNotEqual(System.IO.File.GetCreationTime(file), System.IO.File.GetCreationTime(file2));
+            Assert.AreNotEqual(System.IO.File.GetLastAccessTime(file), System.IO.File.GetLastAccessTime(file2));
+            Assert.AreNotEqual(System.IO.File.GetLastWriteTime(file), System.IO.File.GetLastWriteTime(file2));
+
+            Alphaleonis.Win32.Filesystem.File.TransferTimestamps(file, file2);
+
+            Assert.AreEqual(System.IO.File.GetCreationTime(file), System.IO.File.GetCreationTime(file2));
+            Assert.AreEqual(System.IO.File.GetLastAccessTime(file), System.IO.File.GetLastAccessTime(file2));
+            Assert.AreEqual(System.IO.File.GetLastWriteTime(file), System.IO.File.GetLastWriteTime(file2));
          }
 
          Console.WriteLine();
