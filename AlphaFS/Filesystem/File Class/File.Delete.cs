@@ -36,6 +36,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">
       ///   The name of the file to be deleted. Wildcard characters are not supported.
       /// </param>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
       public static void Delete(string path)
       {
@@ -50,7 +54,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly">
       ///   <see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.
       /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
@@ -66,6 +74,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly">
       ///   <see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.
       /// </param>      
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly)
       {
@@ -79,7 +91,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">
       ///   The name of the file to be deleted. Wildcard characters are not supported.
-      /// </param>      
+      /// </param>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path)
       {
@@ -92,6 +108,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
@@ -103,6 +123,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>      
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
@@ -120,6 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>

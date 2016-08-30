@@ -31,8 +31,8 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_CreateDirectory_LocalAndUNC_Success()
       {
-         Directory_CreateDirectory(false);
-         Directory_CreateDirectory(true);
+         Directory_CreateDirectory_Delete(false);
+         Directory_CreateDirectory_Delete(true);
       }
 
 
@@ -68,15 +68,7 @@ namespace AlphaFS.UnitTest
       {
          Directory_CreateDirectory_CatchArgumentException_PathStartsWithColon(false);
       }
-
-
-      [TestMethod]
-      public void Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon_Local_Success()
-      {
-         Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(false);
-         Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(true);
-      }
-
+      
 
       [TestMethod]
       public void Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndUNC_Success()
@@ -86,55 +78,51 @@ namespace AlphaFS.UnitTest
       }
 
 
+      [TestMethod]
+      public void Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon_LocalAndUNC_Success()
+      {
+         Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(false);
+         Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(true);
+      }
+      
 
 
 
-
-
-      private void Directory_CreateDirectory(bool isNetwork)
+      private void Directory_CreateDirectory_Delete(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         // Directory depth level.
-         int level = new Random().Next(1, 1000);
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory"))
+         {
+            var folder = rootDir.Directory.FullName;
+
+            // Directory depth level.
+            var level = new Random().Next(10, 1000);
 
 #if NET35
-         string emspace = "\u3000";
-         string tempPath =
-            Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" +
-                                                          System.IO.Path.GetRandomFileName() + emspace);
-#else
-         // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-         string tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + System.IO.Path.GetRandomFileName());
+            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
+            folder += UnitTestConstants.EMspace;
 #endif
 
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-         try
-         {
-            string root = System.IO.Path.Combine(tempPath, "MaxPath-Hit-The-Road");
 
-            for (int i = 0; i < level; i++)
-               root = System.IO.Path.Combine(root, "-" + (i + 1) + "-subdir");
+            var root = folder;
+
+            for (var i = 0; i < level; i++)
+               root = System.IO.Path.Combine(root, "Level-" + (i + 1) + "-subFolder");
 
             Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(root);
 
-            Console.WriteLine("\nCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level,
-               root.Length);
+            Console.WriteLine("Created directory structure: Depth: [{0}], path length: [{1}] characters.", level, root.Length);
             Console.WriteLine("\n{0}", root);
 
-            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(root), "Directory should exist.");
-         }
-         finally
-         {
-            if (System.IO.Directory.Exists(tempPath))
-               Alphaleonis.Win32.Filesystem.Directory.Delete(tempPath, true);
-            //SysIODirectory.Delete(tempPath, true);
-
-            Assert.IsFalse(System.IO.Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-
-            Console.WriteLine("\nDirectory deleted.");
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(root), "The directory does not exists, but is expected to.");
          }
 
          Console.WriteLine();
@@ -145,19 +133,19 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string tempPath = System.IO.Path.GetTempPath();
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory-CreateWithFileSecurity"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory_WithFileSecurity"))
          {
-            string file = rootDir.RandomFileFullPath + ".txt";
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", file);
+            var folder = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
 
-            string pathExpected = rootDir.RandomFileFullPath + ".txt";
-            string pathActual = rootDir.RandomFileFullPath + ".txt";
+            var pathExpected = rootDir.RandomFileFullPath + ".txt";
+            var pathActual = rootDir.RandomFileFullPath + ".txt";
 
             var expectedFileSecurity = new System.Security.AccessControl.DirectorySecurity();
             expectedFileSecurity.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.AccessControlType.Allow));
@@ -170,8 +158,8 @@ namespace AlphaFS.UnitTest
                var s2 = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(pathActual, expectedFileSecurity);
             }
 
-            string expected = System.IO.File.GetAccessControl(pathExpected).GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
-            string actual = Alphaleonis.Win32.Filesystem.File.GetAccessControl(pathActual).GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
+            var expected = System.IO.File.GetAccessControl(pathExpected).GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
+            var actual = Alphaleonis.Win32.Filesystem.File.GetAccessControl(pathActual).GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
 
             Assert.AreEqual(expected, actual);
          }
@@ -184,22 +172,22 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string tempPath = System.IO.Path.GetTempPath();
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
          using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory"))
          {
-            string file = rootDir.RandomFileFullPath + ".txt";
+            var file = rootDir.RandomFileFullPath + ".txt";
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
+
+            using (System.IO.File.Create(file)) { }
+
 
             var gotException = false;
             try
             {
-               using (System.IO.File.Create(file))
-               {
-               }
                Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(file);
 
             }
@@ -207,8 +195,10 @@ namespace AlphaFS.UnitTest
             {
                gotException = ex.GetType().Name.Equals("AlreadyExistsException", StringComparison.OrdinalIgnoreCase);
             }
-            Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+            Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
          }
+
+         Console.WriteLine();
       }
 
 
@@ -216,28 +206,26 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string tempPath = System.IO.Path.GetTempPath();
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);
 
+         var folder = tempPath + @"\Folder<>";
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory"))
+
+         var gotException = false;
+         try
          {
-            string file = rootDir.RandomFileFullPath + ".txt";
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
-
-            var gotException = false;
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(UnitTestConstants.SysDrive + @"\<>");
-
-            }
-            catch (Exception ex)
-            {
-               gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-            }
-            Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder);
          }
+         catch (Exception ex)
+         {
+            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+         }
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+
+         Console.WriteLine();
       }
 
 
@@ -245,41 +233,22 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string file = @":AAAAAAAAAA";
-         Console.WriteLine("\nInput File Path: [{0}]\n", file);
+         var folder = @":AAAAAAAAAA";
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
 
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(file);
+            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder);
          }
          catch (Exception ex)
          {
             gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
-      }
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
 
-
-      private void Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string colonText = ":aaa.txt";
-         string file = (isNetwork ? PathUtils.AsUncPath(UnitTestConstants.LocalHostShare) : UnitTestConstants.SysDrive + @"\dev\test\") + colonText;
-
-         Console.WriteLine("\nInput File Path: [{0}]\n", file);
-
-         var gotException = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(file);
-         }
-         catch (Exception ex)
-         {
-            gotException = ex.GetType().Name.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
-         }
-         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+         Console.WriteLine();
       }
 
 
@@ -287,20 +256,50 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string tempPath = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter";
+         var folder = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter";
          if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+            folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
+
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
 
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(tempPath);
+            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder);
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType() .Name.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+            gotException = ex.GetType().Name.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var colonText = ":aaa.txt";
+         var folder = (isNetwork ? PathUtils.AsUncPath(UnitTestConstants.LocalHostShare) : UnitTestConstants.SysDrive + @"\dev\test\") + colonText;
+
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder);
+         }
+         catch (Exception ex)
+         {
+            gotException = ex.GetType().Name.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+         }
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+
+         Console.WriteLine();
       }
    }
 }

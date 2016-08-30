@@ -58,9 +58,15 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File-Create"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.Create"))
          {
             string file = rootDir.RandomFileFullPath + ".txt";
+
+#if NET35
+            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
+            file += UnitTestConstants.EMspace;
+#endif
+
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
@@ -92,7 +98,7 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File-CreateWithFileSecurity"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.Create_WithFileSecurity"))
          {
             string file = rootDir.RandomFileFullPath + ".txt";
             Console.WriteLine("\nInput File Path: [{0}]\n", file);

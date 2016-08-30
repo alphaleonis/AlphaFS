@@ -21,15 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.ComponentModel;
-using System.IO;
-using Alphaleonis.Win32;
-using Alphaleonis.Win32.Filesystem;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
-using Path = Alphaleonis.Win32.Filesystem.Path;
-using SysIOFile = System.IO.File;
-using SysIOPath = System.IO.Path;
 
 namespace AlphaFS.UnitTest
 {
@@ -37,547 +28,399 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      #region ArgumentException: PathContainsInvalidCharacters
-
-      [TestMethod]
-      public void Directory_Delete_PathContainsInvalidCharacters_ArgumentException()
-      {
-         const string expectedException = "System.ArgumentException";
-         bool exception = false;
-
-         try
-         {
-            Directory.Delete(UnitTestConstants.SysDrive + @"\<>");
-         }
-         catch (ArgumentException ex)
-         {
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // ArgumentException: PathContainsInvalidCharacters
-
-      #region ArgumentException: PathStartsWithColon
-
-      [TestMethod]
-      public void Directory_Delete_PathStartsWithColon_ArgumentException()
-      {
-         string tempPath = @":AAAAAAAAAA";
-
-         const string expectedException = "System.ArgumentException";
-         bool exception = false;
-
-         try
-         {
-            Directory.Delete(tempPath);
-         }
-         catch (ArgumentException ex)
-         {
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // ArgumentException: PathStartsWithColon
-
-
-      #region DirectoryNotFoundException: NonExistingDirectory
-
-      [TestMethod]
-      public void Directory_Delete_NonExistingDirectoryLocal_DirectoryNotFoundException()
-      {
-         Directory_Delete_NonExistingDirectory_DirectoryNotFoundException(false);
-      }
-
-      [TestMethod]
-      public void Directory_Delete_NonExistingDirectoryNetwork_DirectoryNotFoundException()
-      {
-         Directory_Delete_NonExistingDirectory_DirectoryNotFoundException(true);
-      }
-
-      private void Directory_Delete_NonExistingDirectory_DirectoryNotFoundException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = Path.GetTempPath("Directory-Delete-NonExistingDirectory-" + SysIOPath.GetRandomFileName());
-
-         if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
-
-         int expectedLastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
-         string expectedException = "System.IO.DirectoryNotFoundException";
-
-         int expectedWin32LastError = (int) Win32Errors.ERROR_FILE_NOT_FOUND;
-         bool exception = false;
-
-         try
-         {
-            Directory.Delete(tempPath);
-         }
-         catch (DirectoryNotFoundException ex)
-         {
-            var win32Error = new Win32Exception("", ex);
-
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            Assert.IsTrue(win32Error.NativeErrorCode == expectedWin32LastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedWin32LastError, win32Error.NativeErrorCode));
-         }
-         catch (IOException ex)
-         {
-            exception = isNetwork;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // DirectoryNotFoundException: NonExistingDirectory
-
-      #region DirectoryNotFoundException: NonExistingDriveLetter
-
-      [TestMethod]
-      public void Directory_Delete_NonExistingDriveLetterLocal_DirectoryNotFoundException()
-      {
-         Directory_Delete_NonExistingDriveLetter_XxxException(false);
-      }
-
-      [TestMethod]
-      public void Directory_Delete_NonExistingDriveLetterNetwork_IOException()
-      {
-         Directory_Delete_NonExistingDriveLetter_XxxException(true);
-      }
-
-      private void Directory_Delete_NonExistingDriveLetter_XxxException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = UnitTestConstants.SysRoot32 + @"\NonExistingDriveLetter-" + SysIOPath.GetRandomFileName();
-         string letter = DriveInfo.GetFreeDriveLetter() + @":\";
-
-         if (isNetwork)
-         {
-            letter = Path.LocalToUnc(letter);
-            tempPath = Path.LocalToUnc(tempPath.Replace(UnitTestConstants.SysDrive + @"\", letter));
-         }
-
-         int expectedLastError = (int) (isNetwork ? Win32Errors.ERROR_BAD_NET_NAME : Win32Errors.ERROR_PATH_NOT_FOUND);
-         string expectedException = isNetwork ? "System.IO.IOException" : "System.IO.DirectoryNotFoundException";
-
-         int expectedWin32Error = (int)Win32Errors.ERROR_FILE_NOT_FOUND;
-         bool exception = false;
-
-         try
-         {
-            Directory.Delete(tempPath);
-         }
-         catch (DirectoryNotFoundException ex)
-         {
-            var win32Error = new Win32Exception("", ex);
-
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            Assert.IsTrue(win32Error.NativeErrorCode == expectedWin32Error, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedWin32Error, win32Error.NativeErrorCode));
-         }
-         catch (IOException ex)
-         {
-            exception = isNetwork;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // DirectoryNotFoundException: NonExistingDriveLetter
-
-      #region DirectoryNotFoundException: PathIsAFileNotADirectory
-
-      [TestMethod]
-      public void Directory_Delete_PathIsAFileNotADirectory_LocalAndUNC_DirectoryNotFoundException()
-      {
-         Directory_Delete_PathIsAFileNotADirectory_DirectoryNotFoundException(false);
-         Directory_Delete_PathIsAFileNotADirectory_DirectoryNotFoundException(true);
-      }
-
-
-      private void Directory_Delete_PathIsAFileNotADirectory_DirectoryNotFoundException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = Path.GetTempPath("Directory-Delete-PathIsAFileNotADirectory-" + SysIOPath.GetRandomFileName());
-
-         if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
-
-         int expectedLastError = (int) Win32Errors.ERROR_INVALID_PARAMETER;
-         string expectedException = "System.IO.DirectoryNotFoundException";
-
-         int expectedWin32Error = (int)Win32Errors.ERROR_DIRECTORY;
-         bool exception = false;
-
-         try
-         {
-            using (SysIOFile.Create(tempPath)) {}
-
-            Directory.Delete(tempPath);
-         }
-         catch (DirectoryNotFoundException ex)
-         {
-            var win32Error = new Win32Exception("", ex);
-
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            Assert.IsTrue(win32Error.NativeErrorCode == expectedWin32Error, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedWin32Error, win32Error.NativeErrorCode));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         finally
-         {
-            if (SysIOFile.Exists(tempPath))
-               SysIOFile.Delete(tempPath);
-
-            Assert.IsFalse(SysIOFile.Exists(tempPath), "Cleanup failed: File should have been removed.");
-         }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // DirectoryNotFoundException: PathIsAFileNotADirectory
-
-
-      #region DirectoryNotEmptyException
-
-      [TestMethod]
-      public void Directory_Delete_NonEmptyDirectoryLocal_DirectoryNotEmptyException()
-      {
-         Directory_Delete_NonEmptyDirectory_DirectoryNotEmptyException(false);
-      }
-
-      [TestMethod]
-      public void Directory_Delete_NonEmptyDirectoryNetwork_DirectoryNotEmptyException()
-      {
-         Directory_Delete_NonEmptyDirectory_DirectoryNotEmptyException(true);
-      }
-
-      private void Directory_Delete_NonEmptyDirectory_DirectoryNotEmptyException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = Path.GetTempPath("Directory-Delete-NonEmptyDirectory-" + SysIOPath.GetRandomFileName());
-
-         if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
-
-         int expectedLastError = (int)Win32Errors.ERROR_DIR_NOT_EMPTY;
-         string expectedException = "System.IO.IOException";
-         bool exception = false;
-
-         try
-         {
-            Directory.CreateDirectory(tempPath);
-
-            using (SysIOFile.Create(SysIOPath.Combine(tempPath, "created-a-file.txt"))) { }
-
-            Directory.Delete(tempPath);
-         }
-         catch (DirectoryNotEmptyException ex)
-         {
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         finally
-         {
-            if (Directory.Exists(tempPath))
-               Directory.Delete(tempPath, true);
-
-            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // DirectoryNotEmptyException
-
-      #region DirectoryReadOnlyException
-
-      [TestMethod]
-      public void Directory_Delete_ReadOnlyDirectoryLocal_DirectoryReadOnlyException()
-      {
-         Directory_Delete_ReadOnlyDirectory_DirectoryReadOnlyException(false);
-      }
-
-      [TestMethod]
-      public void Directory_Delete_ReadOnlyDirectoryNetwork_DirectoryReadOnlyException()
-      {
-         Directory_Delete_ReadOnlyDirectory_DirectoryReadOnlyException(true);
-      }
-
-      private void Directory_Delete_ReadOnlyDirectory_DirectoryReadOnlyException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = Path.GetTempPath("Directory-Delete-DirectoryReadOnlyException-" + SysIOPath.GetRandomFileName());
-
-         if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
-
-         int expectedLastError = (int) Win32Errors.ERROR_FILE_READ_ONLY;
-         string expectedException = "System.IO.IOException";
-
-         int expectedWin32Error = (int) Win32Errors.ERROR_ACCESS_DENIED;
-         bool exception = false;
-
-         try
-         {
-            Directory.CreateDirectory(tempPath);
-
-            SysIOFile.SetAttributes(tempPath, FileAttributes.ReadOnly);
-
-            Directory.Delete(tempPath);
-         }
-         catch (DirectoryReadOnlyException ex)
-         {
-            var win32Error = new Win32Exception("", ex);
-
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            Assert.IsTrue(win32Error.NativeErrorCode == expectedWin32Error, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedWin32Error, win32Error.NativeErrorCode));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         finally
-         {
-            if (Directory.Exists(tempPath))
-               Directory.Delete(tempPath, true, true);
-
-            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // DirectoryReadOnlyException
-
-
-      #region FileReadOnlyException
-
-      [TestMethod]
-      public void Directory_Delete_DirectoryContainsAReadOnlyFileLocal_FileReadOnlyException()
-      {
-         Directory_Delete_DirectoryContainsAReadOnlyFile_FileReadOnlyException(false);
-      }
-
-      [TestMethod]
-      public void Directory_Delete_DirectoryContainsAReadOnlyFileNetwork_FileReadOnlyException()
-      {
-         Directory_Delete_DirectoryContainsAReadOnlyFile_FileReadOnlyException(true);
-      }
-
-      private void Directory_Delete_DirectoryContainsAReadOnlyFile_FileReadOnlyException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = Path.GetTempPath("Directory-Delete-FileReadOnlyException-" + SysIOPath.GetRandomFileName());
-
-         if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
-
-         int expectedLastError = (int) Win32Errors.ERROR_FILE_READ_ONLY;
-         string expectedException = "System.IO.IOException";
-
-         int expectedWin32Error = (int) Win32Errors.ERROR_ACCESS_DENIED;
-         bool exception = false;
-
-         try
-         {
-            Directory.CreateDirectory(tempPath);
-
-            string readOnlyFile = SysIOPath.Combine(tempPath, "created-a-read-only-file.txt");
-            using (SysIOFile.Create(readOnlyFile)) { }
-            SysIOFile.SetAttributes(readOnlyFile, FileAttributes.ReadOnly);
-
-            Directory.Delete(tempPath, true);
-         }
-         catch (FileReadOnlyException ex)
-         {
-            var win32Error = new Win32Exception("", ex);
-
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            Assert.IsTrue(win32Error.NativeErrorCode == expectedWin32Error, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedWin32Error, win32Error.NativeErrorCode));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         finally
-         {
-            if (Directory.Exists(tempPath))
-               Directory.Delete(tempPath, true, true);
-
-            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // FileReadOnlyException
-
-
-      #region NotSupportedException: PathContainsColon
-
-      [TestMethod]
-      public void Directory_Delete_PathContainsColonLocal_NotSupportedException()
-      {
-         Directory_Delete_PathContainsColon_NotSupportedException(false);
-      }
-
-      [TestMethod]
-      public void Directory_Delete_PathContainsColonNetwork_NotSupportedException()
-      {
-         Directory_Delete_PathContainsColon_NotSupportedException(true);
-      }
-
-      private void Directory_Delete_PathContainsColon_NotSupportedException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt";
-
-         if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath) + ":aaa.txt";
-
-         const string expectedException = "System.NotSupportedException";
-         bool exception = false;
-
-         try
-         {
-            Directory.Delete(tempPath);
-         }
-         catch (NotSupportedException ex)
-         {
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // NotSupportedException: PathContainsColon
-
-
-      #region UnauthorizedAccessException: FolderWithDenyPermission
-
-      [TestMethod]
-      public void Directory_Delete_FolderWithDenyPermissionLocal_UnauthorizedAccessException()
-      {
-         Directory_Delete_FolderWithDenyPermission_UnauthorizedAccessException(false);
-      }
-
-      [TestMethod]
-      public void Directory_Delete_FolderWithDenyPermissionNetwork_UnauthorizedAccessException()
-      {
-         Directory_Delete_FolderWithDenyPermission_UnauthorizedAccessException(true);
-      }
-
-      private void Directory_Delete_FolderWithDenyPermission_UnauthorizedAccessException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = Path.GetTempPath("Directory-Delete-FolderWithDenyPermission-" + SysIOPath.GetRandomFileName());
-
-         if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
-
-         // Create a temp folder and set DENY permission for current user.
-         UnitTestConstants.FolderWithDenyPermission(true, isNetwork, tempPath);
-
-         
-         int expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
-         string expectedException = "System.UnauthorizedAccessException";
-         bool exception = false;
-
-         try
-         {
-            Directory.Delete(tempPath);
-         }
-         catch (UnauthorizedAccessException ex)
-         {
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         finally
-         {
-            // Remove DENY permission for current user and delete folder.
-            UnitTestConstants.FolderWithDenyPermission(false, isNetwork, tempPath);
-         }
-
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // UnauthorizedAccessException: FolderWithDenyPermission
-
-
       [TestMethod]
       public void Directory_Delete_LocalAndUNC_Success()
       {
-         Directory_CreateDirectory(false);
-         Directory_CreateDirectory(true);
+         Directory_CreateDirectory_Delete(false);
+         Directory_CreateDirectory_Delete(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters_LocalAndUNC_Success()
+      {
+         Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters(false);
+         Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Delete_CatchArgumentException_PathStartsWithColon_Local_Success()
+      {
+         Directory_Delete_CatchArgumentException_PathStartsWithColon(false);
+      }
+
+
+      [TestMethod]
+      public void Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory_LocalAndUNC_Success()
+      {
+         Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory(false);
+         Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndUNC_Success()
+      {
+         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(false);
+         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndUNC_Success()
+      {
+         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
+         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory_LocalAndUNC_Success()
+      {
+         Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory(false);
+         Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Delete_CatchDirectoryReadOnlyException_ReadOnlyDirectory_LocalAndUNC_Success()
+      {
+         Directory_Delete_CatchDirectoryReadOnlyException_ReadOnlyDirectory(false);
+         Directory_Delete_CatchDirectoryReadOnlyException_ReadOnlyDirectory(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Delete_CatchNotSupportedException_PathContainsColon_LocalAndUNC_Success()
+      {
+         Directory_Delete_CatchNotSupportedException_PathContainsColon(false);
+         Directory_Delete_CatchNotSupportedException_PathContainsColon(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission_LocalAndUNC_Success()
+      {
+         Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission(false);
+         Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission(true);
+      }
+      
+
+
+      
+      private void Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var folder = System.IO.Path.GetTempPath() + @"ThiIs<My>Folder";
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+         }
+         catch (Exception ex)
+         {
+            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+         }
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Delete_CatchArgumentException_PathStartsWithColon(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var folder = @":AAAAAAAAAA";
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+         }
+         catch (Exception ex)
+         {
+            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+         }
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Delete_CatchNotSupportedException_PathContainsColon(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string colonText = @"\My:FolderPath";
+         string folder = (isNetwork ? PathUtils.AsUncPath(UnitTestConstants.LocalHostShare) : UnitTestConstants.SysDrive + @"\dev\test") + colonText;
+
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+         }
+         catch (Exception ex)
+         {
+            gotException = ex.GetType().Name.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+         }
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete"))
+         {
+            var folder = rootDir.RandomFileFullPath;
+            var file = System.IO.Path.Combine(folder, System.IO.Path.GetRandomFileName());
+
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("Input File Path     : [{0}]\n", file);
+
+            System.IO.Directory.CreateDirectory(folder);
+            using (System.IO.File.Create(System.IO.Path.Combine(folder, file))) { }
+
+
+            var gotException = false;
+            try
+            {
+               Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+
+            }
+            catch (Exception ex)
+            {
+               gotException = ex.GetType().Name.Equals("DirectoryNotEmptyException", StringComparison.OrdinalIgnoreCase);
+            }
+            Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath() + "Directory.Delete-" + System.IO.Path.GetRandomFileName();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
+
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.Delete(tempPath);
+         }
+         catch (Exception ex)
+         {
+            gotException = ex.GetType().Name.Equals("DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+         }
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var folder = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter";
+         if (isNetwork)
+            folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
+
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+         }
+         catch (Exception ex)
+         {
+            gotException = ex.GetType().Name.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+         }
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete"))
+         {
+            var file = rootDir.RandomFileFullPath + ".txt";
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+
+            using (System.IO.File.Create(file)) { }
+
+
+            var gotException = false;
+            try
+            {
+               Alphaleonis.Win32.Filesystem.Directory.Delete(file);
+
+            }
+            catch (Exception ex)
+            {
+               gotException = ex.GetType().Name.Equals("DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+            }
+            Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Delete_CatchDirectoryReadOnlyException_ReadOnlyDirectory(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete"))
+         {
+            var folder = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
+            System.IO.Directory.CreateDirectory(folder);
+            System.IO.File.SetAttributes(folder, System.IO.FileAttributes.ReadOnly);
+
+
+            var gotException = false;
+            try
+            {
+               Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+
+            }
+            catch (Exception ex)
+            {
+               gotException = ex.GetType().Name.Equals("DirectoryReadOnlyException", StringComparison.OrdinalIgnoreCase);
+            }
+            Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+
+
+            System.IO.File.SetAttributes(folder, System.IO.FileAttributes.Normal);
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete"))
+         {
+            var folder = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
+            System.IO.Directory.CreateDirectory(folder);
+
+            // Create a temp folder and set DENY permission for current user.
+            FolderDenyPermission(true, folder);
+
+
+            var gotException = false;
+            try
+            {
+               Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+
+            }
+            catch (Exception ex)
+            {
+               gotException = ex.GetType().Name.Equals("UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
+            }
+            Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+
+
+            // Remove DENY permission for current user and delete folder.
+            FolderDenyPermission(false, folder);
+         }
+
+         Console.WriteLine();
+      }
+
+
+
+
+      private static void FolderDenyPermission(bool create, string tempPath)
+      {
+         string user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
+
+         var dirInfo = new System.IO.DirectoryInfo(tempPath);
+         System.Security.AccessControl.DirectorySecurity dirSecurity;
+
+         // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
+         // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
+         // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
+         // ║ Propagation ║ none        ║ none                          ║ none                   ║ none             ║ InheritOnly           ║ InheritOnly ║ InheritOnly ║
+         // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
+         // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
+
+         var rule = new System.Security.AccessControl.FileSystemAccessRule(user,
+            System.Security.AccessControl.FileSystemRights.FullControl,
+            System.Security.AccessControl.InheritanceFlags.ContainerInherit |
+            System.Security.AccessControl.InheritanceFlags.ObjectInherit,
+            System.Security.AccessControl.PropagationFlags.None, System.Security.AccessControl.AccessControlType.Deny);
+
+         if (create)
+         {
+            dirInfo.Create();
+
+            // Set DENY for current user.
+            dirSecurity = dirInfo.GetAccessControl();
+            dirSecurity.AddAccessRule(rule);
+            dirInfo.SetAccessControl(dirSecurity);
+         }
+         else
+         {
+            // Remove DENY for current user.
+            dirSecurity = dirInfo.GetAccessControl();
+            dirSecurity.RemoveAccessRule(rule);
+            dirInfo.SetAccessControl(dirSecurity);
+         }
       }
    }
 }

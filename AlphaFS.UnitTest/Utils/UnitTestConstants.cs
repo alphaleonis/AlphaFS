@@ -43,6 +43,8 @@ namespace AlphaFS.UnitTest
       public const string Local = @"LOCAL";
       public const string Network = @"NETWORK";
 
+      public const string EMspace = "\u3000";
+
       public static readonly string LocalHost = Environment.MachineName;
       public static readonly string LocalHostShare = Environment.SystemDirectory;
 
@@ -190,47 +192,7 @@ namespace AlphaFS.UnitTest
                CreateDirectoriesAndFiles(dir, max, false);
          }
       }
-
-
-      public static void FolderWithDenyPermission(bool create, bool isNetwork, string tempPath)
-      {
-         if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
-
-         string user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
-
-         DirectoryInfo di = new DirectoryInfo(tempPath);
-         DirectorySecurity dirSecurity;
-
-         // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
-         // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
-         // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
-         // ║ Propagation ║ none        ║ none                          ║ none                   ║ none             ║ InheritOnly           ║ InheritOnly ║ InheritOnly ║
-         // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
-         // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
-
-         var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
-
-         if (create)
-         {
-            di.Create();
-
-            // Set DENY for current user.
-            dirSecurity = di.GetAccessControl();
-            dirSecurity.AddAccessRule(rule);
-            di.SetAccessControl(dirSecurity);
-         }
-         else
-         {
-            // Remove DENY for current user.
-            dirSecurity = di.GetAccessControl();
-            dirSecurity.RemoveAccessRule(rule);
-            di.SetAccessControl(dirSecurity, AccessControlSections.Access);
-
-            SysIODirectory.Delete(tempPath, true);
-         }
-      }
-
+      
 
       public static string StopWatcher(bool start = false)
       {

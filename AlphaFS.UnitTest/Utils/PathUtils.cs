@@ -34,8 +34,7 @@ namespace AlphaFS.UnitTest
          if (Alphaleonis.Win32.Filesystem.Path.IsUncPath(localPath))
             throw new ArgumentException("Path is not a local path.");
 
-         return string.Format(CultureInfo.InvariantCulture, @"\\{0}\{1}$\{2}", Environment.MachineName,
-            localPath.First(), localPath.Substring(System.IO.Path.GetPathRoot(localPath).Length));
+         return string.Format(CultureInfo.InvariantCulture, @"\\{0}\{1}$\{2}", Environment.MachineName, localPath.First(), localPath.Substring(System.IO.Path.GetPathRoot(localPath).Length));
       }
    }
 }

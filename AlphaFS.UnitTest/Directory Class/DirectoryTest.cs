@@ -1717,13 +1717,6 @@ namespace AlphaFS.UnitTest
          DumpEnumerateFileSystemEntries(true);
          DumpEnumerateFileSystemEntries(false);
       }
-
-      [TestMethod]
-      public void Directory_GetCurrentDirectory_NET()
-      {
-         Console.WriteLine("Directory.GetCurrentDirectory()");
-         Console.WriteLine("\nThe .NET method is used.");
-      }
       
       [TestMethod]
       public void Directory_GetDirectoryRoot()
@@ -1924,13 +1917,6 @@ namespace AlphaFS.UnitTest
 
          DumpSetXxxTime(true);
          DumpSetXxxTime(false);
-      }
-
-      [TestMethod]
-      public void Directory_SetCurrentDirectory_NET()
-      {
-         Console.WriteLine("Directory.SetCurrentDirectory()");
-         Console.WriteLine("\nThe .NET method is used.");
       }
 
       #endregion // .NET

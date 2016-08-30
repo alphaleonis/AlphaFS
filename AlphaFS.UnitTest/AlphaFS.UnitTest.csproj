@@ -153,8 +153,11 @@
     <Compile Include="Directory Class\Delete.cs" />
     <Compile Include="Directory Class\ExportImportEncryptedDirectoryRaw.cs" />
     <Compile Include="Directory Class\GetAccessControl.cs" />
-    <Compile Include="Directory Class\Timestamps.cs" />
+    <Compile Include="Directory Class\SetTimestamps.cs" />
+    <Compile Include="Directory Class\GetTimestamps.cs" />
     <Compile Include="Directory Class\SetAccessControl.cs" />
+    <Compile Include="File Class\Delete.cs" />
+    <Compile Include="File Class\SetTimestamps.cs" />
     <Compile Include="File Class\IsLocked.cs" />
     <Compile Include="File Class\CreateSymbolicLink_GetLinkTargetInfo.cs" />
     <Compile Include="File Class\CreateHardlink_EnumerateHardlinks.cs" />
@@ -163,7 +166,7 @@
     <Compile Include="File Class\GetSize.cs" />
     <Compile Include="File Class\EnumerateAlternateDataStreams.cs" />
     <Compile Include="File Class\Create.cs" />
-    <Compile Include="File Class\Timestamps.cs" />
+    <Compile Include="File Class\GetTimestamps.cs" />
     <Compile Include="File Class\Open.cs" />
     <Compile Include="File Class\ExportImportEncryptedFileRaw.cs" />
     <Compile Include="File Class\Exists.cs" />

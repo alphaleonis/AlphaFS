@@ -30,46 +30,6 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
       
       [TestMethod]
-      public void File_GetXxxTimeXxx_LocalAndUNC_Success()
-      {
-         File_GetXxxTimeXxx(false);
-         File_GetXxxTimeXxx(true);
-      }
-
-
-      [TestMethod]
-      public void File_GetXxxTimeXxx_NonExistingFile_Success()
-      {
-         const string Path = @"z:\nonExistingPath\nonExistingFile.txt";
-         Assert.IsFalse(System.IO.File.Exists(Path));
-
-         var newDateTime = new DateTime(1601, 1, 1);
-         var newDateTimeLocaltime = new DateTime(1601, 1, 1).ToLocalTime();
-
-
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetCreationTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetCreationTime(Path));
-         
-         Assert.AreEqual(newDateTime, System.IO.File.GetCreationTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(Path));
-
-
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetLastAccessTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(Path));
-
-         Assert.AreEqual(newDateTime, System.IO.File.GetLastAccessTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(Path));
-
-
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetLastWriteTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(Path));
-
-         Assert.AreEqual(newDateTime, System.IO.File.GetLastWriteTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(Path));
-      }
-
-
-      [TestMethod]
       public void AlphaFS_File_SetTimestampsXxx_LocalAndUNC_Success()
       {
          File_SetTimestampsXxx(false);
@@ -85,63 +45,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
-      private void File_GetXxxTimeXxx(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = PathUtils.AsUncPath(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, "File.GetXxxTimeXxx"))
-         {
-            string file = UnitTestConstants.NotepadExe;
-
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
-
-
-            Assert.AreEqual(System.IO.File.GetCreationTime(file), Alphaleonis.Win32.Filesystem.File.GetCreationTime(file));
-            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(file), Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(file));
-            Assert.AreEqual(System.IO.File.GetLastAccessTime(file), Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(file));
-            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(file), Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(file));
-            Assert.AreEqual(System.IO.File.GetLastWriteTime(file), Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(file));
-            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(file), Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(file));
-
-
-            // We can not compare ChangeTime against .NET because it does not exist.
-            // Creating a file and renaming it triggers ChangeTime, so test for that.
-
-            file = rootDir.RandomFileFullPath + ".txt";
-            if (isNetwork) file = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(file);
-            Console.WriteLine("Input File Path: [{0}]\n", file);
-
-            var fileInfo = new System.IO.FileInfo(file);
-            using (fileInfo.Create()) { }
-            string fileName = fileInfo.Name;
-
-
-            DateTime changeTimeActual = Alphaleonis.Win32.Filesystem.File.GetChangeTime(file);
-            DateTime changeTimeUtcActual = Alphaleonis.Win32.Filesystem.File.GetChangeTimeUtc(file);
-
-
-            // Sleep for three seconds.
-            var delay = 3;
-
-            fileInfo.MoveTo(fileInfo.FullName.Replace(fileName, fileName + "-Renamed"));
-            Thread.Sleep(delay*1000);
-            fileInfo.MoveTo(fileInfo.FullName.Replace(fileName + "-Renamed", fileName));
-
-
-            var newChangeTime = changeTimeActual.AddSeconds(3);
-            Assert.AreEqual(changeTimeActual.AddSeconds(3), newChangeTime);
-
-            newChangeTime = changeTimeUtcActual.AddSeconds(3);
-            Assert.AreEqual(changeTimeUtcActual.AddSeconds(3), newChangeTime);
-         }
-      }
 
 
       private void File_SetTimestampsXxx(bool isNetwork)

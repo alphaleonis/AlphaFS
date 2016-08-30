@@ -30,46 +30,6 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
       
       [TestMethod]
-      public void Directory_GetXxxTimeXxx_LocalAndUNC_Success()
-      {
-         Directory_GetXxxTimeXxx(false);
-         Directory_GetXxxTimeXxx(true);
-      }
-
-
-      [TestMethod]
-      public void Directory_GetXxxTimeXxx_NonExistingDirectory_Success()
-      {
-         const string Path = @"z:\nonExistingPath\nonExistingSubFolder";
-         Assert.IsFalse(System.IO.Directory.Exists(Path));
-
-         var newDateTime = new DateTime(1601, 1, 1);
-         var newDateTimeLocaltime = new DateTime(1601, 1, 1).ToLocalTime();
-
-
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.Directory.GetCreationTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.Directory.GetCreationTime(Path));
-         
-         Assert.AreEqual(newDateTime, System.IO.Directory.GetCreationTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.Directory.GetCreationTimeUtc(Path));
-
-
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.Directory.GetLastAccessTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.Directory.GetLastAccessTime(Path));
-
-         Assert.AreEqual(newDateTime, System.IO.Directory.GetLastAccessTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.Directory.GetLastAccessTimeUtc(Path));
-
-
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.Directory.GetLastWriteTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.Directory.GetLastWriteTime(Path));
-
-         Assert.AreEqual(newDateTime, System.IO.Directory.GetLastWriteTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.Directory.GetLastWriteTimeUtc(Path));
-      }
-
-
-      [TestMethod]
       public void AlphaFS_Directory_SetTimestampsXxx_LocalAndUNC_Success()
       {
          Directory_SetTimestampsXxx(false);
@@ -85,63 +45,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
-      private void Directory_GetXxxTimeXxx(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = PathUtils.AsUncPath(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.GetXxxTimeXxx"))
-         {
-            string folder = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.SysRoot32) : UnitTestConstants.SysRoot32;
-
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
-
-
-            Assert.AreEqual(System.IO.Directory.GetCreationTime(folder), Alphaleonis.Win32.Filesystem.Directory.GetCreationTime(folder));
-            Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(folder), Alphaleonis.Win32.Filesystem.Directory.GetCreationTimeUtc(folder));
-            Assert.AreEqual(System.IO.Directory.GetLastAccessTime(folder), Alphaleonis.Win32.Filesystem.Directory.GetLastAccessTime(folder));
-            Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(folder), Alphaleonis.Win32.Filesystem.Directory.GetLastAccessTimeUtc(folder));
-            Assert.AreEqual(System.IO.Directory.GetLastWriteTime(folder), Alphaleonis.Win32.Filesystem.Directory.GetLastWriteTime(folder));
-            Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(folder), Alphaleonis.Win32.Filesystem.Directory.GetLastWriteTimeUtc(folder));
-
-
-            // We can not compare ChangeTime against .NET because it does not exist.
-            // Creating a directory and renaming it triggers ChangeTime, so test for that.
-
-            folder = rootDir.RandomFileFullPath;
-            if (isNetwork) folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
-            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
-
-            var dirInfo = new System.IO.DirectoryInfo(folder);
-            dirInfo.Create();
-            string fileName = dirInfo.Name;
-
-
-            DateTime changeTimeActual = Alphaleonis.Win32.Filesystem.Directory.GetChangeTime(folder);
-            DateTime changeTimeUtcActual = Alphaleonis.Win32.Filesystem.Directory.GetChangeTimeUtc(folder);
-
-
-            // Sleep for three seconds.
-            var delay = 3;
-
-            dirInfo.MoveTo(dirInfo.FullName.Replace(fileName, fileName + "-Renamed"));
-            Thread.Sleep(delay * 1000);
-            dirInfo.MoveTo(dirInfo.FullName.Replace(fileName + "-Renamed", fileName));
-
-
-            var newChangeTime = changeTimeActual.AddSeconds(3);
-            Assert.AreEqual(changeTimeActual.AddSeconds(3), newChangeTime);
-
-            newChangeTime = changeTimeUtcActual.AddSeconds(3);
-            Assert.AreEqual(changeTimeUtcActual.AddSeconds(3), newChangeTime);
-         }
-      }
 
 
       private void Directory_SetTimestampsXxx(bool isNetwork)

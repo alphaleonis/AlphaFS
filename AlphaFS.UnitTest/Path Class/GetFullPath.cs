@@ -98,7 +98,7 @@ namespace AlphaFS.UnitTest
          {
             gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
       }
 
 
@@ -114,7 +114,7 @@ namespace AlphaFS.UnitTest
          {
             gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
       }
 
 
@@ -130,7 +130,7 @@ namespace AlphaFS.UnitTest
          {
             gotException = ex.GetType().Name.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
       }
       
 
