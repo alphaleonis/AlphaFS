@@ -70,10 +70,10 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_SetTimestampsXxx_And_TransferTimestamps_LocalAndUNC_Success()
+      public void AlphaFS_File_SetTimestampsXxx_LocalAndUNC_Success()
       {
-         File_SetTimestampsXxx_TransferTimestamps(false);
-         File_SetTimestampsXxx_TransferTimestamps(true);
+         File_SetTimestampsXxx(false);
+         File_SetTimestampsXxx(true);
       }
 
 
@@ -144,7 +144,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_SetTimestampsXxx_TransferTimestamps(bool isNetwork)
+      private void File_SetTimestampsXxx(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -235,8 +235,8 @@ namespace AlphaFS.UnitTest
             using (System.IO.File.Create(file2)) { }
 
 
-            Console.WriteLine("\nInput File Path: [{0}]", file);
-            Console.WriteLine("\nInput File Path: [{0}]", file2);
+            Console.WriteLine("\nInput File1 Path: [{0}]", file);
+            Console.WriteLine("\nInput File2 Path: [{0}]", file2);
 
 
             Assert.AreNotEqual(System.IO.File.GetCreationTime(file), System.IO.File.GetCreationTime(file2));

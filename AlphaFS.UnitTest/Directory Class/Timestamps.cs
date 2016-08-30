@@ -160,12 +160,6 @@ namespace AlphaFS.UnitTest
             string folder = rootDir.RandomFileFullPath;
             string symlinkPath = System.IO.Path.Combine(rootDir.Directory.FullName, System.IO.Path.GetRandomFileName()) + "-symlink";
 
-            string folder2 = rootDir.RandomFileFullPath;
-            System.IO.Directory.CreateDirectory(folder2);
-            if (isNetwork)
-               folder2 = PathUtils.AsUncPath(folder2);
-
-
             Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
@@ -241,7 +235,7 @@ namespace AlphaFS.UnitTest
             System.IO.Directory.CreateDirectory(folder2);
 
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("\nInput Directory1 Path: [{0}]", folder);
             Console.WriteLine("\nInput Directory2 Path: [{0}]", folder2);
 
 
