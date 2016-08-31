@@ -50,6 +50,8 @@ namespace AlphaFS.UnitTest
             string file = rootDir.RandomFileFullPath + ".txt";
             var fi = new System.IO.FileInfo(file);
 
+            Console.WriteLine("\nInput File Path: [{0}]]", file);
+
 
             using (fi.CreateText())
                Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is not locked, but is expected to be.");

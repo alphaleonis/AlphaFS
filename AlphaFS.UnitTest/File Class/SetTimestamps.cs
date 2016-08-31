@@ -60,14 +60,13 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "File.SetTimestampsXxx"))
          {
-            string file = rootDir.RandomFileFullPath + ".txt";
-            string symlinkPath = System.IO.Path.Combine(rootDir.Directory.FullName, System.IO.Path.GetRandomFileName()) + "-symlink";
+            var file = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
+            var symlinkPath = System.IO.Path.Combine(rootDir.Directory.FullName, System.IO.Path.GetRandomFileName()) + "-symlink";
 
             Console.WriteLine("\nInput File Path: [{0}]", file);
 
 
-            using (System.IO.File.Create(file)) { }
-            Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(symlinkPath, file, Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.File);
+            Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(symlinkPath, file.FullName, Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.File);
 
 
             DateTime creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
@@ -75,12 +74,12 @@ namespace AlphaFS.UnitTest
             DateTime lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
 
 
-            Alphaleonis.Win32.Filesystem.File.SetTimestamps(file, creationTime, lastAccessTime, lastWriteTime);
+            Alphaleonis.Win32.Filesystem.File.SetTimestamps(file.FullName, creationTime, lastAccessTime, lastWriteTime);
 
 
-            Assert.AreEqual(System.IO.File.GetCreationTime(file), creationTime);
-            Assert.AreEqual(System.IO.File.GetLastAccessTime(file), lastAccessTime);
-            Assert.AreEqual(System.IO.File.GetLastWriteTime(file), lastWriteTime);
+            Assert.AreEqual(System.IO.File.GetCreationTime(file.FullName), creationTime);
+            Assert.AreEqual(System.IO.File.GetLastAccessTime(file.FullName), lastAccessTime);
+            Assert.AreEqual(System.IO.File.GetLastWriteTime(file.FullName), lastWriteTime);
 
 
             // SymbolicLink
@@ -95,12 +94,12 @@ namespace AlphaFS.UnitTest
             lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
 
 
-            Alphaleonis.Win32.Filesystem.File.SetTimestampsUtc(file, creationTime, lastAccessTime, lastWriteTime);
+            Alphaleonis.Win32.Filesystem.File.SetTimestampsUtc(file.FullName, creationTime, lastAccessTime, lastWriteTime);
 
 
-            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(file), creationTime);
-            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(file), lastAccessTime);
-            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(file), lastWriteTime);
+            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(file.FullName), creationTime);
+            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(file.FullName), lastAccessTime);
+            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(file.FullName), lastWriteTime);
 
 
             // SymbolicLink

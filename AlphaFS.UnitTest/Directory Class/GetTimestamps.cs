@@ -84,7 +84,7 @@ namespace AlphaFS.UnitTest
          {
             string folder = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.SysRoot32) : UnitTestConstants.SysRoot32;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
             Assert.AreEqual(System.IO.Directory.GetCreationTime(folder), Alphaleonis.Win32.Filesystem.Directory.GetCreationTime(folder));
@@ -100,7 +100,7 @@ namespace AlphaFS.UnitTest
 
             folder = rootDir.RandomFileFullPath;
             if (isNetwork) folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
-            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
             var dirInfo = new System.IO.DirectoryInfo(folder);
             dirInfo.Create();
@@ -119,11 +119,11 @@ namespace AlphaFS.UnitTest
             dirInfo.MoveTo(dirInfo.FullName.Replace(fileName + "-Renamed", fileName));
 
 
-            var newChangeTime = changeTimeActual.AddSeconds(3);
-            Assert.AreEqual(changeTimeActual.AddSeconds(3), newChangeTime);
+            var newChangeTime = changeTimeActual.AddSeconds(delay);
+            Assert.AreEqual(changeTimeActual.AddSeconds(delay), newChangeTime);
 
-            newChangeTime = changeTimeUtcActual.AddSeconds(3);
-            Assert.AreEqual(changeTimeUtcActual.AddSeconds(3), newChangeTime);
+            newChangeTime = changeTimeUtcActual.AddSeconds(delay);
+            Assert.AreEqual(changeTimeUtcActual.AddSeconds(delay), newChangeTime);
          }
       }
    }

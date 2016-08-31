@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -27,11 +28,6 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
-using Alphaleonis.Win32.Filesystem;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SysIODirectory = System.IO.Directory;
-using SysIOPath = System.IO.Path;
-using SysIOFile = System.IO.File;
 
 namespace AlphaFS.UnitTest
 {
@@ -50,9 +46,9 @@ namespace AlphaFS.UnitTest
 
       public static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
       public static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
-      public static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
+      public static readonly string SysRoot32 = System.IO.Path.Combine(SysRoot, "System32");
       public static readonly string AppData = Environment.GetEnvironmentVariable("AppData");
-      public static readonly string NotepadExe = Path.Combine(SysRoot32, "notepad.exe");
+      public static readonly string NotepadExe = System.IO.Path.Combine(SysRoot32, "notepad.exe");
 
       public const string TextTrue = "IsTrue";
       public const string TextFalse = "IsFalse";
@@ -64,7 +60,7 @@ namespace AlphaFS.UnitTest
 
       private static Stopwatch _stopWatcher;
 
-      private static readonly string RandomName = Path.GetRandomFileName();
+      private static readonly string RandomName = System.IO.Path.GetRandomFileName();
       public static readonly string MyStream = "ӍƔŞtrëƛɱ-" + RandomName;
       public static readonly string MyStream2 = "myStreamTWO-" + RandomName;
       public static readonly string[] AllStreams = {MyStream, MyStream2};
@@ -87,11 +83,11 @@ namespace AlphaFS.UnitTest
          SysDrive + @"\\test.txt",
          SysDrive + @"\/test.txt",
 
-         SysIOPath.DirectorySeparatorChar.ToString(),
-         SysIOPath.DirectorySeparatorChar + @"Program Files\Microsoft Office",
-         
-         Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
-         Path.VolumePrefix + @"{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}\Program Files\notepad.exe",
+         System.IO.Path.DirectorySeparatorChar.ToString(),
+         System.IO.Path.DirectorySeparatorChar + @"Program Files\Microsoft Office",
+
+         Alphaleonis.Win32.Filesystem.Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
+         Alphaleonis.Win32.Filesystem.Path.VolumePrefix + @"{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}\Program Files\notepad.exe",
 
          "dir1/dir2/dir3/",
 
@@ -111,55 +107,55 @@ namespace AlphaFS.UnitTest
          SysDrive + @"\a\b\c\f.tx",
          SysDrive + @"\a\b\c\f.txt",
 
-         Path.LongPathPrefix + @"Program Files\Microsoft Office",
-         Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
-         Path.LongPathPrefix + SysDrive,
-         Path.LongPathPrefix + SysDrive + @"\",
-         Path.LongPathPrefix + SysDrive + @"\a",
-         Path.LongPathPrefix + SysDrive + @"\a\",
-         Path.LongPathPrefix + SysDrive + @"\a\b",
-         Path.LongPathPrefix + SysDrive + @"\a\b\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.t",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + @"Program Files\Microsoft Office",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive,
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\f",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\f.",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\f.t",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
 
-         Path.UncPrefix + LocalHost + @"\Share",
-         Path.UncPrefix + LocalHost + @"\Share\",
-         Path.UncPrefix + LocalHost + @"\Share\d",
-         Path.UncPrefix + LocalHost + @"\Share\d1",
-         Path.UncPrefix + LocalHost + @"\Share\d1\",
-         Path.UncPrefix + LocalHost + @"\Share\d1\d",
-         Path.UncPrefix + LocalHost + @"\Share\d1\d2",
-         Path.UncPrefix + LocalHost + @"\Share\d1\d2\",
-         Path.UncPrefix + LocalHost + @"\Share\d1\d2\f",
-         Path.UncPrefix + LocalHost + @"\Share\d1\d2\fi",
-         Path.UncPrefix + LocalHost + @"\Share\d1\d2\fil",
-         Path.UncPrefix + LocalHost + @"\Share\d1\d2\file",
-         Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.",
-         Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.e",
-         Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.ex",
-         Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.ext",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\f",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\fi",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\fil",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.e",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.ex",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.ext",
 
-         Path.LongPathUncPrefix + LocalHost + @"\Share",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\f",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\fi",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\fil",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.e",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.ex",
-         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.ext"
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\f",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\fi",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\fil",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.e",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.ex",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.ext"
       };
 
       #endregion // InputPaths
@@ -172,27 +168,83 @@ namespace AlphaFS.UnitTest
       {
          for (int i = 0; i < max; i++)
          {
-            string file = SysIOPath.Combine(rootPath, SysIOPath.GetRandomFileName());
+            string file = System.IO.Path.Combine(rootPath, System.IO.Path.GetRandomFileName());
             string dir = file + "-" + i + "-dir";
             file = file + "-" + i + "-file";
 
-            SysIODirectory.CreateDirectory(dir);
+            System.IO.Directory.CreateDirectory(dir);
 
             // Some directories will remain empty.
             if (i % 2 != 0)
             {
-               SysIOFile.WriteAllText(file, TextHelloWorld);
-               SysIOFile.WriteAllText(SysIOPath.Combine(dir, SysIOPath.GetFileName(file)), TextGoodByeWorld);
+               System.IO.File.WriteAllText(file, TextHelloWorld);
+               System.IO.File.WriteAllText(System.IO.Path.Combine(dir, System.IO.Path.GetFileName(file)), TextGoodByeWorld);
             }
          }
 
          if (recurse)
          {
-            foreach (string dir in SysIODirectory.EnumerateDirectories(rootPath))
+            foreach (string dir in System.IO.Directory.EnumerateDirectories(rootPath))
                CreateDirectoriesAndFiles(dir, max, false);
          }
       }
-      
+
+
+      public static System.IO.FileInfo CreateFile(string rootFolder, int fileLength = 0)
+      {
+         var file = System.IO.Path.Combine(rootFolder, System.IO.Path.GetRandomFileName());
+
+         using (var fs = System.IO.File.Create(file))
+         {
+            if (fileLength <= 0)
+               fileLength = new Random().Next(1, 10485760);
+            
+
+            fs.SetLength(fileLength);
+         }
+
+         return new System.IO.FileInfo(file);
+      }
+
+
+      public static void FolderDenyPermission(bool create, string tempPath)
+      {
+         string user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
+
+         var dirInfo = new System.IO.DirectoryInfo(tempPath);
+         System.Security.AccessControl.DirectorySecurity dirSecurity;
+
+         // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
+         // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
+         // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
+         // ║ Propagation ║ none        ║ none                          ║ none                   ║ none             ║ InheritOnly           ║ InheritOnly ║ InheritOnly ║
+         // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
+         // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
+
+         var rule = new System.Security.AccessControl.FileSystemAccessRule(user,
+            System.Security.AccessControl.FileSystemRights.FullControl,
+            System.Security.AccessControl.InheritanceFlags.ContainerInherit |
+            System.Security.AccessControl.InheritanceFlags.ObjectInherit,
+            System.Security.AccessControl.PropagationFlags.None, System.Security.AccessControl.AccessControlType.Deny);
+
+         if (create)
+         {
+            dirInfo.Create();
+
+            // Set DENY for current user.
+            dirSecurity = dirInfo.GetAccessControl();
+            dirSecurity.AddAccessRule(rule);
+            dirInfo.SetAccessControl(dirSecurity);
+         }
+         else
+         {
+            // Remove DENY for current user.
+            dirSecurity = dirInfo.GetAccessControl();
+            dirSecurity.RemoveAccessRule(rule);
+            dirInfo.SetAccessControl(dirSecurity);
+         }
+      }
+
 
       public static string StopWatcher(bool start = false)
       {

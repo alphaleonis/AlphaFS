@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
          {
             //tempPath = PathUtils.AsUncPath(tempPath);
-            Console.WriteLine("\n\tEnumerating Hardlinks does not work with UNC paths.");
+            Console.WriteLine("\nEnumerating Hardlinks does not work with UNC paths.");
             return;
          }
 
@@ -70,7 +70,7 @@ namespace AlphaFS.UnitTest
             int numCreate = new Random().Next(1, 20);
             List<string> hardlinks = new List<string>();
 
-            Console.WriteLine("\tCreated {0} hardlinks:", numCreate + 1);
+            Console.WriteLine("Created {0} hardlinks:", numCreate + 1);
 
             for (int i = 0; i < numCreate; i++)
             {

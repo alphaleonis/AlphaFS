@@ -113,7 +113,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var folder = System.IO.Path.GetTempPath() + @"ThiIs<My>Folder";
+         var folder = System.IO.Path.GetTempPath() + @"ThisIs<My>Folder";
          Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
 
@@ -124,9 +124,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
       }
@@ -147,9 +149,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
       }
@@ -172,9 +176,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
       }
@@ -209,9 +215,11 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               gotException = ex.GetType().Name.Equals("DirectoryNotEmptyException", StringComparison.OrdinalIgnoreCase);
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("DirectoryNotEmptyException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
-            Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
 
          Console.WriteLine();
@@ -236,9 +244,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals("DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
       }
@@ -262,9 +272,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
       }
@@ -295,9 +307,11 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               gotException = ex.GetType().Name.Equals("DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
-            Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
 
          Console.WriteLine();
@@ -330,9 +344,11 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               gotException = ex.GetType().Name.Equals("DirectoryReadOnlyException", StringComparison.OrdinalIgnoreCase);
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("DirectoryReadOnlyException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
-            Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 
             System.IO.File.SetAttributes(folder, System.IO.FileAttributes.Normal);
@@ -359,7 +375,7 @@ namespace AlphaFS.UnitTest
             System.IO.Directory.CreateDirectory(folder);
 
             // Create a temp folder and set DENY permission for current user.
-            FolderDenyPermission(true, folder);
+            UnitTestConstants.FolderDenyPermission(true, folder);
 
 
             var gotException = false;
@@ -370,57 +386,19 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               gotException = ex.GetType().Name.Equals("UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
-            Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 
             // Remove DENY permission for current user and delete folder.
-            FolderDenyPermission(false, folder);
+            UnitTestConstants.FolderDenyPermission(false, folder);
+            
          }
 
          Console.WriteLine();
-      }
-
-
-
-
-      private static void FolderDenyPermission(bool create, string tempPath)
-      {
-         string user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
-
-         var dirInfo = new System.IO.DirectoryInfo(tempPath);
-         System.Security.AccessControl.DirectorySecurity dirSecurity;
-
-         // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
-         // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
-         // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
-         // ║ Propagation ║ none        ║ none                          ║ none                   ║ none             ║ InheritOnly           ║ InheritOnly ║ InheritOnly ║
-         // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
-         // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
-
-         var rule = new System.Security.AccessControl.FileSystemAccessRule(user,
-            System.Security.AccessControl.FileSystemRights.FullControl,
-            System.Security.AccessControl.InheritanceFlags.ContainerInherit |
-            System.Security.AccessControl.InheritanceFlags.ObjectInherit,
-            System.Security.AccessControl.PropagationFlags.None, System.Security.AccessControl.AccessControlType.Deny);
-
-         if (create)
-         {
-            dirInfo.Create();
-
-            // Set DENY for current user.
-            dirSecurity = dirInfo.GetAccessControl();
-            dirSecurity.AddAccessRule(rule);
-            dirInfo.SetAccessControl(dirSecurity);
-         }
-         else
-         {
-            // Remove DENY for current user.
-            dirSecurity = dirInfo.GetAccessControl();
-            dirSecurity.RemoveAccessRule(rule);
-            dirInfo.SetAccessControl(dirSecurity);
-         }
       }
    }
 }

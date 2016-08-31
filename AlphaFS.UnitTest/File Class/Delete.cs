@@ -104,14 +104,13 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "File.Delete"))
          {
-            var file = rootDir.RandomFileFullPath + ".txt";
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+            var file = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
+            Console.WriteLine("\nInput File Path: [{0}]", file);
+            
 
-            using (System.IO.File.Create(file)) { }
+            Alphaleonis.Win32.Filesystem.File.Delete(file.FullName);
 
-            Alphaleonis.Win32.Filesystem.File.Delete(file);
-
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file exists, but is expected not to be.");
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file.FullName), "The file exists, but is expected not to be.");
          }
 
          Console.WriteLine();
@@ -122,8 +121,8 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var file = System.IO.Path.GetTempPath() + @"ThiIs<My>File";
-         Console.WriteLine("\nInput File Path: [{0}]\n", file);
+         var file = System.IO.Path.GetTempPath() + @"ThisIs<My>File";
+         Console.WriteLine("\nInput File Path: [{0}]", file);
 
 
          var gotException = false;
@@ -133,9 +132,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
       }
@@ -146,7 +147,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
          var folder = @":AAAAAAAAAA";
-         Console.WriteLine("\nInput File Path: [{0}]\n", folder);
+         Console.WriteLine("\nInput File Path: [{0}]", folder);
 
 
          var gotException = false;
@@ -156,9 +157,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
       }
@@ -171,7 +174,7 @@ namespace AlphaFS.UnitTest
          string colonText = @"\My:FilePath";
          string folder = (isNetwork ? PathUtils.AsUncPath(UnitTestConstants.LocalHostShare) : UnitTestConstants.SysDrive + @"\dev\test") + colonText;
 
-         Console.WriteLine("\nInput File Path: [{0}]\n", folder);
+         Console.WriteLine("\nInput File Path: [{0}]", folder);
 
 
          var gotException = false;
@@ -181,9 +184,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
       }
@@ -197,7 +202,7 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
 
-         Console.WriteLine("\nInput File Path: [{0}]\n", folder);
+         Console.WriteLine("\nInput File Path: [{0}]", folder);
 
 
          var gotException = false;
@@ -207,9 +212,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
       }
@@ -223,7 +230,7 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);
 
-         Console.WriteLine("\nInput File Path: [{0}]\n", tempPath);
+         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
 
 
          var gotException = false;
@@ -252,7 +259,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, "File.Delete"))
          {
             var folder = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
             System.IO.Directory.CreateDirectory(folder);
 
@@ -264,9 +271,11 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               gotException = ex.GetType().Name.Equals("UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
-            Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
 
          Console.WriteLine();
@@ -284,27 +293,28 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, "File.Delete"))
          {
-            var file = rootDir.RandomFileFullPath + ".txt";
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+            var file = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
+            Console.WriteLine("\nInput File Path: [{0}]", file);
 
-            using (System.IO.File.Create(file)) { }
-            System.IO.File.SetAttributes(file, System.IO.FileAttributes.ReadOnly);
+            System.IO.File.SetAttributes(file.FullName, System.IO.FileAttributes.ReadOnly);
 
 
             var gotException = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.File.Delete(file);
+               Alphaleonis.Win32.Filesystem.File.Delete(file.FullName);
 
             }
             catch (Exception ex)
             {
-               gotException = ex.GetType().Name.Equals("FileReadOnlyException", StringComparison.OrdinalIgnoreCase);
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("FileReadOnlyException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
-            Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 
-            System.IO.File.SetAttributes(file, System.IO.FileAttributes.Normal);
+            System.IO.File.SetAttributes(file.FullName, System.IO.FileAttributes.Normal);
          }
 
          Console.WriteLine();

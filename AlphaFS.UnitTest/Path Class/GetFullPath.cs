@@ -96,9 +96,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
       }
 
 
@@ -112,9 +114,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
       }
 
 
@@ -128,9 +132,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            gotException = ex.GetType().Name.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(gotException, "The exception was not caught, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
       }
       
 

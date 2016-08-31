@@ -156,6 +156,7 @@
     <Compile Include="Directory Class\SetTimestamps.cs" />
     <Compile Include="Directory Class\GetTimestamps.cs" />
     <Compile Include="Directory Class\SetAccessControl.cs" />
+    <Compile Include="File Class\Copy.cs" />
     <Compile Include="File Class\Delete.cs" />
     <Compile Include="File Class\SetTimestamps.cs" />
     <Compile Include="File Class\IsLocked.cs" />

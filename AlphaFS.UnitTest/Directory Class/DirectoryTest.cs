@@ -1962,7 +1962,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", gotException);
-         Assert.IsTrue(gotException);
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          Console.WriteLine("\n\tdirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, fsoCount, UnitTestConstants.Reporter());
 
          #endregion // Exception
@@ -2011,7 +2011,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", gotException);
-         Assert.IsTrue(gotException);
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, UnitTestConstants.Reporter());
 
          #endregion // Exception

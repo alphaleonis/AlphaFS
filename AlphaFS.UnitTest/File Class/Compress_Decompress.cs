@@ -47,9 +47,11 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File.Decompress"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.Compress_Decompress"))
          {
             string file = rootDir.RandomFileFullPath + ".txt";
+            Console.WriteLine("\nInput File Path: [{0}]]", file);
+
             using (System.IO.File.CreateText(file)) { }
 
 

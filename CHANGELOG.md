@@ -77,6 +77,7 @@ Version 2.1
 - Issue #232: Enable null for destinationBackupFileName for File.Replace and FileInfo.Replace.
 - Issue #234: CheckInvalidPathChars breaks IsPathRooted for whitespace strings.
 - Issue #242: File.Open(file, System.IO.FileMode.Append) does not append.
+- Issue #244: File.Copy(src, dst, true) does not respect FILE_ATTRIBUTE_READONLY.
 
 ### Breaking Changes
 
