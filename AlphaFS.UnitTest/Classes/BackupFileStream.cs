@@ -20,9 +20,7 @@
  */
 
 using System;
-using System.ComponentModel;
 using System.IO;
-using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Path = System.IO.Path;
@@ -42,6 +40,8 @@ namespace AlphaFS.UnitTest
          BackupFileStream(true);
       }
       
+
+
 
       private void BackupFileStream(bool isNetwork)
       {
@@ -73,30 +73,18 @@ namespace AlphaFS.UnitTest
 
                bfs.Lock(0, 10);
 
-               string expectedException = "System.IO.IOException";
-               int expectedLastError = (int) Win32Errors.ERROR_LOCK_VIOLATION;
-               bool exception = false;
+               var gotException = false;
                try
                {
-                  Console.WriteLine("\nCatch #{0}: [{1}]: The process cannot access the file because another process has locked a portion of the file.", ++catchCount, expectedException);
-
                   bfs.Lock(0, 10);
-               }
-               catch (IOException ex)
-               {
-                  var win32Error = new Win32Exception("", ex);
-                  Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-                  Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
                }
                catch (Exception ex)
                {
-                  Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+                  var exName = ex.GetType().Name;
+                  gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
+                  Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
                }
-               Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+               Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
                Console.WriteLine();
 
                bfs.Unlock(0, 10);
@@ -105,30 +93,18 @@ namespace AlphaFS.UnitTest
 
                #region IOException #2
 
-               expectedException = "System.IO.IOException";
-               expectedLastError = (int) Win32Errors.ERROR_NOT_LOCKED;
-               exception = false;
+               gotException = false;
                try
                {
-                  Console.WriteLine("\nCatch #{0}: [{1}]: The segment is already unlocked.", ++catchCount, expectedException);
-
                   bfs.Unlock(0, 10);
-               }
-               catch (IOException ex)
-               {
-                  var win32Error = new Win32Exception("", ex);
-                  Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-                  Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
                }
                catch (Exception ex)
                {
-                  Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+                  var exName = ex.GetType().Name;
+                  gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
+                  Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
                }
-               Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+               Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
                Console.WriteLine();
 
                #endregion // IOException #2

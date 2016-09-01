@@ -212,8 +212,13 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
+            // DirectoryNotFoundException is only for local.
+            // For UNC: IOException or DeviceNotReadyException.
+
             var exName = ex.GetType().Name;
             gotException = exName.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+            if (!gotException && isNetwork)
+               gotException = exName.Equals("DeviceNotReadyException", StringComparison.OrdinalIgnoreCase);
             Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");

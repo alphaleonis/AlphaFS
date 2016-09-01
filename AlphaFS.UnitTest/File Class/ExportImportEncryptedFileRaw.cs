@@ -21,8 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using File = Alphaleonis.Win32.Filesystem.File;
-using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
 {
@@ -44,9 +42,9 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string tempPath = Path.GetTempPath();
+         string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = PathUtils.AsUncPath(tempPath);
 
 
          using (var rootDir = new TemporaryDirectory(tempPath, "File-ExportImportEncryptedFileRaw"))
@@ -55,16 +53,14 @@ namespace AlphaFS.UnitTest
             string inputFile = System.IO.Path.Combine(rootDir.Directory.FullName, "test.txt");
             System.IO.File.WriteAllText(inputFile, "Test file #1");
 
-            File.Encrypt(inputFile);
+            Alphaleonis.Win32.Filesystem.File.Encrypt(inputFile);
             Console.WriteLine("\nEncrypted Input File: [{0}]", inputFile);
 
 
             // Export the file using the method under test.
             string exportedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "export.dat");
             using (var fs = System.IO.File.Create(exportedFile))
-            {
-               File.ExportEncryptedFileRaw(inputFile, fs);
-            }
+               Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw(inputFile, fs);
             Console.WriteLine("\nExported Input File: [{0}]", exportedFile);
 
 
@@ -76,9 +72,7 @@ namespace AlphaFS.UnitTest
             // Import the file again.
             string importedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "import.txt");
             using (var fs = System.IO.File.OpenRead(exportedFile))
-            {
-               File.ImportEncryptedFileRaw(fs, importedFile);
-            }
+               Alphaleonis.Win32.Filesystem.File.ImportEncryptedFileRaw(fs, importedFile);
             Console.WriteLine("\nImported Input File: [{0}]", importedFile);
 
 

@@ -21,10 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using File = Alphaleonis.Win32.Filesystem.File;
-using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
 {
@@ -51,9 +47,9 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string tempPath = Path.GetTempPath();
+         string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = PathUtils.AsUncPath(tempPath);
 
 
          using (var rootDir = new TemporaryDirectory(tempPath, "Directory-ExportImportEncryptedDirectoryRaw"))
@@ -61,9 +57,9 @@ namespace AlphaFS.UnitTest
             // Create an encrypted file to use for testing.
             string inputDir = System.IO.Path.Combine(rootDir.Directory.FullName, "testDir");
             System.IO.Directory.CreateDirectory(inputDir);
-            File.WriteAllText(Path.Combine(inputDir, "test.txt"), "Test file");
+            System.IO.File.WriteAllText(System.IO.Path.Combine(inputDir, "test.txt"), "Test file");
 
-            Directory.Encrypt(inputDir, false);
+            Alphaleonis.Win32.Filesystem.Directory.Encrypt(inputDir, false);
             Console.WriteLine("\nEncrypted Input Directory: [{0}]", inputDir);
 
 
@@ -71,7 +67,7 @@ namespace AlphaFS.UnitTest
             string exportedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "export.dat");
             using (var fs = System.IO.File.Create(exportedFile))
             {
-               Directory.ExportEncryptedDirectoryRaw(inputDir, fs);               
+               Alphaleonis.Win32.Filesystem.Directory.ExportEncryptedDirectoryRaw(inputDir, fs);               
             }
             Console.WriteLine("\nExported Input Directory: [{0}]", exportedFile);
 
@@ -84,7 +80,7 @@ namespace AlphaFS.UnitTest
             string importedDir = System.IO.Path.Combine(rootDir.Directory.FullName, "importDir");
             using (var fs = System.IO.File.OpenRead(exportedFile))
             {
-               Directory.ImportEncryptedDirectoryRaw(fs, importedDir);               
+               Alphaleonis.Win32.Filesystem.Directory.ImportEncryptedDirectoryRaw(fs, importedDir);               
             }
             Console.WriteLine("\nImported Input Directory: [{0}]", importedDir);
 

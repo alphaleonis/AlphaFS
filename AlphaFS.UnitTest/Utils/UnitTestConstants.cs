@@ -177,7 +177,9 @@ namespace AlphaFS.UnitTest
             // Some directories will remain empty.
             if (i % 2 != 0)
             {
-               System.IO.File.WriteAllText(file, TextHelloWorld);
+               //System.IO.File.WriteAllText(file, TextHelloWorld);
+               CreateFile(dir);
+
                System.IO.File.WriteAllText(System.IO.Path.Combine(dir, System.IO.Path.GetFileName(file)), TextGoodByeWorld);
             }
          }
@@ -198,7 +200,6 @@ namespace AlphaFS.UnitTest
          {
             if (fileLength <= 0)
                fileLength = new Random().Next(1, 10485760);
-            
 
             fs.SetLength(fileLength);
          }

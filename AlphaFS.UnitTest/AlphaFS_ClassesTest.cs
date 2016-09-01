@@ -19,12 +19,10 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -165,9 +163,6 @@ namespace AlphaFS.UnitTest
          string tempPath = Path.Combine(Path.GetTempPath(), "DirectoryInfo()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         int expectedLastError;
-         string expectedException;
-
          string nonExistingDirectory = UnitTestConstants.SysRoot32 + @"\NonExistingDirectory-" + Path.GetRandomFileName();
          if (!isLocal) nonExistingDirectory = Path.LocalToUnc(nonExistingDirectory);
 
@@ -184,13 +179,9 @@ namespace AlphaFS.UnitTest
 
          #region NotSupportedException
 
-         expectedLastError = (int) (isLocal ? Win32Errors.ERROR_ENVVAR_NOT_FOUND : Win32Errors.NERR_UseNotFound);
-         expectedException = "System.NotSupportedException";
-         bool exception = false;
+         var gotException = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]", expectedException);
-
             string invalidPath = UnitTestConstants.SysDrive + @"\:a";
             if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + @":a";
 
@@ -198,21 +189,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            // Not reliable.
-            //var win32Error = new Win32Exception("", ex);
-            //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-            //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            string exceptionTypeName = ex.GetType().FullName;
-            if (exceptionTypeName.Equals(expectedException))
-            {
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            else
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          Console.WriteLine();
 
          #endregion // NotSupportedException
@@ -532,14 +513,13 @@ namespace AlphaFS.UnitTest
       
       private void DumpClassFileInfo(bool isLocal)
       {
+         var isNetwork = !isLocal;
+         
          #region Setup
 
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.Combine(Path.GetTempPath(), "FileInfo()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         int expectedLastError;
-         string expectedException;
 
          string nonExistingFile = UnitTestConstants.SysRoot32 + @"\NonExistingFile-" + Path.GetRandomFileName();
          if (!isLocal) nonExistingFile = Path.LocalToUnc(nonExistingFile);
@@ -557,13 +537,9 @@ namespace AlphaFS.UnitTest
 
          #region NotSupportedException
 
-         expectedLastError = (int) (isLocal ? Win32Errors.ERROR_ENVVAR_NOT_FOUND : Win32Errors.NERR_UseNotFound);
-         expectedException = "System.NotSupportedException";
-         bool exception = false;
+         var gotException = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]", expectedException);
-
             string invalidPath = UnitTestConstants.SysDrive + @"\:a";
             if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + @":a";
 
@@ -571,21 +547,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            // Not reliable.
-            //var win32Error = new Win32Exception("", ex);
-            //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-            //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            string exceptionTypeName = ex.GetType().FullName;
-            if (exceptionTypeName.Equals(expectedException))
-            {
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            else
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          Console.WriteLine();
 
          #endregion // NotSupportedException
@@ -594,91 +560,57 @@ namespace AlphaFS.UnitTest
 
          #region FileNotFoundException #1
 
-         expectedLastError = (int) Win32Errors.ERROR_FILE_NOT_FOUND;
-         expectedException = "System.IO.FileNotFoundException";
-         exception = false;
+         gotException = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]", expectedException);
             Console.WriteLine(new FileInfo(nonExistingFile).Length);
          }
          catch (Exception ex)
          {
-            var win32Error = new Win32Exception("", ex);
-            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            string exceptionTypeName = ex.GetType().FullName;
-            if (exceptionTypeName.Equals(expectedException))
-            {
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            else
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("FileNotFoundException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          Console.WriteLine();
 
          #endregion // FileNotFoundException #1
 
          #region FileNotFoundException #2
 
-         expectedLastError = (int) (isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
-         expectedException = isLocal ? "System.IO.FileNotFoundException" : "System.IO.IOException";
-         exception = false;
+         gotException = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]", expectedException);
             Console.WriteLine(new FileInfo(nonExistingFile.Replace(sysDrive + @"\", letter)).Length);
          }
          catch (Exception ex)
          {
-            var win32Error = new Win32Exception("", ex);
-            //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-            //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            string exceptionTypeName = ex.GetType().FullName;
-            if (exceptionTypeName.Equals(expectedException))
-            {
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            else
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("FileNotFoundException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          Console.WriteLine();
 
          #endregion // FileNotFoundException #1
          
          #region FileNotFoundException #3
 
-         expectedLastError = (int) Win32Errors.ERROR_FILE_NOT_FOUND;
-         expectedException = "System.IO.FileNotFoundException";
-         exception = false;
+         gotException = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]", expectedException);
             Console.WriteLine(new FileInfo(sysRoot).Length);
          }
          catch (Exception ex)
          {
-            // win32Error is always 0
-            //var win32Error = new Win32Exception("", ex);
-            //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+            // FileNotFoundException is only for local.
+            // For UNC: IOException or DeviceNotReadyException.
 
-            string exceptionTypeName = ex.GetType().FullName;
-            if (exceptionTypeName.Equals(expectedException))
-            {
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            else
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("FileNotFoundException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          Console.WriteLine();
 
          #endregion // FileNotFoundException #3

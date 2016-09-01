@@ -21,11 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Globalization;
-using Alphaleonis.Win32.Filesystem;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using File = Alphaleonis.Win32.Filesystem.File;
-using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
 {
@@ -43,7 +38,7 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            var volume = Volume.GetVolumeInfo(globalRootPath);
+            var volume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(globalRootPath);
             Console.WriteLine("Volume full path: " + volume.FullPath);
 
             Assert.AreEqual(globalRootPath + @"\", volume.FullPath);
@@ -58,7 +53,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Volume_GetVolumeInfo_SystemDrivePath_Success()
       {
-         var volume = Volume.GetVolumeInfo(UnitTestConstants.SysDrive);
+         var volume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(UnitTestConstants.SysDrive);
          Console.WriteLine("Volume full path: " + volume.FullPath);
 
          Assert.AreEqual(UnitTestConstants.SysDrive + @"\", volume.FullPath);

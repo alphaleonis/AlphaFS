@@ -21,10 +21,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using Alphaleonis.Win32;
 using Directory = System.IO.Directory;
 using File = System.IO.File;
 using Path = System.IO.Path;
@@ -64,6 +62,8 @@ namespace AlphaFS.UnitTest
 
       private void DumpDirectory_GetDirectories(bool isLocal)
       {
+         var isNetwork = !isLocal;
+
          #region Setup
 
          UnitTestConstants.PrintUnitTestHeader(!isLocal);
@@ -82,34 +82,28 @@ namespace AlphaFS.UnitTest
 
          #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
-         var expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
-         var expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
-         var exception = false;
+         var gotException = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]", expectedException);
-
             string nonExistingPath = letter + folderSource;
             if (!isLocal) nonExistingPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(nonExistingPath);
 
+            Console.WriteLine("\nInput Directory Path: [{0}]", nonExistingPath);
             Directory.GetDirectories(nonExistingPath);
          }
          catch (Exception ex)
          {
-            // win32Error is always 0
-            var win32Error = new Win32Exception("", ex);
-            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+            // DirectoryNotFoundException is only for local.
+            // For UNC: IOException or DeviceNotReadyException.
 
-            string exceptionTypeName = ex.GetType().FullName;
-            if (exceptionTypeName.Equals(expectedException))
-            {
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            else
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+            if (!gotException && isNetwork)
+               gotException = exName.Equals("DeviceNotReadyException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
          Console.WriteLine();
 
          #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
@@ -118,29 +112,23 @@ namespace AlphaFS.UnitTest
 
          string tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory.GetDirectories-file-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
+         var exception = false;
          try
          {
             using (File.Create(tempPath)) { }
 
-            expectedLastError = (int) Win32Errors.ERROR_DIRECTORY;
-            expectedException = "System.IO.IOException";
-            exception = false;
+            gotException = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]", expectedException);
                Directory.GetDirectories(tempPath);
-            }
-            catch (IOException ex)
-            {
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
-            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
          finally
          {
@@ -158,27 +146,18 @@ namespace AlphaFS.UnitTest
 
          if (Directory.Exists(tempPath))
          {
-            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
-            expectedException = "System.UnauthorizedAccessException";
-            exception = false;
+            gotException = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]", expectedException);
                Directory.GetDirectories(tempPath, searchPattern, SearchOption.AllDirectories).Any();
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-               var win32Error = new Win32Exception("", ex);
-               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
-            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
             Console.WriteLine();
          }
 
