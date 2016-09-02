@@ -414,7 +414,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (isAppend)
             {
-               var stream = new FileStream(handle, isAppend ? FileAccess.Write : FileAccess.ReadWrite, 4096, (attributes & ExtendedFileAttributes.Overlapped) != 0);
+               var stream = new FileStream(handle, FileAccess.Write, 4096, (attributes & ExtendedFileAttributes.Overlapped) != 0);
                stream.Seek(0, SeekOrigin.End);
             }
 

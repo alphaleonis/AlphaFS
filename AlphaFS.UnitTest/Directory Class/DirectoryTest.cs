@@ -1160,8 +1160,6 @@ namespace AlphaFS.UnitTest
          string tempPathSource0 = Path.Combine(tempPath, "Source0");
          string tempPathDestination = Path.Combine(tempPath, "Destination");
 
-         bool exception;
-         int expectedLastError;
          string report;
 
          string random = Path.GetRandomFileName();

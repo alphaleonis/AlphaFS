@@ -21,12 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
 using System.Linq;
-using Directory = System.IO.Directory;
-using File = System.IO.File;
-using Path = System.IO.Path;
-
 
 namespace AlphaFS.UnitTest
 {
@@ -37,29 +32,29 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_GetFiles_LocalAndUNC_Success()
       {
-         DumpDirectory_GetFiles(true);
-         DumpDirectory_GetFiles(false);
+         Directory_GetFiles(true);
+         Directory_GetFiles(false);
       }
 
 
       [TestMethod]
       public void Directory_GetFiles_WithSearchPattern_LocalAndUNC_Success()
       {
-         DumpDirectory_GetFiles_WithSearchPattern(true);
-         DumpDirectory_GetFiles_WithSearchPattern(false);
+         Directory_GetFiles_WithSearchPattern(true);
+         Directory_GetFiles_WithSearchPattern(false);
       }
 
 
       [TestMethod]
-      public void Directory_GetFiles_AbsoluteAndRelativePath_Success()
+      public void Directory_GetFiles_AbsoluteAndRelativePath_Local_Success()
       {
-         DumpDirectory_GetFiles_AbsoluteAndRelativePath(true);
-         DumpDirectory_GetFiles_AbsoluteAndRelativePath(false);
+         Directory_GetFiles_AbsoluteAndRelativePath(true);
+         Directory_GetFiles_AbsoluteAndRelativePath(false);
       }
 
 
 
-      private void DumpDirectory_GetFiles(bool isLocal)
+      private void Directory_GetFiles(bool isLocal)
       {
          var isNetwork = !isLocal;
 
@@ -69,27 +64,28 @@ namespace AlphaFS.UnitTest
 
          int cnt = 0;
          string searchPattern = Alphaleonis.Win32.Filesystem.Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.TopDirectoryOnly;
+         var searchOption = System.IO.SearchOption.TopDirectoryOnly;
 
-         string random = Path.GetRandomFileName();
+         string random = System.IO.Path.GetRandomFileName();
          string folderSource = @"folder-source-" + random;
 
          string originalLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":";
          string letter = originalLetter + @"\";
-         
+
          #endregion // Setup
 
          #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
+         string nonExistingPath = letter + folderSource;
+         if (!isLocal) nonExistingPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(nonExistingPath);
+
+         Console.WriteLine("\nInput Directory Path: [{0}]", nonExistingPath);
+
+
          var gotException = false;
          try
          {
-            string nonExistingPath = letter + folderSource;
-            if (!isLocal) nonExistingPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(nonExistingPath);
-
-            Console.WriteLine("\nInput Directory Path: [{0}]", nonExistingPath);
-
-            Directory.GetFiles(nonExistingPath);
+            Alphaleonis.Win32.Filesystem.Directory.GetFiles(nonExistingPath);
          }
          catch (Exception ex)
          {
@@ -110,17 +106,17 @@ namespace AlphaFS.UnitTest
 
          #region IOException
 
-         string tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory.GetFiles-" + Path.GetRandomFileName());
+         string tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory.GetFiles-" + System.IO.Path.GetRandomFileName());
          if (!isLocal) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
-         using (File.Create(tempPath)) { }
+         using (System.IO.File.Create(tempPath)) { }
 
          gotException = false;
          try
          {
-            Directory.GetFiles(tempPath);
+            Alphaleonis.Win32.Filesystem.Directory.GetFiles(tempPath);
          }
          catch (Exception ex)
          {
@@ -130,8 +126,8 @@ namespace AlphaFS.UnitTest
          }
          finally
          {
-            File.Delete(tempPath);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            System.IO.File.Delete(tempPath);
+            Assert.IsFalse(System.IO.File.Exists(tempPath), "Cleanup failed: File should have been removed.");
             Console.WriteLine();
          }
 
@@ -141,17 +137,17 @@ namespace AlphaFS.UnitTest
 
          #region UnauthorizedAccessException
 
-         tempPath = Path.Combine(UnitTestConstants.SysRoot, "CSC");
+         tempPath = System.IO.Path.Combine(UnitTestConstants.SysRoot, "CSC");
          if (!isLocal) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
-         if (Directory.Exists(tempPath))
+         if (System.IO.Directory.Exists(tempPath))
          {
             gotException = false;
             try
             {
-               Directory.GetFiles(tempPath, searchPattern, SearchOption.AllDirectories).Any();
+               Alphaleonis.Win32.Filesystem.Directory.GetFiles(tempPath, searchPattern, System.IO.SearchOption.AllDirectories).Any();
             }
             catch (Exception ex)
             {
@@ -171,7 +167,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\tGet files, using \"SearchOption.{0}\"\n", searchOption);
 
          UnitTestConstants.StopWatcher(true);
-         foreach (string file in Directory.GetFiles(path, searchPattern, searchOption))
+         foreach (string file in Alphaleonis.Win32.Filesystem.Directory.GetFiles(path, searchPattern, searchOption))
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, file);
 
          Console.WriteLine();
@@ -184,23 +180,23 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void DumpDirectory_GetFiles_WithSearchPattern(bool isLocal)
+      private void Directory_GetFiles_WithSearchPattern(bool isLocal)
       {
          #region Setup
 
          UnitTestConstants.PrintUnitTestHeader(!isLocal);
 
-         string tempPath = Path.Combine(Path.GetTempPath(), "Directory.GetDirectories_With_SearchPattern()-" + Path.GetRandomFileName());
+         string tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Directory.GetDirectories_With_SearchPattern()-" + System.IO.Path.GetRandomFileName());
          if (!isLocal) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
 
-         Directory.CreateDirectory(tempPath);
-         using (File.Create(Path.Combine(tempPath, "a.txt"))) { }
-         using (File.Create(Path.Combine(tempPath, "aa.txt"))) { }
-         using (File.Create(Path.Combine(tempPath, "aba.txt"))) { }
-         using (File.Create(Path.Combine(tempPath, "foo.txt"))) { }
-         using (File.Create(Path.Combine(tempPath, "footxt"))) { }
+         System.IO.Directory.CreateDirectory(tempPath);
+         using (System.IO.File.Create(System.IO.Path.Combine(tempPath, "a.txt"))) { }
+         using (System.IO.File.Create(System.IO.Path.Combine(tempPath, "aa.txt"))) { }
+         using (System.IO.File.Create(System.IO.Path.Combine(tempPath, "aba.txt"))) { }
+         using (System.IO.File.Create(System.IO.Path.Combine(tempPath, "foo.txt"))) { }
+         using (System.IO.File.Create(System.IO.Path.Combine(tempPath, "footxt"))) { }
 
          #endregion // Setup
 
@@ -208,20 +204,20 @@ namespace AlphaFS.UnitTest
          {
             var files = Alphaleonis.Win32.Filesystem.Directory.GetFiles(tempPath, "foo.txt");
             Console.WriteLine("\tDirectory.GetFiles(tempPath, \"foo.txt\");");
-            Assert.IsTrue(files.Length == 1 && files.Contains(Path.Combine(tempPath, "foo.txt"), StringComparer.InvariantCultureIgnoreCase));
-            Assert.IsFalse(files.Contains(Path.Combine(tempPath, "fooatxt"), StringComparer.InvariantCultureIgnoreCase));
+            Assert.IsTrue(files.Length == 1 && files.Contains(System.IO.Path.Combine(tempPath, "foo.txt"), StringComparer.InvariantCultureIgnoreCase));
+            Assert.IsFalse(files.Contains(System.IO.Path.Combine(tempPath, "fooatxt"), StringComparer.InvariantCultureIgnoreCase));
 
             files = Alphaleonis.Win32.Filesystem.Directory.GetFiles(tempPath, "a?a.txt");
             Console.WriteLine("\tDirectory.GetFiles(tempPath, \"a?a.txt\");");
-            Assert.IsTrue(files.Length == 1 && files.Contains(Path.Combine(tempPath, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
-            Assert.IsFalse(files.Contains(Path.Combine(tempPath, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
+            Assert.IsTrue(files.Length == 1 && files.Contains(System.IO.Path.Combine(tempPath, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
+            Assert.IsFalse(files.Contains(System.IO.Path.Combine(tempPath, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
 
             files = Alphaleonis.Win32.Filesystem.Directory.GetFiles(tempPath, "a*.*");
             Console.WriteLine("\tDirectory.GetFiles(tempPath, \"a*.*\");");
             Assert.IsTrue(files.Length == 3);
-            Assert.IsTrue(files.Contains(Path.Combine(tempPath, "a.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
-            Assert.IsTrue(files.Contains(Path.Combine(tempPath, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
-            Assert.IsTrue(files.Contains(Path.Combine(tempPath, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
+            Assert.IsTrue(files.Contains(System.IO.Path.Combine(tempPath, "a.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
+            Assert.IsTrue(files.Contains(System.IO.Path.Combine(tempPath, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
+            Assert.IsTrue(files.Contains(System.IO.Path.Combine(tempPath, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
 
             files = Alphaleonis.Win32.Filesystem.Directory.GetFiles(tempPath, "*.*");
             Console.WriteLine("\tDirectory.GetFiles(tempPath, \"*.*\");");
@@ -233,19 +229,19 @@ namespace AlphaFS.UnitTest
          }
          finally
          {
-            Directory.Delete(tempPath, true);
-            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            System.IO.Directory.Delete(tempPath, true);
+            Assert.IsFalse(System.IO.Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
             Console.WriteLine();
          }
       }
 
 
-      private void DumpDirectory_GetFiles_AbsoluteAndRelativePath(bool isLocal)
+      private void Directory_GetFiles_AbsoluteAndRelativePath(bool isLocal)
       {
          UnitTestConstants.PrintUnitTestHeader(!isLocal);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (!isLocal) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+         var tempPath = UnitTestConstants.SysRoot32;
+         if (!isLocal) tempPath = PathUtils.AsUncPath(tempPath);
 
          Assert.IsTrue(System.IO.Path.IsPathRooted(tempPath));
          Environment.CurrentDirectory = tempPath;

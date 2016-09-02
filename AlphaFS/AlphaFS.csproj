@@ -260,6 +260,7 @@
     <Compile Include="Filesystem\Exceptions\DirectoryReadOnlyException.cs" />
     <Compile Include="Filesystem\Exceptions\DirectoryNotEmptyException.cs" />
     <Compile Include="Filesystem\Exceptions\FileReadOnlyException.cs" />
+    <Compile Include="Filesystem\File Class\File.Hash.cs" />
     <Compile Include="Filesystem\File Class\File.EncryptedFileRaw.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
@@ -459,6 +460,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SafeNativeMemoryBufferHandle.cs" />
+    <Compile Include="Security\Crc64.cs" />
+    <Compile Include="Security\Enumerations\HashType.cs" />
     <Compile Include="Security\Enumerations\ObjectType.cs" />
     <Compile Include="Security\Enumerations\SecurityDescriptorControl.cs" />
     <Compile Include="Security\Enumerations\SecurityInformation.cs" />
@@ -473,6 +476,7 @@
     <Compile Include="Filesystem\Exceptions\UnsupportedRemoteTransactionException.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Security\NativeMethods.cs" />
+    <Compile Include="Security\Crc32.cs" />
     <Compile Include="Security\Privilege.cs" />
     <Compile Include="Security\PrivilegeEnabler.cs" />
     <Compile Include="Security\InternalPrivilegeEnabler.cs" />
@@ -519,7 +523,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

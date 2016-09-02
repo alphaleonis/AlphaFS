@@ -145,6 +145,7 @@
     </Compile>
     <Compile Include="AlphaFS_DeviceTest.cs" />
     <Compile Include="Classes\BackupFileStream.cs" />
+    <Compile Include="Classes\Hash.cs" />
     <Compile Include="Directory Class\Compress_Decompress.cs" />
     <Compile Include="Directory Class\GetDirectories.cs" />
     <Compile Include="Directory Class\GetFiles.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Directory Class\SetTimestamps.cs" />
     <Compile Include="Directory Class\GetTimestamps.cs" />
     <Compile Include="Directory Class\SetAccessControl.cs" />
+    <Compile Include="File Class\Hash.cs" />
     <Compile Include="File Class\Move.cs" />
     <Compile Include="File Class\Copy.cs" />
     <Compile Include="File Class\Delete.cs" />

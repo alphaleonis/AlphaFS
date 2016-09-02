@@ -66,9 +66,6 @@ namespace AlphaFS.UnitTest
 
             using (var bfs = new BackupFileStream(file, FileMode.Open))
             {
-               var catchCount = 0;
-
-
                #region IOException
 
                bfs.Lock(0, 10);

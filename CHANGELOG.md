@@ -43,10 +43,12 @@ Version 2.1
 - Issue #194: Add bitshift for Marshal.GetHRForException(ex) usage. 
 - Issue #195: Add useful FileAttributes as properties to `FileSystemEntryInfo` class.
 - Issue #199: Change `FindFileSystemEntryInfo.FindFirstFile()` to show actual path instead of inputpath on access error.
+- Issue #214: Howto Get-Filehash.
 - Issue #235: Implement unicode versions of methods: CM_Connect_Machine and CM_Get_Device_ID_Ex.
 - Issue #239: Enable long path support for CreateSymbolicLink() source parameter.
 - Issue #240: Add KeepDotOrSpace to GetFullPathOptions enum.
 - Issue #241: Add Path.GetFullPath() overload that supports GetFullPathOptions enum.
+- Issue #245: Implement CRC-32/64.
 
 ### Bugs Fixed
 
@@ -78,6 +80,7 @@ Version 2.1
 - Issue #234: CheckInvalidPathChars breaks IsPathRooted for whitespace strings.
 - Issue #242: File.Open(file, System.IO.FileMode.Append) does not append.
 - Issue #244: File.Copy(src, dst, true) does not respect FILE_ATTRIBUTE_READONLY.
+- Issue #246: Using Directory.EnumerateFileSystemEntries() recursively with a relative path may fail.
 
 ### Breaking Changes
 

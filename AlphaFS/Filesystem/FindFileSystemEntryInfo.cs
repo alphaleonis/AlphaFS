@@ -148,11 +148,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region NewFileSystemEntryType
 
-      private T NewFileSystemEntryType<T>(NativeMethods.WIN32_FIND_DATA win32FindData, string fullPathLp, bool isFolder)
+      private T NewFileSystemEntryType<T>(NativeMethods.WIN32_FIND_DATA win32FindData, string fileName, string pathLp, bool isFolder)
       {
          // Determine yield.
          if (FileSystemObjectType != null && ((!(bool) FileSystemObjectType || !isFolder) && (!(bool) !FileSystemObjectType || isFolder)))
             return (T) (object) null;
+
+
+         var fullPathLp = string.Format(CultureInfo.InvariantCulture, "{0}{1}", pathLp, fileName ?? string.Empty);
 
 
          // Return object instance FullPath property as string, optionally in long path format.
@@ -238,20 +241,21 @@ namespace Alphaleonis.Win32.Filesystem
                         continue;
 
 
-                     string fseiFullPathLp = string.Format(CultureInfo.InvariantCulture, "{0}{1}", IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : path, fileName);
+                     //string fseiFullPathLp = string.Format(CultureInfo.InvariantCulture, "{0}{1}", IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : path, fileName);
 
                      bool fseiIsFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
 
                      // If object is a directory, add it to the queue for later traversal.
                      if (fseiIsFolder && Recursive)
-                        dirs.Enqueue(fseiFullPathLp);
+                        dirs.Enqueue(path + fileName);
 
 
                      // Determine yield.
                      if (!(_nameFilter == null || (_nameFilter != null && _nameFilter.IsMatch(fileName))))
                         continue;
 
-                     var res = NewFileSystemEntryType<T>(win32FindData, fseiFullPathLp, fseiIsFolder);
+                     //var res = NewFileSystemEntryType<T>(win32FindData, fseiFullPathLp, fseiIsFolder);
+                     var res = NewFileSystemEntryType<T>(win32FindData, fileName, IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : path, fseiIsFolder);
                      if (res == null)
                         continue;
 
@@ -304,7 +308,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (SafeFindFileHandle handle = FindFirstFile(InputPath, out win32FindData))
          {
             if (handle != null && !handle.IsInvalid)
-               return NewFileSystemEntryType<T>(win32FindData, InputPath, (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0);
+               return NewFileSystemEntryType<T>(win32FindData, null, InputPath, (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0);
          }
 
          return (T) (object) null;
