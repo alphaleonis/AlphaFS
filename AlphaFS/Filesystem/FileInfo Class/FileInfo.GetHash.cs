@@ -19,36 +19,21 @@
  *  THE SOFTWARE. 
  */
 
-namespace Alphaleonis.Win32.Security
+using Alphaleonis.Win32.Security;
+
+namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Enum containing the supported hash types.</summary>
-   public enum HashType
+   partial class FileInfo
    {
-      /// <summary>Cyclic Redundancy Check</summary>
-      CRC32,
+      #region AlphaFS
 
-      /// <summary>Cyclic Redundancy Check</summary>
-      CRC64ISO3309,
+      /// <summary>[AlphaFS] Calculates the hash/checksum.</summary>
+      /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
+      public string GetHash(HashType hashType)
+      {
+         return File.GetHashCore(Transaction, LongFullName, hashType, PathFormat.LongFullPath);
+      }
 
-      ///// <summary>Message Authentication Code Triple Data Encryption Standard</summary>
-      //MACTripleDES,
-
-      /// <summary>Message digest</summary>
-      MD5,
-
-      /// <summary>RACE Integrity Primitives Evaluation Message Digest</summary>
-      RIPEMD160,
-
-      /// <summary>Secure Hash Algorithm</summary>
-      SHA1,
-
-      /// <summary>Secure Hash Algorithm</summary>
-      SHA256,
-
-      /// <summary>Secure Hash Algorithm</summary>
-      SHA384,
-
-      /// <summary>Secure Hash Algorithm</summary>
-      SHA512
+      #endregion // AlphaFS
    }
 }

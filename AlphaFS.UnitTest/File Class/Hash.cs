@@ -67,10 +67,10 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual("ad3de8a8c701f74e", hash);
 
 
-            type = Alphaleonis.Win32.Security.HashType.MACTripleDES;
-            hash = Alphaleonis.Win32.Filesystem.File.GetHash(file, type);
-            Console.WriteLine("\t{0,12} = {1}", type, hash);
-            // The hash value is different each time!
+            //type = Alphaleonis.Win32.Security.HashType.MACTripleDES;
+            //hash = Alphaleonis.Win32.Filesystem.File.GetHash(file, type);
+            //Console.WriteLine("\t{0,12} = {1}", type, hash);
+            //// The hash value is different each time!
             //Assert.AreEqual("de2142bf5bd4bfff728b7756d8d5364a63314177", hash);
 
 

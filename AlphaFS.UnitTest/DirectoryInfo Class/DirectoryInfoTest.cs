@@ -19,261 +19,81 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Security.Principal;
-using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
-using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
 {
    /// <summary>This is a test class for DirectoryInfo and is intended to contain all DirectoryInfo Unit Tests.</summary>
    [TestClass]
-   public class DirectoryInfoTest
+   public partial class DirectoryInfoTest
    {
-      private void DumpRefresh(bool isLocal)
-      {
-         #region Setup
-
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-
-         string tempPathSysIo = Path.GetTempPath("DirectoryInfo.Refresh()-directory-SysIo-" + Path.GetRandomFileName());
-         string tempPath = Path.GetTempPath("DirectoryInfo.Refresh()-directory-AlphaFS-" + Path.GetRandomFileName());
-         if (!isLocal) tempPathSysIo = Path.LocalToUnc(tempPathSysIo);
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-
-         #endregion // Setup
-
-         #region Refresh
-
-         try
-         {
-            System.IO.DirectoryInfo diSysIo = new System.IO.DirectoryInfo(tempPathSysIo);
-            DirectoryInfo di = new DirectoryInfo(tempPath);
-
-            bool existsSysIo = diSysIo.Exists;
-            bool exists = di.Exists;
-            Console.WriteLine("\nnew DirectoryInfo(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // false
-            Assert.AreEqual(existsSysIo, exists);
-
-            diSysIo.Create();
-            di.Create();
-            existsSysIo = diSysIo.Exists;
-            exists = di.Exists;
-            Console.WriteLine("\ndi.Create(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // false
-            Assert.AreEqual(existsSysIo, exists);
-
-            diSysIo.Refresh();
-            di.Refresh();
-            existsSysIo = diSysIo.Exists;
-            exists = di.Exists;
-            Console.WriteLine("\ndi.Refresh(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // true
-            Assert.AreEqual(existsSysIo, exists);
-
-            diSysIo.Delete();
-            di.Delete();
-            existsSysIo = diSysIo.Exists;
-            exists = di.Exists;
-            Console.WriteLine("\ndi.Delete(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // true
-            Assert.AreEqual(existsSysIo, exists);
-
-            diSysIo.Refresh();
-            di.Refresh();
-            existsSysIo = diSysIo.Exists;
-            exists = di.Exists;
-            Console.WriteLine("\ndi.Refresh(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // false
-            Assert.AreEqual(existsSysIo, exists);
-         }
-         finally
-         {
-            if (Directory.Exists(tempPathSysIo))
-            {
-               Directory.Delete(tempPathSysIo);
-               Assert.IsFalse(Directory.Exists(tempPathSysIo), "Cleanup failed: Directory should have been removed.");
-            }
-
-            if (Directory.Exists(tempPath))
-            {
-               Directory.Delete(tempPath);
-               Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-            }
-
-            Console.WriteLine();
-         }
-
-         #endregion // Refresh
-      }
-
-
+      // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void EnumerateDirectories()
-      {
-         Console.WriteLine("DirectoryInfo.EnumerateDirectories()");
-
-         // Should only return folders.
-
-         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateDirectories(DirectoryEnumerationOptions.FilesAndFolders))
-            Assert.IsTrue(di.IsDirectory, "Expected a folder, not a file.");
-
-         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateDirectories(DirectoryEnumerationOptions.Files))
-            Assert.IsTrue(di.IsDirectory, "Expected a folder, not a file.");
-      }
-
-      
-      
-      [TestMethod]
-      public void EnumerateFiles()
-      {
-         Console.WriteLine("DirectoryInfo.EnumerateFiles()");
-
-         // Should only return files.
-
-         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFiles(DirectoryEnumerationOptions.FilesAndFolders))
-            Assert.IsTrue(!di.IsDirectory, "Expected a file, not a folder.");
-
-         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFiles(DirectoryEnumerationOptions.Folders))
-            Assert.IsTrue(!di.IsDirectory, "Expected a file, not a folder.");
-      }
-
-
-
-      [TestMethod]
-      public void EnumerateFileSystemInfos()
-      {
-         Console.WriteLine("DirectoryInfo.EnumerateFileSystemInfos()");
-
-         // Should only return folders.
-
-         foreach (FileSystemInfo di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFileSystemInfos(DirectoryEnumerationOptions.Folders))
-            Assert.IsTrue(di.IsDirectory, string.Format("Expected a folder, not a file: [{0}]", di.FullName));
-
-
-         // Should only return files.
-
-         foreach (FileSystemInfo fi in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFileSystemInfos(DirectoryEnumerationOptions.Files))
-            Assert.IsTrue(!fi.IsDirectory, string.Format("Expected a file, not a folder: [{0}]", fi.FullName));
-      }
-
-
-
-      [TestMethod]
-      public void Refresh()
-      {
-         Console.WriteLine("DirectoryInfo.Refresh()");
-
-         DumpRefresh(true);
-         DumpRefresh(false);
-      }
-      
-
-
-      #region SetSecurity (Issue-19788)
-
-      private string GetTempDirectoryName()
-      {
-         return Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
-      }
-
-      [TestMethod]
-      public void Test_AlphaFS___SetSecurity_ShouldNotProduceError()
-      {
-         SetSecurityAlpha(GetTempDirectoryName());
-      }
-
-      [TestMethod]
-      public void Test_System___SetSecurity_ShouldNotProduceError()
-      {
-         SetSecuritySystem(GetTempDirectoryName());
-      }
-
-      [TestMethod]
-      public void Test_System___AnalyzeSecurity_LocalAcessShouldNotExist()
+      public void DirectoryInfo_AnalyzeSecurity_LocalAcess_ShouldNotExist()
       {
          string testDir = GetTempDirectoryName();
          SetSecuritySystem(testDir);
          var dirsec = new System.IO.DirectoryInfo(testDir + @"\inherited").GetAccessControl();
-         AuthorizationRuleCollection accessRules = dirsec.GetAccessRules(true, true, targetType: typeof(SecurityIdentifier));
+         var accessRules = dirsec.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
+         Assert.IsFalse(HasLocalAces(accessRules), "local access rules found");
+
+
+         testDir = GetTempDirectoryName();
+         SetSecurityAlpha(testDir);
+         dirsec = new Alphaleonis.Win32.Filesystem.DirectoryInfo(testDir + @"\inherited").GetAccessControl();
+         accessRules = dirsec.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
          Assert.IsFalse(HasLocalAces(accessRules), "local access rules found");
       }
-
-      [TestMethod]
-      public void Test_AlphaFS___AnalyzeSecurity_LocalAcessShouldNotExist()
-      {
-         string testDir = GetTempDirectoryName();
-         SetSecuritySystem(testDir);
-         var dirsec = new DirectoryInfo(testDir + @"\inherited").GetAccessControl();
-         AuthorizationRuleCollection accessRules = dirsec.GetAccessRules(true, true, targetType: typeof(SecurityIdentifier));
-         Assert.IsFalse(HasLocalAces(accessRules), "local access rules found");
-      }
+      
 
 
-      public bool HasLocalAces(AuthorizationRuleCollection rules)
-      {
-         bool res = false;
-
-         AccessRule locaACE = rules.Cast<AccessRule>().FirstOrDefault(a => a.IsInherited == false);
-         res = (locaACE == null ? false : true);
-         return res;
-      }
 
       private void SetSecurityAlpha(string directory)
       {
-         //create the test structure
-         if (Directory.Exists(directory))
-            Directory.Delete(directory, true);
+         if (System.IO.Directory.Exists(directory))
+            System.IO.Directory.Delete(directory, true);
+         System.IO.Directory.CreateDirectory(directory);
+         System.IO.Directory.CreateDirectory(System.IO.Path.Combine(directory, "inherited"));
 
-         Directory.CreateDirectory(directory);
-         Directory.CreateDirectory(System.IO.Path.Combine(directory, "inherited"));
-         DirectoryInfo testDirInfo = new DirectoryInfo(directory);
-         //System.IO.Directory.CreateDirectory(_testDir);
-         //System.IO.Directory.CreateDirectory(System.IO.Path.Combine(_testDir, "inherited"));
-         //System.IO.DirectoryInfo testDirInfo = new System.IO.DirectoryInfo(_testDir);
 
-         var ds = testDirInfo.GetAccessControl(AccessControlSections.Access);
+         var testDirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(directory);
+
+         var ds = testDirInfo.GetAccessControl(System.Security.AccessControl.AccessControlSections.Access);
          ds.SetAccessRuleProtection(true, false);
-         ds.AddAccessRule(new FileSystemAccessRule(
-               identity: new SecurityIdentifier(WellKnownSidType.WorldSid, null),
-               fileSystemRights: FileSystemRights.FullControl,
-               inheritanceFlags: InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-               propagationFlags: PropagationFlags.None,
-               type: AccessControlType.Allow
-               ));
+         ds.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.InheritanceFlags.ContainerInherit | System.Security.AccessControl.InheritanceFlags.ObjectInherit, System.Security.AccessControl.PropagationFlags.None, System.Security.AccessControl.AccessControlType.Allow));
 
-         //using (new PrivilegeEnabler(Privilege.Impersonate, Privilege.Backup, Privilege.Restore, Privilege.Security, Privilege.TakeOwnership, Privilege.TrustedCredManAccess, Privilege.Audit))
-         {
-            testDirInfo.SetAccessControl(ds);
-
-         }
+         testDirInfo.SetAccessControl(ds);
       }
 
       private void SetSecuritySystem(string directory)
       {
-         //create the test structure
          if (System.IO.Directory.Exists(directory))
             System.IO.Directory.Delete(directory, true);
-
          System.IO.Directory.CreateDirectory(directory);
          System.IO.Directory.CreateDirectory(System.IO.Path.Combine(directory, "inherited"));
-         System.IO.DirectoryInfo testDirInfo = new System.IO.DirectoryInfo(directory);
 
-         var ds = testDirInfo.GetAccessControl(AccessControlSections.Access);
+
+         var testDirInfo = new System.IO.DirectoryInfo(directory);
+
+         var ds = testDirInfo.GetAccessControl(System.Security.AccessControl.AccessControlSections.Access);
          ds.SetAccessRuleProtection(true, false);
-         ds.AddAccessRule(new FileSystemAccessRule(
-           identity: new SecurityIdentifier(WellKnownSidType.WorldSid, null),
-           fileSystemRights: FileSystemRights.FullControl,
-           inheritanceFlags: InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
-           propagationFlags: PropagationFlags.None,
-           type: AccessControlType.Allow
-           ));
+         ds.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.InheritanceFlags.ContainerInherit | System.Security.AccessControl.InheritanceFlags.ObjectInherit, System.Security.AccessControl.PropagationFlags.None, System.Security.AccessControl.AccessControlType.Allow));
+
          testDirInfo.SetAccessControl(ds);
       }
+      
+      private string GetTempDirectoryName()
+      {
+         return System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+      }
 
-      #endregion
+      private bool HasLocalAces(System.Security.AccessControl.AuthorizationRuleCollection rules)
+      {
+         var localACE = rules.Cast<System.Security.AccessControl.AccessRule>().FirstOrDefault(a => !a.IsInherited);
+         return localACE != null;
+      }
    }
 }

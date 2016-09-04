@@ -260,7 +260,7 @@
     <Compile Include="Filesystem\Exceptions\DirectoryReadOnlyException.cs" />
     <Compile Include="Filesystem\Exceptions\DirectoryNotEmptyException.cs" />
     <Compile Include="Filesystem\Exceptions\FileReadOnlyException.cs" />
-    <Compile Include="Filesystem\File Class\File.Hash.cs" />
+    <Compile Include="Filesystem\File Class\File.GetHash.cs" />
     <Compile Include="Filesystem\File Class\File.EncryptedFileRaw.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
@@ -332,6 +332,7 @@
     <Compile Include="Filesystem\File Class\File.OpenWrite.cs" />
     <Compile Include="Filesystem\File Class\File.OpenBackupRead.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.GetHash.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.RefreshEntryInfo.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.Decompress.cs" />

@@ -157,6 +157,7 @@
     <Compile Include="Directory Class\SetTimestamps.cs" />
     <Compile Include="Directory Class\GetTimestamps.cs" />
     <Compile Include="Directory Class\SetAccessControl.cs" />
+    <Compile Include="DirectoryInfo Class\Refresh.cs" />
     <Compile Include="File Class\Hash.cs" />
     <Compile Include="File Class\Move.cs" />
     <Compile Include="File Class\Copy.cs" />
@@ -176,6 +177,8 @@
     <Compile Include="File Class\Exists.cs" />
     <Compile Include="File Class\SetAccessControl.cs" />
     <Compile Include="File Class\GetAccessControl.cs" />
+    <Compile Include="FileInfo Class\FileInfoTest.cs" />
+    <Compile Include="FileInfo Class\Refresh.cs" />
     <Compile Include="Host Class\AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS_ClassesTest.cs" />
     <Compile Include="Directory Class\CreateDirectory.cs" />
@@ -186,7 +189,6 @@
     <Compile Include="Path Class\GetDirectoryName.cs" />
     <Compile Include="Utils\DirectoryAssert.cs" />
     <Compile Include="Utils\FileAssert.cs" />
-    <Compile Include="FileInfo Class\FileInfoTest.cs" />
     <Compile Include="Shell32 Class\AlphaFS_Shell32Test.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfoTest.cs" />
     <Compile Include="File Class\FileTest.cs" />

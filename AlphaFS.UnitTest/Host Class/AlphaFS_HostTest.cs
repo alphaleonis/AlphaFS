@@ -589,11 +589,8 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-          
             connectOk = false;
-
             Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
             Console.WriteLine("\nFailed DriveConnection() to: [{0}]", share);
          }
 

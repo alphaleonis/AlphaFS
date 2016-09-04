@@ -49,6 +49,7 @@ Version 2.1
 - Issue #240: Add KeepDotOrSpace to GetFullPathOptions enum.
 - Issue #241: Add Path.GetFullPath() overload that supports GetFullPathOptions enum.
 - Issue #245: Implement CRC-32/64.
+- Issue #247: Add FileInfo.GetHash().
 
 ### Bugs Fixed
 

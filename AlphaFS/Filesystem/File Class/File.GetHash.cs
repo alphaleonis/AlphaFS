@@ -102,9 +102,9 @@ namespace Alphaleonis.Win32.Filesystem
                   break;
 
 
-               case HashType.MACTripleDES:
-                  hash = System.Security.Cryptography.MACTripleDES.Create().ComputeHash(fs);
-                  break;
+               //case HashType.MACTripleDES:
+               //   hash = System.Security.Cryptography.MACTripleDES.Create().ComputeHash(fs);
+               //   break;
 
 
                case HashType.MD5:
