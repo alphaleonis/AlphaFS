@@ -227,7 +227,7 @@ namespace Alphaleonis.Win32.Filesystem
          // 2015-08-02: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
          SafeEncryptedFileRawHandle context;
-         int lastError = NativeMethods.OpenEncryptedFileRaw(destinationPathLp, mode, out context);
+         var lastError = NativeMethods.OpenEncryptedFileRaw(destinationPathLp, mode, out context);
 
          try
          {

@@ -21,6 +21,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -41,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   function.</para>
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       internal static extern SafeKernelTransactionHandle CreateTransaction([MarshalAs(UnmanagedType.LPStruct)] Security.NativeMethods.SecurityAttributes lpTransactionAttributes, IntPtr uow, [MarshalAs(UnmanagedType.U4)] uint createOptions, [MarshalAs(UnmanagedType.U4)] uint isolationLevel, [MarshalAs(UnmanagedType.U4)] uint isolationFlags, [MarshalAs(UnmanagedType.U4)] int timeout, [MarshalAs(UnmanagedType.LPWStr)] string description);
 
       /// <summary>Requests that the specified transaction be committed.</summary>
@@ -57,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If the function fails, the return value is 0 (zero). To get extended error information, call the GetLastError function.</para>
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool CommitTransaction(SafeHandle hTrans);
 
@@ -69,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If the function fails, the return value is zero. To get extended error information, call the GetLastError function. </para>
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool RollbackTransaction(SafeHandle hTrans);
    }

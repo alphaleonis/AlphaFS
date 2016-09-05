@@ -33,6 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
    [ComImport]
    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
    [Guid("79427A2B-F895-40e0-BE79-B57DC82ED231")]
+   [SuppressUnmanagedCodeSecurity]
    internal interface IKernelTransaction
    {
       void GetHandle([Out] out SafeKernelTransactionHandle handle);

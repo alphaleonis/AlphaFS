@@ -24,6 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -106,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="uMode">The mode.</param>
       /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
+      [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
       private static extern ErrorMode SetErrorMode(ErrorMode uMode);
 
@@ -123,7 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="lpOldMode">[out] The old mode.</param>
       /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
+      [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       private static extern bool SetThreadErrorMode(ErrorMode dwNewMode, [MarshalAs(UnmanagedType.U4)] out ErrorMode lpOldMode);
 

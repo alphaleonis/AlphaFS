@@ -32,6 +32,22 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
+      public void DirectoryInfo_InitializeInstance_ExistingDirectory_LocalAndUnc_Success()
+      {
+         DirectoryInfo_InitializeInstance_ExistingDirectory(false);
+         DirectoryInfo_InitializeInstance_ExistingDirectory(true);
+      }
+
+
+      [TestMethod]
+      public void DirectoryInfo_InitializeInstance_NonExistingDirectory_LocalAndUnc_Success()
+      {
+         DirectoryInfo_InitializeInstance_NonExistingDirectory(false);
+         DirectoryInfo_InitializeInstance_NonExistingDirectory(true);
+      }
+
+
+      [TestMethod]
       public void DirectoryInfo_AnalyzeSecurity_LocalAcess_ShouldNotExist()
       {
          string testDir = GetTempDirectoryName();
@@ -47,7 +63,117 @@ namespace AlphaFS.UnitTest
          accessRules = dirsec.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
          Assert.IsFalse(HasLocalAces(accessRules), "local access rules found");
       }
-      
+
+
+
+
+      private void DirectoryInfo_InitializeInstance_ExistingDirectory(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "DirectoryInfo.Initialize_Instance_ExistingDirectory"))
+         {
+            string folder = rootDir.RandomFileFullPath;
+            var dirInfo = new System.IO.DirectoryInfo(folder);
+            dirInfo.Create();
+
+            CompareDirectoryInfos(dirInfo, new Alphaleonis.Win32.Filesystem.DirectoryInfo(folder), true);
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void DirectoryInfo_InitializeInstance_NonExistingDirectory(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "DirectoryInfo.Initialize_Instance_NonExistingDirectory"))
+         {
+            string folder = rootDir.RandomFileFullPath;
+            CompareDirectoryInfos(new System.IO.DirectoryInfo(folder), new Alphaleonis.Win32.Filesystem.DirectoryInfo(folder), false);
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void CompareDirectoryInfos(System.IO.DirectoryInfo expected, Alphaleonis.Win32.Filesystem.DirectoryInfo actual, bool exists)
+      {
+         if (expected == null || actual == null)
+            Assert.AreEqual(expected, actual, "The two DirectoryInfo instances are not the same, but are expected to be.");
+
+         UnitTestConstants.Dump(expected, -17);
+         Console.WriteLine();
+         UnitTestConstants.Dump(actual, -17);
+
+
+         if (exists)
+            Assert.IsTrue(expected.Exists && actual.Exists, "The directory does not exist, but is expected to.");
+         else
+            Assert.IsFalse(expected.Exists && actual.Exists, "The directory exists, but is expected not to.");
+
+
+         int cnt = -1;
+         while (cnt != 13)
+         {
+            cnt++;
+            // Compare values of both instances.
+            switch (cnt)
+            {
+               case 0:
+                  Assert.AreEqual(expected.Attributes, actual.Attributes, "The property Attributes is not the same, but is expected to be.");
+                  break;
+               case 1:
+                  Assert.AreEqual(expected.CreationTime, actual.CreationTime, "The property CreationTime is not the same, but is expected to be.");
+                  break;
+               case 2:
+                  Assert.AreEqual(expected.CreationTimeUtc, actual.CreationTimeUtc, "The property CreationTimeUtc is not the same, but is expected to be.");
+                  break;
+               case 3:
+                  Assert.AreEqual(expected.Exists, actual.Exists, "The property Exists is not the same, but is expected to be.");
+                  break;
+               case 4:
+                  Assert.AreEqual(expected.Extension, actual.Extension, "The property Extension is not the same, but is expected to be.");
+                  break;
+               case 5:
+                  Assert.AreEqual(expected.FullName, actual.FullName, "The property FullName is not the same, but is expected to be.");
+                  break;
+               case 6:
+                  Assert.AreEqual(expected.LastAccessTime, actual.LastAccessTime, "The property LastAccessTime is not the same, but is expected to be.");
+                  break;
+               case 7:
+                  Assert.AreEqual(expected.LastAccessTimeUtc, actual.LastAccessTimeUtc, "The property LastAccessTimeUtc is not the same, but is expected to be.");
+                  break;
+               case 8:
+                  Assert.AreEqual(expected.LastWriteTime, actual.LastWriteTime, "The property LastWriteTime is not the same, but is expected to be.");
+                  break;
+               case 9:
+                  Assert.AreEqual(expected.LastWriteTimeUtc, actual.LastWriteTimeUtc, "The property LastWriteTimeUtc is not the same, but is expected to be.");
+                  break;
+               case 10:
+                  Assert.AreEqual(expected.Name, actual.Name, "The property Name is not the same, but is expected to be.");
+                  break;
+
+               // Need .ToString() here since the object types are obviously not the same.
+               case 11: Assert.AreEqual(expected.Parent.ToString(), actual.Parent.ToString(), "The property Parent is not the same, but is expected to be.");
+                  break;
+               case 12: Assert.AreEqual(expected.Root.ToString(), actual.Root.ToString(), "The property Root is not the same, but is expected to be.");
+                  break;
+            }
+         }
+      }
+
 
 
 

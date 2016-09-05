@@ -32,6 +32,7 @@ Version 2.1
 - Issue #146: Add method `DirectoryInfo.EnumerateAlternateDataStreams()`.
 - Issue #147: Add overloaded methods to set Reparse Point Timestamp. (rstarkov)
 - Issue #150: Enhancement: `File.IsLocked()`
+- Issue #158: Add SuppressUnmanagedCodeSecurity attribute to [DllImport] tag.
 - Issue #184: `File.CreateSymbolicLink()` should throw `PlatformNotSupportedException()` if OS < Vista. 
 - Issue #186: Replace WIN32 API `NativeMethods.GetVersionEx()` with `NativeMethods.RtlGetVersion()`.
 - Issue #188: Make `ShareInfo` class property setters private: `ShareType`, `ResourceType`.
