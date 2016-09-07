@@ -155,7 +155,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          string sourceFileNameLp = Path.GetExtendedLengthPathCore(null, sourceFileName, pathFormat, options);
          string destinationFileNameLp = Path.GetExtendedLengthPathCore(null, destinationFileName, pathFormat, options);
-         
+
          // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
          string destinationBackupFileNameLp = destinationBackupFileName == null
             ? null
@@ -164,9 +164,9 @@ namespace Alphaleonis.Win32.Filesystem
          const int replacefileWriteThrough = 1;
          const int replacefileIgnoreMergeErrors = 2;
 
-         FileSystemRights dwReplaceFlags = (FileSystemRights)replacefileWriteThrough;
+         FileSystemRights dwReplaceFlags = (FileSystemRights) replacefileWriteThrough;
          if (ignoreMetadataErrors)
-            dwReplaceFlags |= (FileSystemRights)replacefileIgnoreMergeErrors;
+            dwReplaceFlags |= (FileSystemRights) replacefileIgnoreMergeErrors;
 
          // ReplaceFile()
          // In the ANSI version of this function, the name is limited to MAX_PATH characters.

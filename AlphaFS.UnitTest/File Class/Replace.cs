@@ -36,6 +36,14 @@ namespace AlphaFS.UnitTest
       }
 
 
+      [TestMethod]
+      public void File_Replace_NoBackup_LocalAndUNC_Success()
+      {
+         File_Replace_NoBackup(false);
+         File_Replace_NoBackup(true);
+      }
+
+
 
 
       private void File_Replace(bool isNetwork)
@@ -62,7 +70,7 @@ namespace AlphaFS.UnitTest
                stream.Write(UnitTestConstants.TextGoodbyeWorld);
 
 
-            Alphaleonis.Win32.Filesystem.File.Replace(fileSrc, fileDst, fileBackup, false);
+            Alphaleonis.Win32.Filesystem.File.Replace(fileSrc, fileDst, fileBackup);
 
 
             Assert.IsFalse(System.IO.File.Exists(fileSrc), "The file exists, but is expected not to.");
@@ -72,6 +80,45 @@ namespace AlphaFS.UnitTest
 
             Assert.AreEqual(UnitTestConstants.TextHelloWorld, Alphaleonis.Win32.Filesystem.File.ReadAllText(fileDst), "The texts do not match, but are expected to.");
             Assert.AreEqual(UnitTestConstants.TextGoodbyeWorld, Alphaleonis.Win32.Filesystem.File.ReadAllText(fileBackup), "The texts do not match, but are expected to.");
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void File_Replace_NoBackup(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.Replace"))
+         {
+            string fileSrc = rootDir.RandomFileFullPath + "-" + UnitTestConstants.TextHelloWorld + ".txt";
+            string fileDst = rootDir.RandomFileFullPath + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
+            string fileBackup = rootDir.RandomFileFullPath + "-Backup.txt";
+            Console.WriteLine("\nInput File Path: [{0}]", fileSrc);
+
+
+            using (var stream = System.IO.File.CreateText(fileSrc))
+               stream.Write(UnitTestConstants.TextHelloWorld);
+
+            using (var stream = System.IO.File.CreateText(fileDst))
+               stream.Write(UnitTestConstants.TextGoodbyeWorld);
+
+
+            Alphaleonis.Win32.Filesystem.File.Replace(fileSrc, fileDst, null);
+
+
+            Assert.IsFalse(System.IO.File.Exists(fileSrc), "The file exists, but is expected not to.");
+            Assert.IsTrue(System.IO.File.Exists(fileDst), "The file does not exist, but is expected to.");
+            Assert.IsFalse(System.IO.File.Exists(fileBackup), "The file exists, but is expected not to.");
+
+
+            Assert.AreEqual(UnitTestConstants.TextHelloWorld, Alphaleonis.Win32.Filesystem.File.ReadAllText(fileDst), "The texts do not match, but are expected to.");
          }
 
          Console.WriteLine();
