@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Network
       /// <exception cref="PathTooLongException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="path">The local path with drive name.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       internal static NativeMethods.REMOTE_NAME_INFO GetRemoteNameInfoCore(string path, bool continueOnException)
       {

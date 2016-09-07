@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="continueOnException">
-      ///    <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>

@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Network
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="host">The DNS or NetBIOS name of a host.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDfsRoot(string host, bool continueOnException)
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Network
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="domain">A domain name.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDomainDfsRoot(string domain, bool continueOnException)
@@ -182,7 +182,7 @@ namespace Alphaleonis.Win32.Network
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="host">The DNS or NetBIOS name of a host.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDfsRootCore(string host, bool continueOnException)
@@ -216,7 +216,7 @@ namespace Alphaleonis.Win32.Network
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="domain">A domain name.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDomainDfsRootCore(string domain, bool continueOnException)

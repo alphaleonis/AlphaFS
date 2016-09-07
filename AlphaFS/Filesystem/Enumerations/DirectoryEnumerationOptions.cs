@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Skip reparse points during directory enumeration.</summary>
       SkipReparsePoints = 8,
 
-      /// <summary>Suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</summary>
+      /// <summary>Suppress any Exception that might be thrown as a result from a failure, such as ACLs protected directories or non-accessible reparse points.</summary>
       ContinueOnException = 16,
 
       /// <summary>Specifies whether to search the current directory, or the current directory and all subdirectories.</summary>

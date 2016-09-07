@@ -595,7 +595,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="attributes">A <see cref="System.IO.FileAttributes"/> attribute.</param>
       /// <param name="fileAttributes">One ore more <see cref="FileAttributes"/> attributes.</param>
       /// <param name="continueOnException">
-      /// <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
       /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
@@ -887,7 +887,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileAttributes">A <see cref="FileAttributes"/> attribute.</param>
       /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
       /// <param name="continueOnException">
-      /// <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
       /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]

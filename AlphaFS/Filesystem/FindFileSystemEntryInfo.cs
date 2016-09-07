@@ -343,7 +343,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region ContinueOnException
 
       /// <summary>Gets or sets the ability to skip on access errors.</summary>
-      /// <value><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</value>
+      /// <value><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as ACLs protected directories or non-accessible reparse points.</value>
       public bool ContinueOnException { get; internal set; }
 
       #endregion // ContinueOnException

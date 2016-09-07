@@ -1108,7 +1108,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeMountPoint">The Drive letter or mounted folder to be deleted. For example, X:\ or Y:\MountX\.</param>
       /// <param name="continueOnException">
-      ///   <see langword="true"/> suppress any exception that might be thrown a result from a failure, such as unavailable resources.
+      ///   <see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.
       /// </param>
       /// <returns>If completed successfully returns <see cref="Win32Errors.ERROR_SUCCESS"/>, otherwise the last error number.</returns>      
       [SecurityCritical]

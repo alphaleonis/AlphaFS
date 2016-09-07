@@ -28,12 +28,12 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
       /// <summary>Opens an existing file for reading.</summary>
-      /// <remarks>
-      ///   This method is equivalent to the FileStream(string, FileMode, FileAccess, FileShare) constructor overload with a
-      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
-      /// </remarks>
       /// <param name="path">The file to be opened for reading.</param>
       /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
+      /// <remarks>
+      ///   This method is equivalent to the <see cref="FileStream"/>(string, FileMode, FileAccess, FileShare) constructor overload with a
+      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
+      /// </remarks>
       [SecurityCritical]
       public static FileStream OpenRead(string path)
       {
@@ -41,13 +41,13 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
-      /// <remarks>
-      ///   This method is equivalent to the FileStream(string, FileMode, FileAccess, FileShare) constructor overload with a
-      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
-      /// </remarks>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
+      /// <remarks>
+      ///   This method is equivalent to the <see cref="FileStream"/>(string, FileMode, FileAccess, FileShare) constructor overload with a
+      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
+      /// </remarks>
       [SecurityCritical]
       public static FileStream OpenRead(string path, PathFormat pathFormat)
       {
@@ -55,13 +55,13 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
-      /// <remarks>
-      ///   This method is equivalent to the FileStream(string, FileMode, FileAccess, FileShare) constructor overload with a
-      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
-      /// </remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
       /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
+      /// <remarks>
+      ///   This method is equivalent to the <see cref="FileStream"/>(string, FileMode, FileAccess, FileShare) constructor overload with a
+      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
+      /// </remarks>
       [SecurityCritical]
       public static FileStream OpenReadTransacted(KernelTransaction transaction, string path)
       {
@@ -69,14 +69,14 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
-      /// <remarks>
-      ///   This method is equivalent to the FileStream(string, FileMode, FileAccess, FileShare) constructor overload with a
-      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
-      /// </remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
+      /// <remarks>
+      ///   This method is equivalent to the <see cref="FileStream"/>(string, FileMode, FileAccess, FileShare) constructor overload with a
+      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
+      /// </remarks>
       [SecurityCritical]
       public static FileStream OpenReadTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
