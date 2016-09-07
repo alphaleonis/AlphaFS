@@ -154,7 +154,7 @@ namespace AlphaFS.UnitTest
 
                var exName = ex.GetType().Name;
                gotException = exName.Equals("AlreadyExistsException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+               Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
 
                Assert.IsFalse(System.IO.File.Exists(fileSource.FullName), "The file does exists, but is expected not to.");
                Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
@@ -193,7 +193,7 @@ namespace AlphaFS.UnitTest
             {
                var exName = ex.GetType().Name;
                gotException = exName.Equals("AlreadyExistsException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+               Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
@@ -219,7 +219,7 @@ namespace AlphaFS.UnitTest
          {
             var exName = ex.GetType().Name;
             gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+            Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
@@ -244,7 +244,7 @@ namespace AlphaFS.UnitTest
          {
             var exName = ex.GetType().Name;
             gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+            Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
@@ -271,7 +271,7 @@ namespace AlphaFS.UnitTest
          {
             var exName = ex.GetType().Name;
             gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+            Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
@@ -305,14 +305,12 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               // DirectoryNotFoundException is only for local.
-               // For UNC: IOException or DeviceNotReadyException.
+               // Local: UnauthorizedAccessException.
+               // UNC: IOException.
 
                var exName = ex.GetType().Name;
                gotException = exName.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
-               if (!gotException && isNetwork)
-                  gotException = exName.Equals("DeviceNotReadyException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+               Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
@@ -339,7 +337,7 @@ namespace AlphaFS.UnitTest
          {
             var exName = ex.GetType().Name;
             gotException = exName.Equals("FileNotFoundException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+            Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 

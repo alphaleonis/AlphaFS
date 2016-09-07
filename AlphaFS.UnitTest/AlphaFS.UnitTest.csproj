@@ -147,6 +147,7 @@
     <Compile Include="Classes\BackupFileStream.cs" />
     <Compile Include="Classes\Hash.cs" />
     <Compile Include="Directory Class\AlphaFS_Compress_Decompress.cs" />
+    <Compile Include="Directory Class\Move.cs" />
     <Compile Include="Directory Class\AlphaFS_CountFileSystemObjects.cs" />
     <Compile Include="Directory Class\AlphaFS_Copy.cs" />
     <Compile Include="Directory Class\GetDirectories.cs" />

@@ -71,18 +71,20 @@ Version 2.1
 - Issue #197: Fix: Prevent normalization of GlobalRootPrefix paths.
 - Issue #198: `Path.GetRegularPathCore()` should not normalize `\\?\Volume` prefix.
 - Issue #201: Some exceptions contain an incorrect `HRESULT` (Thomas Levesque)
-- Issue #203: Directory.GetDirectories and GetFiles return absolute paths when given relative argument.
-- Issue #204: Giving empty string to GetFileName and related methods throws exception.
-- Issue #206: GetLastWriteTime throws exception for non-existing path.
-- Issue #217: Find.Replace() raises an exception.
-- Issue #218: Volume.GetVolumeInfo() fails for global root paths.
-- Issue #219: Mismatching Implementation to System.IO.Path.GetDirectoryName.
-- Issue #226: DirectoryInfo using searchoption.
-- Issue #232: Enable null for destinationBackupFileName for File.Replace and FileInfo.Replace.
-- Issue #234: CheckInvalidPathChars breaks IsPathRooted for whitespace strings.
-- Issue #242: File.Open(file, System.IO.FileMode.Append) does not append.
-- Issue #244: File.Copy(src, dst, true) does not respect FILE_ATTRIBUTE_READONLY.
-- Issue #246: Using Directory.EnumerateFileSystemEntries() recursively with a relative path may fail.
+- Issue #203: `Directory.GetDirectories()` and `Directory.GetFiles()` return absolute paths when given relative argument.
+- Issue #204: Giving empty string to `Directory.GetFileName()` and related methods throws exception.
+- Issue #206: `File.GetLastWriteTime()` throws exception for non-existing path.
+- Issue #217: `File.Replace()` raises an exception.
+- Issue #218: `Volume.GetVolumeInfo()` fails for global root paths.
+- Issue #219: Mismatching Implementation to `System.IO.Path.GetDirectoryName()`.
+- Issue #226: `DirectoryInfo` using searchoption.
+- Issue #232: Enable null for destinationBackupFileName for `File.Replace()` and `FileInfo.Replace()`.
+- Issue #234: `Path.CheckInvalidPathChars` breaks `IsPathRooted` for whitespace strings.
+- Issue #242: `File.Open(file, System.IO.FileMode.Append)` does not append.
+- Issue #244: `File.Copy(src, dst, true)` does not respect `FILE_ATTRIBUTE_READONLY`.
+- Issue #246: Using `Directory.EnumerateFileSystemEntries()` recursively with a relative path may fail.
+- Isses #248: `Directory.Move()` throws `FileNotFoundException` instead of `DirectoryNotFoundException` when source folder doesn't exist.
+- Isses #249: Change `File.GetHashCore()` `.ToString("X2")` to `.ToString("X2", CultureInfo.InvariantCulture)`.
 
 ### Breaking Changes
 

@@ -25,7 +25,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
 
@@ -336,7 +335,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      public static void TestAccessRules(ObjectSecurity sysIO, ObjectSecurity alphaFS)
+      public static void TestAccessRules(System.Security.AccessControl.ObjectSecurity sysIO, System.Security.AccessControl.ObjectSecurity alphaFS)
       {
          Console.WriteLine();
 

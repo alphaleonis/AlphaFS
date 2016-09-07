@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Security.AccessControl;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,79 +29,79 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_LocalAndUNC_Success()
+      public void Directory_Move_LocalAndUNC_Success()
       {
-         Directory_Copy(false);
-         Directory_Copy(true);
+         Directory_Move(false);
+         Directory_Move(true);
       }
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_Overwrite_DestinationFileAlreadyExists_LocalAndUNC_Success()
+      public void Directory_Move_Overwrite_DestinationFileAlreadyExists_LocalAndUNC_Success()
       {
-         Directory_Copy_Overwrite_DestinationFileAlreadyExists(false);
-         Directory_Copy_Overwrite_DestinationFileAlreadyExists(true);
+         Directory_Move_Overwrite_DestinationFileAlreadyExists(false);
+         Directory_Move_Overwrite_DestinationFileAlreadyExists(true);
       }
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndUNC_Success()
+      public void Directory_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndUNC_Success()
       {
-         Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
-         Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(true);
+         Directory_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
+         Directory_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(true);
       }
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchArgumentException_PathContainsInvalidCharacters_LocalAndUNC_Success()
+      public void Directory_Move_CatchArgumentException_PathContainsInvalidCharacters_LocalAndUNC_Success()
       {
-         Directory_Copy_CatchArgumentException_PathContainsInvalidCharacters(false);
-         Directory_Copy_CatchArgumentException_PathContainsInvalidCharacters(true);
+         Directory_Move_CatchArgumentException_PathContainsInvalidCharacters(false);
+         Directory_Move_CatchArgumentException_PathContainsInvalidCharacters(true);
       }
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchArgumentException_PathStartsWithColon_Local_Success()
+      public void Directory_Move_CatchArgumentException_PathStartsWithColon_Local_Success()
       {
-         Directory_Copy_CatchArgumentException_PathStartsWithColon(false);
+         Directory_Move_CatchArgumentException_PathStartsWithColon(false);
       }
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndUNC_Success()
+      public void Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndUNC_Success()
       {
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
+         Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
+         Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
       }
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndUNC_Success()
+      public void Directory_Move_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndUNC_Success()
       {
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory(false);
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory(true);
+         Directory_Move_CatchDirectoryNotFoundException_NonExistingDirectory(false);
+         Directory_Move_CatchDirectoryNotFoundException_NonExistingDirectory(true);
       }
       
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchNotSupportedException_PathContainsColon_LocalAndUNC_Success()
+      public void Directory_Move_CatchNotSupportedException_PathContainsColon_LocalAndUNC_Success()
       {
-         Directory_Copy_CatchNotSupportedException_PathContainsColon(false);
-         Directory_Copy_CatchNotSupportedException_PathContainsColon(true);
+         Directory_Move_CatchNotSupportedException_PathContainsColon(false);
+         Directory_Move_CatchNotSupportedException_PathContainsColon(true);
       }
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny_LocalAndUNC_Success()
+      public void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny_LocalAndUNC_Success()
       {
-         Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny(false);
-         Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny(true);
+         Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny(false);
+         Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny(true);
       }
 
 
 
 
-      private void Directory_Copy(bool isNetwork)
+      private void Directory_Move(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -111,10 +110,10 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Copy"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Move"))
          {
             var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
-            var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName());
+            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName());
             Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
 
@@ -129,7 +128,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
             
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName);
 
 
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
@@ -142,7 +141,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_Copy_Overwrite_DestinationFileAlreadyExists(bool isNetwork)
+      private void Directory_Move_Overwrite_DestinationFileAlreadyExists(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -151,10 +150,10 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Copy"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Move"))
          {
             var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
-            var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName());
+            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName());
             Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("\nDst Directory Path: [{0}]", folderDst.FullName);
 
@@ -166,7 +165,7 @@ namespace AlphaFS.UnitTest
             var gotException = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
+               Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName);
             }
             catch (Exception ex)
             {
@@ -177,7 +176,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 
-            // Overwrite using CopyOptions.None
+            // Overwrite using MoveOptions.ReplaceExisting
 
             var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
             var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderSrc.FullName, dirEnumOptions);
@@ -187,7 +186,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
 
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.CopyOptions.None);
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
 
 
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
@@ -200,7 +199,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
+      private void Directory_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -209,7 +208,7 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Copy"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Move"))
          {
             var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
             var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName());
@@ -218,13 +217,12 @@ namespace AlphaFS.UnitTest
 
 
             UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), true);
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
 
 
             var gotException = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
+               Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName);
             }
             catch (Exception ex)
             {
@@ -239,7 +237,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_Copy_CatchArgumentException_PathContainsInvalidCharacters(bool isNetwork)
+      private void Directory_Move_CatchArgumentException_PathContainsInvalidCharacters(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -250,7 +248,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, string.Empty);
          }
          catch (Exception ex)
          {
@@ -264,7 +262,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_Copy_CatchArgumentException_PathStartsWithColon(bool isNetwork)
+      private void Directory_Move_CatchArgumentException_PathStartsWithColon(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -275,7 +273,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, string.Empty);
          }
          catch (Exception ex)
          {
@@ -289,7 +287,7 @@ namespace AlphaFS.UnitTest
       }
 
       
-      private void Directory_Copy_CatchNotSupportedException_PathContainsColon(bool isNetwork)
+      private void Directory_Move_CatchNotSupportedException_PathContainsColon(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -302,7 +300,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, string.Empty);
          }
          catch (Exception ex)
          {
@@ -316,25 +314,28 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter(bool isNetwork)
+      private void Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(bool isNetwork)
       {
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);
          
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Copy"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Move"))
          {
-            var folder = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingFolder";
+            var folderSrc = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingFolder";
             if (isNetwork)
-               folder = PathUtils.AsUncPath(folder);
+               folderSrc = PathUtils.AsUncPath(folderSrc);
 
-            Console.WriteLine("Dst Directory Path: [{0}]", folder);
+            Console.WriteLine("\nDst Directory Path: [{0}]", folderSrc);
+
+            UnitTestConstants.CreateDirectoriesAndFiles(rootDir.Directory.FullName, new Random().Next(5, 15), true);
+
 
             var gotException = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(rootDir.Directory.FullName, folder);
+               Alphaleonis.Win32.Filesystem.Directory.Move(rootDir.Directory.FullName, folderSrc, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
             }
             catch (Exception ex)
             {
@@ -352,14 +353,14 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
+      private void Directory_Move_CatchDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
       {
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Copy"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Move"))
          {
             var folderSrc = System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName();
             var folderDst = System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName();
@@ -370,7 +371,7 @@ namespace AlphaFS.UnitTest
             var gotException = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, folderDst);
+               Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, folderDst);
             }
             catch (Exception ex)
             {
@@ -385,7 +386,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny(bool isNetwork)
+      private void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -394,7 +395,7 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Copy"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Move"))
          {
             var folderSrc = rootDir.RandomFileFullPath;
             Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc);
@@ -417,17 +418,20 @@ namespace AlphaFS.UnitTest
             var dirSecurity = dirInfo.GetAccessControl();
             dirSecurity.AddAccessRule(rule);
             dirInfo.SetAccessControl(dirSecurity);
-            
+
 
             var gotException = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(UnitTestConstants.SysRoot, dirInfo.FullName);
+               Alphaleonis.Win32.Filesystem.Directory.Move(UnitTestConstants.SysRoot, dirInfo.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
             }
             catch (Exception ex)
             {
+               // Local: UnauthorizedAccessException.
+               // UNC: IOException.
+
                var exName = ex.GetType().Name;
-               gotException = exName.Equals("UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
+               gotException = exName.Equals(isNetwork ? "IOException" : "UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
                Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");

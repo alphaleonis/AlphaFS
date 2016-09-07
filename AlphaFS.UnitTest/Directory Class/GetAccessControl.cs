@@ -19,11 +19,8 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Security.AccessControl;
-using System.Security.Principal;
-using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace AlphaFS.UnitTest
 {
@@ -43,22 +40,22 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string tempPath = Path.Combine(Path.GetTempPath(), "Directory.GetAccessControl()-" + Path.GetRandomFileName());
+         string tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Directory.GetAccessControl()-" + System.IO.Path.GetRandomFileName());
 
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
          try
          {
-            Directory.CreateDirectory(tempPath);
+            System.IO.Directory.CreateDirectory(tempPath);
 
             bool foundRules = false;
 
-            FileSecurity sysIO = System.IO.File.GetAccessControl(tempPath);
-            AuthorizationRuleCollection sysIOaccessRules = sysIO.GetAccessRules(true, true, typeof(NTAccount));
+            System.Security.AccessControl.FileSecurity sysIO = System.IO.File.GetAccessControl(tempPath);
+            System.Security.AccessControl.AuthorizationRuleCollection sysIOaccessRules = sysIO.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
 
-            FileSecurity alphaFS = File.GetAccessControl(tempPath);
-            AuthorizationRuleCollection alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(NTAccount));
+            System.Security.AccessControl.FileSecurity alphaFS = System.IO.File.GetAccessControl(tempPath);
+            System.Security.AccessControl.AuthorizationRuleCollection alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
 
 
             Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
@@ -66,7 +63,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(sysIOaccessRules.Count, alphaFSaccessRules.Count);
 
 
-            foreach (FileSystemAccessRule far in alphaFSaccessRules)
+            foreach (var far in alphaFSaccessRules)
             {
                UnitTestConstants.Dump(far, -17);
 
@@ -84,8 +81,8 @@ namespace AlphaFS.UnitTest
          }
          finally
          {
-            Directory.Delete(tempPath, true);
-            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            System.IO.Directory.Delete(tempPath, true);
+            Assert.IsFalse(System.IO.Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          }
 
          Console.WriteLine();

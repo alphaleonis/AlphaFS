@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System.Globalization;
 using System.IO;
 using System.Security;
 using System.Text;
@@ -144,7 +145,7 @@ namespace Alphaleonis.Win32.Filesystem
             var sb = new StringBuilder(hash.Length);
 
             foreach (byte b in hash)
-               sb.Append(b.ToString("X2"));
+               sb.Append(b.ToString("X2", CultureInfo.InvariantCulture));
 
             return sb.ToString().ToLowerInvariant();
          }

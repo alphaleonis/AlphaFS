@@ -1071,31 +1071,31 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         bool fullCheck = pathFormat == PathFormat.RelativePath;
+         var fullCheck = pathFormat == PathFormat.RelativePath;
 
          Path.CheckSupportedPathFormat(sourceFileName, fullCheck, fullCheck);
          Path.CheckSupportedPathFormat(destinationFileName, fullCheck, fullCheck);
 
-         string sourceFileNameLp = Path.GetExtendedLengthPathCore(transaction, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
-         string destFileNameLp = Path.GetExtendedLengthPathCore(transaction, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         var sourceFileNameLp = Path.GetExtendedLengthPathCore(transaction, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         var destFileNameLp = Path.GetExtendedLengthPathCore(transaction, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
 
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
          // Otherwise, the copy/move operation will continue to completion.
-         bool cancel = false;
+         var cancel = false;
 
          // Determine Copy or Move action.
-         bool doCopy = copyOptions != null;
-         bool doMove = !doCopy && moveOptions != null;
+         var doCopy = copyOptions != null;
+         var doMove = !doCopy && moveOptions != null;
 
          if ((!doCopy && !doMove) || (doCopy && doMove))
             throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
 
-         bool overwrite = doCopy
+         var overwrite = doCopy
             ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
             : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
 
-         bool raiseException = progressHandler == null;
+         var raiseException = progressHandler == null;
 
          // Setup callback function for progress notifications.
          var routine = progressHandler != null
@@ -1108,7 +1108,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       startCopyMove:
 
-         uint lastError = Win32Errors.ERROR_SUCCESS;
+         var lastError = Win32Errors.ERROR_SUCCESS;
 
          #region Win32 Copy/Move
 
@@ -1148,15 +1148,23 @@ namespace Alphaleonis.Win32.Filesystem
 
             else if (raiseException)
             {
+               raiseException:
+
                #region Win32Errors
 
                switch (lastError)
                {
                   case Win32Errors.ERROR_FILE_NOT_FOUND:
+                     if (isFolder)
+                     {
+                        lastError = Win32Errors.ERROR_PATH_NOT_FOUND;
+                        goto raiseException;
+                     }
+
                      // File.Copy()
                      // File.Move()
                      // MSDN: .NET 3.5+: FileNotFoundException: sourceFileName was not found. 
-                     NativeError.ThrowException(lastError, sourceFileNameLp);
+                        NativeError.ThrowException(lastError, sourceFileNameLp);
                      break;
 
                   case Win32Errors.ERROR_PATH_NOT_FOUND:
@@ -1194,11 +1202,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                      // Try reading the source file.
-                     string fileNameLp = destFileNameLp;
+                     var fileNameLp = destFileNameLp;
 
                      if (!isFolder)
                      {
-                        using (SafeFileHandle safeHandle = CreateFileCore(transaction, sourceFileNameLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, PathFormat.LongFullPath))
+                        using (var safeHandle = CreateFileCore(transaction, sourceFileNameLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, PathFormat.LongFullPath))
                            if (safeHandle != null && safeHandle.IsInvalid)
                               fileNameLp = sourceFileNameLp;
                      }
@@ -1280,7 +1288,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             // Currently preserveDates is only used with files.
             var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-            int dataInitialised = FillAttributeInfoCore(transaction, sourceFileNameLp, ref data, false, true);
+            var dataInitialised = FillAttributeInfoCore(transaction, sourceFileNameLp, ref data, false, true);
 
             if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.dwFileAttributes != (FileAttributes) (-1))
                SetFsoDateTimeCore(false, transaction, destFileNameLp, DateTime.FromFileTimeUtc(data.ftCreationTime),
