@@ -29,14 +29,9 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_ExportEncryptedDirectoryRaw_ExportImportRountrip_DirectoryCreated_Local_Success()
+      public void AlphaFS_Directory_ExportImportEncryptedDirectoryRaw_LocalAndUNC_Success()
       {
          Directory_ExportImportEncryptedDirectoryRaw(false);
-      }
-
-      [TestMethod]
-      public void Directory_ExportEncryptedDirectoryRaw_ExportImportRountrip_DirectoryCreated_Network_Success()
-      {
          Directory_ExportImportEncryptedDirectoryRaw(true);
       }
 
@@ -52,7 +47,7 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory-ExportImportEncryptedDirectoryRaw"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.ExportImportEncryptedDirectoryRaw"))
          {
             // Create an encrypted file to use for testing.
             string inputDir = System.IO.Path.Combine(rootDir.Directory.FullName, "testDir");
@@ -66,9 +61,7 @@ namespace AlphaFS.UnitTest
             // Export the file using the method under test.
             string exportedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "export.dat");
             using (var fs = System.IO.File.Create(exportedFile))
-            {
                Alphaleonis.Win32.Filesystem.Directory.ExportEncryptedDirectoryRaw(inputDir, fs);               
-            }
             Console.WriteLine("\nExported Input Directory: [{0}]", exportedFile);
 
 
@@ -79,9 +72,7 @@ namespace AlphaFS.UnitTest
             // Import the directory again.
             string importedDir = System.IO.Path.Combine(rootDir.Directory.FullName, "importDir");
             using (var fs = System.IO.File.OpenRead(exportedFile))
-            {
                Alphaleonis.Win32.Filesystem.Directory.ImportEncryptedDirectoryRaw(fs, importedDir);               
-            }
             Console.WriteLine("\nImported Input Directory: [{0}]", importedDir);
 
 
@@ -89,6 +80,8 @@ namespace AlphaFS.UnitTest
             DirectoryAssert.Exists(importedDir);
             DirectoryAssert.IsEncrypted(importedDir);
          }
+
+         Console.WriteLine();
       }
    }
 }

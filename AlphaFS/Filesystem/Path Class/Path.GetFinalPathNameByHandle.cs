@@ -78,8 +78,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
-
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             if (NativeMethods.IsAtLeastWindowsVista)

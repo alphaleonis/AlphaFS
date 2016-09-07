@@ -80,7 +80,7 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CountFileSystemObjects_FoldersOnly_NonRecursive"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CountFileSystemObjects"))
          {
             string folder = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
@@ -109,7 +109,7 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CountFileSystemObjects_FoldersOnly_Recursive"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CountFileSystemObjects"))
          {
             string folder = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
@@ -138,7 +138,7 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CountFileSystemObjects_FilesOnly_NonRecursive"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CountFileSystemObjects"))
          {
             string folder = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
@@ -167,7 +167,7 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CountFileSystemObjects_FilesOnly_Recursive"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CountFileSystemObjects"))
          {
             string folder = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
@@ -196,7 +196,7 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CountFileSystemObjects_FoldersAndFiles_Recursive"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CountFileSystemObjects"))
          {
             string folder = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);

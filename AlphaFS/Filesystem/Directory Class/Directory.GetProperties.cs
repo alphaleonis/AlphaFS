@@ -255,13 +255,10 @@ namespace Alphaleonis.Win32.Filesystem
          const string propTotal = "Total";
          const string propSize = "Size";
          
-         Type typeOfAttrs = typeof(FileAttributes);
-         Array attributes = Enum.GetValues(typeOfAttrs);
-
-         Dictionary<string, long> props = Enum.GetNames(typeOfAttrs).OrderBy(attrs => attrs).ToDictionary<string, string, long>(name => name, name => 0);
-
-
-         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         var typeOfAttrs = typeof(FileAttributes);
+         var attributes = Enum.GetValues(typeOfAttrs);
+         var props = Enum.GetNames(typeOfAttrs).OrderBy(attrs => attrs).ToDictionary<string, string, long>(name => name, name => 0);
+         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath))
          {
@@ -271,10 +268,9 @@ namespace Alphaleonis.Win32.Filesystem
                size += fsei.FileSize;
 
             var fsei1 = fsei;
-            foreach (FileAttributes attributeMarker in attributes.Cast<FileAttributes>().Where(attributeMarker => (fsei1.Attributes & attributeMarker) != 0))
-            {
-               props[(((attributeMarker & FileAttributes.Directory) != 0) ? FileAttributes.Directory : attributeMarker).ToString()]++;
-            }
+
+            foreach (var attributeMarker in attributes.Cast<FileAttributes>().Where(attributeMarker => (fsei1.Attributes & attributeMarker) != 0))
+               props[((attributeMarker & FileAttributes.Directory) != 0 ? FileAttributes.Directory : attributeMarker).ToString()]++;
          }
 
          // Adjust regular files count.

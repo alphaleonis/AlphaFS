@@ -752,7 +752,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         bool fullCheck = pathFormat == PathFormat.RelativePath;
+         var fullCheck = pathFormat == PathFormat.RelativePath;
 
          Path.CheckSupportedPathFormat(sourcePath, fullCheck, fullCheck);
          Path.CheckSupportedPathFormat(destinationPath, fullCheck, fullCheck);
@@ -763,8 +763,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          const GetFullPathOptions fullPathOptions = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
 
-         string sourcePathLp = Path.GetExtendedLengthPathCore(transaction, sourcePath, pathFormat, fullPathOptions);
-         string destinationPathLp = Path.GetExtendedLengthPathCore(transaction, destinationPath, pathFormat, fullPathOptions);
+         var sourcePathLp = Path.GetExtendedLengthPathCore(transaction, sourcePath, pathFormat, fullPathOptions);
+         var destinationPathLp = Path.GetExtendedLengthPathCore(transaction, destinationPath, pathFormat, fullPathOptions);
 
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
          if (sourcePathLp.Equals(destinationPathLp, StringComparison.OrdinalIgnoreCase))
@@ -772,13 +772,13 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Determine Copy or Move action.
-         bool doCopy = copyOptions != null;
-         bool doMove = !doCopy && moveOptions != null;
+         var doCopy = copyOptions != null;
+         var doMove = !doCopy && moveOptions != null;
 
          if ((!doCopy && !doMove) || (doCopy && doMove))
             throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
 
-         bool overwrite = doCopy
+         var overwrite = doCopy
             ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
             : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
 
@@ -794,7 +794,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
             {
-               string newDestinationPathLp = Path.CombineCore(false, destinationPathLp, fsei.FileName);
+               var newDestinationPathLp = Path.CombineCore(false, destinationPathLp, fsei.FileName);
 
                cmr = fsei.IsDirectory
                   ? CopyMoveCore(transaction, fsei.LongFullPath, newDestinationPathLp, copyOptions, null, progressHandler, userProgressData, PathFormat.LongFullPath)

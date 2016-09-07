@@ -175,7 +175,7 @@ namespace Alphaleonis.Win32.Filesystem
          // The deviceName cannot have a trailing backslash.
          deviceName = Path.RemoveTrailingDirectorySeparator(deviceName, false);
 
-         bool searchFilter = (deviceName != null);
+         var searchFilter = (deviceName != null);
 
          // Only process options if a device is supplied.
          if (searchFilter)
@@ -187,14 +187,13 @@ namespace Alphaleonis.Win32.Filesystem
          }
          
          // Choose sorted output.
-         bool doSort = options != null &&
+         var doSort = options != null &&
                        options.Any(s => s != null && s.Equals("sort", StringComparison.OrdinalIgnoreCase));
 
          // Start with a larger buffer when using a searchFilter.
-         uint bufferSize = (uint) (searchFilter || doSort || (options == null) ? 8*NativeMethods.DefaultFileBufferSize : 256);
+         var bufferSize = (uint) (searchFilter || doSort || (options == null) ? 8*NativeMethods.DefaultFileBufferSize : 256);
          uint bufferResult = 0;
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (bufferResult == 0)
             {
@@ -206,7 +205,7 @@ namespace Alphaleonis.Win32.Filesystem
                // 2014-01-29: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
                bufferResult = NativeMethods.QueryDosDevice(deviceName, cBuffer, bufferSize);
-               int lastError = Marshal.GetLastWin32Error();
+               var lastError = Marshal.GetLastWin32Error();
 
                if (bufferResult == 0)
                   switch ((uint) lastError)
@@ -224,7 +223,7 @@ namespace Alphaleonis.Win32.Filesystem
                var dosDev = new List<string>();
                var buffer = new StringBuilder();
 
-               for (int i = 0; i < bufferResult; i++)
+               for (var i = 0; i < bufferResult; i++)
                {
                   if (cBuffer[i] != Path.StringTerminatorChar)
                      buffer.Append(cBuffer[i]);
@@ -237,11 +236,11 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
                // Choose the yield back query; filtered or list.
-               IEnumerable<string> selectQuery = searchFilter
+               var selectQuery = searchFilter
                   ? dosDev.Where(dev => options != null && dev.StartsWith(options[0], StringComparison.OrdinalIgnoreCase))
                   : dosDev;
 
-               foreach (string dev in (doSort) ? selectQuery.OrderBy(n => n) : selectQuery)
+               foreach (var dev in (doSort) ? selectQuery.OrderBy(n => n) : selectQuery)
                   yield return dev;
             }
       }
@@ -264,7 +263,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDriveFormat(string drivePath)
       {
-         string fsName = new VolumeInfo(drivePath, true, true).FileSystemName;
+         var fsName = new VolumeInfo(drivePath, true, true).FileSystemName;
          return Utils.IsNullOrWhiteSpace(fsName) ? null : fsName;
       }
 
@@ -449,11 +448,10 @@ namespace Alphaleonis.Win32.Filesystem
 
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (SafeFindVolumeMountPointHandle handle = NativeMethods.FindFirstVolumeMountPoint(volumeGuid, buffer, (uint)buffer.Capacity))
+         using (var handle = NativeMethods.FindFirstVolumeMountPoint(volumeGuid, buffer, (uint)buffer.Capacity))
          {
-            int lastError = Marshal.GetLastWin32Error();
+            var lastError = Marshal.GetLastWin32Error();
 
             if (handle.IsInvalid)
             {
@@ -520,16 +518,15 @@ namespace Alphaleonis.Win32.Filesystem
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
 
-         string volName = Path.AddTrailingDirectorySeparator(volumeGuid, false);
+         var volName = Path.AddTrailingDirectorySeparator(volumeGuid, false);
 
          uint requiredLength = 10;
-         char[] cBuffer = new char[requiredLength];
+         var cBuffer = new char[requiredLength];
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (!NativeMethods.GetVolumePathNamesForVolumeName(volName, cBuffer, (uint)cBuffer.Length, out requiredLength))
             {
-               int lastError = Marshal.GetLastWin32Error();
+               var lastError = Marshal.GetLastWin32Error();
 
                switch ((uint)lastError)
                {
@@ -545,7 +542,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
          var buffer = new StringBuilder(cBuffer.Length);
-         foreach (char c in cBuffer)
+         foreach (var c in cBuffer)
          {
             if (c != Path.StringTerminatorChar)
                buffer.Append(c);
@@ -572,9 +569,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (SafeFindVolumeHandle handle = NativeMethods.FindFirstVolume(buffer, (uint)buffer.Capacity))
+         using (var handle = NativeMethods.FindFirstVolume(buffer, (uint)buffer.Capacity))
          {
             while (handle != null && !handle.IsInvalid)
             {
@@ -583,7 +579,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                else
                {
-                  int lastError = Marshal.GetLastWin32Error();
+                  var lastError = Marshal.GetLastWin32Error();
 
                   handle.Close();
 
@@ -688,7 +684,7 @@ namespace Alphaleonis.Win32.Filesystem
             try
             {
                // Get the real Device underneath.
-               string dev = QueryDosDevice(volumeName).FirstOrDefault();
+               var dev = QueryDosDevice(volumeName).FirstOrDefault();
                return !Utils.IsNullOrWhiteSpace(dev) ? dev : null;
             }
             catch
@@ -717,14 +713,14 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            foreach (string m in EnumerateVolumePathNames(volumeName).Where(m => !Utils.IsNullOrWhiteSpace(m) && m.Length < smallestMountPoint[0].Length))
+            foreach (var m in EnumerateVolumePathNames(volumeName).Where(m => !Utils.IsNullOrWhiteSpace(m) && m.Length < smallestMountPoint[0].Length))
                smallestMountPoint[0] = m;
          }
          catch
          {
          }
 
-         string result = smallestMountPoint[0][0] == Path.WildcardStarMatchAllChar ? null : smallestMountPoint[0];
+         var result = smallestMountPoint[0][0] == Path.WildcardStarMatchAllChar ? null : smallestMountPoint[0];
          return Utils.IsNullOrWhiteSpace(result) ? null : result;
       }
 
@@ -756,7 +752,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             {
                // GetVolumeNameForVolumeMountPoint()
@@ -773,7 +768,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
          finally
          {
-            uint lastError = (uint) Marshal.GetLastWin32Error();
+            var lastError = (uint) Marshal.GetLastWin32Error();
 
             switch (lastError)
             {
@@ -872,19 +867,18 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
          
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             var volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode / 32);
-            string pathLp = Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
+            var pathLp = Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
             // GetVolumePathName()
             // In the ANSI version of this function, the name is limited to 248 characters.
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-            bool getOk = NativeMethods.GetVolumePathName(pathLp, volumeRootPath, (uint) volumeRootPath.Capacity);
-            int lastError = Marshal.GetLastWin32Error();
+            var getOk = NativeMethods.GetVolumePathName(pathLp, volumeRootPath, (uint) volumeRootPath.Capacity);
+            var lastError = Marshal.GetLastWin32Error();
 
             if (getOk)
                return Path.GetRegularPathCore(volumeRootPath.ToString(), GetFullPathOptions.None, false);
@@ -988,7 +982,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          volumePath = Path.AddTrailingDirectorySeparator(volumePath, false);
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          // NTFS uses a limit of 32 characters for the volume label as of Windows Server 2003.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             if (!NativeMethods.SetVolumeLabel(volumePath, volumeName))
@@ -1036,7 +1029,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (!NativeMethods.SetVolumeMountPoint(volumeMountPoint, volumeGuid))
             {
-               int lastError = Marshal.GetLastWin32Error();
+               var lastError = Marshal.GetLastWin32Error();
 
                // If the lpszVolumeMountPoint parameter contains a path to a mounted folder,
                // GetLastError returns ERROR_DIR_NOT_EMPTY, even if the directory is empty.
@@ -1088,7 +1081,6 @@ namespace Alphaleonis.Win32.Filesystem
             // In no case is a trailing backslash ("\") allowed.
             deviceName = Path.GetRegularPathCore(deviceName, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars, false);
 
-            // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
                if (!NativeMethods.DefineDosDevice(deviceAttributes, deviceName, targetPath))
                   NativeError.ThrowException(deviceName, targetPath);
@@ -1125,9 +1117,8 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(volumeMountPoint))
             throw new ArgumentNullException("volumeMountPoint");
 
-         int lastError = (int) Win32Errors.ERROR_SUCCESS;
+         var lastError = (int) Win32Errors.ERROR_SUCCESS;
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             // DeleteVolumeMountPoint()

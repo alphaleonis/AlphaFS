@@ -164,6 +164,7 @@ namespace AlphaFS.UnitTest
 
       #region Methods
 
+      // A high "max" increases the change of path too long.
       public static void CreateDirectoriesAndFiles(string rootPath, int max, bool recurse)
       {
          for (int i = 0; i < max; i++)

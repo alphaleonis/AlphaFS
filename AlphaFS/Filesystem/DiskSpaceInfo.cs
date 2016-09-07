@@ -104,7 +104,6 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Reset();
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             int lastError = (int) Win32Errors.NO_ERROR;

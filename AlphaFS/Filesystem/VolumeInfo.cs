@@ -120,7 +120,6 @@ namespace Alphaleonis.Win32.Filesystem
          int maximumComponentLength;
          uint serialNumber;
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             // GetVolumeInformationXxx()

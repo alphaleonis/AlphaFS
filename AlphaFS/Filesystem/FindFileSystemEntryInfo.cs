@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       private SafeFindFileHandle FindFirstFile(string pathLp, out NativeMethods.WIN32_FIND_DATA win32FindData)
       {
-         SafeFindFileHandle handle = Transaction == null || !NativeMethods.IsAtLeastWindowsVista
+         var handle = Transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
             // FindFirstFileEx() / FindFirstFileTransacted()
             // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -99,12 +99,12 @@ namespace Alphaleonis.Win32.Filesystem
             ? NativeMethods.FindFirstFileEx(Path.RemoveTrailingDirectorySeparator(pathLp, false), FindExInfoLevel, out win32FindData, _limitSearchToDirs, IntPtr.Zero, LargeCache)
             : NativeMethods.FindFirstFileTransacted(Path.RemoveTrailingDirectorySeparator(pathLp, false), FindExInfoLevel, out win32FindData, _limitSearchToDirs, IntPtr.Zero, LargeCache, Transaction.SafeHandle);
 
-         int lastError = Marshal.GetLastWin32Error();
-
+         var lastError = Marshal.GetLastWin32Error();
 
          if (handle.IsInvalid)
          {
             handle.Close();
+            handle = null;
 
             if (!ContinueOnException)
             {
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
       private T NewFileSystemEntryType<T>(NativeMethods.WIN32_FIND_DATA win32FindData, string fileName, string pathLp, bool isFolder)
       {
          // Determine yield.
-         if (FileSystemObjectType != null && ((!(bool) FileSystemObjectType || !isFolder) && (!(bool) !FileSystemObjectType || isFolder)))
+         if (FileSystemObjectType != null && (!(bool) FileSystemObjectType || !isFolder) && (!(bool) !FileSystemObjectType || isFolder))
             return (T) (object) null;
 
 
@@ -211,25 +211,21 @@ namespace Alphaleonis.Win32.Filesystem
          // The algorithmic complexity of this is O(1). It doesn't loop over elements.
          dirs.Enqueue(InputPath);
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (dirs.Count > 0)
             {
-               string path = Path.AddTrailingDirectorySeparator(dirs.Dequeue(), false);
-               string pathLp = path + Path.WildcardStarMatchAll;
+               var path = Path.AddTrailingDirectorySeparator(dirs.Dequeue(), false);
+               var pathLp = path + Path.WildcardStarMatchAll;
                NativeMethods.WIN32_FIND_DATA win32FindData;
 
-               using (SafeFindFileHandle handle = FindFirstFile(pathLp, out win32FindData))
+               using (var handle = FindFirstFile(pathLp, out win32FindData))
                {
-                  if (handle != null && handle.IsInvalid && ContinueOnException)
-                  {
-                     handle.Close();
+                  if (handle == null && ContinueOnException)
                      continue;
-                  }
-
+                  
                   do
                   {
-                     string fileName = win32FindData.cFileName;
+                     var fileName = win32FindData.cFileName;
 
                      // Skip entries "." and ".."
                      if (fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) ||
@@ -241,12 +237,10 @@ namespace Alphaleonis.Win32.Filesystem
                         continue;
 
 
-                     //string fseiFullPathLp = string.Format(CultureInfo.InvariantCulture, "{0}{1}", IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : path, fileName);
-
-                     bool fseiIsFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
+                     var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
 
                      // If object is a directory, add it to the queue for later traversal.
-                     if (fseiIsFolder && Recursive)
+                     if (isFolder && Recursive)
                         dirs.Enqueue(path + fileName);
 
 
@@ -254,8 +248,7 @@ namespace Alphaleonis.Win32.Filesystem
                      if (!(_nameFilter == null || (_nameFilter != null && _nameFilter.IsMatch(fileName))))
                         continue;
 
-                     //var res = NewFileSystemEntryType<T>(win32FindData, fseiFullPathLp, fseiIsFolder);
-                     var res = NewFileSystemEntryType<T>(win32FindData, fileName, IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : path, fseiIsFolder);
+                     var res = NewFileSystemEntryType<T>(win32FindData, fileName, IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : path, isFolder);
                      if (res == null)
                         continue;
 
@@ -303,15 +296,11 @@ namespace Alphaleonis.Win32.Filesystem
       {
          NativeMethods.WIN32_FIND_DATA win32FindData;
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (SafeFindFileHandle handle = FindFirstFile(InputPath, out win32FindData))
-         {
-            if (handle != null && !handle.IsInvalid)
-               return NewFileSystemEntryType<T>(win32FindData, null, InputPath, (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0);
-         }
-
-         return (T) (object) null;
+         using (var handle = FindFirstFile(InputPath, out win32FindData))
+            return handle == null
+               ? (T) (object) null
+               : NewFileSystemEntryType<T>(win32FindData, null, InputPath, (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0);
       }
 
       #endregion // Get

@@ -32,6 +32,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          private readonly ErrorMode _oldMode;
 
+         /// <summary>ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.</summary>
+         /// <param name="mode">One of the <see cref="ErrorMode"/> values.</param>
          public ChangeErrorMode(ErrorMode mode)
          {
             if (IsAtLeastWindows7)

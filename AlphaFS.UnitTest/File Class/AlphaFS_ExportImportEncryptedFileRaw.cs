@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File-ExportImportEncryptedFileRaw"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.ExportImportEncryptedFileRaw"))
          {
             // Create an encrypted file to use for testing
             string inputFile = System.IO.Path.Combine(rootDir.Directory.FullName, "test.txt");
