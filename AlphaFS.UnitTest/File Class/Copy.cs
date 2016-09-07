@@ -126,6 +126,9 @@ namespace AlphaFS.UnitTest
 
             var fileLen = new System.IO.FileInfo(fileCopy).Length;
             Assert.AreEqual(fileLength, fileLen, "The file copy is: {0} bytes, but is expected to be: {1} bytes.", fileLen, fileLength);
+
+
+            Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The original file does not exist, but is expected to.");
          }
 
          Console.WriteLine();

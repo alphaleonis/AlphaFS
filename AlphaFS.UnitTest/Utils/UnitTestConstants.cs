@@ -53,8 +53,7 @@ namespace AlphaFS.UnitTest
       public const string TextFalse = "IsFalse";
       public const string TenNumbers = "0123456789";
       public const string TextHelloWorld = "Hëllõ Wørld!";
-      public const string TextGoodByeWorld = "GóödByé Wôrld!";
-      public const string TextAppend = "GóödByé Wôrld!";
+      public const string TextGoodbyeWorld = "Góödbyé Wôrld!";
       public const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
 
       private static Stopwatch _stopWatcher;
@@ -180,7 +179,7 @@ namespace AlphaFS.UnitTest
                //System.IO.File.WriteAllText(file, TextHelloWorld);
                CreateFile(dir);
 
-               System.IO.File.WriteAllText(System.IO.Path.Combine(dir, System.IO.Path.GetFileName(file)), TextGoodByeWorld);
+               System.IO.File.WriteAllText(System.IO.Path.Combine(dir, System.IO.Path.GetFileName(file)), TextGoodbyeWorld);
             }
          }
 

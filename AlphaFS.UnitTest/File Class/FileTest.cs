@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
          string tempFile = Path.GetTempFileName();
          if (!isLocal) tempFile = Path.LocalToUnc(tempFile);
 
-         IEnumerable<string> allLines = new[] { UnitTestConstants.TenNumbers, UnitTestConstants.TextHelloWorld, UnitTestConstants.TextAppend, UnitTestConstants.TextUnicode };
+         IEnumerable<string> allLines = new[] {UnitTestConstants.TenNumbers, UnitTestConstants.TextHelloWorld, UnitTestConstants.TextGoodbyeWorld, UnitTestConstants.TextUnicode};
 
          #endregion // Setup
 
@@ -425,7 +425,7 @@ namespace AlphaFS.UnitTest
          // Append text as UTF-8, default.
          using (streamWrite = File.AppendText(tempFile))
          {
-            streamWrite.Write(UnitTestConstants.TextAppend);
+            streamWrite.Write(UnitTestConstants.TextGoodbyeWorld);
          }
 
          // Read filestream contents.
@@ -433,7 +433,7 @@ namespace AlphaFS.UnitTest
          {
             while ((line = streamRead.ReadLine()) != null)
             {
-               Console.WriteLine("\n AppendText() as [{0}]\n  Appended: [{1}]\n  Content : [{2}]", utf8, UnitTestConstants.TextAppend, line);
+               Console.WriteLine("\n AppendText() as [{0}]\n  Appended: [{1}]\n  Content : [{2}]", utf8, UnitTestConstants.TextGoodbyeWorld, line);
             }
          }
 
@@ -449,12 +449,12 @@ namespace AlphaFS.UnitTest
          {
             while ((line = streamRead.ReadLine()) != null)
             {
-               Console.WriteLine("\n AppendText() as [{0}]\n  Appended: [{1}]\n  Content : [{2}]", utf8, UnitTestConstants.TextAppend, line);
+               Console.WriteLine("\n AppendText() as [{0}]\n  Appended: [{1}]\n  Content : [{2}]", utf8, UnitTestConstants.TextGoodbyeWorld, line);
                matchLine = line; // Catch the last line.
             }
          }
 
-         Assert.IsTrue(matchLine.Equals(UnitTestConstants.TextHelloWorld + UnitTestConstants.TextAppend + UnitTestConstants.TextUnicode, StringComparison.OrdinalIgnoreCase));
+         Assert.IsTrue(matchLine.Equals(UnitTestConstants.TextHelloWorld + UnitTestConstants.TextGoodbyeWorld + UnitTestConstants.TextUnicode, StringComparison.OrdinalIgnoreCase));
 
          File.Delete(tempFile, true);
          Assert.IsFalse(File.Exists(tempFile), "Cleanup failed: File should have been removed.");
@@ -679,7 +679,7 @@ namespace AlphaFS.UnitTest
          // Create file and append text.
          string tempFile = Path.GetTempFileName();
 
-         string[] allLines = new[] { UnitTestConstants.TenNumbers, UnitTestConstants.TextHelloWorld, UnitTestConstants.TextAppend, UnitTestConstants.TextUnicode };
+         string[] allLines = new[] { UnitTestConstants.TenNumbers, UnitTestConstants.TextHelloWorld, UnitTestConstants.TextGoodbyeWorld, UnitTestConstants.TextUnicode };
 
          // Create real UTF-8 file.
          File.WriteAllLines(tempFile, allLines, NativeMethods.DefaultFileEncoding);

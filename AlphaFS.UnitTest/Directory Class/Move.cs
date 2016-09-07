@@ -135,6 +135,9 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
+
+
+            Assert.IsFalse(System.IO.Directory.Exists(folderSrc.FullName), "The original folder exists, but is expected not to.");
          }
 
          Console.WriteLine();

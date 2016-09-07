@@ -372,8 +372,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput File Path: [{0}]\n", tempPath);
 
-         using (File.Create(tempPath))
-         {}
+         using (File.Create(tempPath)) {}
 
 
          

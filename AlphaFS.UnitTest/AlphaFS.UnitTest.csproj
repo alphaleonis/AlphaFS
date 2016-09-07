@@ -161,7 +161,8 @@
     <Compile Include="Directory Class\GetTimestamps.cs" />
     <Compile Include="Directory Class\SetAccessControl.cs" />
     <Compile Include="DirectoryInfo Class\Refresh.cs" />
-    <Compile Include="File Class\AlphaFS__GetHash.cs" />
+    <Compile Include="File Class\AlphaFS_GetHash.cs" />
+    <Compile Include="File Class\Replace.cs" />
     <Compile Include="File Class\Move.cs" />
     <Compile Include="File Class\Copy.cs" />
     <Compile Include="File Class\Delete.cs" />
