@@ -11,6 +11,7 @@ Version 2.1
 	* `Directory.ImportEncryptedDirectoryRaw`
 	* `Directory.ExportEncryptedDirectoryRaw`
 
+- Issue #2  : Unit tests for methods: `File.OpenRead()`, `File.OpenText()` and `File.Replace()` are missing.
 - Issue #101: The release now also contains a build targetting .NET 4.5.2.
 - Issue #109: Add overloaded methods for `Host.EnumerateShares()`.
 - Issue #112: Add `CreationTimeUtc`, `LastAccessTimeUtc` and `LastWriteTimeUtc` to "Info" classes.

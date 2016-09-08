@@ -32,6 +32,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_SetTimestampsXxx_LocalAndUNC_Success()
       {
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
          File_SetTimestampsXxx(false);
          File_SetTimestampsXxx(true);
       }

@@ -963,7 +963,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       internal static FileStream OpenCore(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, ExtendedFileAttributes attributes, int? bufferSize, FileSecurity security, PathFormat pathFormat)
       {
-         FileSystemRights rights = access == FileAccess.Read
+         var rights = access == FileAccess.Read
             ? FileSystemRights.Read
             : (access == FileAccess.Write ? FileSystemRights.Write : FileSystemRights.Read | FileSystemRights.Write);
 
@@ -988,10 +988,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       internal static FileStream OpenCore(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, ExtendedFileAttributes attributes, int? bufferSize, FileSecurity security, PathFormat pathFormat)
       {
-         FileAccess access = ((rights & FileSystemRights.ReadData) != 0 ? FileAccess.Read : 0) |
-                             ((rights & FileSystemRights.WriteData) != 0 || (rights & FileSystemRights.AppendData) != 0
-                                ? FileAccess.Write
-                                : 0);
+         var access = ((rights & FileSystemRights.ReadData) != 0 ? FileAccess.Read : 0) |
+                      ((rights & FileSystemRights.WriteData) != 0 || (rights & FileSystemRights.AppendData) != 0
+                         ? FileAccess.Write
+                         : 0);
 
 
          SafeFileHandle safeHandle = null;

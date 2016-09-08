@@ -554,47 +554,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetAttributes
 
-      #region OpenWrite
-
-      [TestMethod]
-      public void File_OpenWrite()
-      {
-         Console.WriteLine("File.OpenWrite()\n");
-
-         string path = Path.GetTempPath("File.OpenWrite()-" + Path.GetRandomFileName());
-
-         // Open the stream and write to it.
-         using (FileStream fs = File.OpenWrite(path))
-         {
-            byte[] info = new UTF8Encoding(true).GetBytes("This is to test the OpenWrite method.");
-
-            // Add some information to the file.
-            fs.Write(info, 0, info.Length);
-         }
-
-         bool fileExists = File.Exists(path);
-
-
-         // Open the stream and read it back.
-         using (FileStream fs = File.OpenRead(path))
-         {
-            byte[] b = new byte[1024];
-            UTF8Encoding temp = new UTF8Encoding(true);
-
-            while (fs.Read(b, 0, b.Length) > 0)
-            {
-               Console.WriteLine(temp.GetString(b));
-            }
-         }
-
-         File.Delete(path, true);
-         Assert.IsFalse(File.Exists(path), "Cleanup failed: File should have been removed.");
-
-         Assert.IsTrue(fileExists);
-      }
-
-      #endregion // OpenWrite
-
       #region ReadAllBytes
 
       [TestMethod]

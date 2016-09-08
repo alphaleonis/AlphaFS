@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
          return Open(path, FileMode.OpenOrCreate, FileAccess.Write);
       }
 
-      /// <summary>Opens an existing file or creates a new file for writing.</summary>
+      /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
          return Open(path, FileMode.OpenOrCreate, FileAccess.Write, pathFormat);
       }
 
-      /// <summary>Opens an existing file or creates a new file for writing.</summary>
+      /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
       /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
          return OpenTransacted(transaction, path, FileMode.OpenOrCreate, FileAccess.Write);
       }
 
-      /// <summary>Opens an existing file or creates a new file for writing.</summary>
+      /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>

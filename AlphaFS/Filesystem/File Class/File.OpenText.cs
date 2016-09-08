@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
          return new StreamReader(OpenRead(path), NativeMethods.DefaultFileEncoding);
       }
 
-      /// <summary>Opens an existing UTF-8 encoded text file for reading.</summary>
+      /// <summary>[AlphaFS] Opens an existing UTF-8 encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
          return new StreamReader(OpenRead(path, pathFormat), NativeMethods.DefaultFileEncoding);
       }
 
-      /// <summary>Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
+      /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
+      /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
          return new StreamReader(OpenRead(path), encoding);
       }
 
-      /// <summary>Opens an existing UTF-8 encoded text file for reading.</summary>
+      /// <summary>[AlphaFS] Opens an existing UTF-8 encoded text file for reading.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
          return new StreamReader(OpenReadTransacted(transaction, path), NativeMethods.DefaultFileEncoding);
       }
 
-      /// <summary>Opens an existing UTF-8 encoded text file for reading.</summary>
+      /// <summary>[AlphaFS] Opens an existing UTF-8 encoded text file for reading.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
          return new StreamReader(OpenReadTransacted(transaction, path, pathFormat), NativeMethods.DefaultFileEncoding);
       }
 
-      /// <summary>Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
+      /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
          return new StreamReader(OpenReadTransacted(transaction, path, pathFormat), encoding);
       }
 
-      /// <summary>Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
+      /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>

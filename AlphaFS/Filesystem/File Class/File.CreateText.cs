@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateTextCore(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
-      /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
+      /// <summary>[AlphaFS] Creates or opens a file for writing <see cref="Encoding"/> encoded text.</summary>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateTextCore(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
       }
 
-      /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
+      /// <summary>[AlphaFS] Creates or opens a file for writing <see cref="Encoding"/> encoded text.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
