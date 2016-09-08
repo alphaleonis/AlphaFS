@@ -464,18 +464,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // AppendText
 
-      #region CreateText
-
-      [TestMethod]
-      public void File_CreateText()
-      {
-         Console.WriteLine("File.CreateText()");
-
-         File_AppendText();
-      }
-
-      #endregion // CreateText
-
       #region Encrypt
 
       [TestMethod]

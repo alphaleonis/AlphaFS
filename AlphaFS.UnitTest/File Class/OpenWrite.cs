@@ -69,7 +69,7 @@ namespace AlphaFS.UnitTest
             }
 
 
-            Assert.AreEqual(System.IO.File.ReadAllText(file1), Alphaleonis.Win32.Filesystem.File.ReadAllText(file2), "The content of the two files is not equal, but is expected to.");
+            Assert.AreEqual(System.IO.File.ReadAllText(file1), System.IO.File.ReadAllText(file2), "The content of the two files is not equal, but is expected to.");
          }
 
          Console.WriteLine();

@@ -162,6 +162,7 @@
     <Compile Include="Directory Class\SetAccessControl.cs" />
     <Compile Include="DirectoryInfo Class\Refresh.cs" />
     <Compile Include="File Class\AlphaFS_GetHash.cs" />
+    <Compile Include="File Class\CreateText.cs" />
     <Compile Include="File Class\OpenWrite.cs" />
     <Compile Include="File Class\OpenText.cs" />
     <Compile Include="File Class\OpenRead.cs" />
