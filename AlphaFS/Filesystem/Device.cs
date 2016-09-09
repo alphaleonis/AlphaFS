@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static IEnumerable<DeviceInfo> EnumerateDevicesCore(SafeHandle safeHandle, string hostName, DeviceGuid deviceInterfaceGuid)
       {
-         bool callerHandle = safeHandle != null;
+         var callerHandle = safeHandle != null;
          var deviceGuid = new Guid(Utils.GetEnumDescription(deviceInterfaceGuid));
 
 
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
          // http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx
 
          SafeCmConnectMachineHandle safeMachineHandle;
-         int lastError = NativeMethods.CM_Connect_Machine(Path.LocalToUncCore(Host.GetUncName(hostName), false, false, false), out safeMachineHandle);
+         var lastError = NativeMethods.CM_Connect_Machine(Path.LocalToUncCore(Host.GetUncName(hostName), false, false, false), out safeMachineHandle);
 
          if (safeMachineHandle != null && safeMachineHandle.IsInvalid)
          {
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
             try
             {
                uint memberInterfaceIndex = 0;
-               NativeMethods.SP_DEVICE_INTERFACE_DATA deviceInterfaceData = CreateDeviceInterfaceDataInstance();
+               var deviceInterfaceData = CreateDeviceInterfaceDataInstance();
 
                // Start enumerating Device Interfaces.
                while (NativeMethods.SetupDiEnumDeviceInterfaces(safeHandle, IntPtr.Zero, ref deviceGuid, memberInterfaceIndex++, ref deviceInterfaceData))
@@ -113,8 +113,8 @@ namespace Alphaleonis.Win32.Filesystem
                      NativeError.ThrowException(lastError, hostName);
 
 
-                  NativeMethods.SP_DEVINFO_DATA deviceInfoData = CreateDeviceInfoDataInstance();
-                  NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA deviceInterfaceDetailData = GetDeviceInterfaceDetailDataInstance(safeHandle, deviceInterfaceData, deviceInfoData);
+                  var deviceInfoData = CreateDeviceInfoDataInstance();
+                  var deviceInterfaceDetailData = GetDeviceInterfaceDetailDataInstance(safeHandle, deviceInterfaceData, deviceInfoData);
 
                   // Get device interace details.
                   if (!NativeMethods.SetupDiGetDeviceInterfaceDetail(safeHandle, ref deviceInterfaceData, ref deviceInterfaceDetailData, NativeMethods.DefaultFileBufferSize, IntPtr.Zero, ref deviceInfoData))
@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      uint regType;
                      string dataString;
-                     uint safeBufferCapacity = (uint) safeBuffer.Capacity;
+                     var safeBufferCapacity = (uint) safeBuffer.Capacity;
 
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.BaseContainerId, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
@@ -260,7 +260,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (!NativeMethods.DeviceIoControl(safeHandle, ((9 << 16) | (42 << 2) | 0 | (0 << 14)), IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero))
                {
-                  int lastError = Marshal.GetLastWin32Error();
+                  var lastError = Marshal.GetLastWin32Error();
                   switch ((uint) lastError)
                   {
                      case Win32Errors.ERROR_MORE_DATA:
@@ -280,11 +280,11 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
 
-            int marshalReparseBuffer = (int) Marshal.OffsetOf(typeof(NativeMethods.ReparseDataBufferHeader), "data");
+            var marshalReparseBuffer = (int) Marshal.OffsetOf(typeof(NativeMethods.ReparseDataBufferHeader), "data");
 
             var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>(0);
 
-            int dataOffset = (int) (marshalReparseBuffer + (header.ReparseTag == ReparsePointTag.MountPoint
+            var dataOffset = (int) (marshalReparseBuffer + (header.ReparseTag == ReparsePointTag.MountPoint
                ? Marshal.OffsetOf(typeof (NativeMethods.MountPointReparseBuffer), "data")
                : Marshal.OffsetOf(typeof (NativeMethods.SymbolicLinkReparseBuffer), "data")).ToInt64());
 
@@ -333,7 +333,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void ToggleCompressionCore(bool isFolder, KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {
-         using (SafeFileHandle handle = File.CreateFileCore(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, pathFormat))
+         using (var handle = File.CreateFileCore(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, pathFormat))
          {
             // DeviceIoControlMethod.Buffered = 0,
             // DeviceIoControlFileDevice.FileSystem = 9
@@ -395,7 +395,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Get device interace details.
          if (!NativeMethods.SetupDiGetDeviceInterfaceDetail(safeHandle, ref deviceInterfaceData, ref didd, NativeMethods.DefaultFileBufferSize, IntPtr.Zero, ref deviceInfoData))
          {
-            int lastError = Marshal.GetLastWin32Error();
+            var lastError = Marshal.GetLastWin32Error();
             if (lastError != Win32Errors.NO_ERROR)
                NativeError.ThrowException(lastError);
          }
@@ -414,15 +414,15 @@ namespace Alphaleonis.Win32.Filesystem
          byte[] output;
          uint bytesReturned;
 
-         uint inputSize = (uint)Marshal.SizeOf(input);
-         uint outputLength = increment;
+         var inputSize = (uint) Marshal.SizeOf(input);
+         var outputLength = increment;
 
          do
          {
             output = new byte[outputLength];
             if (!NativeMethods.DeviceIoControl(handle, controlCode, input, inputSize, output, outputLength, out bytesReturned, IntPtr.Zero))
             {
-               int lastError = Marshal.GetLastWin32Error();
+               var lastError = Marshal.GetLastWin32Error();
                switch ((uint)lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
@@ -444,7 +444,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (output.Length == bytesReturned)
             return output;
 
-         byte[] res = new byte[bytesReturned];
+         var res = new byte[bytesReturned];
          Array.Copy(output, res, bytesReturned);
 
          return res;

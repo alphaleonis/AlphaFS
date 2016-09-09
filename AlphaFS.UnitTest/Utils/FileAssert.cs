@@ -33,15 +33,15 @@ namespace AlphaFS.UnitTest
 
       public static void AreEqual(string expectedFilePath, string actualFilePath)
       {
-         int position = 0;
+         var position = 0;
          using (var s1 = System.IO.File.OpenRead(expectedFilePath))
          using (var s2 = System.IO.File.OpenRead(actualFilePath))
          {
             if (s1.Length != s2.Length)
                throw new AssertFailedException(string.Format("The files: [{0}] and \"{1}\" are not equal but are expected to be. Their size differs.", expectedFilePath, actualFilePath));
             
-            int a = s1.ReadByte();
-            int b = s2.ReadByte();
+            var a = s1.ReadByte();
+            var b = s2.ReadByte();
             
             if (a != b)
                throw new AssertFailedException(string.Format("The files: [{0}] and \"{1}\" are not equal but are expected to be. The first difference was at position: [{2}]", expectedFilePath, actualFilePath, position));
@@ -52,15 +52,15 @@ namespace AlphaFS.UnitTest
 
       public static void AreNotEqual(string expectedFilePath, string actualFilePath)
       {
-         int position = 0;
+         var position = 0;
          using (var s1 = System.IO.File.OpenRead(expectedFilePath))
          using (var s2 = System.IO.File.OpenRead(actualFilePath))
          {
             if (s1.Length != s2.Length)
                return;
 
-            int a = s1.ReadByte();
-            int b = s2.ReadByte();
+            var a = s1.ReadByte();
+            var b = s2.ReadByte();
             
             if (a != b)
                return;

@@ -45,12 +45,12 @@ namespace AlphaFS.UnitTest
          #region Setup
 
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string tempFolder = Path.GetTempPath();
-         string tempPath = Path.Combine(tempFolder, "File.Delete-" + Path.GetRandomFileName());
+         var tempFolder = Path.GetTempPath();
+         var tempPath = Path.Combine(tempFolder, "File.Delete-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          // Create file and append text.
-         string tempFile = Path.GetTempFileName();
+         var tempFile = Path.GetTempFileName();
          if (!isLocal) tempFile = Path.LocalToUnc(tempFile);
 
          IEnumerable<string> allLines = new[] {UnitTestConstants.TenNumbers, UnitTestConstants.TextHelloWorld, UnitTestConstants.TextGoodbyeWorld, UnitTestConstants.TextUnicode};
@@ -67,13 +67,13 @@ namespace AlphaFS.UnitTest
             File.AppendAllLines(tempFile, allLines, NativeMethods.DefaultFileEncoding);
 
             // Read filestream contents.
-            using (StreamReader streamRead = File.OpenText(tempFile))
+            using (var streamRead = File.OpenText(tempFile))
             {
-               string line = streamRead.ReadToEnd();
+               var line = streamRead.ReadToEnd();
 
                Console.WriteLine("\nCreated: [{0}] filestream: [{1}]\n\n\tAppendAllLines content:\n{2}", streamRead.CurrentEncoding.EncodingName, tempFile, line);
 
-               foreach (string line2 in allLines)
+               foreach (var line2 in allLines)
                   Assert.IsTrue(line.Contains(line2));
             }
 
@@ -84,13 +84,13 @@ namespace AlphaFS.UnitTest
             File.AppendAllLines(tempFile, allLines);
 
             // Read filestream contents.
-            using (StreamReader streamRead = File.OpenText(tempFile))
+            using (var streamRead = File.OpenText(tempFile))
             {
-               string line = streamRead.ReadToEnd();
+               var line = streamRead.ReadToEnd();
 
                Console.WriteLine("AppendAllLines content:\n{0}", line);
 
-               foreach (string line2 in allLines)
+               foreach (var line2 in allLines)
                   Assert.IsTrue(line.Contains(line2));
             }
 
@@ -112,17 +112,17 @@ namespace AlphaFS.UnitTest
       private void DumpGetSetAttributes(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
-         string tempPath = isLocal ? tmp : Path.LocalToUnc(tmp);
-         string sys32 = isLocal ? UnitTestConstants.SysRoot32 : Path.LocalToUnc(UnitTestConstants.SysRoot32);
+         var tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
+         var tempPath = isLocal ? tmp : Path.LocalToUnc(tmp);
+         var sys32 = isLocal ? UnitTestConstants.SysRoot32 : Path.LocalToUnc(UnitTestConstants.SysRoot32);
 
          Console.WriteLine("\nInput Path: [{0}]", sys32);
 
          // Just enumerate and compare attributes in folder: C:\Windows\System32
-         foreach (string file in Directory.EnumerateFiles(sys32))
+         foreach (var file in Directory.EnumerateFiles(sys32))
          {
-            FileAttributes actual = File.GetAttributes(file);
-            FileAttributes expected = System.IO.File.GetAttributes(file);
+            var actual = File.GetAttributes(file);
+            var expected = System.IO.File.GetAttributes(file);
 
             Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
          }
@@ -133,25 +133,25 @@ namespace AlphaFS.UnitTest
          // Create some folders and files.
          UnitTestConstants.CreateDirectoriesAndFiles(tempPath, 10, true);
 
-         FileAttributes apply = FileAttributes.Hidden | FileAttributes.Archive | FileAttributes.System | FileAttributes.ReadOnly;
+         var apply = FileAttributes.Hidden | FileAttributes.Archive | FileAttributes.System | FileAttributes.ReadOnly;
          Console.WriteLine("\nSetAttributes(): [{0}]", apply);
 
-         bool allOk = true;
-         int cnt = 0;
+         var allOk = true;
+         var cnt = 0;
          UnitTestConstants.StopWatcher(true);
-         foreach (string file in Directory.EnumerateFiles(tempPath))
+         foreach (var file in Directory.EnumerateFiles(tempPath))
          {
             try
             {
                File.SetAttributes(file, apply);
 
-               FileAttributes actual = File.GetAttributes(file);
-               FileAttributes expected = System.IO.File.GetAttributes(file);
+               var actual = File.GetAttributes(file);
+               var expected = System.IO.File.GetAttributes(file);
 
                Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t\tSystem.IO: [{3}]", ++cnt, file, expected, actual);
 
                if (cnt == 0)
-                  Assert.Inconclusive("Nothing was enumerated.");
+                  Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
                Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
             }
@@ -172,19 +172,19 @@ namespace AlphaFS.UnitTest
          allOk = true;
          cnt = 0;
          UnitTestConstants.StopWatcher(true);
-         foreach (string file in Directory.EnumerateFiles(tempPath))
+         foreach (var file in Directory.EnumerateFiles(tempPath))
          {
             try
             {
                File.SetAttributes(file, apply);
 
-               FileAttributes actual = File.GetAttributes(file);
-               FileAttributes expected = System.IO.File.GetAttributes(file);
+               var actual = File.GetAttributes(file);
+               var expected = System.IO.File.GetAttributes(file);
 
                Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t\tSystem.IO: [{3}]", ++cnt, file, expected, actual);
 
                if (cnt == 0)
-                  Assert.Inconclusive("Nothing was enumerated.");
+                  Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
                Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
             }
@@ -211,25 +211,25 @@ namespace AlphaFS.UnitTest
       private void DumpReadAllLines(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
-         string tempPath = isLocal ? tmp : Path.LocalToUnc(tmp);
+         var tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
+         var tempPath = isLocal ? tmp : Path.LocalToUnc(tmp);
 
          // Create file and append text.
-         string tempFile = Path.GetTempFileName();
+         var tempFile = Path.GetTempFileName();
 
          string[] createText = { "Hello", "And", "Welcome" };
          File.WriteAllLines(tempFile, createText);
 
          Console.WriteLine("\nFile.ReadAllLines()\n");
-         string[] readText = File.ReadAllLines(tempFile);
-         foreach (string s in readText)
+         var readText = File.ReadAllLines(tempFile);
+         foreach (var s in readText)
          {
             Console.WriteLine("\t{0}", s);
             Assert.IsTrue(createText.Contains(s));
          }
 
          Console.WriteLine("\nFile.ReadLines()\n");
-         foreach (string s in File.ReadLines((tempFile)))
+         foreach (var s in File.ReadLines((tempFile)))
          {
             Console.WriteLine("\t{0}", s);
             Assert.IsTrue(createText.Contains(s));
@@ -246,12 +246,12 @@ namespace AlphaFS.UnitTest
       private void DumpReadWriteAllBytes(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string tempPath = Path.GetTempPath("File.ReadWriteAllBytes()-" + Path.GetRandomFileName());
+         var tempPath = Path.GetTempPath("File.ReadWriteAllBytes()-" + Path.GetRandomFileName());
          if (!isLocal) { tempPath = Path.LocalToUnc(tempPath); }
 
-         int size = 10000;
-         byte[] text = Encoding.UTF8.GetBytes(new string('X', size));
-         bool allOk = true;
+         var size = 10000;
+         var text = Encoding.UTF8.GetBytes(new string('X', size));
+         var allOk = true;
 
          try
          {
@@ -264,7 +264,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(File.Exists(tempPath), "File.WriteAllBytes(): File was not created.");
-         long fileSize = File.GetSize(tempPath);
+         var fileSize = File.GetSize(tempPath);
          Assert.AreEqual(size, fileSize);
          Assert.IsTrue(allOk);
 
@@ -341,17 +341,17 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\tDefault AlphaFS Encoding: [{0}]", NativeMethods.DefaultFileEncoding.EncodingName);
 
          // Create file and append text.
-         string tempFile = Path.GetTempFileName();
+         var tempFile = Path.GetTempFileName();
 
-         string allLines = UnitTestConstants.TextHelloWorld;
+         var allLines = UnitTestConstants.TextHelloWorld;
 
          // Create real UTF-8 file.
          File.AppendAllText(tempFile, allLines, NativeMethods.DefaultFileEncoding);
 
          // Read filestream contents.
-         using (StreamReader streamRead = File.OpenText(tempFile))
+         using (var streamRead = File.OpenText(tempFile))
          {
-            string line = streamRead.ReadToEnd();
+            var line = streamRead.ReadToEnd();
 
             Console.WriteLine("\n\tCreated: [{0}] filestream: [{1}]\n\n\tAppendAllText content:\n{2}", streamRead.CurrentEncoding.EncodingName, tempFile, line);
 
@@ -365,9 +365,9 @@ namespace AlphaFS.UnitTest
          File.AppendAllText(tempFile, allLines);
 
          // Read filestream contents.
-         using (StreamReader streamRead = File.OpenText(tempFile))
+         using (var streamRead = File.OpenText(tempFile))
          {
-            string line = streamRead.ReadToEnd();
+            var line = streamRead.ReadToEnd();
 
             Console.WriteLine("\tAppendAllText content:\n{0}", line);
 
@@ -389,10 +389,10 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("File.AppendText()");
 
-         string utf8 = NativeMethods.DefaultFileEncoding.BodyName.ToUpperInvariant();
+         var utf8 = NativeMethods.DefaultFileEncoding.BodyName.ToUpperInvariant();
          string line;
-         string matchLine = string.Empty;
-         string tempFile = Path.GetTempFileName();
+         var matchLine = string.Empty;
+         var tempFile = Path.GetTempFileName();
 
          StreamReader streamRead;
          StreamWriter streamWrite;
@@ -472,21 +472,21 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("File.Encrypt()");
 
          // Create file and append text.
-         string tempFile = Path.GetTempFileName();
+         var tempFile = Path.GetTempFileName();
 
          // Append text as UTF-8, default.
          File.AppendAllText(tempFile, UnitTestConstants.TextHelloWorld);
 
-         string utf8 = NativeMethods.DefaultFileEncoding.BodyName.ToUpperInvariant();
-         string readText8 = File.ReadAllText(tempFile);
-         FileAttributes actual = File.GetAttributes(tempFile);
-         FileEncryptionStatus encryptionStatus = File.GetEncryptionStatus(tempFile);
+         var utf8 = NativeMethods.DefaultFileEncoding.BodyName.ToUpperInvariant();
+         var readText8 = File.ReadAllText(tempFile);
+         var actual = File.GetAttributes(tempFile);
+         var encryptionStatus = File.GetEncryptionStatus(tempFile);
          Console.WriteLine("\n\tCreated {0} file: [{1}]", utf8, tempFile);
          Console.WriteLine("\tContent: [{0}]", readText8);
          Console.WriteLine("\n\tFile.GetAttributes(): [{0}]", actual);
          Console.WriteLine("\tEncryption status   : [{0}]", encryptionStatus);
 
-         bool encryptOk = false;
+         var encryptOk = false;
          try
          {
             File.Encrypt(tempFile);
@@ -502,7 +502,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\tFile.GetAttributes()           : [{0}]", actual);
          Console.WriteLine("\tEncryption status              : [{0}]", encryptionStatus);
 
-         bool decryptOk = false;
+         var decryptOk = false;
          try
          {
             File.Decrypt(tempFile);
@@ -513,7 +513,7 @@ namespace AlphaFS.UnitTest
          {
             Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
-         FileEncryptionStatus decryptionStatus = File.GetEncryptionStatus(tempFile);
+         var decryptionStatus = File.GetEncryptionStatus(tempFile);
          Console.WriteLine("\n\tFile.Decrypt() (Should be True): [{0}]:", decryptOk);
          Console.WriteLine("\tFile.GetAttributes()           : [{0}]", actual);
          Console.WriteLine("\tDecryption status              : [{0}]", decryptionStatus);
@@ -576,13 +576,13 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("File.ReadAllText()\n");
 
          // Create file and append text.
-         string tempFile = Path.GetTempFileName();
+         var tempFile = Path.GetTempFileName();
 
          string[] createText = { "Hello", "And", "Welcome" };
          File.WriteAllLines(tempFile, createText);
 
          // Open the file to read from. 
-         string textRead = File.ReadAllText(tempFile);
+         var textRead = File.ReadAllText(tempFile);
          Console.WriteLine(textRead);
 
          File.Delete(tempFile, true);
@@ -624,21 +624,21 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n Default AlphaFS Encoding: [{0}]", NativeMethods.DefaultFileEncoding.EncodingName);
 
          // Create file and append text.
-         string tempFile = Path.GetTempFileName();
+         var tempFile = Path.GetTempFileName();
 
-         string[] allLines = new[] { UnitTestConstants.TenNumbers, UnitTestConstants.TextHelloWorld, UnitTestConstants.TextGoodbyeWorld, UnitTestConstants.TextUnicode };
+         var allLines = new[] { UnitTestConstants.TenNumbers, UnitTestConstants.TextHelloWorld, UnitTestConstants.TextGoodbyeWorld, UnitTestConstants.TextUnicode };
 
          // Create real UTF-8 file.
          File.WriteAllLines(tempFile, allLines, NativeMethods.DefaultFileEncoding);
 
          // Read filestream contents.
-         using (StreamReader streamRead = File.OpenText(tempFile))
+         using (var streamRead = File.OpenText(tempFile))
          {
-            string line = streamRead.ReadToEnd();
+            var line = streamRead.ReadToEnd();
 
             Console.WriteLine("\n Created: [{0}] filestream: [{1}]\n\n WriteAllLines content:\n{2}", streamRead.CurrentEncoding.EncodingName, tempFile, line);
 
-            foreach (string line2 in allLines)
+            foreach (var line2 in allLines)
                Assert.IsTrue(line.Contains(line2));
          }
 
@@ -657,17 +657,17 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\tDefault AlphaFS Encoding: [{0}]", NativeMethods.DefaultFileEncoding.EncodingName);
 
          // Create file and append text.
-         string tempFile = Path.GetTempFileName();
+         var tempFile = Path.GetTempFileName();
 
-         string allLines = UnitTestConstants.TextHelloWorld;
+         var allLines = UnitTestConstants.TextHelloWorld;
 
          // Create real UTF-8 file.
          File.WriteAllText(tempFile, allLines, NativeMethods.DefaultFileEncoding);
 
          // Read filestream contents.
-         using (StreamReader streamRead = File.OpenText(tempFile))
+         using (var streamRead = File.OpenText(tempFile))
          {
-            string line = streamRead.ReadToEnd();
+            var line = streamRead.ReadToEnd();
 
             Console.WriteLine("\n\tCreated: [{0}] filestream: [{1}]\n\n\tWriteAllText content:\n{2}", streamRead.CurrentEncoding.EncodingName, tempFile, line);
 
@@ -681,9 +681,9 @@ namespace AlphaFS.UnitTest
          File.WriteAllText(tempFile, allLines);
 
          // Read filestream contents.
-         using (StreamReader streamRead = File.OpenText(tempFile))
+         using (var streamRead = File.OpenText(tempFile))
          {
-            string line = streamRead.ReadToEnd();
+            var line = streamRead.ReadToEnd();
 
             Console.WriteLine("\tWriteAllText content:\n{0}", line);
 

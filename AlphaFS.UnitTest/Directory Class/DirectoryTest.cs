@@ -19,20 +19,16 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis;
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Security.Principal;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
-using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
 using FileSystemInfo = Alphaleonis.Win32.Filesystem.FileSystemInfo;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
@@ -204,7 +200,7 @@ namespace AlphaFS.UnitTest
          }
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
          #endregion // Encrypt
 
@@ -245,7 +241,7 @@ namespace AlphaFS.UnitTest
          }
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
          #endregion // Decrypt
 
@@ -374,7 +370,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
          Console.WriteLine();
 
@@ -397,7 +393,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
          #region DirectoryEnumerationOptions
 
@@ -446,7 +442,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\tEnumerated: Directories = [{0}] Files = [{1}]\t{2}", numDirectories, numFiles, report);
 
          if (!foundFse)
-            Assert.Inconclusive("Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
          var matchAll = directories == numDirectories && files == numFiles;
          Assert.IsTrue(matchAll, "Number of directories and/or files don't match.");
@@ -571,7 +567,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
          Console.WriteLine();
 
@@ -594,7 +590,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
          #region DirectoryEnumerationOptions
 
@@ -730,7 +726,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
          Console.WriteLine();
 
@@ -753,7 +749,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
          #region DirectoryEnumerationOptions
 
@@ -914,7 +910,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
          Console.WriteLine();
       }
@@ -941,7 +937,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\t{0}", report);
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
          Assert.IsTrue(total > 0, "0 Objects.");
          Assert.IsTrue(file > 0, "0 Files.");

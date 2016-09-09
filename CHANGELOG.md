@@ -50,7 +50,7 @@ Version 2.1
 - Issue #239: Enable long path support for CreateSymbolicLink() source parameter.
 - Issue #240: Add KeepDotOrSpace to GetFullPathOptions enum.
 - Issue #241: Add Path.GetFullPath() overload that supports GetFullPathOptions enum.
-- Issue #245: Implement CRC-32/64.
+- Issue #245: Implement CRC-32/64 (Thanks to Damien Guard for implementing his code).
 - Issue #247: Add FileInfo.GetHash().
 
 ### Bugs Fixed

@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string GetUncName()
       {
-         return string.Format(CultureInfo.CurrentCulture, "{0}{1}", Path.UncPrefix, Environment.MachineName);
+         return string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.UncPrefix, Environment.MachineName);
       }
 
       /// <summary>Return the host name in UNC format, for example: \\hostname.</summary>

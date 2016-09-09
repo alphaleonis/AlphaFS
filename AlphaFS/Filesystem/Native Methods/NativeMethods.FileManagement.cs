@@ -32,77 +32,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      #region AssocXxx
-
-      /// <summary>Returns a pointer to an IQueryAssociations object.</summary>
-      /// <returns>If this function succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</returns>
-      /// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("shlwapi.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
-      [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint AssocCreate(Guid clsid, ref Guid riid, [MarshalAs(UnmanagedType.Interface)] out IQueryAssociations ppv);
-
-      /// <summary>Searches for and retrieves a file or protocol association-related string from the registry.</summary>
-      /// <returns>Return value Type: HRESULT. Returns a standard COM error value, including the following: S_OK, E_POINTER and S_FALSE.</returns>
-      /// <remarks>Minimum supported client: Windows 2000 Professional</remarks>
-      /// <remarks>Minimum supported server: Windows 2000 Server</remarks>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("shlwapi.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "AssocQueryStringW"), SuppressUnmanagedCodeSecurity]
-      [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint AssocQueryString(Shell32.AssociationAttributes flags, Shell32.AssociationString str, [MarshalAs(UnmanagedType.LPWStr)] string pszAssoc, [MarshalAs(UnmanagedType.LPWStr)] string pszExtra, StringBuilder pszOut, [MarshalAs(UnmanagedType.U4)] out uint pcchOut);
-
-
-      #region IQueryAssociations
-
-      internal static readonly Guid ClsidQueryAssociations = new Guid("A07034FD-6CAA-4954-AC3F-97A27216F98A");
-      internal const string QueryAssociationsGuid = "C46CA590-3C3F-11D2-BEE6-0000F805CA57";
-
-      /// <summary>Exposes methods that simplify the process of retrieving information stored in the registry in association with defining a file type or protocol and associating it with an application.</summary>
-      [Guid(QueryAssociationsGuid), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-      [SuppressUnmanagedCodeSecurity]
-      internal interface IQueryAssociations
-      {
-         /// <summary>Initializes the IQueryAssociations interface and sets the root key to the appropriate ProgID.</summary>
-         /// <returns>If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</returns>
-         /// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
-         /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
-         void Init(Shell32.AssociationAttributes flags, [MarshalAs(UnmanagedType.LPWStr)] string pszAssoc, IntPtr hkProgid, IntPtr hwnd);
-
-         //[return: MarshalAs(UnmanagedType.U4)]
-         //uint Init(Shell32.AssociationAttributes flags, [MarshalAs(UnmanagedType.LPWStr)] string pszAssoc, IntPtr hkProgid, IntPtr hwnd);
-
-         /// <summary>Searches for and retrieves a file or protocol association-related string from the registry.</summary>
-         /// <returns>A standard COM error value, including the following: S_OK, E_POINTER, S_FALSE</returns>
-         /// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
-         /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
-         void GetString(Shell32.AssociationAttributes flags, Shell32.AssociationString str, [MarshalAs(UnmanagedType.LPWStr)] string pwszExtra, StringBuilder pwszOut, [MarshalAs(UnmanagedType.I4)] out int pcchOut);
-
-         //[return: MarshalAs(UnmanagedType.U4)]
-         //void GetString(Shell32.AssociationAttributes flags, Shell32.AssociationString str, [MarshalAs(UnmanagedType.LPWStr)] string pwszExtra, StringBuilder pwszOut, [MarshalAs(UnmanagedType.I4)] out int pcchOut);
-
-         ///// <summary>Searches for and retrieves a file or protocol association-related key from the registry.</summary>
-         ///// <returns>If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</returns>
-         ///// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
-         ///// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
-         //[return: MarshalAs(UnmanagedType.U4)]
-         //uint GetKey(Shell32.AssociationAttributes flags, Shell32.AssociationKey str, [MarshalAs(UnmanagedType.LPWStr)] string pwszExtra, out UIntPtr phkeyOut);
-
-         ///// <summary>Searches for and retrieves file or protocol association-related binary data from the registry.</summary>
-         ///// <returns>If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</returns>
-         ///// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
-         ///// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
-         //[return: MarshalAs(UnmanagedType.U4)]
-         //uint GetData(Shell32.AssociationAttributes flags, Shell32.AssociationData data, [MarshalAs(UnmanagedType.LPWStr)] string pwszExtra, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 4)] out byte[] pvOut, [MarshalAs(UnmanagedType.I4)] out int pcbOut);
-
-         ///// <summary>This method is not implemented.</summary>
-         //void GetEnum();
-      }
-
-      #endregion // IQueryAssociations
-
-      #endregion // AssocXxx
-
       /// <summary>
       ///   Copies an existing file to a new file, notifying the application of its progress through a callback function.
       /// </summary>
@@ -742,21 +671,6 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressUnmanagedCodeSecurity]
       internal delegate CopyMoveProgressResult NativeCopyMoveProgressRoutine(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, [MarshalAs(UnmanagedType.U4)] int dwStreamNumber, CopyMoveProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData);
 
-      /// <summary>Determines whether a path to a file system object such as a file or folder is valid.</summary>
-      /// <returns><see langword="true"/> if the file exists; otherwise, <see langword="false"/>. Call GetLastError for extended error information.</returns>
-      /// <remarks>
-      /// This function tests the validity of the path.
-      /// A path specified by Universal Naming Convention (UNC) is limited to a file only; that is, \\server\share\file is permitted.
-      /// A network share path to a server or server share is not permitted; that is, \\server or \\server\share.
-      /// This function returns FALSE if a mounted remote drive is out of service.
-      /// </remarks>
-      /// <remarks>Minimum supported client: Windows 2000 Professional</remarks>
-      /// <remarks>Minimum supported server: Windows 2000 Server</remarks>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("Shlwapi.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "PathFileExistsW"), SuppressUnmanagedCodeSecurity]
-      [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool PathFileExists([MarshalAs(UnmanagedType.LPWStr)] string pszPath);
-
       /// <summary>Replaces one file with another file, with the option of creating a backup copy of the original file. The replacement file assumes the name of the replaced file and its identity.</summary>
       /// <returns>
       /// If the function succeeds, the return value is nonzero.
@@ -805,14 +719,6 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool SetFileTime(SafeFileHandle hFile, SafeGlobalMemoryBufferHandle lpCreationTime, SafeGlobalMemoryBufferHandle lpLastAccessTime, SafeGlobalMemoryBufferHandle lpLastWriteTime);
-
-      /// <summary>Retrieves information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
-      /// <remarks>You should call this function from a background thread. Failure to do so could cause the UI to stop responding.</remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("shell32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SHGetFileInfoW"), SuppressUnmanagedCodeSecurity]
-      internal static extern IntPtr ShGetFileInfo([MarshalAs(UnmanagedType.LPWStr)] string pszPath, FileAttributes dwFileAttributes, [MarshalAs(UnmanagedType.Struct)] out Shell32.FileInfo psfi, [MarshalAs(UnmanagedType.U4)] uint cbFileInfo, [MarshalAs(UnmanagedType.U4)] Shell32.FileAttributes uFlags);
 
       /// <summary>Unlocks a region in an open file. Unlocking a region enables other processes to access the region.</summary>
       /// <returns>

@@ -165,10 +165,10 @@ namespace AlphaFS.UnitTest
       // A high "max" increases the change of path too long.
       public static void CreateDirectoriesAndFiles(string rootPath, int max, bool recurse)
       {
-         for (int i = 0; i < max; i++)
+         for (var i = 0; i < max; i++)
          {
-            string file = System.IO.Path.Combine(rootPath, System.IO.Path.GetRandomFileName());
-            string dir = file + "-" + i + "-dir";
+            var file = System.IO.Path.Combine(rootPath, System.IO.Path.GetRandomFileName());
+            var dir = file + "-" + i + "-dir";
             file = file + "-" + i + "-file";
 
             System.IO.Directory.CreateDirectory(dir);
@@ -185,7 +185,7 @@ namespace AlphaFS.UnitTest
 
          if (recurse)
          {
-            foreach (string dir in System.IO.Directory.EnumerateDirectories(rootPath))
+            foreach (var dir in System.IO.Directory.EnumerateDirectories(rootPath))
                CreateDirectoriesAndFiles(dir, max, false);
          }
       }
@@ -209,7 +209,7 @@ namespace AlphaFS.UnitTest
 
       public static void FolderDenyPermission(bool create, string tempPath)
       {
-         string user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
+         var user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
 
          var dirInfo = new System.IO.DirectoryInfo(tempPath);
          System.Security.AccessControl.DirectorySecurity dirSecurity;
@@ -258,8 +258,8 @@ namespace AlphaFS.UnitTest
          }
 
          _stopWatcher.Stop();
-         long ms = _stopWatcher.ElapsedMilliseconds;
-         TimeSpan elapsed = _stopWatcher.Elapsed;
+         var ms = _stopWatcher.ElapsedMilliseconds;
+         var elapsed = _stopWatcher.Elapsed;
 
          return string.Format(CultureInfo.CurrentCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
       }
@@ -279,7 +279,7 @@ namespace AlphaFS.UnitTest
       
       public static bool IsAdmin()
       {
-         bool isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+         var isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
 
          if (!isAdmin)
             Console.WriteLine("\nThis Unit Test must be run as Administrator.\n");
@@ -291,9 +291,9 @@ namespace AlphaFS.UnitTest
       /// <summary>Shows the Object's available Properties and Values.</summary>
       public static bool Dump(object obj, int width = -35, bool indent = false)
       {
-         int cnt = 0;
+         var cnt = 0;
          const string nulll = "\t\tnull";
-         string template = "\t{0}#{1:000}\t{2, " + width + "} = [{3}]";
+         var template = "\t{0}#{1:000}\t{2, " + width + "} = [{3}]";
 
          if (obj == null)
          {
@@ -303,13 +303,13 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
 
-         bool loopOk = false;
-         foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
+         var loopOk = false;
+         foreach (var descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
          {
             string propValue;
             try
             {
-               object value = descriptor.GetValue(obj);
+               var value = descriptor.GetValue(obj);
                propValue = (value == null) ? "null" : value.ToString();
 
                loopOk = true;
@@ -329,7 +329,7 @@ namespace AlphaFS.UnitTest
 
       public static byte[] StringToByteArray(string str, params Encoding[] encoding)
       {
-         Encoding encode = encoding != null && encoding.Any() ? encoding[0] : new UTF8Encoding(true, true);
+         var encode = encoding != null && encoding.Any() ? encoding[0] : new UTF8Encoding(true, true);
          return encode.GetBytes(str);
       }
 

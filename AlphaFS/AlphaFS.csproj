@@ -361,6 +361,7 @@
     <Compile Include="Filesystem\Enumerations\GetFileExInfoLevels.cs" />
     <Compile Include="Filesystem\Enumerations\GetFullPathOptions.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.EncryptedFileRaw.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.Shell32.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.KernelTransactions.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.Handles.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.FileManagement.cs" />
@@ -524,7 +525,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
