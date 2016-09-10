@@ -21,7 +21,7 @@
 
 
  Param(
-    [String]$Path,
+    [String]$Path = ".",
 	[String]$Filter = "*",
 	[Switch]$Recurse,
 	[Switch]$ContinueOnException,
@@ -38,7 +38,7 @@ Function Invoke-GenericMethod {
 #>
 
     Param(
-        $Instance,
+        [Object]$Instance,
         [String]$MethodName,
         [Type[]]$TypeParameters,
         [Object[]]$MethodParameters
@@ -65,8 +65,12 @@ Function Enumerate-FileSystemEntryInfos {
         AlphaFS 2.1+: A powerful folder/file enumerator which can recover from access denied exceptions.
 
 
+    .EXAMPLE
+        PS C:\> .\Enumerate-FileSystemEntryInfos.ps1 -Path $env:windir -Filter *.dll -Recurse -ContinueOnException
+
+
     .OUTPUTS
-        An instance of [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo]
+        An [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo] instance:
 
         AlternateFileName : 
         Attributes        : Archive
@@ -90,10 +94,6 @@ Function Enumerate-FileSystemEntryInfos {
         LastWriteTimeUtc  : 3-8-2015 01:19:54
         LongFullPath      : \\?\C:\windows\notepad.exe
         ReparsePointTag   : None
-
-
-    .EXAMPLE
-        PS C:\> .\Enumerate-FileSystemEntryInfos.ps1 -Path $env:windir -Filter *.dll -Recurse -ContinueOnException
 #>
 
     # Skip ReparsePoints by default.
@@ -109,13 +109,13 @@ Function Enumerate-FileSystemEntryInfos {
 	}
 	
 
-	ForEach ($Private:fso In (Invoke-GenericMethod `
+	ForEach ($Private:fsei In (Invoke-GenericMethod `
 		-Instance           ([Alphaleonis.Win32.Filesystem.Directory]) `
 		-MethodName         EnumerateFileSystemEntryInfos `
 		-TypeParameters     Alphaleonis.Win32.Filesystem.FileSystemEntryInfo `
-		-MethodParameters   "$Path", "$Filter", $dirEnumOptions, ([Alphaleonis.Win32.Filesystem.PathFormat]::FullPath))) {
+		-MethodParameters   $Path, $Filter, $dirEnumOptions, ([Alphaleonis.Win32.Filesystem.PathFormat]::FullPath))) {
 
-		Write-Host $fso.FullPath
+		Write-Output $fsei
 	}
 }
 
