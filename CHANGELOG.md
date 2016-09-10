@@ -45,13 +45,13 @@ Version 2.1
 - Issue #194: Add bitshift for Marshal.GetHRForException(ex) usage. 
 - Issue #195: Add useful FileAttributes as properties to `FileSystemEntryInfo` class.
 - Issue #199: Change `FindFileSystemEntryInfo.FindFirstFile()` to show actual path instead of inputpath on access error.
-- Issue #214: Howto Get-Filehash.
+- Issue #214: Howto `Get-Filehash`.
 - Issue #235: Implement unicode versions of methods: CM_Connect_Machine and CM_Get_Device_ID_Ex.
-- Issue #239: Enable long path support for CreateSymbolicLink() source parameter.
-- Issue #240: Add KeepDotOrSpace to GetFullPathOptions enum.
-- Issue #241: Add Path.GetFullPath() overload that supports GetFullPathOptions enum.
+- Issue #239: Enable long path support for `File.CreateSymbolicLink()` source parameter.
+- Issue #240: Add `KeepDotOrSpace` to `GetFullPathOptions` enum.
+- Issue #241: Add method `Path.GetFullPath()` overload that supports `GetFullPathOptions` enum.
 - Issue #245: Implement CRC-32/64 (Thanks to Damien Guard for implementing his code).
-- Issue #247: Add FileInfo.GetHash().
+- Issue #247: Add method `FileInfo.GetHash()`.
 
 ### Bugs Fixed
 
@@ -94,6 +94,7 @@ Version 2.1
 - Issue #128: Remove `Path.IsLocalPath()` in favour of `Path.IsUncPath()`.
 - Issue #140: Replace internal `DFS_INFO_4` structure with `DFS_INFO_9`.
 - Issue #184: `File.CreateSymbolicLink()` should throw `PlatformNotSupportedException()` if OS < Vista. 
+- Issue #250: Change `FileSystemEntryInfo.ToString()` to show full path instead of `ReparsePointTag`.
 
 Version 2.0.1
 -------------
