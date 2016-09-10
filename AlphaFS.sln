@@ -21,6 +21,11 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "AlphaFS.Doc", "AlphaFS.Doc\
 		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA} = {F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShell", "PowerShell", "{9D8AAD55-4083-454F-BBA9-1AB58D2B5FB9}"
+	ProjectSection(SolutionItems) = preProject
+		PowerShell\Enumerate-FileSystemEntryInfos.ps1 = PowerShell\Enumerate-FileSystemEntryInfos.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Net35 Debug|Any CPU = Net35 Debug|Any CPU
@@ -98,6 +103,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9D8AAD55-4083-454F-BBA9-1AB58D2B5FB9} = {478C6563-C321-4AB5-9D4D-ABFC9C88EBF0}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AlphaFS.vsmdi
