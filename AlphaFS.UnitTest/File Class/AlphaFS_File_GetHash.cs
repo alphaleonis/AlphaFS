@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_GetHash_LocalAndNetworkSuccess()
+      public void AlphaFS_File_GetHash_LocalAndNetwork_Success()
       {
          File_GetHash(false);
          File_GetHash(true);

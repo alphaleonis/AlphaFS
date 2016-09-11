@@ -25,18 +25,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 
 namespace Alphaleonis.Win32.Security
 {
    /// <summary>Implements a 64-bit CRC hash algorithm for a given polynomial.</summary>
    /// <remarks>Use <see cref="Crc64Iso"/> for ISO 3309 compliant 64-bit CRC's.</remarks>
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crc")]
    public class Crc64 : HashAlgorithm
    {
-      public const ulong DefaultSeed = 0x0;
-
+      internal const ulong DefaultSeed = 0x0;
       readonly ulong[] table;
-
       readonly ulong seed;
       ulong hash;
 
@@ -169,6 +169,8 @@ namespace Alphaleonis.Win32.Security
 
 
    /// <summary>Implements a 64-bit CRC hash algorithm for a given polynomial.</summary>
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Iso")]
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crc")]
    public class Crc64Iso : Crc64
    {
       internal static ulong[] Table;
@@ -176,6 +178,7 @@ namespace Alphaleonis.Win32.Security
       /// <summary>
       /// 
       /// </summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Iso")]
       public const ulong Iso3309Polynomial = 0xD800000000000000;
 
 

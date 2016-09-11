@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 
 namespace Alphaleonis.Win32.Security
@@ -37,68 +38,110 @@ namespace Alphaleonis.Win32.Security
    /// interface or remember that the result of one Compute call needs to be ~ (XOR) before
    /// being passed in as the seed for the next Compute call.
    /// </remarks>
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crc")]
    public sealed class Crc32 : HashAlgorithm
    {
-      public const uint DefaultPolynomial = 0xedb88320u;
-      public const uint DefaultSeed = 0xffffffffu;
+      private const uint DefaultPolynomial = 0xedb88320u;
+      private const uint DefaultSeed = 0xffffffffu;
 
-      static uint[] defaultTable;
+      private uint _hash;
+      private static uint[] _defaultTable;
+      private readonly uint _seed;
+      private readonly uint[] _table;
 
-      readonly uint seed;
-      readonly uint[] table;
-      uint hash;
 
-
+      /// <summary>
+      /// 
+      /// </summary>
       public Crc32() : this(DefaultPolynomial, DefaultSeed)
       {
       }
 
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="polynomial"></param>
+      /// <param name="seed"></param>
       public Crc32(uint polynomial, uint seed)
       {
-         table = InitializeTable(polynomial);
-         this.seed = hash = seed;
+         _table = InitializeTable(polynomial);
+         _seed = _hash = seed;
       }
 
 
+      /// <summary>
+      /// 
+      /// </summary>
       public override void Initialize()
       {
-         hash = seed;
+         _hash = _seed;
       }
 
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="array"></param>
+      /// <param name="ibStart"></param>
+      /// <param name="cbSize"></param>
       protected override void HashCore(byte[] array, int ibStart, int cbSize)
       {
-         hash = CalculateHash(table, hash, array, ibStart, cbSize);
+         _hash = CalculateHash(_table, _hash, array, ibStart, cbSize);
       }
 
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <returns></returns>
       protected override byte[] HashFinal()
       {
-         var hashBuffer = UInt32ToBigEndianBytes(~hash);
+         var hashBuffer = UInt32ToBigEndianBytes(~_hash);
          HashValue = hashBuffer;
          return hashBuffer;
       }
 
-
+      
+      /// <summary>
+      /// 
+      /// </summary>
       public override int HashSize
       {
          get { return 32; }
       }
 
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="buffer"></param>
+      /// <returns></returns>
       public static uint Compute(byte[] buffer)
       {
          return Compute(DefaultSeed, buffer);
       }
 
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="seed"></param>
+      /// <param name="buffer"></param>
+      /// <returns></returns>
       public static uint Compute(uint seed, byte[] buffer)
       {
          return Compute(DefaultPolynomial, seed, buffer);
       }
 
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="polynomial"></param>
+      /// <param name="seed"></param>
+      /// <param name="buffer"></param>
+      /// <returns></returns>
       public static uint Compute(uint polynomial, uint seed, byte[] buffer)
       {
          return ~CalculateHash(InitializeTable(polynomial), seed, buffer, 0, buffer.Length);
@@ -107,8 +150,8 @@ namespace Alphaleonis.Win32.Security
 
       private static uint[] InitializeTable(uint polynomial)
       {
-         if (polynomial == DefaultPolynomial && defaultTable != null)
-            return defaultTable;
+         if (polynomial == DefaultPolynomial && _defaultTable != null)
+            return _defaultTable;
 
          var createTable = new uint[256];
          for (var i = 0; i < 256; i++)
@@ -123,7 +166,7 @@ namespace Alphaleonis.Win32.Security
          }
 
          if (polynomial == DefaultPolynomial)
-            defaultTable = createTable;
+            _defaultTable = createTable;
 
          return createTable;
       }

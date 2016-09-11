@@ -19,15 +19,20 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Alphaleonis.Win32.Security
 {
    /// <summary>Enum containing the supported hash types.</summary>
    public enum HashType
    {
       /// <summary>Cyclic Redundancy Check</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CRC")]
       CRC32,
 
       /// <summary>Cyclic Redundancy Check</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CRC")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ISO")]
       CRC64ISO3309,
 
       ///// <summary>Message Authentication Code Triple Data Encryption Standard</summary>
@@ -37,18 +42,23 @@ namespace Alphaleonis.Win32.Security
       MD5,
 
       /// <summary>RACE Integrity Primitives Evaluation Message Digest</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "RIPEMD")]
       RIPEMD160,
 
       /// <summary>Secure Hash Algorithm</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA")]
       SHA1,
 
       /// <summary>Secure Hash Algorithm</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA")]
       SHA256,
 
       /// <summary>Secure Hash Algorithm</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA")]
       SHA384,
 
       /// <summary>Secure Hash Algorithm</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA")]
       SHA512
    }
 }

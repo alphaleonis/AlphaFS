@@ -86,6 +86,7 @@ Version 2.1
 - Issue #246: Using `Directory.EnumerateFileSystemEntries()` recursively with a relative path may fail.
 - Isses #248: `Directory.Move()` throws `FileNotFoundException` instead of `DirectoryNotFoundException` when source folder doesn't exist.
 - Isses #249: Change `File.GetHashCore()` `.ToString("X2")` to `.ToString("X2", CultureInfo.InvariantCulture)`.
+- Isses #253: Apply `Dispose()` to method `File.GetHashCore()`.
 
 ### Breaking Changes
 

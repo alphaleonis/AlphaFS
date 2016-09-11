@@ -94,47 +94,50 @@ namespace Alphaleonis.Win32.Filesystem
             switch (hashType)
             {
                case HashType.CRC32:
-                  hash = new Crc32().ComputeHash(fs);
+                  using (var hType = new Crc32())
+                     hash = hType.ComputeHash(fs);
                   break;
 
 
                case HashType.CRC64ISO3309:
-                  hash = new Crc64Iso().ComputeHash(fs);
+                  using (var hType = new Crc64Iso())
+                     hash = hType.ComputeHash(fs);
                   break;
 
 
-               //case HashType.MACTripleDES:
-               //   hash = System.Security.Cryptography.MACTripleDES.Create().ComputeHash(fs);
-               //   break;
-
-
                case HashType.MD5:
-                  hash = System.Security.Cryptography.MD5.Create().ComputeHash(fs);
+                  using (var hType = System.Security.Cryptography.MD5.Create())
+                     hash = hType.ComputeHash(fs);
                   break;
 
 
                case HashType.RIPEMD160:
-                  hash = System.Security.Cryptography.RIPEMD160.Create().ComputeHash(fs);
+                  using (var hType = System.Security.Cryptography.RIPEMD160.Create())
+                     hash = hType.ComputeHash(fs);
                   break;
 
 
                case HashType.SHA1:
-                  hash = System.Security.Cryptography.SHA1.Create().ComputeHash(fs);
+                  using (var hType = System.Security.Cryptography.SHA1.Create())
+                     hash = hType.ComputeHash(fs);
                   break;
 
 
                case HashType.SHA256:
-                  hash = System.Security.Cryptography.SHA256.Create().ComputeHash(fs);
+                  using (var hType = System.Security.Cryptography.SHA256.Create())
+                     hash = hType.ComputeHash(fs);
                   break;
 
 
                case HashType.SHA384:
-                  hash = System.Security.Cryptography.SHA384.Create().ComputeHash(fs);
+                  using (var hType = System.Security.Cryptography.SHA384.Create())
+                     hash = hType.ComputeHash(fs);
                   break;
 
 
                case HashType.SHA512:
-                  hash = System.Security.Cryptography.SHA512.Create().ComputeHash(fs);
+                  using (var hType = System.Security.Cryptography.SHA512.Create())
+                     hash = hType.ComputeHash(fs);
                   break;
             }
          }
