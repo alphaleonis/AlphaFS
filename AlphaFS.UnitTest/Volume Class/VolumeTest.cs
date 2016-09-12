@@ -55,7 +55,7 @@ namespace AlphaFS.UnitTest
             {
                // GetDriveType() can read an empty cdrom drive.
                // SetCurrentDirectory() wil fail on an empty cdrom drive.
-               Directory.SetCurrentDirectory(drv);
+               System.IO.Directory.SetCurrentDirectory(drv);
             }
             catch (Exception ex)
             {

@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Move_LocalAndNetworkSuccess()
+      public void File_Move_LocalAndNetwork_Success()
       {
          File_Move(false);
          File_Move(true);
@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Move_Overwrite_DestinationFileAlreadyExists_LocalAndNetworkSuccess()
+      public void File_Move_Overwrite_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
          File_Move_Overwrite_DestinationFileAlreadyExists(false);
          File_Move_Overwrite_DestinationFileAlreadyExists(true);
@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetworkSuccess()
+      public void File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
          File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
          File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(true);
@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Move_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetworkSuccess()
+      public void File_Move_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetwork_Success()
       {
          File_Move_CatchArgumentException_PathContainsInvalidCharacters(false);
          File_Move_CatchArgumentException_PathContainsInvalidCharacters(true);
@@ -68,7 +68,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetworkSuccess()
+      public void File_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetwork_Success()
       {
          File_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
          File_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
@@ -76,7 +76,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Move_CatchFileNotFoundException_NonExistingFile_LocalAndNetworkSuccess()
+      public void File_Move_CatchFileNotFoundException_NonExistingFile_LocalAndNetwork_Success()
       {
          File_Move_CatchFileNotFoundException_NonExistingFile(false);
          File_Move_CatchFileNotFoundException_NonExistingFile(true);
@@ -84,7 +84,7 @@ namespace AlphaFS.UnitTest
       
 
       [TestMethod]
-      public void File_Move_CatchNotSupportedException_PathContainsColon_LocalAndNetworkSuccess()
+      public void File_Move_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
       {
          File_Move_CatchNotSupportedException_PathContainsColon(false);
          File_Move_CatchNotSupportedException_PathContainsColon(true);

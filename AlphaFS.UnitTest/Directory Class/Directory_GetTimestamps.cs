@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
       
       [TestMethod]
-      public void Directory_GetXxxTimeXxx_LocalAndNetworkSuccess()
+      public void Directory_GetXxxTimeXxx_LocalAndNetwork_Success()
       {
          Directory_GetXxxTimeXxx(false);
          Directory_GetXxxTimeXxx(true);

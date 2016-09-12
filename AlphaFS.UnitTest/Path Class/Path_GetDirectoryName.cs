@@ -28,7 +28,7 @@ namespace AlphaFS.UnitTest
    public partial class PathTest
    {
       [TestMethod]
-      public void Path_GetDirectoryName_LocalAndNetworkSuccess()
+      public void Path_GetDirectoryName_LocalAndNetwork_Success()
       {
          var pathCnt = 0;
          var errorCnt = 0;

@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
       
       [TestMethod]
-      public void AlphaFS_File_SetTimestampsXxx_LocalAndNetworkSuccess()
+      public void AlphaFS_File_SetTimestampsXxx_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_TransferTimestamps_LocalAndNetworkSuccess()
+      public void AlphaFS_File_TransferTimestamps_LocalAndNetwork_Success()
       {
          File_TransferTimestamps(false);
          File_TransferTimestamps(true);

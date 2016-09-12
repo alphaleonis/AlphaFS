@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_Delete_LocalAndNetworkSuccess()
+      public void Directory_Delete_LocalAndNetwork_Success()
       {
          Directory_CreateDirectory_Delete(false);
          Directory_CreateDirectory_Delete(true);
@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetworkSuccess()
+      public void Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetwork_Success()
       {
          Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters(false);
          Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters(true);
@@ -52,7 +52,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetworkSuccess()
+      public void Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetwork_Success()
       {
          Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory(false);
          Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory(true);
@@ -60,7 +60,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndNetworkSuccess()
+      public void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
       {
          Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(false);
          Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(true);
@@ -68,7 +68,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetworkSuccess()
+      public void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetwork_Success()
       {
          Directory_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
          Directory_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
@@ -76,7 +76,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory_LocalAndNetworkSuccess()
+      public void Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory_LocalAndNetwork_Success()
       {
          Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory(false);
          Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory(true);
@@ -84,7 +84,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryReadOnlyException_ReadOnlyDirectory_LocalAndNetworkSuccess()
+      public void Directory_Delete_CatchDirectoryReadOnlyException_ReadOnlyDirectory_LocalAndNetwork_Success()
       {
          Directory_Delete_CatchDirectoryReadOnlyException_ReadOnlyDirectory(false);
          Directory_Delete_CatchDirectoryReadOnlyException_ReadOnlyDirectory(true);
@@ -92,7 +92,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_CatchNotSupportedException_PathContainsColon_LocalAndNetworkSuccess()
+      public void Directory_Delete_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
       {
          Directory_Delete_CatchNotSupportedException_PathContainsColon(false);
          Directory_Delete_CatchNotSupportedException_PathContainsColon(true);
@@ -100,7 +100,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission_LocalAndNetworkSuccess()
+      public void Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission_LocalAndNetwork_Success()
       {
          Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission(false);
          Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission(true);

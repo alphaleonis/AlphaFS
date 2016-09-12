@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Shell32Info_InitializeInstance_LocalAndNetworkSuccess()
+      public void AlphaFS_Shell32Info_InitializeInstance_LocalAndNetwork_Success()
       {
          Shell32Info_InitializeInstance(false);
          Shell32Info_InitializeInstance(true);

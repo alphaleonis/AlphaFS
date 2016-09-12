@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
       
       [TestMethod]
-      public void AlphaFS_Class_BackupFileStream_LocalAndNetworkSuccess()
+      public void AlphaFS_Class_BackupFileStream_LocalAndNetwork_Success()
       {
          if (!System.IO.File.Exists(UnitTestConstants.NotepadExe))
             Assert.Inconclusive("Test ignored because {0} was not found.", UnitTestConstants.NotepadExe);

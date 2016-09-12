@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Open_Create_LocalAndNetworkSuccess()
+      public void File_Open_Create_LocalAndNetwork_Success()
       {
          Open_Create(false);
          Open_Create(true);
@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Open_Append_LocalAndNetworkSuccess()
+      public void File_Open_Append_LocalAndNetwork_Success()
       {
          Open_Append(false);
          Open_Append(true);

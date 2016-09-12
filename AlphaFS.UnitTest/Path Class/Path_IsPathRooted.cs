@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Path_IsPathRooted_LocalAndNetworkSuccess()
+      public void Path_IsPathRooted_LocalAndNetwork_Success()
       {
          UnitTestConstants.StopWatcher(true);
          foreach (var path in UnitTestConstants.InputPaths)

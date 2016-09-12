@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Delete_LocalAndNetworkSuccess()
+      public void File_Delete_LocalAndNetwork_Success()
       {
          File_Delete(false);
          File_Delete(true);
@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetworkSuccess()
+      public void File_Delete_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetwork_Success()
       {
          File_Delete_CatchArgumentException_PathContainsInvalidCharacters(false);
          File_Delete_CatchArgumentException_PathContainsInvalidCharacters(true);
@@ -52,7 +52,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetworkSuccess()
+      public void File_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetwork_Success()
       {
          File_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
          File_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
@@ -60,7 +60,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_CatchFileNotFoundException_NonExistingFile_LocalAndNetworkSuccess()
+      public void File_Delete_CatchFileNotFoundException_NonExistingFile_LocalAndNetwork_Success()
       {
          File_Delete_CatchFileNotFoundException_NonExistingFile(false);
          File_Delete_CatchFileNotFoundException_NonExistingFile(true);
@@ -68,7 +68,7 @@ namespace AlphaFS.UnitTest
       
 
       [TestMethod]
-      public void File_Delete_CatchFileReadOnlyException_ReadOnlyFile_LocalAndNetworkSuccess()
+      public void File_Delete_CatchFileReadOnlyException_ReadOnlyFile_LocalAndNetwork_Success()
       {
          File_Delete_CatchFileReadOnlyException_ReadOnlyFile(false);
          File_Delete_CatchFileReadOnlyException_ReadOnlyFile(true);
@@ -76,7 +76,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_CatchNotSupportedException_PathContainsColon_LocalAndNetworkSuccess()
+      public void File_Delete_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
       {
          File_Delete_CatchNotSupportedException_PathContainsColon(false);
          File_Delete_CatchNotSupportedException_PathContainsColon(true);
@@ -84,7 +84,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_CatchUnauthorizedAccessException_PathIsADirectoryNotAFile_LocalAndNetworkSuccess()
+      public void File_Delete_CatchUnauthorizedAccessException_PathIsADirectoryNotAFile_LocalAndNetwork_Success()
       {
          File_Delete_CatchUnauthorizedAccessException_PathIsADirectoryNotAFile(false);
          File_Delete_CatchUnauthorizedAccessException_PathIsADirectoryNotAFile(true);

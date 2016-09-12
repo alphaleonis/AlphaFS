@@ -141,7 +141,7 @@ namespace AlphaFS.UnitTest
       
 
       [TestMethod]
-      public void AlphaFS_Path_GetFullPath_WithTrailingDotOrSpace_LocalAndNetworkSuccess()
+      public void AlphaFS_Path_GetFullPath_WithTrailingDotOrSpace_LocalAndNetwork_Success()
       {
          Path_GetFullPath_WithTrailingDotOrSpace(false);
          Path_GetFullPath_WithTrailingDotOrSpace(true);

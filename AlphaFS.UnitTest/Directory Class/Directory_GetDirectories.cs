@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_GetDirectories_LocalAndNetworkSuccess()
+      public void Directory_GetDirectories_LocalAndNetwork_Success()
       {
          Directory_GetDirectories(true);
          Directory_GetDirectories(false);
@@ -38,7 +38,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_GetDirectories_WithSearchPattern_LocalAndNetworkSuccess()
+      public void Directory_GetDirectories_WithSearchPattern_LocalAndNetwork_Success()
       {
          Directory_GetDirectories_WithSearchPattern(true);
          Directory_GetDirectories_WithSearchPattern(false);

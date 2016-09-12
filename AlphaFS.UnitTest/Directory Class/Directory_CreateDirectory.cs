@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_CreateDirectory_LocalAndNetworkSuccess()
+      public void Directory_CreateDirectory_LocalAndNetwork_Success()
       {
          Directory_CreateDirectory_Delete(false);
          Directory_CreateDirectory_Delete(true);
@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_WithFileSecurity_LocalAndNetworkSuccess()
+      public void Directory_CreateDirectory_WithFileSecurity_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory_LocalAndNetworkSuccess()
+      public void Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
       {
          Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory(false);
          Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory(true);
@@ -56,7 +56,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetworkSuccess()
+      public void Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetwork_Success()
       {
          Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters(false);
          Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters(true);
@@ -71,7 +71,7 @@ namespace AlphaFS.UnitTest
       
 
       [TestMethod]
-      public void Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetworkSuccess()
+      public void Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetwork_Success()
       {
          Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
          Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
@@ -79,7 +79,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon_LocalAndNetworkSuccess()
+      public void Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
       {
          Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(false);
          Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(true);

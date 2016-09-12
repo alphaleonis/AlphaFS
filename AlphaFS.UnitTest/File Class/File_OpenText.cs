@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_OpenText_LocalAndNetworkSuccess()
+      public void File_OpenText_LocalAndNetwork_Success()
       {
          File_OpenText(false);
          File_OpenText(true);

@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Shell32_GetFileIcon_LocalAndNetworkSuccess()
+      public void AlphaFS_Shell32_GetFileIcon_LocalAndNetwork_Success()
       {
          Shell32_GetFileIcon(false);
          Shell32_GetFileIcon(true);

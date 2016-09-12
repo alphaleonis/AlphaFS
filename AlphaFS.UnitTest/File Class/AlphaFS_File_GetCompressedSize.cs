@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_GetCompressedSize_LocalAndNetworkSuccess()
+      public void AlphaFS_File_GetCompressedSize_LocalAndNetwork_Success()
       {
          File_GetCompressedSize(false);
          File_GetCompressedSize(true);

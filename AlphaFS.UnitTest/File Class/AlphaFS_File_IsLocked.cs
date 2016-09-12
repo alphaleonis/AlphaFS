@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_IsLocked_LocalAndNetworkSuccess()
+      public void AlphaFS_File_IsLocked_LocalAndNetwork_Success()
       {
          File_IsLocked(false);
          File_IsLocked(true);

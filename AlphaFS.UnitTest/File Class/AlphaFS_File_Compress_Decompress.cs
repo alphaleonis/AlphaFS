@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_Compress_And_Decompress_LocalAndNetworkSuccess()
+      public void AlphaFS_File_Compress_And_Decompress_LocalAndNetwork_Success()
       {
          File_Compress_And_Decompress(false);
          File_Compress_And_Decompress(true);

@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Replace_LocalAndNetworkSuccess()
+      public void File_Replace_LocalAndNetwork_Success()
       {
          File_Replace(false);
          File_Replace(true);
@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Replace_NoBackup_LocalAndNetworkSuccess()
+      public void File_Replace_NoBackup_LocalAndNetwork_Success()
       {
          File_Replace_NoBackup(false);
          File_Replace_NoBackup(true);

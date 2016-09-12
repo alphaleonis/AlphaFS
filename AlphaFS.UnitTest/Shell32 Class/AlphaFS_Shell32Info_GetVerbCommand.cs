@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Shell32Info_GetVerbCommand_LocalAndNetworkSuccess()
+      public void AlphaFS_Shell32Info_GetVerbCommand_LocalAndNetwork_Success()
       {
          Shell32Info_GetVerbCommand(false);
          Shell32Info_GetVerbCommand(true);

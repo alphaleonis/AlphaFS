@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_Move_LocalAndNetworkSuccess()
+      public void Directory_Move_LocalAndNetwork_Success()
       {
          Directory_Move(false);
          Directory_Move(true);
@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_Overwrite_DestinationFileAlreadyExists_LocalAndNetworkSuccess()
+      public void Directory_Move_Overwrite_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
          Directory_Move_Overwrite_DestinationFileAlreadyExists(false);
          Directory_Move_Overwrite_DestinationFileAlreadyExists(true);
@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetworkSuccess()
+      public void Directory_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
          Directory_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
          Directory_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(true);
@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetworkSuccess()
+      public void Directory_Move_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetwork_Success()
       {
          Directory_Move_CatchArgumentException_PathContainsInvalidCharacters(false);
          Directory_Move_CatchArgumentException_PathContainsInvalidCharacters(true);
@@ -68,7 +68,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetworkSuccess()
+      public void Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetwork_Success()
       {
          Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
          Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
@@ -76,7 +76,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndNetworkSuccess()
+      public void Directory_Move_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
       {
          Directory_Move_CatchDirectoryNotFoundException_NonExistingDirectory(false);
          Directory_Move_CatchDirectoryNotFoundException_NonExistingDirectory(true);
@@ -84,7 +84,7 @@ namespace AlphaFS.UnitTest
       
 
       [TestMethod]
-      public void Directory_Move_CatchNotSupportedException_PathContainsColon_LocalAndNetworkSuccess()
+      public void Directory_Move_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
       {
          Directory_Move_CatchNotSupportedException_PathContainsColon(false);
          Directory_Move_CatchNotSupportedException_PathContainsColon(true);
@@ -92,7 +92,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny_LocalAndNetworkSuccess()
+      public void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny_LocalAndNetwork_Success()
       {
          Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny(false);
          Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny(true);

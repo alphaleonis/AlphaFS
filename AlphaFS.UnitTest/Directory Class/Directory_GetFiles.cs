@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_GetFiles_LocalAndNetworkSuccess()
+      public void Directory_GetFiles_LocalAndNetwork_Success()
       {
          Directory_GetFiles(true);
          Directory_GetFiles(false);
@@ -38,7 +38,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_GetFiles_WithSearchPattern_LocalAndNetworkSuccess()
+      public void Directory_GetFiles_WithSearchPattern_LocalAndNetwork_Success()
       {
          Directory_GetFiles_WithSearchPattern(true);
          Directory_GetFiles_WithSearchPattern(false);

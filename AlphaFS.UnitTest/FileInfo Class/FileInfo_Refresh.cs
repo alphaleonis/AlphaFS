@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void FileInfo_Refresh_LocalAndNetworkSuccess()
+      public void FileInfo_Refresh_LocalAndNetwork_Success()
       {
          FileInfo_Refresh(false);
          FileInfo_Refresh(true);
@@ -81,7 +81,6 @@ namespace AlphaFS.UnitTest
 
 
             fsSysIo.Close();
-            fsAlphaFS.Close();
             fsAlphaFS.Close();
             fiSysIo.Delete();
             fiAlphaFS.Delete();

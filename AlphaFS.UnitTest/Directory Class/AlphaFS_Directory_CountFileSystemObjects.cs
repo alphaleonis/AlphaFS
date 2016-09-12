@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_NonRecursive_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_NonRecursive_LocalAndNetwork_Success()
       {
          Directory_CountFileSystemObjects_FoldersOnly_NonRecursive(false);
          Directory_CountFileSystemObjects_FoldersOnly_NonRecursive(true);
@@ -38,7 +38,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_Recursive_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_Recursive_LocalAndNetwork_Success()
       {
          Directory_CountFileSystemObjects_FoldersOnly_Recursive(false);
          Directory_CountFileSystemObjects_FoldersOnly_Recursive(true);
@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_CountFileSystemObjects_FilesOnly_NonRecursive_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_CountFileSystemObjects_FilesOnly_NonRecursive_LocalAndNetwork_Success()
       {
          Directory_CountFileSystemObjects_FilesOnly_NonRecursive(false);
          Directory_CountFileSystemObjects_FilesOnly_NonRecursive(true);
@@ -54,7 +54,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive_LocalAndNetwork_Success()
       {
          Directory_CountFileSystemObjects_FilesOnly_Recursive(false);
          Directory_CountFileSystemObjects_FilesOnly_Recursive(true);
@@ -62,7 +62,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_CountFileSystemObjects_FoldersAndFiles_Recursive_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_CountFileSystemObjects_FoldersAndFiles_Recursive_LocalAndNetwork_Success()
       {
          Directory_CountFileSystemObjects_FoldersAndFiles_Recursive(false);
          Directory_CountFileSystemObjects_FoldersAndFiles_Recursive(true);

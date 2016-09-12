@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_Copy_LocalAndNetwork_Success()
       {
          Directory_Copy(false);
          Directory_Copy(true);
@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_Overwrite_DestinationFileAlreadyExists_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_Copy_Overwrite_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
          Directory_Copy_Overwrite_DestinationFileAlreadyExists(false);
          Directory_Copy_Overwrite_DestinationFileAlreadyExists(true);
@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
          Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
          Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(true);
@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_Copy_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetwork_Success()
       {
          Directory_Copy_CatchArgumentException_PathContainsInvalidCharacters(false);
          Directory_Copy_CatchArgumentException_PathContainsInvalidCharacters(true);
@@ -68,7 +68,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetwork_Success()
       {
          Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
          Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
@@ -76,7 +76,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
       {
          Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory(false);
          Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory(true);
@@ -84,7 +84,7 @@ namespace AlphaFS.UnitTest
       
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchNotSupportedException_PathContainsColon_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_Copy_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
       {
          Directory_Copy_CatchNotSupportedException_PathContainsColon(false);
          Directory_Copy_CatchNotSupportedException_PathContainsColon(true);
@@ -92,7 +92,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny_LocalAndNetwork_Success()
       {
          Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny(false);
          Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny(true);

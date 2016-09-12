@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
       
       [TestMethod]
-      public void AlphaFS_Directory_SetTimestampsXxx_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_SetTimestampsXxx_LocalAndNetwork_Success()
       {
          Directory_SetTimestampsXxx(false);
          Directory_SetTimestampsXxx(true);
@@ -38,7 +38,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_TransferTimestamps_LocalAndNetworkSuccess()
+      public void AlphaFS_Directory_TransferTimestamps_LocalAndNetwork_Success()
       {
          Directory_TransferTimestamps(false);
          Directory_TransferTimestamps(true);

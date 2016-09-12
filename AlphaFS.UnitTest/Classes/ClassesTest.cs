@@ -375,7 +375,7 @@ namespace AlphaFS.UnitTest
          var tempPath = Path.LocalToUnc(share);
          Console.WriteLine("\nNetwork.Host.EnumerateOpenResources() from host: [{0}]", tempPath);
 
-         Directory.SetCurrentDirectory(tempPath);
+         System.IO.Directory.SetCurrentDirectory(tempPath);
 
          UnitTestConstants.StopWatcher(true);
          var cnt = 0;

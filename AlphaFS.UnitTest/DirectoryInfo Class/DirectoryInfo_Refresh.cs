@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void DirectoryInfo_Refresh_LocalAndNetworkSuccess()
+      public void DirectoryInfo_Refresh_LocalAndNetwork_Success()
       {
          DirectoryInfo_Refresh(false);
          DirectoryInfo_Refresh(true);

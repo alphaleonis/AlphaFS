@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Exists_LocalAndNetworkSuccess()
+      public void File_Exists_LocalAndNetwork_Success()
       {
          File_Exists(false);
          File_Exists(true);
@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_Exists_WithLeadingOrTrailingSpace_LocalAndNetworkSuccess()
+      public void AlphaFS_File_Exists_WithLeadingOrTrailingSpace_LocalAndNetwork_Success()
       {
          File_Exists_WithLeadingOrTrailingSpace(false);
          File_Exists_WithLeadingOrTrailingSpace(true);
