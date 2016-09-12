@@ -87,6 +87,7 @@ Version 2.1
 - Isses #248: `Directory.Move()` throws `FileNotFoundException` instead of `DirectoryNotFoundException` when source folder doesn't exist.
 - Isses #249: Change `File.GetHashCore()` `.ToString("X2")` to `.ToString("X2", CultureInfo.InvariantCulture)`.
 - Isses #253: Apply `Dispose()` to method `File.GetHashCore()`.
+- Isses #254: Change File.GetHashCore() output from .ToLowerInvariant() to ToUpperInvariant().
 
 ### Breaking Changes
 

@@ -58,56 +58,49 @@ namespace AlphaFS.UnitTest
             var type = Alphaleonis.Win32.Security.HashType.CRC32;
             var hash = Alphaleonis.Win32.Filesystem.File.GetHash(file, type);
             Console.WriteLine("\t{0,12} = {1}", type, hash);
-            Assert.AreEqual("1bf6339c", hash);
+            Assert.AreEqual("1BF6339C", hash);
 
 
             type = Alphaleonis.Win32.Security.HashType.CRC64ISO3309;
             hash = Alphaleonis.Win32.Filesystem.File.GetHash(file, type);
             Console.WriteLine("\t{0,12} = {1}", type, hash);
-            Assert.AreEqual("ad3de8a8c701f74e", hash);
-
-
-            //type = Alphaleonis.Win32.Security.HashType.MACTripleDES;
-            //hash = Alphaleonis.Win32.Filesystem.File.GetHash(file, type);
-            //Console.WriteLine("\t{0,12} = {1}", type, hash);
-            //// The hash value is different each time!
-            //Assert.AreEqual("de2142bf5bd4bfff728b7756d8d5364a63314177", hash);
+            Assert.AreEqual("AD3DE8A8C701F74E", hash);
 
 
             type = Alphaleonis.Win32.Security.HashType.MD5;
             hash = Alphaleonis.Win32.Filesystem.File.GetHash(file, type);
             Console.WriteLine("\t{0,12} = {1}", type, hash);
-            Assert.AreEqual("4cf01535a68a0f4aafd0631f3a000c52", hash);
+            Assert.AreEqual("4CF01535A68A0F4AAFD0631F3A000C52", hash);
 
 
             type = Alphaleonis.Win32.Security.HashType.RIPEMD160;
             hash = Alphaleonis.Win32.Filesystem.File.GetHash(file, type);
             Console.WriteLine("\t{0,12} = {1}", type, hash);
-            Assert.AreEqual("c2183fb7668fe4a2382a8e6d00501b3c114a6e9a", hash);
+            Assert.AreEqual("C2183FB7668FE4A2382A8E6D00501B3C114A6E9A", hash);
 
 
             type = Alphaleonis.Win32.Security.HashType.SHA1;
             hash = Alphaleonis.Win32.Filesystem.File.GetHash(file, type);
             Console.WriteLine("\t{0,12} = {1}", type, hash);
-            Assert.AreEqual("53f20d3d826642b232f5e514cb2aadfc359417e8", hash);
+            Assert.AreEqual("53F20D3D826642B232F5E514CB2AADFC359417E8", hash);
 
 
             type = Alphaleonis.Win32.Security.HashType.SHA256;
             hash = Alphaleonis.Win32.Filesystem.File.GetHash(file, type);
             Console.WriteLine("\t{0,12} = {1}", type, hash);
-            Assert.AreEqual("07e7173232f22a1b746fe15c98bcb294a668f8300f645174bf0b83e2d8eaddcb", hash);
+            Assert.AreEqual("07E7173232F22A1B746FE15C98BCB294A668F8300F645174BF0B83E2D8EADDCB", hash);
 
 
             type = Alphaleonis.Win32.Security.HashType.SHA384;
             hash = Alphaleonis.Win32.Filesystem.File.GetHash(file, type);
             Console.WriteLine("\t{0,12} = {1}", type, hash);
-            Assert.AreEqual("bf5ffd4053c364a8db68608d79db0a016e990b1be8f1d91fcfc820ac89456f4afaf8307deea4a7f663ce03d0ec21ad58", hash);
+            Assert.AreEqual("BF5FFD4053C364A8DB68608D79DB0A016E990B1BE8F1D91FCFC820AC89456F4AFAF8307DEEA4A7F663CE03D0EC21AD58", hash);
 
 
             type = Alphaleonis.Win32.Security.HashType.SHA512;
             hash = Alphaleonis.Win32.Filesystem.File.GetHash(file, type);
             Console.WriteLine("\t{0,12} = {1}", type, hash);
-            Assert.AreEqual("ffc32d18263b784a6e661e852dc5ff3a4c75425a42974cf067ddc01a17ffd34cf6e9717623a7d9c6ea19b04dbf5fdadecde06122dab0c26cfc83b1ea61c7b382", hash);
+            Assert.AreEqual("FFC32D18263B784A6E661E852DC5FF3A4C75425A42974CF067DDC01A17FFD34CF6E9717623A7D9C6EA19B04DBF5FDADECDE06122DAB0C26CFC83B1EA61C7B382", hash);
          }
 
          Console.WriteLine();

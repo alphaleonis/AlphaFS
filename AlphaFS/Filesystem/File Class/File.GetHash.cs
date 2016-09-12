@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Filesystem
             foreach (byte b in hash)
                sb.Append(b.ToString("X2", CultureInfo.InvariantCulture));
 
-            return sb.ToString().ToLowerInvariant();
+            return sb.ToString().ToUpperInvariant();
          }
 
          return string.Empty;

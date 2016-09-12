@@ -259,8 +259,8 @@ namespace Alphaleonis.Win32.Filesystem
          {
             options |= DirectoryEnumerationOptions.Recursive;
 
-            foreach (string fso in EnumerateFileSystemEntryInfosCore<string>(null, pathLp, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath))
-               File.EncryptDecryptFileCore(true, fso, encrypt, PathFormat.LongFullPath);
+            foreach (string fsei in EnumerateFileSystemEntryInfosCore<string>(null, pathLp, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath))
+               File.EncryptDecryptFileCore(true, fsei, encrypt, PathFormat.LongFullPath);
          }
 
          // Process the root folder, the given path.

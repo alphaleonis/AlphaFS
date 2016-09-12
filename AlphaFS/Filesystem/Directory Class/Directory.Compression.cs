@@ -472,8 +472,8 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // Process directories and files.
-         foreach (var fso in EnumerateFileSystemEntryInfosCore<string>(transaction, pathLp, searchPattern, options | DirectoryEnumerationOptions.AsLongPath, PathFormat.LongFullPath))
-            Device.ToggleCompressionCore(true, transaction, fso, compress, PathFormat.LongFullPath);
+         foreach (var fsei in EnumerateFileSystemEntryInfosCore<string>(transaction, pathLp, searchPattern, options | DirectoryEnumerationOptions.AsLongPath, PathFormat.LongFullPath))
+            Device.ToggleCompressionCore(true, transaction, fsei, compress, PathFormat.LongFullPath);
 
          // Compress the root directory, the given path.
          Device.ToggleCompressionCore(true, transaction, pathLp, compress, PathFormat.LongFullPath);
