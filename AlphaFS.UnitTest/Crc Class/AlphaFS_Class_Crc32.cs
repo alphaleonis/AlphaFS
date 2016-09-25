@@ -19,7 +19,9 @@
  *  THE SOFTWARE. 
  */
 
+using Alphaleonis.Win32.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,18 +32,22 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Class_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString()
       {
-         var actual = Alphaleonis.Win32.Security.Crc32.Compute(System.Text.Encoding.ASCII.GetBytes(UnitTestConstants.StreamArrayContent[0]));
-
-         Assert.AreEqual((uint) 2048436515, actual);
+         using (var crc32 = new Crc32())
+         {
+            var actual = crc32.ComputeHash(System.Text.Encoding.ASCII.GetBytes(UnitTestConstants.StreamArrayContent[0]));
+            Assert.AreEqual((uint)2048436515, actual);
+         }
       }
 
 
       [TestMethod]
       public void AlphaFS_Class_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString2()
       {
-         var actual = Alphaleonis.Win32.Security.Crc32.Compute(System.Text.Encoding.ASCII.GetBytes(UnitTestConstants.StreamArrayContent[1]));
-
-         Assert.AreEqual(2244818965, actual);
+         using (var crc32 = new Crc32())
+         {
+            var actual = crc32.ComputeHash(System.Text.Encoding.ASCII.GetBytes(UnitTestConstants.StreamArrayContent[1]));
+            Assert.AreEqual(2244818965, actual);
+         }
       }
    }
 }

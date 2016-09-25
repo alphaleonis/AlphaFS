@@ -39,119 +39,80 @@ namespace Alphaleonis.Win32.Security
    /// being passed in as the seed for the next Compute call.
    /// </remarks>
    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crc")]
-   public sealed class Crc32 : HashAlgorithm
+   internal sealed class Crc32 : HashAlgorithm
    {
       private const uint DefaultPolynomial = 0xedb88320u;
       private const uint DefaultSeed = 0xffffffffu;
 
-      private uint _hash;
-      private static uint[] _defaultTable;
-      private readonly uint _seed;
-      private readonly uint[] _table;
-
+      private uint m_hash;
+      private static uint[] s_defaultTable;
+      private readonly uint m_seed;
+      private readonly uint[] m_table;
 
       /// <summary>
-      /// 
+      /// Initializes a new instance of Crc32.
       /// </summary>
-      public Crc32() : this(DefaultPolynomial, DefaultSeed)
+      public Crc32() 
+         : this(DefaultPolynomial, DefaultSeed)
       {
       }
 
-
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="polynomial"></param>
-      /// <param name="seed"></param>
-      public Crc32(uint polynomial, uint seed)
+      /// <summary>Initializes a new instance of Crc32.</summary>
+      /// <param name="polynomial">The polynomial.</param>
+      /// <param name="seed">The seed.</param>
+      private Crc32(uint polynomial, uint seed)
       {
-         _table = InitializeTable(polynomial);
-         _seed = _hash = seed;
+         m_table = InitializeTable(polynomial);
+         m_seed = m_hash = seed;
       }
 
-
       /// <summary>
-      /// 
+      /// Initializes an implementation of the
+      /// <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.
       /// </summary>
       public override void Initialize()
       {
-         _hash = _seed;
+         m_hash = m_seed;
       }
 
-
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="array"></param>
-      /// <param name="ibStart"></param>
-      /// <param name="cbSize"></param>
+      /// <summary>When overridden in a derived class, routes data written to the object into the hash algorithm for computing the hash.</summary>
+      /// <param name="array">The input to compute the hash code for..</param>
+      /// <param name="ibStart">The offset into the byte array from which to begin using data.</param>
+      /// <param name="cbSize">The number of bytes in the byte array to use as data.</param>
       protected override void HashCore(byte[] array, int ibStart, int cbSize)
       {
-         _hash = CalculateHash(_table, _hash, array, ibStart, cbSize);
+         m_hash = CalculateHash(m_table, m_hash, array, ibStart, cbSize);
       }
 
-
       /// <summary>
-      /// 
+      /// Finalizes the hash computation after the last data is processed by the cryptographic stream
+      /// object.
       /// </summary>
-      /// <returns></returns>
+      /// <returns>
+      /// This method finalizes any partial computation and returns the correct hash value for the data
+      /// stream.
+      /// </returns>
       protected override byte[] HashFinal()
       {
-         var hashBuffer = UInt32ToBigEndianBytes(~_hash);
+         var hashBuffer = UInt32ToBigEndianBytes(~m_hash);
          HashValue = hashBuffer;
          return hashBuffer;
       }
 
-      
-      /// <summary>
-      /// 
-      /// </summary>
+      /// <summary>Gets the size, in bits, of the computed hash code.</summary>
+      /// <value>The size, in bits, of the computed hash code.</value>
       public override int HashSize
       {
          get { return 32; }
       }
 
-
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="buffer"></param>
-      /// <returns></returns>
-      public static uint Compute(byte[] buffer)
-      {
-         return Compute(DefaultSeed, buffer);
-      }
-
-
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="seed"></param>
-      /// <param name="buffer"></param>
-      /// <returns></returns>
-      public static uint Compute(uint seed, byte[] buffer)
-      {
-         return Compute(DefaultPolynomial, seed, buffer);
-      }
-
-
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="polynomial"></param>
-      /// <param name="seed"></param>
-      /// <param name="buffer"></param>
-      /// <returns></returns>
-      public static uint Compute(uint polynomial, uint seed, byte[] buffer)
-      {
-         return ~CalculateHash(InitializeTable(polynomial), seed, buffer, 0, buffer.Length);
-      }
-
-
+      /// <summary>Initializes the table.</summary>
+      /// <param name="polynomial">The polynomial.</param>
+      /// <returns>The table.</returns>
       private static uint[] InitializeTable(uint polynomial)
       {
-         if (polynomial == DefaultPolynomial && _defaultTable != null)
-            return _defaultTable;
+         if (polynomial == DefaultPolynomial && s_defaultTable != null)
+            return s_defaultTable;
 
          var createTable = new uint[256];
          for (var i = 0; i < 256; i++)
@@ -166,12 +127,18 @@ namespace Alphaleonis.Win32.Security
          }
 
          if (polynomial == DefaultPolynomial)
-            _defaultTable = createTable;
+            s_defaultTable = createTable;
 
          return createTable;
       }
 
-
+      /// <summary>Calculates the hash.</summary>
+      /// <param name="table">The table.</param>
+      /// <param name="seed">The seed.</param>
+      /// <param name="buffer">The buffer.</param>
+      /// <param name="start">The start.</param>
+      /// <param name="size">The size.</param>
+      /// <returns>The calculated hash.</returns>
       private static uint CalculateHash(uint[] table, uint seed, IList<byte> buffer, int start, int size)
       {
          var hash = seed;
@@ -182,7 +149,9 @@ namespace Alphaleonis.Win32.Security
          return hash;
       }
 
-
+      /// <summary>Int 32 to big endian bytes.</summary>
+      /// <param name="uint32">The second uint 3.</param>
+      /// <returns>A byte[].</returns>
       private static byte[] UInt32ToBigEndianBytes(uint uint32)
       {
          var result = BitConverter.GetBytes(uint32);
