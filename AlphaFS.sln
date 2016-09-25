@@ -1,13 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{478C6563-C321-4AB5-9D4D-ABFC9C88EBF0}"
 	ProjectSection(SolutionItems) = preProject
 		AlphaFS.nuspec = AlphaFS.nuspec
 		AlphaFS.testrunconfig = AlphaFS.testrunconfig
 		AlphaFS.vsmdi = AlphaFS.vsmdi
+		BuildRelease.proj = BuildRelease.proj
 		CHANGELOG.md = CHANGELOG.md
 		LICENSE.md = LICENSE.md
 	EndProjectSection

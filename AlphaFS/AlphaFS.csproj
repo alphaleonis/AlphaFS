@@ -193,7 +193,9 @@
     <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyVersionInfo.cs" />
+    <Compile Include="AssemblyVersionInfo.cs">
+      <DoTransformOnBuild>True</DoTransformOnBuild>
+    </Compile>
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\BackupStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
@@ -513,6 +515,7 @@
     </None>
     <None Include="app.config" />
     <Compile Include="Filesystem\Directory Class\Directory.EncryptedDirectoryRaw.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
