@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                case HashType.CRC64ISO3309:
-                  using (var hType = new Crc64Iso())
+                  using (var hType = new Crc64())
                      hash = hType.ComputeHash(fs);
                   break;
 
