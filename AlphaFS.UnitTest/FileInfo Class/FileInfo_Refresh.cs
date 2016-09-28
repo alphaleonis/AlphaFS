@@ -54,8 +54,8 @@ namespace AlphaFS.UnitTest
             var fiSysIo = new System.IO.FileInfo(file + "-System.IO.txt");
             var fiAlphaFS = new Alphaleonis.Win32.Filesystem.FileInfo(file + "-AlphaFS.txt");
 
-            Console.WriteLine("\nInput File Path: [{0}]", fiSysIo.FullName);
-            Console.WriteLine("Input File Path: [{0}]", fiAlphaFS.FullName);
+            Console.WriteLine("\nSystem.IO Input File Path: [{0}]", fiSysIo.FullName);
+            Console.WriteLine("AlphaFS   Input File Path: [{0}]", fiAlphaFS.FullName);
 
 
             var existsSysIo = fiSysIo.Exists;

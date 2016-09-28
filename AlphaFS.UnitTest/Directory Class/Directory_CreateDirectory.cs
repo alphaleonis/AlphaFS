@@ -37,6 +37,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
+      public void Directory_CreateDirectory_WithMultipleSpacesAndSlashes_LocalAndNetwork_Success()
+      {
+         Directory_CreateDirectory_WithMultipleSpacesAndSlashes(false);
+         Directory_CreateDirectory_WithMultipleSpacesAndSlashes(true);
+      }
+
+
+      [TestMethod]
       public void Directory_CreateDirectory_WithFileSecurity_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
@@ -123,6 +131,63 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n{0}", root);
 
             Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(root), "The directory does not exists, but is expected to.");
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_CreateDirectory_WithMultipleSpacesAndSlashes(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory"))
+         {
+            var folder = rootDir.Directory.FullName;
+            var subFolders = new[]
+            {
+               @"földer1",
+               @"\ \",
+               @"foldër2 2",
+               @"///",
+               @" fóldér3 33"
+            };
+
+
+            var fullPath = folder + @"\" + subFolders[0] + subFolders[1] + subFolders[2] + subFolders[3] + subFolders[4];
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", fullPath);
+
+
+            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(fullPath);
+
+
+            var count = 0;
+            foreach (var dir in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.DirectoryInfo>(folder, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive))
+            {
+               Console.WriteLine("\tFolder name: \"{0}\"", dir.Name);
+
+               switch (count)
+               {
+                  case 0:
+                     Assert.IsTrue(dir.Name.Equals(subFolders[0]));
+                     break;
+
+                  case 1:
+                     Assert.IsTrue(dir.Name.Equals(subFolders[2]));
+                     break;
+
+                  case 2:
+                     Assert.IsTrue(dir.Name.Equals(subFolders[4]));
+                     break;
+               }
+
+               count++;
+            }
          }
 
          Console.WriteLine();

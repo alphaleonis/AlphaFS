@@ -48,6 +48,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>DefaultFileEncoding = Encoding.UTF8; Default type of Encoding used for reading and writing files.</summary>
       public static readonly Encoding DefaultFileEncoding = Encoding.UTF8;
 
+      /// <summary>MaxDirectoryLength = 255</summary>
+      internal const int MaxDirectoryLength = 255;
+      
       /// <summary>MaxPath = 260
       /// The specified path, file name, or both exceed the system-defined maximum length.
       /// For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters. 

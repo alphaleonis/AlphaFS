@@ -54,8 +54,8 @@ namespace AlphaFS.UnitTest
             var diSysIo = new System.IO.DirectoryInfo(folder + "-System.IO");
             var diAlphaFS = new Alphaleonis.Win32.Filesystem.DirectoryInfo(folder + "-AlphaFS");
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", diSysIo.FullName);
-            Console.WriteLine("Input Directory Path: [{0}]", diAlphaFS.FullName);
+            Console.WriteLine("\nSystem.IO Input Directory Path: [{0}]", diSysIo.FullName);
+            Console.WriteLine("AlphaFS   Input Directory Path: [{0}]", diAlphaFS.FullName);
 
 
             var existsSysIo = diSysIo.Exists;

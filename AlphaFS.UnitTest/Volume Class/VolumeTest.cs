@@ -529,9 +529,9 @@ namespace AlphaFS.UnitTest
             }
          }
 
-         // No Assert(); there might be no Mount Points.
+
          if (cnt == 0)
-            Console.WriteLine("\tNo Volume Mount Points found.");
+            Assert.Inconclusive("No Volume Mount Points found.");
 
          #endregion // Logical Drives
       }

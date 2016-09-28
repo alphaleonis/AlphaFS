@@ -753,17 +753,15 @@ namespace Alphaleonis.Win32.Filesystem
                // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                // 2013-01-13: MSDN confirms LongPath usage.
 
-               bool createOk = (transaction == null || !NativeMethods.IsAtLeastWindowsVista
+               if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
                   ? (templatePathLp == null
                      ? NativeMethods.CreateDirectory(folderLp, securityAttributes)
                      : NativeMethods.CreateDirectoryEx(templatePathLp, folderLp, securityAttributes))
-                  : NativeMethods.CreateDirectoryTransacted(templatePathLp, folderLp, securityAttributes, transaction.SafeHandle));
-
-               if (!createOk)
+                  : NativeMethods.CreateDirectoryTransacted(templatePathLp, folderLp, securityAttributes, transaction.SafeHandle)))
                {
                   int lastError = Marshal.GetLastWin32Error();
 
-                  switch ((uint)lastError)
+                  switch ((uint) lastError)
                   {
                      // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
@@ -788,12 +786,13 @@ namespace Alphaleonis.Win32.Filesystem
                         break;
                   }
                }
+
                else if (compress)
                   Device.ToggleCompressionCore(true, transaction, folderLp, true, PathFormat.LongFullPath);
             }
-         }
 
-         return new DirectoryInfo(transaction, pathLp, PathFormat.FullPath);
+            return new DirectoryInfo(transaction, pathLp, PathFormat.LongFullPath);
+         }
       }
 
       #endregion // Internal Methods

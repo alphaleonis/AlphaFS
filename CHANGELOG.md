@@ -87,9 +87,10 @@ Version 2.1
 - Issue #248: `Directory.Move()` throws `FileNotFoundException` instead of `DirectoryNotFoundException` when source folder doesn't exist.
 - Issue #249: Change `File.GetHashCore()` `.ToString("X2")` to `.ToString("X2", CultureInfo.InvariantCulture)`.
 - Issue #253: Apply `Dispose()` to method `File.GetHashCore()`.
-- Issue #254: Change File.GetHashCore() output from .ToLowerInvariant() to ToUpperInvariant().
+- Issue #254: Change `File.GetHashCore()` output from `.ToLowerInvariant()` to `.ToUpperInvariant()`.
 - Issue #256: `Directory.Move()` not working over volumes with `MoveOptions.CopyAllowed`. (frontier777)
 - Issue #263: `Directory.GetDirectories()` Method `(String, String, SearchOption)` with pattern "* " (ardestan)
+- Issue #255: Creating Folder with Empty name. (ardestan)
 
 ### Breaking Changes
 

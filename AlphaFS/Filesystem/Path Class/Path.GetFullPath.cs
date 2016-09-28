@@ -172,15 +172,14 @@ namespace Alphaleonis.Win32.Filesystem
       internal static string GetFullPathCore(KernelTransaction transaction, string path, GetFullPathOptions options)
       {
          if (path != null)
-            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||
-                path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
+            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
                return path;
          
          if (options != GetFullPathOptions.None)
          {
             if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
             {
-               bool checkAdditional = (options & GetFullPathOptions.CheckAdditional) != 0;
+               var checkAdditional = (options & GetFullPathOptions.CheckAdditional) != 0;
 
                CheckInvalidPathChars(path, checkAdditional, false);
 
@@ -199,7 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         string pathLp = GetLongPathCore(path, options);
+         var pathLp = GetLongPathCore(path, options);
          uint bufferSize = NativeMethods.MaxPathUnicode;
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
@@ -207,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
             startGetFullPathName:
 
             var buffer = new StringBuilder((int)bufferSize);
-            uint returnLength = (transaction == null || !NativeMethods.IsAtLeastWindowsVista
+            var returnLength = (transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
                // GetFullPathName() / GetFullPathNameTransacted()
                // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -239,6 +238,9 @@ namespace Alphaleonis.Win32.Filesystem
                : GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None, false);
 
 
+            finalFullPath = NormalizePath(finalFullPath, options);
+
+
             if ((options & GetFullPathOptions.KeepDotOrSpace) != 0)
             {
                if (pathLp.EndsWith(".", StringComparison.OrdinalIgnoreCase))
@@ -249,7 +251,7 @@ namespace Alphaleonis.Win32.Filesystem
                   finalFullPath += lastChar;
             }
 
-
+            
             return finalFullPath;
          }
       }
@@ -258,8 +260,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (path != null)
          {
-            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||
-                path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
+            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) || path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
                return path;
 
             CheckInvalidUncPath(path);
