@@ -771,16 +771,30 @@ namespace Alphaleonis.Win32.Filesystem
             NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPathLp);
 
 
+         var emulateMove = false;
+
          // Determine Copy or Move action.
          var doCopy = copyOptions != null;
          var doMove = !doCopy && moveOptions != null;
-
+         
          if ((!doCopy && !doMove) || (doCopy && doMove))
             throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
 
-         var overwrite = doCopy
-            ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
-            : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
+
+         if (doMove)
+         {
+            if (((MoveOptions) moveOptions & MoveOptions.CopyAllowed) != 0 || !Volume.IsSameVolume(sourcePath, destinationPath))
+            {
+               doMove = false;
+               moveOptions = null;
+
+               doCopy = true;
+               copyOptions = CopyOptions.FailIfExists;
+
+               emulateMove = true;
+            }
+         }
+
 
          var cmr = new CopyMoveResult(sourcePathLp, destinationPathLp, true, doMove, false, (int) Win32Errors.ERROR_SUCCESS);
 
@@ -800,9 +814,25 @@ namespace Alphaleonis.Win32.Filesystem
                   ? CopyMoveCore(transaction, fsei.LongFullPath, newDestinationPathLp, copyOptions, null, progressHandler, userProgressData, PathFormat.LongFullPath)
                   : File.CopyMoveCore(false, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions, null, progressHandler, userProgressData, PathFormat.LongFullPath);
 
+               
+               // Remove the folder or file when copying was successful.
+               if (emulateMove && cmr.ErrorCode == Win32Errors.ERROR_SUCCESS)
+               {
+                  if (fsei.IsDirectory)
+                     DeleteDirectoryCore(fsei, transaction, null, true, true, false, true, PathFormat.LongFullPath);
+                  else
+                     File.DeleteFileCore(transaction, fsei.LongFullPath, true, PathFormat.LongFullPath);
+               }
+
+
                if (cmr.IsCanceled)
                   return cmr;
             }
+
+
+            // Remove source folder.
+            if (emulateMove && cmr.ErrorCode == Win32Errors.ERROR_SUCCESS)
+               DeleteDirectoryCore(null, transaction, sourcePathLp, true, true, false, true, PathFormat.LongFullPath);
          }
 
          #endregion // Copy
@@ -818,7 +848,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
-            if (overwrite && File.ExistsCore(true, transaction, destinationPathLp, PathFormat.LongFullPath))
+            if (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) != 0)
                DeleteDirectoryCore(null, transaction, destinationPathLp, true, true, false, true, PathFormat.LongFullPath);
 
 

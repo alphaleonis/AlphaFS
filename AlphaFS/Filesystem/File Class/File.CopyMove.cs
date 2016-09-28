@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.Win32.SafeHandles;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -1091,10 +1090,6 @@ namespace Alphaleonis.Win32.Filesystem
          if ((!doCopy && !doMove) || (doCopy && doMove))
             throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
 
-         var overwrite = doCopy
-            ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
-            : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
-
          var raiseException = progressHandler == null;
 
          // Setup callback function for progress notifications.
@@ -1220,47 +1215,37 @@ namespace Alphaleonis.Win32.Filesystem
                         if (!isFolder && ExistsCore(true, transaction, destFileNameLp, PathFormat.LongFullPath))
                            NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.Target_File_Is_A_Directory, destFileNameLp));
 
-                        else
+                        if (doMove)
                         {
-                           if (doMove)
+                           var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+                           FillAttributeInfoCore(transaction, destFileNameLp, ref data, false, true);
+
+                           if (data.dwFileAttributes != (FileAttributes) (-1))
                            {
-                              var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-                              FillAttributeInfoCore(transaction, destFileNameLp, ref data, false, true);
-
-                              if (data.dwFileAttributes != (FileAttributes) (-1))
+                              if ((data.dwFileAttributes & FileAttributes.ReadOnly) != 0)
                               {
-                                 if ((data.dwFileAttributes & FileAttributes.ReadOnly) != 0)
+                                 // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
+                                 if (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) != 0)
                                  {
-                                    // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
+                                    // Reset file system object attributes.
+                                    SetAttributesCore(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
 
-                                    if (overwrite)
-                                    {
-                                       // Reset file system object attributes.
-                                       SetAttributesCore(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
-
-                                       goto startCopyMove;
-                                    }
-
-
-                                    // MSDN: .NET 3.5+: UnauthorizedAccessException: destinationFileName is read-only.
-                                    // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
-                                    // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-
-                                    throw new FileReadOnlyException(destFileNameLp);
+                                    goto startCopyMove;
                                  }
 
 
+                                 // MSDN: .NET 3.5+: UnauthorizedAccessException: destinationFileName is read-only.
                                  // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                                  // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                                 if ((data.dwFileAttributes & FileAttributes.Hidden) != 0)
-                                    NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.File_Is_Hidden, destFileNameLp));
+                                 throw new FileReadOnlyException(destFileNameLp);
                               }
+
+
+                              // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
+                              // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
+                              if ((data.dwFileAttributes & FileAttributes.Hidden) != 0)
+                                 NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.File_Is_Hidden, destFileNameLp));
                            }
-
-
-                           // Observation: .NET 3.5+: For files: UnauthorizedAccessException: The caller does not have the required permission.
-                           // Observation: .NET 3.5+: For directories: IOException: The caller does not have the required permission.
-                           NativeError.ThrowException(lastError, destFileNameLp);
                         }
                      }
 

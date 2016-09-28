@@ -34,14 +34,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>MOVE_FILE_REPLACE_EXISTSING
       /// <para>If the destination file name already exists, the function replaces its contents with the contents of the source file.</para>
       /// <para>This value cannot be used if lpNewFileName or lpExistingFileName names a directory.</para>
+      /// <para>This value cannot be used if either source or destination names a directory.</para>
       /// </summary>
-      /// <remark>This value cannot be used if either source or destination names a directory.</remark>
       ReplaceExisting = 1,
 
       /// <summary>MOVE_FILE_COPY_ALLOWED
       /// <para>If the file is to be moved to a different volume, the function simulates the move by using the CopyFile and DeleteFile functions.</para>
+      /// <para>This value cannot be used with <see cref="MoveOptions.DelayUntilReboot"/>.</para>
       /// </summary>
-      /// <remarks>This value cannot be used with <see cref="MoveOptions.DelayUntilReboot"/>.</remarks>
       CopyAllowed = 2,
 
       /// <summary>MOVE_FILE_DELAY_UNTIL_REBOOT
@@ -53,8 +53,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// Consequently, this parameter enables the function to delete paging files from previous startups.
       /// This value can only be used if the process is in the context of a user who belongs to the administrators group or the LocalSystem account.
       /// </para>
+      /// <para>This value cannot be used with <see cref="MoveOptions.CopyAllowed"/>.</para>
       /// </summary>
-      /// <remarks>This value cannot be used with <see cref="MoveOptions.CopyAllowed"/>.</remarks>
       DelayUntilReboot = 4,
 
       /// <summary>MOVE_FILE_WRITE_THROUGH
@@ -63,8 +63,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// Setting this value guarantees that a move performed as a copy and delete operation is flushed to disk before the function returns.
       /// The flush occurs at the end of the copy operation.
       /// </para>
+      /// <para>This value has no effect if <see cref="MoveOptions.DelayUntilReboot"/> is set.</para>
       /// </summary>
-      /// <remarks>This value has no effect if <see cref="MoveOptions.DelayUntilReboot"/> is set.</remarks>
       WriteThrough = 8,
 
       /// <summary>MOVE_FILE_CREATE_HARDLINK

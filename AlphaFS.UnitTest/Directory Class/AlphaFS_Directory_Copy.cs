@@ -115,7 +115,7 @@ namespace AlphaFS.UnitTest
             var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
             var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName());
             Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("\nDst Directory Path: [{0}]", folderDst.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
 
             UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), true);
 
@@ -158,7 +158,7 @@ namespace AlphaFS.UnitTest
             var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
             var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName());
             Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("\nDst Directory Path: [{0}]", folderDst.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
 
 
             UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), true);
@@ -216,7 +216,7 @@ namespace AlphaFS.UnitTest
             var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
             var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName());
             Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("\nDst Directory Path: [{0}]", folderDst.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
 
 
             UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), true);
@@ -333,7 +333,8 @@ namespace AlphaFS.UnitTest
             if (isNetwork)
                folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
 
-            Console.WriteLine("\nDst Directory Path: [{0}]", folder);
+            Console.WriteLine("\nSrc Directory Path: [{0}]", rootDir.Directory.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folder);
 
             var gotException = false;
             try

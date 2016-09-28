@@ -285,9 +285,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Path refers to a file instead of a directory.
             // The specified path is invalid (for example, it is on an unmapped drive). 
 
-            fileSystemEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction,
-               Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator), 
-                  continueOnNotExist, pathFormat);
+            fileSystemEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator), continueOnNotExist, pathFormat);
          }
 
          if (fileSystemEntryInfo == null)

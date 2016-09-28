@@ -63,7 +63,7 @@ Version 2.1
 - Issue #168: Error on `File.Open()` with access-mode Append?
 - Issue #169: `DirectoryInfo .ToString()` returns path with `\\UNC` prefix.
 - Issue #176: At `DirectoryInfo.GetFileSystemInfos()`, Long path prefix of GLOBALROOT path is missing. (diontools)
-- Isses #179: `Path.GetFileName()` with an empty string throws an exception. (brutaldev)
+- Issue #179: `Path.GetFileName()` with an empty string throws an exception. (brutaldev)
 - Issue #180: Network connects methods hangs in Windows service when credentials fail. (brutaldev)
 - Issue #181: `File.OpenWrite()` should create file if it doesn't exist. (Thomas Levesque)
 - Issue #183: Add `SafeFileHandle` null check for BackupFileStream.Dispose. (diontools)
@@ -84,10 +84,11 @@ Version 2.1
 - Issue #242: `File.Open(file, System.IO.FileMode.Append)` does not append.
 - Issue #244: `File.Copy(src, dst, true)` does not respect `FILE_ATTRIBUTE_READONLY`.
 - Issue #246: Using `Directory.EnumerateFileSystemEntries()` recursively with a relative path may fail.
-- Isses #248: `Directory.Move()` throws `FileNotFoundException` instead of `DirectoryNotFoundException` when source folder doesn't exist.
-- Isses #249: Change `File.GetHashCore()` `.ToString("X2")` to `.ToString("X2", CultureInfo.InvariantCulture)`.
-- Isses #253: Apply `Dispose()` to method `File.GetHashCore()`.
-- Isses #254: Change File.GetHashCore() output from .ToLowerInvariant() to ToUpperInvariant().
+- Issue #248: `Directory.Move()` throws `FileNotFoundException` instead of `DirectoryNotFoundException` when source folder doesn't exist.
+- Issue #249: Change `File.GetHashCore()` `.ToString("X2")` to `.ToString("X2", CultureInfo.InvariantCulture)`.
+- Issue #253: Apply `Dispose()` to method `File.GetHashCore()`.
+- Issue #254: Change File.GetHashCore() output from .ToLowerInvariant() to ToUpperInvariant().
+- Issue #256: `Directory.Move()` not working over volumes with `MoveOptions.CopyAllowed`.
 
 ### Breaking Changes
 

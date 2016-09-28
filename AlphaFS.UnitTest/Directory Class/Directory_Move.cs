@@ -29,10 +29,24 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_Move_LocalAndNetwork_Success()
+      public void Directory_Move_SameVolume_LocalAndNetwork_Success()
       {
          Directory_Move(false);
          Directory_Move(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Move_FromLocalToNetwork_Success()
+      {
+         Directory_Move_DifferentSourceAndDestination(false);
+      }
+
+
+      [TestMethod]
+      public void Directory_Move_FromNetworkToLocal_Success()
+      {
+         Directory_Move_DifferentSourceAndDestination(true);
       }
 
 
@@ -144,6 +158,56 @@ namespace AlphaFS.UnitTest
       }
 
 
+      private void Directory_Move_DifferentSourceAndDestination(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Move"))
+         {
+            var src = System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName();
+            var dst = System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName();
+
+            if (isNetwork)
+               src = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(src);
+            else
+               dst = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dst);
+
+
+            var folderSrc = System.IO.Directory.CreateDirectory(src);
+            var folderDst = new System.IO.DirectoryInfo(dst);
+            Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
+
+            UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), true);
+
+
+            var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
+            var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderSrc.FullName, dirEnumOptions);
+            var sourceTotal = props["Total"];
+            var sourceTotalFiles = props["File"];
+            var sourceTotalSize = props["Size"];
+            Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
+
+
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
+
+
+            props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
+            Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
+            Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
+            Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
+
+
+            Assert.IsFalse(System.IO.Directory.Exists(folderSrc.FullName), "The original folder exists, but is expected not to.");
+         }
+
+         Console.WriteLine();
+      }
+
+
       private void Directory_Move_Overwrite_DestinationFileAlreadyExists(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -158,7 +222,7 @@ namespace AlphaFS.UnitTest
             var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
             var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName());
             Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("\nDst Directory Path: [{0}]", folderDst.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
 
 
             UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), true);
@@ -216,7 +280,7 @@ namespace AlphaFS.UnitTest
             var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
             var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName());
             Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("\nDst Directory Path: [{0}]", folderDst.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
 
 
             UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), true);
@@ -319,6 +383,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
@@ -330,7 +396,7 @@ namespace AlphaFS.UnitTest
             if (isNetwork)
                folderSrc = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folderSrc);
 
-            Console.WriteLine("\nDst Directory Path: [{0}]", folderSrc);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderSrc);
 
             UnitTestConstants.CreateDirectoriesAndFiles(rootDir.Directory.FullName, new Random().Next(5, 15), true);
 
@@ -358,6 +424,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Move_CatchDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);

@@ -627,8 +627,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>You can provide a callback function that receives progress notifications.</para>
       /// </summary>
       /// <remarks>
-      ///   <para>The MoveFileWithProgress function coordinates its operation with the link tracking service, so link sources can be tracked as
-      ///   they are moved.</para>
+      ///   <para>The MoveFileWithProgress function coordinates its operation with the link tracking service, so link sources can be tracked as they are moved.</para>
       ///   <para>Minimum supported client: Windows XP [desktop apps only]</para>
       ///   <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>

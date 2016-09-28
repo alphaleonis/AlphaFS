@@ -29,10 +29,24 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Move_LocalAndNetwork_Success()
+      public void File_Move_SameVolume_LocalAndNetwork_Success()
       {
          File_Move(false);
          File_Move(true);
+      }
+
+
+      [TestMethod]
+      public void File_Move_FromLocalToNetwork_Success()
+      {
+         File_Move_DifferentSourceAndDestination(false);
+      }
+
+
+      [TestMethod]
+      public void File_Move_FromNetworkToLocal_Success()
+      {
+         File_Move_DifferentSourceAndDestination(true);
       }
 
 
@@ -121,6 +135,46 @@ namespace AlphaFS.UnitTest
 
 
             Assert.IsFalse(System.IO.File.Exists(fileSource.FullName), "The original file exists, but is expected not to.");
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void File_Move_DifferentSourceAndDestination(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.Move"))
+         {
+            // Min: 1 bytes, Max: 10485760 = 10 MB.
+            var fileLength = new Random().Next(1, 10485760);
+            var src = UnitTestConstants.CreateFile(rootDir.Directory.FullName, fileLength).FullName;
+            var dst = rootDir.RandomFileFullPath + ".txt";
+
+
+            if (isNetwork)
+               src = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(src);
+            else
+               dst = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dst);
+
+
+            Console.WriteLine("\nSRC File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), src);
+            Console.WriteLine("DST File Path: [{0}]", dst);
+
+            Alphaleonis.Win32.Filesystem.File.Move(src, dst);
+
+            Assert.IsFalse(System.IO.File.Exists(src), "The file does exists, but is expected not to.");
+            Assert.IsTrue(System.IO.File.Exists(dst), "The file does not exists, but is expected to.");
+
+            var fileLen = new System.IO.FileInfo(dst).Length;
+            Assert.AreEqual(fileLength, fileLen, "The file copy is: {0} bytes, but is expected to be: {1} bytes.", fileLen, fileLength);
+
+
+            Assert.IsFalse(System.IO.File.Exists(src), "The original file exists, but is expected not to.");
          }
 
          Console.WriteLine();
