@@ -26,38 +26,35 @@ namespace Alphaleonis.Win32.Security
    /// <summary>Enum containing the supported hash types.</summary>
    public enum HashType
    {
-      /// <summary>Cyclic Redundancy Check</summary>
+      /// <summary>CRC-32 (Cyclic Redundancy Check)</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CRC")]
       CRC32,
 
-      /// <summary>Cyclic Redundancy Check</summary>
+      /// <summary>CRC-64 ISO-3309 compliant.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CRC")]
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ISO")]
       CRC64ISO3309,
 
-      ///// <summary>Message Authentication Code Triple Data Encryption Standard</summary>
-      //MACTripleDES,
-
-      /// <summary>Message digest</summary>
+      /// <summary>MD5 (Message digest)</summary>
       MD5,
 
-      /// <summary>RACE Integrity Primitives Evaluation Message Digest</summary>
+      /// <summary>RIPEMD-160 is a 160-bit cryptographic hash function. It is intended for use as a replacement for the 128-bit hash functions MD4, MD5, and RIPEMD.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "RIPEMD")]
       RIPEMD160,
 
-      /// <summary>Secure Hash Algorithm</summary>
+      /// <summary>SHA-1 (Secure Hash Algorithm)</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA")]
       SHA1,
 
-      /// <summary>Secure Hash Algorithm</summary>
+      /// <summary>SHA-256 (Secure Hash Algorithm)</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA")]
       SHA256,
 
-      /// <summary>Secure Hash Algorithm</summary>
+      /// <summary>SHA-384 (Secure Hash Algorithm)</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA")]
       SHA384,
 
-      /// <summary>Secure Hash Algorithm</summary>
+      /// <summary>SHA-512 (Secure Hash Algorithm)</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA")]
       SHA512
    }
