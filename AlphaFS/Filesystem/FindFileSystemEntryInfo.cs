@@ -44,7 +44,9 @@ namespace Alphaleonis.Win32.Filesystem
          InputPath = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
          IsRelativePath = !Path.IsPathRooted(OriginalInputPath, false);
 
-         SearchPattern = searchPattern;
+         // .NET behaviour.
+         SearchPattern = searchPattern.TrimEnd(Path.TrimEndChars);
+
          FileSystemObjectType = null;
 
          ContinueOnException = (options & DirectoryEnumerationOptions.ContinueOnException) != 0;
@@ -438,7 +440,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          internal set
          {
-            if (Utils.IsNullOrWhiteSpace(value))
+            if (null == value)
                throw new ArgumentNullException("SearchPattern");
 
             _searchPattern = value;

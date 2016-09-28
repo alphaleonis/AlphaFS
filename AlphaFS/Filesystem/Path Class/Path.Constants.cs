@@ -68,6 +68,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] StringTerminatorChar = '\0' String Terminator Suffix.</summary>
       public const char StringTerminatorChar = '\0';
 
+      /// <summary>[AlphaFS] Characters to trim from the SearchPattern.</summary>
+      internal static readonly char[] TrimEndChars = { (char) 0x9, (char) 0xA, (char) 0xB, (char) 0xC, (char) 0xD, (char) 0x20, (char) 0x85, (char) 0xA0 };
+
       /// <summary>[AlphaFS] VolumeSeparatorChar = ':' Provides a platform-specific Volume Separator character.</summary>
       public static readonly string VolumeSeparator = VolumeSeparatorChar.ToString(CultureInfo.CurrentCulture);
 
