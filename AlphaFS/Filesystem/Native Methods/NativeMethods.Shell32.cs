@@ -18,14 +18,12 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
  *  THE SOFTWARE. 
  */
-using Alphaleonis.Win32.Security;
-using Microsoft.Win32.SafeHandles;
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.AccessControl;
 using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -182,6 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Destroys an icon and frees any memory the icon occupied.</summary>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
+      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("user32.dll", SetLastError = false)]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool DestroyIcon(IntPtr hIcon);

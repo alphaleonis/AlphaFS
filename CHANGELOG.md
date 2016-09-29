@@ -52,6 +52,7 @@ Version 2.1
 - Issue #241: Add method `Path.GetFullPath()` overload that supports `GetFullPathOptions` enum.
 - Issue #245: Implement CRC-32/64 (Thanks to Damien Guard for implementing his code).
 - Issue #247: Add method `FileInfo.GetHash()`.
+- Issue #251: Implement unicode versions of `Directory.GetCurrentDirectory()` and `Directory.SetCurrentDirectory()`.
 
 ### Bugs Fixed
 

@@ -22,6 +22,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -120,6 +121,32 @@ namespace Alphaleonis.Win32.Filesystem
       internal static extern bool CreateDirectoryTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpTemplateDirectory, [MarshalAs(UnmanagedType.LPWStr)] string lpNewDirectory, [MarshalAs(UnmanagedType.LPStruct)] Security.NativeMethods.SecurityAttributes lpSecurityAttributes, SafeHandle hTransaction);
 
       /// <summary>
+      ///   Retrieves the current directory for the current process.
+      /// </summary>
+      /// <remarks>
+      ///   <para>The RemoveDirectory function marks a directory for deletion on close.</para>
+      ///   <para>Therefore, the directory is not removed until the last handle to the directory is closed.</para>
+      ///   <para>RemoveDirectory removes a directory junction, even if the contents of the target are not empty;</para>
+      ///   <para>the function removes directory junctions regardless of the state of the target object.</para>
+      ///   <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
+      ///   <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
+      /// </remarks>
+      /// <param name="nBufferLength">The length of the buffer for the current directory string, in TCHARs. The buffer length must include room for a terminating null character.</param>
+      /// <param name="lpBuffer">
+      ///   <para>A pointer to the buffer that receives the current directory string. This null-terminated string specifies the absolute path to the current directory.</para>
+      ///   <para>To determine the required buffer size, set this parameter to NULL and the nBufferLength parameter to 0.</para>
+      /// </param>
+      /// <returns>
+      ///   <para>If the function succeeds, the return value specifies the number of characters that are written to the buffer, not including the terminating null character.</para>
+      ///   <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// </returns>
+      [SuppressMessage("Microsoft.Usage", "CA2205:UseManagedEquivalentsOfWin32Api")]
+      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetCurrentDirectoryW"), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.U4)]
+      internal static extern uint GetCurrentDirectory([MarshalAs(UnmanagedType.U4)] uint nBufferLength, StringBuilder lpBuffer);
+      
+      /// <summary>
       ///   Deletes an existing empty directory.
       /// </summary>
       /// <remarks>
@@ -161,5 +188,21 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "RemoveDirectoryTransactedW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool RemoveDirectoryTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpPathName, SafeHandle hTransaction);
+
+      /// <summary>
+      ///   Changes the current directory for the current process.
+      /// </summary>
+      /// <param name="lpPathName">
+      ///   <para>The path to the new current directory. This parameter may specify a relative path or a full path. In either case, the full path of the specified directory is calculated and stored as the current directory.</para>
+      /// </param>
+      /// <returns>
+      ///   <para>If the function succeeds, the return value is nonzero.</para>
+      ///   <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// </returns>
+      [SuppressMessage("Microsoft.Usage", "CA2205:UseManagedEquivalentsOfWin32Api")]
+      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SetCurrentDirectoryW"), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.Bool)]
+      internal static extern bool SetCurrentDirectory([MarshalAs(UnmanagedType.LPWStr)] string lpPathName);
    }
 }
