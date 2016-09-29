@@ -53,6 +53,7 @@ Version 2.1
 - Issue #245: Implement CRC-32/64 (Thanks to Damien Guard for implementing his code).
 - Issue #247: Add method `FileInfo.GetHash()`.
 - Issue #251: Implement unicode versions of `Directory.GetCurrentDirectory()` and `Directory.SetCurrentDirectory()`.
+- Issue #266: Add PowerShell script: `Enumerate-FileSystemEntryInfos.ps1`
 
 ### Bugs Fixed
 
