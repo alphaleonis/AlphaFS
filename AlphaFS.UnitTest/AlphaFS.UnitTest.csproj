@@ -150,6 +150,7 @@
     <Compile Include="Crc Class\AlphaFS_Class_Crc64.cs" />
     <Compile Include="Device Class\AlphaFS_DeviceInfo_InitializeInstance.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Compress_Decompress.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_EnumerateFileSystemEntryInfos.cs" />
     <Compile Include="Directory Class\Directory_CurrentDirectory.cs" />
     <Compile Include="Directory Class\Directory_Move.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_CountFileSystemObjects.cs" />
