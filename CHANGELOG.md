@@ -1,4 +1,4 @@
-﻿---
+---
 layout: page
 toc: true
 permalink: /changelog/
