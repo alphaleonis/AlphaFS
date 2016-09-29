@@ -24,26 +24,27 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for several AlphaFS instance classes.</summary>
+   /// <summary>This is a test class for BackupFileStream and is intended to contain all BackupFileStream Unit Tests.</summary>
    partial class ClassesTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
       
       [TestMethod]
-      public void AlphaFS_Class_BackupFileStream_LocalAndNetwork_Success()
+      public void AlphaFS_BackupFileStream_InitializeInstance_LocalAndNetwork_Success()
+      {
+         BackupFileStream_InitializeInstance(false);
+         BackupFileStream_InitializeInstance(true);
+      }
+
+
+
+
+      private void BackupFileStream_InitializeInstance(bool isNetwork)
       {
          if (!System.IO.File.Exists(UnitTestConstants.NotepadExe))
             Assert.Inconclusive("Test ignored because {0} was not found.", UnitTestConstants.NotepadExe);
 
-         Class_BackupFileStream(false);
-         Class_BackupFileStream(true);
-      }
-      
 
-
-
-      private void Class_BackupFileStream(bool isNetwork)
-      {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
          var tempPath = System.IO.Path.GetTempPath();
@@ -75,10 +76,9 @@ namespace AlphaFS.UnitTest
                {
                   var exName = ex.GetType().Name;
                   gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
-                  Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+                  Console.WriteLine("\tCaught Exception (Expected): [{0}] Message: [{1}]", exName, ex.Message);
                }
                Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-               Console.WriteLine();
 
                bfs.Unlock(0, 10);
 
@@ -95,10 +95,9 @@ namespace AlphaFS.UnitTest
                {
                   var exName = ex.GetType().Name;
                   gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
-                  Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+                  Console.WriteLine("\tCaught Exception (Expected): [{0}] Message: [{1}]", exName, ex.Message);
                }
                Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-               Console.WriteLine();
 
                #endregion // IOException #2
 

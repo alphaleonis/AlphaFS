@@ -143,9 +143,10 @@
     <Compile Include="..\AlphaFS\AssemblyVersionInfo.cs">
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Classes\AlphaFS_FileSystemEntryInfo.cs" />
     <Compile Include="Crc Class\AlphaFS_Class_Crc32.cs" />
     <Compile Include="Device Class\AlphaFS_DeviceInfo_EnumerateDevices.cs" />
-    <Compile Include="Classes\AlphaFS_Class_BackupFileStream.cs" />
+    <Compile Include="Classes\AlphaFS_BackupFileStream.cs" />
     <Compile Include="Crc Class\AlphaFS_Class_Crc64.cs" />
     <Compile Include="Device Class\AlphaFS_DeviceInfo_InitializeInstance.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Compress_Decompress.cs" />

@@ -237,53 +237,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpClassDriveInfo
      
-      #region DumpClassFileSystemEntryInfo
-
-      private void DumpClassFileSystemEntryInfo(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-
-         Console.WriteLine("\nThe return type is based on C# inference. Possible return types are:");
-         Console.WriteLine("string (full path), FileSystemInfo (DiskInfo / FileInfo) or FileSystemEntryInfo instance.\n");
-
-         #region Directory
-
-         var path = UnitTestConstants.SysRoot;
-         if (!isLocal) path = Path.LocalToUnc(path);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", path);
-
-         Console.WriteLine("\n\nvar fsei = Directory.GetFileSystemEntry(path);");
-         var asFileSystemEntryInfo = File.GetFileSystemEntryInfo(path);
-         Assert.IsTrue((asFileSystemEntryInfo.GetType().IsEquivalentTo(typeof(FileSystemEntryInfo))));
-         Assert.IsTrue(UnitTestConstants.Dump(asFileSystemEntryInfo, -17));
-
-         Console.WriteLine();
-
-         #endregion // Directory
-
-         #region File
-
-         path = UnitTestConstants.NotepadExe;
-         if (!isLocal) path = Path.LocalToUnc(path);
-
-         Console.WriteLine("\nInput File Path: [{0}]", path);
-
-         Console.WriteLine("\n\nvar fsei = File.GetFileSystemEntry(path);");
-         asFileSystemEntryInfo = File.GetFileSystemEntryInfo(path);
-         Assert.IsTrue((asFileSystemEntryInfo.GetType().IsEquivalentTo(typeof(FileSystemEntryInfo))));
-         Assert.IsTrue(UnitTestConstants.Dump(asFileSystemEntryInfo, -17));
-
-         Console.WriteLine();
-
-         #endregion // File
-      }
-
-      #endregion // DumpClassFileSystemEntryInfo
-
-
-
-
       #region DumpClassDfsInfo
 
       private void DumpClassDfsInfo()
@@ -447,19 +400,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // Filesystem_Class_DriveInfo
      
-      #region Filesystem_Class_FileSystemEntryInfo
-
-      [TestMethod]
-      public void AlphaFS_Class_FileSystemEntryInfo()
-      {
-         Console.WriteLine("Class Filesystem.FileSystemEntryInfo()");
-
-         DumpClassFileSystemEntryInfo(true);
-         DumpClassFileSystemEntryInfo(false);
-      }
-
-      #endregion // Filesystem_Class_FileSystemEntryInfo
-      
       #endregion Filesystem
 
 
