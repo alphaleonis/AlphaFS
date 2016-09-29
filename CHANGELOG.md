@@ -7,6 +7,7 @@ title: Changelog
 
 Version 2.1  (2016-09-29)
 -----------
+
 ### New Features/Enhancements
 
 - Issue #3: Added methods for backing up and restoring encrypted files:
