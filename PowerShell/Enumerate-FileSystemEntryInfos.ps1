@@ -18,11 +18,11 @@
  #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
  #  THE SOFTWARE. 
  #>
+ 
 
-
- Param(
-    [String]$Path = ".",
-	[String]$Filter = "*",
+Param(
+    [String]$Path = '.',
+	[String]$Filter = '*',
 	[Switch]$Recurse,
 	[Switch]$ContinueOnException,
 	[Switch]$Directory,
@@ -97,15 +97,15 @@ Function Enumerate-FileSystemEntryInfos {
 #>
 
     # Skip ReparsePoints by default.
-	$Private:dirEnumOptions = [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]'SkipReparsePoints'
+	$Private:dirEnumOptions = [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::SkipReparsePoints
 
-	If ($ContinueOnException.IsPresent) { $dirEnumOptions += [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]'ContinueOnException' }
-	If ($Recurse.IsPresent)             { $dirEnumOptions += [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]'Recursive' }
+	If ($ContinueOnException.IsPresent) { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::ContinueOnException }
+	If ($Recurse.IsPresent)             { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::Recursive }
 
-	If (-not $Directory.IsPresent -and -not $File.IsPresent) { $dirEnumOptions += [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]'FilesAndFolders' }
+	If (-not $Directory.IsPresent -and -not $File.IsPresent) { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::FilesAndFolders }
 	Else {
-		If ($Directory.IsPresent) { $dirEnumOptions += [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]'Folders' }
-		If ($File.IsPresent)      { $dirEnumOptions += [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]'Files' }
+		If ($Directory.IsPresent) { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::Folders }
+		If ($File.IsPresent)      { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::Files }
 	}
 	
 
@@ -113,10 +113,13 @@ Function Enumerate-FileSystemEntryInfos {
 		-Instance           ([Alphaleonis.Win32.Filesystem.Directory]) `
 		-MethodName         EnumerateFileSystemEntryInfos `
 		-TypeParameters     Alphaleonis.Win32.Filesystem.FileSystemEntryInfo `
-		-MethodParameters   $Path, $Filter, $dirEnumOptions, ([Alphaleonis.Win32.Filesystem.PathFormat]::FullPath))) {
+		-MethodParameters   $Path, $Filter, $dirEnumOptions, ([Alphaleonis.Win32.Filesystem.PathFormat]::RelativePath))) {
 
 		Write-Output $fsei
 	}
 }
+
+
+Import-Module -Name 'PATH TO AlphaFS.dll'
 
 Enumerate-FileSystemEntryInfos
