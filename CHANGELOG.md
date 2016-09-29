@@ -1,5 +1,9 @@
-﻿Changelog
-=========
+﻿---
+layout: page
+toc: true
+permalink: /changelog/
+title: Changelog
+---
 
 Version 2.1  (2016-09-29)
 -----------
