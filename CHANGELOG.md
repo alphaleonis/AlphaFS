@@ -1,26 +1,122 @@
----
-layout: page
-toc: true
-permalink: /changelog/
-title: Changelog
----
+﻿Changelog
+=========
 
-Version 2.0.1
+Version 2.1  (2016-09-29)
 -----------
+### New Features/Enhancements
+
+- Issue #3: Added methods for backing up and restoring encrypted files:
+	* `File.ImportEncryptedFileRaw`
+	* `File.ExportEncryptedFileRaw`
+	* `Directory.ImportEncryptedDirectoryRaw`
+	* `Directory.ExportEncryptedDirectoryRaw`
+- Issue #2  : Unit tests for methods: `File.OpenRead()`, `File.OpenText()` and `File.Replace()` are missing.
+- Issue #101: The release now also contains a build targetting .NET 4.5.2.
+- Issue #109: Add overloaded methods for `Host.EnumerateShares()`.
+- Issue #112: Add `CreationTimeUtc`, `LastAccessTimeUtc` and `LastWriteTimeUtc` to "Info" classes.
+- Issue #119: Fix `Path.IsLocalPath()` issues.
+- Issue #125: AlphaFS is now CLSCompliant.
+- Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
+- Issue #130: Modify method `Path.LocalToUnc()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
+- Issue #131: Modify method `Path.GetPathRoot()` to handle UNC paths in long path format.
+- Issue #132: Modify method `VolumeInfo()` constructor to better handle input paths.
+- Issue #133: Add missing unit test `Host.GetHostShareFromPath()`.
+- Issue #134: Improved upon `FindFileSystemEntryInfo.FindFirstFile()` when throwing `Directory-/FileNotFoundException()`.
+- Issue #138: Modify `GetShareInfo()` to use `SafeGlobalMemoryBufferHandle` instead of `IntPtr`.
+- Issue #139: Modify `GetDfsInfoInternal()` to use `SafeGlobalMemoryBufferHandle` instead of `IntPtr`.
+- Issue #141: Remove obsolete Resources (resx) string messages.
+- Issue #142: Move literal strings to Resources (resx).
+- Issue #144: Add `DirectoryInfo.EnumerateXxx()` methods with support for `DirectoryEnumerationOptions` enum.
+- Issue #151: Add `Directory.EnumerateXxx()` methods with support for `DirectoryEnumerationOptions`- and `PathFormat` enum.
+- Issue #154: Modify private method `FindFileSystemEntryInfo.FindFirstFile()` to report the full path on Exception. 
+- Issue #146: Add method `DirectoryInfo.EnumerateAlternateDataStreams()`.
+- Issue #147: Add overloaded methods to set Reparse Point Timestamp. (rstarkov)
+- Issue #150: Enhancement: `File.IsLocked()`
+- Issue #158: Add SuppressUnmanagedCodeSecurity attribute to [DllImport] tag.
+- Issue #184: `File.CreateSymbolicLink()` should throw `PlatformNotSupportedException()` if OS < Vista. 
+- Issue #186: Replace WIN32 API `NativeMethods.GetVersionEx()` with `NativeMethods.RtlGetVersion()`.
+- Issue #188: Make `ShareInfo` class property setters private: `ShareType`, `ResourceType`.
+- Issue #189: Improve method `Utils.UnitSizeToText()`.
+- Issue #190: Add overloaded methods for `File/Directory.Get/SetAccessControl()` that accept `SafeFileHandle`.
+- Issue #191: Make class `BackupFileStream` sealed.
+- Issue #192: Add `null`-checks to `SafeHandle.IsInvalid` usage.
+- Issue #193: Use unicode version of WIN32 API `OpenEncryptedFileRaw()`.
+- Issue #194: Add bitshift for Marshal.GetHRForException(ex) usage. 
+- Issue #195: Add useful FileAttributes as properties to `FileSystemEntryInfo` class.
+- Issue #199: Change `FindFileSystemEntryInfo.FindFirstFile()` to show actual path instead of inputpath on access error.
+- Issue #214: Howto `Get-Filehash`.
+- Issue #235: Implement unicode versions of methods: CM_Connect_Machine and CM_Get_Device_ID_Ex.
+- Issue #239: Enable long path support for `File.CreateSymbolicLink()` source parameter.
+- Issue #240: Add `KeepDotOrSpace` to `GetFullPathOptions` enum.
+- Issue #241: Add method `Path.GetFullPath()` overload that supports `GetFullPathOptions` enum.
+- Issue #245: Implement CRC-32/64 (Thanks to Damien Guard for implementing his code).
+- Issue #247: Add method `FileInfo.GetHash()`.
+- Issue #251: Implement unicode versions of `Directory.GetCurrentDirectory()` and `Directory.SetCurrentDirectory()`.
+- Issue #266: Add PowerShell script: `Enumerate-FileSystemEntryInfos.ps1`
 
 ### Bugs Fixed
 
-* Fixed Issue #104: `VolumeInfo.Refresh()` fails with `System.IO.IOException`: (234)
-* Fixed Issue #108: `Volume.Refresh()` should throw `DeviceNotReadyException`.
-* Fixed Issue #110: `Directory.GetDirectoryRoot()` should throw `System.ArgumentException`.
-* Fixed Issue #117: Fix `Path.GetFullPath()` issues.
-* Fixed Issue #123: When `Directory.Encrypt/Decrypt()` is non-recursive, only process the folder.
-* Fixed Issue #124: Unit tests for long/short path are failing.
- 
+- Issue #50 : `Path.GetLongPath()` does not prefix on "C:\", should it?
+- Issue #60 : Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`.
+- Issue #160: `File.CreateSymbolicLink()` creates shortcut with no target. (martin-john-green)
+- Issue #162: `File.AppendAllLines()` concatenates content into one line. (pavelhritonenko)
+- Issue #166: `File.Exists` & `Directory.Exists` fail when path has leading space(s).
+- Issue #168: Error on `File.Open()` with access-mode Append?
+- Issue #169: `DirectoryInfo .ToString()` returns path with `\\UNC` prefix.
+- Issue #176: At `DirectoryInfo.GetFileSystemInfos()`, Long path prefix of GLOBALROOT path is missing. (diontools)
+- Issue #179: `Path.GetFileName()` with an empty string throws an exception. (brutaldev)
+- Issue #180: Network connects methods hangs in Windows service when credentials fail. (brutaldev)
+- Issue #181: `File.OpenWrite()` should create file if it doesn't exist. (Thomas Levesque)
+- Issue #183: Add `SafeFileHandle` null check for BackupFileStream.Dispose. (diontools)
+- Issue #185: Correct pinvoke signatures of `CreateSymbolicLink()` and `CreateSymbolicLinkTransacted()` functions.
+- Issue #196: Replace usage of `ExtendedFileAttributes.None` with `ExtendedFileAttributes.Normal`.
+- Issue #197: Fix: Prevent normalization of GlobalRootPrefix paths.
+- Issue #198: `Path.GetRegularPathCore()` should not normalize `\\?\Volume` prefix.
+- Issue #201: Some exceptions contain an incorrect `HRESULT` (Thomas Levesque)
+- Issue #203: `Directory.GetDirectories()` and `Directory.GetFiles()` return absolute paths when given relative argument.
+- Issue #204: Giving empty string to `Directory.GetFileName()` and related methods throws exception.
+- Issue #206: `File.GetLastWriteTime()` throws exception for non-existing path.
+- Issue #217: `File.Replace()` raises an exception.
+- Issue #218: `Volume.GetVolumeInfo()` fails for global root paths.
+- Issue #219: Mismatching Implementation to `System.IO.Path.GetDirectoryName()`.
+- Issue #226: `DirectoryInfo` using searchoption.
+- Issue #232: Enable null for destinationBackupFileName for `File.Replace()` and `FileInfo.Replace()`.
+- Issue #234: `Path.CheckInvalidPathChars` breaks `IsPathRooted` for whitespace strings.
+- Issue #242: `File.Open(file, System.IO.FileMode.Append)` does not append.
+- Issue #244: `File.Copy(src, dst, true)` does not respect `FILE_ATTRIBUTE_READONLY`.
+- Issue #246: Using `Directory.EnumerateFileSystemEntries()` recursively with a relative path may fail.
+- Issue #248: `Directory.Move()` throws `FileNotFoundException` instead of `DirectoryNotFoundException` when source folder doesn't exist.
+- Issue #249: Change `File.GetHashCore()` `.ToString("X2")` to `.ToString("X2", CultureInfo.InvariantCulture)`.
+- Issue #252: Correct `FileSystemEntryInfos.FullPath` property when input path is a dot (current directory).
+- Issue #253: Apply `Dispose()` to method `File.GetHashCore()`.
+- Issue #254: Change `File.GetHashCore()` output from `.ToLowerInvariant()` to `.ToUpperInvariant()`.
+- Issue #255: Creating Folder with Empty name. (ardestan)
+- Issue #256: `Directory.Move()` not working over volumes with `MoveOptions.CopyAllowed`. (frontier777)
+- Issue #263: `Directory.GetDirectories()` Method `(String, String, SearchOption)` with pattern "* " (ardestan)
+
+### Breaking Changes
+
+- Issue #113: Change names of time related properties on `FileSystemEntryInfo` to conform with `FileInfo/DirectoryInfo`.
+- Issue #126: Suffix the name of all methods working with TxF with "Transacted".
+- Issue #128: Remove `Path.IsLocalPath()` in favour of `Path.IsUncPath()`.
+- Issue #140: Replace internal `DFS_INFO_4` structure with `DFS_INFO_9`.
+- Issue #184: `File.CreateSymbolicLink()` should throw `PlatformNotSupportedException()` if OS < Vista. 
+- Issue #250: Change `FileSystemEntryInfo.ToString()` to show full path instead of `ReparsePointTag`.
+
+Version 2.0.1
+-------------
+
+### Bugs Fixed
+
+- Issue #104: `VolumeInfo.Refresh()` fails with `System.IO.IOException`: (234)".
+- Issue #108: `Volume.Refresh()` should throw `DeviceNotReadyException`.
+- Issue #110: `Directory.GetDirectoryRoot()` should throw `System.ArgumentException`.
+- Issue #117: Fix `Path.GetFullPath()` issues. 
+- Issue #123: When `Directory.Encrypt/Decrypt()` is non-recursive, only process the folder.
+- Issue #124: Unit tests for long/short path are failing.
 
 Version 2.0
 -----------
-
 * New: The public key of AlphaFS.dll has changed, delay-signing is no longer used.
 * New: Unit Tests, also act as code samples.
 * New: Numerous bugfixes, optimizations and (AlphaFS) overloaded methods implementations.
@@ -136,4 +232,3 @@ Version 0.3.1
 Version 0.3.0
 -------------
   * Initial release
-  

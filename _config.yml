@@ -54,6 +54,8 @@ menu:
      submenus:
          - title: Version 2.0
            url: /doc/2.0/index.html
+         - title: Version 2.1
+           url: /doc/2.1/index.html
    - title: Changelog
      url: /changelog/
 
