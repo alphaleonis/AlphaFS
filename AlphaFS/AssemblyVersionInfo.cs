@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -25,7 +25,7 @@ using System.Resources;
 
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("AlphaFS")]
-[assembly: AssemblyCopyright("© 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov")]
+[assembly: AssemblyCopyright("© 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov")]
 [assembly: AssemblyTrademark("")]
 
 [assembly: AssemblyVersion("2.1.0.0")]

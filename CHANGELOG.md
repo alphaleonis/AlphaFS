@@ -1,7 +1,7 @@
 ﻿Changelog
 =========
 
-Version 2.1
+Version 2.1  (2016-09-29)
 -----------
 ### New Features/Enhancements
 
@@ -10,7 +10,6 @@ Version 2.1
 	* `File.ExportEncryptedFileRaw`
 	* `Directory.ImportEncryptedDirectoryRaw`
 	* `Directory.ExportEncryptedDirectoryRaw`
-
 - Issue #2  : Unit tests for methods: `File.OpenRead()`, `File.OpenText()` and `File.Replace()` are missing.
 - Issue #101: The release now also contains a build targetting .NET 4.5.2.
 - Issue #109: Add overloaded methods for `Host.EnumerateShares()`.
