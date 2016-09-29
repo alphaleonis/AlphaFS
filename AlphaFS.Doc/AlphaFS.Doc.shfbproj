@@ -4,7 +4,7 @@
     <!-- The configuration and platform will be used to determine which
          assemblies to include from solution and project documentation
          sources -->
-    <Configuration Condition=" '$(Configuration)' == '' ">Net452 Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{81ed470c-0a64-4b10-b37e-61a06ddc497c}</ProjectGuid>
@@ -39,8 +39,8 @@
     <SyntaxFilters>Standard</SyntaxFilters>
     <HelpFileVersion>2.0.0.9300</HelpFileVersion>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Bin\Debug\Net452\AlphaFS.dll" />
-      <DocumentationSource sourceFile="..\Bin\Debug\Net452\AlphaFS.xml" />
+      <DocumentationSource sourceFile="..\Bin\$(Configuration)\Net452\AlphaFS.dll" />
+      <DocumentationSource sourceFile="..\Bin\$(Configuration)\Net452\AlphaFS.xml" />
     </DocumentationSources>
     <FooterText>https://github.com/alphaleonis/AlphaFS/</FooterText>
     <ShowFeedbackControl>False</ShowFeedbackControl>
@@ -74,9 +74,11 @@ Additional classes and methods are provided to provide more advanced functionali
   </PropertyGroup>
   <!-- There are no properties for these two groups but they need to appear in
        order for Visual Studio to perform the build. -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net452 Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+     <OutputPath>..\Bin\Documentation\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net452|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+     <OutputPath>..\Bin\Documentation\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <None Include="License.aml" />

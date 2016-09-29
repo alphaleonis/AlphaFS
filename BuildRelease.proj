@@ -29,6 +29,10 @@
          <Configuration>Net451</Configuration>
          <CopyOutputs>True</CopyOutputs>
       </ProjectsToBuild>
+      <ProjectsToBuild Include="$(MSBuildProjectDirectory)\AlphaFS\AlphaFS.csproj">
+         <Configuration>Net452</Configuration>
+         <CopyOutputs>True</CopyOutputs>
+      </ProjectsToBuild>      
       <ProjectsToBuild Include="$(MSBuildProjectDirectory)\AlphaFS.Doc\AlphaFS.Doc.shfbproj">
          <Configuration>Release</Configuration>
       </ProjectsToBuild>
@@ -46,8 +50,6 @@
 
       <ItemGroup>
          <FilesToClean Include="$(DistDir)\**\*"/>
-         <Directories Include="$([System.IO.Directory]::GetDirectories('$(DistDir)', '*', System.IO.SearchOption.AllDirectories))"
-                      Exclude="$(DistDir)"/>
       </ItemGroup>
 
       <Delete Files="@(FilesToClean)" ContinueOnError="false"/>
@@ -79,7 +81,7 @@
          <StaticFiles Include="$(MSBuildThisFileDirectory)\README.md" />
       </ItemGroup>
 
-      <!--<Move SourceFiles="$(MSBuildThisFileDirectory)\Bin\Documentation\AlphaFS.chm" DestinationFiles="$(DistDir)\Zip\AlphaFS.%(AlphaFSAssembly.Version).chm" />-->
+      <Move SourceFiles="$(MSBuildThisFileDirectory)\Bin\Documentation\AlphaFS.chm" DestinationFiles="$(DistDir)\Zip\AlphaFS.%(AlphaFSAssembly.Version).chm" />
 
       <Copy SourceFiles="@(BinFiles)" DestinationFiles="@(BinFiles->'$(DistDir)\Zip\Lib\%(Configuration)\%(Filename)%(Extension)')" />
       <Copy SourceFiles="@(StaticFiles)" DestinationFolder="$(DistDir)\Zip" />
