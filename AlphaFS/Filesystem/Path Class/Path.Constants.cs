@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -62,8 +62,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] StreamSeparator = ':' Provides a platform-specific Stream-name character.</summary>
       public static readonly string StreamSeparator = StreamSeparatorChar.ToString(CultureInfo.CurrentCulture);
 
+      /// <summary>[AlphaFS] StreamDataLabel = ':$DATA' Provides a platform-specific Stream :$DATA label.</summary>
+      public static readonly string StreamDataLabel = ":$DATA";
+
       /// <summary>[AlphaFS] StringTerminatorChar = '\0' String Terminator Suffix.</summary>
       public const char StringTerminatorChar = '\0';
+
+      /// <summary>[AlphaFS] Characters to trim from the SearchPattern.</summary>
+      internal static readonly char[] TrimEndChars = { (char) 0x9, (char) 0xA, (char) 0xB, (char) 0xC, (char) 0xD, (char) 0x20, (char) 0x85, (char) 0xA0 };
 
       /// <summary>[AlphaFS] VolumeSeparatorChar = ':' Provides a platform-specific Volume Separator character.</summary>
       public static readonly string VolumeSeparator = VolumeSeparatorChar.ToString(CultureInfo.CurrentCulture);

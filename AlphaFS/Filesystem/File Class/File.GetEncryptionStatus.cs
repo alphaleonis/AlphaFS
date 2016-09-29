@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileEncryptionStatus GetEncryptionStatus(string path, PathFormat pathFormat)
       {
-         return GetEncryptionStatusInternal(path, pathFormat);
+         return GetEncryptionStatusCore(path, pathFormat);
       }
 
 
@@ -44,20 +44,20 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileEncryptionStatus GetEncryptionStatus(string path)
       {
-         return GetEncryptionStatusInternal(path, PathFormat.RelativePath);
+         return GetEncryptionStatusCore(path, PathFormat.RelativePath);
       }
 
-      /// <summary>[AlphaFS] Unified method GetEncryptionStatusInternal() to retrieve the encryption status of the specified file.</summary>
+      /// <summary>Retrieves the encryption status of the specified file.</summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
       [SecurityCritical]
-      internal static FileEncryptionStatus GetEncryptionStatusInternal(string path, PathFormat pathFormat)
+      internal static FileEncryptionStatus GetEncryptionStatusCore(string path, PathFormat pathFormat)
       {
          if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         string pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          FileEncryptionStatus status;
 

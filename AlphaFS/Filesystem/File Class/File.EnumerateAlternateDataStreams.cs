@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -25,67 +25,74 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public static partial class File
+   partial class File
    {
-      #region Public Methods
-
-      /// <summary>Enumerates the streams of type :$DATA in the specified file or directory.</summary>
-      /// <param name="path">The path to the file or directory to enumerate streams of.</param>
-      /// <returns>The streams of type :$DATA in the specified file or directory.</returns>
+      /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file.</summary>
+      /// <param name="path">The path to the file to enumerate streams of.</param>
+      /// <returns>The streams of type :$DATA in the specified file.</returns>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path)
       {
-         return EnumerateAlternateDataStreamsInternal(null, path, PathFormat.RelativePath);
+         return EnumerateAlternateDataStreamsCore(null, path, PathFormat.RelativePath);
       }
 
-      /// <summary>Enumerates the streams of type :$DATA in the specified file or directory.</summary>
-      /// <param name="path">The path to the file or directory to enumerate streams of.</param>
+      /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file.</summary>
+      /// <param name="path">The path to the file to enumerate streams of.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The streams of type :$DATA in the specified file or directory.</returns>
+      /// <returns>The streams of type :$DATA in the specified file.</returns>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path, PathFormat pathFormat)
       {
-         return EnumerateAlternateDataStreamsInternal(null, path, pathFormat);
+         return EnumerateAlternateDataStreamsCore(null, path, pathFormat);
       }
 
-      /// <summary>Enumerates the streams of type :$DATA in the specified file or directory.</summary>
+      /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file or directory to enumerate streams of.</param>
-      /// <returns>The streams of type :$DATA in the specified file or directory.</returns>
+      /// <param name="path">The path to the file to enumerate streams of.</param>
+      /// <returns>The streams of type :$DATA in the specified file.</returns>
       [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(KernelTransaction transaction, string path)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path)
       {
-         return EnumerateAlternateDataStreamsInternal(transaction, path, PathFormat.RelativePath);
+         return EnumerateAlternateDataStreamsCore(transaction, path, PathFormat.RelativePath);
       }
 
-      /// <summary>Enumerates the streams of type :$DATA in the specified file or directory.</summary>
+      /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the file to enumerate streams of.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>The streams of type :$DATA in the specified file.</returns>
+      [SecurityCritical]
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         return EnumerateAlternateDataStreamsCore(transaction, path, pathFormat);
+      }
+
+
+
+
+      #region Internal Methods
+
+      /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file or directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory to enumerate streams of.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The streams of type :$DATA in the specified file or directory.</returns>
-      [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return EnumerateAlternateDataStreamsInternal(transaction, path, pathFormat);
-      }
-
-      #endregion
-           
-
-      #region Internal Methods
-
-      internal static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
          {
-            path = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
-            using (var handle = transaction == null 
-               ? NativeMethods.FindFirstStreamW(path, NativeMethods.StreamInfoLevels.FindStreamInfoStandard, buffer, 0) 
-               : NativeMethods.FindFirstStreamTransactedW(path, NativeMethods.StreamInfoLevels.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
+            string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat,
+               GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars |
+               GetFullPathOptions.CheckAdditional);
+
+            using (SafeFindFileHandle handle = transaction == null
+               ? NativeMethods.FindFirstStreamW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0)
+               : NativeMethods.FindFirstStreamTransactedW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
             {
+               int errorCode = Marshal.GetLastWin32Error();
+
                if (handle.IsInvalid)
                {
-                  int errorCode = Marshal.GetLastWin32Error();
                   if (errorCode == Win32Errors.ERROR_HANDLE_EOF)
                      yield break;
 
@@ -94,21 +101,21 @@ namespace Alphaleonis.Win32.Filesystem
 
                while (true)
                {
-                  NativeMethods.WIN32_FIND_STREAM_DATA data = buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>();
-                  yield return new AlternateDataStreamInfo(path, data);
+                  yield return new AlternateDataStreamInfo(pathLp, buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0));
+
                   if (!NativeMethods.FindNextStreamW(handle, buffer))
                   {
                      int lastError = Marshal.GetLastWin32Error();
                      if (lastError == Win32Errors.ERROR_HANDLE_EOF)
                         break;
 
-                     NativeError.ThrowException(lastError, path);
+                     NativeError.ThrowException(lastError, pathLp);
                   }
                }
             }
          }
       }
 
-      #endregion
+      #endregion // Internal Methods
    }
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -25,9 +25,7 @@ using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32
 {
-   /// <summary>
-   /// Base class for classes representing a block of unmanaged memory.
-   /// </summary>
+   /// <summary>Base class for classes representing a block of unmanaged memory.</summary>
    internal abstract class SafeNativeMemoryBufferHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
       #region Private Fields
@@ -43,9 +41,7 @@ namespace Alphaleonis.Win32
       {
       }
 
-      /// <summary>
-      /// Initializes a new instance of the <see cref="SafeNativeMemoryBufferHandle"/> specifying the allocated capacity of the memory block. 
-      /// </summary>
+      /// <summary>Initializes a new instance of the <see cref="SafeNativeMemoryBufferHandle"/> specifying the allocated capacity of the memory block.</summary>
       /// <param name="capacity">The capacity.</param>
       protected SafeNativeMemoryBufferHandle(int capacity)
          : this(true)
@@ -63,8 +59,7 @@ namespace Alphaleonis.Win32
 
       #region Properties
 
-      /// <summary>
-      /// Gets the capacity. Only valid if this instance was created using a constructor that specifies the size,
+      /// <summary>Gets the capacity. Only valid if this instance was created using a constructor that specifies the size,
       /// it is not correct if this handle was returned by a native method using p/invoke.
       /// </summary>
       public int Capacity
@@ -76,9 +71,7 @@ namespace Alphaleonis.Win32
 
       #region Public Methods
 
-      /// <summary>
-      /// Copies data from a one-dimensional, managed 8-bit unsigned integer array to the unmanaged memory pointer referenced by this instance-
-      /// </summary>
+      /// <summary>Copies data from a one-dimensional, managed 8-bit unsigned integer array to the unmanaged memory pointer referenced by this instance.</summary>
       /// <param name="source">The one-dimensional array to copy from. </param>
       /// <param name="startIndex">The zero-based index into the array where Copy should start.</param>
       /// <param name="length">The number of array elements to copy.</param>
@@ -97,9 +90,7 @@ namespace Alphaleonis.Win32
          Marshal.Copy(source, startIndex, new IntPtr(handle.ToInt64() + offset), length);
       }
 
-      /// <summary>
-      /// Copies data from an unmanaged memory pointer to a managed 8-bit unsigned integer array.
-      /// </summary>
+      /// <summary>Copies data from an unmanaged memory pointer to a managed 8-bit unsigned integer array.</summary>
       /// <param name="destination">The array to copy to.</param>
       /// <param name="destinationOffset">The zero-based index in the destination array where copying should start.</param>
       /// <param name="length">The number of array elements to copy.</param>
@@ -109,18 +100,43 @@ namespace Alphaleonis.Win32
             throw new ArgumentNullException("destination");
 
          if (destinationOffset < 0)
-            throw new ArgumentOutOfRangeException("destinationOffset", "Destination offset must not be negative");
+            throw new ArgumentOutOfRangeException("destinationOffset", Resources.Negative_Destination_Offset);
 
          if (length < 0)
-            throw new ArgumentOutOfRangeException("length", "Length must not be negative.");
+            throw new ArgumentOutOfRangeException("length", Resources.Negative_Length);
 
          if (destinationOffset + length > destination.Length)
-            throw new ArgumentException("Destination buffer not large enough for the requested operation.");
+            throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough);
 
          if (length > Capacity)
-            throw new ArgumentOutOfRangeException("length", "Source offset and length outside the bounds of the array");
+            throw new ArgumentOutOfRangeException("length", Resources.Source_Offset_And_Length_Outside_Bounds);
 
          Marshal.Copy(handle, destination, destinationOffset, length);
+      }
+
+      /// <summary>Copies data from this unmanaged memory pointer to a managed 8-bit unsigned integer array.</summary>
+      /// <param name="sourceOffset">The offset in the buffer to start copying from.</param>
+      /// <param name="destination">The array to copy to.</param>
+      /// <param name="destinationOffset">The zero-based index in the destination array where copying should start.</param>
+      /// <param name="length">The number of array elements to copy.</param>
+      public void CopyTo(int sourceOffset, byte[] destination, int destinationOffset, int length)
+      {
+         if (destination == null)
+            throw new ArgumentNullException("destination");
+
+         if (destinationOffset < 0)
+            throw new ArgumentOutOfRangeException("destinationOffset", Resources.Negative_Destination_Offset);
+
+         if (length < 0)
+            throw new ArgumentOutOfRangeException("length", Resources.Negative_Length);
+
+         if (destinationOffset + length > destination.Length)
+            throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough);
+
+         if (length > Capacity)
+            throw new ArgumentOutOfRangeException("length", Resources.Source_Offset_And_Length_Outside_Bounds);
+
+         Marshal.Copy(new IntPtr(handle.ToInt64() + sourceOffset), destination, destinationOffset, length);
       }
 
       public byte[] ToByteArray(int startIndex, int length)
@@ -133,6 +149,7 @@ namespace Alphaleonis.Win32
          return arr;
       }
 
+      #region Write
 
       public void WriteInt16(int offset, short value)
       {
@@ -194,6 +211,10 @@ namespace Alphaleonis.Win32
          Marshal.WriteIntPtr(handle, value);
       }
 
+      #endregion // Write
+
+      #region Read
+
       public byte ReadByte()
       {
          return Marshal.ReadByte(handle);
@@ -244,31 +265,37 @@ namespace Alphaleonis.Win32
          return Marshal.ReadIntPtr(handle, offset);
       }
 
+      #endregion // Read
+
+
+
+      /// <summary>Marshals data from a managed object to an unmanaged block of memory.</summary>
       public void StructureToPtr(object structure, bool deleteOld)
       {
          Marshal.StructureToPtr(structure, handle, deleteOld);
       }
 
-      public T PtrToStructure<T>()
-      {
-         return PtrToStructure<T>(0);
-      }
-
+      /// <summary>Marshals data from an unmanaged block of memory to a newly allocated managed object of the specified type.</summary>
+      /// <returns>A managed object containing the data pointed to by the ptr parameter.</returns>
       public T PtrToStructure<T>(int offset)
       {
-         return (T)Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof(T));
+         return (T) Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof (T));
       }
 
-      public string PtrToStringUni(int length)
-      {
-         return PtrToStringUni(0, length);
-      }
-
+      /// <summary>Allocates a managed System.String and copies a specified number of characters from an unmanaged Unicode string into it.</summary>
+      /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
       public string PtrToStringUni(int offset, int length)
       {
          return Marshal.PtrToStringUni(new IntPtr(handle.ToInt64() + offset), length);
       }
 
-      #endregion
+      /// <summary>Allocates a managed System.String and copies all characters up to the first null character from an unmanaged Unicode string into it.</summary>
+      /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
+      public string PtrToStringUni()
+      {
+         return Marshal.PtrToStringUni(handle);
+      }
+
+      #endregion // Public Methods
    }
 }

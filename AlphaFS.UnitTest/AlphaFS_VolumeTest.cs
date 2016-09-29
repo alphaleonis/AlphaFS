@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -23,11 +23,8 @@ using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Security.Principal;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
@@ -39,211 +36,9 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class AlphaFS_VolumeTest
    {
-      #region Unit Test Helpers
-
-      #region Fields
-
-      private readonly string LocalHost = Environment.MachineName;
-      private readonly string LocalHostShare = Environment.SystemDirectory;
-      private const string Local = @"LOCAL";
-      private const string Network = @"NETWORK";
-
-      private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
-      private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
-      private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
-
-      private const string TextTrue = "IsTrue";
-      private const string TenNumbers = "0123456789";
-      private const string TextHelloWorld = "Hëllõ Wørld!";
-      private const string TextGoodByeWorld = "GóödByé Wôrld!";
-      private const string TextAppend = "GóödByé Wôrld!";
-      private const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
-
-      #endregion // Fields
-
-      #region StopWatcher
-
-      private static Stopwatch _stopWatcher;
-      private static string StopWatcher(bool start = false)
-      {
-         if (_stopWatcher == null)
-            _stopWatcher = new Stopwatch();
-
-         if (start)
-         {
-            _stopWatcher.Restart();
-            return null;
-         }
-
-         _stopWatcher.Stop();
-         long ms = _stopWatcher.ElapsedMilliseconds;
-         TimeSpan elapsed = _stopWatcher.Elapsed;
-
-         return string.Format(CultureInfo.CurrentCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
-      }
-
-      #endregion // StopWatcher
-
-      #region Reporter
-
-      private static string Reporter(bool condensed = false, bool onlyTime = false)
-      {
-         var lastError = new Win32Exception();
-
-         StopWatcher();
-
-         return onlyTime
-            ? string.Format(CultureInfo.CurrentCulture, condensed
-               ? "{0} [{1}: {2}]"
-               : "\t\t{0}", StopWatcher())
-            : string.Format(CultureInfo.CurrentCulture, condensed
-               ? "{0} [{1}: {2}]"
-               : "\t\t{0}\t*Win32 Result: [{1, 4}]\t*Win32 Message: [{2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
-      }
-
-      #endregion // Reporter
-
-      #region IsAdmin
-
-      private static bool IsAdmin()
-      {
-         bool isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
-
-         if (!isAdmin)
-            Console.WriteLine("\n\tThis Unit Test must be run as Administrator.");
-
-         return isAdmin;
-      }
-
-      #endregion // IsAdmin
-
-      #region Dump
-
-      /// <summary>Shows the Object's available Properties and Values.</summary>
-      private static bool Dump(object obj, int width = -35, bool indent = false)
-      {
-         int cnt = 0;
-         const string nulll = "\t\tnull";
-         string template = "\t{0}#{1:000}\t{2, " + width + "} == \t[{3}]";
-
-         if (obj == null)
-         {
-            Console.WriteLine(nulll);
-            return false;
-         }
-
-         Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
-
-         bool loopOk = false;
-         foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
-         {
-            string propValue;
-            try
-            {
-               object value = descriptor.GetValue(obj);
-               propValue = (value == null) ? "null" : value.ToString();
-
-               loopOk = true;
-            }
-            catch (Exception ex)
-            {
-               // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, "  ");
-            }
-
-            Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
-         }
-
-         return loopOk;
-      }
-
-      #endregion //Dump
-
-      #region InputPaths
-
-      static readonly string[] InputPaths =
-      {
-         @".",
-         @".zip",
-         
-         Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture),
-         Path.DirectorySeparatorChar + @"Program Files\Microsoft Office",
-         
-         Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
-         Path.VolumePrefix + @"{12345678-aac3-31de-3321-3124565341ed}\Program Files\notepad.exe",
-
-         @"Program Files\Microsoft Office",
-         SysDrive[0].ToString(CultureInfo.InvariantCulture),
-         SysDrive,
-         SysDrive + @"\",
-         SysDrive + @"\a",
-         SysDrive + @"\a\",
-         SysDrive + @"\a\b",
-         SysDrive + @"\a\b\",
-         SysDrive + @"\a\b\c",
-         SysDrive + @"\a\b\c\",
-         SysDrive + @"\a\b\c\f",
-         SysDrive + @"\a\b\c\f.",
-         SysDrive + @"\a\b\c\f.t",
-         SysDrive + @"\a\b\c\f.tx",
-         SysDrive + @"\a\b\c\f.txt",
-
-         Path.LongPathPrefix + @"Program Files\Microsoft Office",
-         Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
-         Path.LongPathPrefix + SysDrive,
-         Path.LongPathPrefix + SysDrive + @"\",
-         Path.LongPathPrefix + SysDrive + @"\a",
-         Path.LongPathPrefix + SysDrive + @"\a\",
-         Path.LongPathPrefix + SysDrive + @"\a\b",
-         Path.LongPathPrefix + SysDrive + @"\a\b\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.t",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
-
-         Path.UncPrefix + @"Server\Share\",
-         Path.UncPrefix + @"Server\Share\d",
-         Path.UncPrefix + @"Server\Share\d1",
-         Path.UncPrefix + @"Server\Share\d1\",
-         Path.UncPrefix + @"Server\Share\d1\d",
-         Path.UncPrefix + @"Server\Share\d1\d2",
-         Path.UncPrefix + @"Server\Share\d1\d2\",
-         Path.UncPrefix + @"Server\Share\d1\d2\f",
-         Path.UncPrefix + @"Server\Share\d1\d2\fi",
-         Path.UncPrefix + @"Server\Share\d1\d2\fil",
-         Path.UncPrefix + @"Server\Share\d1\d2\file",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ext",
-
-         Path.LongPathUncPrefix + @"Server\Share\",
-         Path.LongPathUncPrefix + @"Server\Share\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1",
-         Path.LongPathUncPrefix + @"Server\Share\d1\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\f",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fi",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fil",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ext"
-      };
-
-      #endregion // InputPaths
-
-      #endregion // Unit Test Helpers
-
       #region Unit Tests
 
-      private static readonly string TempFolder = Path.GetTempPath();
+      private readonly string TempFolder = Path.GetTempPath();
 
       private void DumpGetDriveFormat(bool isLocal)
       {
@@ -252,9 +47,9 @@ namespace AlphaFS.UnitTest
          int cnt = 0;
 
          // Get Logical Drives from Environment.
-         foreach (string drv in Directory.GetLogicalDrives())
+         foreach (string drv in Directory.GetLogicalDrives(false, true))
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
 
             try
             {
@@ -264,12 +59,12 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
 
             string drive = isLocal ? drv : Path.LocalToUnc(drv);
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             DriveInfo driveInfo = new DriveInfo(drive);
 
             Console.WriteLine("#{0:000}\tInput Path      : [{1}]", ++cnt, drive);
@@ -281,19 +76,21 @@ namespace AlphaFS.UnitTest
             if (isLocal)
                Assert.AreEqual(new System.IO.DriveInfo(drive).IsReady, driveInfo.IsReady, "IsReady AlphaFS != System.IO");
          }
-         Console.WriteLine("{0}\n\n", Reporter(true));
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Console.WriteLine("{0}\n\n", UnitTestConstants.Reporter(true));
+         
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
       }
       
       private void DumpGetVolumePathName(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
-         string tempPath = LocalHostShare;
+         string tempPath = UnitTestConstants.LocalHostShare;
          Console.WriteLine("Input Path: [{0}]", tempPath);
 
-         StopWatcher(true);
-         string volumePathName = Volume.GetVolumePathName(LocalHostShare);
-         string report = Reporter(true);
+         UnitTestConstants.StopWatcher(true);
+         string volumePathName = Volume.GetVolumePathName(UnitTestConstants.LocalHostShare);
+         string report = UnitTestConstants.Reporter(true);
          Console.WriteLine("\n\tGetVolumePathName(): [{0}]", volumePathName);
 
          Console.WriteLine("\n\t{0}\n", report);
@@ -308,7 +105,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
          int cnt = 0;
 
-         // Get Logical Drives from Local Host.
+         // Get Logical Drives from UnitTestConstants.Local Host.
          foreach (string drive in Directory.GetLogicalDrives())
          {
             string tempPath = isLocal ? drive : Path.LocalToUnc(drive);
@@ -325,9 +122,10 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\tGetVolumeGuidForNtDeviceName(): [{0}]\n", result ?? "null");
             }
          }
-         Console.WriteLine("\t{0}\n", Reporter(true));
-         if (isLocal)
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Console.WriteLine("\t{0}\n", UnitTestConstants.Reporter(true));
+
+         if (isLocal && cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
       }
 
       private void DumpGetUniqueVolumeNameForPath(bool isLocal)
@@ -336,9 +134,9 @@ namespace AlphaFS.UnitTest
 
          int cnt = 0;
          bool testedSystemDrive = false;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
-         // Get Logical Drives from Local Host.
+         // Get Logical Drives from UnitTestConstants.Local Host.
          foreach (string drive in Directory.GetLogicalDrives())
          {
             string tempPath = isLocal ? drive : Path.LocalToUnc(drive);
@@ -359,17 +157,19 @@ namespace AlphaFS.UnitTest
 
 
             // At least the system drive should contain valid data.
-            if (isLocal && drive.TrimEnd('\\').Equals(SysDrive))
+            if (isLocal && drive.TrimEnd('\\').Equals(UnitTestConstants.SysDrive))
             {
                Assert.IsFalse(deviceName != null && deviceName.StartsWith(@"\\Device\", StringComparison.OrdinalIgnoreCase));
                testedSystemDrive = true;
             }
          }
-         Console.WriteLine("\t{0}\n", Reporter(true));
+         Console.WriteLine("\t{0}\n", UnitTestConstants.Reporter(true));
 
          if (isLocal)
          {
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+            if (cnt == 0)
+               Assert.Inconclusive("Nothing was enumerated.");
+
             Assert.IsTrue(testedSystemDrive);
          }
       }
@@ -386,14 +186,14 @@ namespace AlphaFS.UnitTest
       public void DefineDosDevice()
       {
          Console.WriteLine("Volume.DefineDosDevice()");
-        
-         if (!IsAdmin())
-            Assert.Fail();
+
+          if (!UnitTestConstants.IsAdmin())
+              Assert.Inconclusive();
 
          #region Regular Drive Mapping
 
          string drive = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}", DriveInfo.GetFreeDriveLetter(), Path.VolumeSeparatorChar, Path.DirectorySeparatorChar);
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          // Create Regular drive mapping.
          bool actionIsTrue = false;
@@ -406,7 +206,7 @@ namespace AlphaFS.UnitTest
          {
          }
 
-         Console.WriteLine("\nCreated Regular drive mapping (Should be True): [{0}]\nDrive letter: [{1}] now points to: [{2}]\n\t{3}", actionIsTrue, drive, TempFolder, Reporter(true));
+         Console.WriteLine("\nCreated Regular drive mapping (Should be True): [{0}]\nDrive letter: [{1}] now points to: [{2}]\n\t{3}", actionIsTrue, drive, TempFolder, UnitTestConstants.Reporter(true));
          Assert.IsTrue(actionIsTrue, "Regular drive mapping should have been created.");
 
          DriveInfo di = new DriveInfo(drive);
@@ -414,7 +214,7 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            Assert.IsTrue(Dump(di, -21));
+            Assert.IsTrue(UnitTestConstants.Dump(di, -21));
 
             // A Regular drive mapping that should be visible immediately in Explorer.
             // Seems to be invisible in Explorer on Windows 8, but visibile in an elevated cmd shell.
@@ -426,7 +226,7 @@ namespace AlphaFS.UnitTest
          }
          finally 
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             
             // Remove Regular drive mapping.
             actionIsTrue = false;
@@ -439,7 +239,7 @@ namespace AlphaFS.UnitTest
             {
             }
 
-            Console.WriteLine("\n\nRemoved Regular drive mapping (Should be True): [{0}]\nDrive letter: [{1}] has been set free.\n\t{2}\n", actionIsTrue, drive, Reporter(true));
+            Console.WriteLine("\n\nRemoved Regular drive mapping (Should be True): [{0}]\nDrive letter: [{1}] has been set free.\n\t{2}\n", actionIsTrue, drive, UnitTestConstants.Reporter(true));
             Assert.IsTrue(actionIsTrue, "Regular drive mapping should have been removed.");
             Assert.IsFalse(Directory.Exists(drive), "Drive letter should not be visible.");
          }
@@ -451,7 +251,7 @@ namespace AlphaFS.UnitTest
          try
          {
             drive = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}", DriveInfo.GetFreeDriveLetter(true), Path.VolumeSeparatorChar, Path.DirectorySeparatorChar);
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
 
             // Create Symbolic Link.
             bool createSymbolicLink = false;
@@ -464,16 +264,16 @@ namespace AlphaFS.UnitTest
             {
             }
 
-            Console.WriteLine("\n\nCreated Symbolic link mapping (Should be True): [{0}]\nDrive letter: [{1}] now points to: [{2}]\n\t{3}", createSymbolicLink, drive, TempFolder, Reporter(true));
+            Console.WriteLine("\n\nCreated Symbolic link mapping (Should be True): [{0}]\nDrive letter: [{1}] now points to: [{2}]\n\t{3}", createSymbolicLink, drive, TempFolder, UnitTestConstants.Reporter(true));
             Assert.IsTrue(createSymbolicLink);
 
             di = new DriveInfo(drive);
-            Assert.IsTrue(Dump(di, -21));
+            Assert.IsTrue(UnitTestConstants.Dump(di, -21));
 
             // The link is created in the NT Device Name namespace and thus not visibile in Explorer.
 
             // Remove Symbolic Link, no exact match: fail.
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
 
             bool removeSymbolicLink = false;
             try
@@ -485,12 +285,12 @@ namespace AlphaFS.UnitTest
             {
             }
 
-            Console.WriteLine("\n\nRemoved Symbolic link mapping (Should be False): [{0}]\nDrive letter: [{1}] has NOT been set free.\tNo exactMatch MS-DOS device name found.\n\t{2}", removeSymbolicLink, drive, Reporter(true));
+            Console.WriteLine("\n\nRemoved Symbolic link mapping (Should be False): [{0}]\nDrive letter: [{1}] has NOT been set free.\tNo exactMatch MS-DOS device name found.\n\t{2}", removeSymbolicLink, drive, UnitTestConstants.Reporter(true));
             Assert.IsFalse(removeSymbolicLink);
          }
          finally
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
 
             // Remove Symbolic Link, exact match: success.
             bool removeSymbolicLink = false;
@@ -503,7 +303,7 @@ namespace AlphaFS.UnitTest
             {
             }
 
-            Console.WriteLine("\n\nRemoved Symbolic link mapping (Should be True): [{0}]\nDrive letter: [{1}] has been set free.\tFound exactMatch MS-DOS device name.\n\t{2}", removeSymbolicLink, drive, Reporter(true));
+            Console.WriteLine("\n\nRemoved Symbolic link mapping (Should be True): [{0}]\nDrive letter: [{1}] has been set free.\tFound exactMatch MS-DOS device name.\n\t{2}", removeSymbolicLink, drive, UnitTestConstants.Reporter(true));
             Assert.IsTrue(removeSymbolicLink);
             Assert.IsFalse(Directory.Exists(drive));
          }
@@ -513,17 +313,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DefineDosDevice
 
-      #region DeleteDosDevice
-
-      [TestMethod]
-      public void DeleteDosDevice()
-      {
-         Console.WriteLine("Volume.DeleteDosDevice()");
-         Console.WriteLine("\nPlease see unit test: DefineDosDevice()");
-      }
-
-      #endregion // DeleteDosDevice
-
       #region QueryAllDosDevices
 
       [TestMethod]
@@ -531,45 +320,23 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Volume.QueryAllDosDevices()");
 
-         #region QueryAllDosDevices: Sorted
-
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          IEnumerable<string> query = Volume.QueryAllDosDevices("sort").ToArray();
+         string report = UnitTestConstants.Reporter(true);
 
-         Console.WriteLine("\nRetrieved Sorted list: [{0}]\nList .Count(): [{1}]\n{2}\n", query.Any(), query.Count(), Reporter());
+         Console.WriteLine("\nRetrieved: [{0}] items.{1}\n", query.Count(), report);
 
          int cnt = 0;
          foreach (string dosDev in query)
          {
-            Console.WriteLine("\t#{0:000}\t{1}", ++cnt, dosDev);
+            Console.WriteLine("#{0:000}\t{1}", ++cnt, dosDev);
          }
 
-         Assert.IsTrue(query.Any());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
-
-         #endregion // QueryAllDosDevices: Sorted
-
-         #region QueryAllDosDevices: UnSorted
-
-         Console.Write("\n");
-
-         StopWatcher(true);
-
-         query = Volume.QueryAllDosDevices().ToArray();
-
-         Console.WriteLine("\nRetrieved UnSorted list: [{0}]\nList .Count(): [{1}]\n{2}\n", query.Any(), query.Count(), Reporter());
-
-         cnt = 0;
-         foreach (string dosDev in query)
-         {
-            Console.WriteLine("\t#{0:000}\t{1}", ++cnt, dosDev);
-         }
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          Assert.IsTrue(query.Any());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
-
-         #endregion // QueryAllDosDevices: UnSorted
       }
 
       #endregion // QueryAllDosDevices
@@ -585,11 +352,11 @@ namespace AlphaFS.UnitTest
 
          string filter = "hard";
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          IEnumerable<string> query = Volume.QueryDosDevice(filter).ToArray();
 
-         Console.WriteLine("\n\tQueryDosDevice(\"" + filter + "\")\n\tRetrieved Filtered, UnSorted list: [{0}]\n\tList .Count(): [{1}]\n{2}\n", query.Any(), query.Count(), Reporter());
+         Console.WriteLine("\n\tQueryDosDevice(\"" + filter + "\")\n\tRetrieved Filtered, UnSorted list: [{0}]\n\tList .Count(): [{1}]\n{2}\n", query.Any(), query.Count(), UnitTestConstants.Reporter());
 
          int cnt = 0;
 
@@ -606,11 +373,11 @@ namespace AlphaFS.UnitTest
 
          cnt = 0;
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          query = Volume.QueryDosDevice(filter, "sort").ToArray();
 
-         Console.WriteLine("\n\n\tQueryDosDevice(\"" + filter + "\")\n\tRetrieved Filtered, Sorted list: [{0}]\n\tList .Count(): [{1}]\n", query.Any(), query.Count(), Reporter());
+         Console.WriteLine("\n\n\tQueryDosDevice(\"" + filter + "\")\n\tRetrieved Filtered, Sorted list: [{0}]\n\tList .Count(): [{1}]\n", query.Any(), query.Count(), UnitTestConstants.Reporter());
 
          foreach (string dosDev in query)
             Console.WriteLine("\t\t#{0:000}\tMS-Dos Name: [{1}]", ++cnt, dosDev);
@@ -647,11 +414,11 @@ namespace AlphaFS.UnitTest
 
          cnt = 0;
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          query = Volume.QueryDosDevice(filter, "sort").ToArray();
 
-         Console.WriteLine("\n\n\tQueryDosDevice(\"" + filter + "\")\n\tRetrieved Filtered, Sorted list: [{0}]\n\tList .Count(): [{1}]\n", query.Any(), query.Count(), Reporter());
+         Console.WriteLine("\n\n\tQueryDosDevice(\"" + filter + "\")\n\tRetrieved Filtered, Sorted list: [{0}]\n\tList .Count(): [{1}]\n", query.Any(), query.Count(), UnitTestConstants.Reporter());
 
          foreach (string dosDev in query)
             Console.WriteLine("\t\t#{0:000}\tMS-Dos Name: [{1}]", ++cnt, dosDev);
@@ -666,11 +433,11 @@ namespace AlphaFS.UnitTest
 
          cnt = 0;
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          query = Volume.QueryDosDevice(filter, "sort").ToArray();
 
-         Console.WriteLine("\n\n\tQueryDosDevice(\"" + filter + "\")\n\tRetrieved Filtered, Sorted list: [{0}]\n\tList .Count(): [{1}]\n", query.Any(), query.Count(), Reporter());
+         Console.WriteLine("\n\n\tQueryDosDevice(\"" + filter + "\")\n\tRetrieved Filtered, Sorted list: [{0}]\n\tList .Count(): [{1}]\n", query.Any(), query.Count(), UnitTestConstants.Reporter());
 
          foreach (string dosDev in query)
             Console.WriteLine("\t\t#{0:000}\tMS-Dos Name: [{1}]", ++cnt, dosDev);
@@ -712,64 +479,9 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetDriveNameForNtDeviceName
 
-      #region GetDriveType
-
-      [TestMethod]
-      public void GetDriveType()
-      {
-         Console.WriteLine("Volume.GetDriveType()");
-         Console.WriteLine("\nPlease see unit test: GetDriveFormat()");
-      }
-
-      #endregion // GetDriveType
-
-      #region GetDiskFreeSpace
-
-      [TestMethod]
-      public void GetDiskFreeSpace()
-      {
-         Console.WriteLine("Volume.GetDiskFreeSpace()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_DiskSpaceInfo()");
-      }
-
-      #endregion // GetDiskFreeSpace
-
-      #region IsReady
-
-      [TestMethod]
-      public void IsReady()
-      {
-         Console.WriteLine("Volume.IsReady()");
-         Console.WriteLine("\nPlease see unit test: GetDriveFormat()");
-      }
-
-      #endregion // IsReady
-
       #endregion // Drive
 
       #region Volume
-
-      #region DeleteVolumeLabel
-
-      [TestMethod]
-      public void DeleteVolumeLabel()
-      {
-         Console.WriteLine("Volume.DeleteVolumeLabel()");
-         Console.WriteLine("\nPlease see unit test: SetVolumeLabel()");
-      }
-
-      #endregion // DeleteVolumeLabel
-
-      #region DeleteVolumeMountPoint
-
-      [TestMethod]
-      public void DeleteVolumeMountPoint()
-      {
-         Console.WriteLine("Volume.DeleteVolumeMountPoint()");
-         Console.WriteLine("\nPlease see unit test: SetVolumeMountPoint()");
-      }
-
-      #endregion // DeleteVolumeMountPoint
       
       #region EnumerateVolumeMountPoints
 
@@ -778,15 +490,15 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Volume.EnumerateVolumeMountPoints()");
 
-         if (!IsAdmin())
-            Assert.Fail();
+          if (!UnitTestConstants.IsAdmin())
+              Assert.Inconclusive();
 
          #region Logical Drives
 
          int cnt = 0;
          Console.WriteLine("\nLogical Drives\n");
 
-         // Get Logical Drives from Local Host, .IsReady Drives only.
+         // Get Logical Drives from UnitTestConstants.Local Host, .IsReady Drives only.
          foreach (string drive in Directory.GetLogicalDrives(false, true))
          {
             try
@@ -798,22 +510,22 @@ namespace AlphaFS.UnitTest
                {
                   foreach (string mountPoint in Volume.EnumerateVolumeMountPoints(uniqueVolName).Where(mp => !string.IsNullOrWhiteSpace(mp)))
                   {
-                     StopWatcher(true);
+                     UnitTestConstants.StopWatcher(true);
 
                      string guid = null;
                      try { guid = Volume.GetVolumeGuid(Path.Combine(drive, mountPoint)); }
                      catch (Exception ex)
                      {
-                        Console.Write("\n\tCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+                        Console.WriteLine("\n\tCaught (unexpected #1) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
                      }
 
-                     Console.WriteLine("\t#{0:000}\tLogical Drive: [{1}]\tGUID: [{2}]\n\t\tDestination  : [{3}]\n\t{4}", ++cnt, drive, guid ?? "null", mountPoint, Reporter(true));
+                     Console.WriteLine("\t#{0:000}\tLogical Drive: [{1}]\tGUID: [{2}]\n\t\tDestination  : [{3}]\n\t{4}", ++cnt, drive, guid ?? "null", mountPoint, UnitTestConstants.Reporter(true));
                   }
                }
             }
             catch (Exception ex)
             {
-               Console.Write("\n\tCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\n\tCaught (unexpected #2) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
 
@@ -826,17 +538,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // EnumerateVolumeMountPoints
 
-      #region EnumerateVolumePathNames
-
-      [TestMethod]
-      public void EnumerateVolumePathNames()
-      {
-         Console.WriteLine("Volume.EnumerateVolumePathNames()");
-         Console.WriteLine("\nPlease see unit test: EnumerateVolumes()");
-      }
-
-      #endregion // EnumerateVolumePathNames
-
       #region EnumerateVolumes
 
       [TestMethod]
@@ -847,22 +548,22 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nShould give the same enumeration as \"mountvol.exe\"\n");
 
          int cnt = 0;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (string volume in Volume.EnumerateVolumes())
          {
             Console.WriteLine("#{0:000}\tVolume: [{1}]\n", ++cnt, volume);
             Console.WriteLine("\tVolume() class methods that accept a volume guid as input argument:\n");
 
-            Console.WriteLine("\t\tIsReady()             : [{0}]", Volume.IsReady(volume));
-            Console.WriteLine("\t\tIsVolume()            : [{0}]", Volume.IsVolume(volume));
-            Console.WriteLine("\t\tGetDiskFreeSpace()    : [{0}]", Volume.GetDiskFreeSpace(volume).AvailableFreeSpaceUnitSize);
+            Console.WriteLine("\t\tIsReady()                 : [{0}]", Volume.IsReady(volume));
+            Console.WriteLine("\t\tIsVolume()                : [{0}]", Volume.IsVolume(volume));
+            Console.WriteLine("\t\tGetDiskFreeSpace()        : [{0}]", Volume.GetDiskFreeSpace(volume).AvailableFreeSpaceUnitSize);
 
             string result = Volume.GetDriveFormat(volume);
-            Console.WriteLine("\t\tGetDriveFormat()      : [{0}]", result ?? "null");
+            Console.WriteLine("\t\tGetDriveFormat()          : [{0}]", result ?? "null");
 
-            Console.WriteLine("\t\tGetDriveType()        : [{0}]", Volume.GetDriveType(volume));
-            Console.WriteLine("\t\tGetVolumeLabel()      : [{0}]", Volume.GetVolumeLabel(volume));
-            Console.WriteLine("\t\tGetVolumeDisplayName(): [{0}]", Volume.GetVolumeDisplayName(volume));
+            Console.WriteLine("\t\tGetDriveType()            : [{0}]", Volume.GetDriveType(volume));
+            Console.WriteLine("\t\tGetVolumeLabel()          : [{0}]", Volume.GetVolumeLabel(volume));
+            Console.WriteLine("\t\tGetVolumeDisplayName()    : [{0}]", Volume.GetVolumeDisplayName(volume));
             
 
             foreach (string displayName in Volume.EnumerateVolumePathNames(volume))
@@ -871,9 +572,10 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(!string.IsNullOrWhiteSpace(displayName));
             }
          }
-         Console.WriteLine("\t{0}\n", Reporter(true));
+         Console.WriteLine("\t{0}\n", UnitTestConstants.Reporter(true));
 
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
       }
 
       #endregion // EnumerateVolumes
@@ -890,61 +592,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetUniqueVolumeNameForPath
-
-      #region GetVolumeDeviceName
-
-      [TestMethod]
-      public void GetVolumeDeviceName()
-      {
-         Console.WriteLine("Volume.GetVolumeDeviceName()");
-         Console.WriteLine("\nPlease see unit test: GetUniqueVolumeNameForPath()");
-      }
-
-      #endregion // GetVolumeDeviceName
-
-      #region GetVolumeDisplayName
-
-      [TestMethod]
-      public void GetVolumeDisplayName()
-      {
-         Console.WriteLine("Volume.GetVolumeDisplayName()");
-         Console.WriteLine("\nPlease see unit test: EnumerateVolumes()");
-      }
-
-      #endregion // GetVolumeDisplayName
-
-      #region GetVolumeGuid
-
-      [TestMethod]
-      public void GetVolumeGuid()
-      {
-         Console.WriteLine("Volume.GetVolumeGuid()");
-         Console.WriteLine("\nPlease see unit test: GetUniqueVolumeNameForPath()");
-      }
-
-      #endregion // GetVolumeGuid
-
-      #region GetVolumeGuidForNtDeviceName
-
-      [TestMethod]
-      public void GetVolumeGuidForNtDeviceName()
-      {
-         Console.WriteLine("Volume.GetVolumeGuidForNtDeviceName()");
-         Console.WriteLine("\nPlease see unit test: GetDriveNameForNtDeviceName()");
-      }
-
-      #endregion // GetVolumeGuidForNtDeviceName
-
-      #region GetVolumeInfo
-
-      [TestMethod]
-      public void GetVolumeInfo()
-      {
-         Console.WriteLine("Volume.GetVolumeInfo()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_VolumeInfo()");
-      }
-
-      #endregion // GetVolumeInfo
 
       #region GetVolumeLabel
 
@@ -964,14 +611,14 @@ namespace AlphaFS.UnitTest
          cnt = 0;
          looped = false;
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (string drive in Directory.GetLogicalDrives())
          {
             label = Volume.GetVolumeLabel(drive);
             Console.WriteLine("\t#{0:000}\tLogical Drive: [{1}]\t\tLabel: [{2}]", ++cnt, drive, label);
             looped = true;
          }
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
+         Console.WriteLine("\n\t{0}\n", UnitTestConstants.Reporter(true));
          Assert.IsTrue(looped && cnt > 0);
 
          #endregion // Logical Drives
@@ -983,17 +630,14 @@ namespace AlphaFS.UnitTest
          cnt = 0;
          looped = false;
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (string volume in Volume.EnumerateVolumes())
          {
-            if (!string.IsNullOrWhiteSpace(volume))
-            {
-               label = Volume.GetVolumeLabel(volume);
-               Console.WriteLine("\t#{0:000}\tVolume: [{1}]\t\tLabel: [{2}]", ++cnt, volume, label);
-               looped = true;
-            }
+            label = Volume.GetVolumeLabel(volume);
+            Console.WriteLine("\t#{0:000}\tVolume: [{1}]\t\tLabel: [{2}]", ++cnt, volume, label);
+            looped = true;
          }
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
+         Console.WriteLine("\n\t{0}\n", UnitTestConstants.Reporter(true));
          Assert.IsTrue(looped && cnt > 0);
 
          #endregion // Volumes
@@ -1010,16 +654,15 @@ namespace AlphaFS.UnitTest
          {
             cnt = 0;
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             foreach (string dosDevice in Volume.QueryDosDevice(dd))
             {
-               // Need LongPathPrefix when querying MS-Dos Namespace.
-               label = Volume.GetVolumeLabel(Path.LongPathPrefix + dosDevice);
+               label = Volume.GetVolumeLabel(dosDevice);
                Console.WriteLine("\t#{0:000}\tDosDevice: [{1}]\t\tLabel: [{2}]", ++cnt, dosDevice, label);
 
                looped = true;
             }
-            Console.WriteLine("\n\t{0}\n", Reporter(true));
+            Console.WriteLine("\n\t{0}\n", UnitTestConstants.Reporter(true));
          }
 
          Assert.IsTrue(looped && cnt > 0);
@@ -1053,31 +696,20 @@ namespace AlphaFS.UnitTest
          string fileTmp = file2;
 
          // Same C:
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          bool isSame = Volume.IsSameVolume(file1, fileTmp);
-         Console.WriteLine("\nOn same Volume (Should be True): [{0}]\n\tFile1: [{1}]\n\tFile2: [{2}]\n\t{3}", isSame, file1, fileTmp, Reporter(true));
+         Console.WriteLine("\nOn same Volume (Should be True): [{0}]\n\tFile1: [{1}]\n\tFile2: [{2}]\n\t{3}", isSame, file1, fileTmp, UnitTestConstants.Reporter(true));
          Assert.IsTrue(isSame, "Should be the same volume.");
 
          // Same C: -> C$
          fileTmp = Path.LocalToUnc(file2);
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          isSame = Volume.IsSameVolume(file1, fileTmp);
-         Console.WriteLine("\nOn same Volume (Should be True): [{0}]\n\tFile1: [{1}]\n\tFile2: [{2}]\n\t{3}", isSame, file1, fileTmp, Reporter(true));
+         Console.WriteLine("\nOn same Volume (Should be True): [{0}]\n\tFile1: [{1}]\n\tFile2: [{2}]\n\t{3}", isSame, file1, fileTmp, UnitTestConstants.Reporter(true));
          Assert.IsTrue(isSame, "Should be the same volume.");
       }
 
       #endregion // IsSameVolume
-
-      #region IsVolume
-
-      [TestMethod]
-      public void IsVolume()
-      {
-         Console.WriteLine("Volume.IsVolume()");
-         Console.WriteLine("\nPlease see unit test: GetDriveFormat()");
-      }
-
-      #endregion // IsVolume
 
       #region SetVolumeLabel
 
@@ -1086,12 +718,12 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Volume.SetVolumeLabel()");
 
-         if (!IsAdmin())
-            Assert.Fail();
+         if (!UnitTestConstants.IsAdmin())
+             Assert.Inconclusive();
 
          const string newLabel = "ÂĽpĥæƑŞ ŠëtVőlümèĻāßƩl() Ťest";
          const string template = "\nSystem Drive: [{0}]\tCurrent Label: [{1}]";
-         string drive = SysDrive;
+         string drive = UnitTestConstants.SysDrive;
 
          #region Get Label
 
@@ -1117,7 +749,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(isLabelSet);
 
@@ -1139,7 +771,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(isLabelRemoved);
 
@@ -1161,7 +793,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(isLabelSet);
 
@@ -1175,10 +807,10 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void SetVolumeMountPoint()
       {
-         Console.WriteLine("Volume.SetVolumeMountPoint()\n");
+         Console.WriteLine("Volume.SetVolumeMountPoint()");
 
-         if (!IsAdmin())
-            Assert.Fail();
+          if (!UnitTestConstants.IsAdmin())
+              Assert.Inconclusive();
 
          #region Logical Drives
 
@@ -1186,16 +818,16 @@ namespace AlphaFS.UnitTest
          string destFolder = Path.Combine(TempFolder, "Volume.SetVolumeMountPoint()-" + Path.GetRandomFileName());
          Directory.CreateDirectory(destFolder);
 
-         string guid = Volume.GetUniqueVolumeNameForPath(SysDrive);
+         string guid = Volume.GetUniqueVolumeNameForPath(UnitTestConstants.SysDrive);
 
          try
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
 
             Volume.SetVolumeMountPoint(destFolder, guid);
             Console.WriteLine(
                "\t#{0:000}\tSystem Drive: [{1}]\tGUID: [{2}]\n\t\tDestination : [{3}]\n\t\tCreated Mount Point.\n\t{4}",
-               ++cnt, SysDrive, guid, destFolder, Reporter(true));
+               ++cnt, UnitTestConstants.SysDrive, guid, destFolder, UnitTestConstants.Reporter(true));
 
             Console.WriteLine("\n");
             EnumerateVolumeMountPoints();
@@ -1205,10 +837,10 @@ namespace AlphaFS.UnitTest
             LinkTargetInfo lti = File.GetLinkTargetInfo(destFolder);
             Assert.IsTrue(!string.IsNullOrWhiteSpace(lti.PrintName));
             Assert.IsTrue(!string.IsNullOrWhiteSpace(lti.SubstituteName));
-            Assert.IsTrue(Dump(lti, -14), "Unable to dump object.");
+            Assert.IsTrue(UnitTestConstants.Dump(lti, -14), "Unable to dump object.");
 
             // Cleanup.
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             bool deleteOk = false;
             try
             {
@@ -1217,11 +849,11 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
 
             Console.WriteLine("\n\nVolume.DeleteVolumeMountPoint() (Should be True): [{0}]\tFolder: [{1}]\n{2}\n",
-               deleteOk, destFolder, Reporter());
+               deleteOk, destFolder, UnitTestConstants.Reporter());
 
             Directory.Delete(destFolder, true, true);
             Assert.IsTrue(deleteOk && !Directory.Exists(destFolder));
@@ -1230,8 +862,9 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
             cnt = 0;
+
+            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          finally
          {
@@ -1241,7 +874,8 @@ namespace AlphaFS.UnitTest
             catch { }
          }
 
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          #endregion // Logical Drives
       }

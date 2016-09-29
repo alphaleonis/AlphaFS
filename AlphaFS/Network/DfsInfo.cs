@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -23,6 +23,7 @@ using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -41,26 +42,31 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class, which acts as a wrapper for a DFS root or link target.</summary>
-      /// <param name="structure">An initialized <see cref="NativeMethods.DfsInfo4"/> instance.</param>
-      internal DfsInfo(NativeMethods.DfsInfo4 structure)
+      /// <param name="structure">An initialized <see cref="NativeMethods.DFS_INFO_9"/> instance.</param>
+      internal DfsInfo(NativeMethods.DFS_INFO_9 structure)
       {
          Comment = structure.Comment;
          EntryPath = structure.EntryPath;
          State = structure.State;
          Timeout = structure.Timeout;
          Guid = structure.Guid;
+         MetadataSize = structure.MetadataSize;
+         PropertyFlags = structure.PropertyFlags;
+         SecurityDescriptor = structure.pSecurityDescriptor;
 
-         _storageInfoCollection = new List<DfsStorageInfo>();
+         if (structure.NumberOfStorages > 0)
+         {
+            var typeOfStruct = typeof (NativeMethods.DFS_STORAGE_INFO_1);
+            var sizeOfStruct = Marshal.SizeOf(typeOfStruct);
 
-         for (int i = 0; i < structure.NumberOfStorages; i++)
-            _storageInfoCollection.Add(new DfsStorageInfo(Utils.MarshalPtrToStructure<NativeMethods.DfsStorageInfo>(i, structure.Storage)));
+            for (int i = 0; i < structure.NumberOfStorages; i++)
+               _storageInfoCollection.Add(new DfsStorageInfo((NativeMethods.DFS_STORAGE_INFO_1) Marshal.PtrToStructure(new IntPtr(structure.Storage.ToInt64() + i*sizeOfStruct), typeOfStruct)));
+         }
       }
 
       #endregion // Constructor
 
       #region Methods
-
-      #region ToString
 
       /// <summary>Returns the Universal Naming Convention (UNC) path of the DFS root or link.</summary>
       /// <returns>A string that represents this instance.</returns>
@@ -69,13 +75,9 @@ namespace Alphaleonis.Win32.Network
          return EntryPath;
       }
 
-      #endregion // ToString
-
       #endregion // Methods
 
       #region Properties
-
-      #region DirectoryInfo
 
       private DirectoryInfo _directoryInfo;
 
@@ -92,42 +94,23 @@ namespace Alphaleonis.Win32.Network
          }
       }
 
-      #endregion // DirectoryInfo
-
-      #region Comment
-
       /// <summary>The comment of the DFS root or link.</summary>
       public string Comment { get; internal set; }
-
-      #endregion // Comment
-
-      #region EntryPath
 
       /// <summary>The Universal Naming Convention (UNC) path of the DFS root or link.</summary>
       public string EntryPath { get; internal set; }
 
-      #endregion // EntryPath
-
-      #region Guid
-
       /// <summary>Specifies the GUID of the DFS root or link.</summary>
       public Guid Guid { get; internal set; }
 
-      #endregion // Guid
 
-      #region StorageInfoCollection
-
-      private readonly List<DfsStorageInfo> _storageInfoCollection;
+      private readonly List<DfsStorageInfo> _storageInfoCollection = new List<DfsStorageInfo>();
 
       /// <summary>The collection of DFS targets of the DFS root or link.</summary>
       public IEnumerable<DfsStorageInfo> StorageInfoCollection
       {
          get { return _storageInfoCollection; }
       }
-
-      #endregion // StorageInfoCollection
-
-      #region State
 
       /// <summary>An <see cref="DfsVolumeStates"/> enum that specifies a set of bit flags that describe the DFS root or link.</summary>
       public DfsVolumeStates State { get; internal set; }
@@ -141,15 +124,25 @@ namespace Alphaleonis.Win32.Network
       //   DFS_VOLUME_STATE_OFFLINE or DFS_VOLUME_STATE_ONLINE)
       //State = flavorBits | structure3.State;
 
-      #endregion // State
-      
-      #region Timeout
-
       /// <summary>Specifies the time-out, in seconds, of the DFS root or link.</summary>
-      public ulong Timeout { get; internal set; }
+      public long Timeout { get; internal set; }
 
-      #endregion // Timeout
+      /// <summary>Specifies a set of flags that describe specific properties of a DFS namespace, root, or link.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags")]
+      public DfsPropertyFlags PropertyFlags { get; internal set; }
+      
+      /// <summary>For domain-based DFS namespaces, this member specifies the size of the corresponding Active Directory data blob, in bytes.
+      /// For stand-alone DFS namespaces, this field specifies the size of the metadata stored in the registry,
+      /// including the key names and value names, in addition to the specific data items associated with them. This field is valid for DFS roots only.
+      /// </summary>
+      public long MetadataSize { get; internal set; }
 
+
+      /// <summary>Pointer to a SECURITY_DESCRIPTOR structure that specifies a self-relative security descriptor to be associated with the DFS link's reparse point.
+      /// This field is valid for DFS links only.
+      /// </summary>
+      public IntPtr SecurityDescriptor { get; internal set; }
+      
       #endregion // Properties
    }
 }

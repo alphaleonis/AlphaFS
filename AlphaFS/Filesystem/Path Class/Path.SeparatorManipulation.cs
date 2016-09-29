@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetSuffixedDirectoryName(string path)
       {
-         return GetSuffixedDirectoryNameInternal(null, path);
+         return GetSuffixedDirectoryNameCore(null, path);
       }
 
       /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
@@ -108,9 +108,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       [SecurityCritical]
-      public static string GetSuffixedDirectoryName(KernelTransaction transaction, string path)
+      public static string GetSuffixedDirectoryNameTransacted(KernelTransaction transaction, string path)
       {
-         return GetSuffixedDirectoryNameInternal(transaction, path);
+         return GetSuffixedDirectoryNameCore(transaction, path);
       }
 
       #endregion // GetSuffixedDirectoryName
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetSuffixedDirectoryNameWithoutRoot(string path)
       {
-         return GetSuffixedDirectoryNameWithoutRootInternal(null, path);
+         return GetSuffixedDirectoryNameWithoutRootCore(null, path);
       }
 
       /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
@@ -137,16 +137,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       [SecurityCritical]
-      public static string GetSuffixedDirectoryNameWithoutRoot(KernelTransaction transaction, string path)
+      public static string GetSuffixedDirectoryNameWithoutRootTransacted(KernelTransaction transaction, string path)
       {
-         return GetSuffixedDirectoryNameWithoutRootInternal(transaction, path);
+         return GetSuffixedDirectoryNameWithoutRootCore(transaction, path);
       }
       
       #endregion // GetSuffixedDirectoryNameWithoutRoot
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method GetSuffixedDirectoryNameInternal() to return the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
+      /// <summary>Returns the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
       ///   <para>The suffixed directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
       ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
@@ -155,16 +155,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       [SecurityCritical]
-      private static string GetSuffixedDirectoryNameInternal(KernelTransaction transaction, string path)
+      private static string GetSuffixedDirectoryNameCore(KernelTransaction transaction, string path)
       {
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.RelativePath);
+         DirectoryInfo di = Directory.GetParentCore(transaction, path, PathFormat.RelativePath);
 
          return di != null && di.Parent != null && di.Name != null
-            ? AddTrailingDirectorySeparator(CombineInternal(false, di.Parent.FullName, di.Name), false)
+            ? AddTrailingDirectorySeparator(CombineCore(false, di.Parent.FullName, di.Name), false)
             : null;
       }
 
-      /// <summary>[AlphaFS] Unified method GetSuffixedDirectoryNameWithoutRootInternal() to return the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
+      /// <summary>Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
       ///   <para>The directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
       ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> is <see langword="null"/>.</para>
@@ -172,9 +172,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       [SecurityCritical]
-      private static string GetSuffixedDirectoryNameWithoutRootInternal(KernelTransaction transaction, string path)
+      private static string GetSuffixedDirectoryNameWithoutRootCore(KernelTransaction transaction, string path)
       {
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.RelativePath);
+         DirectoryInfo di = Directory.GetParentCore(transaction, path, PathFormat.RelativePath);
 
          if (di == null || di.Parent == null)
             return null;
@@ -197,6 +197,6 @@ namespace Alphaleonis.Win32.Filesystem
          // TrimStart() for network-drive, like: C$
       }
 
-      #endregion
+      #endregion // Internal Methods
    }
 }

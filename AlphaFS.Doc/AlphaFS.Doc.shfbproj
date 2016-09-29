@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <!-- The configuration and platform will be used to determine which
@@ -8,7 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{81ed470c-0a64-4b10-b37e-61a06ddc497c}</ProjectGuid>
-    <SHFBSchemaVersion>1.9.9.0</SHFBSchemaVersion>
+    <SHFBSchemaVersion>2015.6.5.0</SHFBSchemaVersion>
     <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual
          Studio adds them anyway -->
     <AssemblyName>Documentation</AssemblyName>
@@ -33,14 +33,14 @@
     <FrameworkVersion>.NET Framework 4.0</FrameworkVersion>
     <RootNamespaceContainer>True</RootNamespaceContainer>
     <RootNamespaceTitle>API Reference</RootNamespaceTitle>
-    <HelpTitle>AlphaFS 2.0 Documentation</HelpTitle>
-    <CopyrightText>Copyright %28C%29 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</CopyrightText>
+    <HelpTitle>AlphaFS 2.1 Documentation</HelpTitle>
+    <CopyrightText>Copyright %28C%29 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</CopyrightText>
     <PresentationStyle>VS2013</PresentationStyle>
     <SyntaxFilters>Standard</SyntaxFilters>
-    <HelpFileVersion>1.0.0.9300</HelpFileVersion>
+    <HelpFileVersion>2.0.0.9300</HelpFileVersion>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\Bin\Debug\Net451\AlphaFS.dll" />
-      <DocumentationSource sourceFile="..\Bin\Debug\Net451\AlphaFS.xml" />
+      <DocumentationSource sourceFile="..\Bin\$(Configuration)\Net452\AlphaFS.dll" />
+      <DocumentationSource sourceFile="..\Bin\$(Configuration)\Net452\AlphaFS.xml" />
     </DocumentationSources>
     <FooterText>https://github.com/alphaleonis/AlphaFS/</FooterText>
     <ShowFeedbackControl>False</ShowFeedbackControl>
@@ -54,7 +54,7 @@ Additional classes and methods are provided to provide more advanced functionali
       <NamespaceSummaryItem name="Alphaleonis.Win32" isDocumented="True">This namespace contains general classes related to the Win32 Api.</NamespaceSummaryItem>
       <NamespaceSummaryItem name="Alphaleonis.Win32.Network" isDocumented="True">This namespace contains network related classes.</NamespaceSummaryItem>
     </NamespaceSummaries>
-    <HelpFileFormat>Website</HelpFileFormat>
+    <HelpFileFormat>HtmlHelp1, Website</HelpFileFormat>
     <ComponentConfigurations>
     </ComponentConfigurations>
     <HtmlSdkLinkType>Msdn</HtmlSdkLinkType>
@@ -70,12 +70,15 @@ Additional classes and methods are provided to provide more advanced functionali
     <NamingMethod>HashedMemberName</NamingMethod>
     <Language>en-US</Language>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
+    <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
   </PropertyGroup>
   <!-- There are no properties for these two groups but they need to appear in
        order for Visual Studio to perform the build. -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+     <OutputPath>..\Bin\Documentation\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+     <OutputPath>..\Bin\Documentation\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <None Include="License.aml" />

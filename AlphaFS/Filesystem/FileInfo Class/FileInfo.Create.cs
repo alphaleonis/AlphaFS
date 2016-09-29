@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -33,9 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Create()
       {
-         return File.CreateFileStreamInternal(Transaction, LongFullName, ExtendedFileAttributes.Normal, null,
-            FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize,
-            PathFormat.LongFullPath);
+         return File.CreateFileStreamCore(Transaction, LongFullName, ExtendedFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize, PathFormat.LongFullPath);
       }
 
       #endregion // .NET

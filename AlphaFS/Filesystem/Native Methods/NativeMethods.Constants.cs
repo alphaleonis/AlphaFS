@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -31,12 +31,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure,</para>
+      /// <para>The data is returned in a <see cref="WIN32_FIND_DATA"/> structure,</para>
       /// <para>and cAlternateFileName member is always a NULL string.</para>
       /// <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
       /// </remarks>
       /// </summary>
-      public static readonly FindExInfoLevels FindExInfoLevel = IsAtLeastWindows7 ? FindExInfoLevels.Basic : FindExInfoLevels.Standard;
+      public static readonly FINDEX_INFO_LEVELS FindexInfoLevels = IsAtLeastWindows7 ? FINDEX_INFO_LEVELS.Basic : FINDEX_INFO_LEVELS.Standard;
 
       /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.</summary>
       /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
@@ -48,6 +48,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>DefaultFileEncoding = Encoding.UTF8; Default type of Encoding used for reading and writing files.</summary>
       public static readonly Encoding DefaultFileEncoding = Encoding.UTF8;
 
+      /// <summary>MaxDirectoryLength = 255</summary>
+      internal const int MaxDirectoryLength = 255;
+      
       /// <summary>MaxPath = 260
       /// The specified path, file name, or both exceed the system-defined maximum length.
       /// For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters. 
@@ -56,5 +59,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>MaxPathUnicode = 32000</summary>
       internal const int MaxPathUnicode = 32000;
+
+
+      /// <summary>When an exception is raised, bit shifting is needed to prevent: "System.OverflowException: Arithmetic operation resulted in an overflow."</summary>
+      internal const int OverflowExceptionBitShift = 65535;
    }
 }

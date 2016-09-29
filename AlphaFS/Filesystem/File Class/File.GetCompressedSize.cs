@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(string path, PathFormat pathFormat)
       {
-         return GetCompressedSizeInternal(null, path, pathFormat);
+         return GetCompressedSizeCore(null, path, pathFormat);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used to store a specified file.</summary>
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(string path)
       {
-         return GetCompressedSizeInternal(null, path, PathFormat.RelativePath);
+         return GetCompressedSizeCore(null, path, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -69,9 +69,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
-      public static long GetCompressedSize(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static long GetCompressedSizeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetCompressedSizeInternal(transaction, path, pathFormat);
+         return GetCompressedSizeCore(transaction, path, pathFormat);
       }
 
       /// <summary>
@@ -84,33 +84,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path"><para>The name of the file.</para></param>
       /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
-      public static long GetCompressedSize(KernelTransaction transaction, string path)
+      public static long GetCompressedSizeTransacted(KernelTransaction transaction, string path)
       {
-         return GetCompressedSizeInternal(transaction, path, PathFormat.RelativePath);
+         return GetCompressedSizeCore(transaction, path, PathFormat.RelativePath);
       }
 
       #endregion // GetCompressedSize
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method GetCompressedSizeInternal() to retrieve the actual number of bytes of disk storage used to store a
+      /// <summary>Retrieves the actual number of bytes of disk storage used to store a
       ///   specified file as part of a transaction. If the file is located on a volume that supports compression and the file is compressed,
       ///   the value obtained is the compressed size of the specified file. If the file is located on a volume that supports sparse files and
       ///   the file is a sparse file, the value obtained is the sparse size of the specified file.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path"><para>The name of the file.</para></param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>      
       [SecurityCritical]
-      internal static long GetCompressedSizeInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static long GetCompressedSizeCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          uint fileSizeHigh;
          uint fileSizeLow = transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -130,6 +129,6 @@ namespace Alphaleonis.Win32.Filesystem
          return NativeMethods.ToLong(fileSizeHigh, fileSizeLow);
       }
 
-      #endregion // GetCompressedSizeInternal
+      #endregion // Internal Methods
    }
 }

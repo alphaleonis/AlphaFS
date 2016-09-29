@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -25,22 +25,16 @@ using System.Text;
 
 namespace Alphaleonis.Win32
 {
-   /// <summary>
-   /// Represents a block of native memory of a specified size allocated using the LocalAlloc function from Kernel32.dll.
-   /// </summary>
+   /// <summary>Represents a block of native memory of a specified size allocated using the LocalAlloc function from Kernel32.dll.</summary>
    internal sealed class SafeGlobalMemoryBufferHandle : SafeNativeMemoryBufferHandle
    {
-      /// <summary>
-      /// Creates new instance with zero IntPtr
-      /// </summary>
+      /// <summary>Creates new instance with zero IntPtr.</summary>
       public SafeGlobalMemoryBufferHandle()
          : base(true)
       {
       }
 
-      /// <summary>
-      /// Initializes a new instance of the <see cref="SafeGlobalMemoryBufferHandle"/> class allocating the specified number of bytes of unmanaged memory.
-      /// </summary>
+      /// <summary>Initializes a new instance of the <see cref="SafeGlobalMemoryBufferHandle"/> class allocating the specified number of bytes of unmanaged memory.</summary>
       /// <param name="capacity">The capacity.</param>
       public SafeGlobalMemoryBufferHandle(int capacity) :
          base(capacity)
@@ -58,7 +52,7 @@ namespace Alphaleonis.Win32
       {
          if (value.HasValue)
          {
-            var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(long)));
+            var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof (long)));
             Marshal.WriteInt64(safeBuffer.handle, value.Value);
             return safeBuffer;
          }
@@ -71,12 +65,10 @@ namespace Alphaleonis.Win32
          if (str == null)
             throw new ArgumentNullException("str");
 
-         return new SafeGlobalMemoryBufferHandle(Marshal.StringToHGlobalUni(str), str.Length * UnicodeEncoding.CharSize + UnicodeEncoding.CharSize);
+         return new SafeGlobalMemoryBufferHandle(Marshal.StringToHGlobalUni(str), str.Length*UnicodeEncoding.CharSize + UnicodeEncoding.CharSize);
       }
 
-      /// <summary>
-      /// Called when object is disposed or finalized.
-      /// </summary>
+      /// <summary>Called when object is disposed or finalized.</summary>
       protected override bool ReleaseHandle()
       {
          Marshal.FreeHGlobal(handle);

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -26,9 +26,9 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>FILE_ID_BOTH_DIR_INFO - Contains information about files in the specified directory. Used for directory handles.
-   /// Use only when calling GetFileInformationByHandleEx.</summary>
-   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir"), Serializable]
+   /// <summary>Contains information about files in the specified directory. Used for directory handles.</summary>
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
+   [Serializable]
    [SecurityCritical]
    public sealed class FileIdBothDirectoryInfo
    {
@@ -36,12 +36,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FileIdBothDirectoryInfo
 
-      internal FileIdBothDirectoryInfo(NativeMethods.FileIdBothDirInfo fibdi, string fileName)
+      internal FileIdBothDirectoryInfo(NativeMethods.FILE_ID_BOTH_DIR_INFO fibdi, string fileName)
       {
-         CreationTime = DateTime.FromFileTimeUtc(fibdi.CreationTime).ToLocalTime();
-         LastAccessTime = DateTime.FromFileTimeUtc(fibdi.LastAccessTime).ToLocalTime();
-         LastWriteTime = DateTime.FromFileTimeUtc(fibdi.LastWriteTime).ToLocalTime();
-         ChangeTime = DateTime.FromFileTimeUtc(fibdi.ChangeTime).ToLocalTime();
+         CreationTimeUtc = DateTime.FromFileTimeUtc(fibdi.CreationTime);
+         LastAccessTimeUtc = DateTime.FromFileTimeUtc(fibdi.LastAccessTime);
+         LastWriteTimeUtc = DateTime.FromFileTimeUtc(fibdi.LastWriteTime);
+         ChangeTimeUtc = DateTime.FromFileTimeUtc(fibdi.ChangeTime);
 
          AllocationSize = fibdi.AllocationSize;
          EndOfFile = fibdi.EndOfFile;
@@ -71,22 +71,46 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region ChangeTime
 
-      /// <summary>The time that the file was last changed.</summary>
-      public DateTime ChangeTime { get; set; }
+      /// <summary>Gets the time this entry was changed.</summary>
+      /// <value>The time this entry was changed.</value>
+      public DateTime ChangeTime
+      {
+         get { return ChangeTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // ChangeTime
 
+      #region ChangeTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was changed.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was changed.</value>
+      public DateTime ChangeTimeUtc { get; set; }
+
+      #endregion // ChangeTimeUtc
+
       #region CreationTime
 
-      /// <summary>The time that the file was created.</summary>
-      public DateTime CreationTime { get; set; }
+      /// <summary>Gets the time this entry was created.</summary>
+      /// <value>The time this entry was created.</value>
+      public DateTime CreationTime
+      {
+         get { return CreationTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // CreationTime
+
+      #region CreationTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was created.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was created.</value>
+      public DateTime CreationTimeUtc { get; set; }
+
+      #endregion // CreationTimeUtc
 
       #region EaSize
 
       /// <summary>The size of the extended attributes for the file.</summary>
-      public uint ExtendedAttributesSize { get; set; }
+      public int ExtendedAttributesSize { get; set; }
 
       #endregion // EaSize
 
@@ -119,7 +143,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The byte offset of the file within the parent directory. This member is undefined for file systems, such as NTFS,
       /// in which the position of a file within the parent directory is not fixed and can be changed at any time to maintain sort order.
       /// </summary>
-      public uint FileIndex { get; set; }
+      public long FileIndex { get; set; }
 
       #endregion // FileIndex
 
@@ -132,17 +156,41 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastAccessTime
 
-      /// <summary>The time that the file was last accessed.</summary>
-      public DateTime LastAccessTime { get; set; }
+      /// <summary>Gets the time this entry was last accessed.</summary>
+      /// <value>The time this entry was last accessed.</value>
+      public DateTime LastAccessTime
+      {
+         get { return LastAccessTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // LastAccessTime
 
+      #region LastAccessTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last accessed.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last accessed.</value>
+      public DateTime LastAccessTimeUtc { get; set; }
+
+      #endregion // LastAccessTimeUtc
+
       #region LastWriteTime
 
-      /// <summary>The time that the file was last written to.</summary>
-      public DateTime LastWriteTime { get; set; }
+      /// <summary>Gets the time this entry was last modified.</summary>
+      /// <value>The time this entry was last modified.</value>
+      public DateTime LastWriteTime
+      {
+         get { return LastWriteTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // LastWriteTime
+
+      #region LastWriteTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last modified.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last modified.</value>
+      public DateTime LastWriteTimeUtc { get; set; }
+
+      #endregion // LastWriteTimeUtc
 
       #region ShortName
 

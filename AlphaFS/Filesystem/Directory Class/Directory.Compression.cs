@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,6 +19,8 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -27,94 +29,138 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Compress
 
-      #region Non-Transactional
-
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <remarks>This will only compress the root items (non recursive).</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to compress.</param>
       [SecurityCritical]
       public static void Compress(string path)
       {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.RelativePath);
+         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <remarks>This will only compress the root items (non recursive).</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void Compress(string path, PathFormat pathFormat)
       {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, pathFormat);
+         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, pathFormat);
       }
 
 
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
       public static void Compress(string path, DirectoryEnumerationOptions options)
       {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, options, true, PathFormat.RelativePath);
+         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, options, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void Compress(string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, options, true, pathFormat);
+         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, options, true, pathFormat);
       }
       
-      #endregion
-
       #region Transactional
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <remarks>This will only compress the root items (non recursive).</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path)
+      public static void CompressTransacted(KernelTransaction transaction, string path)
       {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.RelativePath);
+         CompressDecompressCore(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <remarks>This will only compress the root items (non recursive).</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void CompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, pathFormat);
+         CompressDecompressCore(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, pathFormat);
       }
 
 
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
+      public static void CompressTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
       {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, options, true, PathFormat.RelativePath);
+         CompressDecompressCore(transaction, path, Path.WildcardStarMatchAll, options, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      public static void CompressTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, options, true, pathFormat);
+         CompressDecompressCore(transaction, path, Path.WildcardStarMatchAll, options, true, pathFormat);
       }
 
       #endregion // Transactional
@@ -123,94 +169,138 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Decompress
 
-      #region Non-Transactional
-
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <remarks>This will only decompress the root items (non recursive).</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to decompress.</param>
       [SecurityCritical]
       public static void Decompress(string path)
       {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.RelativePath);
+         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <remarks>This will only decompress the root items (non recursive).</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void Decompress(string path, PathFormat pathFormat)
       {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, pathFormat);
+         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, pathFormat);
       }
 
 
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
       public static void Decompress(string path, DirectoryEnumerationOptions options)
       {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, options, false, PathFormat.RelativePath);
+         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, options, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void Decompress(string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, options, false, pathFormat);
+         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, options, false, pathFormat);
       }
-      
-      #endregion
 
       #region Transactional
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <remarks>This will only decompress the root items (non recursive).</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path)
+      public static void DecompressTransacted(KernelTransaction transaction, string path)
       {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.RelativePath);
+         CompressDecompressCore(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <remarks>This will only decompress the root items (non recursive).</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void DecompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, pathFormat);
+         CompressDecompressCore(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, pathFormat);
       }
 
       
       
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
+      public static void DecompressTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
       {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, options, false, PathFormat.RelativePath);
+         CompressDecompressCore(transaction, path, Path.WildcardStarMatchAll, options, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      public static void DecompressTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, options, false, pathFormat);
+         CompressDecompressCore(transaction, path, Path.WildcardStarMatchAll, options, false, pathFormat);
       }
 
       #endregion // Transactional
@@ -221,44 +311,68 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
       /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory. However, newly created files and directories will be uncompressed.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path to a directory to decompress.</param>
       [SecurityCritical]
       public static void DisableCompression(string path)
       {
-         Device.ToggleCompressionInternal(true, null, path, false, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(true, null, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
       /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory. However, newly created files and directories will be uncompressed.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path to a directory to decompress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void DisableCompression(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(true, null, path, false, pathFormat);
+         Device.ToggleCompressionCore(true, null, path, false, pathFormat);
       }
 
 
 
       /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
       /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory. However, newly created files and directories will be uncompressed.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory to decompress.</param>
       [SecurityCritical]
-      public static void DisableCompression(KernelTransaction transaction, string path)
+      public static void DisableCompressionTransacted(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionInternal(true, transaction, path, false, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(true, transaction, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
       /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory. However, newly created files and directories will be uncompressed.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <param name="path">A path to a directory to decompress.</param>
       [SecurityCritical]
-      public static void DisableCompression(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void DisableCompressionTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(true, transaction, path, false, pathFormat);
+         Device.ToggleCompressionCore(true, transaction, path, false, pathFormat);
       }
       
       #endregion // DisableCompression
@@ -267,74 +381,104 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
       /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path to a directory to compress.</param>
       [SecurityCritical]
       public static void EnableCompression(string path)
       {
-         Device.ToggleCompressionInternal(true, null, path, true, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(true, null, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
       /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path to a directory to compress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void EnableCompression(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(true, null, path, true, pathFormat);
+         Device.ToggleCompressionCore(true, null, path, true, pathFormat);
       }
 
 
 
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
       /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory to compress.</param>
       [SecurityCritical]
-      public static void EnableCompression(KernelTransaction transaction, string path)
+      public static void EnableCompressionTransacted(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionInternal(true, transaction, path, true, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(true, transaction, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
       /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory to compress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void EnableCompression(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void EnableCompressionTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(true, transaction, path, true, pathFormat);
+         Device.ToggleCompressionCore(true, transaction, path, true, pathFormat);
       }
       
       #endregion // EnableCompression
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method CompressDecompressInternal() to compress/decompress Non-/Transacted files/directories.</summary>
+      /// <summary>Compress/decompress Non-/Transacted files/directories.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="searchPattern">
-      ///    <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
-      ///    <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      ///    <para>characters, but does not support regular expressions.</para>
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="compress"><see langword="true"/> compress, when <see langword="false"/> decompress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void CompressDecompressInternal(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, bool compress, PathFormat pathFormat)
+      internal static void CompressDecompressCore(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, bool compress, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // Process directories and files.
-         foreach (var fso in EnumerateFileSystemEntryInfosInternal<string>(transaction, pathLp, searchPattern, options | DirectoryEnumerationOptions.AsLongPath, PathFormat.LongFullPath))
-            Device.ToggleCompressionInternal(true, transaction, fso, compress, PathFormat.LongFullPath);
+         foreach (var fsei in EnumerateFileSystemEntryInfosCore<string>(transaction, pathLp, searchPattern, options | DirectoryEnumerationOptions.AsLongPath, PathFormat.LongFullPath))
+            Device.ToggleCompressionCore(true, transaction, fsei, compress, PathFormat.LongFullPath);
 
          // Compress the root directory, the given path.
-         Device.ToggleCompressionInternal(true, transaction, pathLp, compress, PathFormat.LongFullPath);
+         Device.ToggleCompressionCore(true, transaction, pathLp, compress, PathFormat.LongFullPath);
       }
 
-      #endregion // CompressDecompressInternal
+      #endregion // Internal Methods
    }
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path)
       {
-         return GetAttributesExInternal<FileAttributes>(null, path, PathFormat.RelativePath);
+         return GetAttributesExCore<FileAttributes>(null, path, PathFormat.RelativePath, true);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path, PathFormat pathFormat)
       {
-         return GetAttributesExInternal<FileAttributes>(null, path, pathFormat);
+         return GetAttributesExCore<FileAttributes>(null, path, pathFormat, true);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -55,9 +55,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
       [SecurityCritical]
-      public static FileAttributes GetAttributes(KernelTransaction transaction, string path)
+      public static FileAttributes GetAttributesTransacted(KernelTransaction transaction, string path)
       {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, PathFormat.RelativePath);
+         return GetAttributesExCore<FileAttributes>(transaction, path, PathFormat.RelativePath, true);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -66,49 +66,44 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
       [SecurityCritical]
-      public static FileAttributes GetAttributes(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileAttributes GetAttributesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, pathFormat);
+         return GetAttributesExCore<FileAttributes>(transaction, path, pathFormat, true);
       }
 
       #endregion
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Gets the <see cref="FileAttributes"/> or <see cref="Alphaleonis.Win32.Filesystem.NativeMethods.Win32FileAttributeData"/>
-      ///   of the specified file or directory.
-      /// </summary>
+      /// <summary>Gets the <see cref="FileAttributes"/> or <see cref="NativeMethods.WIN32_FILE_ATTRIBUTE_DATA"/> of the specified file or directory.</summary>
+      /// <returns>The <see cref="FileAttributes"/> or <see cref="NativeMethods.WIN32_FILE_ATTRIBUTE_DATA"/> of the specified file or directory.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <typeparam name="T">Generic type parameter.</typeparam>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   Returns the <see cref="FileAttributes"/> or <see cref="Alphaleonis.Win32.Filesystem.NativeMethods.Win32FileAttributeData"/> of the
-      ///   specified file or directory.
-      /// </returns>
+      /// <param name="returnErrorOnNotFound"></param>
       [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
       [SecurityCritical]
-      internal static T GetAttributesExInternal<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static T GetAttributesExCore<T>(KernelTransaction transaction, string path, PathFormat pathFormat, bool returnErrorOnNotFound)
       {
          if (pathFormat == PathFormat.RelativePath)
-            Path.CheckValidPath(path, true, true);
+            Path.CheckSupportedPathFormat(path, true, true);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
+         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
-         var data = new NativeMethods.Win32FileAttributeData();
-         int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
+         var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+         int dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, returnErrorOnNotFound);
 
          if (dataInitialised != Win32Errors.ERROR_SUCCESS)
             NativeError.ThrowException(dataInitialised, pathLp);
 
-         return (typeof(T) == typeof(FileAttributes)
-            ? (T)(object)data.FileAttributes
-            : (T)(object)data);
+         return (T) (typeof (T) == typeof (FileAttributes) ? (object) data.dwFileAttributes : data);
       }
 
       /// <summary>
-      ///   Calls NativeMethods.GetFileAttributesEx to retrieve Win32FileAttributeData.
+      ///   Calls NativeMethods.GetFileAttributesEx to retrieve WIN32_FILE_ATTRIBUTE_DATA.
       ///   <para>Note that classes should use -1 as the uninitialized state for dataInitialized when relying on this method.</para>
       /// </summary>
       /// <remarks>No path (null, empty string) checking or normalization is performed.</remarks>
@@ -117,10 +112,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="win32AttrData">[in,out].</param>
       /// <param name="tryagain">.</param>
       /// <param name="returnErrorOnNotFound">.</param>
-      /// <returns>Returns 0 on success, otherwise a Win32 error code.</returns>
+      /// <returns>0 on success, otherwise a Win32 error code.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
-      internal static int FillAttributeInfoInternal(KernelTransaction transaction, string pathLp, ref NativeMethods.Win32FileAttributeData win32AttrData, bool tryagain, bool returnErrorOnNotFound)
+      internal static int FillAttributeInfoCore(KernelTransaction transaction, string pathLp, ref NativeMethods.WIN32_FILE_ATTRIBUTE_DATA win32AttrData, bool tryagain, bool returnErrorOnNotFound)
       {
          int dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
 
@@ -129,9 +124,8 @@ namespace Alphaleonis.Win32.Filesystem
          // Someone has a handle to the file open, or other error.
          if (tryagain)
          {
-            NativeMethods.Win32FindData findData;
+            NativeMethods.WIN32_FIND_DATA findData;
 
-            // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             {
                bool error = false;
@@ -144,8 +138,8 @@ namespace Alphaleonis.Win32.Filesystem
                   // 2013-01-13: MSDN confirms LongPath usage.
 
                   // A trailing backslash is not allowed.
-                  ? NativeMethods.FindFirstFileEx(Path.RemoveTrailingDirectorySeparator(pathLp, false), NativeMethods.FindExInfoLevel, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache)
-                  : NativeMethods.FindFirstFileTransacted(Path.RemoveTrailingDirectorySeparator(pathLp, false), NativeMethods.FindExInfoLevel, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache, transaction.SafeHandle);
+                  ? NativeMethods.FindFirstFileEx(Path.RemoveTrailingDirectorySeparator(pathLp, false), NativeMethods.FindexInfoLevels, out findData, NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache)
+                  : NativeMethods.FindFirstFileTransacted(Path.RemoveTrailingDirectorySeparator(pathLp, false), NativeMethods.FindexInfoLevels, out findData, NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache, transaction.SafeHandle);
 
                try
                {
@@ -162,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
                         {
                            // Return default value for backward compatibility
                            dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
-                           win32AttrData.FileAttributes = (FileAttributes)(-1);
+                           win32AttrData.dwFileAttributes = (FileAttributes)(-1);
                         }
                      }
 
@@ -173,8 +167,8 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   try
                   {
-                     // Close the Win32 handle.
-                     handle.Close();
+                     if (handle != null)
+                        handle.Close();
                   }
                   catch
                   {
@@ -186,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
             // Copy the attribute information.
-            win32AttrData = new NativeMethods.Win32FileAttributeData(findData);
+            win32AttrData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA(findData);
          }
 
          #endregion // Try Again
@@ -212,14 +206,14 @@ namespace Alphaleonis.Win32.Filesystem
                       dataInitialised != Win32Errors.ERROR_NOT_READY) // Floppy device not ready.
                   {
                      // In case someone latched onto the file. Take the perf hit only for failure.
-                     return FillAttributeInfoInternal(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);
+                     return FillAttributeInfoCore(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);
                   }
 
                   if (!returnErrorOnNotFound)
                   {
                      // Return default value for backward compbatibility.
                      dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
-                     win32AttrData.FileAttributes = (FileAttributes)(-1);
+                     win32AttrData.dwFileAttributes = (FileAttributes)(-1);
                   }
                }
             }
@@ -228,7 +222,6 @@ namespace Alphaleonis.Win32.Filesystem
          return dataInitialised;
       }
 
-
-      #endregion // GetAttributesExInternal
+      #endregion // Internal Methods
    }
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -38,17 +39,23 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
       public FileInfo[] GetFiles()
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Returns a file list from the current directory matching the given search pattern.</summary>
       /// <param name="searchPattern">
-      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
-      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      ///   <para>characters, but does not support regular expressions.</para>
+      ///   The search string to match against the names of directories in path.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       /// <returns>An array of type <see cref="FileInfo"/>.</returns>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</remarks>
@@ -58,21 +65,27 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
       public FileInfo[] GetFiles(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Returns a file list from the current directory matching the given search pattern and using a value to determine whether to search subdirectories.</summary>
       /// <param name="searchPattern">
-      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
-      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      ///   <para>characters, but does not support regular expressions.</para>
+      ///   The search string to match against the names of directories in path.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       /// <param name="searchOption">
-      ///   <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
-      ///   <para> should include only the current directory or should include all subdirectories.</para>
+      ///   One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/>
+      ///   should include only the current directory or should include all subdirectories.
       /// </param>
       /// <returns>An array of type <see cref="FileInfo"/>.</returns>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</remarks>
@@ -82,12 +95,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
       public FileInfo[] GetFiles(string searchPattern, SearchOption searchOption)
       {
          var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath).ToArray();
       }
 
       #endregion // .NET

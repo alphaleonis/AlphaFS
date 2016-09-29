@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -22,6 +22,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -38,12 +39,9 @@ namespace Alphaleonis.Win32.Network
       /// <para>Minimum supported server: Windows Server 2003</para>
       /// </remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint NetDfsEnum([MarshalAs(UnmanagedType.LPWStr)] string dfsName,
-         [MarshalAs(UnmanagedType.U4)] uint level, [MarshalAs(UnmanagedType.U4)] int prefMaxLen,
-         out IntPtr buffer, [MarshalAs(UnmanagedType.U4)] out uint entriesRead,
-         [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
+      internal static extern uint NetDfsEnum([MarshalAs(UnmanagedType.LPWStr)] string dfsName, [MarshalAs(UnmanagedType.U4)] uint level, [MarshalAs(UnmanagedType.U4)] int prefMaxLen, out SafeGlobalMemoryBufferHandle buffer, [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
 
       
       /// <summary>Retrieves information about a Distributed File System (DFS) root or link from the cache maintained by the DFS client.</summary>
@@ -57,11 +55,9 @@ namespace Alphaleonis.Win32.Network
       /// <para>Minimum supported server: Windows Server 2003</para>
       /// </remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint NetDfsGetClientInfo([MarshalAs(UnmanagedType.LPWStr)] string dfsEntryPath,
-         [MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.LPWStr)] string shareName,
-         [MarshalAs(UnmanagedType.U4)] uint level, out IntPtr buffer);
+      internal static extern uint NetDfsGetClientInfo([MarshalAs(UnmanagedType.LPWStr)] string dfsEntryPath, [MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.LPWStr)] string shareName, [MarshalAs(UnmanagedType.U4)] uint level, out SafeGlobalMemoryBufferHandle buffer);
 
       
       /// <summary>Retrieves information about a specified Distributed File System (DFS) root or link in a DFS namespace.</summary>
@@ -75,10 +71,8 @@ namespace Alphaleonis.Win32.Network
       /// <para>Minimum supported server: Windows Server 2003</para>
       /// </remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint NetDfsGetInfo([MarshalAs(UnmanagedType.LPWStr)] string dfsEntryPath,
-         [MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.LPWStr)] string shareName,
-         [MarshalAs(UnmanagedType.U4)] uint level, out IntPtr buffer);
+      internal static extern uint NetDfsGetInfo([MarshalAs(UnmanagedType.LPWStr)] string dfsEntryPath, [MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.LPWStr)] string shareName, [MarshalAs(UnmanagedType.U4)] uint level, out SafeGlobalMemoryBufferHandle buffer);
    }
 }

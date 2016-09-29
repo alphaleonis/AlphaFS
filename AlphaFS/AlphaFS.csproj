@@ -14,6 +14,7 @@
     <AssemblyOriginatorKeyFile>..\AlphaFS.snk</AssemblyOriginatorKeyFile>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
     <DelaySign>false</DelaySign>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net35 Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,7 +30,7 @@
     <RegisterForComInterop>false</RegisterForComInterop>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
@@ -48,7 +49,7 @@
     <RegisterForComInterop>false</RegisterForComInterop>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -68,7 +69,7 @@
     <RegisterForComInterop>false</RegisterForComInterop>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -87,10 +88,29 @@
     <RegisterForComInterop>false</RegisterForComInterop>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452 Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Bin\Debug\Net452</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET452</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>..\Bin\Debug\Net452\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net35|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -105,7 +125,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net40|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -121,7 +141,7 @@
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -136,7 +156,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net451|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -151,37 +171,68 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Bin\Release\Net452</OutputPath>
+    <DefineConstants>TRACE;NET452</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Bin\Release\Net452\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyVersionInfo.cs" />
+    <Compile Include="AssemblyVersionInfo.cs">
+      <DoTransformOnBuild>True</DoTransformOnBuild>
+    </Compile>
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\BackupStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CopyMove.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CountFileSystemObjects.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.DeleteEmptySubdirectories.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Delete.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CreateDirectory.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateDirectories.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFiles.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntryInfos.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntries.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Exists.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetDirectories.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetFiles.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetCreationTime.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetLastAccessTime.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetLastWriteTime.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.HasInheritedPermissions.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetAccessControl.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.GetTimes.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetChangeTime.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CurrentDirectory.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileSystemEntries.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetDirectoryRoot.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetLogicalDrives.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetParent.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.SetAccessControl.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.CopyMove.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.SetTimes.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.SetCreationTime.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.SetLastAccessTime.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.SetTimestamps.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.TransferTimestamps.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.SetLastWriteTime.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Compression.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Encryption.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetProperties.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.RefreshEntryInfo.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Encryption.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.DeleteEmptySubdirectories.cs" />
@@ -202,21 +253,27 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Delete.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateSubdirectory.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Create.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateAlternateDataStreams.cs" />
+    <Compile Include="Filesystem\Enumerations\EncryptedFileRawMode.cs" />
+    <Compile Include="Filesystem\Enumerations\STREAM_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
     <Compile Include="Filesystem\Exceptions\AlreadyExistsException.cs" />
     <Compile Include="Filesystem\Exceptions\DeviceNotReadyException.cs" />
     <Compile Include="Filesystem\Exceptions\DirectoryReadOnlyException.cs" />
     <Compile Include="Filesystem\Exceptions\DirectoryNotEmptyException.cs" />
     <Compile Include="Filesystem\Exceptions\FileReadOnlyException.cs" />
+    <Compile Include="Filesystem\File Class\File.GetHash.cs" />
+    <Compile Include="Filesystem\File Class\File.EncryptedFileRaw.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
     <Compile Include="Filesystem\File Class\File.CreateSymbolicLink.cs" />
     <Compile Include="Filesystem\File Class\File.CreateHardlink.cs" />
     <Compile Include="Filesystem\File Class\File.Compress.cs" />
     <Compile Include="Filesystem\File Class\File.Delete.cs" />
-    <Compile Include="Filesystem\File Class\File.EncryptDescrypt.cs" />
+    <Compile Include="Filesystem\File Class\File.EncryptDecrypt.cs" />
     <Compile Include="Filesystem\File Class\File.CreateText.cs" />
     <Compile Include="Filesystem\File Class\File.CopyMove.cs" />
+    <Compile Include="Filesystem\File Class\File.IsLocked.cs" />
     <Compile Include="Filesystem\File Class\File.WriteText.cs" />
     <Compile Include="Filesystem\File Class\File.AppendText.cs" />
     <Compile Include="Filesystem\File Class\File.Create.cs" />
@@ -231,7 +288,7 @@
     <Compile Include="Filesystem\Enumerations\FileInfoByHandleClass.cs" />
     <Compile Include="Filesystem\Enumerations\FinalPathFormats.cs" />
     <Compile Include="Filesystem\Enumerations\FindExAdditionalFlags.cs" />
-    <Compile Include="Filesystem\Enumerations\FindExInfoLevels.cs" />
+    <Compile Include="Filesystem\Enumerations\FINDEX_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Enumerations\FindExSearchOps.cs" />
     <Compile Include="Filesystem\Enumerations\ErrorMode.cs" />
     <Compile Include="Filesystem\Enumerations\ReparsePointTag.cs" />
@@ -272,7 +329,12 @@
     <Compile Include="Filesystem\File Class\File.GetLinkTargetInfo.cs" />
     <Compile Include="Filesystem\File Class\File.GetSize.cs" />
     <Compile Include="Filesystem\File Class\File.TransferTimestamps.cs" />
+    <Compile Include="Filesystem\File Class\File.OpenRead.cs" />
+    <Compile Include="Filesystem\File Class\File.OpenText.cs" />
+    <Compile Include="Filesystem\File Class\File.OpenWrite.cs" />
+    <Compile Include="Filesystem\File Class\File.OpenBackupRead.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.GetHash.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.RefreshEntryInfo.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.Decompress.cs" />
@@ -300,6 +362,8 @@
     <Compile Include="Filesystem\FileSystemInfo.cs" />
     <Compile Include="Filesystem\Enumerations\GetFileExInfoLevels.cs" />
     <Compile Include="Filesystem\Enumerations\GetFullPathOptions.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.EncryptedFileRaw.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.Shell32.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.KernelTransactions.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.Handles.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.FileManagement.cs" />
@@ -310,6 +374,7 @@
     <Compile Include="Filesystem\Native Methods\NativeMethods.BackupStreams.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.Utilities.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.PathManagement.cs" />
+    <Compile Include="Filesystem\Native Structures\WIN32_FIND_STREAM_DATA.cs" />
     <Compile Include="Filesystem\Path Class\Path.cs" />
     <Compile Include="Filesystem\Path Class\Path.ValidationAndChecks.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetComponents.cs" />
@@ -321,30 +386,33 @@
     <Compile Include="Filesystem\Path Class\Path.UncPaths.cs" />
     <Compile Include="Filesystem\Path Class\Path.ShortLongConversions.cs" />
     <Compile Include="Filesystem\Path Class\Path.Temporary.cs" />
-    <Compile Include="Filesystem\SafeCmConnectMachineHandle.cs" />
-    <Compile Include="Filesystem\SafeSetupDiClassDevsExHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeCmConnectMachineHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeEncryptedFileRawHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />
-    <Compile Include="Filesystem\Structures\CopyMoveResult.cs" />
-    <Compile Include="Filesystem\Structures\FileBasicInfo.cs" />
-    <Compile Include="Filesystem\Structures\ByHandleFileInfo.cs" />
-    <Compile Include="Filesystem\Structures\ChangeErrorMode.cs" />
-    <Compile Include="Filesystem\Structures\FileIdBothDirInfo.cs" />
-    <Compile Include="Filesystem\Structures\FileTime.cs" />
+    <Compile Include="Filesystem\CopyMoveResult.cs" />
+    <Compile Include="Filesystem\Native Structures\FILE_BASIC_INFO.cs" />
+    <Compile Include="Filesystem\Native Structures\BY_HANDLE_FILE_INFORMATION.cs" />
+    <Compile Include="Filesystem\ChangeErrorMode.cs" />
+    <Compile Include="Filesystem\Native Structures\FILE_ID_BOTH_DIR_INFO.cs" />
+    <Compile Include="Filesystem\Native Structures\FILETIME.cs" />
     <Compile Include="Filesystem\LinkTargetInfo.cs" />
     <Compile Include="Filesystem\Enumerations\MoveOptions.cs" />
     <Compile Include="Filesystem\Exceptions\NotAReparsePointException.cs" />
     <Compile Include="Filesystem\Shell32.cs" />
-    <Compile Include="Filesystem\Structures\MountPointReparseBuffer.cs" />
-    <Compile Include="Filesystem\Structures\ReparseDataBufferHeader.cs" />
-    <Compile Include="Filesystem\Structures\SpDeviceInfoData.cs" />
-    <Compile Include="Filesystem\Structures\SpDeviceInterfaceData.cs" />
-    <Compile Include="Filesystem\Structures\SpDeviceInterfaceDetailData.cs" />
-    <Compile Include="Filesystem\Structures\SymbolicLinkReparseBuffer.cs" />
-    <Compile Include="Filesystem\Structures\Win32FileAttributeData.cs" />
-    <Compile Include="Filesystem\Structures\Win32FindData.cs" />
-    <Compile Include="Filesystem\Structures\Win32StreamId.cs" />
+    <Compile Include="Filesystem\Native Structures\MountPointReparseBuffer.cs" />
+    <Compile Include="Filesystem\Native Structures\ReparseDataBufferHeader.cs" />
+    <Compile Include="Filesystem\Native Structures\SP_DEVINFO_DATA.cs" />
+    <Compile Include="Filesystem\Native Structures\SP_DEVICE_INTERFACE_DATA.cs" />
+    <Compile Include="Filesystem\Native Structures\SP_DEVICE_INTERFACE_DETAIL_DATA.cs" />
+    <Compile Include="Filesystem\Native Structures\SymbolicLinkReparseBuffer.cs" />
+    <Compile Include="Filesystem\Native Structures\WIN32_FILE_ATTRIBUTE_DATA.cs" />
+    <Compile Include="Filesystem\Native Structures\WIN32_FIND_DATA.cs" />
+    <Compile Include="Filesystem\Native Structures\WIN32_STREAM_ID.cs" />
     <Compile Include="Network\DfsInfo.cs" />
     <Compile Include="Network\DfsStorageInfo.cs" />
+    <Compile Include="Network\Enumerations\DfsPropertyFlags.cs" />
+    <Compile Include="Network\Enumerations\DfsTargetPriorityClass.cs" />
     <Compile Include="Network\Enumerations\ShareInfoLevel.cs" />
     <Compile Include="Network\Enumerations\ResourceUsage.cs" />
     <Compile Include="Network\Enumerations\ResourceType.cs" />
@@ -369,22 +437,22 @@
     <Compile Include="Network\Native Methods\NativeMethods.NetworkManagement.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.DistributedFileSystem.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.cs" />
+    <Compile Include="Network\Native Structures\DFS_INFO_9.cs" />
+    <Compile Include="Network\Native Structures\DFS_TARGET_PRIORITY.cs" />
+    <Compile Include="Network\Native Structures\DFS_STORAGE_INFO_1.cs" />
     <Compile Include="Network\OpenConnectionInfo.cs" />
-    <Compile Include="Network\SafeNetApiBuffer.cs" />
     <Compile Include="Network\OpenResourceInfo.cs" />
     <Compile Include="Network\ShareInfo.cs" />
-    <Compile Include="Network\Structures\NetResource.cs" />
-    <Compile Include="Network\Structures\FileInfo3.cs" />
-    <Compile Include="Network\Structures\DfsInfo200.cs" />
-    <Compile Include="Network\Structures\DfsInfo300.cs" />
-    <Compile Include="Network\Structures\DfsInfo4.cs" />
-    <Compile Include="Network\Structures\DfsStorageInfo.cs" />
-    <Compile Include="Network\Structures\RemoteNameInfo.cs" />
-    <Compile Include="Network\Structures\ConnectionInfo1.cs" />
-    <Compile Include="Network\Structures\ShareInfo1005.cs" />
-    <Compile Include="Network\Structures\ShareInfo1.cs" />
-    <Compile Include="Network\Structures\ShareInfo2.cs" />
-    <Compile Include="Network\Structures\ShareInfo503.cs" />
+    <Compile Include="Network\Native Structures\NETRESOURCE.cs" />
+    <Compile Include="Network\Native Structures\FILE_INFO_3.cs" />
+    <Compile Include="Network\Native Structures\DFS_INFO_200.cs" />
+    <Compile Include="Network\Native Structures\DFS_INFO_300.cs" />
+    <Compile Include="Network\Native Structures\REMOTE_NAME_INFO.cs" />
+    <Compile Include="Network\Native Structures\CONNECTION_INFO_1.cs" />
+    <Compile Include="Network\Native Structures\SHARE_INFO_1005.cs" />
+    <Compile Include="Network\Native Structures\SHARE_INFO_1.cs" />
+    <Compile Include="Network\Native Structures\SHARE_INFO_2.cs" />
+    <Compile Include="Network\Native Structures\SHARE_INFO_503.cs" />
     <Compile Include="OperatingSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -396,10 +464,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SafeNativeMemoryBufferHandle.cs" />
+    <Compile Include="Security\Crc64.cs" />
+    <Compile Include="Security\Enumerations\HashType.cs" />
     <Compile Include="Security\Enumerations\ObjectType.cs" />
     <Compile Include="Security\Enumerations\SecurityDescriptorControl.cs" />
     <Compile Include="Security\Enumerations\SecurityInformation.cs" />
-    <Compile Include="Filesystem\SafeLocalMemoryBufferHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeLocalMemoryBufferHandle.cs" />
     <Compile Include="Filesystem\Enumerations\SymbolicLinkTarget.cs" />
     <Compile Include="Filesystem\SymbolicLinkTargetInfo.cs" />
     <Compile Include="Filesystem\Enumerations\SymbolicLinkType.cs" />
@@ -410,16 +480,17 @@
     <Compile Include="Filesystem\Exceptions\UnsupportedRemoteTransactionException.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Security\NativeMethods.cs" />
+    <Compile Include="Security\Crc32.cs" />
     <Compile Include="Security\Privilege.cs" />
     <Compile Include="Security\PrivilegeEnabler.cs" />
     <Compile Include="Security\InternalPrivilegeEnabler.cs" />
     <Compile Include="Filesystem\Exceptions\InvalidTransactionException.cs" />
     <Compile Include="Filesystem\KernelTransaction.cs" />
     <Compile Include="NativeError.cs" />
-    <Compile Include="Filesystem\SafeFindFileHandle.cs" />
-    <Compile Include="Filesystem\SafeFindVolumeMountPointHandle.cs" />
-    <Compile Include="Filesystem\SafeFindVolumeHandle.cs" />
-    <Compile Include="Filesystem\SafeKernelTransactionHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeFindFileHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeFindVolumeMountPointHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeFindVolumeHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeKernelTransactionHandle.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionAlreadyAbortedException.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionAlreadyCommittedException.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionException.cs" />
@@ -443,6 +514,8 @@
       <Link>AlphaFS.snk</Link>
     </None>
     <None Include="app.config" />
+    <Compile Include="Filesystem\Directory Class\Directory.EncryptedDirectoryRaw.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -455,7 +528,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

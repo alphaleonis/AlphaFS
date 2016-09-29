@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -24,10 +24,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Text;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace Alphaleonis.Win32.Network
@@ -43,7 +45,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string GetUncName()
       {
-         return string.Format(CultureInfo.CurrentCulture, "{0}{1}", Path.UncPrefix, Environment.MachineName);
+         return string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.UncPrefix, Environment.MachineName);
       }
 
       /// <summary>Return the host name in UNC format, for example: \\hostname.</summary>
@@ -62,14 +64,11 @@ namespace Alphaleonis.Win32.Network
       }
 
       #endregion // GetUncName
-      
 
-      #region Internal
-
-      #region EnumerateNetworkObjectInternal
+      #region Internal Methods
 
       private delegate uint EnumerateNetworkObjectDelegate(
-         FunctionData functionData, out IntPtr netApiBuffer, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
+         FunctionData functionData, out SafeGlobalMemoryBufferHandle netApiBuffer, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
          [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalEntries,
          [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
 
@@ -82,7 +81,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       [SecurityCritical]
-      private static IEnumerable<TStruct> EnumerateNetworkObjectInternal<TStruct, TNative>(FunctionData functionData, Func<TNative, IntPtr, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException)
+      private static IEnumerable<TStruct> EnumerateNetworkObjectCore<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException) 
       {
          Type objectType;
          int objectSize;
@@ -94,7 +93,7 @@ namespace Alphaleonis.Win32.Network
             case 1:
                objectType = typeof(IntPtr);
                isString = true;
-               objectSize = Marshal.SizeOf(objectType) + 2;
+               objectSize = Marshal.SizeOf(objectType) + UnicodeEncoding.CharSize;
                break;
 
             default:
@@ -105,95 +104,80 @@ namespace Alphaleonis.Win32.Network
          }
 
 
-         var buffer = IntPtr.Zero;
-
-         try
+         uint lastError;
+         do
          {
-            uint lastError;
-            do
-            {
-               uint entriesRead;
-               uint totalEntries;
-               uint resumeHandle;
+            uint entriesRead;
+            uint totalEntries;
+            uint resumeHandle;
+            SafeGlobalMemoryBufferHandle buffer;
 
-               lastError = enumerateNetworkObject(functionData, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
+            lastError = enumerateNetworkObject(functionData, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 
+            using (buffer)
                switch (lastError)
                {
                   case Win32Errors.NERR_Success:
                   case Win32Errors.ERROR_MORE_DATA:
                      if (entriesRead > 0)
                      {
-                        for (long i = 0, itemOffset = buffer.ToInt64(); i < entriesRead; i++, itemOffset += objectSize)
+                        for (int i = 0, itemOffset = 0; i < entriesRead; i++, itemOffset += objectSize)
                            yield return (TStruct) (isString
-                              ? Marshal.PtrToStringUni(new IntPtr(itemOffset))
-                              : (object) createTStruct((TNative) Marshal.PtrToStructure(new IntPtr(itemOffset), objectType), buffer));
+                              ? buffer.PtrToStringUni(itemOffset, 2)
+                              : (object) createTStruct(buffer.PtrToStructure<TNative>(itemOffset), buffer));
                      }
                      break;
 
                   case Win32Errors.ERROR_BAD_NETPATH:
                      break;
 
-                  // Observed when ShareInfo503 is requested, but not supported/possible.
+                  // Observed when SHARE_INFO_503 is requested but not supported/possible.
                   case Win32Errors.RPC_X_BAD_STUB_DATA:
                      yield break;
                }
 
-            } while (lastError == Win32Errors.ERROR_MORE_DATA);
+         } while (lastError == Win32Errors.ERROR_MORE_DATA);
 
-            if (lastError != Win32Errors.NO_ERROR && !continueOnException)
-               throw new NetworkInformationException((int) lastError);
-         }
-         finally
-         {
-            if (buffer != IntPtr.Zero)
-               NativeMethods.NetApiBufferFree(buffer);
-         }
+         if (lastError != Win32Errors.NO_ERROR && !continueOnException)
+            throw new NetworkInformationException((int) lastError);
       }
-
-      #endregion // EnumerateNetworkObjectInternal
       
-      #region GetRemoteNameInfoInternal
-
-      /// <summary>This method uses <see cref="NativeMethods.RemoteNameInfo"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
-      /// <returns>A <see cref="NativeMethods.RemoteNameInfo"/> structure.</returns>
+      /// <summary>This method uses <see cref="NativeMethods.REMOTE_NAME_INFO"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
+      /// <returns>A <see cref="NativeMethods.REMOTE_NAME_INFO"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="System.IO.PathTooLongException">When <paramref name="path"/> exceeds maximum path length.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PathTooLongException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="path">The local path with drive name.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      internal static NativeMethods.RemoteNameInfo GetRemoteNameInfoInternal(string path, bool continueOnException)
+      internal static NativeMethods.REMOTE_NAME_INFO GetRemoteNameInfoCore(string path, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         path = Path.GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars); 
+         path = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false); 
 
-         // If path already is a network share path, we fill the RemoteNameInfo structure ourselves.
-         if (Path.IsUncPath(path, false))
-            return new NativeMethods.RemoteNameInfo
+         // If path already is a network share path, we fill the REMOTE_NAME_INFO structure ourselves.
+         if (Path.IsUncPathCore(path, true, false))
+            return new NativeMethods.REMOTE_NAME_INFO
             {
-               UniversalName = Path.AddTrailingDirectorySeparator(path, false),
-               ConnectionName = Path.RemoveTrailingDirectorySeparator(path, false),
-               RemainingPath = Path.DirectorySeparator
+               lpUniversalName = Path.AddTrailingDirectorySeparator(path, false),
+               lpConnectionName = Path.RemoveTrailingDirectorySeparator(path, false),
+               lpRemainingPath = Path.DirectorySeparator
             };
 
+         
+         uint lastError;
 
          // Use large enough buffer to prevent a 2nd call.
          uint bufferSize = 1024;
-         var buffer = new IntPtr(bufferSize);
-
-         try
+         
+         do
          {
-            uint lastError;
-            do
+            using (var buffer = new SafeGlobalMemoryBufferHandle((int) bufferSize))
             {
-               // Allocate the memory.
-               buffer = Marshal.AllocHGlobal((int) bufferSize);
-
                // Structure: UNIVERSAL_NAME_INFO_LEVEL = 1 (not used in AlphaFS).
                // Structure: REMOTE_NAME_INFO_LEVEL    = 2
 
@@ -202,32 +186,22 @@ namespace Alphaleonis.Win32.Network
                switch (lastError)
                {
                   case Win32Errors.NO_ERROR:
-                     return Utils.MarshalPtrToStructure<NativeMethods.RemoteNameInfo>(0, buffer);
+                     return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>(0);
 
                   case Win32Errors.ERROR_MORE_DATA:
                      //bufferSize = Received the required buffer size, retry.
-
-                     if (buffer != IntPtr.Zero)
-                        Marshal.FreeHGlobal(buffer);
                      break;
                }
+            }
 
-            } while (lastError == Win32Errors.ERROR_MORE_DATA);
+         } while (lastError == Win32Errors.ERROR_MORE_DATA);
 
-            if (!continueOnException && lastError != Win32Errors.NO_ERROR)
-               throw new NetworkInformationException((int) lastError);
+         if (!continueOnException && lastError != Win32Errors.NO_ERROR)
+            throw new NetworkInformationException((int) lastError);
 
-            // Return an empty structure (all fields set to null).
-            return new NativeMethods.RemoteNameInfo();
-         }
-         finally
-         {
-            if (buffer != IntPtr.Zero)
-               Marshal.FreeHGlobal(buffer);
-         }
+         // Return an empty structure (all fields set to null).
+         return new NativeMethods.REMOTE_NAME_INFO();
       }
-
-      #endregion // GetRemoteNameInfoInternal
 
       internal struct ConnectDisconnectArguments
       {
@@ -249,7 +223,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>The password to be used for making the network connection. If <see cref="Password"/> is <see langword="null"/>, the function uses the current default password associated with the user specified by <see cref="UserName"/>.</summary>
          public string Password;
 
-         /// <summary><see langword="true"/> always pop-ups an authentication dialog box.</summary>
+         /// <summary><see langword="true"/> always pops-up an authentication dialog box.</summary>
          public bool Prompt;
 
          /// <summary><see langword="true"/> successful network resource connections will be saved.</summary>
@@ -265,6 +239,6 @@ namespace Alphaleonis.Win32.Network
          public bool IsDisconnect;
       }
 
-      #endregion // Internal
+      #endregion // Internal Methods
    }
 }

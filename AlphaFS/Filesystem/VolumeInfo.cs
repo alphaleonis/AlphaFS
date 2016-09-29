@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -36,8 +36,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region Constructor
 
       /// <summary>Initializes a VolumeInfo instance.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="volumeName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share.</param>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       public VolumeInfo(string volumeName)
@@ -45,16 +45,22 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(volumeName))
             throw new ArgumentNullException("volumeName");
 
-         if (volumeName.Length == 1)
-            Name += Path.VolumeSeparatorChar;
+         if (!volumeName.StartsWith(Path.LongPathPrefix, StringComparison.OrdinalIgnoreCase))
+            volumeName = Path.IsUncPathCore(volumeName, false, false)
+               ? Path.GetLongPathCore(volumeName, GetFullPathOptions.None)
+               : Path.LongPathPrefix + volumeName;
          else
-            Name = Path.GetPathRoot(volumeName, false);
+         {
+            if (volumeName.Length == 1)
+               volumeName += Path.VolumeSeparatorChar;
+            else if (!volumeName.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+               volumeName = Path.GetPathRoot(volumeName, false);
+         }
 
-         if (Utils.IsNullOrWhiteSpace(Name))
+         if (Utils.IsNullOrWhiteSpace(volumeName))
             throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")");
 
-         // If an exception is thrown, the original drivePath is used.
-         Name = Path.AddTrailingDirectorySeparator(Name, false);
+         Name = Path.AddTrailingDirectorySeparator(volumeName, false);
 
          _volumeHandle = null;
       }
@@ -62,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a VolumeInfo instance.</summary>
       /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: "\\server\share".</param>
       /// <param name="refresh">Refreshes the state of the object.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public VolumeInfo(string driveName, bool refresh, bool continueOnException) : this(driveName)
       {
@@ -83,7 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a VolumeInfo instance.</summary>
       /// <param name="volumeHandle">An instance to a <see cref="SafeFileHandle"/> handle.</param>
       /// <param name="refresh">Refreshes the state of the object.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public VolumeInfo(SafeFileHandle volumeHandle, bool refresh, bool continueOnException) : this(volumeHandle)
       {
@@ -111,10 +117,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var volumeNameBuffer = new StringBuilder(NativeMethods.MaxPath + 1);
          var fileSystemNameBuffer = new StringBuilder(NativeMethods.MaxPath + 1);
-         uint maximumComponentLength;
+         int maximumComponentLength;
          uint serialNumber;
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             // GetVolumeInformationXxx()
@@ -122,7 +127,7 @@ namespace Alphaleonis.Win32.Filesystem
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-            var lastError = Win32Errors.NO_ERROR;
+            uint lastError;
 
             do
             {
@@ -158,11 +163,13 @@ namespace Alphaleonis.Win32.Filesystem
                         break;
                   }
                }
+               else
+                  break;
 
             } while (lastError == Win32Errors.ERROR_MORE_DATA);
          }
 
-         FullPath = Path.GetRegularPathInternal(Name, GetFullPathOptions.None);
+         FullPath = Path.GetRegularPathCore(Name, GetFullPathOptions.None, false);
          Name = volumeNameBuffer.ToString();
 
          FileSystemName = fileSystemNameBuffer.ToString();
@@ -256,8 +263,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region MaximumComponentLength
 
       /// <summary>Gets the maximum length of a file name component that the file system supports.</summary>
-      /// <value>The maximum length of a file name component that the file system supports.</value>
-      public uint MaximumComponentLength { get; set; }
+      /// <value>The maximum length of a file name component that the file system supports.</value>      
+      public int MaximumComponentLength { get; set; }
 
       #endregion // MaximumComponentLength
 

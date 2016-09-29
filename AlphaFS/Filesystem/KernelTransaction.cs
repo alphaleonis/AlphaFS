@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -33,6 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
    [ComImport]
    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
    [Guid("79427A2B-F895-40e0-BE79-B57DC82ED231")]
+   [SuppressUnmanagedCodeSecurity]
    internal interface IKernelTransaction
    {
       void GetHandle([Out] out SafeKernelTransactionHandle handle);
@@ -62,8 +63,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a new instance of the <see cref="KernelTransaction"/> class with a default security descriptor.</summary>
       /// <param name="timeout"><para>The time, in milliseconds, when the transaction will be aborted if it has not already reached the prepared state.</para></param>
       /// <param name="description">A user-readable description of the transaction. This parameter may be <see langword="null"/>.</param>
-      [SecurityCritical]
-      public KernelTransaction(uint timeout, string description)
+      [SecurityCritical]      
+      public KernelTransaction(int timeout, string description)
          : this(null, timeout, description)
       {
       }
@@ -74,10 +75,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Specify 0 to provide an infinite timeout.</para></param>
       /// <param name="description">A user-readable description of the transaction. This parameter may be <see langword="null"/>.</param>
       [SecurityCritical]
-      public KernelTransaction(ObjectSecurity securityDescriptor, uint timeout, string description)
+      public KernelTransaction(ObjectSecurity securityDescriptor, int timeout, string description)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(securityDescriptor))
          {
@@ -90,35 +91,27 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Requests that the specified transaction be committed.</summary>
-      /// <exception cref="TransactionAlreadyCommittedException">The transaction was already committed.</exception>
-      /// <exception cref="TransactionAlreadyAbortedException">The transaction was already aborted.</exception>
-      /// <exception cref="Win32Exception">An error occurred</exception>
-#if NET35
-      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
-#else
+      /// <exception cref="TransactionAlreadyCommittedException"/>
+      /// <exception cref="TransactionAlreadyAbortedException"/>
+      /// <exception cref="Win32Exception"/>
       [SecurityCritical]
-#endif
       public void Commit()
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          if (!NativeMethods.CommitTransaction(_hTrans))
             CheckTransaction();
       }
 
       /// <summary>Requests that the specified transaction be rolled back. This function is synchronous.</summary>
-      /// <exception cref="TransactionAlreadyCommittedException">The transaction was already committed.</exception>
-      /// <exception cref="Win32Exception">An error occurred</exception>
-#if NET35
-      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
-#else
+      /// <exception cref="TransactionAlreadyCommittedException"/>
+      /// <exception cref="Win32Exception"/>
       [SecurityCritical]
-#endif
       public void Rollback()
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          if (!NativeMethods.RollbackTransaction(_hTrans))
             CheckTransaction();

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSecurity GetAccessControl()
       {
-         return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.LongFullPath);
+         return File.GetAccessControlCore<FileSecurity>(false, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.LongFullPath);
       }
 
       /// <summary>Gets a <see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</summary>
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSecurity GetAccessControl(AccessControlSections includeSections)
       {
-         return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, includeSections, PathFormat.LongFullPath);
+         return File.GetAccessControlCore<FileSecurity>(false, LongFullName, includeSections, PathFormat.LongFullPath);
       }
 
       #endregion // .NET

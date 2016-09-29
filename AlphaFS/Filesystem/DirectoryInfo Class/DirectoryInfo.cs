@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -31,8 +31,6 @@ namespace Alphaleonis.Win32.Filesystem
    public sealed partial class DirectoryInfo : FileSystemInfo
    {
       #region Constructors
-
-      #region DirectoryInfo
 
       #region .NET
 
@@ -71,14 +69,13 @@ namespace Alphaleonis.Win32.Filesystem
          IsDirectory = true;
          Transaction = transaction;
 
-         LongFullName = Path.GetLongPathInternal(fullPath, GetFullPathOptions.None);
+         LongFullName = Path.GetLongPathCore(fullPath, GetFullPathOptions.None);
 
          OriginalPath = Path.GetFileName(fullPath, true);
 
          FullPath = fullPath;
 
-         // GetDisplayName()
-         DisplayPath = OriginalPath.Length != 2 || (OriginalPath[1] != Path.VolumeSeparatorChar) ? OriginalPath : Path.CurrentDirectoryPrefix;
+         DisplayPath = OriginalPath.Length != 2 || OriginalPath[1] != Path.VolumeSeparatorChar ? OriginalPath : Path.CurrentDirectoryPrefix;
       }
 
       #region Transactional
@@ -98,14 +95,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
       public DirectoryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         InitializeInternal(true, transaction, path, pathFormat);
+         InitializeCore(true, transaction, path, pathFormat);
       }
 
       #endregion // Transactional
 
       #endregion // AlphaFS
-
-      #endregion // DirectoryInfo
 
       #endregion // Constructors
       
@@ -115,9 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Exists
 
-      /// <summary>
-      ///   Gets a value indicating whether the directory exists.
-      /// </summary>
+      /// <summary>Gets a value indicating whether the directory exists.</summary>
       /// <remarks>
       ///   <para>The <see cref="Exists"/> property returns <see langword="false"/> if any error occurs while trying to determine if the
       ///   specified directory exists.</para>
@@ -137,8 +130,8 @@ namespace Alphaleonis.Win32.Filesystem
                if (DataInitialised == -1)
                   Refresh();
 
-               FileAttributes attrs = Win32AttributeData.FileAttributes;
-               return DataInitialised == 0 && (attrs != (FileAttributes)(-1) && (attrs & FileAttributes.Directory) != 0);
+               FileAttributes attrs = Win32AttributeData.dwFileAttributes;
+               return DataInitialised == 0 && attrs != (FileAttributes) (-1) && (attrs & FileAttributes.Directory) != 0;
             }
             catch
             {

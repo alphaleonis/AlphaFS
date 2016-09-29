@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -24,6 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -41,15 +42,18 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
       /// <param name="handle">The current handle to check.</param>
-      /// <param name="throwException"><see langword="true"/> will throw an <exception cref="Resources.HandleInvalid"/>, <see langword="false"/> will not raise this exception..</param>
+      /// <param name="throwException"><see langword="true"/> will throw an <exception cref="Resources.Handle_Is_Invalid"/>, <see langword="false"/> will not raise this exception..</param>
       /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
-      /// <exception cref="ArgumentException"></exception>
+      /// <exception cref="ArgumentException"/>
       internal static bool IsValidHandle(SafeHandle handle, bool throwException = true)
       {
          if (handle == null || handle.IsClosed || handle.IsInvalid)
          {
+            if (handle != null)
+               handle.Close();
+
             if (throwException)
-               throw new ArgumentException(Resources.HandleInvalid);
+               throw new ArgumentException(Resources.Handle_Is_Invalid);
 
             return false;
          }
@@ -60,15 +64,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
       /// <param name="handle">The current handle to check.</param>
       /// <param name="lastError">The result of Marshal.GetLastWin32Error()</param>
-      /// <param name="throwException"><see langword="true"/> will throw an <exception cref="Resources.HandleInvalidWin32Error"/>, <see langword="false"/> will not raise this exception..</param>
+      /// <param name="throwException"><see langword="true"/> will throw an <exception cref="Resources.Handle_Is_Invalid_Win32Error"/>, <see langword="false"/> will not raise this exception..</param>
       /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
-      /// <exception cref="ArgumentException"></exception>
+      /// <exception cref="ArgumentException"/>
       internal static bool IsValidHandle(SafeHandle handle, int lastError, bool throwException = true)
       {
          if (handle == null || handle.IsClosed || handle.IsInvalid)
          {
+            if (handle != null)
+               handle.Close();
+
             if (throwException)
-               throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.HandleInvalidWin32Error, lastError));
+               throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Handle_Is_Invalid_Win32Error, lastError));
 
             return false;
          }
@@ -76,14 +83,14 @@ namespace Alphaleonis.Win32.Filesystem
          return true;
       }
 
-      internal static ulong LuidToLong(Luid luid)
+      internal static long LuidToLong(Luid luid)
       {
          ulong high = (((ulong)luid.HighPart) << 32);
          ulong low = (((ulong)luid.LowPart) & 0x00000000FFFFFFFF);
-         return high | low;
+         return unchecked((long)(high | low));
       }
 
-      internal static Luid LongToLuid(ulong lluid)
+      internal static Luid LongToLuid(long lluid)
       {
          return new Luid { HighPart = (uint)(lluid >> 32), LowPart = (uint)(lluid & 0xFFFFFFFF) };
       }
@@ -100,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="uMode">The mode.</param>
       /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
+      [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
       private static extern ErrorMode SetErrorMode(ErrorMode uMode);
 
@@ -117,7 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="lpOldMode">[out] The old mode.</param>
       /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
+      [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       private static extern bool SetThreadErrorMode(ErrorMode dwNewMode, [MarshalAs(UnmanagedType.U4)] out ErrorMode lpOldMode);
 

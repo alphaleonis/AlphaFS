@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -39,8 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       /// </summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      public Shell32Info(string fileName) 
-         : this(fileName, PathFormat.RelativePath)
+      public Shell32Info(string fileName) : this(fileName, PathFormat.RelativePath)
       {
       }
 
@@ -58,16 +57,15 @@ namespace Alphaleonis.Win32.Filesystem
          // Shell32 is limited to MAX_PATH length.
          // Get a full path of regular format.
 
-         FullPath = Path.GetExtendedLengthPathInternal(null, fileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         FullPath = Path.GetExtendedLengthPathCore(null, fileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          Initialize();
       }
 
       #endregion // Constructors
 
+      
       #region Methods
-
-      #region GetIcon
 
       /// <summary>Gets an <see cref="IntPtr"/> handle to the Shell icon that represents the file.</summary>
       /// <param name="iconAttributes">Icon size <see cref="Shell32.FileAttributes.SmallIcon"/> or <see cref="Shell32.FileAttributes.LargeIcon"/>. Can also be combined with <see cref="Shell32.FileAttributes.AddOverlays"/> and others.</param>
@@ -79,9 +77,6 @@ namespace Alphaleonis.Win32.Filesystem
          return Shell32.GetFileIcon(FullPath, iconAttributes);
       }
 
-      #endregion // GetIcon
-
-      #region GetVerbCommand
 
       /// <summary>Gets the Shell command association from the registry.</summary>
       /// <param name="shellVerb">The shell verb.</param>
@@ -95,9 +90,6 @@ namespace Alphaleonis.Win32.Filesystem
          return GetString(_iQaNone, Shell32.AssociationString.Command, shellVerb);
       }
 
-      #endregion // GetVerbCommand
-
-      #region GetString
 
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
@@ -107,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
          try
          {
             // Use a large buffer to prevent calling this function twice.
-            int size = NativeMethods.DefaultFileBufferSize;
+            var size = NativeMethods.DefaultFileBufferSize;
             var buffer = new StringBuilder(size);
 
             iQa.GetString(Shell32.AssociationAttributes.NoTruncate | Shell32.AssociationAttributes.RemapRunDll, assocString, shellVerb, buffer, out size);
@@ -120,9 +112,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // GetString
-
-      #region Initialize
 
       private NativeMethods.IQueryAssociations _iQaNone;    // Retrieve info from Shell.
       private NativeMethods.IQueryAssociations _iQaByExe;   // Retrieve info from exe file.
@@ -134,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Initialized)
             return;
 
-         Guid iidIQueryAssociations = new Guid(NativeMethods.QueryAssociationsGuid);
+         var iidIQueryAssociations = new Guid(NativeMethods.QueryAssociationsGuid);
 
          if (NativeMethods.AssocCreate(NativeMethods.ClsidQueryAssociations, ref iidIQueryAssociations, out _iQaNone) == Win32Errors.S_OK)
          {
@@ -155,9 +144,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // Initialize
-
-      #region Refresh
 
       /// <summary>Refreshes the state of the object.</summary>
       [SecurityCritical]
@@ -169,9 +155,6 @@ namespace Alphaleonis.Win32.Filesystem
          Initialize();
       }
 
-      #endregion // Refresh
-
-      #region ToString
 
       /// <summary>Returns the path as a string.</summary>
       /// <returns>The path.</returns>      
@@ -180,13 +163,10 @@ namespace Alphaleonis.Win32.Filesystem
          return FullPath;
       }
 
-      #endregion // ToString
-
       #endregion // Methods
 
-      #region Properties
 
-      #region Association
+      #region Properties
 
       private string _association;
 
@@ -204,9 +184,6 @@ namespace Alphaleonis.Win32.Filesystem
          private set { _association = value; }
       }
 
-      #endregion // Association
-
-      #region Attributes
       
       private Shell32.GetAttributesOf _attributes;
 
@@ -217,7 +194,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (_attributes == Shell32.GetAttributesOf.None)
             {
-               Shell32.FileInfo fileInfo = Shell32.GetFileInfoInternal(FullPath, FileAttributes.Normal, Shell32.FileAttributes.Attributes, false, true);
+               var fileInfo = Shell32.GetFileInfoCore(FullPath, FileAttributes.Normal, Shell32.FileAttributes.Attributes, false, true);
                _attributes = fileInfo.Attributes;
             }
 
@@ -227,9 +204,6 @@ namespace Alphaleonis.Win32.Filesystem
          private set { _attributes = value; }
       }
 
-      #endregion // Attributes
-
-      #region Command
 
       private string _command;
 
@@ -247,9 +221,6 @@ namespace Alphaleonis.Win32.Filesystem
          private set { _command = value; }
       }
 
-      #endregion // Command
-
-      #region ContentType
 
       private string _contentType;
 
@@ -267,9 +238,6 @@ namespace Alphaleonis.Win32.Filesystem
          private set { _contentType = value; }
       }
 
-      #endregion // ContentType
-
-      #region DdeApplication
 
       private string _ddeApplication;
 
@@ -288,9 +256,6 @@ namespace Alphaleonis.Win32.Filesystem
          private set { _ddeApplication = value; }
       }
 
-      #endregion // DdeApplication
-
-      #region DefaultIcon
 
       private string _defaultIcon;
 
@@ -308,16 +273,10 @@ namespace Alphaleonis.Win32.Filesystem
          private set { _defaultIcon = value; }
       }
 
-      #endregion // DefaultIcon
-
-      #region FullPath
 
       /// <summary>Represents the fully qualified path of the file.</summary>
       public string FullPath { get; private set; }
 
-      #endregion // FullPath
-
-      #region FriendlyAppName
 
       private string _friendlyAppName;
 
@@ -335,9 +294,6 @@ namespace Alphaleonis.Win32.Filesystem
          private set { _friendlyAppName = value; }
       }
 
-      #endregion // FriendlyAppName
-
-      #region FriendlyDocName
 
       private string _friendlyDocName;
 
@@ -355,16 +311,10 @@ namespace Alphaleonis.Win32.Filesystem
          private set { _friendlyDocName = value; }
       }
 
-      #endregion // FriendlyDocName
-      
-      #region Initialized
 
       /// <summary>Reflects the initialization state of the instance.</summary>
       internal bool Initialized { get; set; }
 
-      #endregion // Initialized
-
-      #region OpenWithAppName
 
       private string _openWithAppName;
 
@@ -382,8 +332,6 @@ namespace Alphaleonis.Win32.Filesystem
          private set { _openWithAppName = value; }
       }
 
-      #endregion // OpenWithAppName
-      
       #endregion // Properties
    }
 }

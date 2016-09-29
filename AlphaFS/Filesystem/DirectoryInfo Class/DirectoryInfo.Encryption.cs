@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,6 +19,8 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -30,18 +32,30 @@ namespace Alphaleonis.Win32.Filesystem
       #region Decrypt
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
       public void Decrypt()
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, false, false, PathFormat.LongFullPath);
+         Directory.EncryptDecryptDirectoryCore(LongFullName, false, false, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt files and directories in the root of the directory.</param>
       [SecurityCritical]
       public void Decrypt(bool recursive)
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, false, recursive, PathFormat.LongFullPath);
+         Directory.EncryptDecryptDirectoryCore(LongFullName, false, recursive, PathFormat.LongFullPath);
       }
 
       #endregion // Decrypt
@@ -54,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DisableEncryption()
       {
-         Directory.EnableDisableEncryptionInternal(LongFullName, false, PathFormat.LongFullPath);
+         Directory.EnableDisableEncryptionCore(LongFullName, false, PathFormat.LongFullPath);
       }
 
       #endregion // DisableEncryption
@@ -67,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void EnableEncryption()
       {
-         Directory.EnableDisableEncryptionInternal(LongFullName, true, PathFormat.LongFullPath);
+         Directory.EnableDisableEncryptionCore(LongFullName, true, PathFormat.LongFullPath);
       }
 
       #endregion // EnableEncryption
@@ -75,18 +89,30 @@ namespace Alphaleonis.Win32.Filesystem
       #region Encrypt
 
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
       public void Encrypt()
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, true, false, PathFormat.LongFullPath);
+         Directory.EncryptDecryptDirectoryCore(LongFullName, true, false, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="recursive"><see langword="true"/> to encrypt the directory recursively. <see langword="false"/> only encrypt files and directories in the root of the directory.</param>
       [SecurityCritical]
       public void Encrypt(bool recursive)
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, true, recursive, PathFormat.LongFullPath);
+         Directory.EncryptDecryptDirectoryCore(LongFullName, true, recursive, PathFormat.LongFullPath);
       }
 
       #endregion // Encrypt

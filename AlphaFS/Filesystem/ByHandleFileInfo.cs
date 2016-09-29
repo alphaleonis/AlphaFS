@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -34,17 +34,17 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructor
 
-      internal ByHandleFileInfo(NativeMethods.ByHandleFileInfo fibh)
+      internal ByHandleFileInfo(NativeMethods.BY_HANDLE_FILE_INFORMATION fibh)
       {
-         CreationTime = DateTime.FromFileTimeUtc(fibh.CreationTime).ToLocalTime();
-         LastAccessTime = DateTime.FromFileTimeUtc(fibh.LastAccessTime).ToLocalTime();
-         LastWriteTime = DateTime.FromFileTimeUtc(fibh.LastWriteTime).ToLocalTime();
+         CreationTimeUtc = DateTime.FromFileTimeUtc(fibh.ftCreationTime);
+         LastAccessTimeUtc = DateTime.FromFileTimeUtc(fibh.ftLastAccessTime);
+         LastWriteTimeUtc = DateTime.FromFileTimeUtc(fibh.ftLastWriteTime);
 
-         Attributes = fibh.FileAttributes;
-         FileIndex = NativeMethods.ToLong(fibh.FileIndexHigh, fibh.FileIndexLow);
-         FileSize = NativeMethods.ToLong(fibh.FileSizeHigh, fibh.FileSizeLow);
-         NumberOfLinks = fibh.NumberOfLinks;
-         VolumeSerialNumber = fibh.VolumeSerialNumber;
+         Attributes = fibh.dwFileAttributes;
+         FileIndex = NativeMethods.ToLong(fibh.nFileIndexHigh, fibh.nFileIndexLow);
+         FileSize = NativeMethods.ToLong(fibh.nFileSizeHigh, fibh.nFileSizeLow);
+         NumberOfLinks = fibh.nNumberOfLinks;
+         VolumeSerialNumber = fibh.dwVolumeSerialNumber;
       }
 
       #endregion // Constructor
@@ -61,42 +61,84 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CreationTime
 
-      /// <summary>Gets a <see cref="System.DateTime"/> structure that specifies when a file or directory was created.</summary>
-      /// <value>A <see cref="System.DateTime"/> structure that specifies when a file or directory was created.</value>
-      public DateTime CreationTime { get; private set; }
+      /// <summary>Gets the time this entry was created.</summary>
+      /// <value>The time this entry was created.</value>
+      public DateTime CreationTime
+      {
+         get { return CreationTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // CreationTime
 
+      #region CreationTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was created.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was created.</value>
+      public DateTime CreationTimeUtc { get; private set; }
+
+      #endregion // CreationTimeUtc
+
       #region LastAccessTime
 
-      /// <summary>Gets a <see cref="System.DateTime"/> structure. 
+      /// <summary>Gets the time this entry was last accessed.
       /// For a file, the structure specifies the last time that a file is read from or written to. 
       /// For a directory, the structure specifies when the directory is created. 
       /// For both files and directories, the specified date is correct, but the time of day is always set to midnight. 
       /// If the underlying file system does not support the last access time, this member is zero (0).
       /// </summary>
-      /// <value>A <see cref="System.DateTime"/> structure that specifies when a file was last written to or the directory created.</value>
-      public DateTime LastAccessTime{ get; private set; }
+      /// <value>The time this entry was last accessed.</value>
+      public DateTime LastAccessTime
+      {
+         get { return LastAccessTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // LastAccessTime
 
+      #region LastAccessTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last accessed.
+      /// For a file, the structure specifies the last time that a file is read from or written to. 
+      /// For a directory, the structure specifies when the directory is created. 
+      /// For both files and directories, the specified date is correct, but the time of day is always set to midnight. 
+      /// If the underlying file system does not support the last access time, this member is zero (0).
+      /// </summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last accessed.</value>
+      public DateTime LastAccessTimeUtc { get; private set; }
+
+      #endregion // LastAccessTimeUtc
+
       #region LastWriteTime
 
-      /// <summary>Gets a <see cref="System.DateTime"/> structure. 
+      /// <summary>Gets the time this entry was last modified.
       /// For a file, the structure specifies the last time that a file is written to. 
       /// For a directory, the structure specifies when the directory is created. 
       /// If the underlying file system does not support the last access time, this member is zero (0).
       /// </summary>
-      /// <value>A <see cref="System.DateTime"/> structure that specifies when a file was last written to or the directory created.</value>
-      public DateTime LastWriteTime { get; private set; }
+      /// <value>The time this entry was last modified.</value>
+      public DateTime LastWriteTime
+      {
+         get { return LastWriteTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // LastWriteTime
+
+      #region LastWriteTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last modified.
+      /// For a file, the structure specifies the last time that a file is written to. 
+      /// For a directory, the structure specifies when the directory is created. 
+      /// If the underlying file system does not support the last access time, this member is zero (0).
+      /// </summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last modified.</value>
+      public DateTime LastWriteTimeUtc { get; private set; }
+
+      #endregion // LastWriteTimeUtc
 
       #region VolumeSerialNumber
 
       /// <summary>Gets the serial number of the volume that contains a file.</summary>
       /// <value>The serial number of the volume that contains a file.</value>
-      public uint VolumeSerialNumber { get; private set; }
+      public int VolumeSerialNumber { get; private set; }
 
       #endregion // VolumeSerialNumber
 
@@ -112,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the number of links to this file. For the FAT file system this member is always 1. For the NTFS file system, it can be more than 1.</summary>
       /// <value>The number of links to this file. </value>
-      public uint NumberOfLinks { get; private set; }
+      public int NumberOfLinks { get; private set; }
 
       #endregion // NumberOfLinks
 

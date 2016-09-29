@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    [Flags]
    public enum DirectoryEnumerationOptions
    {
-      /// <summary>None, do not use.</summary>
+      /// <summary>None (do not use).</summary>
       None = 0,
 
       /// <summary>Enumerate files only.</summary>
@@ -45,18 +45,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Skip reparse points during directory enumeration.</summary>
       SkipReparsePoints = 8,
 
-      /// <summary><para>Suppress any Exception that might be thrown a result from a failure,</para>
-      /// <para>such as ACLs protected directories or non-accessible reparse points.</para> 
-      /// </summary>
+      /// <summary>Suppress any Exception that might be thrown as a result from a failure, such as ACLs protected directories or non-accessible reparse points.</summary>
       ContinueOnException = 16,
 
       /// <summary>Specifies whether to search the current directory, or the current directory and all subdirectories.</summary>
       Recursive = 32,
 
-      /// <summary>Enumerate directory using the FindExInfoLevels.Basic option.</summary>
+      /// <summary>Enumerates the directory without querying the short file name, improving overall enumeration speed.</summary>
+      /// <remarks>This option is enabled by default if supported. This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
       BasicSearch = 64,
 
-      /// <summary>Enumerate directory using the NativeMethods.FindExAdditionalFlags.LargeFetch option.</summary>
+      /// <summary>Enumerates the directory using a larger buffer for directory queries, which can increase performance of the find operation.</summary>
+      /// <remarks>This option is enabled by default if supported. This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
       LargeCache = 128
    }
 }

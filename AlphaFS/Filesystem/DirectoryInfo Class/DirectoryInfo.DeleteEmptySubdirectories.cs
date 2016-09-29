@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DeleteEmptySubdirectories()
       {
-         Directory.DeleteEmptySubdirectoriesInternal(null, Transaction, LongFullName, false, false, true, PathFormat.LongFullPath);
+         Directory.DeleteEmptySubdirectoriesCore(null, Transaction, LongFullName, false, false, true, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectories from the <see cref="DirectoryInfo"/> instance.</summary>
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DeleteEmptySubdirectories(bool recursive)
       {
-         Directory.DeleteEmptySubdirectoriesInternal(null, Transaction, LongFullName, recursive, false, true, PathFormat.LongFullPath);
+         Directory.DeleteEmptySubdirectoriesCore(null, Transaction, LongFullName, recursive, false, true, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectories from the <see cref="DirectoryInfo"/> instance.</summary>
@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DeleteEmptySubdirectories(bool recursive, bool ignoreReadOnly)
       {
-         Directory.DeleteEmptySubdirectoriesInternal(null, Transaction, LongFullName, recursive, ignoreReadOnly, true, PathFormat.LongFullPath);
+         Directory.DeleteEmptySubdirectoriesCore(null, Transaction, LongFullName, recursive, ignoreReadOnly, true, PathFormat.LongFullPath);
       }
 
       #endregion // AlphaFS

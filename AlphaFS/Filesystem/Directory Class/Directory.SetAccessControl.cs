@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -22,6 +22,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Security;
 using System.Security.AccessControl;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -34,22 +35,23 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity)
       {
-         File.SetAccessControlInternal(path, null, directorySecurity, AccessControlSections.All, PathFormat.RelativePath);
+         File.SetAccessControlCore(path, null, directorySecurity, AccessControlSections.All, PathFormat.RelativePath);
       }
 
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
-      /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>
-      /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
-      /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
       /// <remarks>Note that unlike <see cref="System.IO.File.SetAccessControl"/> this method does <b>not</b> automatically
       /// determine what parts of the specified <see cref="DirectorySecurity"/> instance has been modified. Instead, the
       /// parameter <paramref name="includeSections"/> is used to specify what entries from <paramref name="directorySecurity"/> to apply to <paramref name="path"/>.</remarks>
+      /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>
+      /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
+      /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity, AccessControlSections includeSections)
       {
-         File.SetAccessControlInternal(path, null, directorySecurity, includeSections, PathFormat.RelativePath);
+         File.SetAccessControlCore(path, null, directorySecurity, includeSections, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
       /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>
@@ -59,22 +61,44 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity, PathFormat pathFormat)
       {
-         File.SetAccessControlInternal(path, null, directorySecurity, AccessControlSections.All, pathFormat);
+         File.SetAccessControlCore(path, null, directorySecurity, AccessControlSections.All, pathFormat);
       }
 
       /// <summary>[AlphaFS] Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
+      /// <remarks>Note that unlike <see cref="System.IO.File.SetAccessControl"/> this method does <b>not</b> automatically
+      /// determine what parts of the specified <see cref="DirectorySecurity"/> instance has been modified. Instead, the
+      /// parameter <paramref name="includeSections"/> is used to specify what entries from <paramref name="directorySecurity"/> to apply to <paramref name="path"/>.</remarks>
       /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>
       /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
       /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <remarks>Note that unlike <see cref="System.IO.File.SetAccessControl"/> this method does <b>not</b> automatically
-      /// determine what parts of the specified <see cref="DirectorySecurity"/> instance has been modified. Instead, the
-      /// parameter <paramref name="includeSections"/> is used to specify what entries from <paramref name="directorySecurity"/> to apply to <paramref name="path"/>.</remarks>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         File.SetAccessControlInternal(path, null, directorySecurity, includeSections, pathFormat);
+         File.SetAccessControlCore(path, null, directorySecurity, includeSections, pathFormat);
+      }
+
+
+      /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
+      /// <param name="handle">A <see cref="SafeFileHandle"/> to a file to add or remove access control list (ACL) entries from.</param>
+      /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static void SetAccessControl(SafeFileHandle handle, DirectorySecurity directorySecurity)
+      {
+         File.SetAccessControlCore(null, handle, directorySecurity, AccessControlSections.All, PathFormat.LongFullPath);
+      }
+
+      /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
+      /// <param name="handle">A <see cref="SafeFileHandle"/> to a file to add or remove access control list (ACL) entries from.</param>
+      /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
+      /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static void SetAccessControl(SafeFileHandle handle, DirectorySecurity directorySecurity, AccessControlSections includeSections)
+      {
+         File.SetAccessControlCore(null, handle, directorySecurity, includeSections, PathFormat.LongFullPath);
       }
    }
 }

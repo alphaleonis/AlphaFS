@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security;
@@ -31,44 +32,107 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an enumerable collection of file information in the current directory.</summary>
       /// <returns>An enumerable collection of the files in the current directory.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles()
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath);
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file information that matches a search pattern.</summary>
-      /// <param name="searchPattern">
-      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
-      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      ///   <para>characters, but does not support regular expressions.</para>
-      /// </param>
       /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in path.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath);
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file information that matches a specified search pattern and search subdirectory option.</summary>
+      /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="searchPattern">
-      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
-      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      ///   <para>characters, but does not support regular expressions.</para>
+      ///   The search string to match against the names of directories in path.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       /// <param name="searchOption">
-      ///   <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
-      ///   <para> should include only the current directory or should include all subdirectories.</para>
+      ///   One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/>
+      ///   should include only the current directory or should include all subdirectories.
       /// </param>
-      /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(string searchPattern, SearchOption searchOption)
       {
          var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath);
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
+
+
+
+      /// <summary>Returns an enumerable collection of file information in the current directory.</summary>
+      /// <returns>An enumerable collection of the files in the current directory.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public IEnumerable<FileInfo> EnumerateFiles(DirectoryEnumerationOptions options)
+      {
+         // Adhere to the method name.
+         options &= ~DirectoryEnumerationOptions.Folders;
+         options |= DirectoryEnumerationOptions.Files;
+
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath);
+      }
+
+      /// <summary>Returns an enumerable collection of file information that matches a search pattern.</summary>
+      /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in path.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public IEnumerable<FileInfo> EnumerateFiles(string searchPattern, DirectoryEnumerationOptions options)
+      {
+         // Adhere to the method name.
+         options &= ~DirectoryEnumerationOptions.Folders;
+         options |= DirectoryEnumerationOptions.Files;
+
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath);
+      }
    }
 }

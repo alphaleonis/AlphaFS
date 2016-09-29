@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create()
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, false, PathFormat.LongFullPath);
+         Directory.CreateDirectoryCore(Transaction, LongFullName, null, null, false, PathFormat.LongFullPath);
       }
 
       /// <summary>Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity)
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, directorySecurity, false, PathFormat.LongFullPath);
+         Directory.CreateDirectoryCore(Transaction, LongFullName, null, directorySecurity, false, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create(bool compress)
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, compress, PathFormat.LongFullPath);
+         Directory.CreateDirectoryCore(Transaction, LongFullName, null, null, compress, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity, bool compress)
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, directorySecurity, compress, PathFormat.LongFullPath);
+         Directory.CreateDirectoryCore(Transaction, LongFullName, null, directorySecurity, compress, PathFormat.LongFullPath);
       }
 
       #endregion // AlphaFS

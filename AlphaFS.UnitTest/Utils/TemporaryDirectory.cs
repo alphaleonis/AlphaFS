@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -21,28 +21,37 @@
 
 using Alphaleonis;
 using System;
-using System.IO;
+using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
    /// <summary>Used to create a temporary directory that will be deleted once this instance is disposed.</summary>
    internal sealed class TemporaryDirectory : IDisposable
    {
-      private readonly DirectoryInfo _dirInfo;
-
-      public TemporaryDirectory(string prefix)
+      public TemporaryDirectory(string prefix = null) : this(System.IO.Path.GetTempPath(), prefix) { }
+      
+      public TemporaryDirectory(string root, string prefix)
       {
          if (Utils.IsNullOrWhiteSpace(prefix))
             prefix = "AlphaFS";
 
-         string root = Path.GetTempPath();
          do
          {
-            _dirInfo = new DirectoryInfo(Path.Combine(root, prefix + "-" + Guid.NewGuid().ToString("N").Substring(0, 6)));
-         } while (_dirInfo.Exists);
+            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, prefix + "-" + Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture).Substring(0, 6)));
 
-         _dirInfo.Create();
+         } while (Directory.Exists);
+
+         Directory.Create();
       }
+
+      public System.IO.DirectoryInfo Directory { get; private set; }
+
+      public string RandomFileFullPath
+      {
+         get { return System.IO.Path.Combine(Directory.FullName, System.IO.Path.GetRandomFileName()); }
+      }
+
+      #region Disposable Members
 
       ~TemporaryDirectory()
       {
@@ -51,25 +60,23 @@ namespace AlphaFS.UnitTest
 
       public void Dispose()
       {
-         GC.SuppressFinalize(this);
          Dispose(true);
+         GC.SuppressFinalize(this);
       }
 
       private void Dispose(bool isDisposing)
       {
          try
          {
-            _dirInfo.Delete(true);
+            if (isDisposing)
+               Alphaleonis.Win32.Filesystem.Directory.Delete(Directory.FullName, true, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
          }
          catch (Exception ex)
          {
-            Console.WriteLine("Failed to delete directory: [{0}]: [{1}]", _dirInfo, ex.Message);
+            Console.WriteLine("\n\nFailed to delete TemporaryDirectory: [{0}]: [{1}]", Directory.FullName, ex.Message);
          }
       }
 
-      public DirectoryInfo Directory
-      {
-         get { return _dirInfo; }
-      }
+      #endregion // Disposable Members
    }
 }

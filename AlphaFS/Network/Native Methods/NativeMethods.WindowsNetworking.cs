@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -22,6 +22,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 
 namespace Alphaleonis.Win32.Network
@@ -38,10 +39,9 @@ namespace Alphaleonis.Win32.Network
       /// <para>Minimum supported server: Windows 2000 Server [desktop apps only]</para>
       /// </remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("mpr.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "WNetCancelConnection2W")]
+      [DllImport("mpr.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "WNetCancelConnection2W"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint WNetCancelConnection([MarshalAs(UnmanagedType.LPWStr)] string lpName, Connect dwFlags,
-         [MarshalAs(UnmanagedType.Bool)] bool fForce);
+      internal static extern uint WNetCancelConnection([MarshalAs(UnmanagedType.LPWStr)] string lpName, Connect dwFlags, [MarshalAs(UnmanagedType.Bool)] bool fForce);
 
 
       /// <summary>The WNetGetUniversalName function takes a drive-based path for a network resource and returns an information structure that contains a more universal form of the name.</summary>
@@ -54,11 +54,9 @@ namespace Alphaleonis.Win32.Network
       /// <para>Minimum supported server: Windows 2000 Server [desktop apps only]</para>
       /// </remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("mpr.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "WNetGetUniversalNameW")]
+      [DllImport("mpr.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "WNetGetUniversalNameW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint WNetGetUniversalName([MarshalAs(UnmanagedType.LPWStr)] string lpLocalPath,
-         [MarshalAs(UnmanagedType.U4)] uint dwInfoLevel, IntPtr lpBuffer,
-         [MarshalAs(UnmanagedType.U4)] out uint lpBufferSize);
+      internal static extern uint WNetGetUniversalName([MarshalAs(UnmanagedType.LPWStr)] string lpLocalPath, [MarshalAs(UnmanagedType.U4)] uint dwInfoLevel, SafeGlobalMemoryBufferHandle lpBuffer, [MarshalAs(UnmanagedType.U4)] out uint lpBufferSize);
 
 
       /// <summary>The WNetUseConnection function creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
@@ -71,14 +69,10 @@ namespace Alphaleonis.Win32.Network
       /// <para>Minimum supported server: Windows 2000 Server [desktop apps only]</para>
       /// </remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("mpr.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "WNetUseConnectionW")]
+      [DllImport("mpr.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "WNetUseConnectionW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint WNetUseConnection(IntPtr hwndOwner,
-         [MarshalAs(UnmanagedType.Struct)] ref NetResource lpNetResource,
-         [MarshalAs(UnmanagedType.LPWStr)] string lpPassword, [MarshalAs(UnmanagedType.LPWStr)] string lpUserId,
-         [MarshalAs(UnmanagedType.U4)] Connect dwFlags, StringBuilder lpAccessName,
-         [MarshalAs(UnmanagedType.U4)] out uint lpBufferSize, [MarshalAs(UnmanagedType.U4)] out uint lpResult);
+      internal static extern uint WNetUseConnection(IntPtr hwndOwner, [MarshalAs(UnmanagedType.Struct)] ref NETRESOURCE lpNetResource, [MarshalAs(UnmanagedType.LPWStr)] string lpPassword, [MarshalAs(UnmanagedType.LPWStr)] string lpUserId, [MarshalAs(UnmanagedType.U4)] Connect dwFlags, StringBuilder lpAccessName, [MarshalAs(UnmanagedType.U4)] out uint lpBufferSize, [MarshalAs(UnmanagedType.U4)] out uint lpResult);
 
-      // Note: When NetResource is struct: use ref, when NetResource is class: ommit ref.
+      // Note: When NETRESOURCE is struct: use ref, when NETRESOURCE is class: ommit ref.
    }
 }

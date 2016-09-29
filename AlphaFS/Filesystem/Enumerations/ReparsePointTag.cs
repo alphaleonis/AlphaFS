@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -27,81 +27,80 @@ namespace Alphaleonis.Win32.Filesystem
    /// <remarks>
    ///   <para>Reparse tags, with the exception of IO_REPARSE_TAG_SYMLINK, are processed on the server and are not processed by a client after transmission over the wire.</para>
    ///   <para>Clients should treat associated reparse data as opaque data.</para>
-   /// </remarks>
-   [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
-   public enum ReparsePointTag : uint
+   /// </remarks>   
+   public enum ReparsePointTag
    {
       /// <summary>The entry is not a reparse point.</summary>
       None = 0,
 
       /// <summary>IO_REPARSE_APPXSTREAM</summary>
-      AppXStream = 3221225492,
+      AppXStream = unchecked ((int) 3221225492),
 
       /// <summary>IO_REPARSE_TAG_CSV</summary>
-      Csv = 2147483657,
+      Csv = unchecked ((int) 2147483657),
 
       /// <summary>IO_REPARSE_TAG_DRIVER_EXTENDER
       /// <para>Used by Home server drive extender.</para>
       /// </summary>
-      DriverExtender = 2147483653,
+      DriverExtender = unchecked ((int) 2147483653),
 
       /// <summary>IO_REPARSE_TAG_DEDUP</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dedup")]
-      Dedup = 2147483667,
+      Dedup = unchecked ((int) 2147483667),
 
       /// <summary>IO_REPARSE_TAG_DFS
       /// <para>Used by the DFS filter.</para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
-      Dfs = 2147483658,
+      Dfs = unchecked ((int) 2147483658),
 
       /// <summary>IO_REPARSE_TAG_DFSR
       /// <para>Used by the DFS filter.</para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfsr")]
-      Dfsr = 2147483666,
+      Dfsr = unchecked ((int) 2147483666),
 
       /// <summary>IO_REPARSE_TAG_FILTER_MANAGER
       /// <para>Used by filter manager test harness.</para>
       /// </summary>
-      FilterManager = 2147483659,
+      FilterManager = unchecked ((int) 2147483659),
 
       /// <summary>IO_REPARSE_TAG_HSM
       /// <para>(Obsolete) Used by legacy Hierarchical Storage Manager Product.</para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hsm")]
-      Hsm = 3221225476,
+      Hsm = unchecked ((int) 3221225476),
 
       /// <summary>IO_REPARSE_TAG_HSM2
       /// <para>(Obsolete) Used by legacy Hierarchical Storage Manager Product.</para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hsm")]
-      Hsm2 = 2147483654,
+      Hsm2 = unchecked ((int) 2147483654),
 
       /// <summary>IO_REPARSE_TAG_NFS
       /// <para>NFS symlinks, Windows 8 / SMB3 and later.</para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nfs")]
-      Nfs = 2147483668,
-      
+      Nfs = unchecked ((int) 2147483668),
+
       /// <summary>IO_REPARSE_TAG_MOUNT_POINT
       /// <para>Used for mount point support.</para>
       /// </summary>
-      MountPoint = 2684354563,
+      MountPoint = unchecked ((int) 2684354563),
 
       /// <summary>IO_REPARSE_TAG_SIS
       /// <para>Used by single-instance storage (SIS) filter driver.</para>
       /// </summary>
-      Sis = 2147483655,
+      Sis = unchecked ((int) 2147483655),
 
       /// <summary>IO_REPARSE_TAG_SYMLINK
       /// <para>Used for symbolic link support.</para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sym")]
-      SymLink = 2684354572,
+      SymLink = unchecked ((int) 2684354572),
 
       /// <summary>IO_REPARSE_TAG_WIM</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wim")]
-      Wim = 2147483656
+      Wim = unchecked ((int) 2147483656)
    }
 }

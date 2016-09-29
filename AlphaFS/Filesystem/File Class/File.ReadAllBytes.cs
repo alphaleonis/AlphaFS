@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path)
       {
-         return ReadAllBytesInternal(null, path, PathFormat.RelativePath);
+         return ReadAllBytesCore(null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path, PathFormat pathFormat)
       {
-         return ReadAllBytesInternal(null, path, pathFormat);
+         return ReadAllBytesCore(null, path, pathFormat);
       }
 
 
@@ -57,9 +57,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to open for reading.</param>
       /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
-      public static byte[] ReadAllBytes(KernelTransaction transaction, string path)
+      public static byte[] ReadAllBytesTransacted(KernelTransaction transaction, string path)
       {
-         return ReadAllBytesInternal(transaction, path, PathFormat.RelativePath);
+         return ReadAllBytesCore(transaction, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
@@ -68,9 +68,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
-      public static byte[] ReadAllBytes(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static byte[] ReadAllBytesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ReadAllBytesInternal(transaction, path, pathFormat);
+         return ReadAllBytesCore(transaction, path, pathFormat);
       }
 
       #endregion // Transacted
@@ -79,21 +79,18 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method ReadAllBytesInternal() to open a binary file, reads the contents of the file into a byte array, and then
-      ///   closes the file.
-      /// </summary>
-      /// <exception cref="IOException">Thrown when an IO failure occurred.</exception>
+      /// <summary>Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
+      /// <exception cref="IOException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
-      internal static byte[] ReadAllBytesInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static byte[] ReadAllBytesCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          byte[] buffer;
 
-         using (FileStream fs = OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.None, pathFormat))
+         using (FileStream fs = OpenReadTransacted(transaction, path, pathFormat))
          {
             int offset = 0;
             long length = fs.Length;
@@ -115,6 +112,6 @@ namespace Alphaleonis.Win32.Filesystem
          return buffer;
       }
 
-      #endregion // ReadAllBytesInternal
+      #endregion // Internal Methods
    }
 }

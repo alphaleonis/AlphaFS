@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName)
       {
-         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, false, PathFormat.RelativePath);
+         ReplaceCore(sourceFileName, destinationFileName, destinationBackupFileName, false, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
-         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.RelativePath);
+         ReplaceCore(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -117,15 +117,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
       {
-         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, pathFormat);
+         ReplaceCore(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, pathFormat);
       }
 
       #endregion // Replace
 
-      #region ReplaceInternal
+      #region ReplaceCore
 
-      /// <summary>
-      ///   [AlphaFS] Unified method ReplaceInternal() to replace the contents of a specified file with the contents of another file, deleting
+      /// <summary>Replaces the contents of a specified file with the contents of another file, deleting
       ///   the original file, and creating a backup of the replaced file and optionally ignores merge errors.
       /// </summary>
       /// <remarks>
@@ -150,22 +149,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      internal static void ReplaceInternal(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
+      internal static void ReplaceCore(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
       {
          var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
-         string sourceFileNameLp = Path.GetExtendedLengthPathInternal(null, sourceFileName, pathFormat, options);
-         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationFileName, pathFormat, options);
-         
+         string sourceFileNameLp = Path.GetExtendedLengthPathCore(null, sourceFileName, pathFormat, options);
+         string destinationFileNameLp = Path.GetExtendedLengthPathCore(null, destinationFileName, pathFormat, options);
+
          // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
-         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationBackupFileName, pathFormat, options);
+         string destinationBackupFileNameLp = destinationBackupFileName == null
+            ? null
+            : Path.GetExtendedLengthPathCore(null, destinationBackupFileName, pathFormat, options);
 
          const int replacefileWriteThrough = 1;
          const int replacefileIgnoreMergeErrors = 2;
 
-         FileSystemRights dwReplaceFlags = (FileSystemRights)replacefileWriteThrough;
+         FileSystemRights dwReplaceFlags = (FileSystemRights) replacefileWriteThrough;
          if (ignoreMetadataErrors)
-            dwReplaceFlags |= (FileSystemRights)replacefileIgnoreMergeErrors;
+            dwReplaceFlags |= (FileSystemRights) replacefileIgnoreMergeErrors;
 
          // ReplaceFile()
          // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -176,6 +177,6 @@ namespace Alphaleonis.Win32.Filesystem
             NativeError.ThrowException(Marshal.GetLastWin32Error(), sourceFileNameLp, destinationFileNameLp);
       }
 
-      #endregion // ReplaceInternal
+      #endregion // ReplaceCore
    }
 }

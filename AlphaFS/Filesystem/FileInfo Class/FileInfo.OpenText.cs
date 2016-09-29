@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -28,20 +28,15 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      #region .NET
-
       /// <summary>Creates a <see cref="StreamReader"/> with NativeMethods.DefaultFileEncoding encoding that reads from an existing text file.</summary>
       /// <returns>A new <see cref="StreamReader"/> with NativeMethods.DefaultFileEncoding encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public StreamReader OpenText()
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(File.OpenCore(Transaction, LongFullName, FileMode.Open, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath), NativeMethods.DefaultFileEncoding);
       }
 
-      #endregion // .NET
-
-      #region AlphaFS
 
       /// <summary>[AlphaFS] Creates a <see cref="StreamReader"/> with <see cref="Encoding"/> that reads from an existing text file.</summary>
       /// <returns>A new <see cref="StreamReader"/> with the specified <see cref="Encoding"/>.</returns>
@@ -50,9 +45,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamReader OpenText(Encoding encoding)
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath), encoding);
+         return new StreamReader(File.OpenCore(Transaction, LongFullName, FileMode.Open, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath), encoding);
       }
 
-      #endregion // AlphaFS
    }
 }

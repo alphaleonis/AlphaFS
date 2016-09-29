@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -26,7 +26,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace Alphaleonis
 {
@@ -71,7 +70,7 @@ namespace Alphaleonis
       #region IsNullOrWhiteSpace
 
       /// <summary>Indicates whether a specified string is null, empty, or consists only of white-space characters.</summary>
-      /// <returns><see langword="true"/> if the <paramref name="value"/> parameter is null or <see cref="String.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
+      /// <returns><see langword="true"/> if the <paramref name="value"/> parameter is null or <see cref="string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
       /// <param name="value">The string to test.</param>
       public static bool IsNullOrWhiteSpace(string value)
       {
@@ -93,38 +92,29 @@ namespace Alphaleonis
 
       #endregion // IsNullOrWhiteSpace
 
-      #region MarshalPtrToStructure
-
-      public static T MarshalPtrToStructure<T>(int offset, IntPtr buffer) where T : struct
-      {
-         var structure = new T();
-         return (T) Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset*Marshal.SizeOf(structure)), typeof (T));
-      }
-
-      #endregion // MarshalPtrToStructure
-
       #region UnitSizeToText
 
-      /// <summary>Converts a number of type T to string with UnitSize or Percentage suffixed.</summary>
+      /// <summary>Converts a number of type T to string, suffixed with a unit size.</summary>
       public static string UnitSizeToText<T>(T numberOfBytes)
       {
-         string template = "{0:0.00}{1}";
-         string sfx = "B";
+         string[] sizeFormats =
+         {
+            "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"
+         };
 
-         double bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
 
-         if (bytes >= 1152921504606846976) { sfx = "EB"; bytes /= 1152921504606846976; }
-         else if (bytes >= 1125899906842624) { sfx = "PB"; bytes /= 1125899906842624; }
-         else if (bytes >= 1099511627776) { sfx = "TB"; bytes /= 1099511627776; }
-         else if (bytes >= 1073741824) { sfx = "GB"; bytes /= 1073741824; }
-         else if (bytes >= 1048576) { sfx = "MB"; bytes /= 1048576; }
-         else if (bytes >= 1024) { sfx = "KB"; bytes /= 1024; }
+         var i = 0;
+         var bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
 
-         else
-            // Will return "512 B" instead of "512,00 B".
-            template = "{0:0}{1}";
+         while (i < sizeFormats.Length && bytes > 1024)
+         {
+            i++;
+            bytes /= 1024;
+         }
 
-         return string.Format(CultureInfo.CurrentCulture, template, bytes, " " + sfx);
+
+         // Will return "512 B" instead of "512,00 B".
+         return string.Format(CultureInfo.CurrentCulture, i == 0 ? "{0:0} {1}" : "{0:0.##} {1}", bytes, sizeFormats[i]);
       }
 
       /// <summary>Calculates a percentage value.</summary>

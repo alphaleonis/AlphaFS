@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -32,23 +32,22 @@ namespace Alphaleonis.Win32.Security
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal sealed class SecurityAttributes : IDisposable
       {
+         // Removing this member results in: "Invalid access to memory location: ..."
          [MarshalAs(UnmanagedType.U4)]
-         private int nLength;
+         private int _length;
 
-         private readonly SafeGlobalMemoryBufferHandle lpSecurityDescriptor;
+         private readonly SafeGlobalMemoryBufferHandle _securityDescriptor;
 
          public SecurityAttributes(ObjectSecurity securityDescriptor)
          {
-            var safeBuffer = ToUnmanagedSecurityAttributes(securityDescriptor);
-            nLength = safeBuffer.Capacity;
-            lpSecurityDescriptor = safeBuffer;
+            SafeGlobalMemoryBufferHandle safeBuffer = ToUnmanagedSecurityAttributes(securityDescriptor);
+            _length = safeBuffer.Capacity;
+            _securityDescriptor = safeBuffer;
          }
 
-         /// <summary>
-         /// Marshals an ObjectSecurity instance to unmanaged memory.
-         /// </summary>
-         /// <param name="securityDescriptor">The security descriptor.</param>
+         /// <summary>Marshals an ObjectSecurity instance to unmanaged memory.</summary>
          /// <returns>A safe handle containing the marshalled security descriptor.</returns>
+         /// <param name="securityDescriptor">The security descriptor.</param>
          [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
          private static SafeGlobalMemoryBufferHandle ToUnmanagedSecurityAttributes(ObjectSecurity securityDescriptor)
          {
@@ -58,6 +57,7 @@ namespace Alphaleonis.Win32.Security
             
             byte[] src = securityDescriptor.GetSecurityDescriptorBinaryForm();
             var safeBuffer = new SafeGlobalMemoryBufferHandle(src.Length);
+
             try
             {
                safeBuffer.CopyFrom(src, 0, src.Length);
@@ -72,8 +72,8 @@ namespace Alphaleonis.Win32.Security
 
          public void Dispose()
          {
-            if (lpSecurityDescriptor != null)
-               lpSecurityDescriptor.Close();
+            if (_securityDescriptor != null)
+               _securityDescriptor.Close();
          }
       }
    }

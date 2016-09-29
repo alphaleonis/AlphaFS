@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DefineDosDevice(string deviceName, string targetPath)
       {
-         DefineDosDeviceInternal(true, deviceName, targetPath, DosDeviceAttributes.None, false);
+         DefineDosDeviceCore(true, deviceName, targetPath, DosDeviceAttributes.None, false);
       }
 
       /// <summary>Defines, redefines, or deletes MS-DOS device names.</summary>
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DefineDosDevice(string deviceName, string targetPath, DosDeviceAttributes deviceAttributes)
       {
-         DefineDosDeviceInternal(true, deviceName, targetPath, deviceAttributes, false);
+         DefineDosDeviceCore(true, deviceName, targetPath, deviceAttributes, false);
       }
 
       #endregion // DefineDosDevice
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName)
       {
-         DefineDosDeviceInternal(false, deviceName, null, DosDeviceAttributes.RemoveDefinition, false);
+         DefineDosDeviceCore(false, deviceName, null, DosDeviceAttributes.RemoveDefinition, false);
       }
 
       /// <summary>Deletes an MS-DOS device name.</summary>
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath)
       {
-         DefineDosDeviceInternal(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, false);
+         DefineDosDeviceCore(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, false);
       }
 
       /// <summary>Deletes an MS-DOS device name.</summary>
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath, bool exactMatch)
       {
-         DefineDosDeviceInternal(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, exactMatch);
+         DefineDosDeviceCore(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, exactMatch);
       }
 
       /// <summary>Deletes an MS-DOS device name.</summary>
@@ -124,7 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
       {
-         DefineDosDeviceInternal(false, deviceName, targetPath, deviceAttributes, exactMatch);
+         DefineDosDeviceCore(false, deviceName, targetPath, deviceAttributes, exactMatch);
       }
 
       #endregion // DeleteDosDevice
@@ -171,31 +171,29 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> QueryDosDevice(string deviceName, params string[] options)
       {
-         // The device name cannot have a trailing backslash.
+         // deviceName is allowed to be null.
+         // The deviceName cannot have a trailing backslash.
          deviceName = Path.RemoveTrailingDirectorySeparator(deviceName, false);
-         bool searchFilter = false;
+
+         var searchFilter = (deviceName != null);
 
          // Only process options if a device is supplied.
-         if (deviceName != null)
+         if (searchFilter)
          {
             // Check that at least one "options[]" has something to say. If so, rebuild them.
             options = options != null && options.Any() ? new[] { deviceName, options[0] } : new[] { deviceName, string.Empty };
 
-            searchFilter = !Path.IsLocalPath(deviceName, true);
-
-            if (searchFilter)
-               deviceName = null;
+            deviceName = null;
          }
-
+         
          // Choose sorted output.
-         bool doSort = options != null &&
+         var doSort = options != null &&
                        options.Any(s => s != null && s.Equals("sort", StringComparison.OrdinalIgnoreCase));
 
          // Start with a larger buffer when using a searchFilter.
-         uint bufferSize = (uint)(searchFilter || doSort || (deviceName == null && options == null) ? 32768 : 256);
+         var bufferSize = (uint) (searchFilter || doSort || (options == null) ? 8*NativeMethods.DefaultFileBufferSize : 256);
          uint bufferResult = 0;
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (bufferResult == 0)
             {
@@ -207,7 +205,7 @@ namespace Alphaleonis.Win32.Filesystem
                // 2014-01-29: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
                bufferResult = NativeMethods.QueryDosDevice(deviceName, cBuffer, bufferSize);
-               int lastError = Marshal.GetLastWin32Error();
+               var lastError = Marshal.GetLastWin32Error();
 
                if (bufferResult == 0)
                   switch ((uint) lastError)
@@ -225,7 +223,7 @@ namespace Alphaleonis.Win32.Filesystem
                var dosDev = new List<string>();
                var buffer = new StringBuilder();
 
-               for (int i = 0; i < bufferResult; i++)
+               for (var i = 0; i < bufferResult; i++)
                {
                   if (cBuffer[i] != Path.StringTerminatorChar)
                      buffer.Append(cBuffer[i]);
@@ -238,11 +236,11 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
                // Choose the yield back query; filtered or list.
-               IEnumerable<string> selectQuery = (searchFilter)
+               var selectQuery = searchFilter
                   ? dosDev.Where(dev => options != null && dev.StartsWith(options[0], StringComparison.OrdinalIgnoreCase))
                   : dosDev;
 
-               foreach (string dev in (doSort) ? selectQuery.OrderBy(n => n) : selectQuery)
+               foreach (var dev in (doSort) ? selectQuery.OrderBy(n => n) : selectQuery)
                   yield return dev;
             }
       }
@@ -265,7 +263,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDriveFormat(string drivePath)
       {
-         string fsName = new VolumeInfo(drivePath, true, true).FileSystemName;
+         var fsName = new VolumeInfo(drivePath, true, true).FileSystemName;
          return Utils.IsNullOrWhiteSpace(fsName) ? null : fsName;
       }
 
@@ -280,7 +278,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
       public static string GetDriveNameForNtDeviceName(string deviceName)
       {
-         return (from drive in Directory.EnumerateLogicalDrivesInternal(false, false)
+         return (from drive in Directory.EnumerateLogicalDrivesCore(false, false)
             where drive.DosDeviceName.Equals(deviceName, StringComparison.OrdinalIgnoreCase)
             select drive.Name).FirstOrDefault();
       }
@@ -370,7 +368,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsReady(string drivePath)
       {
-         return File.ExistsInternal(true, null, drivePath, PathFormat.FullPath);
+         return File.ExistsCore(true, null, drivePath, PathFormat.FullPath);
       }
 
       #endregion // IsReady
@@ -393,7 +391,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region DeleteVolumeLabel
 
       /// <summary>Deletes the label of a file system volume.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="rootPathName">The root directory of a file system volume. This is the volume the function will remove the label.</param>
       [SecurityCritical]
       public static void DeleteVolumeLabel(string rootPathName)
@@ -422,7 +420,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteVolumeMountPoint(string volumeMountPoint)
       {
-         DeleteVolumeMountPointInternal(volumeMountPoint, false);
+         DeleteVolumeMountPointCore(volumeMountPoint, false);
       }
       
       #endregion // DeleteVolumeMountPoint
@@ -432,8 +430,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       ///   Returns an enumerable collection of <see cref="String"/> of all mounted folders (volume mount points) on the specified volume.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="volumeGuid">A <see cref="string"/> containing the volume <see cref="Guid"/>.</param>
       /// <returns>An enumerable collection of <see cref="String"/> of all volume mount points on the specified volume.</returns>      
       [SecurityCritical]
@@ -443,22 +441,23 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
 
          // A trailing backslash is required.
          volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);
 
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (SafeFindVolumeMountPointHandle handle = NativeMethods.FindFirstVolumeMountPoint(volumeGuid, buffer, (uint)buffer.Capacity))
+         using (var handle = NativeMethods.FindFirstVolumeMountPoint(volumeGuid, buffer, (uint)buffer.Capacity))
          {
-            int lastError;
+            var lastError = Marshal.GetLastWin32Error();
+
             if (handle.IsInvalid)
             {
-               lastError = Marshal.GetLastWin32Error();
-               switch ((uint)lastError)
+               handle.Close();
+
+               switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_NO_MORE_FILES:
                   case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
@@ -475,9 +474,12 @@ namespace Alphaleonis.Win32.Filesystem
 
             while (NativeMethods.FindNextVolumeMountPoint(handle, buffer, (uint)buffer.Capacity))
             {
+               lastError = Marshal.GetLastWin32Error();
+
                if (handle.IsInvalid)
                {
-                  lastError = Marshal.GetLastWin32Error();
+                  handle.Close();
+
                   switch ((uint) lastError)
                   {
                      case Win32Errors.ERROR_NO_MORE_FILES:
@@ -503,8 +505,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       ///   Returns an enumerable collection of <see cref="String"/> drive letters and mounted folder paths for the specified volume.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="volumeGuid">A volume <see cref="Guid"/> path: \\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\.</param>
       /// <returns>An enumerable collection of <see cref="String"/> containing the path names for the specified volume.</returns>      
       [SecurityCritical]
@@ -514,18 +516,17 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
 
-         string volName = Path.AddTrailingDirectorySeparator(volumeGuid, false);
+         var volName = Path.AddTrailingDirectorySeparator(volumeGuid, false);
 
          uint requiredLength = 10;
-         char[] cBuffer = new char[requiredLength];
+         var cBuffer = new char[requiredLength];
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (!NativeMethods.GetVolumePathNamesForVolumeName(volName, cBuffer, (uint)cBuffer.Length, out requiredLength))
             {
-               int lastError = Marshal.GetLastWin32Error();
+               var lastError = Marshal.GetLastWin32Error();
 
                switch ((uint)lastError)
                {
@@ -541,7 +542,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
          var buffer = new StringBuilder(cBuffer.Length);
-         foreach (char c in cBuffer)
+         foreach (var c in cBuffer)
          {
             if (c != Path.StringTerminatorChar)
                buffer.Append(c);
@@ -568,18 +569,20 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (SafeFindVolumeHandle handle = NativeMethods.FindFirstVolume(buffer, (uint)buffer.Capacity))
+         using (var handle = NativeMethods.FindFirstVolume(buffer, (uint)buffer.Capacity))
          {
-            while (!handle.IsInvalid)
+            while (handle != null && !handle.IsInvalid)
             {
                if (NativeMethods.FindNextVolume(handle, buffer, (uint)buffer.Capacity))
                   yield return buffer.ToString();
 
                else
                {
-                  int lastError = Marshal.GetLastWin32Error();
+                  var lastError = Marshal.GetLastWin32Error();
+
+                  handle.Close();
+
                   if (lastError == Win32Errors.ERROR_NO_MORE_FILES)
                      yield break;
 
@@ -596,7 +599,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       ///   Get the unique volume name for the given path.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumePathName">
       ///   A path string. Both absolute and relative file and directory names, for example "..", is acceptable in this path. If you specify a
       ///   relative file or directory name without a volume qualifier, GetUniqueVolumeNameForPath returns the Drive letter of the current
@@ -628,7 +631,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetVolumeDeviceName
 
       /// <summary>Retrieves the Win32 Device name from the Volume name.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeName">Name of the Volume.</param>
       /// <returns>
       ///   The Win32 Device name from the Volume name (for example: "\Device\HarddiskVolume2"), or <see langword="null"/> on error or if
@@ -650,7 +653,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #endregion // GlobalRoot
 
-         bool doQueryDos = false;
+         bool doQueryDos;
 
          #region Volume
 
@@ -666,8 +669,13 @@ namespace Alphaleonis.Win32.Filesystem
          #region Logical Drive
 
          // Check for Logical Drives: C:, D:, ...
-         else if (Path.IsLocalPath(volumeName, true))
-            doQueryDos = true;
+         else
+         {
+            // Don't use char.IsLetter() here as that can be misleading.
+            // The only valid drive letters are: a-z and A-Z.
+            var c = volumeName[0];
+            doQueryDos = (volumeName[1] == Path.VolumeSeparatorChar && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')));
+         }
 
          #endregion // Logical Drive
 
@@ -676,7 +684,7 @@ namespace Alphaleonis.Win32.Filesystem
             try
             {
                // Get the real Device underneath.
-               string dev = QueryDosDevice(volumeName).FirstOrDefault();
+               var dev = QueryDosDevice(volumeName).FirstOrDefault();
                return !Utils.IsNullOrWhiteSpace(dev) ? dev : null;
             }
             catch
@@ -705,14 +713,14 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            foreach (string m in EnumerateVolumePathNames(volumeName).Where(m => !Utils.IsNullOrWhiteSpace(m) && m.Length < smallestMountPoint[0].Length))
+            foreach (var m in EnumerateVolumePathNames(volumeName).Where(m => !Utils.IsNullOrWhiteSpace(m) && m.Length < smallestMountPoint[0].Length))
                smallestMountPoint[0] = m;
          }
          catch
          {
          }
 
-         string result = smallestMountPoint[0][0] == Path.WildcardStarMatchAllChar ? null : smallestMountPoint[0];
+         var result = smallestMountPoint[0][0] == Path.WildcardStarMatchAllChar ? null : smallestMountPoint[0];
          return Utils.IsNullOrWhiteSpace(result) ? null : result;
       }
 
@@ -724,7 +732,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Retrieves a volume <see cref="Guid"/> path for the volume that is associated with the specified volume mount point (drive letter,
       ///   volume GUID path, or mounted folder).
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeMountPoint">
       ///   The path of a mounted folder (for example, "Y:\MountX\") or a drive letter (for example, "X:\").
       /// </param>
@@ -737,14 +745,13 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeMountPoint");
 
          // The string must end with a trailing backslash ('\').
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);            
+         volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);            
 
          var volumeGuid = new StringBuilder(100);
          var uniqueName = new StringBuilder(100);
 
          try
          {
-            // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             {
                // GetVolumeNameForVolumeMountPoint()
@@ -761,7 +768,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
          finally
          {
-            uint lastError = (uint) Marshal.GetLastWin32Error();
+            var lastError = (uint) Marshal.GetLastWin32Error();
 
             switch (lastError)
             {
@@ -797,7 +804,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
       public static string GetVolumeGuidForNtDeviceName(string dosDevice)
       {
-         return (from drive in Directory.EnumerateLogicalDrivesInternal(false, false)
+         return (from drive in Directory.EnumerateLogicalDrivesCore(false, false)
                  where drive.DosDeviceName.Equals(dosDevice, StringComparison.OrdinalIgnoreCase)
                  select drive.VolumeInfo.Guid).FirstOrDefault();
       }
@@ -848,7 +855,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetVolumePathName
 
       /// <summary>Retrieves the volume mount point where the specified path is mounted.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to the volume, for example: "C:\Windows".</param>
       /// <returns>
       ///   <para>Returns the nearest volume root path for a given directory.</para>
@@ -860,22 +867,21 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
          
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             var volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode / 32);
-            string pathLp = Path.GetFullPathInternal(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
+            var pathLp = Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
             // GetVolumePathName()
             // In the ANSI version of this function, the name is limited to 248 characters.
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-            bool getOk = NativeMethods.GetVolumePathName(pathLp, volumeRootPath, (uint) volumeRootPath.Capacity);
-            int lastError = Marshal.GetLastWin32Error();
+            var getOk = NativeMethods.GetVolumePathName(pathLp, volumeRootPath, (uint) volumeRootPath.Capacity);
+            var lastError = Marshal.GetLastWin32Error();
 
             if (getOk)
-               return Path.GetRegularPathInternal(volumeRootPath.ToString(), GetFullPathOptions.None);
+               return Path.GetRegularPathCore(volumeRootPath.ToString(), GetFullPathOptions.None, false);
 
             switch ((uint) lastError)
             {
@@ -939,7 +945,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region SetCurrentVolumeLabel
 
       /// <summary>Sets the label of the file system volume that is the root of the current directory.</summary>
-      /// <exception cref="ArgumentNullException"><paramref name="volumeName"/> is a <see langword="null"/> reference.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeName">A name for the volume.</param>
       [SecurityCritical]
       public static void SetCurrentVolumeLabel(string volumeName)
@@ -976,7 +982,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          volumePath = Path.AddTrailingDirectorySeparator(volumePath, false);
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          // NTFS uses a limit of 32 characters for the volume label as of Windows Server 2003.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             if (!NativeMethods.SetVolumeLabel(volumePath, volumeName))
@@ -988,8 +993,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region SetVolumeMountPoint
 
       /// <summary>Associates a volume with a Drive letter or a directory on another volume.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="volumeMountPoint">
       ///   The user-mode path to be associated with the volume. This may be a Drive letter (for example, "X:\")
       ///   or a directory on another volume (for example, "Y:\MountX\").
@@ -1006,9 +1011,9 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
 
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // This string must be of the form "\\?\Volume{GUID}\"
          volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);
@@ -1024,7 +1029,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (!NativeMethods.SetVolumeMountPoint(volumeMountPoint, volumeGuid))
             {
-               int lastError = Marshal.GetLastWin32Error();
+               var lastError = Marshal.GetLastWin32Error();
 
                // If the lpszVolumeMountPoint parameter contains a path to a mounted folder,
                // GetLastError returns ERROR_DIR_NOT_EMPTY, even if the directory is empty.
@@ -1039,10 +1044,10 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Volume
 
 
-      #region Unified Internals
+      #region Internal Methods
 
-      /// <summary>Unified method DefineDosDeviceInternal() to define, redefine, or delete MS-DOS device names.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <summary>Defines, redefines, or deletes MS-DOS device names.</summary>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="isDefine">
       ///   <see langword="true"/> defines a new MS-DOS device. <see langword="false"/> deletes a previously defined MS-DOS device.
       /// </param>
@@ -1064,7 +1069,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///
       /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>      
       [SecurityCritical]
-      internal static void DefineDosDeviceInternal(bool isDefine, string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
+      internal static void DefineDosDeviceCore(bool isDefine, string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
       {
          if (Utils.IsNullOrWhiteSpace(deviceName))
             throw new ArgumentNullException("deviceName");
@@ -1074,9 +1079,8 @@ namespace Alphaleonis.Win32.Filesystem
             // targetPath is allowed to be null.
 
             // In no case is a trailing backslash ("\") allowed.
-            deviceName = Path.GetRegularPathInternal(deviceName, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
+            deviceName = Path.GetRegularPathCore(deviceName, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars, false);
 
-            // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
                if (!NativeMethods.DefineDosDevice(deviceAttributes, deviceName, targetPath))
                   NativeError.ThrowException(deviceName, targetPath);
@@ -1096,27 +1100,25 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      /// <summary>Unified method DeleteVolumeMountPointInternal() to delete a Drive letter or mounted folder.</summary>
-      /// <remarks>Deleting a mounted folder does not cause the underlying directory to be deleted.</remarks>
+      /// <summary>Deletes a Drive letter or mounted folder.</summary>
       /// <remarks>
-      ///   It's not an error to attempt to unmount a volume from a volume mount point when there is no volume actually mounted at that volume
-      ///   mount point.
+      ///   <para>It's not an error to attempt to unmount a volume from a volume mount point when there is no volume actually mounted at that volume mount point.</para>
+      ///   <para>Deleting a mounted folder does not cause the underlying directory to be deleted.</para>
       /// </remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeMountPoint">The Drive letter or mounted folder to be deleted. For example, X:\ or Y:\MountX\.</param>
       /// <param name="continueOnException">
-      ///   <see langword="true"/> suppress any exception that might be thrown a result from a failure, such as unavailable resources.
+      ///   <see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.
       /// </param>
       /// <returns>If completed successfully returns <see cref="Win32Errors.ERROR_SUCCESS"/>, otherwise the last error number.</returns>      
       [SecurityCritical]
-      internal static int DeleteVolumeMountPointInternal(string volumeMountPoint, bool continueOnException)
+      internal static int DeleteVolumeMountPointCore(string volumeMountPoint, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(volumeMountPoint))
             throw new ArgumentNullException("volumeMountPoint");
 
-         int lastError = (int) Win32Errors.ERROR_SUCCESS;
+         var lastError = (int) Win32Errors.ERROR_SUCCESS;
 
-         // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             // DeleteVolumeMountPoint()
@@ -1139,6 +1141,6 @@ namespace Alphaleonis.Win32.Filesystem
          return lastError;
       }
 
-      #endregion Unified Internals
+      #endregion // Internal Methods
    }
 }

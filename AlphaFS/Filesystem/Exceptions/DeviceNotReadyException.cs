@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -24,34 +24,26 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>
-   /// The requested operation could not be completed because the device was not ready.
-   /// </summary>
+   /// <summary>The requested operation could not be completed because the device was not ready.</summary>
    [Serializable]
    public class DeviceNotReadyException : System.IO.IOException
    {
       private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_READY);
 
-      /// <summary>
-      /// Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.
-      /// </summary>
+      /// <summary>Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.</summary>
       public DeviceNotReadyException()
-         : base(Resources.EDeviceNotReady, s_errorCode)
+         : base(Resources.Device_Not_Ready, s_errorCode)
       {
       }
 
-      /// <summary>
-      /// Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.
-      /// </summary>
+      /// <summary>Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.</summary>
       /// <param name="message">The message.</param>
       public DeviceNotReadyException(string message)
          : base(message, s_errorCode)
       {
       }
 
-      /// <summary>
-      /// Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.
-      /// </summary>
+      /// <summary>Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
       public DeviceNotReadyException(string message, Exception innerException)
@@ -59,15 +51,12 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>
-      /// Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.
-      /// </summary>
+      /// <summary>Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
       protected DeviceNotReadyException(SerializationInfo info, StreamingContext context)
          : base(info, context)
       {
       }
-
    }
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -20,89 +20,94 @@
  */
 
 using System;
+using System.IO;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
-using System.Security.Principal;
+using Alphaleonis.Win32.Security;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    partial class Directory
    {
-      #region GetAccessControl
-
       /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the specified directory.</summary>
-      /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the file's access control list (ACL) information.</param>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
+      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the file's access control list (ACL) information.</param>
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(string path)
       {
-         return File.GetAccessControlInternal<DirectorySecurity>(true, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.RelativePath);
+         return File.GetAccessControlCore<DirectorySecurity>(true, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.RelativePath);
       }
 
       /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for a particular directory.</summary>
+      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="path"/> parameter. </returns>
+      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
       /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
-      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="path"/> parameter. </returns>
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(string path, AccessControlSections includeSections)
       {
-         return File.GetAccessControlInternal<DirectorySecurity>(true, path, includeSections, PathFormat.RelativePath);
+         return File.GetAccessControlCore<DirectorySecurity>(true, path, includeSections, PathFormat.RelativePath);
       }
 
+
       /// <summary>[AlphaFS] Gets a <see cref="DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the specified directory.</summary>
+      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
+      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the file's access control list (ACL) information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(string path, PathFormat pathFormat)
       {
-         return File.GetAccessControlInternal<DirectorySecurity>(true, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, pathFormat);
+         return File.GetAccessControlCore<DirectorySecurity>(true, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, pathFormat);
       }
 
       /// <summary>[AlphaFS] Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for a particular directory.</summary>
+      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="path"/> parameter. </returns>
+      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
       /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="path"/> parameter. </returns>
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(string path, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         return File.GetAccessControlInternal<DirectorySecurity>(true, path, includeSections, pathFormat);
+         return File.GetAccessControlCore<DirectorySecurity>(true, path, includeSections, pathFormat);
       }
 
-      #endregion
 
-      #region HasInheritedPermissions
-
-      /// <summary>[AlphaFS] Check if the directory has permission inheritance enabled.</summary>
-      /// <returns><see langword="true"/> if permission inheritance is enabled, <see langword="false"/> if permission inheritance is disabled.</returns>
-      /// <param name="path">The full path to the directory to check.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      public static bool HasInheritedPermissions(string path, PathFormat pathFormat)
+      /// <summary>[AlphaFS] Gets a <see cref="DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the specified directory handle.</summary>
+      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="handle"/> parameter.</returns>
+      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <param name="handle">A <see cref="SafeHandle"/> to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
+      [SecurityCritical]
+      public static DirectorySecurity GetAccessControl(SafeFileHandle handle)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
-
-         //DirectorySecurity acl = GetAccessControl(directoryPath);
-         DirectorySecurity acl = File.GetAccessControlInternal<DirectorySecurity>(true, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, pathFormat);
-
-         return acl.GetAccessRules(false, true, typeof(SecurityIdentifier)).Count > 0;
+         return File.GetAccessControlHandleCore<DirectorySecurity>(false, true, handle, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, SecurityInformation.None);
       }
 
-
-      /// <summary>[AlphaFS] Check if the directory has permission inheritance enabled.</summary>
-      /// <param name="path">The full path to the directory to check.</param>
-      /// <returns><see langword="true"/> if permission inheritance is enabled, <see langword="false"/> if permission inheritance is disabled.</returns>
-      public static bool HasInheritedPermissions(string path)
+      /// <summary>[AlphaFS] Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for a particular directory handle.</summary>
+      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="handle"/> parameter. </returns>
+      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <param name="handle">A <see cref="SafeHandle"/> to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
+      /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
+      [SecurityCritical]
+      public static DirectorySecurity GetAccessControl(SafeFileHandle handle, AccessControlSections includeSections)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
-
-         DirectorySecurity acl = File.GetAccessControlInternal<DirectorySecurity>(true, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.RelativePath);
-
-         return acl.GetAccessRules(false, true, typeof(SecurityIdentifier)).Count > 0;
+         return File.GetAccessControlHandleCore<DirectorySecurity>(false, true, handle, includeSections, SecurityInformation.None);
       }
-
-      #endregion // HasInheritedPermissions
    }
 }

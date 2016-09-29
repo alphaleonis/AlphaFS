@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -80,10 +80,12 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
-         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationFileName, pathFormat, options);
-         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationBackupFileName, pathFormat, options);
+         string destinationFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationFileName, pathFormat, options);
+         string destinationBackupFileNameLp = destinationBackupFileName != null
+            ? Path.GetExtendedLengthPathCore(Transaction, destinationBackupFileName, pathFormat, options)
+            : null;
 
-         File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, false, PathFormat.LongFullPath);
+         File.ReplaceCore(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, false, PathFormat.LongFullPath);
 
          return new FileInfo(Transaction, destinationFileNameLp, PathFormat.LongFullPath);
       }
@@ -105,10 +107,12 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
-         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationFileName, pathFormat, options);
-         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationBackupFileName, pathFormat, options);
+         string destinationFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationFileName, pathFormat, options);
+         string destinationBackupFileNameLp = destinationBackupFileName != null
+            ? Path.GetExtendedLengthPathCore(Transaction, destinationBackupFileName, pathFormat, options)
+            : null;
 
-         File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, PathFormat.LongFullPath);
+         File.ReplaceCore(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, PathFormat.LongFullPath);
 
          return new FileInfo(Transaction, destinationFileNameLp, PathFormat.LongFullPath);
       }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(string path)
       {
-         return GetCreationTimeInternal(null, path, false, PathFormat.RelativePath).ToLocalTime();
+         return GetCreationTimeCore(null, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(null, path, false, pathFormat).ToLocalTime();
+         return GetCreationTimeCore(null, path, false, pathFormat).ToLocalTime();
       }
 
       #region Transactional
@@ -63,9 +63,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTime(KernelTransaction transaction, string path)
+      public static DateTime GetCreationTimeTransacted(KernelTransaction transaction, string path)
       {
-         return GetCreationTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
+         return GetCreationTimeCore(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
@@ -77,9 +77,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTime(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetCreationTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
+         return GetCreationTimeCore(transaction, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // Transacted
@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(string path)
       {
-         return GetCreationTimeInternal(null, path, true, PathFormat.RelativePath);
+         return GetCreationTimeCore(null, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(null, path, true, pathFormat);
+         return GetCreationTimeCore(null, path, true, pathFormat);
       }
 
       #region Transactional
@@ -129,9 +129,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path)
+      public static DateTime GetCreationTimeUtcTransacted(KernelTransaction transaction, string path)
       {
-         return GetCreationTimeInternal(transaction, path, true, PathFormat.RelativePath);
+         return GetCreationTimeCore(transaction, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
@@ -145,9 +145,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetCreationTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(transaction, path, true, pathFormat);
+         return GetCreationTimeCore(transaction, path, true, pathFormat);
       }
 
       #endregion // Transacted
@@ -170,15 +170,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <paramref name="returnUtc"/> this value is expressed in UTC- or local time.
       /// </returns>
       [SecurityCritical]
-      internal static DateTime GetCreationTimeInternal(KernelTransaction transaction, string path, bool returnUtc, PathFormat pathFormat)
+      internal static DateTime GetCreationTimeCore(KernelTransaction transaction, string path, bool returnUtc, PathFormat pathFormat)
       {
-         NativeMethods.FileTime creationTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, pathFormat).CreationTime;
+         NativeMethods.FILETIME creationTime = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, path, pathFormat, false).ftCreationTime;
 
          return returnUtc
             ? DateTime.FromFileTimeUtc(creationTime)
             : DateTime.FromFileTime(creationTime);
       }
 
-      #endregion // GetCreationTimeInternal
+      #endregion // Internal Methods
    }
 }

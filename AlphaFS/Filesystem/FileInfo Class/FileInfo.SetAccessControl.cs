@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -27,8 +27,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      #region .NET
-
       /// <summary>Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.</summary>
       /// <remarks>
       ///   The SetAccessControl method applies access control list (ACL) entries to the current file that represents the noninherited ACL
@@ -39,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity)
       {
-         File.SetAccessControlInternal(LongFullName, null, fileSecurity, AccessControlSections.All, PathFormat.LongFullPath);
+         File.SetAccessControlCore(LongFullName, null, fileSecurity, AccessControlSections.All, PathFormat.LongFullPath);
       }
 
       /// <summary>Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.</summary>
@@ -53,9 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity, AccessControlSections includeSections)
       {
-         File.SetAccessControlInternal(LongFullName, null, fileSecurity, includeSections, PathFormat.LongFullPath);
+         File.SetAccessControlCore(LongFullName, null, fileSecurity, includeSections, PathFormat.LongFullPath);
       }
-
-      #endregion // .NET
    }
 }

@@ -101,6 +101,28 @@
     <Prefer32Bit>false</Prefer32Bit>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452|AnyCPU'">
+    <OutputPath>..\bin\Release\Net452\</OutputPath>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;NET452</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452 Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug\Net452\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET452</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+  </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
@@ -121,18 +143,78 @@
     <Compile Include="..\AlphaFS\AssemblyVersionInfo.cs">
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
-    <Compile Include="AlphaFS_DeviceTest.cs" />
-    <Compile Include="AlphaFS_HostTest.cs" />
-    <Compile Include="AlphaFS_ClassesTest.cs" />
-    <Compile Include="FileInfoTest.cs" />
-    <Compile Include="AlphaFS_Shell32Test.cs" />
-    <Compile Include="DirectoryInfoTest.cs" />
-    <Compile Include="DirectoryTest.cs" />
-    <Compile Include="DriveInfoTest.cs" />
-    <Compile Include="FileTest.cs" />
-    <Compile Include="PathTest.cs" />
+    <Compile Include="Classes\AlphaFS_FileSystemEntryInfo.cs" />
+    <Compile Include="Crc Class\AlphaFS_Class_Crc32.cs" />
+    <Compile Include="Device Class\AlphaFS_DeviceInfo_EnumerateDevices.cs" />
+    <Compile Include="Classes\AlphaFS_BackupFileStream.cs" />
+    <Compile Include="Crc Class\AlphaFS_Class_Crc64.cs" />
+    <Compile Include="Device Class\AlphaFS_DeviceInfo_InitializeInstance.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_Compress_Decompress.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_EnumerateFileSystemEntryInfos.cs" />
+    <Compile Include="Directory Class\Directory_CurrentDirectory.cs" />
+    <Compile Include="Directory Class\Directory_Move.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_CountFileSystemObjects.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_Copy.cs" />
+    <Compile Include="Directory Class\Directory_GetDirectories.cs" />
+    <Compile Include="Directory Class\Directory_GetFiles.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_EnumerateAlternateDataStreams.cs" />
+    <Compile Include="Directory Class\Directory_Exists.cs" />
+    <Compile Include="Directory Class\Directory_Delete.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_ExportImportEncryptedDirectoryRaw.cs" />
+    <Compile Include="Directory Class\Directory_GetAccessControl.cs" />
+    <Compile Include="Directory Class\Directory_SetTimestamps.cs" />
+    <Compile Include="Directory Class\Directory_GetTimestamps.cs" />
+    <Compile Include="Directory Class\Directory_SetAccessControl.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo_Refresh.cs" />
+    <Compile Include="File Class\AlphaFS_File_GetHash.cs" />
+    <Compile Include="File Class\File_CreateText.cs" />
+    <Compile Include="File Class\File_OpenWrite.cs" />
+    <Compile Include="File Class\File_OpenText.cs" />
+    <Compile Include="File Class\File_OpenRead.cs" />
+    <Compile Include="File Class\File_Replace.cs" />
+    <Compile Include="File Class\File_Move.cs" />
+    <Compile Include="File Class\File_Copy.cs" />
+    <Compile Include="File Class\File_Delete.cs" />
+    <Compile Include="File Class\File_SetTimestamps.cs" />
+    <Compile Include="File Class\AlphaFS_File_IsLocked.cs" />
+    <Compile Include="File Class\AlphaFS_File_CreateSymbolicLink_GetLinkTargetInfo.cs" />
+    <Compile Include="File Class\AlphaFS_File_CreateHardlink_EnumerateHardlinks.cs" />
+    <Compile Include="File Class\AlphaFS_File_Compress_Decompress.cs" />
+    <Compile Include="File Class\AlphaFS_File_GetCompressedSize.cs" />
+    <Compile Include="File Class\AlphaFS_File_GetSize.cs" />
+    <Compile Include="File Class\AlphaFS_File_EnumerateAlternateDataStreams.cs" />
+    <Compile Include="File Class\File_Create.cs" />
+    <Compile Include="File Class\File_GetTimestamps.cs" />
+    <Compile Include="File Class\File_Open.cs" />
+    <Compile Include="File Class\AlphaFS_File_ExportImportEncryptedFileRaw.cs" />
+    <Compile Include="File Class\File_Exists.cs" />
+    <Compile Include="File Class\File_SetAccessControl.cs" />
+    <Compile Include="File Class\File_GetAccessControl.cs" />
+    <Compile Include="FileInfo Class\FileInfo_InitializeInstance.cs" />
+    <Compile Include="FileInfo Class\FileInfo_Refresh.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_DriveConnection.cs" />
+    <Compile Include="Host Class\HostTest.cs" />
+    <Compile Include="Classes\ClassesTest.cs" />
+    <Compile Include="Directory Class\Directory_CreateDirectory.cs" />
+    <Compile Include="Directory Class\DirectoryTest.cs" />
+    <Compile Include="Path Class\Path_GetFullPath.cs" />
+    <Compile Include="Path Class\Path_IsPathRooted.cs" />
+    <Compile Include="Path Class\Path_GetExtension.cs" />
+    <Compile Include="Path Class\Path_GetDirectoryName.cs" />
+    <Compile Include="Shell32 Class\AlphaFS_Shell32Info_GetFileIcon.cs" />
+    <Compile Include="Shell32 Class\AlphaFS_Shell32Info_GetVerbCommand.cs" />
+    <Compile Include="Shell32 Class\AlphaFS_Shell32Info_InitializeInstance.cs" />
+    <Compile Include="Utils\DirectoryAssert.cs" />
+    <Compile Include="Utils\FileAssert.cs" />
+    <Compile Include="Shell32 Class\Shell32Test.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo_InitializeInstance.cs" />
+    <Compile Include="File Class\FileTest.cs" />
+    <Compile Include="Path Class\PathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AlphaFS_VolumeTest.cs" />
+    <Compile Include="Volume Class\VolumeInfo_InitializeInstance.cs" />
+    <Compile Include="Volume Class\Volume_GetVolumeInfo.cs" />
+    <Compile Include="Volume Class\VolumeTest.cs" />
+    <Compile Include="Utils\UnitTestConstants.cs" />
     <Compile Include="Utils\TemporaryDirectory.cs" />
   </ItemGroup>
   <ItemGroup>

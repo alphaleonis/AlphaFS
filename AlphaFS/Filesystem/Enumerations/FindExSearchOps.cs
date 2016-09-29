@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
       ///   <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
       /// </remarks>
-      internal enum FindExSearchOps
+      internal enum FINDEX_SEARCH_OPS
       {
          /// <summary>The search for a file that matches a specified file name.
          /// <para>The lpSearchFilter parameter of FindFirstFileEx must be NULL when this search operation is used.</para>

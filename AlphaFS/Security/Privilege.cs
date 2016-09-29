@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -336,7 +336,7 @@ namespace Alphaleonis.Win32.Security
       public Privilege(string systemName, Privilege privilege)
       {
          if (Utils.IsNullOrWhiteSpace(systemName))
-            throw new ArgumentException(Resources.Privilege_Privilege_name_cannot_be_empty, "systemName");
+            throw new ArgumentException(Resources.Privilege_Name_Cannot_Be_Empty, "systemName");
 
          _systemName = systemName;
 
@@ -393,8 +393,8 @@ namespace Alphaleonis.Win32.Security
       /// <summary>Retrieves the locally unique identifier (LUID) used on to represent this privilege (on the system from which it originates).</summary>
       /// <returns>the locally unique identifier (LUID) used on to represent this privilege (on the system from which it originates).</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Luid")]
-      [SecurityCritical]
-      public ulong LookupLuid()
+      [SecurityCritical]      
+      public long LookupLuid()
       {
          Luid luid;
 
@@ -424,7 +424,7 @@ namespace Alphaleonis.Win32.Security
       /// <summary>Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>.</summary>
       /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="System.Object"/>.</param>
       /// <returns><see langword="true"/> if the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>; otherwise, <see langword="false"/>.</returns>
-      /// <exception cref="System.NullReferenceException">The <paramref name="obj"/> parameter is <see langword="null"/>.</exception>
+      /// <exception cref="NullReferenceException"/>
       public override bool Equals(object obj)
       {
          Privilege other = obj as Privilege;
@@ -484,7 +484,7 @@ namespace Alphaleonis.Win32.Security
       private Privilege(string name)
       {
          if (Utils.IsNullOrWhiteSpace(name))
-            throw new ArgumentException(Resources.Privilege_Privilege_name_cannot_be_empty, "name");
+            throw new ArgumentException(Resources.Privilege_Name_Cannot_Be_Empty, "name");
 
          _name = name;
       }

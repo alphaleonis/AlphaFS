@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(string path, PathFormat pathFormat)
       {
-         return EnumerateHardlinksInternal(null, path, pathFormat);
+         return EnumerateHardlinksCore(null, path, pathFormat);
       }
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(string path)
       {
-         return EnumerateHardlinksInternal(null, path, PathFormat.RelativePath);
+         return EnumerateHardlinksCore(null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
@@ -60,9 +60,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static IEnumerable<string> EnumerateHardlinksTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return EnumerateHardlinksInternal(transaction, path, pathFormat);
+         return EnumerateHardlinksCore(transaction, path, pathFormat);
       }
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
@@ -71,9 +71,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path)
+      public static IEnumerable<string> EnumerateHardlinksTransacted(KernelTransaction transaction, string path)
       {
-         return EnumerateHardlinksInternal(transaction, path, PathFormat.RelativePath);
+         return EnumerateHardlinksCore(transaction, path, PathFormat.RelativePath);
       }
 
       #endregion // EnumerateHardlinks
@@ -81,17 +81,17 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internal Methods
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <exception cref="PlatformNotSupportedException">Thrown when a Platform Not Supported error condition occurs.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
-      internal static IEnumerable<string> EnumerateHardlinksInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static IEnumerable<string> EnumerateHardlinksCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // Default buffer length, will be extended if needed, although this should not happen.
          uint length = NativeMethods.MaxPathUnicode;
@@ -110,14 +110,16 @@ namespace Alphaleonis.Win32.Filesystem
             ? NativeMethods.FindFirstFileName(pathLp, 0, out length, builder)
             : NativeMethods.FindFirstFileNameTransacted(pathLp, 0, out length, builder, transaction.SafeHandle))
          {
+         	int lastError = Marshal.GetLastWin32Error();
+
             if (handle.IsInvalid)
             {
-               int lastError = Marshal.GetLastWin32Error();
-               switch ((uint)lastError)
+               handle.Close();
+               
+               switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
-                     builder = new StringBuilder((int)length);
-                     handle.Close();
+                     builder = new StringBuilder((int) length);
                      goto getFindFirstFileName;
 
                   default:
@@ -137,15 +139,16 @@ namespace Alphaleonis.Win32.Filesystem
             {
                while (!NativeMethods.FindNextFileName(handle, out length, builder))
                {
-                  int lastError = Marshal.GetLastWin32Error();
-                  switch ((uint)lastError)
+                  lastError = Marshal.GetLastWin32Error();
+
+                  switch ((uint) lastError)
                   {
                      // We've reached the end of the enumeration.
                      case Win32Errors.ERROR_HANDLE_EOF:
                         yield break;
 
                      case Win32Errors.ERROR_MORE_DATA:
-                        builder = new StringBuilder((int)length);
+                        builder = new StringBuilder((int) length);
                         continue;
 
                      default:
@@ -161,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // EnumerateHardlinksInternal
+      #endregion // Internal Methods
 
    }
 }

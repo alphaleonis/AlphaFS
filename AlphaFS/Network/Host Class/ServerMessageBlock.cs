@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security;
 
@@ -34,29 +35,29 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateOpenConnections
 
       /// <summary>Enumerates open connections from the local host.</summary>
-      /// <returns>Returns <see cref="OpenConnectionInfo"/> connection information from the local host.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="OpenConnectionInfo"/> connection information from the local host.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static IEnumerable<OpenConnectionInfo> EnumerateOpenConnections()
       {
-         return EnumerateOpenConnectionsInternal(null, null, false);
+         return EnumerateOpenConnectionsCore(null, null, false);
       }
 
       /// <summary>Enumerates open connections from the specified host.</summary>
-      /// <returns>Returns <see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException">
-      ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
+      ///   <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
       ///   <para>such as unavailable resources.</para>
       /// </param>
       [SecurityCritical]
       public static IEnumerable<OpenConnectionInfo> EnumerateOpenConnections(string host, string share, bool continueOnException)
       {
-         return EnumerateOpenConnectionsInternal(host, share, continueOnException);
+         return EnumerateOpenConnectionsCore(host, share, continueOnException);
       }
 
       #endregion // EnumerateOpenConnections
@@ -64,47 +65,96 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateShares
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares()
       {
-         return EnumerateSharesInternal(null, false);
+         return EnumerateSharesCore(null, ShareType.All, false);
       }
 
-      /// <summary>
-      ///   Enumerates Server Message Block (SMB) shares from the specified host.
-      /// </summary>
-      /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
-      /// <param name="continueOnException">
-      ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
-      ///   <para>such as unavailable resources.</para>
-      /// </param>
-      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
+      [SecurityCritical]
+      public static IEnumerable<ShareInfo> EnumerateShares(bool continueOnException)
+      {
+         return EnumerateSharesCore(null, ShareType.All, continueOnException);
+      }
+
+      /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <param name="shareType">The type of the shared resource to retrieve.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
+      [SecurityCritical]
+      public static IEnumerable<ShareInfo> EnumerateShares(ShareType shareType, bool continueOnException)
+      {
+         return EnumerateSharesCore(null, shareType, continueOnException);
+      }
+
+      /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
+      [SecurityCritical]
+      public static IEnumerable<ShareInfo> EnumerateShares(string host)
+      {
+         return EnumerateSharesCore(host, ShareType.All, false);
+      }
+
+      /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares(string host, bool continueOnException)
       {
-         return EnumerateSharesInternal(host, continueOnException);
+         return EnumerateSharesCore(host, ShareType.All, continueOnException);
+      }
+
+      /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
+      /// <param name="shareType">The type of the shared resource to retrieve.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
+      [SecurityCritical]
+      public static IEnumerable<ShareInfo> EnumerateShares(string host, ShareType shareType, bool continueOnException)
+      {
+         return EnumerateSharesCore(host, shareType, continueOnException);
       }
 
       #endregion // EnumerateShares
 
       #region GetHostShareFromPath
 
-      /// <summary>Gets the host and Server Message Block (SMB) share name for the given <paramref name="uncPath"/>.</summary>
+      /// <summary>Gets the host and share path name for the given <paramref name="uncPath"/>.</summary>
       /// <param name="uncPath">The share in the format: \\host\share.</param>
-      /// <returns>string[0] = host, string[1] = share;</returns>
+      /// <returns>The host and share path. For example, if <paramref name="uncPath"/> is: "\\SERVER001\C$\WINDOWS\System32",
+      ///   its is returned as string[0] = "SERVER001" and string[1] = "\C$\WINDOWS\System32".
+      /// <para>If the conversion from local path to UNC path fails, <see langword="null"/> is returned.</para>
+      /// </returns>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]
       public static string[] GetHostShareFromPath(string uncPath)
       {
          if (Utils.IsNullOrWhiteSpace(uncPath))
             return null;
+         
+         Uri uri;
+         if (Uri.TryCreate(Path.GetRegularPathCore(uncPath, GetFullPathOptions.None, false), UriKind.Absolute, out uri) && uri.IsUnc)
+         {
+            return new[]
+            {
+               uri.Host,
+               uri.AbsolutePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
+            };
+         }
 
-         // Get Host and Share.
-         uncPath = uncPath.Replace(Path.LongPathUncPrefix, string.Empty);
-         uncPath = uncPath.Replace(Path.UncPrefix, string.Empty);
-
-         return uncPath.Split(Path.DirectorySeparatorChar);
+         return null;
       }
 
       #endregion // GetHostShareFromPath
@@ -112,94 +162,81 @@ namespace Alphaleonis.Win32.Network
       #region GetShareInfo
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>
-      /// A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available,
-      /// and <paramref name="continueOnException"/> is <see langword="true"/>.
-      /// </returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
       /// <param name="uncPath">The share in the format: \\host\share.</param>
-      /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(string uncPath, bool continueOnException)
       {
          string[] unc = GetHostShareFromPath(uncPath);
-         return GetShareInfoInternal(ShareInfoLevel.Info503, unc[0], unc[1], continueOnException);
+         return GetShareInfoCore(ShareInfoLevel.Info503, unc[0], unc[1], continueOnException);
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>
-      /// A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available,
-      /// and <paramref name="continueOnException"/> is <see langword="true"/>.
-      /// </returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
       /// <param name="uncPath">The share in the format: \\host\share.</param>
-      /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(ShareInfoLevel shareLevel, string uncPath, bool continueOnException)
       {
          string[] unc = GetHostShareFromPath(uncPath);
-         return GetShareInfoInternal(shareLevel, unc[0], unc[1], continueOnException);
+         return GetShareInfoCore(shareLevel, unc[0], unc[1], continueOnException);
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>
-      /// A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available,
-      /// and <paramref name="continueOnException"/> is <see langword="true"/>.
-      /// </returns>
-      /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
+      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
+      /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
-      /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(string host, string share, bool continueOnException)
       {
-         return GetShareInfoInternal(ShareInfoLevel.Info503, host, share, continueOnException);
+         return GetShareInfoCore(ShareInfoLevel.Info503, host, share, continueOnException);
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>
-      /// A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available,
-      /// and <paramref name="continueOnException"/> is <see langword="true"/>.
-      /// </returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>
-      /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(ShareInfoLevel shareLevel, string host, string share, bool continueOnException)
       {
-         return GetShareInfoInternal(shareLevel, host, share, continueOnException);
+         return GetShareInfoCore(shareLevel, host, share, continueOnException);
       }
 
       #endregion // GetShareInfo
 
-
       #region Internal Methods
 
-      #region EnumerateOpenConnectionsInternal
+      #region EnumerateOpenConnectionsCore
 
-      /// <summary>Unified method EnumerateOpenConnectionsInternal() to enumerate open connections from the specified host.</summary>
-      /// <returns>Returns <see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <summary>Enumerates open connections from the specified host.</summary>
+      /// <returns><see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      private static IEnumerable<OpenConnectionInfo> EnumerateOpenConnectionsInternal(string host, string share, bool continueOnException)
+      private static IEnumerable<OpenConnectionInfo> EnumerateOpenConnectionsCore(string host, string share, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(share))
             throw new ArgumentNullException("share");
 
-         return EnumerateNetworkObjectInternal(new FunctionData { ExtraData1 = share }, (NativeMethods.ConnectionInfo1 structure, IntPtr buffer) =>
+         return EnumerateNetworkObjectCore(new FunctionData { ExtraData1 = share }, (NativeMethods.CONNECTION_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
                new OpenConnectionInfo(host, structure),
 
-            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
             {
                // When host == null, the local computer is used.
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetConnectionEnum(stripUnc, functionData.ExtraData1, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 
@@ -207,18 +244,20 @@ namespace Alphaleonis.Win32.Network
             continueOnException);
       }
 
-      #endregion // EnumerateOpenConnectionsInternal
+      #endregion // EnumerateOpenConnectionsCore
 
-      #region EnumerateSharesInternal
+      #region EnumerateSharesCore
 
-      /// <summary>Unified method EnumerateSharesInternal() to enumerate (hidden) Server Message Block (SMB) shares from the specified host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
-      /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <summary>Enumerates Server Message Block (SMB) shares from a local or remote host.</summary>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
+      /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
+      /// <param name="shareType">The type of the shared resource to retrieve.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      internal static IEnumerable<ShareInfo> EnumerateSharesInternal(string host, bool continueOnException)
+      internal static IEnumerable<ShareInfo> EnumerateSharesCore(string host, ShareType shareType, bool continueOnException)
       {
          // When host == null, the local computer is used.
          // However, the resulting OpenResourceInfo.Host property will be empty.
@@ -226,62 +265,59 @@ namespace Alphaleonis.Win32.Network
          // Furthermore, the UNC prefix: \\ is not required and always removed.
          string stripUnc = Utils.IsNullOrWhiteSpace(host)
             ? Environment.MachineName
-            : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+            : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
          var fd = new FunctionData();
          bool hasItems = false;
+         bool yieldAll = shareType == ShareType.All;
 
-         // Try ShareInfo503 structure.
-         foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo503 structure, IntPtr buffer) =>
+         // Try SHARE_INFO_503 structure.
+         foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_503 structure, SafeGlobalMemoryBufferHandle buffer) =>
             new ShareInfo(stripUnc, ShareInfoLevel.Info503, structure),
-            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-               NativeMethods.NetShareEnum(stripUnc, 503, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
+            (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+               NativeMethods.NetShareEnum(stripUnc, 503, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
          {
             yield return si;
             hasItems = true;
          }
 
-         // ShareInfo503 is requested, but not supported/possible.
-         // Try again with ShareInfo2 structure.
+         // SHARE_INFO_503 is requested, but not supported/possible.
+         // Try again with SHARE_INFO_2 structure.
          if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo2 structure, IntPtr buffer) =>
+            foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info2, structure),
-               (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                  NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
+               (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+                  NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
             {
                yield return si;
                hasItems = true;
             }
 
-         // ShareInfo2 is requested, but not supported/possible.
-         // Try again with ShareInfo1 structure.
+         // SHARE_INFO_2 is requested, but not supported/possible.
+         // Try again with SHARE_INFO_1 structure.
          if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo1 structure, IntPtr buffer) =>
+            foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info1, structure),
-               (FunctionData functionData, out  IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                  NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
+               (FunctionData functionData, out  SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+                  NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
             {
                yield return si;
             }
       }
 
-      #endregion // EnumerateSharesInternal
+      #endregion // EnumerateSharesCore
 
-      #region GetShareInfoInternal
+      #region GetShareInfoCore
 
-      /// <summary>Unified method GetShareInfoInternal() to get the <see cref="ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
-      /// <returns>
-      /// A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available,
-      /// and <paramref name="continueOnException"/> is <see langword="true"/>.
-      /// </returns>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <summary>Gets the <see cref="ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
+      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>
-      /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
-      [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Network.NativeMethods.NetApiBufferFree(System.IntPtr)")]
+      /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      internal static ShareInfo GetShareInfoInternal(ShareInfoLevel shareLevel, string host, string share, bool continueOnException)
+      internal static ShareInfo GetShareInfoCore(ShareInfoLevel shareLevel, string host, string share, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(share))
             return null;
@@ -292,76 +328,67 @@ namespace Alphaleonis.Win32.Network
          // Furthermore, the UNC prefix: \\ is not required and always removed.
          string stripUnc = Utils.IsNullOrWhiteSpace(host)
             ? Environment.MachineName
-            : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+            : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
          bool fallback = false;
 
 
-      startNetShareGetInfo:
+         startNetShareGetInfo:
 
-         var buffer = IntPtr.Zero;
+         SafeGlobalMemoryBufferHandle safeBuffer;
 
-         try
+         uint structureLevel = Convert.ToUInt16(shareLevel, CultureInfo.InvariantCulture);
+         uint lastError = NativeMethods.NetShareGetInfo(stripUnc, share, structureLevel, out safeBuffer);
+
+         using (safeBuffer)
          {
-            uint structureLevel = Convert.ToUInt16(shareLevel, CultureInfo.InvariantCulture);
-
-            uint lastError = NativeMethods.NetShareGetInfo(stripUnc, share, structureLevel, out buffer);
-
             switch (lastError)
             {
                case Win32Errors.NERR_Success:
                   switch (shareLevel)
                   {
                      case ShareInfoLevel.Info1005:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo1005>(0, buffer))
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_1005>(0))
                         {
-                           NetFullPath = Path.CombineInternal(false, Path.UncPrefix + stripUnc, share)
+                           NetFullPath = Path.CombineCore(false, Path.UncPrefix + stripUnc, share)
                         };
 
                      case ShareInfoLevel.Info503:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo503>(0, buffer));
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_503>(0));
 
                      case ShareInfoLevel.Info2:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo2>(0, buffer));
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_2>(0));
 
                      case ShareInfoLevel.Info1:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo1>(0, buffer));
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_1>(0));
                   }
                   break;
 
 
-               // Observed when ShareInfo503 is requested, but not supported/possible.
-               // Fall back on ShareInfo2 structure and try again.
+               // Observed when SHARE_INFO_503 is requested, but not supported/possible.
+               // Fall back on SHARE_INFO_2 structure and try again.
                case Win32Errors.RPC_X_BAD_STUB_DATA:
 
                case Win32Errors.ERROR_ACCESS_DENIED:
                   if (!fallback && shareLevel != ShareInfoLevel.Info2)
                   {
-                     NativeMethods.NetApiBufferFree(buffer);
-
                      shareLevel = ShareInfoLevel.Info2;
                      fallback = true;
                      goto startNetShareGetInfo;
                   }
                   break;
 
-
                default:
                   if (!continueOnException)
-                     throw new NetworkInformationException((int)lastError);
+                     throw new NetworkInformationException((int) lastError);
                   break;
             }
 
             return null;
          }
-         finally
-         {
-            if (buffer != IntPtr.Zero)
-               NativeMethods.NetApiBufferFree(buffer);
-         }
       }
 
-      #endregion // GetShareInfoInternal
+      #endregion // GetShareInfoCore
 
       #endregion // Internal Methods
    }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -34,14 +34,12 @@ namespace Alphaleonis.Win32.Filesystem
    public sealed class DeviceInfo
    {
       #region Constructors
-
-      [NonSerialized] private readonly string _hostName;
-
+      
       /// <summary>Initializes a DeviceInfo class.</summary>
       [SecurityCritical]
       public DeviceInfo()
       {
-         _hostName = Host.GetUncName();
+         HostName = Host.GetUncName();
       }
 
       /// <summary>Initializes a DeviceInfo class.</summary>
@@ -49,141 +47,94 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DeviceInfo(string host)
       {
-         _hostName = Host.GetUncName(host);
+         HostName = Host.GetUncName(host).Replace(Path.UncPrefix, string.Empty);
       }
 
       #endregion // Constructors
 
-      #region Methods
 
-      #region EnumerateDevices
+      #region Methods
 
       /// <summary>Enumerates all available devices on the local host.</summary>
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
-      /// <returns>Returns <see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> from the local host.</returns>
+      /// <returns><see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> from the local host.</returns>
       [SecurityCritical]
       public IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {
-         return Device.EnumerateDevicesInternal(null, _hostName, deviceGuid);
+         return Device.EnumerateDevicesCore(null, HostName, deviceGuid);
       }
-      
-      #endregion // EnumerateDevices
       
       #endregion // Methods
 
-      #region Properties
 
-      #region BaseContainerId
+      #region Properties
 
       /// <summary>Represents the <see cref="Guid"/> value of the base container identifier (ID) .The Windows Plug and Play (PnP) manager assigns this value to the device node (devnode).</summary>
       public Guid BaseContainerId { get; internal set; }
 
-      #endregion // BaseContainerId
-
-      #region Class
 
       /// <summary>Represents the name of the device setup class that a device instance belongs to.</summary>
       public string Class { get; internal set; }
 
-      #endregion // Class
-
-      #region ClassGuid
 
       /// <summary>Represents the <see cref="Guid"/> of the device setup class that a device instance belongs to.</summary>
       public Guid ClassGuid { get; internal set; }
 
-      #endregion // ClassGuid
-      
-      #region CompatibleIds
 
       /// <summary>Represents the list of compatible identifiers for a device instance.</summary>
       public string CompatibleIds { get; internal set; }
 
-      #endregion // CompatibleIds
-
-      #region DeviceDescription
 
       /// <summary>Represents a description of a device instance.</summary>
       public string DeviceDescription { get; internal set; }
 
-      #endregion // DeviceDescription
-
-      #region DevicePath
 
       /// <summary>The device interface path.</summary>
       public string DevicePath { get; internal set; }
 
-      #endregion // DevicePath
-
-      #region Driver
 
       /// <summary>Represents the registry entry name of the driver key for a device instance.</summary>
       public string Driver { get; internal set; }
 
-      #endregion // Driver
-
-      #region EnumeratorName
 
       /// <summary>Represents the name of the enumerator for a device instance.</summary>
       public string EnumeratorName { get; internal set; }
 
-      #endregion // EnumeratorName
-
-      #region FriendlyName
 
       /// <summary>Represents the friendly name of a device instance.</summary>
       public string FriendlyName { get; internal set; }
 
-      #endregion // FriendlyName
-
-      #region HardwareId
 
       /// <summary>Represents the list of hardware identifiers for a device instance.</summary>
       public string HardwareId { get; internal set; }
 
-      #endregion // HardwareId
 
-      #region InstanceId
+      /// <summary>The host name that was passed to the class constructor.</summary>
+      public string HostName { get; internal set; }
+
 
       /// <summary>Gets the instance Id of the device.</summary>
       public string InstanceId { get; internal set; }
 
-      #endregion // InstanceId
-
-      #region LocationInformation
 
       /// <summary>Represents the bus-specific physical location of a device instance.</summary>
       public string LocationInformation { get; internal set; }
 
-      #endregion // LocationInformation
-
-      #region LocationPaths
 
       /// <summary>Represents the location of a device instance in the device tree.</summary>
       public string LocationPaths { get; internal set; }
 
-      #endregion // LocationPaths
-
-      #region Manufacturer
 
       /// <summary>Represents the name of the manufacturer of a device instance.</summary>
       public string Manufacturer { get; internal set; }
 
-      #endregion // Manufacturer
-
-      #region PhysicalDeviceObjectName
 
       /// <summary>Encapsulates the physical device location information provided by a device's firmware to Windows.</summary>
       public string PhysicalDeviceObjectName { get; internal set; }
 
-      #endregion // PhysicalDeviceObjectName
-
-      #region Service
 
       /// <summary>Represents the name of the service that is installed for a device instance.</summary>
       public string Service { get; internal set; }
-
-      #endregion // Service
 
       #endregion // Properties
    }

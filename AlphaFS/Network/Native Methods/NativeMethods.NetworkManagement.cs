@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,31 +19,14 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
    partial class NativeMethods
    {
-      /// <summary>The NetApiBufferFree function frees the memory that the NetApiBufferAllocate function allocates.</summary>
-      /// <returns>
-      /// If the function succeeds, the return value is NERR_Success.
-      /// If the function fails, the return value is a system error code.
-      /// </returns>
-      /// <remarks>
-      /// <para>The NetApiBufferFree function is used to free memory used by network management functions.</para>
-      /// <para>SetLastError is set to <see langword="false"/>.</para>
-      /// <para>Minimum supported client: Windows 2000 Professional [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows 2000 Server [desktop apps only]</para>
-      /// </remarks>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("netapi32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
-      [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint NetApiBufferFree(IntPtr buffer);
-
-
       /// <summary>The NetServerDiskEnum function retrieves a list of disk drives on a server.</summary>
       /// <returns>
       /// If the function succeeds, the return value is NERR_Success.
@@ -56,11 +39,8 @@ namespace Alphaleonis.Win32.Network
       /// <para>Minimum supported server: Windows 2000 Server [desktop apps only]</para>
       /// </remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint NetServerDiskEnum([MarshalAs(UnmanagedType.LPWStr)] string serverName,
-         [MarshalAs(UnmanagedType.U4)] uint level, out IntPtr bufPtr,
-         [MarshalAs(UnmanagedType.I4)] int prefMaxLen, [MarshalAs(UnmanagedType.U4)] out uint entriesRead,
-         [MarshalAs(UnmanagedType.U4)] out uint totalEntries, [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
+      internal static extern uint NetServerDiskEnum([MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.U4)] uint level, out SafeGlobalMemoryBufferHandle bufPtr, [MarshalAs(UnmanagedType.I4)] int prefMaxLen, [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalEntries, [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
    }
 }
