@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Enable BasicSearch and LargeCache by default.
          var options = DirectoryEnumerationOptions.BasicSearch | DirectoryEnumerationOptions.LargeCache | (continueOnException ? DirectoryEnumerationOptions.ContinueOnException : 0);
 
-         return (new FindFileSystemEntryInfo(isFolder, transaction, path, Path.WildcardQuestion, options, typeof(FileSystemEntryInfo), pathFormat)).Get<FileSystemEntryInfo>();
+         return (new FindFileSystemEntryInfo(isFolder, transaction, path, Path.WildcardStarMatchAll, options, typeof(FileSystemEntryInfo), pathFormat)).Get<FileSystemEntryInfo>();
       }
 
       #endregion // Internal Methods
