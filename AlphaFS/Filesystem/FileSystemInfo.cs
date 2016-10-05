@@ -603,14 +603,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Transaction
 
-      [NonSerialized] private KernelTransaction _transaction;
-
       /// <summary>[AlphaFS] Represents the KernelTransaction that was passed to the constructor.</summary>
-      public KernelTransaction Transaction
-      {
-         get { return _transaction; }
-         internal set { _transaction = value; }
-      }
+      public KernelTransaction Transaction { get; set; }
 
       #endregion // Transaction
 

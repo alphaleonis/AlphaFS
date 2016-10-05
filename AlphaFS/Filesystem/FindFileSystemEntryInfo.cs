@@ -215,14 +215,14 @@ namespace Alphaleonis.Win32.Filesystem
          // This constructor is an O(n) operation, where n is capacity.
 
          var dirs = new Queue<string>(1000);
-
-         // Removes the object at the beginning of your Queue.
-         // The algorithmic complexity of this is O(1). It doesn't loop over elements.
          dirs.Enqueue(InputPath);
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (dirs.Count > 0)
             {
+               // Removes the object at the beginning of your Queue.
+               // The algorithmic complexity of this is O(1). It doesn't loop over elements.
+
                var path = Path.AddTrailingDirectorySeparator(dirs.Dequeue(), false);
                var pathLp = path + Path.WildcardStarMatchAll;
                NativeMethods.WIN32_FIND_DATA win32FindData;

@@ -29,12 +29,20 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
+      public void __Directory_Move_HostToHost_Success()
+      {
+         Directory_Move_HostToHost(false);
+         Directory_Move_HostToHost(true);
+      }
+
+
+      [TestMethod]
       public void Directory_Move_SameVolume_LocalAndNetwork_Success()
       {
          Directory_Move(false);
          Directory_Move(true);
       }
-
+      
 
       [TestMethod]
       public void Directory_Move_FromLocalToNetwork_Success()
@@ -192,13 +200,22 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
 
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
+            var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed, null, null);
 
 
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
+
+
+            // Test against moveResult results.
+
+            UnitTestConstants.Dump(moveResult, -12);
+
+            Assert.AreEqual(sourceTotal, moveResult.TotalFolders + moveResult.TotalFiles, "The number of total file system objects do not match.");
+            Assert.AreEqual(sourceTotalFiles, moveResult.TotalFiles, "The number of total files do not match.");
+            Assert.AreEqual(sourceTotalSize, moveResult.TotalBytes, "The total file size does not match.");
 
 
             Assert.IsFalse(System.IO.Directory.Exists(folderSrc.FullName), "The original folder exists, but is expected not to.");
@@ -512,6 +529,65 @@ namespace AlphaFS.UnitTest
             dirSecurity = dirInfo.GetAccessControl();
             dirSecurity.RemoveAccessRule(rule);
             dirInfo.SetAccessControl(dirSecurity);
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Move_HostToHost(bool localToNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(localToNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Move-HostToHost"))
+         {
+            var localRoot = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(System.IO.Path.Combine(rootDir.Directory.FullName, "HostToHost"));
+            var remoteRoot = @"\\wssccm1002.wsp.local\workspace$\Temp\AdminJJa\HostToHost";
+
+            Console.WriteLine("\nSrc Directory Path: [{0}]", !localToNetwork ? localRoot : remoteRoot);
+            Console.WriteLine("Dst Directory Path: [{0}]", localToNetwork ? localRoot : remoteRoot);
+
+
+            if (System.IO.Directory.Exists(localRoot))
+               System.IO.Directory.Delete(localRoot, true);
+
+            if (System.IO.Directory.Exists(remoteRoot))
+               System.IO.Directory.Delete(remoteRoot, true);
+
+            System.IO.Directory.CreateDirectory(!localToNetwork ? localRoot : remoteRoot);
+            UnitTestConstants.CreateDirectoriesAndFiles(!localToNetwork ? localRoot : remoteRoot, new Random().Next(5, 15), true);
+
+
+            var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
+            var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(!localToNetwork ? localRoot : remoteRoot, dirEnumOptions);
+            var sourceTotal = props["Total"];
+            var sourceTotalFiles = props["File"];
+            var sourceTotalSize = props["Size"];
+            Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - TotalFiles: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
+
+
+            var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(!localToNetwork ? localRoot : remoteRoot, localToNetwork ? localRoot : remoteRoot, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed, null, null);
+
+
+            props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(localToNetwork ? localRoot : remoteRoot, dirEnumOptions);
+            Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
+            Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
+            Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
+
+
+            // Test against moveResult results.
+
+            UnitTestConstants.Dump(moveResult, -12);
+
+            Assert.AreEqual(sourceTotal, moveResult.TotalFolders + moveResult.TotalFiles, "The number of total file system objects do not match.");
+            Assert.AreEqual(sourceTotalFiles, moveResult.TotalFiles, "The number of total files do not match.");
+            Assert.AreEqual(sourceTotalSize, moveResult.TotalBytes, "The total file size does not match.");
+
+
+            Assert.IsFalse(System.IO.Directory.Exists(!localToNetwork ? localRoot : remoteRoot), "The original folder exists, but is expected not to.");
          }
 
          Console.WriteLine();

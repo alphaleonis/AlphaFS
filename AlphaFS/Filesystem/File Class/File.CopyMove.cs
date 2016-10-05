@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
@@ -74,10 +74,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName, bool overwrite)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
       }
 
       #endregion // .NET
+
 
       #region AlphaFS
 
@@ -102,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName, PathFormat pathFormat)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, pathFormat);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
@@ -125,10 +126,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName, bool overwrite, PathFormat pathFormat)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, null, pathFormat);
       }
 
       #endregion // Non-Transactional
+
 
       #region Transactional
 
@@ -151,7 +153,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
@@ -174,9 +176,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, PathFormat pathFormat)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, pathFormat);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, null, pathFormat);
       }
-
 
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
@@ -199,7 +200,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, bool overwrite)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
@@ -223,7 +224,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, bool overwrite, PathFormat pathFormat)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, null, pathFormat);
       }
 
       #endregion // Transactional
@@ -231,6 +232,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // AlphaFS
 
       #endregion // Copy
+
 
       #region Copy (CopyOptions)
 
@@ -256,7 +258,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, copyOptions, null, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
@@ -280,11 +282,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, PathFormat pathFormat)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, copyOptions, null, null, null, pathFormat);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, copyOptions, null, null, null, null, pathFormat);
       }
 
-
-
+      
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
@@ -306,7 +307,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
@@ -331,15 +332,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, pathFormat);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, null, pathFormat);
       }
 
-
-
+      
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
@@ -361,13 +361,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, null, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(false, null, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
@@ -390,15 +390,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, null, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(false, null, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, null, pathFormat);
       }
 
       
-
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
@@ -421,13 +420,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
@@ -451,10 +450,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, null, pathFormat);
       }
 
       #endregion // Non-Transactional
+
 
       #region Transactional
 
@@ -479,7 +479,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
@@ -504,11 +504,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, PathFormat pathFormat)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, pathFormat);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, null, pathFormat);
       }
 
-
-
+      
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
@@ -531,7 +530,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
@@ -557,15 +556,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, pathFormat);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, null, pathFormat);
       }
-
-
+      
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
@@ -588,13 +586,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
@@ -618,15 +616,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, null, pathFormat);
       }
-
 
       
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
@@ -650,13 +647,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
@@ -681,12 +678,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, null, pathFormat);
       }
 
       #endregion // Transactional
 
       #endregion // Copy (CopyOptions)
+
 
       #region Move
 
@@ -712,7 +710,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destinationFileName)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, null, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -742,7 +740,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destinationFileName, PathFormat pathFormat)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, pathFormat);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, null, pathFormat);
       }
 
       #endregion // Non-Transactional
@@ -770,7 +768,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
@@ -795,7 +793,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, PathFormat pathFormat)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, pathFormat);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, null, pathFormat);
       }
       
       #endregion // Transactional
@@ -803,6 +801,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // AlphaFS
 
       #endregion // Move
+
 
       #region Move (MoveOptions)
 
@@ -829,7 +828,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, moveOptions, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
@@ -854,7 +853,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, moveOptions, null, null, pathFormat);
+         CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, moveOptions, null, null, null, pathFormat);
       }
 
 
@@ -883,7 +882,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
@@ -911,7 +910,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, null, pathFormat);
       }
 
       #endregion // Non-Transactional
@@ -940,7 +939,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.RelativePath);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
@@ -966,7 +965,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, pathFormat);
+         CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, null, pathFormat);
       }
 
 
@@ -996,7 +995,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
@@ -1025,14 +1024,29 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, null, pathFormat);
       }
       
       #endregion // Transactional
 
       #endregion // Move (MoveOptions)
       
+
       #region Internal Methods
+
+      /// <summary>Determine the Copy or Move action.</summary>
+      internal static bool DetermineIsCopy(CopyOptions? copyOptions, MoveOptions? moveOptions)
+      {
+         // Determine Copy or Move action.
+         var isCopy = copyOptions != null;
+         var isMove = !isCopy && moveOptions != null;
+
+         if ((!isCopy && !isMove) || (isCopy && isMove))
+            throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
+
+         return isCopy;
+      }
+
 
       /// <summary>Copy/move a Non-/Transacted file or directory including its children to a new location, <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,
       ///   and the possibility of notifying the application of its progress through a callback function.
@@ -1063,20 +1077,27 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions">Flags that specify how the file or directory is to be moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="copyMoveResult"></param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(bool isFolder, KernelTransaction transaction, string sourceFileName, string destinationFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      internal static CopyMoveResult CopyMoveCore(bool isFolder, KernelTransaction transaction, string sourceFileName, string destinationFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult, PathFormat pathFormat)
       {
          #region Setup
 
-         var fullCheck = pathFormat == PathFormat.RelativePath;
+         var sourceFileNameLp = sourceFileName;
+         var destFileNameLp = destinationFileName;
+         var skipPathChecks = pathFormat == PathFormat.LongFullPath;
 
-         Path.CheckSupportedPathFormat(sourceFileName, fullCheck, fullCheck);
-         Path.CheckSupportedPathFormat(destinationFileName, fullCheck, fullCheck);
 
-         var sourceFileNameLp = Path.GetExtendedLengthPathCore(transaction, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
-         var destFileNameLp = Path.GetExtendedLengthPathCore(transaction, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         if (!skipPathChecks)
+         {
+            Path.CheckSupportedPathFormat(sourceFileName, true, true);
+            Path.CheckSupportedPathFormat(destinationFileName, true, true);
+
+            sourceFileNameLp = Path.GetExtendedLengthPathCore(transaction, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
+            destFileNameLp = Path.GetExtendedLengthPathCore(transaction, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         }
 
 
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
@@ -1084,13 +1105,13 @@ namespace Alphaleonis.Win32.Filesystem
          var cancel = false;
 
          // Determine Copy or Move action.
-         var doCopy = copyOptions != null;
-         var doMove = !doCopy && moveOptions != null;
+         var isCopy = DetermineIsCopy(copyOptions, moveOptions);
+         var isMove = !isCopy;
 
-         if ((!doCopy && !doMove) || (doCopy && doMove))
-            throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
 
          var raiseException = progressHandler == null;
+         //Task completedTask = null;
+
 
          // Setup callback function for progress notifications.
          var routine = progressHandler != null
@@ -1098,17 +1119,19 @@ namespace Alphaleonis.Win32.Filesystem
                   progressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, userProgressData)
             : (NativeMethods.NativeCopyMoveProgressRoutine) null;
 
-         #endregion //Setup
+
+         var cmr = copyMoveResult ?? new CopyMoveResult(sourceFileNameLp, destFileNameLp, false, (int) Win32Errors.ERROR_SUCCESS);
+
+         #endregion // Setup
 
 
       startCopyMove:
 
-         var lastError = Win32Errors.ERROR_SUCCESS;
+        #region Win32 Copy/Move
 
-         #region Win32 Copy/Move
+         var success = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
-         if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
-            ? doMove
+            ? isMove
                // MoveFileWithProgress() / MoveFileTransacted()
                // In the ANSI version of this function, the name is limited to MAX_PATH characters.
                // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
@@ -1119,17 +1142,30 @@ namespace Alphaleonis.Win32.Filesystem
                // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                // 2013-04-15: MSDN confirms LongPath usage.
 
+
+               // Note: The NativeMethod.MoveFileXxx() methods fail if one of the paths is a UNC path, even though both paths refer to the same volume.
+               // For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
+               
+
                ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
                : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
 
-            : doMove
+            : isMove
                ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
-               : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle)))
+               : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle);
+
+
+         
+         
+         var lastError = (uint) Marshal.GetLastWin32Error();
+         if (!success)
          {
-            lastError = (uint) Marshal.GetLastWin32Error();
+            cmr.ErrorCode = (int) lastError;
 
             if (lastError == Win32Errors.ERROR_REQUEST_ABORTED)
             {
+               // MSDN:
+               //
                // If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
                // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
                // In this case, the partially copied destination file is deleted.
@@ -1139,6 +1175,7 @@ namespace Alphaleonis.Win32.Filesystem
                // In this case, the partially copied destination file is left intact.
 
                cancel = true;
+               cmr.IsCanceled = cancel;
             }
 
             else if (raiseException)
@@ -1177,16 +1214,18 @@ namespace Alphaleonis.Win32.Filesystem
                      break;
 
                   default:
+                     var destExists = ExistsCore(isFolder, transaction, destFileNameLp, PathFormat.LongFullPath);
+
                      // For a number of error codes (sharing violation, path not found, etc)
-                     // we don't know if the problem was with the source or dest file.
+                     // we don't know if the problem was with the source or destination file.
 
                      // Check if destination directory already exists.
                      // Directory.Move()
                      // MSDN: .NET 3.5+: IOException: destDirName already exists. 
-                     if (ExistsCore(true, transaction, destFileNameLp, PathFormat.LongFullPath))
+                     if (isFolder && destExists)
                         NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destFileNameLp);
 
-                     if (doMove)
+                     if (isMove)
                      {
                         // Ensure that the source file or directory exists.
                         // Directory.Move()
@@ -1212,10 +1251,10 @@ namespace Alphaleonis.Win32.Filesystem
                         // File.Move()
                         // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
                         //   Directory exists with the same name as the file.
-                        if (!isFolder && ExistsCore(true, transaction, destFileNameLp, PathFormat.LongFullPath))
+                        if (!isFolder && destExists)
                            NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.Target_File_Is_A_Directory, destFileNameLp));
 
-                        if (doMove)
+                        if (isMove)
                         {
                            var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                            FillAttributeInfoCore(transaction, destFileNameLp, ref data, false, true);
@@ -1264,12 +1303,14 @@ namespace Alphaleonis.Win32.Filesystem
 
          #endregion // Win32 Copy/Move
 
+
          #region Transfer Timestamps
 
          // Apply original Timestamps if requested.
          // MoveFileWithProgress() / MoveFileTransacted() automatically preserve Timestamps.
          // File.Copy()
-         if (preserveDates && doCopy && lastError == Win32Errors.ERROR_SUCCESS)
+
+         if (success && preserveDates && isCopy)
          {
             // Currently preserveDates is only used with files.
             var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
@@ -1282,8 +1323,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          #endregion // Transfer Timestamps
 
-         // The copy/move operation succeeded, failed or was canceled.
-         return new CopyMoveResult(sourceFileNameLp, destFileNameLp, isFolder, doMove, cancel, (int) lastError);
+
+         return cmr;
       }
 
       #endregion // Internal Methods
