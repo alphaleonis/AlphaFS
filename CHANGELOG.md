@@ -8,6 +8,7 @@ Version vNext  (20xx-xx-xx)
 
 - Issue #273: Improve methods `Directory/File.CopyMoveCore`: Make code recursive-aware, skip additional path checks and validations.
 - Issue #274: Improve methods `Directory/File.CopyMoveCore`: Improve detection of same volume.
+- Issue #275: Improve methods `Directory/File.CopyMoveCore`: Eliminate recursion.
 
 
 Version 2.1.1  (2016-xx-xx)

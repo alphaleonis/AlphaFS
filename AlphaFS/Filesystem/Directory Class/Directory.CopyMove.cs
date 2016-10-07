@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security;
@@ -804,10 +805,16 @@ namespace Alphaleonis.Win32.Filesystem
 
          var sourcePathLp = sourcePath;
          var destinationPathLp = destinationPath;
-         var skipPathChecks = pathFormat == PathFormat.LongFullPath;
+         var emulateMove = false;
+
+         // Determine Copy or Move action.
+         var isCopy = File.DetermineIsCopy(copyOptions, moveOptions);
+         var isMove = !isCopy;
+
+         var cmr = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, false, (int) Win32Errors.ERROR_SUCCESS);
 
 
-         if (!skipPathChecks)
+         if (pathFormat != PathFormat.LongFullPath)
          {
             Path.CheckSupportedPathFormat(sourcePathLp, true, true);
             Path.CheckSupportedPathFormat(destinationPathLp, true, true);
@@ -825,69 +832,60 @@ namespace Alphaleonis.Win32.Filesystem
             // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
             if (sourcePathLp.Equals(destinationPathLp, StringComparison.OrdinalIgnoreCase))
                NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPathLp);
-         }
 
 
-         var emulateMove = false;
-
-         // Determine Copy or Move action.
-         var isCopy = File.DetermineIsCopy(copyOptions, moveOptions);
-         var isMove = !isCopy;
-
-         var cmr = copyMoveResult ?? new CopyMoveResult(sourcePathLp, destinationPathLp, false, (int) Win32Errors.ERROR_SUCCESS);
-
-
-         // Execute once only.
-         if (!skipPathChecks && isMove)
-         {
-            // Compare the root part of both paths.
-            var equalRootPaths = Path.GetPathRoot(sourcePathLp, false).Equals(Path.GetPathRoot(destinationPathLp, false), StringComparison.OrdinalIgnoreCase);
-
-            // Method Volume.IsSameVolume() returns true when both paths refer to the same volume, even if one of the paths is a UNC path.
-            // For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
-            var isSameVolume = equalRootPaths || Volume.IsSameVolume(sourcePathLp, destinationPathLp);
-
-            isMove = isSameVolume && equalRootPaths;
-            
-
-            if (!isMove)
-            {
-               // A Move() can be emulated by using Copy() and Delete(), but only if the CopyAllowed flag is set.
-               isMove = ((MoveOptions) moveOptions & MoveOptions.CopyAllowed) != 0;
-
-               // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
-               if (!isMove)
-                  NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, sourcePathLp, destinationPathLp);
-            }
-
-
-            // The NativeMethod.MoveFileXxx() methods fail when:
-            // - A directory is being moved;
-            // - One of the paths is a UNC path, even though both paths refer to the same volume.
-            //   For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
+            // Execute once only.
             if (isMove)
             {
-               var srcIsUncPath = Path.IsUncPathCore(sourcePathLp, false, false);
-               var dstIsUncPath = Path.IsUncPathCore(destinationPathLp, false, false);
+               // Compare the root part of both paths.
+               var equalRootPaths = Path.GetPathRoot(sourcePathLp, false).Equals(Path.GetPathRoot(destinationPathLp, false), StringComparison.OrdinalIgnoreCase);
 
-               isMove = srcIsUncPath && dstIsUncPath;
+               // Method Volume.IsSameVolume() returns true when both paths refer to the same volume, even if one of the paths is a UNC path.
+               // For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
+               var isSameVolume = equalRootPaths || Volume.IsSameVolume(sourcePathLp, destinationPathLp);
+
+               isMove = isSameVolume && equalRootPaths;
+
+
                if (!isMove)
-                  isMove = !srcIsUncPath && !dstIsUncPath;
-            }
+               {
+                  // A Move() can be emulated by using Copy() and Delete(), but only if the CopyAllowed flag is set.
+                  isMove = ((MoveOptions) moveOptions & MoveOptions.CopyAllowed) != 0;
+
+                  // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
+                  if (!isMove)
+                     NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, sourcePathLp, destinationPathLp);
+               }
 
 
-            isMove = isMove && isSameVolume && equalRootPaths;
+               // The NativeMethod.MoveFileXxx() methods fail when:
+               // - A directory is being moved;
+               // - One of the paths is a UNC path, even though both paths refer to the same volume.
+               //   For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
+               if (isMove)
+               {
+                  var srcIsUncPath = Path.IsUncPathCore(sourcePathLp, false, false);
+                  var dstIsUncPath = Path.IsUncPathCore(destinationPathLp, false, false);
+
+                  isMove = srcIsUncPath && dstIsUncPath;
+                  if (!isMove)
+                     isMove = !srcIsUncPath && !dstIsUncPath;
+               }
 
 
-            // Emulate Move().
-            if (!isMove)
-            {
-               emulateMove = true;
+               isMove = isMove && isSameVolume && equalRootPaths;
 
-               moveOptions = null;
 
-               isCopy = true;
-               copyOptions = CopyOptions.FailIfExists;
+               // Emulate Move().
+               if (!isMove)
+               {
+                  emulateMove = true;
+
+                  moveOptions = null;
+
+                  isCopy = true;
+                  copyOptions = CopyOptions.FailIfExists;
+               }
             }
          }
          
@@ -898,43 +896,52 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (isCopy)
          {
-            CreateDirectoryCore(transaction, destinationPathLp, null, null, false, PathFormat.LongFullPath);
-
-            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
+            var dirs = new Queue<string>(1000);
+            dirs.Enqueue(sourcePathLp);
+            
+            while (dirs.Count > 0)
             {
-               var newDestinationPathLp = Path.CombineCore(false, destinationPathLp, fsei.FileName);
+               var source = dirs.Dequeue();
+               var folder = source.Replace(sourcePathLp, destinationPathLp);
 
-               cmr = fsei.IsDirectory
-                  ? CopyMoveCore(transaction, fsei.LongFullPath, newDestinationPathLp, copyOptions, moveOptions, progressHandler, userProgressData, cmr, PathFormat.LongFullPath)
-                  : File.CopyMoveCore(false, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions, moveOptions, progressHandler, userProgressData, cmr, PathFormat.LongFullPath);
-
-
-               if (cmr.ErrorCode == Win32Errors.ERROR_SUCCESS)
+               foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, source, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
                {
+                  var newDestinationPathLp = Path.CombineCore(false, folder, fsei.FileName);
+
                   if (fsei.IsDirectory)
+                  {
+                     CreateDirectoryCore(transaction, newDestinationPathLp, null, null, false, PathFormat.LongFullPath);
+
+                     dirs.Enqueue(fsei.LongFullPath);
                      cmr.TotalFolders++;
-                  else
+
+                     continue;
+                  }
+
+
+                  cmr = File.CopyMoveCore(false, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions, moveOptions, progressHandler, userProgressData, cmr, PathFormat.LongFullPath);
+
+                  if (cmr.ErrorCode == Win32Errors.ERROR_SUCCESS)
                   {
                      cmr.TotalFiles++;
                      cmr.TotalBytes += fsei.FileSize;
+
+                     // Remove the folder or file when copying was successful.
+                     if (emulateMove)
+                     {
+                        if (fsei.IsDirectory)
+                           DeleteDirectoryCore(fsei, transaction, null, true, true, false, true, PathFormat.LongFullPath);
+
+                        else
+                           File.DeleteFileCore(transaction, fsei.LongFullPath, true, PathFormat.LongFullPath);
+                     }
                   }
 
 
-                  // Remove the folder or file when copying was successful.
-                  if (emulateMove)
-                  {
-                     if (fsei.IsDirectory)
-                        DeleteDirectoryCore(fsei, transaction, null, true, true, false, true, PathFormat.LongFullPath);
-                     else
-                        File.DeleteFileCore(transaction, fsei.LongFullPath, true, PathFormat.LongFullPath);
-                  }
+                  if (cmr.IsCanceled)
+                     return cmr;
                }
-
-
-               if (cmr.IsCanceled)
-                  return cmr;
             }
-
 
             // Remove source folder.
             if (emulateMove && cmr.ErrorCode == Win32Errors.ERROR_SUCCESS)
@@ -961,7 +968,7 @@ namespace Alphaleonis.Win32.Filesystem
          #endregion // Move
 
 
-         return cmr;
+         return isMove ? null : cmr;
       }
 
       #endregion // Internal Methods

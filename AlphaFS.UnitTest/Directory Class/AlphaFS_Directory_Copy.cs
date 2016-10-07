@@ -351,19 +351,16 @@ namespace AlphaFS.UnitTest
             if (isNetwork)
                folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
 
-            Console.WriteLine("\nSrc Directory Path: [{0}]", rootDir.Directory.FullName);
-            Console.WriteLine("Dst Directory Path: [{0}]", folder);
+            Console.WriteLine("\nSrc Directory Path: [{0}]", folder);
+            Console.WriteLine("Dst Directory Path: [{0}]", rootDir.Directory.FullName);
 
             var gotException = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(rootDir.Directory.FullName, folder);
+               Alphaleonis.Win32.Filesystem.Directory.Copy(folder, rootDir.Directory.FullName);
             }
             catch (Exception ex)
             {
-               // Local: DirectoryNotFoundException.
-               // UNC: IOException.
-
                var exName = ex.GetType().Name;
                gotException = exName.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
                Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);

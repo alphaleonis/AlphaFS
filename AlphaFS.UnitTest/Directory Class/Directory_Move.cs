@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void __Directory_Move_HostToHost_Success()
+      public void Directory_Move_HostToHost_Success()
       {
          Directory_Move_HostToHost(false);
          Directory_Move_HostToHost(true);
@@ -413,7 +413,8 @@ namespace AlphaFS.UnitTest
             if (isNetwork)
                folderSrc = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folderSrc);
 
-            Console.WriteLine("Dst Directory Path: [{0}]", folderSrc);
+            Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc);
+            Console.WriteLine("Dst Directory Path: [{0}]", rootDir.Directory.FullName);
 
             UnitTestConstants.CreateDirectoriesAndFiles(rootDir.Directory.FullName, new Random().Next(5, 15), true);
 
@@ -421,7 +422,7 @@ namespace AlphaFS.UnitTest
             var gotException = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Move(rootDir.Directory.FullName, folderSrc, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
+               Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, rootDir.Directory.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
             }
             catch (Exception ex)
             {

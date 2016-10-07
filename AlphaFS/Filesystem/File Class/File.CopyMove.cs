@@ -1087,10 +1087,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          var sourceFileNameLp = sourceFileName;
          var destFileNameLp = destinationFileName;
-         var skipPathChecks = pathFormat == PathFormat.LongFullPath;
-
-
-         if (!skipPathChecks)
+         
+         if (pathFormat != PathFormat.LongFullPath)
          {
             Path.CheckSupportedPathFormat(sourceFileName, true, true);
             Path.CheckSupportedPathFormat(destinationFileName, true, true);
@@ -1098,29 +1096,26 @@ namespace Alphaleonis.Win32.Filesystem
             sourceFileNameLp = Path.GetExtendedLengthPathCore(transaction, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
             destFileNameLp = Path.GetExtendedLengthPathCore(transaction, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
          }
+         
+
+         // Determine Copy or Move action.
+         var isCopy = DetermineIsCopy(copyOptions, moveOptions);
+         var isMove = !isCopy;
+
+         var cmr = copyMoveResult ?? new CopyMoveResult(sourceFileName, destinationFileName, false, (int)Win32Errors.ERROR_SUCCESS);
 
 
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
          // Otherwise, the copy/move operation will continue to completion.
          var cancel = false;
 
-         // Determine Copy or Move action.
-         var isCopy = DetermineIsCopy(copyOptions, moveOptions);
-         var isMove = !isCopy;
-
-
          var raiseException = progressHandler == null;
-         //Task completedTask = null;
-
 
          // Setup callback function for progress notifications.
-         var routine = progressHandler != null
+         var routine = !raiseException
             ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, hSourceFile, hDestinationFile, lpData) =>
                   progressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, userProgressData)
             : (NativeMethods.NativeCopyMoveProgressRoutine) null;
-
-
-         var cmr = copyMoveResult ?? new CopyMoveResult(sourceFileNameLp, destFileNameLp, false, (int) Win32Errors.ERROR_SUCCESS);
 
          #endregion // Setup
 
@@ -1153,8 +1148,6 @@ namespace Alphaleonis.Win32.Filesystem
             : isMove
                ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
                : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle);
-
-
          
          
          var lastError = (uint) Marshal.GetLastWin32Error();
