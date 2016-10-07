@@ -28,12 +28,12 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      [TestMethod]
-      public void Directory_Move_HostToHost_Success()
-      {
-         Directory_Move_HostToHost(false);
-         Directory_Move_HostToHost(true);
-      }
+      //[TestMethod]
+      //public void Directory_Move_HostToHost_Success()
+      //{
+      //   Directory_Move_HostToHost(false);
+      //   Directory_Move_HostToHost(true);
+      //}
 
 
       [TestMethod]
