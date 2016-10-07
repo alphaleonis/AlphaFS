@@ -3226,7 +3226,7 @@ namespace Alphaleonis.Win32
       // http://msdn.microsoft.com/en-us/library/windows/desktop/aa370674%28v=vs.85%29.aspx
 
       /// <summary>(0) The operation completed successfully.</summary>
-      public const uint NERR_Success = 0;
+      public const uint NERR_Success = ERROR_SUCCESS;
 
       ///// <summary>The workstation driver is not installed.</summary>
       //public const uint NERR_NetNotStarted = 2102;

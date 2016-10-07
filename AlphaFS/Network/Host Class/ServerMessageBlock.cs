@@ -168,7 +168,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static ShareInfo GetShareInfo(string uncPath, bool continueOnException)
       {
-         string[] unc = GetHostShareFromPath(uncPath);
+         var unc = GetHostShareFromPath(uncPath);
          return GetShareInfoCore(ShareInfoLevel.Info503, unc[0], unc[1], continueOnException);
       }
 
@@ -180,7 +180,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static ShareInfo GetShareInfo(ShareInfoLevel shareLevel, string uncPath, bool continueOnException)
       {
-         string[] unc = GetHostShareFromPath(uncPath);
+         var unc = GetHostShareFromPath(uncPath);
          return GetShareInfoCore(shareLevel, unc[0], unc[1], continueOnException);
       }
 
@@ -213,7 +213,7 @@ namespace Alphaleonis.Win32.Network
 
       #region EnumerateOpenConnectionsCore
 
-      /// <summary>Enumerates open connections from the specified host.</summary>
+      /// <summary>Enumerates open connections from the specified host and <paramref name="share"/>.</summary>
       /// <returns><see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
@@ -241,6 +241,7 @@ namespace Alphaleonis.Win32.Network
                return NativeMethods.NetConnectionEnum(stripUnc, functionData.ExtraData1, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 
             },
+
             continueOnException);
       }
 
@@ -260,16 +261,14 @@ namespace Alphaleonis.Win32.Network
       internal static IEnumerable<ShareInfo> EnumerateSharesCore(string host, ShareType shareType, bool continueOnException)
       {
          // When host == null, the local computer is used.
-         // However, the resulting OpenResourceInfo.Host property will be empty.
+         // However, the resulting Host property will be empty.
          // So, explicitly state Environment.MachineName to prevent this.
          // Furthermore, the UNC prefix: \\ is not required and always removed.
-         string stripUnc = Utils.IsNullOrWhiteSpace(host)
-            ? Environment.MachineName
-            : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
+         var stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
          var fd = new FunctionData();
-         bool hasItems = false;
-         bool yieldAll = shareType == ShareType.All;
+         var hasItems = false;
+         var yieldAll = shareType == ShareType.All;
 
          // Try SHARE_INFO_503 structure.
          foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_503 structure, SafeGlobalMemoryBufferHandle buffer) =>
@@ -323,14 +322,12 @@ namespace Alphaleonis.Win32.Network
             return null;
 
          // When host == null, the local computer is used.
-         // However, the resulting OpenResourceInfo.Host property will be empty.
+         // However, the resulting Host property will be empty.
          // So, explicitly state Environment.MachineName to prevent this.
          // Furthermore, the UNC prefix: \\ is not required and always removed.
-         string stripUnc = Utils.IsNullOrWhiteSpace(host)
-            ? Environment.MachineName
-            : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
+         var stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
-         bool fallback = false;
+         var fallback = false;
 
 
          startNetShareGetInfo:
@@ -338,7 +335,7 @@ namespace Alphaleonis.Win32.Network
          SafeGlobalMemoryBufferHandle safeBuffer;
 
          uint structureLevel = Convert.ToUInt16(shareLevel, CultureInfo.InvariantCulture);
-         uint lastError = NativeMethods.NetShareGetInfo(stripUnc, share, structureLevel, out safeBuffer);
+         var lastError = NativeMethods.NetShareGetInfo(stripUnc, share, structureLevel, out safeBuffer);
 
          using (safeBuffer)
          {

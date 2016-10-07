@@ -193,6 +193,9 @@
     <Compile Include="FileInfo Class\FileInfo_InitializeInstance.cs" />
     <Compile Include="FileInfo Class\FileInfo_Refresh.cs" />
     <Compile Include="Host Class\AlphaFS_Host_DriveConnection.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_EnumerateOpenResources.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_EnumerateOpenConnections.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_EnumerateShares.cs" />
     <Compile Include="Host Class\HostTest.cs" />
     <Compile Include="Classes\ClassesTest.cs" />
     <Compile Include="Directory Class\Directory_CreateDirectory.cs" />

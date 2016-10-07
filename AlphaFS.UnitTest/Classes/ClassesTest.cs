@@ -303,54 +303,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpClassDfsInfo
 
-      #region DumpOpenConnectionInfo
-
-      private void DumpOpenConnectionInfo(string host)
-      {
-         Console.WriteLine("\n=== TEST ===");
-         Console.WriteLine("\nNetwork.Host.EnumerateOpenResources() from host: [{0}]", host);
-          
-         UnitTestConstants.StopWatcher(true);
-         foreach (var connectionInfo in Host.EnumerateOpenConnections(host, "IPC$", false))
-            UnitTestConstants.Dump(connectionInfo, -16);
-
-         Console.WriteLine(UnitTestConstants.Reporter(true));
-         Console.WriteLine();
-      }
-      
-      #endregion // DumpClassOpenResourceInfo
-
-      #region DumpClassOpenResourceInfo
-
-      private void DumpClassOpenResourceInfo(string host, string share)
-      {
-         Console.WriteLine("\n=== TEST ===");
-         var tempPath = Path.LocalToUnc(share);
-         Console.WriteLine("\nNetwork.Host.EnumerateOpenResources() from host: [{0}]", tempPath);
-
-         System.IO.Directory.SetCurrentDirectory(tempPath);
-
-         UnitTestConstants.StopWatcher(true);
-         var cnt = 0;
-         foreach (var openResource in Host.EnumerateOpenResources(host, null, null, false))
-         {
-            if (UnitTestConstants.Dump(openResource, -11))
-            {
-               Console.Write("\n");
-               cnt++;
-            }
-         }
-
-         Console.WriteLine(UnitTestConstants.Reporter());
-         
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
-
-         Console.WriteLine();
-      }
-      
-      #endregion // DumpClassOpenResourceInfo
-
       #region DumpClassShareInfo
 
       #endregion // DumpClassShareInfo
@@ -417,64 +369,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Network_Class_DfsXxx
-
-      #region Network_Class_OpenConnectionInfo
-
-      [TestMethod]
-      public void AlphaFS_Class_Network_OpenConnectionInfo()
-      {
-         Console.WriteLine("Class Network.OpenConnectionInfo()");
-
-         if (!UnitTestConstants.IsAdmin())
-             Assert.Inconclusive();
-
-         DumpOpenConnectionInfo(UnitTestConstants.LocalHost);
-      }
-
-      #endregion // Network_Class_OpenConnectionInfo
-
-      #region Network_Class_OpenResourceInfo
-
-      [TestMethod]
-      public void AlphaFS_Class_Network_OpenResourceInfo()
-      {
-         Console.WriteLine("Class Network.OpenResourceInfo()");
-
-         if (!UnitTestConstants.IsAdmin())
-             Assert.Inconclusive();
-
-         DumpClassOpenResourceInfo(UnitTestConstants.LocalHost, UnitTestConstants.LocalHostShare);
-      }
-
-      #endregion // Network_Class_OpenResourceInfo
-
-      #region Network_Class_ShareInfo
-
-      [TestMethod]
-      public void AlphaFS_Class_Network_ShareInfo()
-      {
-         Console.WriteLine("Class Network.ShareInfo()");
-
-         var host = UnitTestConstants.LocalHost;
-
-         Console.WriteLine("\n=== TEST ===");
-         Console.Write("\nNetwork.Host.EnumerateShares() from host: [{0}]\n", host);
-
-         var cnt = 0;
-         UnitTestConstants.StopWatcher(true);
-         foreach (var share in Host.EnumerateShares(host, true))
-         {
-            Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, share);
-            UnitTestConstants.Dump(share, -18);
-         }
-
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
-      }
-
-      #endregion // Network_Class_ShareInfo
 
       #endregion // Network
 
