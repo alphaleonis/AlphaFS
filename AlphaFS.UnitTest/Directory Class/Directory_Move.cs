@@ -28,12 +28,12 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      //[TestMethod]
-      //public void Directory_Move_HostToHost_Success()
-      //{
-      //   Directory_Move_HostToHost(false);
-      //   Directory_Move_HostToHost(true);
-      //}
+      [TestMethod]
+      public void Directory_Move_HostToHost_Success()
+      {
+         Directory_Move_HostToHost(false);
+         Directory_Move_HostToHost(true);
+      }
 
 
       [TestMethod]
@@ -538,6 +538,14 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Move_HostToHost(bool localToNetwork)
       {
+         const string localHost = "wsbeh2001";
+         const string shareRootFolder = @"\\wssccm1002.wsp.local\workspace$\Temp\AdminJJa";
+
+
+         if (!Environment.MachineName.Equals(localHost, StringComparison.OrdinalIgnoreCase))
+            Assert.Inconclusive("Please enter your own server and unc path.");
+
+
          UnitTestConstants.PrintUnitTestHeader(localToNetwork);
 
          var tempPath = System.IO.Path.GetTempPath();
@@ -546,7 +554,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Move-HostToHost"))
          {
             var localRoot = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(System.IO.Path.Combine(rootDir.Directory.FullName, "HostToHost"));
-            var remoteRoot = @"\\wssccm1002.wsp.local\workspace$\Temp\AdminJJa\HostToHost";
+            var remoteRoot = shareRootFolder + @"\HostToHost";
 
             Console.WriteLine("\nSrc Directory Path: [{0}]", !localToNetwork ? localRoot : remoteRoot);
             Console.WriteLine("Dst Directory Path: [{0}]", localToNetwork ? localRoot : remoteRoot);
