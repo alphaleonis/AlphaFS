@@ -150,13 +150,14 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
             
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName);
+            var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName);
 
 
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
+            Assert.AreEqual(null, moveResult);
 
 
             Assert.IsFalse(System.IO.Directory.Exists(folderSrc.FullName), "The original folder exists, but is expected not to.");
@@ -207,7 +208,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
-
+            Assert.AreNotEqual(null, moveResult);
 
             // Test against moveResult results.
 
@@ -270,13 +271,14 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
 
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
+            var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
 
-
+            
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
+            Assert.AreEqual(null, moveResult);
          }
 
          Console.WriteLine();
@@ -585,6 +587,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
+            Assert.AreNotEqual(null, moveResult);
 
 
             // Test against moveResult results.

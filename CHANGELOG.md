@@ -207,7 +207,7 @@ Version 2.0  (2015-01-16)
 * Renamed delegate CopyProgressResult to CopyMoveProgressResult.
 
 
-Version 1.5
+Version 1.5  (2014-05-20)
 -----------
    * New: Various file system objects enumeration methods in Directory class.
    * Numerous bugfixes and optimizations
