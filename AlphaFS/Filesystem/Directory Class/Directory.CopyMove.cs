@@ -890,12 +890,14 @@ namespace Alphaleonis.Win32.Filesystem
          }
          
          #endregion // Setup
-
+         
 
          #region Copy
 
          if (isCopy)
          {
+            CreateDirectoryCore(transaction, destinationPathLp, null, null, false, PathFormat.LongFullPath);
+
             var dirs = new Queue<string>(1000);
             dirs.Enqueue(sourcePathLp);
             
