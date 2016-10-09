@@ -1102,7 +1102,7 @@ namespace Alphaleonis.Win32.Filesystem
          var isCopy = DetermineIsCopy(copyOptions, moveOptions);
          var isMove = !isCopy;
 
-         var cmr = copyMoveResult ?? new CopyMoveResult(sourceFileName, destinationFileName, false, (int)Win32Errors.ERROR_SUCCESS);
+         var cmr = copyMoveResult ?? new CopyMoveResult(sourceFileName, destinationFileName, false, (int) Win32Errors.ERROR_SUCCESS);
 
 
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.

@@ -25,22 +25,22 @@ namespace Alphaleonis.Win32.Filesystem
    public enum CopyMoveProgressResult 
    {
       /// <summary>PROGRESS_CONTINUE
-      /// <para>Continue the copy operation.</para>
+      /// <para>Continue the copy/move operation.</para>
       /// </summary>
       Continue = 0,
 
       /// <summary>PROGRESS_CANCEL
-      /// <para>Cancel the copy operation and delete the destination file.</para>
+      /// <para>Cancel the copy/move operation and delete the destination file.</para>
       /// </summary>
       Cancel = 1,
 
       /// <summary>PROGRESS_STOP
-      /// <para>Stop the copy operation. It can be restarted at a later time.</para>
+      /// <para>Stop the copy/move operation. It can be restarted at a later time.</para>
       /// </summary>
       Stop = 2,
 
       /// <summary>PROGRESS_QUIET
-      /// <para>Continue the copy operation, but stop invoking <see cref="CopyMoveProgressRoutine"/> to report progress.</para>
+      /// <para>Continue the copy/move operation, but stop invoking <see cref="CopyMoveProgressRoutine"/> to report progress.</para>
       /// </summary>
       Quiet = 3
    }
