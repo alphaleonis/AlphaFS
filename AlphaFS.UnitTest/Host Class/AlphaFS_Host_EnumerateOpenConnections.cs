@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateOpenConnections_Network_Success()
       {
-         var host = UnitTestConstants.LocalHost;
+         var host = "localhost"; //UnitTestConstants.LocalHost;
          var share = UnitTestConstants.SysDrive.Replace(":", "$"); // C: -> C$
 
          // Create an active connection to the "remote" host.

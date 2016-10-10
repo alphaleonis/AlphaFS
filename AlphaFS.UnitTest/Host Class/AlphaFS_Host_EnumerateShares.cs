@@ -32,7 +32,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateShares_Network_Success()
       {
-         EnumerateShares(UnitTestConstants.LocalHost, true);
+         var host = "localhost"; //UnitTestConstants.LocalHost;
+
+         EnumerateShares(host, true);
       }
 
 
