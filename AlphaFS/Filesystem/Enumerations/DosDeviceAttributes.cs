@@ -55,6 +55,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Do not broadcast the WM_SETTINGCHANGE message.</para>
       /// <para>By default, this message is broadcast to notify the shell and applications of the change.</para>
       /// </summary>
-      NoBroadcastSystem = 8,
+      NoBroadcastSystem = 8
    }
 }

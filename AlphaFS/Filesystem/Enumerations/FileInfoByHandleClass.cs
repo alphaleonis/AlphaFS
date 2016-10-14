@@ -138,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <para>will resume the enumeration operation after the last file is returned.</para>
          /// </remarks>
          /// </summary>
-         FileIdBothDirectoryInfo = 10,
+         FileIdBothDirectoryInfo = 10
 
          #endregion // FILE_ID_BOTH_DIR_INFO
 

@@ -1107,7 +1107,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
          // Otherwise, the copy/move operation will continue to completion.
-         var cancel = false;
+         bool cancel;
 
          var raiseException = progressHandler == null;
 
@@ -1167,8 +1167,7 @@ namespace Alphaleonis.Win32.Filesystem
                // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
                // In this case, the partially copied destination file is left intact.
 
-               cancel = true;
-               cmr.IsCanceled = cancel;
+               cmr.IsCanceled = true;
             }
 
             else if (raiseException)

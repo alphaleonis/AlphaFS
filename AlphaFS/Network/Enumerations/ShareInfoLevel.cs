@@ -41,6 +41,6 @@ namespace Alphaleonis.Win32.Network
       Info503 = 503,
 
       /// <summary>Contains information about the shared resource.</summary>
-      Info1005 = 1005,
+      Info1005 = 1005
    }
 }

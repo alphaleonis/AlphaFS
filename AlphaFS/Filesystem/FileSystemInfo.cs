@@ -264,7 +264,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          [SecurityCritical]
-         set
+         protected set
          {
             File.SetAttributesCore(IsDirectory, Transaction, LongFullName, value, false, PathFormat.LongFullPath);
             Reset();
@@ -547,7 +547,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region DisplayPath
 
       /// <summary>Returns the path as a string.</summary>
-      protected internal string DisplayPath { get; set; }
+      protected internal string DisplayPath { get; protected set; }
 
       #endregion // DisplayPath
 
@@ -590,7 +590,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsDirectory
 
       /// <summary>[AlphaFS] The initial "IsDirectory" indicator that was passed to the constructor.</summary>
-      protected internal bool IsDirectory { get; set; }
+      protected bool IsDirectory { get; set; }
 
       #endregion // IsDirectory
 
@@ -604,7 +604,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Transaction
 
       /// <summary>[AlphaFS] Represents the KernelTransaction that was passed to the constructor.</summary>
-      public KernelTransaction Transaction { get; set; }
+      protected KernelTransaction Transaction { get; set; }
 
       #endregion // Transaction
 

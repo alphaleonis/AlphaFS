@@ -28,11 +28,11 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      [TestMethod]
-      public void aaaDirectory_EnumerateFileSystemEntryInfos_ReportException_LocalAndNetwork_Success()
-      {
-         Directory_EnumerateFileSystemEntryInfos_ReportException(false);
-      }
+      //[TestMethod]
+      //public void aaaDirectory_EnumerateFileSystemEntryInfos_ReportException_LocalAndNetwork_Success()
+      //{
+      //   Directory_EnumerateFileSystemEntryInfos_ReportException(false);
+      //}
 
 
       [TestMethod]
@@ -157,27 +157,27 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_EnumerateFileSystemEntryInfos_ReportException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+      //private void Directory_EnumerateFileSystemEntryInfos_ReportException(bool isNetwork)
+      //{
+      //   UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = @"C:\Users"; //UnitTestConstants.SysRoot;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+      //   var tempPath = @"C:\Users"; //UnitTestConstants.SysRoot;
+      //   if (isNetwork)
+      //      tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
+      //   Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
 
-         var count = 0;
-         //foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<string>(tempPath, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.ContinueOnException))
-         foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<string>(tempPath, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive))
-         {
-            Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(string)));
-            Console.WriteLine(fsei);
-            count++;
-         }
+      //   var count = 0;
+      //   //foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<string>(tempPath, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.ContinueOnException))
+      //   foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<string>(tempPath, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive))
+      //   {
+      //      Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(string)));
+      //      Console.WriteLine(fsei);
+      //      count++;
+      //   }
 
-         Assert.IsTrue(count > 0, "Nothing was enumerated, but it was expected.");
-      }
+      //   Assert.IsTrue(count > 0, "Nothing was enumerated, but it was expected.");
+      //}
    }
 }

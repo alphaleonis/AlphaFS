@@ -30,14 +30,13 @@ namespace Alphaleonis.Win32
    {
       #region Private Fields
 
-      private int m_capacity;
+      private readonly int m_capacity;
 
       #endregion
 
       #region Constructors
 
-      protected SafeNativeMemoryBufferHandle(bool ownsHandle)
-         : base(ownsHandle)
+      protected SafeNativeMemoryBufferHandle(bool ownsHandle) : base(ownsHandle)
       {
       }
 

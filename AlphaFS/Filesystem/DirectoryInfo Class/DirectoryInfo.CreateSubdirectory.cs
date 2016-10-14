@@ -148,7 +148,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The <see cref="DirectorySecurity"/> security to apply.</param>
       /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       [SecurityCritical]
-      private DirectoryInfo CreateSubdirectoryCore(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
+      private DirectoryInfo CreateSubdirectoryCore(string path, string templatePath, ObjectSecurity directorySecurity, bool compress)
       {
          string pathLp = Path.CombineCore(false, LongFullName, path);
          string templatePathLp = templatePath == null ? null :

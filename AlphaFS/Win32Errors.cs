@@ -223,7 +223,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_DISCARDED = 157;
 
       /// <summary>(158) The segment is already unlocked.</summary>
-      public const uint ERROR_NOT_LOCKED = 158;
+      //public const uint ERROR_NOT_LOCKED = 158;
 
       //public const uint ERROR_BAD_THREADID_ADDR = 159;
       //public const uint ERROR_BAD_ARGUMENTS = 160;
@@ -259,7 +259,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_INFLOOP_IN_RELOC_CHAIN = 202;
 
       /// <summary>(203) The system could not find the environment option that was entered.</summary>
-      public const uint ERROR_ENVVAR_NOT_FOUND = 203;
+      //public const uint ERROR_ENVVAR_NOT_FOUND = 203;
 
       //public const uint ERROR_NO_SIGNAL_SENT = 205;
       //public const uint ERROR_FILENAME_EXCED_RANGE = 206;
@@ -320,7 +320,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_IO_INCOMPLETE = 996;
 
       /// <summary>(997) Overlapped I/O operation is in progress.</summary>
-      public const uint ERROR_IO_PENDING = 997;
+      //public const uint ERROR_IO_PENDING = 997;
 
       //public const uint ERROR_NOACCESS = 998;
       //public const uint ERROR_SWAPERROR = 999;
@@ -449,7 +449,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_JOURNAL_ENTRY_DELETED = 1181;
 
       /// <summary>(1200) The specified device name is invalid.</summary>
-      public const uint ERROR_BAD_DEVICE = 1200;
+      //public const uint ERROR_BAD_DEVICE = 1200;
 
       //public const uint ERROR_CONNECTION_UNAVAIL = 1201;
       //public const uint ERROR_DEVICE_ALREADY_REMEMBERED = 1202;
@@ -460,7 +460,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_NOT_CONTAINER = 1207;
 
       /// <summary>(1208) An extended error has occurred.</summary>
-      public const uint ERROR_EXTENDED_ERROR = 1208;
+      //public const uint ERROR_EXTENDED_ERROR = 1208;
 
       //public const uint ERROR_INVALID_GROUPNAME = 1209;
       //public const uint ERROR_INVALID_COMPUTERNAME = 1210;
@@ -477,7 +477,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_DUP_DOMAINNAME = 1221;
 
       /// <summary>(1222) The network is not present or not started.</summary>
-      public const uint ERROR_NO_NETWORK = 1222;
+      //public const uint ERROR_NO_NETWORK = 1222;
 
       //public const uint ERROR_CANCELLED = 1223;
       //public const uint ERROR_USER_MAPPED_FILE = 1224;
@@ -3559,7 +3559,7 @@ namespace Alphaleonis.Win32
       //public const uint NERR_SyncRequired = 2249;
 
       /// <summary>(2250) The network connection could not be found.</summary>
-      public const uint NERR_UseNotFound = 2250;
+      //public const uint NERR_UseNotFound = 2250;
 
       ///// <summary>This asg_type is invalid.</summary>
       //public const uint NERR_BadAsgType = 2251;
@@ -3646,7 +3646,7 @@ namespace Alphaleonis.Win32
       //public const uint NERR_MultipleNets = 2300;
 
       /// <summary>(2310) This shared resource does not exist.</summary>
-      public const uint NERR_NetNameNotFound = 2310;
+      //public const uint NERR_NetNameNotFound = 2310;
 
       ///// <summary>This device is not shared.</summary>
       //public const uint NERR_DeviceNotShared = 2311;

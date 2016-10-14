@@ -175,7 +175,7 @@ namespace Alphaleonis.Win32.Filesystem
          // The deviceName cannot have a trailing backslash.
          deviceName = Path.RemoveTrailingDirectorySeparator(deviceName, false);
 
-         var searchFilter = (deviceName != null);
+         var searchFilter = deviceName != null;
 
          // Only process options if a device is supplied.
          if (searchFilter)

@@ -357,10 +357,9 @@ namespace Alphaleonis.Win32.Filesystem
             if (path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase))
                return GetLongPathCore(path.Substring(0, rootLengthPath), GetFullPathOptions.None);
 
-         if (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase))
-            return GetLongPathCore(pathRp.Substring(0, rootLengthPathRp), GetFullPathOptions.None);
-
-         return path.Substring(0, rootLengthPath);
+         return path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase)
+            ? GetLongPathCore(pathRp.Substring(0, rootLengthPathRp), GetFullPathOptions.None)
+            : path.Substring(0, rootLengthPath);
       }
 
       #endregion // GetPathRoot

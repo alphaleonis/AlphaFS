@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// This flag must be set in the Flags parameter if the Enumerator parameter specifies a Device Instance ID. 
          /// </para>
          /// </summary>
-         DeviceInterface = 16,
+         DeviceInterface = 16
       }
    }
 }

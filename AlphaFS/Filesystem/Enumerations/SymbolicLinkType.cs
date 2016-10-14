@@ -28,6 +28,6 @@ namespace Alphaleonis.Win32.Filesystem
       Absolute = 0,
 
       /// <summary>The symbolic link is relative.</summary>
-      Relative = 1,
+      Relative = 1
    }
 }

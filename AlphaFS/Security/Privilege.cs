@@ -490,5 +490,5 @@ namespace Alphaleonis.Win32.Security
       }
 
       #endregion // Privilege
-   };
+   }
 }

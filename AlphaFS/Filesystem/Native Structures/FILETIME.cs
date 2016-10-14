@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (obj == null || GetType() != obj.GetType())
                return false;
 
-            FILETIME other = obj is FILETIME ? (FILETIME)obj : new FILETIME();
+            FILETIME other = obj as FILETIME? ?? new FILETIME();
 
             return (other.dwHighDateTime.Equals(dwHighDateTime) &&
                     other.dwLowDateTime.Equals(dwLowDateTime));

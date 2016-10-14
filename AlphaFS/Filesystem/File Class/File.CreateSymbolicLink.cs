@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
-         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
+         const GetFullPathOptions options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
          string symlinkFileNameLp = Path.GetExtendedLengthPathCore(transaction, symlinkFileName, pathFormat, options);
          string targetFileNameRp = Path.GetExtendedLengthPathCore(transaction, targetFileName, pathFormat, options);

@@ -42,8 +42,7 @@ namespace Alphaleonis.Win32.Security
       private ulong m_hash;
 
       /// <summary>Initializes a new instance of <see cref="Crc64"/> </summary>
-      public Crc64()
-         : this(Iso3309Polynomial, DefaultSeed)
+      public Crc64() : this(Iso3309Polynomial, DefaultSeed)
       {
       }
 
@@ -53,7 +52,7 @@ namespace Alphaleonis.Win32.Security
       private Crc64(ulong polynomial, ulong seed)
       {
          m_table = InitializeTable(polynomial);
-         this.m_seed = m_hash = seed;
+         m_seed = m_hash = seed;
       }
 
       /// <summary>
@@ -106,11 +105,13 @@ namespace Alphaleonis.Win32.Security
       private static ulong CalculateHash(ulong seed, ulong[] table, IList<byte> buffer, int start, int size)
       {
          var hash = seed;
-         for (var i = start; i < start + size; i++)            
+
+         for (var i = start; i < start + size; i++)
             unchecked
             {
                hash = (hash >> 8) ^ table[(buffer[i] ^ hash) & 0xff];
             }
+
          return hash;
       }
 
@@ -151,12 +152,11 @@ namespace Alphaleonis.Win32.Security
          var createTable = new ulong[256];
          for (var i = 0; i < 256; ++i)
          {
-            var entry = (ulong)i;
+            var entry = (ulong) i;
+
             for (var j = 0; j < 8; ++j)
-               if ((entry & 1) == 1)
-                  entry = (entry >> 1) ^ polynomial;
-               else
-                  entry = entry >> 1;
+               entry = (entry & 1) == 1 ? (entry >> 1) ^ polynomial : entry >> 1;
+
             createTable[i] = entry;
          }
 

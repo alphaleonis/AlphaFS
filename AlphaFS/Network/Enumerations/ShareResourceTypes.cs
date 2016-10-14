@@ -86,6 +86,6 @@ namespace Alphaleonis.Win32.Network
       /// <remarks>Windows 7, Windows Server 2008 R2, Windows Vista, Windows Server 2008, and Windows Server 2003:  This flag is not supported.</remarks>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ca")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ca")]
-      EnableCa = 16384,
+      EnableCa = 16384
    }
 }

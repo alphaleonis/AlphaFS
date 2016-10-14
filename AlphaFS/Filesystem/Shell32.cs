@@ -656,15 +656,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool PathFileExists(string path)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            return false;
-
          // PathFileExists()
          // In the ANSI version of this function, the name is limited to 248 characters.
          // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-         return NativeMethods.PathFileExists(Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck | GetFullPathOptions.ContinueOnNonExist));            
+         return !Utils.IsNullOrWhiteSpace(path) && NativeMethods.PathFileExists(Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck | GetFullPathOptions.ContinueOnNonExist));
       }
 
 
