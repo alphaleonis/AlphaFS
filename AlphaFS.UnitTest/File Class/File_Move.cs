@@ -352,7 +352,8 @@ namespace AlphaFS.UnitTest
             if (isNetwork)
                fileCopy = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(fileCopy);
 
-            Console.WriteLine("\nInput File Path: [{0}]", fileSource);
+            Console.WriteLine("\nSrc File Path: [{0}]", fileSource);
+            Console.WriteLine("Dst File Path: [{0}]", fileCopy);
 
 
             var gotException = false;
