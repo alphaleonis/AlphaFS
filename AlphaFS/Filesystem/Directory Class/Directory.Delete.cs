@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteDirectoryCore(null, null, path, false, false, true, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, null, path, false, false, false, PathFormat.RelativePath);
       }
 
       /// <summary>Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool recursive)
       {
-         DeleteDirectoryCore(null, null, path, recursive, false, !recursive, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, null, path, recursive, false, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, PathFormat pathFormat)
       {
-         DeleteDirectoryCore(null, null, path, false, false, true, false, pathFormat);
+         DeleteDirectoryCore(null, null, path, false, false, false, pathFormat);
       }
 
 
@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool recursive, PathFormat pathFormat)
       {
-         DeleteDirectoryCore(null, null, path, recursive, false, !recursive, false, pathFormat);
+         DeleteDirectoryCore(null, null, path, recursive, false, false, pathFormat);
       }
 
 
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteDirectoryCore(null, null, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, null, path, recursive, ignoreReadOnly, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -134,7 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteDirectoryCore(null, null, path, recursive, ignoreReadOnly, !recursive, false, pathFormat);
+         DeleteDirectoryCore(null, null, path, recursive, ignoreReadOnly, false, pathFormat);
       }
 
       #region Transactional
@@ -152,7 +152,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path)
       {
-         DeleteDirectoryCore(null, transaction, path, false, false, true, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, transaction, path, false, false, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         DeleteDirectoryCore(null, transaction, path, false, false, true, false, pathFormat);
+         DeleteDirectoryCore(null, transaction, path, false, false, false, pathFormat);
       }
 
 
@@ -188,7 +188,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive)
       {
-         DeleteDirectoryCore(null, transaction, path, recursive, false, !recursive, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, transaction, path, recursive, false, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -206,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
       {
-         DeleteDirectoryCore(null, transaction, path, recursive, false, !recursive, false, pathFormat);
+         DeleteDirectoryCore(null, transaction, path, recursive, false, false, pathFormat);
       }
 
 
@@ -226,7 +226,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteDirectoryCore(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, transaction, path, recursive, ignoreReadOnly, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -245,7 +245,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteDirectoryCore(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, pathFormat);
+         DeleteDirectoryCore(null, transaction, path, recursive, ignoreReadOnly, false, pathFormat);
       }
 
       #endregion // Transactional
@@ -266,12 +266,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory to remove. Use either <paramref name="path"/> or <paramref name="fileSystemEntryInfo"/>, not both.</param>
       /// <param name="recursive"><see langword="true"/> to remove all files and subdirectories recursively; <see langword="false"/> otherwise only the top level empty directory.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only attribute of files and directories.</param>
-      /// <param name="requireEmpty"><see langword="true"/> requires the directory must be empty.</param>
       /// <param name="continueOnNotExist"><see langword="true"/> does not throw an Exception when the file system object does not exist.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static void DeleteDirectoryCore(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool requireEmpty, bool continueOnNotExist, PathFormat pathFormat)
+      internal static void DeleteDirectoryCore(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool continueOnNotExist, PathFormat pathFormat)
       {
          #region Setup
 
@@ -320,7 +319,7 @@ namespace Alphaleonis.Win32.Filesystem
             foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
             {
                if (fsei.IsDirectory)
-                  DeleteDirectoryCore(fsei, transaction, null, true, ignoreReadOnly, requireEmpty, true, PathFormat.LongFullPath);
+                  DeleteDirectoryCore(fsei, transaction, null, true, ignoreReadOnly, true, PathFormat.LongFullPath);
                else
                   File.DeleteFileCore(transaction, fsei.LongFullPath, ignoreReadOnly, PathFormat.LongFullPath);
             }
@@ -346,11 +345,8 @@ namespace Alphaleonis.Win32.Filesystem
             switch ((uint) lastError)
             {
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
-                  if (requireEmpty)
-                     // MSDN: .NET 3.5+: IOException: The directory specified by path is not an empty directory. 
-                     throw new DirectoryNotEmptyException(pathLp);
-
-                  goto startRemoveDirectory;
+                  // MSDN: .NET 3.5+: IOException: The directory specified by path is not an empty directory. 
+                  throw new DirectoryNotEmptyException(pathLp);
 
 
                case Win32Errors.ERROR_DIRECTORY:
