@@ -819,7 +819,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (emulateMove && cmr.ErrorCode == Win32Errors.ERROR_SUCCESS)
                {
                   if (fsei.IsDirectory)
-                     DeleteDirectoryCore(fsei, transaction, null, true, true, false, true, PathFormat.LongFullPath);
+                     DeleteDirectoryCore(fsei, transaction, null, true, true, true, PathFormat.LongFullPath);
                   else
                      File.DeleteFileCore(transaction, fsei.LongFullPath, true, PathFormat.LongFullPath);
                }
@@ -832,7 +832,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // Remove source folder.
             if (emulateMove && cmr.ErrorCode == Win32Errors.ERROR_SUCCESS)
-               DeleteDirectoryCore(null, transaction, sourcePathLp, true, true, false, true, PathFormat.LongFullPath);
+               DeleteDirectoryCore(null, transaction, sourcePathLp, true, true, true, PathFormat.LongFullPath);
          }
 
          #endregion // Copy
@@ -849,7 +849,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
             if (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) != 0)
-               DeleteDirectoryCore(null, transaction, destinationPathLp, true, true, false, true, PathFormat.LongFullPath);
+               DeleteDirectoryCore(null, transaction, destinationPathLp, true, true, true, PathFormat.LongFullPath);
 
 
             // Moves a file or directory, including its children.

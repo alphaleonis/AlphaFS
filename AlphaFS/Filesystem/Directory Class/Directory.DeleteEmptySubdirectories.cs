@@ -202,7 +202,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             // Prevent deleting path itself.
             if (!initialize)
-               DeleteDirectoryCore(fileSystemEntryInfo, transaction, null, false, ignoreReadOnly, true, true, PathFormat.LongFullPath);
+               DeleteDirectoryCore(fileSystemEntryInfo, transaction, null, false, ignoreReadOnly, true, PathFormat.LongFullPath);
          }
       }
 
