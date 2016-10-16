@@ -19,12 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Security;
+using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
 
 namespace AlphaFS.UnitTest
 {
+   [TestClass]
    public class Crc32Test
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
@@ -32,10 +33,15 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Class_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString()
       {
-         using (var crc32 = new Crc32())
+         using (var crc32 = new Alphaleonis.Win32.Security.Crc32())
          {
-            var actual = crc32.ComputeHash(System.Text.Encoding.ASCII.GetBytes(UnitTestConstants.StreamArrayContent[0]));
-            Assert.AreEqual((uint)2048436515, actual);
+            var text = UnitTestConstants.StreamArrayContent[0];
+            var hash = crc32.ComputeHash(System.Text.Encoding.ASCII.GetBytes(text)).Aggregate(string.Empty, (current, b) => current + b.ToString("x2").ToLower());
+               
+            Console.WriteLine("Input text: {0}", text);
+            Console.WriteLine("\n\tCRC32: {0}", hash);
+
+            Assert.AreEqual("7a18a923", hash);
          }
       }
 
@@ -43,10 +49,15 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Class_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString2()
       {
-         using (var crc32 = new Crc32())
+         using (var crc32 = new Alphaleonis.Win32.Security.Crc32())
          {
-            var actual = crc32.ComputeHash(System.Text.Encoding.ASCII.GetBytes(UnitTestConstants.StreamArrayContent[1]));
-            Assert.AreEqual(2244818965, actual);
+            var text = UnitTestConstants.StreamArrayContent[1];
+            var hash = crc32.ComputeHash(System.Text.Encoding.ASCII.GetBytes(text)).Aggregate(string.Empty, (current, b) => current + b.ToString("x2").ToLower());
+
+            Console.WriteLine("Input text: {0}", text);
+            Console.WriteLine("\n\tCRC32: {0}", hash);
+
+            Assert.AreEqual("85cd3815", hash);
          }
       }
    }

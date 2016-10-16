@@ -19,11 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Security;
+using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
+   [TestClass]
    public class Crc64Test
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
@@ -31,22 +33,31 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Class_Crc64Iso_StaticDefaultSeedAndPolynomialWithShortAsciiString()
       {
-         using (var crc64 = new Crc64())
+         using (var crc64 = new Alphaleonis.Win32.Security.Crc64())
          {
-            var actual = crc64.ComputeHash(System.Text.Encoding.ASCII.GetBytes(UnitTestConstants.StreamArrayContent[0]));
+            var text = UnitTestConstants.StreamArrayContent[0];
+            var hash = crc64.ComputeHash(System.Text.Encoding.ASCII.GetBytes(text)).Aggregate(string.Empty, (current, b) => current + b.ToString("x2").ToLower());
 
-            Assert.AreEqual((ulong)8233304910036677951, actual);
+            Console.WriteLine("Input text: {0}", text);
+            Console.WriteLine("\n\tCRC64: {0}", hash);
+
+            Assert.AreEqual("724293319a37353f", hash);
          }
       }
+
 
       [TestMethod]
       public void AlphaFS_Class_Crc64Iso_StaticDefaultSeedAndPolynomialWithShortAsciiString2()
       {
-         using (var crc64 = new Crc64())
+         using (var crc64 = new Alphaleonis.Win32.Security.Crc64())
          {
-            var actual = crc64.ComputeHash(System.Text.Encoding.ASCII.GetBytes(UnitTestConstants.StreamArrayContent[1]));
+            var text = UnitTestConstants.StreamArrayContent[1];
+            var hash = crc64.ComputeHash(System.Text.Encoding.ASCII.GetBytes(text)).Aggregate(string.Empty, (current, b) => current + b.ToString("x2").ToLower());
 
-            Assert.AreEqual((ulong)4995575162106563943, actual);
+            Console.WriteLine("Input text: {0}", text);
+            Console.WriteLine("\n\tCRC64: {0}", hash);
+
+            Assert.AreEqual("4553d9246a204d67", hash);
          }
       }
    }
