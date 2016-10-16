@@ -17,6 +17,7 @@ Version 2.1.1  (2016-xx-xx)
 ### Bugs Fixed
 
 - Issue #270: Method `File.GetFileSystemEntryInfoCore` uses wildcard ? (questionmark) instead of * (asterisk)
+- Issue #279: The unit tests for CRC32/64 are failing.
 
 
 Version 2.1  (2016-09-29)
