@@ -1259,7 +1259,7 @@ namespace Alphaleonis.Win32.Filesystem
                                  if (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) != 0)
                                  {
                                     // Reset file system object attributes.
-                                    SetAttributesCore(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
+                                    SetAttributesCore(isFolder, transaction, destFileNameLp, FileAttributes.Normal, PathFormat.LongFullPath);
 
                                     goto startCopyMove;
                                  }

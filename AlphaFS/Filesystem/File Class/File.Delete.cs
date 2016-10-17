@@ -209,7 +209,7 @@ namespace Alphaleonis.Win32.Filesystem
                         if (ignoreReadOnly)
                         {
                            // Reset file attributes.
-                           SetAttributesCore(false, transaction, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
+                           SetAttributesCore(false, transaction, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
                            goto startDeleteFile;
                         }
 

@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes)
       {
-         SetAttributesCore(false, null, path, fileAttributes, false, PathFormat.RelativePath);
+         SetAttributesCore(false, null, path, fileAttributes, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the specified <see cref="FileAttributes"/> of the file or directory on the specified path.</summary>
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
-         SetAttributesCore(false, null, path, fileAttributes, false, pathFormat);
+         SetAttributesCore(false, null, path, fileAttributes, pathFormat);
       }
 
 
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributesTransacted(KernelTransaction transaction, string path, FileAttributes fileAttributes)
       {
-         SetAttributesCore(false, transaction, path, fileAttributes, false, PathFormat.RelativePath);
+         SetAttributesCore(false, transaction, path, fileAttributes, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the specified <see cref="FileAttributes"/> of the file on the specified path.</summary>
@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributesTransacted(KernelTransaction transaction, string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
-         SetAttributesCore(false, transaction, path, fileAttributes, false, pathFormat);
+         SetAttributesCore(false, transaction, path, fileAttributes, pathFormat);
       }
 
       #endregion // Transacted
@@ -123,16 +123,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileAttributes">
       ///   The attributes to set for the file or directory. Note that all other values override <see cref="FileAttributes.Normal"/>.
       /// </param>
-      /// <param name="continueOnNotExist">
-      ///   <see langword="true"/> does not throw an Exception when the file system object does not exist.
-      /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      internal static void SetAttributesCore(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, PathFormat pathFormat)
+      internal static void SetAttributesCore(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
+         var success = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
             // SetFileAttributes()
             // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -140,13 +137,12 @@ namespace Alphaleonis.Win32.Filesystem
             // 2013-01-13: MSDN confirms LongPath usage.
 
             ? NativeMethods.SetFileAttributes(pathLp, fileAttributes)
-            : NativeMethods.SetFileAttributesTransacted(pathLp, fileAttributes, transaction.SafeHandle)))
+            : NativeMethods.SetFileAttributesTransacted(pathLp, fileAttributes, transaction.SafeHandle);
+
+
+         var lastError = (uint) Marshal.GetLastWin32Error();
+         if (!success)
          {
-            if (continueOnNotExist)
-               return;
-
-            uint lastError = (uint)Marshal.GetLastWin32Error();
-
             switch (lastError)
             {
                // MSDN: .NET 3.5+: ArgumentException: FileSystemInfo().Attributes
@@ -155,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_FILE_NOT_FOUND:
                   if (isFolder)
-                     lastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
+                     lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
 
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid, (for example, it is on an unmapped drive).
                   // MSDN: .NET 3.5+: FileNotFoundException: The file cannot be found.

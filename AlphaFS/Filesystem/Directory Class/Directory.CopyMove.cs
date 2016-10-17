@@ -903,12 +903,12 @@ namespace Alphaleonis.Win32.Filesystem
             
             while (dirs.Count > 0)
             {
-               var source = dirs.Dequeue();
-               var folder = source.Replace(sourcePathLp, destinationPathLp);
+               var srcLp = dirs.Dequeue();
+               var dstLp = srcLp.Replace(sourcePathLp, destinationPathLp);
 
-               foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, source, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
+               foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, srcLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
                {
-                  var newDestinationPathLp = Path.CombineCore(false, folder, fsei.FileName);
+                  var newDestinationPathLp = Path.CombineCore(false, dstLp, fsei.FileName);
 
                   if (fsei.IsDirectory)
                   {
@@ -932,7 +932,7 @@ namespace Alphaleonis.Win32.Filesystem
                      if (emulateMove)
                      {
                         if (fsei.IsDirectory)
-                           DeleteDirectoryCore(fsei, transaction, null, true, true, false, true, PathFormat.LongFullPath);
+                           DeleteDirectoryCore(fsei, transaction, null, true, true, true, PathFormat.LongFullPath);
 
                         else
                            File.DeleteFileCore(transaction, fsei.LongFullPath, true, PathFormat.LongFullPath);

@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Security;
 using System.Security.AccessControl;
 
@@ -54,6 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
 
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity)
       {
@@ -108,6 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
 
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity, bool compress)
       {
@@ -126,6 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
 
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {

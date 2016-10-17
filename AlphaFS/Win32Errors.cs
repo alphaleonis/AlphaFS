@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_SIGNAL_REFUSED = 156;
       //public const uint ERROR_DISCARDED = 157;
 
-      /// <summary>(158) The segment is already unlocked.</summary>
+      // <summary>(158) The segment is already unlocked.</summary>
       //public const uint ERROR_NOT_LOCKED = 158;
 
       //public const uint ERROR_BAD_THREADID_ADDR = 159;

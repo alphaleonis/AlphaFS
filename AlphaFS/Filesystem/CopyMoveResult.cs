@@ -19,9 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Class for CopyMoveResult that contains the results for the Copy or Move action.</summary>
@@ -44,15 +41,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The error code encountered during the Copy or Move action.</summary>
       /// <value>0 (zero) indicates success.</value>
       public int ErrorCode { get; internal set; }
-
-
-      /// <summary>The error message from the <see cref="ErrorCode"/> that was encountered during the Copy or Move action.</summary>
-      /// <value>A message describing the error.</value>
-      [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
-      public string ErrorMessage
-      {
-         get { return new Win32Exception(ErrorCode).Message; }
-      }
 
 
       /// <summary>When true indicates that the Copy or Move action was canceled.</summary>

@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Reset file/directory attributes.
          // MSDN: If lpFileName specifies a read-only file, the function fails and GetLastError returns ERROR_FILE_READ_ONLY.
-         SetAttributesCore(isFolder, null, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
+         SetAttributesCore(isFolder, null, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
 
          // EncryptFile() / DecryptFile()
          // In the ANSI version of this function, the name is limited to 248 characters.

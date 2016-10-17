@@ -1160,64 +1160,6 @@ namespace AlphaFS.UnitTest
       #region AlphaFS
 
       [TestMethod]
-      public void AlphaFS_Directory_DeleteEmptySubdirectories()
-      {
-         Console.WriteLine("Directory.DeleteEmptySubdirectories()");
-
-         var tempPath = Path.Combine(Path.GetTempPath(), "Directory.DeleteEmptySubdirectories()-" + Path.GetRandomFileName());
-         long dirs0, dirs1, files0, files1;
-
-         const int maxDepth = 10;
-         const int totalDirectories = (maxDepth * maxDepth) + maxDepth;  // maxDepth = 10: 110 directories and 110 files.
-         const int emptyDirectories = (maxDepth * maxDepth) / 2;         // 50 empty directories.
-         const int remainingDirectories = totalDirectories - emptyDirectories;   // 60 remaining directories.
-
-         Console.WriteLine("\nInput Path: [{0}]", tempPath);
-         UnitTestConstants.CreateDirectoriesAndFiles(tempPath, maxDepth, true);
-
-         var searchPattern = Path.WildcardStarMatchAll;
-
-         UnitTestConstants.StopWatcher(true);
-         dirs0 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         files0 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         Console.WriteLine("\nCounted Directories: [{0}]\nCounted Files      : [{1}]\n{2}", dirs0, files0, UnitTestConstants.Reporter());
-
-         UnitTestConstants.StopWatcher(true);
-         var deleteOk = false;
-         try
-         {
-            Directory.DeleteEmptySubdirectories(tempPath, false);
-            deleteOk = true;
-         }
-         catch
-         {
-         }
-
-
-         // Issue-21123: Method Directory- and DirectoryInfo.DeleteEmptySubdirectories() also deletes the given directories when totally empty.
-         Assert.IsTrue(Directory.Exists(tempPath), "Directory should exist.");
-
-         Console.WriteLine("\nDirectory.DeleteEmptySubdirectories() (Should be True): [{0}]\n{1}", deleteOk, UnitTestConstants.Reporter());
-         Assert.IsTrue(deleteOk, "DeleteEmptySubdirectories() failed.");
-
-         searchPattern = Path.WildcardStarMatchAll;
-
-         UnitTestConstants.StopWatcher(true);
-         dirs1 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         files1 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         Console.WriteLine("\nCounted Directories (Should be 60): [{0}]\nCounted Files (Should be 110)     : [{1}]\n{2}", dirs1, files1, UnitTestConstants.Reporter());
-         Assert.IsTrue(dirs1 != dirs0);
-         Assert.IsTrue(dirs1 == remainingDirectories);
-         Assert.IsTrue(files1 == files0);
-
-         Directory.Delete(tempPath, true);
-         var directoryNotExists = !Directory.Exists(tempPath);
-         Assert.IsTrue(directoryNotExists);
-
-         Assert.IsTrue((emptyDirectories + remainingDirectories) == totalDirectories);
-      }
-
-      [TestMethod]
       public void AlphaFS_Directory_Encrypt()
       {
          Console.WriteLine("Directory.Encrypt()");
