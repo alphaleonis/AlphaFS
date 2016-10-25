@@ -264,7 +264,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          [SecurityCritical]
-         protected set
+         set
          {
             File.SetAttributesCore(IsDirectory, Transaction, LongFullName, value, PathFormat.LongFullPath);
             Reset();
