@@ -166,6 +166,7 @@
     <Compile Include="Directory Class\Directory_SetTimestamps.cs" />
     <Compile Include="Directory Class\Directory_GetTimestamps.cs" />
     <Compile Include="Directory Class\Directory_SetAccessControl.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo_Attributes.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo_Refresh.cs" />
     <Compile Include="File Class\AlphaFS_File_GetHash.cs" />
     <Compile Include="File Class\File_CreateText.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="File Class\File_Exists.cs" />
     <Compile Include="File Class\File_SetAccessControl.cs" />
     <Compile Include="File Class\File_GetAccessControl.cs" />
+    <Compile Include="FileInfo Class\FileInfo_Attributes.cs" />
     <Compile Include="FileInfo Class\FileInfo_InitializeInstance.cs" />
     <Compile Include="FileInfo Class\FileInfo_Refresh.cs" />
     <Compile Include="Host Class\AlphaFS_Host_DriveConnection.cs" />
