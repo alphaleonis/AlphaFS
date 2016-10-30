@@ -1,7 +1,7 @@
 ﻿Changelog
 =========
 
-Version 2.1.1  (2016-xx-xx)
+Version 2.1.2  (2016-10-30)
 -------------
 
 ### Bugs Fixed
@@ -199,7 +199,7 @@ Version 2.0  (2015-01-16)
 * Renamed delegate CopyProgressResult to CopyMoveProgressResult.
 
 
-Version 1.5
+Version 1.5  (2014-05-20)
 -----------
    * New: Various file system objects enumeration methods in Directory class.
    * Numerous bugfixes and optimizations

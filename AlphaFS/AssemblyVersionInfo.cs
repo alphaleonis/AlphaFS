@@ -19,8 +19,6 @@
  *  THE SOFTWARE. 
  */
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Resources;
 
 [assembly: AssemblyCompany("")]
@@ -29,7 +27,7 @@ using System.Resources;
 [assembly: AssemblyTrademark("")]
 
 [assembly: AssemblyVersion("2.1.0.0")]
-[assembly: AssemblyFileVersion("2.1.0.0")]
+[assembly: AssemblyFileVersion("2.1.2.0")]
 [assembly: AssemblyInformationalVersion("2.0")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
 
