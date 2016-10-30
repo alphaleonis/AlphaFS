@@ -1,9 +1,22 @@
----
+﻿---
 layout: page
 toc: true
 permalink: /changelog/
 title: Changelog
 ---
+
+Changelog
+=========
+
+Version 2.1.1  (2016-10-30)
+-------------
+
+### Bugs Fixed
+
+- Issue #270: Method `File.GetFileSystemEntryInfoCore` uses wildcard ? (questionmark) instead of * (asterisk)
+- Issue #276: `Directory.DeleteDirectory()`: Method can get stuck in infinite loop.
+- Issue #279: The unit tests for CRC32/64 are failing.
+
 
 Version 2.1  (2016-09-29)
 -----------
@@ -108,7 +121,8 @@ Version 2.1  (2016-09-29)
 - Issue #184: `File.CreateSymbolicLink()` should throw `PlatformNotSupportedException()` if OS < Vista. 
 - Issue #250: Change `FileSystemEntryInfo.ToString()` to show full path instead of `ReparsePointTag`.
 
-Version 2.0.1
+
+Version 2.0.1  (2015-02-07)
 -------------
 
 ### Bugs Fixed
@@ -120,7 +134,8 @@ Version 2.0.1
 - Issue #123: When `Directory.Encrypt/Decrypt()` is non-recursive, only process the folder.
 - Issue #124: Unit tests for long/short path are failing.
 
-Version 2.0
+
+Version 2.0  (2015-01-16)
 -----------
 * New: The public key of AlphaFS.dll has changed, delay-signing is no longer used.
 * New: Unit Tests, also act as code samples.
@@ -190,12 +205,14 @@ Version 2.0
 * Renamed class DeviceIo to Device.
 * Renamed delegate CopyProgressResult to CopyMoveProgressResult.
 
-Version 1.5
+
+Version 1.5  (2014-05-20)
 -----------
    * New: Various file system objects enumeration methods in Directory class.
    * Numerous bugfixes and optimizations
    * New: more unit tests
    * New: VS 2010 help file format, aka Help Viewer 1, dumped MS HELP 2 format
+
 
 Version 1.0
 -----------
@@ -226,6 +243,7 @@ Version 0.7 alpha
   * Mod: PathInfo now accepts more types of internal paths, such as \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy5\ etc.
   * ... and many minor changes and fixes, not mentioned here.
 
+
 Version 0.3.1
 -------------
   * New: Added support for hardlinks and symbolic links in File.
@@ -234,6 +252,7 @@ Version 0.3.1
   * Mod: Applied CLSCompliant(false) to the assembly
   * Mod: Improved error reporting, and cleanup of internal class NativeError.
   
+
 Version 0.3.0
 -------------
   * Initial release
