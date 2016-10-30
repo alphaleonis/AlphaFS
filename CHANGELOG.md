@@ -13,7 +13,7 @@ Version vNext  (20xx-xx-xx)
 - Issue #278: `Directory.DeleteEmptySubdirectoriesCore()`: Eliminate recursion.
 
 
-Version 2.1.1  (2016-xx-xx)
+Version 2.1.2  (2016-10-30)
 -------------
 
 ### Bugs Fixed

@@ -8,6 +8,26 @@
       <DistDir>$(MSBuildThisFileDirectory)Dist</DistDir>
    </PropertyGroup>
 
+   <UsingTask
+     TaskName="GetFileVersion"
+     TaskFactory="CodeTaskFactory"
+     AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+      <ParameterGroup>
+         <AssemblyPath ParameterType="System.String" Required="true" />
+         <Version ParameterType="System.String" Output="true" />
+      </ParameterGroup>
+      <Task>
+         <Using Namespace="System.Diagnostics" />
+         <Code Type="Fragment" Language="cs">
+            <![CDATA[
+       Log.LogMessage("Getting version details of assembly at: " + this.AssemblyPath, MessageImportance.High);
+
+       this.Version = FileVersionInfo.GetVersionInfo(this.AssemblyPath).FileVersion;  
+     ]]>
+         </Code>
+      </Task>
+   </UsingTask>
+   
    <ItemGroup>
       <TargetList Condition="  '@(TargetList)' == '' " Include="Rebuild" />
    </ItemGroup>
@@ -44,9 +64,9 @@
                Targets="@(TargetList)"
                SkipNonexistentProjects="true" />
 
-      <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\Bin\$(Configuration)\Net451\AlphaFS.dll">
-         <Output TaskParameter="Assemblies" ItemName="AlphaFSAssembly" />
-      </GetAssemblyIdentity>
+      <GetFileVersion AssemblyPath="$(MSBuildProjectDirectory)\Bin\$(Configuration)\Net451\AlphaFS.dll">
+         <Output TaskParameter="Version" PropertyName="AlphaFSFileVersion" />
+      </GetFileVersion>
 
       <ItemGroup>
          <FilesToClean Include="$(DistDir)\**\*"/>
@@ -57,7 +77,7 @@
       <RemoveDir Directories="$(DistDir)" />
       <MakeDir Directories="$(DistDir)" />
 
-      <Exec Command="&quot;$(MSBuildThisFileDirectory)packages\NuGet.CommandLine.3.4.4-rtm-final\tools\NuGet.exe&quot; pack &quot;$(ProjectDir)AlphaFS.nuspec&quot; -NoPackageAnalysis -Version %(AlphaFSAssembly.Version) -OutputDirectory $(DistDir)" WorkingDirectory="$(TargetDir)" LogStandardErrorAsError="true" ConsoleToMSBuild="true">
+      <Exec Command="&quot;$(MSBuildThisFileDirectory)packages\NuGet.CommandLine.3.4.4-rtm-final\tools\NuGet.exe&quot; pack &quot;$(ProjectDir)AlphaFS.nuspec&quot; -NoPackageAnalysis -Version $(AlphaFSFileVersion) -OutputDirectory $(DistDir)" WorkingDirectory="$(TargetDir)" LogStandardErrorAsError="true" ConsoleToMSBuild="true">
          <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
       </Exec>
 
@@ -81,12 +101,12 @@
          <StaticFiles Include="$(MSBuildThisFileDirectory)\README.md" />
       </ItemGroup>
 
-      <Move SourceFiles="$(MSBuildThisFileDirectory)\Bin\Documentation\AlphaFS.chm" DestinationFiles="$(DistDir)\Zip\AlphaFS.%(AlphaFSAssembly.Version).chm" />
+      <Move SourceFiles="$(MSBuildThisFileDirectory)\Bin\Documentation\AlphaFS.chm" DestinationFiles="$(DistDir)\Zip\AlphaFS.$(AlphaFSFileVersion).chm" />
 
       <Copy SourceFiles="@(BinFiles)" DestinationFiles="@(BinFiles->'$(DistDir)\Zip\Lib\%(Configuration)\%(Filename)%(Extension)')" />
       <Copy SourceFiles="@(StaticFiles)" DestinationFolder="$(DistDir)\Zip" />
 
-      <Exec Command="PowerShell -command Compress-Archive &quot;$(DistDir)\Zip\*&quot; $(DistDir)\AlphaFS.%(AlphaFSASsembly.Version).zip" />
+      <Exec Command="PowerShell -command Compress-Archive &quot;$(DistDir)\Zip\*&quot; $(DistDir)\AlphaFS.$(AlphaFSFileVersion).zip" />
 
    </Target>
 </Project>
