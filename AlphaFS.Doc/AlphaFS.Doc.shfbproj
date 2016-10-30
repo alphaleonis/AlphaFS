@@ -37,7 +37,7 @@
     <CopyrightText>Copyright %28C%29 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</CopyrightText>
     <PresentationStyle>VS2013</PresentationStyle>
     <SyntaxFilters>Standard</SyntaxFilters>
-    <HelpFileVersion>2.1.1.9300</HelpFileVersion>
+    <HelpFileVersion>2.1.2.9300</HelpFileVersion>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\Bin\$(Configuration)\Net452\AlphaFS.dll" />
       <DocumentationSource sourceFile="..\Bin\$(Configuration)\Net452\AlphaFS.xml" />
