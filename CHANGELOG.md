@@ -8,7 +8,7 @@ title: Changelog
 Changelog
 =========
 
-Version 2.1.1  (2016-10-30)
+Version 2.1.2  (2016-10-30)
 -------------
 
 ### Bugs Fixed
