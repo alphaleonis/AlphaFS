@@ -258,7 +258,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_RELOC_CHAIN_XEEDS_SEGLIM = 201;
       //public const uint ERROR_INFLOOP_IN_RELOC_CHAIN = 202;
 
-      /// <summary>(203) The system could not find the environment option that was entered.</summary>
+      //// <summary>(203) The system could not find the environment option that was entered.</summary>
       //public const uint ERROR_ENVVAR_NOT_FOUND = 203;
 
       //public const uint ERROR_NO_SIGNAL_SENT = 205;
@@ -319,7 +319,7 @@ namespace Alphaleonis.Win32
 
       //public const uint ERROR_IO_INCOMPLETE = 996;
 
-      /// <summary>(997) Overlapped I/O operation is in progress.</summary>
+      //// <summary>(997) Overlapped I/O operation is in progress.</summary>
       //public const uint ERROR_IO_PENDING = 997;
 
       //public const uint ERROR_NOACCESS = 998;
@@ -448,7 +448,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_POTENTIAL_FILE_FOUND = 1180;
       //public const uint ERROR_JOURNAL_ENTRY_DELETED = 1181;
 
-      /// <summary>(1200) The specified device name is invalid.</summary>
+      //// <summary>(1200) The specified device name is invalid.</summary>
       //public const uint ERROR_BAD_DEVICE = 1200;
 
       //public const uint ERROR_CONNECTION_UNAVAIL = 1201;
@@ -459,7 +459,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_BAD_PROFILE = 1206;
       //public const uint ERROR_NOT_CONTAINER = 1207;
 
-      /// <summary>(1208) An extended error has occurred.</summary>
+      //// <summary>(1208) An extended error has occurred.</summary>
       //public const uint ERROR_EXTENDED_ERROR = 1208;
 
       //public const uint ERROR_INVALID_GROUPNAME = 1209;
@@ -476,7 +476,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_REMOTE_SESSION_LIMIT_EXCEEDED = 1220;
       //public const uint ERROR_DUP_DOMAINNAME = 1221;
 
-      /// <summary>(1222) The network is not present or not started.</summary>
+      //// <summary>(1222) The network is not present or not started.</summary>
       //public const uint ERROR_NO_NETWORK = 1222;
 
       //public const uint ERROR_CANCELLED = 1223;
@@ -3558,7 +3558,7 @@ namespace Alphaleonis.Win32
       ///// <summary>This replicant database is outdated; synchronization is required.</summary>
       //public const uint NERR_SyncRequired = 2249;
 
-      /// <summary>(2250) The network connection could not be found.</summary>
+      //// <summary>(2250) The network connection could not be found.</summary>
       //public const uint NERR_UseNotFound = 2250;
 
       ///// <summary>This asg_type is invalid.</summary>
@@ -3645,7 +3645,7 @@ namespace Alphaleonis.Win32
       ///// <summary>This operation is not supported on computers with multiple networks.</summary>
       //public const uint NERR_MultipleNets = 2300;
 
-      /// <summary>(2310) This shared resource does not exist.</summary>
+      //// <summary>(2310) This shared resource does not exist.</summary>
       //public const uint NERR_NetNameNotFound = 2310;
 
       ///// <summary>This device is not shared.</summary>
