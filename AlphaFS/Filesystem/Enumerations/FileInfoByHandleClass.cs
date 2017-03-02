@@ -138,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <para>will resume the enumeration operation after the last file is returned.</para>
          /// </remarks>
          /// </summary>
-         FileIdBothDirectoryInfo = 10
+         FileIdBothDirectoryInfo = 10,
 
          #endregion // FILE_ID_BOTH_DIR_INFO
 
@@ -227,15 +227,15 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region FILE_ID_INFO
 
-         ///// <summary>FILE_ID_INFO
-         ///// <para>File information should be retrieved. Use for any handles.</para>
-         ///// <para>Use only when calling GetFileInformationByHandleEx.</para>
-         ///// <remarks>
-         ///// <para>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:</para>
-         ///// <para>This value is not supported before Windows 8 and Windows Server 2012</para>
-         ///// </remarks>
-         ///// </summary>
-         //FileIdInfo = 18,
+         /// <summary>FILE_ID_INFO
+         /// <para>File information should be retrieved. Use for any handles.</para>
+         /// <para>Use only when calling GetFileInformationByHandleEx.</para>
+         /// <remarks>
+         /// <para>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:</para>
+         /// <para>This value is not supported before Windows 8 and Windows Server 2012</para>
+         /// </remarks>
+         /// </summary>
+         FileIdInfo = 18,
 
          #endregion // FILE_ID_INFO
 
