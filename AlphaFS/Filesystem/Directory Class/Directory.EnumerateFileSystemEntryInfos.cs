@@ -86,12 +86,79 @@ namespace Alphaleonis.Win32.Filesystem
       /// </list>
       /// </typeparam>
       /// <param name="path">The directory to search.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<T>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath, filters);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <typeparam name="T">The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term><see cref="FileSystemEntryInfo"/></term>
+      ///       <description>This method will return instances of <see cref="FileSystemEntryInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="FileSystemInfo"/></term>
+      ///       <description>This method will return instances of <see cref="DirectoryInfo"/> and <see cref="FileInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="string"/></term>
+      ///       <description>This method will return the full path of each item.</description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
+      /// <param name="path">The directory to search.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<T>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <typeparam name="T">The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term><see cref="FileSystemEntryInfo"/></term>
+      ///       <description>This method will return instances of <see cref="FileSystemEntryInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="FileSystemInfo"/></term>
+      ///       <description>This method will return instances of <see cref="DirectoryInfo"/> and <see cref="FileInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="string"/></term>
+      ///       <description>This method will return the full path of each item.</description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, PathFormat pathFormat, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<T>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, pathFormat, filters);
       }
 
 
@@ -155,6 +222,40 @@ namespace Alphaleonis.Win32.Filesystem
       /// </typeparam>
       /// <param name="path">The directory to search.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<T>(null, path, Path.WildcardStarMatchAll, options, PathFormat.RelativePath, filters);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <typeparam name="T">The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term><see cref="FileSystemEntryInfo"/></term>
+      ///       <description>This method will return instances of <see cref="FileSystemEntryInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="FileSystemInfo"/></term>
+      ///       <description>This method will return instances of <see cref="DirectoryInfo"/> and <see cref="FileInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="string"/></term>
+      ///       <description>This method will return the full path of each item.</description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
@@ -163,6 +264,40 @@ namespace Alphaleonis.Win32.Filesystem
          return EnumerateFileSystemEntryInfosCore<T>(null, path, Path.WildcardStarMatchAll, options, pathFormat);
       }
 
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <typeparam name="T">The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term><see cref="FileSystemEntryInfo"/></term>
+      ///       <description>This method will return instances of <see cref="FileSystemEntryInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="FileSystemInfo"/></term>
+      ///       <description>This method will return instances of <see cref="DirectoryInfo"/> and <see cref="FileInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="string"/></term>
+      ///       <description>This method will return the full path of each item.</description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, DirectoryEnumerationOptions options, PathFormat pathFormat, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<T>(null, path, Path.WildcardStarMatchAll, options, pathFormat, filters);
+      }
 
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
@@ -200,6 +335,44 @@ namespace Alphaleonis.Win32.Filesystem
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern)
       {
          return EnumerateFileSystemEntryInfosCore<T>(null, path, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
+      /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <typeparam name="T">The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term><see cref="FileSystemEntryInfo"/></term>
+      ///       <description>This method will return instances of <see cref="FileSystemEntryInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="FileSystemInfo"/></term>
+      ///       <description>This method will return instances of <see cref="DirectoryInfo"/> and <see cref="FileInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="string"/></term>
+      ///       <description>This method will return the full path of each item.</description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<T>(null, path, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath, filters);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
@@ -240,7 +413,44 @@ namespace Alphaleonis.Win32.Filesystem
          return EnumerateFileSystemEntryInfosCore<T>(null, path, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, pathFormat);
       }
 
-
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
+      /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <typeparam name="T">The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term><see cref="FileSystemEntryInfo"/></term>
+      ///       <description>This method will return instances of <see cref="FileSystemEntryInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="FileSystemInfo"/></term>
+      ///       <description>This method will return instances of <see cref="DirectoryInfo"/> and <see cref="FileInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="string"/></term>
+      ///       <description>This method will return the full path of each item.</description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, PathFormat pathFormat, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<T>(null, path, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, pathFormat, filters);
+      }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
@@ -311,12 +521,91 @@ namespace Alphaleonis.Win32.Filesystem
       ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<T>(null, path, searchPattern, options, PathFormat.RelativePath, filters);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
+      /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <typeparam name="T">The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term><see cref="FileSystemEntryInfo"/></term>
+      ///       <description>This method will return instances of <see cref="FileSystemEntryInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="FileSystemInfo"/></term>
+      ///       <description>This method will return instances of <see cref="DirectoryInfo"/> and <see cref="FileInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="string"/></term>
+      ///       <description>This method will return the full path of each item.</description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<T>(null, path, searchPattern, options, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
+      /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <typeparam name="T">The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term><see cref="FileSystemEntryInfo"/></term>
+      ///       <description>This method will return instances of <see cref="FileSystemEntryInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="FileSystemInfo"/></term>
+      ///       <description>This method will return instances of <see cref="DirectoryInfo"/> and <see cref="FileInfo"/> instances.</description>
+      ///    </item>
+      ///    <item>
+      ///       <term><see cref="string"/></term>
+      ///       <description>This method will return the full path of each item.</description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<T>(null, path, searchPattern, options, pathFormat, filters);
       }
 
       #region Transactional
@@ -618,7 +907,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return EnumerateFileSystemEntryInfosCore<T>(transaction, path, searchPattern, options, pathFormat);
       }
-      
+
       #endregion // Transactional
 
       #region Internal Methods
@@ -656,13 +945,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
       [SecurityCritical]
-      internal static IEnumerable<T> EnumerateFileSystemEntryInfosCore<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      internal static IEnumerable<T> EnumerateFileSystemEntryInfosCore<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat, DirectoryEnumerationFilters filters = null)
       {
          // Enable BasicSearch and LargeCache by default.
          options |= DirectoryEnumerationOptions.BasicSearch | DirectoryEnumerationOptions.LargeCache;
 
-         return new FindFileSystemEntryInfo(true, transaction, path, searchPattern, options, typeof(T), pathFormat).Enumerate<T>();
+         return new FindFileSystemEntryInfo(true, transaction, path, searchPattern, options, typeof(T), pathFormat, filters).Enumerate<T>();
       }
 
       #endregion // Internal Methods
