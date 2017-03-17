@@ -326,11 +326,64 @@ namespace Alphaleonis.Win32.Filesystem
       {
          NativeMethods.WIN32_FIND_DATA win32FindData;
 
-         using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (var handle = FindFirstFile(InputPath, out win32FindData))
-            return handle == null
-               ? (T)(object)null
-               : NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
+            using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
+            {
+                if (!this.IsDirectory)
+                {
+                    //not explicitly set to be a directory
+                    using (var handle = FindFirstFile(InputPath, out win32FindData))
+                        return handle == null
+                           ? (T)(object)null
+                           : NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
+
+                }
+                else
+                {
+                    //if the input path is root in full path format, e.g., D:\, FindFirstFile, after trimming 
+                    //the ending directory separator, returns (via calling a native method) 
+                    //a descriptor of D:, whilst if the path is in long format, e.g., \\?\D:\, 
+                    //FindFirstFile fails unable to return anything meaningful.
+                    //Here we will hack this issue.
+                    bool savedContinueOnException = this.ContinueOnException;
+                    this.ContinueOnException = true;    //skip exceptions
+
+                    using (var handle = FindFirstFile(InputPath, out win32FindData))
+                    {
+                        if (handle == null)
+                        {
+                            //probably root path not supported by FindFirstFile
+                            NativeMethods.WIN32_FILE_ATTRIBUTE_DATA attrs;
+                            if (!NativeMethods.GetFileAttributesEx(InputPath, NativeMethods.GetFileExInfoLevels.GetFileExInfoStandard, out attrs))
+                            {
+                                var lastError = Marshal.GetLastWin32Error();
+
+                                //restore the flag
+                                this.ContinueOnException = savedContinueOnException;
+
+                                if (!ContinueOnException)
+                                {
+                                    ThrowPossibleException((uint)lastError, InputPath);
+                                }
+
+                                return (T)(object) null;
+                            }
+
+                            win32FindData.cAlternateFileName = null;
+                            win32FindData.cFileName = ".";
+                            win32FindData.dwFileAttributes = attrs.dwFileAttributes;
+                            win32FindData.ftCreationTime = attrs.ftCreationTime;
+                            win32FindData.ftLastAccessTime = attrs.ftLastAccessTime;
+                            win32FindData.ftLastWriteTime = attrs.ftLastWriteTime;
+                            win32FindData.nFileSizeHigh = attrs.nFileSizeHigh;
+                            win32FindData.nFileSizeLow = attrs.nFileSizeLow;
+                        }
+
+                        //restore the flag
+                        this.ContinueOnException = savedContinueOnException;
+                        return NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
+                    }                    
+                }
+            }           
       }
 
 

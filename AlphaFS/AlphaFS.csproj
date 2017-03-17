@@ -199,6 +199,7 @@
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\BackupStreamInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetDirectoryId.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetFileSystemEntryInfo.cs" />
     <Compile Include="Filesystem\FileId.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CopyMove.cs" />
