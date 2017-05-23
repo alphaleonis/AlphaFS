@@ -7,6 +7,8 @@ Version 2.1.3  (2017-XX-XX)
 ### Bugs Fixed
 
 - Issue #288: `Directory.Exists` on root drive problem has come back with recent updates  (Thx warrenlbrown)
+- Issue #297: Incorrect domain returned from `Host.EnumerateDomainDfsRoot` when specifying domain  (Thx damiarnold)
+- Issue #313: `GetHostShareFromPath()` fails with spaces in share name  (Thx damiarnold)
 
 
 Version 2.1.2  (2016-10-30)
