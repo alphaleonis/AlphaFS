@@ -420,7 +420,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteVolumeMountPoint(string volumeMountPoint)
       {
-         DeleteVolumeMountPointCore(volumeMountPoint, false);
+         DeleteVolumeMountPointCore(volumeMountPoint, false, false);
       }
       
       #endregion // DeleteVolumeMountPoint
@@ -1110,9 +1110,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="continueOnException">
       ///   <see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.
       /// </param>
+      /// <param name="continueIfJunction"><see langword="true"/> suppress an exception due to this mount point being a Junction.</param>
       /// <returns>If completed successfully returns <see cref="Win32Errors.ERROR_SUCCESS"/>, otherwise the last error number.</returns>      
       [SecurityCritical]
-      internal static int DeleteVolumeMountPointCore(string volumeMountPoint, bool continueOnException)
+      internal static int DeleteVolumeMountPointCore(string volumeMountPoint, bool continueOnException, bool continueIfJunction)
       {
          if (Utils.IsNullOrWhiteSpace(volumeMountPoint))
             throw new ArgumentNullException("volumeMountPoint");
@@ -1133,6 +1134,9 @@ namespace Alphaleonis.Win32.Filesystem
             {
                if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND)
                   lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+
+                if (continueIfJunction && lastError == Win32Errors.ERROR_INVALID_PARAMETER)
+                    return lastError;
 
                NativeError.ThrowException(lastError, volumeMountPoint);
             }

@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics;
 
 namespace AlphaFS.UnitTest
 {
@@ -108,7 +109,34 @@ namespace AlphaFS.UnitTest
       
 
 
-      
+      [TestMethod]
+      public void Directory_Delete_JunctionPoint()
+      {
+         var tempPath = System.IO.Path.GetTempPath();
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete"))
+         {
+            var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
+            var linked = rootDir.Directory.CreateSubdirectory("Linked");
+
+            var junction = Alphaleonis.Win32.Filesystem.Path.Combine(toDelete.FullName, "Link");
+
+            var startInfo = new ProcessStartInfo(
+               "cmd",
+               $@"/C mklink /J {junction} {linked.FullName}"
+            )
+            {
+               CreateNoWindow = true,
+               UseShellExecute = true
+            };
+            Process.Start(startInfo).WaitForExit();
+
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(junction));
+
+            Alphaleonis.Win32.Filesystem.Directory.Delete(toDelete.FullName, true);
+         }
+      }
+
       private void Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
