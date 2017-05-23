@@ -7,9 +7,10 @@ Version 2.1.3  (2017-XX-XX)
 ### Bugs Fixed
 
 - Issue #288: `Directory.Exists` on root drive problem has come back with recent updates  (Thx warrenlbrown)
-- Issue #289: `Alphaleonis.Win32.Network.Host.GetShareInfo` doesn't work since 2.1.0 
-- Issue #296: Folder rename (casing) throws IOException with HResult `ERROR_SAME_DRIVE`
+- Issue #289: `Alphaleonis.Win32.Network.Host.GetShareInfo` doesn't work since 2.1.0  (Thx Schoolmonkey)
+- Issue #296: Folder rename (casing) throws IOException with HResult `ERROR_SAME_DRIVE`  (Thx doormalena)
 - Issue #297: Incorrect domain returned from `Host.EnumerateDomainDfsRoot` when specifying domain  (Thx damiarnold)
+- Issue #312: `Volume.EnumerateVolumes` skips first volume  (Thx springy76)
 - Issue #313: `GetHostShareFromPath()` fails with spaces in share name  (Thx Schoolmonkey/damiarnold)
 
 
