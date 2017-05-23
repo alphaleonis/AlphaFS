@@ -194,22 +194,19 @@ namespace Alphaleonis.Win32.Filesystem
             return false;
 
 
-         // DriveInfo.IsReady() will fail.
-         //
-         //// After normalizing, check whether path ends in directory separator.
-         //// Otherwise, FillAttributeInfoCore removes it and we may return a false positive.
-         //string pathRp = Path.GetRegularPathCore(path, true, false, false, false);
+         // Check for driveletter, such as: "C:"
+         var pathRp = Path.GetRegularPathCore(path, GetFullPathOptions.None, false);
 
-         //if (pathRp.Length > 0 && Path.IsDVsc(pathRp[pathRp.Length - 1], false))
-         //   return false;
+         if (pathRp.Length == 2 && Path.IsPathRooted(pathRp, false))
+            path = pathRp;
 
 
          try
          {
-            string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);
+            var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);
 
             var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-            int dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
+            var dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
 
             return (dataInitialised == Win32Errors.ERROR_SUCCESS &&
                     data.dwFileAttributes != (FileAttributes) (-1) &&

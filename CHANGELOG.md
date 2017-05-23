@@ -1,6 +1,14 @@
 ﻿Changelog
 =========
 
+Version 2.1.3  (2017-XX-XX)
+-------------
+
+### Bugs Fixed
+
+- Issue #288: `Directory.Exists` on root drive problem has come back with recent updates  (Thx warrenlbrown)
+
+
 Version 2.1.2  (2016-10-30)
 -------------
 
