@@ -767,7 +767,8 @@ namespace Alphaleonis.Win32.Filesystem
          var destinationPathLp = Path.GetExtendedLengthPathCore(transaction, destinationPath, pathFormat, fullPathOptions);
 
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
-         if (sourcePathLp.Equals(destinationPathLp, StringComparison.OrdinalIgnoreCase))
+         // Do not use StringComparison.OrdinalIgnoreCase to allow renaming a folder with different casing.
+         if (sourcePathLp.Equals(destinationPathLp))
             NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPathLp);
 
 
