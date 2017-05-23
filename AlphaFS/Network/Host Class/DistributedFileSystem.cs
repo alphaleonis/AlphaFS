@@ -202,7 +202,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
+               var stripUnc = !Utils.IsNullOrWhiteSpace(host) ? Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty) : Environment.MachineName;
 
                return NativeMethods.NetDfsEnum(stripUnc, 300, prefMaxLen, out buffer, out entriesRead, out resumeHandle);
 
@@ -223,20 +223,21 @@ namespace Alphaleonis.Win32.Network
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+         
+         return EnumerateNetworkObjectCore(new FunctionData(),
+            (NativeMethods.DFS_INFO_200 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
-         return EnumerateNetworkObjectCore(new FunctionData(), (NativeMethods.DFS_INFO_200 structure, SafeGlobalMemoryBufferHandle buffer) =>
-
-            new DfsInfo { EntryPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Path.UncPrefix, NativeMethods.ComputerDomain, Path.DirectorySeparatorChar, structure.FtDfsName) },
+               new DfsInfo { EntryPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Path.UncPrefix, !Utils.IsNullOrWhiteSpace(domain) ? domain : NativeMethods.ComputerDomain, Path.DirectorySeparatorChar, structure.FtDfsName) },
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
             {
                totalEntries = 0;
 
                // When host == null, the local computer is used.
-               // However, the resulting OpenResourceInfo.Host property will be empty.
+               // However, the resulting Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathCore(domain, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
+               var stripUnc = !Utils.IsNullOrWhiteSpace(domain) ? Path.GetRegularPathCore(domain, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty) : NativeMethods.ComputerDomain;
 
                return NativeMethods.NetDfsEnum(stripUnc, 200, prefMaxLen, out buffer, out entriesRead, out resumeHandle);
 
@@ -279,7 +280,7 @@ namespace Alphaleonis.Win32.Network
 
          // Level 9 = DFS_INFO_9
 
-         uint lastError = getFromClient
+         var lastError = getFromClient
             ? NativeMethods.NetDfsGetClientInfo(dfsName, serverName, shareName, 9, out safeBuffer)
             : NativeMethods.NetDfsGetInfo(dfsName, null, null, 9, out safeBuffer);
 

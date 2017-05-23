@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Network
    {
       #region GetUncName
 
-      /// <summary>Return the host name in UNC format, for example: \\hostname.</summary>
+      /// <summary>Return the host name in UNC format, for example: \\hostname</summary>
       /// <returns>The unc name.</returns>
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Network
          return string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.UncPrefix, Environment.MachineName);
       }
 
-      /// <summary>Return the host name in UNC format, for example: \\hostname.</summary>
+      /// <summary>Return the host name in UNC format, for example: \\hostname</summary>
       /// <param name="computerName">Name of the computer.</param>
       /// <returns>The unc name.</returns>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]

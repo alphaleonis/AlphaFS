@@ -76,7 +76,7 @@ namespace AlphaFS.UnitTest
          shouldBe = isNetwork; // True when network (UNC path), false when local path.
          drive = @"\\?\" + UnitTestConstants.SysDrive + @"\";
          if (isNetwork) drive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(drive);
-         Console.Write("Drive path (should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
+         Console.Write("Drive path (System.IO, should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
          existSystemIO = System.IO.Directory.Exists(drive);
          existAlphaFS = Alphaleonis.Win32.Filesystem.Directory.Exists(drive);
          Console.WriteLine(existSystemIO);
@@ -89,7 +89,7 @@ namespace AlphaFS.UnitTest
          shouldBe = true;
          drive = UnitTestConstants.SysDrive + @"\";
          if (isNetwork) drive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(drive);
-         Console.Write("Drive path (should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
+         Console.Write("Drive path (System.IO, should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
          existSystemIO = System.IO.Directory.Exists(drive);
          existAlphaFS = Alphaleonis.Win32.Filesystem.Directory.Exists(drive);
          Console.WriteLine(existSystemIO);

@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Net.NetworkInformation;
 
 namespace AlphaFS.UnitTest
 {
@@ -28,16 +29,39 @@ namespace AlphaFS.UnitTest
    public partial class HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_DriveConnection()
+      public void AlphaFS_Host_EnumerateDomainDfsRoot()
       {
-         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.LocalHostShare);
+         Console.WriteLine("Network.Host.EnumerateDomainDfsRoot()");
 
-         using (var connection = new Alphaleonis.Win32.Network.DriveConnection(share))
+         Console.Write("\nEnumerating DFS Root from user domain: [{0}]\n", Alphaleonis.Win32.Network.NativeMethods.ComputerDomain);
+         var cnt = 0;
+         var noDomainConnection = true;
+         UnitTestConstants.StopWatcher(true);
+         try
          {
-            Console.WriteLine("\nUsing DriveConnection(): [{0}] to: [{1}]", connection.LocalName, share);
-
-            Assert.AreEqual(share, connection.Share);
+            foreach (var dfsNamespace in Alphaleonis.Win32.Network.Host.EnumerateDomainDfsRoot())
+            {
+               noDomainConnection = false;
+               Console.Write("\n\t#{0:000}\tDFS Root: [{1}]", ++cnt, dfsNamespace);
+            }
          }
+         catch (NetworkInformationException ex)
+         {
+            Console.WriteLine("\n\tNetworkInformationException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+
+         Console.WriteLine("\n\n{0}", UnitTestConstants.Reporter(true));
+
+         if (noDomainConnection)
+            Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
+         else if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+
+         Console.WriteLine();
       }
    }
 }
