@@ -207,6 +207,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Copy
 
+
       #region Copy (CopyOptions)
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.</summary>
@@ -415,6 +416,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Copy (CopyOptions)
 
+
       #region Move
 
       #region .NET
@@ -510,6 +512,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transactional
 
       #endregion // Move
+
 
       #region Move (MoveOptions)
 
@@ -719,6 +722,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Move (MoveOptions)
 
+
       #region Internal Methods
 
       /// <summary>Copy/move a Non-/Transacted file or directory including its children to a new location,
@@ -729,7 +733,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
-      ///   <para>This Move method works across disk volumes, and it does not throw an exception if the source and destination are the same. </para>
+      ///   <para>This Move method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
       /// </remarks>
       /// <exception cref="ArgumentException"/>
@@ -752,10 +756,24 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
+         // Determine Copy or Move action.
+         var doCopy = copyOptions != null && null == moveOptions;
+         var doMove = moveOptions != null && null == copyOptions;
+
+         if (doCopy == doMove)
+            throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
+
+
          var fullCheck = pathFormat == PathFormat.RelativePath;
 
+         // Allow null value for destinationPath when flag MoveOptions.DelayUntilReboot is specified.
+         var delayUntilReboot = null == destinationPath && doMove && ((MoveOptions) moveOptions & MoveOptions.DelayUntilReboot) != 0;
+
+
          Path.CheckSupportedPathFormat(sourcePath, fullCheck, fullCheck);
-         Path.CheckSupportedPathFormat(destinationPath, fullCheck, fullCheck);
+
+         if (!delayUntilReboot)
+            Path.CheckSupportedPathFormat(destinationPath, fullCheck, fullCheck);
 
 
          // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
@@ -764,25 +782,19 @@ namespace Alphaleonis.Win32.Filesystem
          const GetFullPathOptions fullPathOptions = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
 
          var sourcePathLp = Path.GetExtendedLengthPathCore(transaction, sourcePath, pathFormat, fullPathOptions);
-         var destinationPathLp = Path.GetExtendedLengthPathCore(transaction, destinationPath, pathFormat, fullPathOptions);
+         var destinationPathLp = delayUntilReboot ? null : Path.GetExtendedLengthPathCore(transaction, destinationPath, pathFormat, fullPathOptions);
+
 
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
          // Do not use StringComparison.OrdinalIgnoreCase to allow renaming a folder with different casing.
-         if (sourcePathLp.Equals(destinationPathLp))
+         if (!delayUntilReboot && sourcePathLp.Equals(destinationPathLp))
             NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPathLp);
 
 
          var emulateMove = false;
-
-         // Determine Copy or Move action.
-         var doCopy = copyOptions != null;
-         var doMove = !doCopy && moveOptions != null;
          
-         if ((!doCopy && !doMove) || (doCopy && doMove))
-            throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
 
-
-         if (doMove)
+         if (doMove && !delayUntilReboot)
          {
             if (((MoveOptions) moveOptions & MoveOptions.CopyAllowed) != 0 || !Volume.IsSameVolume(sourcePath, destinationPath))
             {
@@ -801,21 +813,29 @@ namespace Alphaleonis.Win32.Filesystem
 
          #endregion //Setup
 
+
          #region Copy
 
          if (doCopy)
          {
             CreateDirectoryCore(transaction, destinationPathLp, null, null, false, PathFormat.LongFullPath);
 
-            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, sourcePathLp,
+               Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
             {
                var newDestinationPathLp = Path.CombineCore(false, destinationPathLp, fsei.FileName);
 
                cmr = fsei.IsDirectory
-                  ? CopyMoveCore(transaction, fsei.LongFullPath, newDestinationPathLp, copyOptions, null, progressHandler, userProgressData, PathFormat.LongFullPath)
-                  : File.CopyMoveCore(false, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions, null, progressHandler, userProgressData, PathFormat.LongFullPath);
+                  ? CopyMoveCore(transaction, fsei.LongFullPath, newDestinationPathLp, copyOptions, null,
+                     progressHandler, userProgressData, PathFormat.LongFullPath)
+                  : File.CopyMoveCore(false, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions,
+                     null, progressHandler, userProgressData, PathFormat.LongFullPath);
 
-               
+
+               if (cmr.IsCanceled)
+                  return cmr;
+
+
                // Remove the folder or file when copying was successful.
                if (emulateMove && cmr.ErrorCode == Win32Errors.ERROR_SUCCESS)
                {
@@ -824,10 +844,6 @@ namespace Alphaleonis.Win32.Filesystem
                   else
                      File.DeleteFileCore(transaction, fsei.LongFullPath, true, PathFormat.LongFullPath);
                }
-
-
-               if (cmr.IsCanceled)
-                  return cmr;
             }
 
 
@@ -838,12 +854,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          #endregion // Copy
 
+
          #region Move
 
          else
          {
             // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
-            if (((MoveOptions) moveOptions & MoveOptions.CopyAllowed) == 0)
+            if (!delayUntilReboot && ((MoveOptions) moveOptions & MoveOptions.CopyAllowed) == 0)
                if (!Path.GetPathRoot(sourcePathLp, false).Equals(Path.GetPathRoot(destinationPathLp, false), StringComparison.OrdinalIgnoreCase))
                   NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, destinationPathLp);
 
@@ -859,6 +876,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          #endregion // Move
+
 
          // The copy/move operation succeeded or was canceled.
          return cmr;

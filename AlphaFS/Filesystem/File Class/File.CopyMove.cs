@@ -232,6 +232,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Copy
 
+
       #region Copy (CopyOptions)
 
       #region Non-Transactional
@@ -688,6 +689,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Copy (CopyOptions)
 
+
       #region Move
 
       #region .NET
@@ -716,6 +718,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
+
 
       #region AlphaFS
 
@@ -803,6 +806,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // AlphaFS
 
       #endregion // Move
+
 
       #region Move (MoveOptions)
 
@@ -1032,6 +1036,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Move (MoveOptions)
       
+
       #region Internal Methods
 
       /// <summary>Copy/move a Non-/Transacted file or directory including its children to a new location, <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,
@@ -1056,8 +1061,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="isFolder">Specifies that <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The source directory path.</param>
-      /// <param name="destinationFileName">The destination directory path.</param>
+      /// <param name="sourcePath">The source directory path plus file name.</param>
+      /// <param name="destinationPath">The destination directory path plus file name.</param>
       /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise. This parameter is ignored for move operations.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="moveOptions">Flags that specify how the file or directory is to be moved. This parameter can be <see langword="null"/>.</param>
@@ -1066,37 +1071,52 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(bool isFolder, KernelTransaction transaction, string sourceFileName, string destinationFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      internal static CopyMoveResult CopyMoveCore(bool isFolder, KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          #region Setup
 
+         // Determine Copy or Move action.
+         var doCopy = copyOptions != null && null == moveOptions;
+         var doMove = moveOptions != null && null == copyOptions;
+
+         if (doCopy == doMove)
+            throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
+
+
          var fullCheck = pathFormat == PathFormat.RelativePath;
 
-         Path.CheckSupportedPathFormat(sourceFileName, fullCheck, fullCheck);
-         Path.CheckSupportedPathFormat(destinationFileName, fullCheck, fullCheck);
+         // Allow null value for destinationPath when flag MoveOptions.DelayUntilReboot is specified.
+         var delayUntilReboot = null == destinationPath && doMove && ((MoveOptions) moveOptions & MoveOptions.DelayUntilReboot) != 0;
 
-         var sourceFileNameLp = Path.GetExtendedLengthPathCore(transaction, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
-         var destFileNameLp = Path.GetExtendedLengthPathCore(transaction, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
+
+         Path.CheckSupportedPathFormat(sourcePath, fullCheck, fullCheck);
+
+         if (!delayUntilReboot)
+            Path.CheckSupportedPathFormat(destinationPath, fullCheck, fullCheck);
+
+
+         var sourcePathLp = Path.GetExtendedLengthPathCore(transaction, sourcePath, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         var destinationPathLp = delayUntilReboot ? null : Path.GetExtendedLengthPathCore(transaction, destinationPath, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
+
+
+         // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
+         // Do not use StringComparison.OrdinalIgnoreCase to allow renaming a folder with different casing.
+         if (!delayUntilReboot && sourcePathLp.Equals(destinationPathLp))
+            NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPathLp);
 
 
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
          // Otherwise, the copy/move operation will continue to completion.
          var cancel = false;
 
-         // Determine Copy or Move action.
-         var doCopy = copyOptions != null;
-         var doMove = !doCopy && moveOptions != null;
 
-         if ((!doCopy && !doMove) || (doCopy && doMove))
-            throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
-
-         var raiseException = progressHandler == null;
+         var raiseException = null == progressHandler;
 
          // Setup callback function for progress notifications.
-         var routine = progressHandler != null
-            ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, hSourceFile, hDestinationFile, lpData) =>
-                  progressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, userProgressData)
-            : (NativeMethods.NativeCopyMoveProgressRoutine) null;
+         var routine = raiseException
+            ? (NativeMethods.NativeCopyMoveProgressRoutine) null
+            : (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, hSourceFile, hDestinationFile, lpData) =>
+               progressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, userProgressData);
 
          #endregion //Setup
 
@@ -1104,6 +1124,7 @@ namespace Alphaleonis.Win32.Filesystem
       startCopyMove:
 
          var lastError = Win32Errors.ERROR_SUCCESS;
+
 
          #region Win32 Copy/Move
 
@@ -1119,12 +1140,12 @@ namespace Alphaleonis.Win32.Filesystem
                // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                // 2013-04-15: MSDN confirms LongPath usage.
 
-               ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
-               : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
+               ? NativeMethods.MoveFileWithProgress(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
+               : NativeMethods.CopyFileEx(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
 
             : doMove
-               ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
-               : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle)))
+               ? NativeMethods.MoveFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
+               : NativeMethods.CopyFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle)))
          {
             lastError = (uint) Marshal.GetLastWin32Error();
 
@@ -1159,7 +1180,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // File.Copy()
                      // File.Move()
                      // MSDN: .NET 3.5+: FileNotFoundException: sourceFileName was not found. 
-                        NativeError.ThrowException(lastError, sourceFileNameLp);
+                     NativeError.ThrowException(lastError, sourcePathLp);
                      break;
 
                   case Win32Errors.ERROR_PATH_NOT_FOUND:
@@ -1167,13 +1188,13 @@ namespace Alphaleonis.Win32.Filesystem
                      // File.Move()
                      // Directory.Move()
                      // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified in sourceFileName or destinationFileName is invalid (for example, it is on an unmapped drive).
-                     NativeError.ThrowException(lastError, sourceFileNameLp);
+                     NativeError.ThrowException(lastError, sourcePathLp);
                      break;
 
                   case Win32Errors.ERROR_FILE_EXISTS:
                      // File.Copy()
                      // Directory.Copy()
-                     NativeError.ThrowException(lastError, destFileNameLp);
+                     NativeError.ThrowException(lastError, destinationPathLp);
                      break;
 
                   default:
@@ -1183,27 +1204,27 @@ namespace Alphaleonis.Win32.Filesystem
                      // Check if destination directory already exists.
                      // Directory.Move()
                      // MSDN: .NET 3.5+: IOException: destDirName already exists. 
-                     if (ExistsCore(true, transaction, destFileNameLp, PathFormat.LongFullPath))
-                        NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destFileNameLp);
+                     if (ExistsCore(true, transaction, destinationPathLp, PathFormat.LongFullPath))
+                        NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destinationPathLp);
 
                      if (doMove)
                      {
                         // Ensure that the source file or directory exists.
                         // Directory.Move()
                         // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive). 
-                        if (!ExistsCore(isFolder, transaction, sourceFileNameLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourceFileNameLp);
+                        if (!ExistsCore(isFolder, transaction, sourcePathLp, PathFormat.LongFullPath))
+                           NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourcePathLp);
                      }
 
 
                      // Try reading the source file.
-                     var fileNameLp = destFileNameLp;
+                     var fileNameLp = destinationPathLp;
 
                      if (!isFolder)
                      {
-                        using (var safeHandle = CreateFileCore(transaction, sourceFileNameLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, PathFormat.LongFullPath))
+                        using (var safeHandle = CreateFileCore(transaction, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, PathFormat.LongFullPath))
                            if (safeHandle != null && safeHandle.IsInvalid)
-                              fileNameLp = sourceFileNameLp;
+                              fileNameLp = sourcePathLp;
                      }
 
                      if (lastError == Win32Errors.ERROR_ACCESS_DENIED)
@@ -1212,13 +1233,13 @@ namespace Alphaleonis.Win32.Filesystem
                         // File.Move()
                         // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
                         //   Directory exists with the same name as the file.
-                        if (!isFolder && ExistsCore(true, transaction, destFileNameLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.Target_File_Is_A_Directory, destFileNameLp));
+                        if (!isFolder && ExistsCore(true, transaction, destinationPathLp, PathFormat.LongFullPath))
+                           NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
 
                         if (doMove)
                         {
                            var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-                           FillAttributeInfoCore(transaction, destFileNameLp, ref data, false, true);
+                           FillAttributeInfoCore(transaction, destinationPathLp, ref data, false, true);
 
                            if (data.dwFileAttributes != (FileAttributes) (-1))
                            {
@@ -1228,7 +1249,7 @@ namespace Alphaleonis.Win32.Filesystem
                                  if (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) != 0)
                                  {
                                     // Reset file system object attributes.
-                                    SetAttributesCore(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
+                                    SetAttributesCore(isFolder, transaction, destinationPathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
 
                                     goto startCopyMove;
                                  }
@@ -1237,14 +1258,14 @@ namespace Alphaleonis.Win32.Filesystem
                                  // MSDN: .NET 3.5+: UnauthorizedAccessException: destinationFileName is read-only.
                                  // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                                  // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                                 throw new FileReadOnlyException(destFileNameLp);
+                                 throw new FileReadOnlyException(destinationPathLp);
                               }
 
 
                               // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                               // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
                               if ((data.dwFileAttributes & FileAttributes.Hidden) != 0)
-                                 NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.File_Is_Hidden, destFileNameLp));
+                                 NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.File_Is_Hidden, destinationPathLp));
                            }
                         }
                      }
@@ -1264,6 +1285,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #endregion // Win32 Copy/Move
 
+
          #region Transfer Timestamps
 
          // Apply original Timestamps if requested.
@@ -1273,17 +1295,18 @@ namespace Alphaleonis.Win32.Filesystem
          {
             // Currently preserveDates is only used with files.
             var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-            var dataInitialised = FillAttributeInfoCore(transaction, sourceFileNameLp, ref data, false, true);
+            var dataInitialised = FillAttributeInfoCore(transaction, sourcePathLp, ref data, false, true);
 
             if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.dwFileAttributes != (FileAttributes) (-1))
-               SetFsoDateTimeCore(false, transaction, destFileNameLp, DateTime.FromFileTimeUtc(data.ftCreationTime),
+               SetFsoDateTimeCore(false, transaction, destinationPathLp, DateTime.FromFileTimeUtc(data.ftCreationTime),
                   DateTime.FromFileTimeUtc(data.ftLastAccessTime), DateTime.FromFileTimeUtc(data.ftLastWriteTime), false, PathFormat.LongFullPath);
          }
 
          #endregion // Transfer Timestamps
 
+
          // The copy/move operation succeeded, failed or was canceled.
-         return new CopyMoveResult(sourceFileNameLp, destFileNameLp, isFolder, doMove, cancel, (int) lastError);
+         return new CopyMoveResult(sourcePathLp, destinationPathLp, isFolder, doMove, cancel, (int) lastError);
       }
 
       #endregion // Internal Methods

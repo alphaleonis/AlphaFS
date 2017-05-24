@@ -166,6 +166,7 @@
     <Compile Include="Directory Class\Directory_GetTimestamps.cs" />
     <Compile Include="Directory Class\Directory_SetAccessControl.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo_FolderName255Characters.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo_MoveTo.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo_Refresh.cs" />
     <Compile Include="File Class\AlphaFS_File_GetHash.cs" />
     <Compile Include="File Class\File_CreateText.cs" />

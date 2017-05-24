@@ -10,9 +10,11 @@ Version 2.1.3  (2017-XX-XX)
 - Issue #289: `Alphaleonis.Win32.Network.Host.GetShareInfo` doesn't work since 2.1.0  (Thx Schoolmonkey/damiarnold)
 - Issue #296: Folder rename (casing) throws IOException with HResult `ERROR_SAME_DRIVE`  (Thx doormalena)
 - Issue #297: Incorrect domain returned from `Host.EnumerateDomainDfsRoot` when specifying domain  (Thx damiarnold)
+- Issue #299: `FileInfo.MoveTo` and `DirectoryInfo.MoveTo` throw `ArgumentNullException` on empty destination path  (Thx doormalena)
 - Issue #312: `Volume.EnumerateVolumes` skips first volume  (Thx springy76)
 - Issue #313: `GetHostShareFromPath()` fails with spaces in share name  (Thx damiarnold)
 - Issue #320: Minor changes in comments in `Win32Errors.cs` to eliminate compiler warnings.  (Thx besoft)
+- Issue #321: `DirectoryInfo.CopyToMoveToCore()` calls `Path.GetExtendedLengthPathCore()` without `Transaction` parameter.
 
 
 Version 2.1.2  (2016-10-30)
