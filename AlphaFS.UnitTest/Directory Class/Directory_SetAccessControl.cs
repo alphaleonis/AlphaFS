@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using Alphaleonis.Win32.Filesystem;
@@ -51,7 +52,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File.SetAccessControl"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomFileFullPath;
             Directory.CreateDirectory(folder);

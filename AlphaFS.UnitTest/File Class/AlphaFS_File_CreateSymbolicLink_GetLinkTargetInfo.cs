@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -48,7 +49,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File.CreateSymbolicLink"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var symboliclinkFolder = System.IO.Path.Combine(rootDir.Directory.FullName, "DestinationFolder");
             System.IO.Directory.CreateDirectory(symboliclinkFolder);

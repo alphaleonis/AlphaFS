@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 using System.Text;
 
 namespace AlphaFS.UnitTest
@@ -48,7 +49,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File.OpenWrite"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file1 = rootDir.RandomFileFullPath + ".txt";
             var file2 = rootDir.RandomFileFullPath + ".txt";

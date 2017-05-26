@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -55,7 +56,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File.Replace"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var fileSrc = rootDir.RandomFileFullPath + "-" + UnitTestConstants.TextHelloWorld + ".txt";
             var fileDst = rootDir.RandomFileFullPath + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
@@ -95,7 +96,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File.Replace"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var fileSrc = rootDir.RandomFileFullPath + "-" + UnitTestConstants.TextHelloWorld + ".txt";
             var fileDst = rootDir.RandomFileFullPath + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";

@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -49,7 +50,7 @@ namespace AlphaFS.UnitTest
 
          // Assumption: Extention: .txt is associated with: C:\Windows\System32\notepad.exe
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Shell32Info.GetVerbCommand"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file = rootDir.RandomFileFullPath + ".txt";
 

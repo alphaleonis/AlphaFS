@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -53,7 +54,7 @@ namespace AlphaFS.UnitTest
          }
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File.EnumerateHardlinks"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var hardlinkFolder = System.IO.Path.Combine(rootDir.Directory.FullName, "Hardlinks");
             System.IO.Directory.CreateDirectory(hardlinkFolder);
