@@ -15,6 +15,7 @@ Version 2.1.3  (2017-XX-XX)
 - Issue #313: `GetHostShareFromPath()` fails with spaces in share name  (Thx damiarnold)
 - Issue #320: Minor changes in comments in `Win32Errors.cs` to eliminate compiler warnings.  (Thx besoft)
 - Issue #321: `DirectoryInfo.CopyToMoveToCore()` calls `Path.GetExtendedLengthPathCore()` without `Transaction` parameter.
+- Issue #325: `DeleteEmptySubdirectories` (with `recursive=true`) throws `System.IO.DirectoryNotFoundException`  (Thx kryvoplias)
 
 
 Version 2.1.2  (2016-10-30)
