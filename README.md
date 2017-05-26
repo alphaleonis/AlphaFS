@@ -20,7 +20,7 @@ The file system support in .NET is pretty good for most uses. However there are 
 ## What does AlphaFS provide?
 
 AlphaFS provides a namespace (`Alphaleonis.Win32.Filesystem`) containing a number of classes. Most notable
-are replications of the `System.IO.Path`, `System.IO.File`, `System.IO.FileInfo`, `System.IO.Directory` and `System.IO.DirectoryInfo`, all with support for the extended-length paths (up to 32.000 chars),
+are replications of the `System.IO.Path`, `System.IO.File`, `System.IO.FileInfo`, `System.IO.Directory` and `System.IO.DirectoryInfo`, all with support for the extended-length paths (up to 32.000 chars), full UNC support,
 recursive file enumerations, native backups and manipulations with advanced flags and options.
 They also contain extensions to these, and there are many more features for several functions.
 
@@ -32,7 +32,8 @@ on NTFS file systems, through .NET, using the interface of the standard classes 
 AlphaFS also contains some NTFS security related functionality (in `Alphaleonis.Win32.Security`), providing 
 the ability to enable token privileges for a user, which may be necessary for eg. changing ownership of a file.
 
-Network functionality is available to easily access SMB/DFS shares, folders and files on the network,
+The `Alphaleonis.Win32.Network` namespace together with the `Alphaleonis.Win32.Network.Host` class offers
+network functionality to connect to SMB/DFS resources and easily access files and folders on the network,
 all with extended-length paths support.
 
 The library is Open Source, licensed under the MIT license.
