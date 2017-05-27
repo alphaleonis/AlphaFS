@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
    internal sealed class TemporaryDirectory : IDisposable
    {
       public TemporaryDirectory(string prefix = null) : this(System.IO.Path.GetTempPath(), prefix) { }
-      
+
       public TemporaryDirectory(string root, string prefix)
       {
          if (Utils.IsNullOrWhiteSpace(prefix))
@@ -69,11 +69,29 @@ namespace AlphaFS.UnitTest
          try
          {
             if (isDisposing)
-               Alphaleonis.Win32.Filesystem.Directory.Delete(Directory.FullName, true, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
+               System.IO.Directory.Delete(Directory.FullName, true);
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\nFailed to delete TemporaryDirectory: [{0}]: [{1}]", Directory.FullName, ex.Message);
+            Console.WriteLine("\n\nSystem.IO failed to delete TemporaryDirectory: [{0}]\nError: [{1}]", Directory.FullName, ex.Message);
+            Console.Write("Retry using AlphaFS... ");
+
+            try
+            {
+               var dirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(Directory.FullName, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
+               if (dirInfo.Exists)
+               {
+                  dirInfo.Delete(true, true);
+                  Console.WriteLine("Success.");
+               }
+
+               else
+                  Console.WriteLine("TemporaryDirectory was already removed.");
+            }
+            catch (Exception ex2)
+            {
+               Console.WriteLine("Failed to delete TemporaryDirectory.\nError: [{0}]", ex2.Message);
+            }
          }
       }
 

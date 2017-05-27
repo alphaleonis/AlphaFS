@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -33,7 +32,7 @@ namespace AlphaFS.UnitTest
       {
          var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.LocalHostShare);
 
-         using (var connection = new DriveConnection(share))
+         using (var connection = new Alphaleonis.Win32.Network.DriveConnection(share))
          {
             Console.WriteLine("\nUsing DriveConnection(): [{0}] to: [{1}]", connection.LocalName, share);
 

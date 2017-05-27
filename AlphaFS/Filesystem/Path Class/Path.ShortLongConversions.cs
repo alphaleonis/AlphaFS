@@ -190,7 +190,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? NativeMethods.GetShortPathName(pathLp, buffer, (uint)buffer.Capacity)
                : transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
-                  // GetLongPathName()
+               // GetLongPathName()
                // In the ANSI version of this function, the name is limited to MAX_PATH characters.
                // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                // 2014-01-29: MSDN confirms LongPath usage.
@@ -242,6 +242,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets the path as a long full path.</summary>
       /// <returns>The path as an extended length path.</returns>
       /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">Full pathname of the source path to convert.</param>
       /// <param name="pathFormat">The path format to use.</param>
@@ -267,7 +268,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException("Invalid value for " + typeof(PathFormat).Name + ": " + pathFormat);
          }
       }
-      
+
       #endregion // Internals Methods
    }
 }

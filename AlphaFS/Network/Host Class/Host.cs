@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Network
    {
       #region GetUncName
 
-      /// <summary>Return the host name in UNC format, for example: \\hostname.</summary>
+      /// <summary>Return the host name in UNC format, for example: \\hostname</summary>
       /// <returns>The unc name.</returns>
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Network
          return string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.UncPrefix, Environment.MachineName);
       }
 
-      /// <summary>Return the host name in UNC format, for example: \\hostname.</summary>
+      /// <summary>Return the host name in UNC format, for example: \\hostname</summary>
       /// <param name="computerName">Name of the computer.</param>
       /// <returns>The unc name.</returns>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       [SecurityCritical]
-      private static IEnumerable<TStruct> EnumerateNetworkObjectCore<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException) 
+      private static IEnumerable<TStruct> EnumerateNetworkObjectCore<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException)
       {
          Type objectType;
          int objectSize;
@@ -141,7 +141,7 @@ namespace Alphaleonis.Win32.Network
          if (lastError != Win32Errors.NO_ERROR && !continueOnException)
             throw new NetworkInformationException((int) lastError);
       }
-      
+
       /// <summary>This method uses <see cref="NativeMethods.REMOTE_NAME_INFO"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
       /// <returns>A <see cref="NativeMethods.REMOTE_NAME_INFO"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid.</remarks>
@@ -157,7 +157,7 @@ namespace Alphaleonis.Win32.Network
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         path = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false); 
+         path = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
 
          // If path already is a network share path, we fill the REMOTE_NAME_INFO structure ourselves.
          if (Path.IsUncPathCore(path, true, false))
@@ -168,15 +168,15 @@ namespace Alphaleonis.Win32.Network
                lpRemainingPath = Path.DirectorySeparator
             };
 
-         
+
          uint lastError;
 
          // Use large enough buffer to prevent a 2nd call.
          uint bufferSize = 1024;
-         
+
          do
          {
-            using (var buffer = new SafeGlobalMemoryBufferHandle((int) bufferSize))
+            using (var buffer = new SafeGlobalMemoryBufferHandle((int)bufferSize))
             {
                // Structure: UNIVERSAL_NAME_INFO_LEVEL = 1 (not used in AlphaFS).
                // Structure: REMOTE_NAME_INFO_LEVEL    = 2
