@@ -570,24 +570,51 @@ namespace Alphaleonis.Win32.Filesystem
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (var handle = NativeMethods.FindFirstVolume(buffer, (uint)buffer.Capacity))
+         using (var handle = NativeMethods.FindFirstVolume(buffer, (uint) buffer.Capacity))
          {
-            while (handle != null && !handle.IsInvalid)
+            var lastError = Marshal.GetLastWin32Error();
+
+            if (handle.IsInvalid)
             {
-               if (NativeMethods.FindNextVolume(handle, buffer, (uint)buffer.Capacity))
-                  yield return buffer.ToString();
+               handle.Close();
 
-               else
+               switch ((uint) lastError)
                {
-                  var lastError = Marshal.GetLastWin32Error();
-
-                  handle.Close();
-
-                  if (lastError == Win32Errors.ERROR_NO_MORE_FILES)
+                  case Win32Errors.ERROR_NO_MORE_FILES:
+                  case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
                      yield break;
 
-                  NativeError.ThrowException(lastError);
+                  default:
+                     NativeError.ThrowException(lastError);
+                     break;
                }
+            }
+
+            yield return buffer.ToString();
+
+
+            while (NativeMethods.FindNextVolume(handle, buffer, (uint) buffer.Capacity))
+            {
+               lastError = Marshal.GetLastWin32Error();
+
+               if (handle.IsInvalid)
+               {
+                  handle.Close();
+
+                  switch ((uint) lastError)
+                  {
+                     case Win32Errors.ERROR_NO_MORE_FILES:
+                     case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
+                     case Win32Errors.ERROR_MORE_DATA:
+                        yield break;
+
+                     default:
+                        NativeError.ThrowException(lastError);
+                        break;
+                  }
+               }
+
+               yield return buffer.ToString();
             }
          }
       }
