@@ -441,7 +441,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, nameof(volumeGuid));
 
          // A trailing backslash is required.
          volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);
@@ -516,7 +516,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, nameof(volumeGuid));
 
          var volName = Path.AddTrailingDirectorySeparator(volumeGuid, false);
 
@@ -1011,7 +1011,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, nameof(volumeGuid));
 
          volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
