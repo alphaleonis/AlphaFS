@@ -255,6 +255,7 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Create.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\Enumerations\EncryptedFileRawMode.cs" />
+    <Compile Include="Filesystem\Enumerations\FINDEX_SEARCH_OPS.cs" />
     <Compile Include="Filesystem\Enumerations\STREAM_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
     <Compile Include="Filesystem\Exceptions\AlreadyExistsException.cs" />
@@ -289,7 +290,6 @@
     <Compile Include="Filesystem\Enumerations\FinalPathFormats.cs" />
     <Compile Include="Filesystem\Enumerations\FindExAdditionalFlags.cs" />
     <Compile Include="Filesystem\Enumerations\FINDEX_INFO_LEVELS.cs" />
-    <Compile Include="Filesystem\Enumerations\FindExSearchOps.cs" />
     <Compile Include="Filesystem\Enumerations\ErrorMode.cs" />
     <Compile Include="Filesystem\Enumerations\ReparsePointTag.cs" />
     <Compile Include="Filesystem\Enumerations\SetupDiGetDeviceRegistryPropertyEnum.cs" />
@@ -528,7 +528,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
