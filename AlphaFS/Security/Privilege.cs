@@ -230,7 +230,7 @@ namespace Alphaleonis.Win32.Security
       public Privilege(string systemName, Privilege privilege)
       {
          if (Utils.IsNullOrWhiteSpace(systemName))
-            throw new ArgumentNullException(Resources.Privilege_Name_Cannot_Be_Empty, "systemName");
+            throw new ArgumentNullException("systemName", Resources.Privilege_Name_Cannot_Be_Empty);
 
          _systemName = systemName;
 
@@ -244,7 +244,7 @@ namespace Alphaleonis.Win32.Security
       private Privilege(string name)
       {
          if (Utils.IsNullOrWhiteSpace(name))
-            throw new ArgumentNullException(Resources.Privilege_Name_Cannot_Be_Empty, "name");
+            throw new ArgumentNullException("name", Resources.Privilege_Name_Cannot_Be_Empty);
 
          _name = name;
       }

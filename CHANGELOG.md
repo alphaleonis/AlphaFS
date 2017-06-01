@@ -11,9 +11,27 @@ Version vNext  (20xx-xx-xx)
 - Issue #275: Improve methods `Directory/File.CopyMoveCore`: Eliminate recursion.
 - Issue #277: `Directory.DeleteDirectoryCore()`: Eliminate recursion. 
 - Issue #278: `Directory.DeleteEmptySubdirectoriesCore()`: Eliminate recursion.
+- Issue #328: Several instances of `ArgumentException.ParamName` not set/used correctly  (Thx elgonzo)
+- Issue #330: Correct the parameter order for Privilege class constructors using the `ArgumentNullException`.
 
 
-Version 2.1.2  (2016-10-30)
+Version 2.1.3 (2017-XX-XX)
+-------------
+
+### Bugs Fixed
+
+    Issue #288: Directory.Exists on root drive problem has come back with recent updates (Thx warrenlbrown)
+    Issue #289: Alphaleonis.Win32.Network.Host.GetShareInfo doesn't work since 2.1.0 (Thx Schoolmonkey/damiarnold)
+    Issue #296: Folder rename (casing) throws IOException with HResult ERROR_SAME_DRIVE (Thx doormalena)
+    Issue #297: Incorrect domain returned from Host.EnumerateDomainDfsRoot when specifying domain (Thx damiarnold)
+    Issue #299: FileInfo.MoveTo and DirectoryInfo.MoveTo throw ArgumentNullException on empty destination path (Thx doormalena)
+    Issue #312: Volume.EnumerateVolumes skips first volume (Thx springy76)
+    Issue #313: GetHostShareFromPath() fails with spaces in share name (Thx damiarnold)
+    Issue #320: Minor changes in comments in Win32Errors.cs to eliminate compiler warnings. (Thx besoft)
+    Issue #321: DirectoryInfo.CopyToMoveToCore() calls Path.GetExtendedLengthPathCore() without Transaction parameter.
+
+
+Version 2.1.2 (2016-10-30)
 -------------
 
 ### Bugs Fixed
