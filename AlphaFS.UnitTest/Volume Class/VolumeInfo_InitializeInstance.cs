@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using Alphaleonis.Win32.Filesystem;
 
 namespace AlphaFS.UnitTest
 {
@@ -46,14 +45,14 @@ namespace AlphaFS.UnitTest
 
 
          var cnt = 0;
-         foreach (var drive in Directory.GetLogicalDrives())
+         foreach (var drive in System.IO.Directory.GetLogicalDrives())
          {
             var tempPath = drive;
-            if (isNetwork) tempPath = Path.LocalToUnc(tempPath);
+            if (isNetwork) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
             try
             {
-               var volInfo = Volume.GetVolumeInfo(tempPath);
+               var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(tempPath);
                Console.WriteLine("\n#{0:000}\tLogical Drive: [{1}]", ++cnt, tempPath);
                UnitTestConstants.Dump(volInfo, -26);
             }

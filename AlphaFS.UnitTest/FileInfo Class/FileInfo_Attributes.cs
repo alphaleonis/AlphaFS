@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
@@ -45,7 +44,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = Path.GetTempPath();
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -59,25 +58,25 @@ namespace AlphaFS.UnitTest
 
             using (fileInfo.Create())
             {
-               fileInfo.Attributes |= FileAttributes.ReadOnly;
-               Assert.IsTrue((fileInfo.Attributes & FileAttributes.ReadOnly) != 0, "The file is not ReadOnly, but is expected to be.");
+               fileInfo.Attributes |= System.IO.FileAttributes.ReadOnly;
+               Assert.IsTrue((fileInfo.Attributes & System.IO.FileAttributes.ReadOnly) != 0, "The file is not ReadOnly, but is expected to be.");
 
-               fileInfo.Attributes &= ~FileAttributes.ReadOnly;
-               Assert.IsTrue((fileInfo.Attributes & FileAttributes.ReadOnly) == 0, "The file is ReadOnly, but is expected not to be.");
-
-
-               fileInfo.Attributes |= FileAttributes.Hidden;
-               Assert.IsTrue((fileInfo.Attributes & FileAttributes.Hidden) != 0, "The file is not Hidden, but is expected to be.");
-
-               fileInfo.Attributes &= ~FileAttributes.Hidden;
-               Assert.IsTrue((fileInfo.Attributes & FileAttributes.Hidden) == 0, "The file is Hidden, but is expected not to be.");
+               fileInfo.Attributes &= ~System.IO.FileAttributes.ReadOnly;
+               Assert.IsTrue((fileInfo.Attributes & System.IO.FileAttributes.ReadOnly) == 0, "The file is ReadOnly, but is expected not to be.");
 
 
-               fileInfo.Attributes |= FileAttributes.System;
-               Assert.IsTrue((fileInfo.Attributes & FileAttributes.System) != 0, "The file is not System, but is expected to be.");
+               fileInfo.Attributes |= System.IO.FileAttributes.Hidden;
+               Assert.IsTrue((fileInfo.Attributes & System.IO.FileAttributes.Hidden) != 0, "The file is not Hidden, but is expected to be.");
 
-               fileInfo.Attributes &= ~FileAttributes.System;
-               Assert.IsTrue((fileInfo.Attributes & FileAttributes.System) == 0, "The file is System, but is expected not to be.");
+               fileInfo.Attributes &= ~System.IO.FileAttributes.Hidden;
+               Assert.IsTrue((fileInfo.Attributes & System.IO.FileAttributes.Hidden) == 0, "The file is Hidden, but is expected not to be.");
+
+
+               fileInfo.Attributes |= System.IO.FileAttributes.System;
+               Assert.IsTrue((fileInfo.Attributes & System.IO.FileAttributes.System) != 0, "The file is not System, but is expected to be.");
+
+               fileInfo.Attributes &= ~System.IO.FileAttributes.System;
+               Assert.IsTrue((fileInfo.Attributes & System.IO.FileAttributes.System) == 0, "The file is System, but is expected not to be.");
             }
          }
 
