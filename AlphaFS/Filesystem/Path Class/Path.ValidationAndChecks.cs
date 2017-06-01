@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
                case 60:    // <  (less than)
                case 62:    // >  (greater than)
                case 124:   // |  (pipe)
-                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Illegal_Characters_In_Path, (char) num), pathRp);
+                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Illegal_Characters_In_Path, (char) num), "path");
 
                default:
                   // 32: space
