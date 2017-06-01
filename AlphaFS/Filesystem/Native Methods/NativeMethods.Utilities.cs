@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only].</remarks>
       /// <param name="uMode">The mode.</param>
       /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
       private static extern ErrorMode SetErrorMode(ErrorMode uMode);
@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="dwNewMode">The new mode.</param>
       /// <param name="lpOldMode">[out] The old mode.</param>
       /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       private static extern bool SetThreadErrorMode(ErrorMode dwNewMode, [MarshalAs(UnmanagedType.U4)] out ErrorMode lpOldMode);

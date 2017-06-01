@@ -49,7 +49,7 @@ namespace AlphaFS.UnitTest
          foreach (var drive in Directory.GetLogicalDrives())
          {
             var tempPath = drive;
-            if (isNetwork) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+            if (isNetwork) tempPath = Path.LocalToUnc(tempPath);
 
             try
             {

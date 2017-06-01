@@ -266,7 +266,7 @@ namespace AlphaFS.UnitTest
          File.Delete(fileName);
 
          var fileStream = File.Create(fileName);
-         var fileStreamName = Alphaleonis.Win32.Filesystem.Path.GetFinalPathNameByHandle(fileStream.SafeFileHandle);
+         var fileStreamName = Path.GetFinalPathNameByHandle(fileStream.SafeFileHandle);
 
          Assert.AreNotEqual(fileName, fileStream.Name);
          Assert.AreEqual(fileName, Path.GetRegularPath(fileStreamName));

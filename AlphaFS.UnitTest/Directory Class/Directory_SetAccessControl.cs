@@ -49,7 +49,7 @@ namespace AlphaFS.UnitTest
 
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+            tempPath = Path.LocalToUnc(tempPath);
 
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
