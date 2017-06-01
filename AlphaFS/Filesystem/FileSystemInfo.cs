@@ -547,7 +547,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Resets the state of the file system object to uninitialized.</summary>
-      private void Reset()
+      internal void Reset()
       {
          DataInitialised = -1;
       }

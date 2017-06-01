@@ -121,14 +121,12 @@ namespace AlphaFS.UnitTest
 
             var junction = Alphaleonis.Win32.Filesystem.Path.Combine(toDelete.FullName, "Link");
 
-            var startInfo = new ProcessStartInfo(
-               "cmd",
-               $@"/C mklink /J {junction} {linked.FullName}"
-            )
+            var startInfo = new ProcessStartInfo("cmd",string.Format(@"/C mklink /J {0} {1}", junction, linked.FullName))
             {
                CreateNoWindow = true,
                UseShellExecute = true
             };
+
             Process.Start(startInfo).WaitForExit();
 
             Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(junction));
