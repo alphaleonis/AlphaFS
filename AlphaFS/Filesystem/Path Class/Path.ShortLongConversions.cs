@@ -138,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("path");
 
          if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, nameof(path));
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
          if (options != GetFullPathOptions.None)
             path = ApplyFullPathOptions(path, options);
@@ -225,7 +225,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("path");
 
          if (!allowEmpty && (path.Length == 0 || Utils.IsNullOrWhiteSpace(path)))
-            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, nameof(path));
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
          if (options != GetFullPathOptions.None)
             path = ApplyFullPathOptions(path, options);

@@ -717,7 +717,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          int rootLength = Path.GetRootLength(path, false);
          if (length == 2 && Path.IsDVsc(path[1], false))
-            throw new ArgumentException(Resources.Cannot_Create_Directory, nameof(path));
+            throw new ArgumentException(Resources.Cannot_Create_Directory, "path");
 
 
          // Check if directories are missing.

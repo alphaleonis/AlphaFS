@@ -173,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("path");
 
          if (!allowEmpty && (path.Length == 0 || Utils.IsNullOrWhiteSpace(path)))
-            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, nameof(path));
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
          // Will fail on a Unicode path.
          var pathRp = GetRegularPathCore(path, GetFullPathOptions.None, allowEmpty);
@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
                case 60:    // <  (less than)
                case 62:    // >  (greater than)
                case 124:   // |  (pipe)
-                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Illegal_Characters_In_Path, (char) num), nameof(path));
+                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Illegal_Characters_In_Path, (char) num), "path");
 
                default:
                   // 32: space
