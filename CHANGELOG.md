@@ -6,6 +6,7 @@ Version vNext  (20xx-xx-xx)
 
 ### New Features/Enhancements
 
+- Issue #268: There are multiple warnings when building the documentation.
 - Issue #273: Improve methods `Directory/File.CopyMoveCore`: Make code recursive-aware, skip additional path checks and validations.
 - Issue #274: Improve methods `Directory/File.CopyMoveCore`: Improve detection of same volume.
 - Issue #275: Improve methods `Directory/File.CopyMoveCore`: Eliminate recursion.
