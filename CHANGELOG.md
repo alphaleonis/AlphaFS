@@ -12,6 +12,7 @@ Version vNext  (20xx-xx-xx)
 - Issue #277: `Directory.DeleteDirectoryCore()`: Eliminate recursion. 
 - Issue #278: `Directory.DeleteEmptySubdirectoriesCore()`: Eliminate recursion.
 - Issue #303: `Path.Constants.cs`: Don't use `CurrentCulture`  (Thx HugoRoss)
+- Issue #306: Include `ShareInfoLevel.Info502` and set as a fallback in `GetShareInfoCore()`
 - Issue #325: `DeleteEmptySubdirectories` (with `recursive=true`) throws `System.IO.DirectoryNotFoundException`  (Thx kryvoplias)
 - Issue #328: Several instances of `ArgumentException.ParamName` not set/used correctly  (Thx elgonzo)
 - Issue #330: Correct the parameter order for Privilege class constructors using the `ArgumentNullException`.

@@ -440,6 +440,7 @@
     <Compile Include="Network\Native Structures\DFS_INFO_9.cs" />
     <Compile Include="Network\Native Structures\DFS_TARGET_PRIORITY.cs" />
     <Compile Include="Network\Native Structures\DFS_STORAGE_INFO_1.cs" />
+    <Compile Include="Network\Native Structures\SHARE_INFO_502.cs" />
     <Compile Include="Network\OpenConnectionInfo.cs" />
     <Compile Include="Network\OpenResourceInfo.cs" />
     <Compile Include="Network\ShareInfo.cs" />
@@ -528,7 +529,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

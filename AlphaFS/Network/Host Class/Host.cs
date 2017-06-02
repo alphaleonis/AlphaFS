@@ -133,6 +133,7 @@ namespace Alphaleonis.Win32.Network
 
                   // Observed when SHARE_INFO_503 is requested but not supported/possible.
                   case Win32Errors.RPC_X_BAD_STUB_DATA:
+                  case Win32Errors.ERROR_NOT_SUPPORTED:
                      yield break;
                }
 

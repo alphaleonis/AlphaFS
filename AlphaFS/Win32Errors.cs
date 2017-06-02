@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32
       public const uint ERROR_HANDLE_EOF = 38;
 
       //public const uint ERROR_HANDLE_DISK_FULL = 39;
-      //public const uint ERROR_NOT_SUPPORTED = 50;
+      public const uint ERROR_NOT_SUPPORTED = 50;
       //public const uint ERROR_REM_NOT_LIST = 51;
       //public const uint ERROR_DUP_NAME = 52;
 
