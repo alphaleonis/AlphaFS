@@ -1244,7 +1244,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
                         //   Directory exists with the same name as the file.
                         if (!isFolder && destExists)
-                           NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.Target_File_Is_A_Directory, destFileNameLp));
+                           NativeError.ThrowException(lastError, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destFileNameLp));
 
                         if (isMove)
                         {
@@ -1275,7 +1275,7 @@ namespace Alphaleonis.Win32.Filesystem
                               // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                               // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
                               if ((data.dwFileAttributes & FileAttributes.Hidden) != 0)
-                                 NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.File_Is_Hidden, destFileNameLp));
+                                 NativeError.ThrowException(lastError, string.Format(CultureInfo.InvariantCulture, Resources.File_Is_Hidden, destFileNameLp));
                            }
                         }
                      }

@@ -740,7 +740,7 @@ namespace AlphaFS.UnitTest
 
          // True, add AltDirectorySeparatorChar.
          var hasSlash = Path.AddTrailingDirectorySeparator(nonSlashedString, true);
-         var addedSlash = hasSlash.EndsWith(Path.AltDirectorySeparatorChar.ToString(CultureInfo.CurrentCulture)) && (nonSlashedString + Path.AltDirectorySeparatorChar).Equals(hasSlash);
+         var addedSlash = hasSlash.EndsWith(Path.AltDirectorySeparatorChar.ToString(CultureInfo.InvariantCulture)) && (nonSlashedString + Path.AltDirectorySeparatorChar).Equals(hasSlash);
          Console.WriteLine("\tAddTrailingDirectorySeparator(string, true);\n\tAdded == [{0}]: {1}\n\tResult: [{2}]\n", UnitTestConstants.TextTrue, addedSlash, hasSlash);
 
          Assert.IsTrue(addedBackslash);
@@ -1083,13 +1083,13 @@ namespace AlphaFS.UnitTest
          const string slashedString = "Slashed/";
          // True, add DirectorySeparatorChar.
          var hasBackslash = Path.RemoveTrailingDirectorySeparator(backslashedString);
-         var removedBackslash = !hasBackslash.EndsWith(Path.DirectorySeparatorChar.ToString(CultureInfo.CurrentCulture)) && !backslashedString.Equals(hasBackslash);
+         var removedBackslash = !hasBackslash.EndsWith(Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture)) && !backslashedString.Equals(hasBackslash);
          Console.WriteLine("\tstring = @[{0}];\n", backslashedString);
          Console.WriteLine("\tRemoveTrailingDirectorySeparator(string);\n\tRemoved == [{0}]: {1}\n\tResult: [{2}]\n", UnitTestConstants.TextTrue, removedBackslash, hasBackslash);
 
          // True, add AltDirectorySeparatorChar.
          var hasSlash = Path.RemoveTrailingDirectorySeparator(slashedString, true);
-         var removedSlash = !hasSlash.EndsWith(Path.AltDirectorySeparatorChar.ToString(CultureInfo.CurrentCulture)) && !slashedString.Equals(hasSlash);
+         var removedSlash = !hasSlash.EndsWith(Path.AltDirectorySeparatorChar.ToString(CultureInfo.InvariantCulture)) && !slashedString.Equals(hasSlash);
          Console.WriteLine("\tstring: [{0}];\n", slashedString);
          Console.WriteLine("\tRemoveTrailingDirectorySeparator(string, true);\n\tRemoved == [{0}]: {1}\n\tResult: [{2}]\n", UnitTestConstants.TextTrue, removedSlash, hasSlash);
 

@@ -32,20 +32,20 @@ namespace Alphaleonis.Win32.Filesystem
       private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_DIR_NOT_EMPTY);
 
       /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
-      public DirectoryNotEmptyException() : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is not empty", Win32Errors.ERROR_DIR_NOT_EMPTY), s_errorCode)
+      public DirectoryNotEmptyException() : base(string.Format(CultureInfo.InvariantCulture, "({0}) The directory is not empty", Win32Errors.ERROR_DIR_NOT_EMPTY), s_errorCode)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public DirectoryNotEmptyException(string message) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is not empty: [{1}]", Win32Errors.ERROR_DIR_NOT_EMPTY, message), s_errorCode)
+      public DirectoryNotEmptyException(string message) : base(string.Format(CultureInfo.InvariantCulture, "({0}) The directory is not empty: [{1}]", Win32Errors.ERROR_DIR_NOT_EMPTY, message), s_errorCode)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public DirectoryNotEmptyException(string message, Exception innerException) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is not empty: [{1}]", Win32Errors.ERROR_DIR_NOT_EMPTY, message), innerException)
+      public DirectoryNotEmptyException(string message, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "({0}) The directory is not empty: [{1}]", Win32Errors.ERROR_DIR_NOT_EMPTY, message), innerException)
       {
       }
 

@@ -94,7 +94,7 @@ namespace AlphaFS.UnitTest
 
          #region Connect drive to share
 
-         var drive = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}", DriveInfo.GetFreeDriveLetter(), Path.VolumeSeparatorChar, Path.DirectorySeparatorChar);
+         var drive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", DriveInfo.GetFreeDriveLetter(), Path.VolumeSeparatorChar, Path.DirectorySeparatorChar);
          var share = Path.LocalToUnc(UnitTestConstants.LocalHostShare);
          bool connectOk;
          Console.WriteLine("\nConnect using a designated drive: [{0}]", drive);

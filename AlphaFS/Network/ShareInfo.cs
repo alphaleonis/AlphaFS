@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Network
          }
 
          
-         NetFullPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Filesystem.Path.UncPrefix, ServerName, Filesystem.Path.DirectorySeparatorChar, NetName);
+         NetFullPath = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}", Filesystem.Path.UncPrefix, ServerName, Filesystem.Path.DirectorySeparatorChar, NetName);
 
          ShareLevel = shareLevel;
       }

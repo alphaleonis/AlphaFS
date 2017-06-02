@@ -32,20 +32,20 @@ namespace Alphaleonis.Win32.Filesystem
       private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_FILE_READ_ONLY);
 
       /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
-      public DirectoryReadOnlyException() : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is read-only", Win32Errors.ERROR_FILE_READ_ONLY), s_errorCode)
+      public DirectoryReadOnlyException() : base(string.Format(CultureInfo.InvariantCulture, "({0}) The directory is read-only", Win32Errors.ERROR_FILE_READ_ONLY), s_errorCode)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public DirectoryReadOnlyException(string message) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message), s_errorCode)
+      public DirectoryReadOnlyException(string message) : base(string.Format(CultureInfo.InvariantCulture, "({0}) The directory is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message), s_errorCode)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public DirectoryReadOnlyException(string message, Exception innerException) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message), innerException)
+      public DirectoryReadOnlyException(string message, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "({0}) The directory is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message), innerException)
       {
       }
 

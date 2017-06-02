@@ -27,6 +27,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShell", "PowerShell", 
 		PowerShell\Enumerate-FileSystemEntryInfos.ps1 = PowerShell\Enumerate-FileSystemEntryInfos.ps1
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CEFD9FEC-3A1E-42E0-AFEF-491D5A52B5B3}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Net35 Debug|Any CPU = Net35 Debug|Any CPU

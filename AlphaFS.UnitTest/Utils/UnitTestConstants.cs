@@ -261,7 +261,7 @@ namespace AlphaFS.UnitTest
          var ms = _stopWatcher.ElapsedMilliseconds;
          var elapsed = _stopWatcher.Elapsed;
 
-         return string.Format(CultureInfo.CurrentCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
+         return string.Format(CultureInfo.InvariantCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
       }
 
 
@@ -272,8 +272,8 @@ namespace AlphaFS.UnitTest
          StopWatcher();
 
          return onlyTime
-            ? string.Format(CultureInfo.CurrentCulture, "\t\t{0}", StopWatcher())
-            : string.Format(CultureInfo.CurrentCulture, "\t{0} [{1}: {2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
+            ? string.Format(CultureInfo.InvariantCulture, "\t\t{0}", StopWatcher())
+            : string.Format(CultureInfo.InvariantCulture, "\t{0} [{1}: {2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
       }
 
       

@@ -194,7 +194,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get
          {
-            return string.Format(CultureInfo.CurrentCulture, "{0:0.00}%", Utils.PercentCalculate(TotalNumberOfBytes - (TotalNumberOfBytes - TotalNumberOfFreeBytes), 0, TotalNumberOfBytes));
+            return string.Format(CultureInfo.InvariantCulture, "{0:0.00}%", Utils.PercentCalculate(TotalNumberOfBytes - (TotalNumberOfBytes - TotalNumberOfFreeBytes), 0, TotalNumberOfBytes));
          }
       }
 
@@ -226,7 +226,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get
          {
-            return string.Format(CultureInfo.CurrentCulture, "{0:0.00}%", Utils.PercentCalculate(TotalNumberOfBytes - FreeBytesAvailable, 0, TotalNumberOfBytes));
+            return string.Format(CultureInfo.InvariantCulture, "{0:0.00}%", Utils.PercentCalculate(TotalNumberOfBytes - FreeBytesAvailable, 0, TotalNumberOfBytes));
          }
       }
 

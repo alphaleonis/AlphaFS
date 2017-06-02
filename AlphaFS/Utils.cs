@@ -114,7 +114,7 @@ namespace Alphaleonis
 
 
          // Will return "512 B" instead of "512,00 B".
-         return string.Format(CultureInfo.CurrentCulture, i == 0 ? "{0:0} {1}" : "{0:0.##} {1}", bytes, sizeFormats[i]);
+         return string.Format(CultureInfo.InvariantCulture, i == 0 ? "{0:0} {1}" : "{0:0.##} {1}", bytes, sizeFormats[i]);
       }
 
       /// <summary>Calculates a percentage value.</summary>

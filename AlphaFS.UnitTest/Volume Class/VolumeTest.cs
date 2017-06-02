@@ -192,7 +192,7 @@ namespace AlphaFS.UnitTest
 
          #region Regular Drive Mapping
 
-         var drive = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}", DriveInfo.GetFreeDriveLetter(), Path.VolumeSeparatorChar, Path.DirectorySeparatorChar);
+         var drive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", DriveInfo.GetFreeDriveLetter(), Path.VolumeSeparatorChar, Path.DirectorySeparatorChar);
          UnitTestConstants.StopWatcher(true);
 
          // Create Regular drive mapping.
@@ -250,7 +250,7 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            drive = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}", DriveInfo.GetFreeDriveLetter(true), Path.VolumeSeparatorChar, Path.DirectorySeparatorChar);
+            drive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", DriveInfo.GetFreeDriveLetter(true), Path.VolumeSeparatorChar, Path.DirectorySeparatorChar);
             UnitTestConstants.StopWatcher(true);
 
             // Create Symbolic Link.

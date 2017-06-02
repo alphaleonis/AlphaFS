@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
             long length = fs.Length;
 
             if (length > int.MaxValue)
-               throw new IOException(string.Format(CultureInfo.CurrentCulture, "File larger than 2GB: [{0}]", path));
+               throw new IOException(string.Format(CultureInfo.InvariantCulture, "File larger than 2GB: [{0}]", path));
 
             int count = (int)length;
             buffer = new byte[count];

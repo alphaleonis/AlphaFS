@@ -151,9 +151,9 @@ namespace Alphaleonis.Win32.Filesystem
          if (throwException)
          {
             if (isArgumentException)
-               throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Unsupported_Path_Format, regularPath));
+               throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Unsupported_Path_Format, regularPath));
 
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.Unsupported_Path_Format, regularPath));
+            throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, Resources.Unsupported_Path_Format, regularPath));
          }
 
          if (checkInvalidPathChars)
@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
                case 60:    // <  (less than)
                case 62:    // >  (greater than)
                case 124:   // |  (pipe)
-                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Illegal_Characters_In_Path, (char) num), "path");
+                  throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Illegal_Characters_In_Path, (char) num), "path");
 
                default:
                   // 32: space

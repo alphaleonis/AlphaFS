@@ -226,7 +226,7 @@ namespace Alphaleonis.Win32.Network
 
          return EnumerateNetworkObjectCore(new FunctionData(), (NativeMethods.DFS_INFO_200 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
-            new DfsInfo { EntryPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Path.UncPrefix, 
+            new DfsInfo { EntryPath = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}", Path.UncPrefix, 
                     Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : domain, Path.DirectorySeparatorChar, structure.FtDfsName) },
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>

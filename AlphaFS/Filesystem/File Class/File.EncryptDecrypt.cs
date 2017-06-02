@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
                case Win32Errors.ERROR_ACCESS_DENIED:
                   string root = Path.GetPathRoot(pathLp, false);
                   if (!string.Equals("NTFS", new DriveInfo(root).DriveFormat, StringComparison.OrdinalIgnoreCase))
-                     throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "The drive does not support NTFS encryption: [{0}]", root));
+                     throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "The drive does not support NTFS encryption: [{0}]", root));
                   break;
 
                default:

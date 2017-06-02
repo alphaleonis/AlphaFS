@@ -30,20 +30,20 @@ namespace Alphaleonis.Win32.Filesystem
    public class FileReadOnlyException : UnauthorizedAccessException
    {
       /// <summary>Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
-      public FileReadOnlyException() : base(string.Format(CultureInfo.CurrentCulture, "({0}) The file is read-only.", Win32Errors.ERROR_FILE_READ_ONLY))
+      public FileReadOnlyException() : base(string.Format(CultureInfo.InvariantCulture, "({0}) The file is read-only.", Win32Errors.ERROR_FILE_READ_ONLY))
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public FileReadOnlyException(string message) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The file is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message))
+      public FileReadOnlyException(string message) : base(string.Format(CultureInfo.InvariantCulture, "({0}) The file is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message))
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public FileReadOnlyException(string message, Exception innerException) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The file is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message), innerException)
+      public FileReadOnlyException(string message, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "({0}) The file is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message), innerException)
       {
       }
 

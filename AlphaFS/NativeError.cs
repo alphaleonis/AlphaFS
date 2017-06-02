@@ -60,13 +60,13 @@ namespace Alphaleonis.Win32
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]      
       public static void ThrowException(uint errorCode, string readPath, string writePath)
       {
-         string errorMessage = string.Format(CultureInfo.CurrentCulture, "({0}) {1}.", errorCode, new Win32Exception((int)errorCode).Message);
+         string errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int)errorCode).Message);
 
          if (!Utils.IsNullOrWhiteSpace(readPath))
-            errorMessage = string.Format(CultureInfo.CurrentCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), readPath);
+            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), readPath);
 
          if (!Utils.IsNullOrWhiteSpace(writePath))
-            errorMessage = string.Format(CultureInfo.CurrentCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), writePath);
+            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), writePath);
 
          switch (errorCode)
          {
@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_SUCCESS_REBOOT_REQUIRED:
             case Win32Errors.ERROR_SUCCESS_RESTART_REQUIRED:
                // We should really never get here, throwing an exception for a successful operation.
-               throw new NotImplementedException(string.Format(CultureInfo.CurrentCulture, "{0} {1}", Resources.Exception_From_Successful_Operation, errorMessage));
+               throw new NotImplementedException(string.Format(CultureInfo.InvariantCulture, "{0} {1}", Resources.Exception_From_Successful_Operation, errorMessage));
 
             default:
                // We don't have a specific exception to generate for this error.               

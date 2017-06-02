@@ -248,7 +248,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Ensure path is a directory.
          if (!fsEntryInfo.IsDirectory)
-            throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.Target_Directory_Is_A_File, fsEntryInfo.LongFullPath));
+            throw new IOException(string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, fsEntryInfo.LongFullPath));
 
 
          var dirEnumOptions = DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.SkipReparsePoints;
@@ -308,7 +308,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Ensure path is a directory.
          if (!fsEntryInfo.IsDirectory)
-            throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.Target_Directory_Is_A_File, fsEntryInfo.LongFullPath));
+            throw new IOException(string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, fsEntryInfo.LongFullPath));
 
 
          var dirs = new Stack<string>(1000);

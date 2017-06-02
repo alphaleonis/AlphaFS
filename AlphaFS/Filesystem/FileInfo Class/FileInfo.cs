@@ -216,7 +216,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
             if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
-               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.CurrentCulture, Resources.Target_File_Is_A_Directory, LongFullName));
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, LongFullName));
 
             return Win32AttributeData.FileSize;
          }
