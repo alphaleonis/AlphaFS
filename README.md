@@ -25,6 +25,9 @@ all with support for the extended-length paths (up to 32.000 chars), full UNC su
 recursive file enumerations, native backups and manipulations with advanced flags and options.
 They also contain extensions to these, and there are many more features for several functions.
 
+When only  these `System.IO` classes are used, it is just a matter of replacing `using System.IO`
+with `using Alphaleonis.Win32.Filesystem`, which makes AlphaFS a true drop-in replacement.
+
 Another thing AlphaFS brings to the table is support for transactional NTFS (TxF). Almost every method in
 these classes exist in two versions. One normal, and one that can work with transactions, more specifically the
 kernel transaction manager. This means that file operations can be performed using the simple, lightweight KTM 
