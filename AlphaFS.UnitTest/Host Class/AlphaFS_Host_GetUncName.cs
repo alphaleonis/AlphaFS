@@ -25,19 +25,20 @@ using System;
 namespace AlphaFS.UnitTest
 {
    /// <summary>This is a test class for Host and is intended to contain all Host Unit Tests.</summary>
+   [TestClass]
    public partial class HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_DriveConnection()
+      public void AlphaFS_Host_GetUncName()
       {
-         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.LocalHostShare);
+         Console.WriteLine("Network.Host.GetUncName()");
 
-         using (var connection = new Alphaleonis.Win32.Network.DriveConnection(share))
-         {
-            Console.WriteLine("\nUsing DriveConnection(): [{0}] to: [{1}]", connection.LocalName, share);
+         var hostUncName = Alphaleonis.Win32.Network.Host.GetUncName();
+         Console.WriteLine("\nHost.GetUncName(): [{0}]", hostUncName);
 
-            Assert.AreEqual(share, connection.Share);
-         }
+         Assert.IsTrue(hostUncName.Contains(@"\"));
+
+         Assert.AreEqual(Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName, hostUncName);
       }
    }
 }

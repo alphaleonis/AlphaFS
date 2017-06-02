@@ -165,6 +165,8 @@
     <Compile Include="Directory Class\Directory_SetTimestamps.cs" />
     <Compile Include="Directory Class\Directory_GetTimestamps.cs" />
     <Compile Include="Directory Class\Directory_SetAccessControl.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo_FolderName255Characters.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo_MoveTo.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo_Refresh.cs" />
     <Compile Include="File Class\AlphaFS_File_GetHash.cs" />
     <Compile Include="File Class\File_CreateText.cs" />
@@ -192,8 +194,15 @@
     <Compile Include="File Class\File_GetAccessControl.cs" />
     <Compile Include="FileInfo Class\FileInfo_InitializeInstance.cs" />
     <Compile Include="FileInfo Class\FileInfo_Refresh.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_EnumerateDomainDfsRoot.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_EnumerateDfsRoot.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_EnumerateDfsLinks.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_ConnectTo.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_ConnectDrive.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_EnumerateDrives.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_GetHostShareFromPath.cs" />
     <Compile Include="Host Class\AlphaFS_Host_DriveConnection.cs" />
-    <Compile Include="Host Class\HostTest.cs" />
+    <Compile Include="Host Class\AlphaFS_Host_GetUncName.cs" />
     <Compile Include="Classes\ClassesTest.cs" />
     <Compile Include="Directory Class\Directory_CreateDirectory.cs" />
     <Compile Include="Directory Class\DirectoryTest.cs" />

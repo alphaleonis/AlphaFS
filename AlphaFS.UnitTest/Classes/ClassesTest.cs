@@ -293,7 +293,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\n\t{0}", UnitTestConstants.Reporter(true));
 
          if (noDomainConnection)
-            Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
+            Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
          
          if (cnt == 0)
             Assert.Inconclusive("Nothing was enumerated, but it was expected.");

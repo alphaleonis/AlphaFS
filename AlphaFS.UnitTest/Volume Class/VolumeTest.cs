@@ -545,7 +545,7 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Volume.EnumerateVolumes()");
 
-         Console.WriteLine("\nShould give the same enumeration as \"mountvol.exe\"\n");
+         Console.WriteLine("\nShould give the same (or more) enumeration as \"mountvol.exe\"\n");
 
          var cnt = 0;
          UnitTestConstants.StopWatcher(true);
@@ -565,12 +565,13 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\t\tGetVolumeLabel()          : [{0}]", Volume.GetVolumeLabel(volume));
             Console.WriteLine("\t\tGetVolumeDisplayName()    : [{0}]", Volume.GetVolumeDisplayName(volume));
             
-
             foreach (var displayName in Volume.EnumerateVolumePathNames(volume))
             {
-               Console.WriteLine("\t\tEnumerateVolumePathNames(): [{0}]\n", displayName);
+               Console.WriteLine("\t\tEnumerateVolumePathNames(): [{0}]", displayName);
                Assert.IsTrue(!string.IsNullOrWhiteSpace(displayName));
             }
+
+            Console.WriteLine();
          }
          Console.WriteLine("\t{0}\n", UnitTestConstants.Reporter(true));
 
