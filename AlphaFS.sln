@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		BuildRelease.proj = BuildRelease.proj
 		CHANGELOG.md = CHANGELOG.md
 		LICENSE.md = LICENSE.md
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaFS", "AlphaFS\AlphaFS.csproj", "{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}"
