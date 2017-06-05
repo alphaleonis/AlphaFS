@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -36,8 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      /// <exception cref="PlatformNotSupportedException"/>
-      /// <exception>Several Exceptions possible.</exception>
+      /// <exception cref="PlatformNotSupportedException">Thrown when called on an unsupported platform.</exception> 
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
@@ -50,8 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>      
-      /// <exception cref="PlatformNotSupportedException"/>
-      /// <exception>Several Exceptions possible.</exception>
+      /// <exception cref="PlatformNotSupportedException">Thrown when called on an unsupported platform.</exception> 
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
@@ -66,8 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      /// <exception cref="PlatformNotSupportedException"/>
-      /// <exception>Several Exceptions possible.</exception>
+      /// <exception cref="PlatformNotSupportedException">Thrown when called on an unsupported platform.</exception>       
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLinkTransacted(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
@@ -82,8 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>      
-      /// <exception cref="PlatformNotSupportedException"/>
-      /// <exception>Several Exceptions possible.</exception>
+      /// <exception cref="PlatformNotSupportedException">Thrown when called on an unsupported platform.</exception> 
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLinkTransacted(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
@@ -102,8 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      /// <exception cref="PlatformNotSupportedException"/>
-      /// <exception>Several Exceptions possible.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>      
       [SecurityCritical]
       internal static void CreateSymbolicLinkCore(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {

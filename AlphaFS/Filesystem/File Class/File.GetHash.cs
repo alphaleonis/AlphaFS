@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -29,57 +29,66 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>[AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.</summary>
+      /// <summary>
+      /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
+      /// </summary>
       /// <param name="fileFullPath">The name of the file.</param>
       /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
+      /// <returns>The hash.</returns>
       [SecurityCritical]
       public static string GetHash(string fileFullPath, HashType hashType)
       {
          return GetHashCore(null, fileFullPath, hashType, PathFormat.RelativePath);
       }
 
-
-      /// <summary>[AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.</summary>
+      /// <summary>
+      /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
+      /// </summary>
       /// <param name="fileFullPath">The name of the file.</param>
       /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>The hash.</returns>
       [SecurityCritical]
       public static string GetHash(string fileFullPath, HashType hashType, PathFormat pathFormat)
       {
          return GetHashCore(null, fileFullPath, hashType, pathFormat);
       }
 
-
-      /// <summary>[AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.</summary>
+      /// <summary>
+      /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileFullPath">The name of the file.</param>
       /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
+      /// <returns>The hash.</returns>
       [SecurityCritical]
       public static string GetHash(KernelTransaction transaction, string fileFullPath, HashType hashType)
       {
          return GetHashCore(transaction, fileFullPath, hashType, PathFormat.RelativePath);
       }
 
-
-      /// <summary>[AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.</summary>
+      /// <summary>
+      /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileFullPath">The name of the file.</param>
       /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>The hash.</returns>
       [SecurityCritical]
       public static string GetHash(KernelTransaction transaction, string fileFullPath, HashType hashType, PathFormat pathFormat)
       {
          return GetHashCore(transaction, fileFullPath, hashType, pathFormat);
       }
 
-
-
-
-      /// <summary>[AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.</summary>
+      /// <summary>
+      /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
       /// <param name="fileFullPath">The name of the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param> 
+      /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>The hash core.</returns>
       [SecurityCritical]
       internal static string GetHashCore(KernelTransaction transaction, string fileFullPath, HashType hashType, PathFormat pathFormat)
       {

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -258,7 +258,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_RELOC_CHAIN_XEEDS_SEGLIM = 201;
       //public const uint ERROR_INFLOOP_IN_RELOC_CHAIN = 202;
 
-      /// <summary>(203) The system could not find the environment option that was entered.</summary>
+      //(203) The system could not find the environment option that was entered.
       //public const uint ERROR_ENVVAR_NOT_FOUND = 203;
 
       //public const uint ERROR_NO_SIGNAL_SENT = 205;

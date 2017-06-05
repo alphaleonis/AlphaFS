@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -29,6 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Calculates the hash/checksum.</summary>
       /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
+      /// <returns>The hash/checksum of the file represented by this <see cref="FileInfo"/>.</returns>
       public string GetHash(HashType hashType)
       {
          return File.GetHashCore(Transaction, LongFullName, hashType, PathFormat.LongFullPath);
