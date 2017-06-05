@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Network
             return new[]
             {
                uri.Host,
-               uri.AbsolutePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
+               uri.GetComponents(UriComponents.Path, UriFormat.Unescaped).Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
             };
          }
 

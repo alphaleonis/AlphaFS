@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+         var cmr = CopyToMoveToCore(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
          CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         var cmr = CopyToMoveToCore(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -240,7 +240,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path.</summary>
+      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path.</summary>
       /// <returns>A new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</returns>
       /// <remarks>
       ///   <para>Use this method to prevent overwriting of an existing directory by default.</para>
@@ -295,7 +295,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, null, moveOptions, null, null, out destinationPathLp, PathFormat.RelativePath);
-         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
+         return null != destinationPathLp ? new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath) : null;
       }
 
       /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified.</summary>
@@ -324,7 +324,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, null, moveOptions, null, null, out destinationPathLp, pathFormat);
-         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
+         return null != destinationPathLp ? new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath) : null;
       }
 
 
@@ -357,7 +357,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+         var cmr = CopyToMoveToCore(destinationPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
          CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -393,7 +393,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         var cmr = CopyToMoveToCore(destinationPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -401,6 +401,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // AlphaFS
 
       #endregion // MoveTo
+
 
       #region Internal Methods
 
@@ -411,10 +412,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
-      ///   <para>This Move method works across disk volumes, and it does not throw an exception if the source and destination are the same. </para>
+      ///   <para>This Move method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -431,20 +431,25 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private CopyMoveResult CopyToMoveToCore(string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
       {
-         string destinationPathLp = Path.GetExtendedLengthPathCore(null, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
-         longFullPath = destinationPathLp;
+         // Allow null value for destinationPath when flag MoveOptions.DelayUntilReboot is specified.
+         var delayUntilReboot = null == destinationPath && null != moveOptions && ((MoveOptions) moveOptions & MoveOptions.DelayUntilReboot) != 0;
 
-         // Returns false when CopyMoveProgressResult is PROGRESS_CANCEL or PROGRESS_STOP.
+         var destinationPathLp = longFullPath = delayUntilReboot
+            ? null
+            : Path.GetExtendedLengthPathCore(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+
+
          return Directory.CopyMoveCore(Transaction, LongFullName, destinationPathLp, copyOptions, moveOptions, progressHandler, userProgressData, PathFormat.LongFullPath);
       }
+
 
       private void CopyToMoveToCoreRefresh(string destinationPath, string destinationPathLp)
       {
          LongFullName = destinationPathLp;
-         FullPath = Path.GetRegularPathCore(destinationPathLp, GetFullPathOptions.None, false);
+         FullPath = null != destinationPathLp ? Path.GetRegularPathCore(destinationPathLp, GetFullPathOptions.None, false) : null;
 
          OriginalPath = destinationPath;
-         DisplayPath = Path.GetRegularPathCore(OriginalPath, GetFullPathOptions.None, false);
+         DisplayPath = null != OriginalPath ? Path.GetRegularPathCore(OriginalPath, GetFullPathOptions.None, false) : null;
 
          // Flush any cached information about the directory.
          Reset();

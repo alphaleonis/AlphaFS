@@ -242,6 +242,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets the path as a long full path.</summary>
       /// <returns>The path as an extended length path.</returns>
       /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">Full pathname of the source path to convert.</param>
       /// <param name="pathFormat">The path format to use.</param>

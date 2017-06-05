@@ -50,6 +50,57 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
+
+         // Test Driveletter according to System.IO
+
+         // SystemIO: "C:"
+         // AlphaFS : "\\?\C:"
+         var shouldBe = true;
+         var driveSysIO = UnitTestConstants.SysDrive;
+         var drive = @"\\?\" + UnitTestConstants.SysDrive;
+         if (isNetwork) { driveSysIO = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveSysIO); drive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(drive); }
+         Console.Write("\nDrive path (System.IO, should be " + shouldBe + "):\t\t" + driveSysIO + "\t\t\t");
+         var existSystemIO = System.IO.Directory.Exists(driveSysIO);
+         Console.WriteLine(existSystemIO); 
+         var existAlphaFS = Alphaleonis.Win32.Filesystem.Directory.Exists(drive);
+         Console.Write("Drive path (AlphaFS, should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
+         Console.WriteLine(existAlphaFS);
+         Assert.AreEqual(shouldBe, existSystemIO, "The result should be: " + shouldBe);
+         Assert.AreEqual(existSystemIO, existAlphaFS, "The results are not equal, but were expected to be.");
+         Console.WriteLine();
+
+
+
+
+         // Both: "\\?\C:\"
+         shouldBe = isNetwork; // True when network (UNC path), false when local path.
+         drive = @"\\?\" + UnitTestConstants.SysDrive + @"\";
+         if (isNetwork) drive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(drive);
+         Console.Write("Drive path (System.IO, should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
+         existSystemIO = System.IO.Directory.Exists(drive);
+         existAlphaFS = Alphaleonis.Win32.Filesystem.Directory.Exists(drive);
+         Console.WriteLine(existSystemIO);
+         Assert.AreEqual(shouldBe, existSystemIO, "The result should be: " + shouldBe);
+         Assert.AreEqual(existSystemIO, existAlphaFS, "The results are not equal, but were expected to be.");
+
+
+
+         // Both: "C:\"
+         shouldBe = true;
+         drive = UnitTestConstants.SysDrive + @"\";
+         if (isNetwork) drive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(drive);
+         Console.Write("Drive path (System.IO, should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
+         existSystemIO = System.IO.Directory.Exists(drive);
+         existAlphaFS = Alphaleonis.Win32.Filesystem.Directory.Exists(drive);
+         Console.WriteLine(existSystemIO);
+         Assert.AreEqual(shouldBe, existSystemIO, "The result should be: " + shouldBe);
+         Assert.AreEqual(existSystemIO, existAlphaFS, "The results are not equal, but were expected to be.");
+
+
+
+
+         // Test Folder.
+
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
@@ -66,6 +117,7 @@ namespace AlphaFS.UnitTest
 
             Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The directory does not exists, but is expected to be.");
          }
+
 
          Console.WriteLine();
       }

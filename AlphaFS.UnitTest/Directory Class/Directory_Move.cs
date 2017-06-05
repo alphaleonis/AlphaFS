@@ -29,6 +29,22 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
+      public void Directory_Move_Rename_LocalAndNetwork_Success()
+      {
+         Directory_Move_Rename(false);
+         Directory_Move_Rename(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Move_Rename_DifferentCasing_LocalAndNetwork_Success()
+      {
+         Directory_Move_Rename_DifferentCasing(false);
+         Directory_Move_Rename_DifferentCasing(true);
+      }
+
+
+      [TestMethod]
       public void Directory_Move_SameVolume_LocalAndNetwork_Success()
       {
          Directory_Move(false);
@@ -95,7 +111,15 @@ namespace AlphaFS.UnitTest
          Directory_Move_CatchDirectoryNotFoundException_NonExistingDirectory(false);
          Directory_Move_CatchDirectoryNotFoundException_NonExistingDirectory(true);
       }
-      
+
+
+      [TestMethod]
+      public void Directory_Move_CatchIOException_SameSourceAndDestination_LocalAndNetwork_Success()
+      {
+         Directory_Move_CatchIOException_SameSourceAndDestination(false);
+         Directory_Move_CatchIOException_SameSourceAndDestination(true);
+      }
+
 
       [TestMethod]
       public void Directory_Move_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
@@ -112,9 +136,9 @@ namespace AlphaFS.UnitTest
          Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny(true);
       }
 
+      
 
-
-
+      
       private void Directory_Move(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -352,34 +376,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
       }
-
       
-      private void Directory_Move_CatchNotSupportedException_PathContainsColon(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var colonText = @"\My:FilePath";
-         var folderSrc = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.LocalHostShare) : UnitTestConstants.SysDrive + @"\dev\test") + colonText;
-
-         Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc);
-
-
-         var gotException = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, string.Empty);
-         }
-         catch (Exception ex)
-         {
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
-         }
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-         Console.WriteLine();
-      }
-
 
       private void Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(bool isNetwork)
       {
@@ -457,6 +454,70 @@ namespace AlphaFS.UnitTest
       }
 
 
+      private void Directory_Move_CatchIOException_SameSourceAndDestination(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory_Move_CatchIOException_SameSourceAndDestination"))
+         {
+            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
+            var folderDst = folderSrc;
+
+
+            Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
+
+
+            var gotException = false;
+            try
+            {
+               System.IO.Directory.Move(folderSrc.FullName, folderDst.FullName);
+            }
+            catch (Exception ex)
+            {
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+            }
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Move_CatchNotSupportedException_PathContainsColon(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var colonText = @"\My:FilePath";
+         var folderSrc = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.LocalHostShare) : UnitTestConstants.SysDrive + @"\dev\test") + colonText;
+
+         Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc);
+
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, string.Empty);
+         }
+         catch (Exception ex)
+         {
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+         }
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+         Console.WriteLine();
+      }
+
+
       private void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -512,6 +573,76 @@ namespace AlphaFS.UnitTest
             dirSecurity = dirInfo.GetAccessControl();
             dirSecurity.RemoveAccessRule(rule);
             dirInfo.SetAccessControl(dirSecurity);
+         }
+
+         Console.WriteLine();
+      }
+      
+      
+      private void Directory_Move_Rename(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Move (Rename)"))
+         {
+            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
+            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination-") + System.IO.Path.GetRandomFileName());
+
+            Console.WriteLine("\nInput Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("\nRename folder: [{0}] to: [{1}]", folderSrc.Name, folderDst.Name);
+
+
+            Assert.IsTrue(folderSrc.Exists, "The source folder does not exist which was not expected.");
+            Assert.IsFalse(folderDst.Exists, "The destination folder exists which was not expected.");
+            
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName);
+
+            folderSrc.Refresh();
+            folderDst.Refresh();
+
+            Assert.IsFalse(folderSrc.Exists, "The source folder exists which was not expected.");
+            Assert.IsTrue(folderDst.Exists, "The destination folder does not exists which was not expected.");
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Move_Rename_DifferentCasing(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Move (Rename_DifferentCasing)"))
+         {
+            var folderSrc = System.IO.Directory.CreateDirectory((System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName()).ToLowerInvariant());
+            var folderDst = folderSrc;
+            var newFolderName = System.IO.Path.GetFileName(folderDst.FullName.ToUpperInvariant());
+
+
+            Console.WriteLine("\nInput Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("\nRename folder: [{0}] to: [{1}]", folderSrc.Name, newFolderName);
+
+
+            Assert.IsTrue(folderSrc.Exists, "The source folder does not exist which was not expected.");
+            Assert.IsTrue(folderDst.Exists, "The destination folder exists which was not expected.");
+            
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName.ToUpperInvariant());
+
+            folderSrc.Refresh();
+            folderDst.Refresh();
+
+            Assert.IsTrue(folderSrc.Exists, "The source folder exists which was not expected.");
+            Assert.IsTrue(folderDst.Exists, "The destination folder does not exists which was not expected.");
          }
 
          Console.WriteLine();
