@@ -198,6 +198,8 @@
     </Compile>
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\BackupStreamInfo.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetDirectoryId.cs" />
+    <Compile Include="Filesystem\FileId.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CopyMove.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CountFileSystemObjects.cs" />
@@ -233,6 +235,8 @@
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetProperties.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateAlternateDataStreams.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetLinkTargetInfo.cs" />
+    <Compile Include="Filesystem\DirectoryEnumerationFilters.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.RefreshEntryInfo.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Encryption.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.DeleteEmptySubdirectories.cs" />
@@ -263,6 +267,7 @@
     <Compile Include="Filesystem\Exceptions\DirectoryReadOnlyException.cs" />
     <Compile Include="Filesystem\Exceptions\DirectoryNotEmptyException.cs" />
     <Compile Include="Filesystem\Exceptions\FileReadOnlyException.cs" />
+    <Compile Include="Filesystem\File Class\File.GetFileId.cs" />
     <Compile Include="Filesystem\File Class\File.GetHash.cs" />
     <Compile Include="Filesystem\File Class\File.EncryptedFileRaw.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateAlternateDataStreams.cs" />
@@ -374,6 +379,7 @@
     <Compile Include="Filesystem\Native Methods\NativeMethods.BackupStreams.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.Utilities.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.PathManagement.cs" />
+    <Compile Include="Filesystem\Native Structures\FILE_ID_INFO.cs" />
     <Compile Include="Filesystem\Native Structures\WIN32_FIND_STREAM_DATA.cs" />
     <Compile Include="Filesystem\Path Class\Path.cs" />
     <Compile Include="Filesystem\Path Class\Path.ValidationAndChecks.cs" />
@@ -529,7 +535,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

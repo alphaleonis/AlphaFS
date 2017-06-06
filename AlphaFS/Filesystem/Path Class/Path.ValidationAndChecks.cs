@@ -290,6 +290,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+      [SuppressMessage("Microsoft.Performance", "CA1809:AvoidExcessiveLocals")]
       private static string NormalizePath(string path, GetFullPathOptions options)
       {
          var newBuffer = new StringBuilder(NativeMethods.MaxPathUnicode);
