@@ -4,9 +4,15 @@
 Version vNext  (xxxx-xx-xx)
 -----------
 
-### New Features/Enhancements
+### Bugs Fixed
 
 - Issue #268: There are multiple warnings when building the documentation.
+- Issue #325: `DeleteEmptySubdirectories` (with `recursive=true`) throws `System.IO.DirectoryNotFoundException`  (Thx kryvoplias)
+- Issue #328: Several instances of `ArgumentException.ParamName` not set/used correctly  (Thx elgonzo)
+- Issue #330: Correct the parameter order for Privilege class constructors using the `ArgumentNullException`.
+
+### New Features/Enhancements
+
 - Issue #273: Improve methods `Directory/File.CopyMoveCore`: Make code recursive-aware, skip additional path checks and validations.
 - Issue #274: Improve methods `Directory/File.CopyMoveCore`: Improve detection of same volume.
 - Issue #275: Improve methods `Directory/File.CopyMoveCore`: Eliminate recursion.
@@ -14,9 +20,8 @@ Version vNext  (xxxx-xx-xx)
 - Issue #278: `Directory.DeleteEmptySubdirectoriesCore()`: Eliminate recursion.
 - Issue #303: `Path.Constants.cs`: Don't use `CurrentCulture`  (Thx HugoRoss)
 - Issue #306: Include `ShareInfoLevel.Info502` and set as a fallback in `GetShareInfoCore()`  (Thx damiarnold)
-- Issue #325: `DeleteEmptySubdirectories` (with `recursive=true`) throws `System.IO.DirectoryNotFoundException`  (Thx kryvoplias)
-- Issue #328: Several instances of `ArgumentException.ParamName` not set/used correctly  (Thx elgonzo)
-- Issue #330: Correct the parameter order for Privilege class constructors using the `ArgumentNullException`.
+- Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
+- Issue #335: Add overloaded methods to `File/Directory.TransferTimestamps` to apply to ReparsePoint.
 
 
 Version 2.1.3 (2017-06-05)

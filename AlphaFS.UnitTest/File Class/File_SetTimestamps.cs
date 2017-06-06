@@ -42,10 +42,10 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_TransferTimestamps_LocalAndNetwork_Success()
+      public void AlphaFS_File_CopyTimestamps_LocalAndNetwork_Success()
       {
-         File_TransferTimestamps(false);
-         File_TransferTimestamps(true);
+         File_CopyTimestamps(false);
+         File_CopyTimestamps(true);
       }
 
 
@@ -117,7 +117,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_TransferTimestamps(bool isNetwork)
+      private void File_CopyTimestamps(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -149,7 +149,7 @@ namespace AlphaFS.UnitTest
             Assert.AreNotEqual(System.IO.File.GetLastAccessTime(file), System.IO.File.GetLastAccessTime(file2));
             Assert.AreNotEqual(System.IO.File.GetLastWriteTime(file), System.IO.File.GetLastWriteTime(file2));
 
-            Alphaleonis.Win32.Filesystem.File.TransferTimestamps(file, file2);
+            Alphaleonis.Win32.Filesystem.File.CopyTimestamps(file, file2);
 
             Assert.AreEqual(System.IO.File.GetCreationTime(file), System.IO.File.GetCreationTime(file2));
             Assert.AreEqual(System.IO.File.GetLastAccessTime(file), System.IO.File.GetLastAccessTime(file2));

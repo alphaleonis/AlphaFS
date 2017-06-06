@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.CodeDom;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -1370,7 +1369,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                if (preserveDates)
-                  TransferTimestampsCore(false, transaction, sourcePathLp, destinationPathLp, PathFormat.LongFullPath);
+                  CopyTimestampsCore(false, transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
 
 
                cmr.TotalFiles++;

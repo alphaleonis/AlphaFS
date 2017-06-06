@@ -1139,7 +1139,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                // Traverse the source folder, processing subfolders.
                foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders, PathFormat.LongFullPath))
-                  File.TransferTimestampsCore(true, transaction, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), PathFormat.LongFullPath);
+                  File.CopyTimestampsCore(true, transaction, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
             }
 
 

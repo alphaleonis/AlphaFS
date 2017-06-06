@@ -226,7 +226,7 @@
     <Compile Include="Filesystem\Directory Class\Directory.SetCreationTime.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.SetLastAccessTime.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.SetTimestamps.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.TransferTimestamps.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CopyTimestamps.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.SetLastWriteTime.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Compression.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Encryption.cs" />
@@ -275,6 +275,7 @@
     <Compile Include="Filesystem\File Class\File.CreateText.cs" />
     <Compile Include="Filesystem\File Class\File.CopyMove.cs" />
     <Compile Include="Filesystem\File Class\File.IsLocked.cs" />
+    <Compile Include="Filesystem\File Class\File.CopyTimestamps.cs" />
     <Compile Include="Filesystem\File Class\File.WriteText.cs" />
     <Compile Include="Filesystem\File Class\File.AppendText.cs" />
     <Compile Include="Filesystem\File Class\File.Create.cs" />
@@ -328,7 +329,6 @@
     <Compile Include="Filesystem\File Class\File.GetFileSystemEntryInfo.cs" />
     <Compile Include="Filesystem\File Class\File.GetLinkTargetInfo.cs" />
     <Compile Include="Filesystem\File Class\File.GetSize.cs" />
-    <Compile Include="Filesystem\File Class\File.TransferTimestamps.cs" />
     <Compile Include="Filesystem\File Class\File.OpenRead.cs" />
     <Compile Include="Filesystem\File Class\File.OpenText.cs" />
     <Compile Include="Filesystem\File Class\File.OpenWrite.cs" />
@@ -529,7 +529,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
