@@ -30,51 +30,7 @@ namespace AlphaFS.UnitTest
    partial class DirectoryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
-
-      [TestMethod]
-      public void Directory_Delete_LocalAndNetwork_Success()
-      {
-         Directory_CreateDirectory_Delete(false);
-         Directory_CreateDirectory_Delete(true);
-      }
-
-
-      //[TestMethod]
-      //public void Directory_Delete_JunctionPoint_Success()
-      //{
-      //   var tempPath = System.IO.Path.GetTempPath();
-
-      //   using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete_JunctionPoint"))
-      //   {
-      //      var target = rootDir.Directory.CreateSubdirectory("Lib");
-      //      var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
-      //      var junction = System.IO.Path.Combine(toDelete.FullName, "Link");
-
-
-      //      // mklink: /J = Create a Directory Junction.
-      //      using (var process = Process.Start(new ProcessStartInfo(System.IO.Path.Combine(UnitTestConstants.SysRoot32, "cmd.exe"),
-      //         string.Format(CultureInfo.InvariantCulture, @"/C mklink /J {0} {1}", junction, target.FullName))
-      //      {
-      //         CreateNoWindow = true,
-      //         UseShellExecute = true
-      //      }))
-      //         if (null != process)
-      //            process.WaitForExit();
-
-
-      //      Assert.AreEqual(System.IO.Directory.Exists(junction), Alphaleonis.Win32.Filesystem.Directory.Exists(junction));
-
-
-      //      // System.IO.IOException: (87) The parameter is incorrect
-      //      Alphaleonis.Win32.Filesystem.Directory.Delete(toDelete.FullName, true);
-
-
-      //      // System.IO.IOException: The parameter is incorrect.
-      //      //System.IO.Directory.Delete(toDelete.FullName, true);
-      //   }
-      //}
-
-
+      
       [TestMethod]
       public void Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetwork_Success()
       {
@@ -143,6 +99,57 @@ namespace AlphaFS.UnitTest
       {
          Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission(false);
          Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Delete_LocalAndNetwork_Success()
+      {
+         Directory_CreateDirectory_Delete(false);
+         Directory_CreateDirectory_Delete(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_Delete_JunctionPoint_Local_Success()
+      {
+         var tempPath = System.IO.Path.GetTempPath();
+
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         {
+            var target = rootDir.Directory.CreateSubdirectory("Lib");
+            var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
+            var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
+
+
+            // mklink: /J = Create a Directory Junction.
+            using (var process = Process.Start(new ProcessStartInfo(System.IO.Path.Combine(UnitTestConstants.SysRoot32, "cmd.exe"),
+               string.Format(CultureInfo.InvariantCulture, @"/C mklink /J {0} {1}", junction, target.FullName))
+            {
+               CreateNoWindow = true,
+               UseShellExecute = true
+            }))
+               if (null != process)
+                  process.WaitForExit();
+
+
+            var fsei = Alphaleonis.Win32.Filesystem.File.GetFileSystemEntryInfo(junction);
+            UnitTestConstants.Dump(fsei, -17);
+
+            Assert.AreEqual(System.IO.Directory.Exists(junction), Alphaleonis.Win32.Filesystem.Directory.Exists(junction));
+            Assert.IsTrue(fsei.IsDirectory);
+            Assert.IsTrue(fsei.IsMountPoint);
+            Assert.IsTrue(fsei.IsReparsePoint);
+
+
+
+
+            // System.IO.IOException: The parameter is incorrect
+            Alphaleonis.Win32.Filesystem.Directory.Delete(toDelete.FullName, true);
+
+
+            Assert.IsFalse(System.IO.Directory.Exists(toDelete.FullName));
+         }
       }
 
 

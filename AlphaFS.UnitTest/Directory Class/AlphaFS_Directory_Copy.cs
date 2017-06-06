@@ -131,7 +131,7 @@ namespace AlphaFS.UnitTest
 
             var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.CopyOptions.FailIfExists);
 
-            UnitTestConstants.Dump(copyResult, -12);
+            UnitTestConstants.Dump(copyResult, -16);
 
 
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
@@ -215,7 +215,7 @@ namespace AlphaFS.UnitTest
 
             // Test against copyResult results.
 
-            UnitTestConstants.Dump(copyResult, -12);
+            UnitTestConstants.Dump(copyResult, -16);
 
             Assert.AreEqual(sourceTotal, copyResult.TotalFolders + copyResult.TotalFiles, "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, copyResult.TotalFiles, "The number of total files do not match.");
