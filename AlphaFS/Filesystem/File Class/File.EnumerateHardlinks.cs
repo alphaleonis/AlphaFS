@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
          StringBuilder builder = new StringBuilder((int)length);
 
 
-      getFindFirstFileName:
+         getFindFirstFileName:
 
          using (SafeFindFileHandle handle = transaction == null
 
@@ -106,20 +106,21 @@ namespace Alphaleonis.Win32.Filesystem
             // In the ANSI version of this function, the name is limited to MAX_PATH characters.
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+            // 2017-05-30: MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
             ? NativeMethods.FindFirstFileName(pathLp, 0, out length, builder)
             : NativeMethods.FindFirstFileNameTransacted(pathLp, 0, out length, builder, transaction.SafeHandle))
          {
-         	int lastError = Marshal.GetLastWin32Error();
+            int lastError = Marshal.GetLastWin32Error();
 
             if (handle.IsInvalid)
             {
                handle.Close();
-               
-               switch ((uint) lastError)
+
+               switch ((uint)lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
-                     builder = new StringBuilder((int) length);
+                     builder = new StringBuilder((int)length);
                      goto getFindFirstFileName;
 
                   default:
@@ -141,14 +142,14 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   lastError = Marshal.GetLastWin32Error();
 
-                  switch ((uint) lastError)
+                  switch ((uint)lastError)
                   {
                      // We've reached the end of the enumeration.
                      case Win32Errors.ERROR_HANDLE_EOF:
                         yield break;
 
                      case Win32Errors.ERROR_MORE_DATA:
-                        builder = new StringBuilder((int) length);
+                        builder = new StringBuilder((int)length);
                         continue;
 
                      default:

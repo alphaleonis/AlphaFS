@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -57,10 +57,10 @@ namespace Alphaleonis.Win32
          ThrowException(errorCode, readPath, null);
       }
 
-      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]      
+      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       public static void ThrowException(uint errorCode, string readPath, string writePath)
       {
-         string errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int)errorCode).Message);
+         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int)errorCode).Message);
 
          if (!Utils.IsNullOrWhiteSpace(readPath))
             errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), readPath);
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32
                throw new DirectoryNotEmptyException(errorMessage);
 
             case Win32Errors.ERROR_NOT_READY:
-                  throw new DeviceNotReadyException(errorMessage);
+               throw new DeviceNotReadyException(errorMessage);
 
 
             #region Transactional
@@ -132,6 +132,7 @@ namespace Alphaleonis.Win32
 
             #endregion // Transacted
 
+
             case Win32Errors.ERROR_SUCCESS:
             case Win32Errors.ERROR_SUCCESS_REBOOT_INITIATED:
             case Win32Errors.ERROR_SUCCESS_REBOOT_REQUIRED:
@@ -150,7 +151,7 @@ namespace Alphaleonis.Win32
       {
          ThrowException((uint)Marshal.GetLastWin32Error(), readPath, null);
       }
-      
+
       public static void ThrowException(string readPath, string writePath)
       {
          ThrowException((uint)Marshal.GetLastWin32Error(), readPath, writePath);

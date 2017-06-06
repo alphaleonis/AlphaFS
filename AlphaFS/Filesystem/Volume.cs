@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Defines, redefines, or deletes MS-DOS device names.</summary>
       /// <param name="deviceName">An MS-DOS device name string specifying the device the function is defining, redefining, or deleting.</param>
       /// <param name="targetPath">An MS-DOS path that will implement this device.</param>
-      
+
       [SecurityCritical]
       public static void DefineDosDevice(string deviceName, string targetPath)
       {
@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // DeleteDosDevice
-      
+
       #region QueryAllDosDevices
 
       /// <summary>Retrieves a list of all existing MS-DOS device names.</summary>
@@ -185,13 +185,13 @@ namespace Alphaleonis.Win32.Filesystem
 
             deviceName = null;
          }
-         
+
          // Choose sorted output.
          var doSort = options != null &&
-                       options.Any(s => s != null && s.Equals("sort", StringComparison.OrdinalIgnoreCase));
+                      options.Any(s => s != null && s.Equals("sort", StringComparison.OrdinalIgnoreCase));
 
          // Start with a larger buffer when using a searchFilter.
-         var bufferSize = (uint) (searchFilter || doSort || (options == null) ? 8*NativeMethods.DefaultFileBufferSize : 256);
+         var bufferSize = (uint)(searchFilter || doSort || (options == null) ? 8 * NativeMethods.DefaultFileBufferSize : 256);
          uint bufferResult = 0;
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
@@ -208,7 +208,7 @@ namespace Alphaleonis.Win32.Filesystem
                var lastError = Marshal.GetLastWin32Error();
 
                if (bufferResult == 0)
-                  switch ((uint) lastError)
+                  switch ((uint)lastError)
                   {
                      case Win32Errors.ERROR_MORE_DATA:
                      case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
@@ -250,7 +250,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // DosDevice
 
       #region Drive
-      
+
       #region GetDriveFormat
 
       /// <summary>Gets the name of the file system, such as NTFS or FAT32.</summary>
@@ -282,7 +282,7 @@ namespace Alphaleonis.Win32.Filesystem
             where drive.DosDeviceName.Equals(deviceName, StringComparison.OrdinalIgnoreCase)
             select drive.Name).FirstOrDefault();
       }
-      
+
       #endregion // GetDriveNameForNtDeviceName
 
       #region GetCurrentDriveType
@@ -357,7 +357,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // GetDiskFreeSpace
-      
+
       #region IsReady
 
       /// <summary>Gets a value indicating whether a drive is ready.</summary>
@@ -422,9 +422,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DeleteVolumeMountPointCore(volumeMountPoint, false, false);
       }
-      
+
       #endregion // DeleteVolumeMountPoint
-      
+
       #region EnumerateVolumeMountPoints
 
       /// <summary>
@@ -441,7 +441,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Not_A_Valid_Guid, "volumeGuid");
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
 
          // A trailing backslash is required.
          volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);
@@ -457,7 +457,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                handle.Close();
 
-               switch ((uint) lastError)
+               switch ((uint)lastError)
                {
                   case Win32Errors.ERROR_NO_MORE_FILES:
                   case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
@@ -480,7 +480,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   handle.Close();
 
-                  switch ((uint) lastError)
+                  switch ((uint)lastError)
                   {
                      case Win32Errors.ERROR_NO_MORE_FILES:
                      case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
@@ -516,7 +516,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Not_A_Valid_Guid, "volumeGuid");
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
 
          var volName = Path.AddTrailingDirectorySeparator(volumeGuid, false);
 
@@ -572,28 +572,55 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          using (var handle = NativeMethods.FindFirstVolume(buffer, (uint)buffer.Capacity))
          {
-            while (handle != null && !handle.IsInvalid)
+            var lastError = Marshal.GetLastWin32Error();
+
+            if (handle.IsInvalid)
             {
-               if (NativeMethods.FindNextVolume(handle, buffer, (uint)buffer.Capacity))
-                  yield return buffer.ToString();
+               handle.Close();
 
-               else
+               switch ((uint)lastError)
                {
-                  var lastError = Marshal.GetLastWin32Error();
-
-                  handle.Close();
-
-                  if (lastError == Win32Errors.ERROR_NO_MORE_FILES)
+                  case Win32Errors.ERROR_NO_MORE_FILES:
+                  case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
                      yield break;
 
-                  NativeError.ThrowException(lastError);
+                  default:
+                     NativeError.ThrowException(lastError);
+                     break;
                }
+            }
+
+            yield return buffer.ToString();
+
+
+            while (NativeMethods.FindNextVolume(handle, buffer, (uint)buffer.Capacity))
+            {
+               lastError = Marshal.GetLastWin32Error();
+
+               if (handle.IsInvalid)
+               {
+                  handle.Close();
+
+                  switch ((uint)lastError)
+                  {
+                     case Win32Errors.ERROR_NO_MORE_FILES:
+                     case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
+                     case Win32Errors.ERROR_MORE_DATA:
+                        yield break;
+
+                     default:
+                        NativeError.ThrowException(lastError);
+                        break;
+                  }
+               }
+
+               yield return buffer.ToString();
             }
          }
       }
 
       #endregion // EnumerateVolumes
-      
+
       #region GetUniqueVolumeNameForPath
 
       /// <summary>
@@ -745,7 +772,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeMountPoint");
 
          // The string must end with a trailing backslash ('\').
-         volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);            
+         volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          var volumeGuid = new StringBuilder(100);
          var uniqueName = new StringBuilder(100);
@@ -759,8 +786,8 @@ namespace Alphaleonis.Win32.Filesystem
                // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-               return NativeMethods.GetVolumeNameForVolumeMountPoint(volumeMountPoint, volumeGuid, (uint) volumeGuid.Capacity)
-                  ? NativeMethods.GetVolumeNameForVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeGuid.ToString(), false), uniqueName, (uint) uniqueName.Capacity)
+               return NativeMethods.GetVolumeNameForVolumeMountPoint(volumeMountPoint, volumeGuid, (uint)volumeGuid.Capacity)
+                  ? NativeMethods.GetVolumeNameForVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeGuid.ToString(), false), uniqueName, (uint)uniqueName.Capacity)
                      ? uniqueName.ToString()
                      : null
                   : null;
@@ -768,7 +795,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
          finally
          {
-            var lastError = (uint) Marshal.GetLastWin32Error();
+            var lastError = (uint)Marshal.GetLastWin32Error();
 
             switch (lastError)
             {
@@ -805,8 +832,8 @@ namespace Alphaleonis.Win32.Filesystem
       public static string GetVolumeGuidForNtDeviceName(string dosDevice)
       {
          return (from drive in Directory.EnumerateLogicalDrivesCore(false, false)
-                 where drive.DosDeviceName.Equals(dosDevice, StringComparison.OrdinalIgnoreCase)
-                 select drive.VolumeInfo.Guid).FirstOrDefault();
+            where drive.DosDeviceName.Equals(dosDevice, StringComparison.OrdinalIgnoreCase)
+            select drive.VolumeInfo.Guid).FirstOrDefault();
       }
 
       #endregion // GetVolumeGuidForNtDeviceName
@@ -866,7 +893,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
-         
+
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             var volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode / 32);
@@ -877,15 +904,15 @@ namespace Alphaleonis.Win32.Filesystem
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-            var getOk = NativeMethods.GetVolumePathName(pathLp, volumeRootPath, (uint) volumeRootPath.Capacity);
+            var getOk = NativeMethods.GetVolumePathName(pathLp, volumeRootPath, (uint)volumeRootPath.Capacity);
             var lastError = Marshal.GetLastWin32Error();
 
             if (getOk)
                return Path.GetRegularPathCore(volumeRootPath.ToString(), GetFullPathOptions.None, false);
 
-            switch ((uint) lastError)
+            switch ((uint)lastError)
             {
-                  // Don't throw exception on these errors.
+               // Don't throw exception on these errors.
                case Win32Errors.ERROR_NO_MORE_FILES:
                case Win32Errors.ERROR_INVALID_PARAMETER:
                case Win32Errors.ERROR_INVALID_NAME:
@@ -905,7 +932,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsSameVolume
 
-      /// <summary>Determines whether the volume of two file system objects is the same.</summary>
+      /// <summary>Determines whether the volume of two file system objects is the same, by comparing their serial numbers.</summary>
       /// <param name="path1">The first filesystem ojbect with full path information.</param>
       /// <param name="path2">The second file system object with full path information.</param>
       /// <returns><see langword="true"/> if both filesytem objects reside on the same volume, <see langword="false"/> otherwise.</returns>
@@ -918,7 +945,7 @@ namespace Alphaleonis.Win32.Filesystem
             var volInfo1 = new VolumeInfo(GetVolumePathName(path1), true, true);
             var volInfo2 = new VolumeInfo(GetVolumePathName(path2), true, true);
 
-            return volInfo1.SerialNumber == volInfo2.SerialNumber;
+            return volInfo1.SerialNumber.Equals(volInfo2.SerialNumber) || volInfo1.Guid.Equals(volInfo2.Guid, StringComparison.OrdinalIgnoreCase);
          }
          catch { }
 
@@ -989,7 +1016,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // SetVolumeLabel
-      
+
       #region SetVolumeMountPoint
 
       /// <summary>Associates a volume with a Drive letter or a directory on another volume.</summary>
@@ -1011,7 +1038,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Not_A_Valid_Guid, "volumeGuid");
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
 
          volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
@@ -1118,7 +1145,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(volumeMountPoint))
             throw new ArgumentNullException("volumeMountPoint");
 
-         var lastError = (int) Win32Errors.ERROR_SUCCESS;
+         var lastError = (int)Win32Errors.ERROR_SUCCESS;
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
@@ -1133,10 +1160,10 @@ namespace Alphaleonis.Win32.Filesystem
             if (lastError != Win32Errors.ERROR_SUCCESS && !continueOnException)
             {
                if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND)
-                  lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+                  lastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
 
-                if (continueIfJunction && lastError == Win32Errors.ERROR_INVALID_PARAMETER)
-                    return lastError;
+               if (continueIfJunction && lastError == Win32Errors.ERROR_INVALID_PARAMETER)
+                  return lastError;
 
                NativeError.ThrowException(lastError, volumeMountPoint);
             }

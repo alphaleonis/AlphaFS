@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -155,7 +155,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // Encrypt
-      
+
       #region DisableEncryption
 
       /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it.
@@ -209,7 +209,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // EnableEncryption
-      
+
       #region Internal Methods
 
       /// <summary>Enables/disables encryption of the specified directory and the files in it.
@@ -230,7 +230,7 @@ namespace Alphaleonis.Win32.Filesystem
          // EncryptionDisable()
          // In the ANSI version of this function, the name is limited to 248 characters.
          // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-         // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+         // 2013-01-13: MSDN does not confirm LongPath usage and no Unicode version of this function exists.
 
          if (!NativeMethods.EncryptionDisable(pathLp, !enable))
             NativeError.ThrowException(pathLp);

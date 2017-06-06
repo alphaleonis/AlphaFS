@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -25,6 +25,7 @@ using System;
 namespace AlphaFS.UnitTest
 {
    /// <summary>This is a test class for Host and is intended to contain all Host Unit Tests.</summary>
+   [TestClass]
    public partial class HostTest
    {
       [TestMethod]

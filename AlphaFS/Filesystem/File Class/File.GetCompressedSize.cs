@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -118,6 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
             // In the ANSI version of this function, the name is limited to 248 characters.
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+            // 2017-05-30: MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
             ? NativeMethods.GetCompressedFileSize(pathLp, out fileSizeHigh)
             : NativeMethods.GetCompressedFileSizeTransacted(pathLp, out fileSizeHigh, transaction.SafeHandle);

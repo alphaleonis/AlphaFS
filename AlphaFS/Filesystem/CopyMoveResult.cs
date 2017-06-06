@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,23 +19,78 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Class for CopyMoveResult that contains the results for the Copy or Move action.</summary>
+   /// <summary>Class for CopyMoveResult that contains the results for the Copy or Move action.
+   /// <remarks>Normally there is no need to manually instantiate and/or populate this class.</remarks>
+   /// </summary>
+   [SerializableAttribute]
    public sealed class CopyMoveResult
    {
-      /// <summary>Create a CopyMoveResult class instance for the Copy or Move action.</summary>
+      #region Constructors
+
+      /// <summary>Create a CopyMoveResult class instance for the Copy or Move action.
+      /// <remarks>Normally there is no need to manually call this constructor.</remarks>
+      /// </summary>
       /// <param name="source">Indicates the source file or directory.</param>
       /// <param name="destination">Indicates the destination file or directory.</param>
-      /// <param name="isCanceled">Indicates if the action was canceled.</param>
-      /// <param name="errorCode">The error code encountered during the Copy or Move action.</param>
-      public CopyMoveResult(string source, string destination, bool isCanceled, int errorCode)
+      private CopyMoveResult(string source, string destination)
       {
          Source = source;
          Destination = destination;
-         IsCanceled = isCanceled;
-         ErrorCode = errorCode;
+
+         IsCopy = true;
+
+         ActionStart = ActionFinish = DateTime.Now;
       }
+
+
+      /// <summary>Create a CopyMoveResult class instance for the Copy or Move action.
+      /// <remarks>Normally there is no need to manually call this constructor.</remarks>
+      /// </summary>
+      /// <param name="source">Indicates the source file or directory.</param>
+      /// <param name="destination">Indicates the destination file or directory.</param>
+      /// <param name="isCopy">>When <see langword="true"/> the action is a Copy, Move otherwise.</param>
+      /// <param name="isDirectory">When <see langword="true"/> indicates the sources is a directory; file otherwise.</param>
+      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise. This parameter is ignored for move operations.</param>
+      /// <param name="emulatedMove">When <see langword="true"/> indicates the Move action used a fallback of Copy + Delete actions.</param>
+      public CopyMoveResult(string source, string destination, bool isCopy, bool isDirectory, bool preserveDates, bool emulatedMove) : this(source, destination)
+      {
+         EmulatedMove = emulatedMove;
+
+         IsCopy = isCopy;
+         IsDirectory = isDirectory;
+
+         TimestampsCopied = preserveDates;
+      }
+
+      #endregion // Constructors
+
+
+      #region Properties
+
+      /// <summary>Indicates when the Copy or Move action started, in UTC format.</summary>
+      public DateTime ActionStart { get; set; }
+
+
+      /// <summary>Indicates when the Copy or Move action finished, in UTC format.</summary>
+      public DateTime ActionFinish { get; set; }
+
+
+      /// <summary>Indicates the duration of the Copy or Move action.</summary>
+      public TimeSpan Duration { get { return ActionFinish.Subtract(ActionStart); } }
+
+
+      /// <summary>Indicates the destination file or directory.</summary>
+      public string Destination { get; private set; }
+
+
+      /// <summary>Indicates the Move action used a fallback of Copy + Delete actions.</summary>
+      public bool EmulatedMove { get; private set; }
 
 
       /// <summary>The error code encountered during the Copy or Move action.</summary>
@@ -43,28 +98,56 @@ namespace Alphaleonis.Win32.Filesystem
       public int ErrorCode { get; internal set; }
 
 
-      /// <summary>When true indicates that the Copy or Move action was canceled.</summary>
+      /// <summary>The error message from the <see cref="ErrorCode"/> that was encountered during the Copy or Move action.</summary>
+      /// <value>A message describing the error.</value>
+      [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
+      public string ErrorMessage { get { return new Win32Exception(ErrorCode).Message; } }
+
+
+      /// <summary>When <see langword="true"/> indicates that the Copy or Move action was canceled.</summary>
       /// <value><see langword="true"/> when the Copy/Move action was canceled. Otherwise <see langword="false"/>.</value>
       public bool IsCanceled { get; internal set; }
+
+
+      /// <summary>When <see langword="true"/> the action was a Copy, Move otherwise.</summary>
+      /// <value><see langword="true"/> when the action was a Copy. Otherwise a Move action was performed.</value>
+      public bool IsCopy { get; private set; }
+
+
+      /// <summary>Gets a value indicating whether this instance represents a directory.</summary>
+      /// <value><see langword="true"/> if this instance represents a directory; otherwise, <see langword="false"/>.</value>
+      public bool IsDirectory { get; private set; }
+
+
+      /// <summary>Gets a value indicating whether this instance represents a file.</summary>
+      /// <value><see langword="true"/> if this instance represents a file; otherwise, <see langword="false"/>.</value>
+      public bool IsFile { get { return !IsDirectory; } }
+
+
+      /// <summary>When <see langword="true"/> the action was a Move, Copy otherwise.</summary>
+      /// <value><see langword="true"/> when the action was a Move. Otherwise a Copy action was performed.</value>
+      public bool IsMove { get { return !IsCopy; } }
 
 
       /// <summary>Indicates the source file or directory.</summary>
       public string Source { get; private set; }
 
 
-      /// <summary>Indicates the destination file or directory.</summary>
-      public string Destination { get; private set; }
+      /// <summary>Indicates that the source date and timestamps have been applied to the destination file system objects.</summary>
+      public bool TimestampsCopied { get; private set; }
 
 
-      /// <summary>The total number of folders copied.</summary>
-      public long TotalFolders { get; internal set; }
+      /// <summary>The total number of bytes copied.</summary>
+      public long TotalBytes { get; internal set; }
 
 
       /// <summary>The total number of files copied.</summary>
       public long TotalFiles { get; internal set; }
 
 
-      /// <summary>The total number of bytes copied.</summary>
-      public long TotalBytes { get; internal set; }
+      /// <summary>The total number of folders copied.</summary>
+      public long TotalFolders { get; internal set; }
+
+      #endregion // Properties
    }
 }

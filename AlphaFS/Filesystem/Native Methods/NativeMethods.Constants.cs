@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.</summary>
       /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
-      public static readonly FindExAdditionalFlags LargeCache = IsAtLeastWindows7 ? FindExAdditionalFlags.LargeFetch : FindExAdditionalFlags.None;
+      public static readonly FIND_FIRST_EX_AdditionalFlags LargeCache = IsAtLeastWindows7 ? FIND_FIRST_EX_AdditionalFlags.LargeFetch : FIND_FIRST_EX_AdditionalFlags.None;
 
       /// <summary>DefaultFileBufferSize = 4096; Default type buffer size used for reading and writing files.</summary>
       public const int DefaultFileBufferSize = 4096;
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>MaxDirectoryLength = 255</summary>
       internal const int MaxDirectoryLength = 255;
-      
+
       /// <summary>MaxPath = 260
       /// The specified path, file name, or both exceed the system-defined maximum length.
       /// For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters. 

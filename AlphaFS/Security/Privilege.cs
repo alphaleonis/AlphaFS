@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -250,12 +250,12 @@ namespace Alphaleonis.Win32.Security
       }
 
 
-      ///// <summary>Gets the system name identifying this privilege.</summary>
-      ///// <value>The system name identifying this privilege.</value>
-      //public string Name
-      //{
-      //   get { return _name; }
-      //}
+      /// <summary>Gets the system name identifying this privilege.</summary>
+      /// <value>The system name identifying this privilege.</value>
+      public string Name
+      {
+         get { return _name; }
+      }
 
 
       ///// <summary>Retrieves the display name that represents this privilege.</summary>

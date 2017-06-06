@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
    partial class DirectoryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
-      
+
       [TestMethod]
       public void Directory_GetXxxTimeXxx_LocalAndNetwork_Success()
       {
@@ -50,7 +50,7 @@ namespace AlphaFS.UnitTest
 
          Assert.AreEqual(newDateTimeLocaltime, System.IO.Directory.GetCreationTime(Path));
          Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.Directory.GetCreationTime(Path));
-         
+
          Assert.AreEqual(newDateTime, System.IO.Directory.GetCreationTimeUtc(Path));
          Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.Directory.GetCreationTimeUtc(Path));
 
@@ -68,10 +68,10 @@ namespace AlphaFS.UnitTest
          Assert.AreEqual(newDateTime, System.IO.Directory.GetLastWriteTimeUtc(Path));
          Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.Directory.GetLastWriteTimeUtc(Path));
       }
-      
 
 
-      
+
+
       private void Directory_GetXxxTimeXxx(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -96,7 +96,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(folder), Alphaleonis.Win32.Filesystem.Directory.GetLastWriteTimeUtc(folder));
 
 
-            // We can not compare ChangeTime against .NET because it does not exist.
+            // We cannot compare ChangeTime against .NET because it does not exist.
             // Creating a directory and renaming it triggers ChangeTime, so test for that.
 
             folder = rootDir.RandomFileFullPath;

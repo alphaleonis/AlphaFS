@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ï»¿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -76,7 +77,7 @@ namespace AlphaFS.UnitTest
       {
          Directory_CreateDirectory_CatchArgumentException_PathStartsWithColon(false);
       }
-      
+
 
       [TestMethod]
       public void Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetwork_Success()
@@ -92,7 +93,7 @@ namespace AlphaFS.UnitTest
          Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(false);
          Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(true);
       }
-      
+
 
 
 
@@ -105,7 +106,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.Directory.FullName;
 
@@ -113,8 +114,8 @@ namespace AlphaFS.UnitTest
             var level = new Random().Next(10, 1000);
 
 #if NET35
-            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-            //folder += UnitTestConstants.EMspace;
+// MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
+//folder += UnitTestConstants.EMspace;
 #endif
 
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
@@ -151,16 +152,16 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.Directory.FullName;
             var subFolders = new[]
             {
-               @"földer1",
+               @"fï¿½lder1",
                @"\ \",
-               @"foldër2 2",
+               @"foldï¿½r2 2",
                @"///",
-               @" fóldér3 33"
+               @" fï¿½ldï¿½r3 33"
             };
 
 
@@ -208,10 +209,10 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory_WithFileSecurity"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
             var pathExpected = rootDir.RandomFileFullPath + ".txt";
@@ -226,6 +227,9 @@ namespace AlphaFS.UnitTest
             {
                var s1 = System.IO.Directory.CreateDirectory(pathExpected, expectedFileSecurity);
                var s2 = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(pathActual, expectedFileSecurity);
+
+               UnitTestConstants.Dump(s1);
+               UnitTestConstants.Dump(s2);
             }
 
             var expected = System.IO.File.GetAccessControl(pathExpected).GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
@@ -247,7 +251,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file = rootDir.RandomFileFullPath + ".txt";
             Console.WriteLine("\nInput File Path: [{0}]\n", file);

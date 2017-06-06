@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -175,7 +175,7 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = GetFullPathCore(transaction, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
          var buffer = new StringBuilder();
-         uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint) path.Length;
+         uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint)path.Length;
 
          while (actualLength > buffer.Capacity)
          {
@@ -190,10 +190,10 @@ namespace Alphaleonis.Win32.Filesystem
                ? NativeMethods.GetShortPathName(pathLp, buffer, (uint)buffer.Capacity)
                : transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
-               // GetLongPathName()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2014-01-29: MSDN confirms LongPath usage.
+                  // GetLongPathName()
+                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+                  // 2014-01-29: MSDN confirms LongPath usage.
 
                   ? NativeMethods.GetLongPathName(pathLp, buffer, (uint)buffer.Capacity)
                   : NativeMethods.GetLongPathNameTransacted(pathLp, buffer, (uint)buffer.Capacity, transaction.SafeHandle);
@@ -244,25 +244,29 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">Full pathname of the source path to convert.</param>
+      /// <param name="path">The path to convert.</param>
       /// <param name="pathFormat">The path format to use.</param>
       /// <param name="options">Options for controlling the operation. Note that on .NET 3.5 the TrimEnd option has no effect.</param>
-      internal static string GetExtendedLengthPathCore(KernelTransaction transaction, string sourcePath, PathFormat pathFormat, GetFullPathOptions options)
+      internal static string GetExtendedLengthPathCore(KernelTransaction transaction, string path, PathFormat pathFormat, GetFullPathOptions options)
       {
+         if (null == path)
+            return null;
+
+
          switch (pathFormat)
          {
             case PathFormat.LongFullPath:
-               return sourcePath;
+               return path;
 
             case PathFormat.FullPath:
-               return GetLongPathCore(sourcePath, GetFullPathOptions.None);
+               return GetLongPathCore(path, GetFullPathOptions.None);
 
             case PathFormat.RelativePath:
 #if NET35
                // .NET 3.5 the TrimEnd option has no effect.
                options = options & ~GetFullPathOptions.TrimEnd;
 #endif
-               return GetFullPathCore(transaction, sourcePath, GetFullPathOptions.AsLongPath | options);
+               return GetFullPathCore(transaction, path, GetFullPathOptions.AsLongPath | options);
 
             default:
                throw new ArgumentException("Invalid value for " + typeof(PathFormat).Name + ": " + pathFormat);

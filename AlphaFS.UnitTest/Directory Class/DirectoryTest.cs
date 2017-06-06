@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -150,13 +150,13 @@ namespace AlphaFS.UnitTest
             var file = Path.Combine(tempPath, Path.GetRandomFileName());
 
             var dir = file + "-dir";
-            Directory.CreateDirectory(dir);
+            System.IO.Directory.CreateDirectory(dir);
 
             // using() == Dispose() == Close() = deletable.
-            using (File.Create(file)) { }
-            using (File.Create(Path.Combine(dir, Path.GetFileName(file, true)))) { }
+            using (System.IO.File.Create(file)) { }
+            using (System.IO.File.Create(Path.Combine(dir, Path.GetFileName(file, true)))) { }
 
-            actual = File.GetAttributes(file);
+            actual = System.IO.File.GetAttributes(file);
             action = (actual & FileAttributes.Encrypted) != 0;
             Assert.IsFalse(action, "Encryption should be False");
          }
@@ -182,7 +182,7 @@ namespace AlphaFS.UnitTest
          }
          Assert.IsTrue(action, "Unexpected Exception");
 
-         actual = File.GetAttributes(tempPath);
+         actual = System.IO.File.GetAttributes(tempPath);
          action = (actual & FileAttributes.Encrypted) != 0;
          Assert.IsTrue(action, "File system ojbect should be encrypted.");
          Console.WriteLine("\nDirectory Encrypted (Should be True): [{0}]\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
@@ -223,7 +223,7 @@ namespace AlphaFS.UnitTest
          }
          Assert.IsTrue(action, "Unexpected Exception");
 
-         actual = File.GetAttributes(tempPath);
+         actual = System.IO.File.GetAttributes(tempPath);
          action = (actual & FileAttributes.Encrypted) == 0;
          Assert.IsTrue(action, "File system ojbect should be decrypted.");
          Console.WriteLine("\nDirectory Decrypted (Should be True): [{0}]\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
@@ -480,8 +480,8 @@ namespace AlphaFS.UnitTest
 
             new DirectoryInfo(nonExistingPath).EnumerateFiles().Any();
          }
-         catch(Exception ex)
-            {
+         catch (Exception ex)
+         {
             // Local: DirectoryNotFoundException.
             // UNC: IOException.
 
@@ -618,7 +618,7 @@ namespace AlphaFS.UnitTest
          var cnt = 0;
          var searchPattern = Path.WildcardStarMatchAll;
          var searchOption = SearchOption.TopDirectoryOnly;
-         
+
          var random = Path.GetRandomFileName();
          var folderSource = @"folder-source-" + random;
 
@@ -768,7 +768,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
       }
-      
+
       private void DumpGetDrives(bool enumerate)
       {
          Console.WriteLine("\nIf you are missing drives, please see this topic: https://alphafs.codeplex.com/discussions/397693 \n");
@@ -796,7 +796,7 @@ namespace AlphaFS.UnitTest
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
       }
-      
+
       private void DumpGetFileSystemEntries(bool isLocal)
       {
          var isNetwork = !isLocal;
@@ -818,7 +818,7 @@ namespace AlphaFS.UnitTest
          #endregion // Setup
 
          #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
-         
+
          var gotException = false;
          try
          {
@@ -979,7 +979,7 @@ namespace AlphaFS.UnitTest
          DumpEnumerateFileSystemEntries(true);
          DumpEnumerateFileSystemEntries(false);
       }
-      
+
       [TestMethod]
       public void Directory_GetDirectoryRoot()
       {

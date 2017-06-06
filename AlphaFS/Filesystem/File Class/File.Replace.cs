@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -153,25 +153,26 @@ namespace Alphaleonis.Win32.Filesystem
       {
          const GetFullPathOptions options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
-         string sourceFileNameLp = Path.GetExtendedLengthPathCore(null, sourceFileName, pathFormat, options);
-         string destinationFileNameLp = Path.GetExtendedLengthPathCore(null, destinationFileName, pathFormat, options);
+         var sourceFileNameLp = Path.GetExtendedLengthPathCore(null, sourceFileName, pathFormat, options);
+         var destinationFileNameLp = Path.GetExtendedLengthPathCore(null, destinationFileName, pathFormat, options);
 
          // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
-         string destinationBackupFileNameLp = destinationBackupFileName == null
+         var destinationBackupFileNameLp = destinationBackupFileName == null
             ? null
             : Path.GetExtendedLengthPathCore(null, destinationBackupFileName, pathFormat, options);
 
          const int replacefileWriteThrough = 1;
          const int replacefileIgnoreMergeErrors = 2;
 
-         FileSystemRights dwReplaceFlags = (FileSystemRights) replacefileWriteThrough;
+         var dwReplaceFlags = (FileSystemRights)replacefileWriteThrough;
          if (ignoreMetadataErrors)
-            dwReplaceFlags |= (FileSystemRights) replacefileIgnoreMergeErrors;
+            dwReplaceFlags |= (FileSystemRights)replacefileIgnoreMergeErrors;
 
          // ReplaceFile()
          // In the ANSI version of this function, the name is limited to MAX_PATH characters.
          // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+         // 2017-05-30: MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
          if (!NativeMethods.ReplaceFile(destinationFileNameLp, sourceFileNameLp, destinationBackupFileNameLp, dwReplaceFlags, IntPtr.Zero, IntPtr.Zero))
             NativeError.ThrowException(Marshal.GetLastWin32Error(), sourceFileNameLp, destinationFileNameLp);

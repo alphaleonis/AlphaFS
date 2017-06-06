@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
                case 60:    // <  (less than)
                case 62:    // >  (greater than)
                case 124:   // |  (pipe)
-                  throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Illegal_Characters_In_Path, (char) num), "path");
+                  throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Illegal_Characters_In_Path, (char)num), pathRp);
 
                default:
                   // 32: space
@@ -207,7 +207,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
       }
-      
+
       /// <summary>Tranlates DosDevicePath, Volume GUID. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".</summary>
       /// <returns>A translated dos path.</returns>
       /// <param name="dosDevice">A DosDevicePath, for example: \Device\HarddiskVolumeX\path\filename.ext.</param>
@@ -290,6 +290,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+      [SuppressMessage("Microsoft.Performance", "CA1809:AvoidExcessiveLocals")]
       private static string NormalizePath(string path, GetFullPathOptions options)
       {
          var newBuffer = new StringBuilder(NativeMethods.MaxPathUnicode);
@@ -297,7 +298,7 @@ namespace Alphaleonis.Win32.Filesystem
          uint numSpaces = 0;
          uint numDots = 0;
          var fixupDirectorySeparator = false;
-         
+
          // Number of significant chars other than potentially suppressible
          // dots and spaces since the last directory or volume separator char
          uint numSigChars = 0;
@@ -473,7 +474,7 @@ namespace Alphaleonis.Win32.Filesystem
                         //Safe to update stack ptr directly
                         newBuffer.Length = 0;
                         newBuffer.Append(driveLetter);
-                           // Overwrite spaces, we need a special case to not break "  foo" as a relative path.
+                        // Overwrite spaces, we need a special case to not break "  foo" as a relative path.
                      }
                   }
 
@@ -523,7 +524,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (path[start] != CurrentDirectoryPrefixChar)
                   throw new ArgumentException(path);
 
-               
+
                // Only allow "[dot]+[space]*", and normalize the legal ones to "." or ".."
                if (numDots >= 2)
                {
@@ -605,7 +606,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
 
-         
+
          return newBuffer.ToString();
       }
 

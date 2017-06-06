@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -172,7 +172,7 @@ namespace Alphaleonis.Win32.Filesystem
          DeleteDirectoryCore(null, transaction, path, false, false, false, pathFormat);
       }
 
-      
+
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -207,7 +207,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DeleteDirectoryCore(null, transaction, path, recursive, false, false, pathFormat);
       }
-      
+
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <exception cref="ArgumentException"/>
@@ -328,10 +328,22 @@ namespace Alphaleonis.Win32.Filesystem
 
          DeleteDirectoryCore(transaction, fsEntryInfo.LongFullPath, ignoreReadOnly, continueOnNotFound);
       }
-      
 
+
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       private static void DeleteDirectoryCore(KernelTransaction transaction, string pathLp, bool ignoreReadOnly, bool continueOnNotFound)
       {
+         // Reset directory attributes upfront to avoid Exception route.
+         if (ignoreReadOnly && continueOnNotFound)
+         {
+            try
+            {
+               File.SetAttributesCore(true, transaction, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
+            }
+            catch { }
+         }
+
+
          startRemoveDirectory:
 
          var success = transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -350,7 +362,7 @@ namespace Alphaleonis.Win32.Filesystem
          var lastError = Marshal.GetLastWin32Error();
          if (!success)
          {
-            switch ((uint) lastError)
+            switch ((uint)lastError)
             {
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
                   // MSDN: .NET 3.5+: IOException: The directory specified by path is not an empty directory. 
@@ -369,18 +381,20 @@ namespace Alphaleonis.Win32.Filesystem
                      return;
                   break;
 
-               
+
                case Win32Errors.ERROR_SHARING_VIOLATION:
                   // MSDN: .NET 3.5+: IOException: The directory is being used by another process or there is an open handle on the directory.
                   NativeError.ThrowException(lastError, pathLp);
                   break;
 
-               
+
                case Win32Errors.ERROR_ACCESS_DENIED:
                   var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                   var dataInitialised = File.FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
 
-                  if (data.dwFileAttributes != (FileAttributes) (-1))
+
+                  // Remove ReadOnly attribute.
+                  if (data.dwFileAttributes != (FileAttributes)(-1))
                   {
                      if ((data.dwFileAttributes & FileAttributes.ReadOnly) != 0)
                      {
@@ -390,6 +404,7 @@ namespace Alphaleonis.Win32.Filesystem
                         {
                            // Reset directory attributes.
                            File.SetAttributesCore(true, transaction, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
+
                            goto startRemoveDirectory;
                         }
 

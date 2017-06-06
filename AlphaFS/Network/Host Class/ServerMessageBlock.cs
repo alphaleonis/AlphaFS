@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -61,7 +61,6 @@ namespace Alphaleonis.Win32.Network
       }
 
       #endregion // EnumerateOpenConnections
-
 
       #region EnumerateShares
 
@@ -130,7 +129,6 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // EnumerateShares
 
-
       #region GetHostShareFromPath
 
       /// <summary>Gets the host and share path name for the given <paramref name="uncPath"/>.</summary>
@@ -152,7 +150,7 @@ namespace Alphaleonis.Win32.Network
             return new[]
             {
                uri.Host,
-               uri.AbsolutePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
+               uri.GetComponents(UriComponents.Path, UriFormat.Unescaped).Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
             };
          }
 
@@ -160,7 +158,6 @@ namespace Alphaleonis.Win32.Network
       }
 
       #endregion // GetHostShareFromPath
-
 
       #region GetShareInfo
 
@@ -212,7 +209,6 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // GetShareInfo
 
-
       #region Internal Methods
 
       #region EnumerateOpenConnectionsCore
@@ -230,7 +226,7 @@ namespace Alphaleonis.Win32.Network
          if (Utils.IsNullOrWhiteSpace(share))
             throw new ArgumentNullException("share");
 
-         return EnumerateNetworkObjectCore(new FunctionData {ExtraData1 = share}, (NativeMethods.CONNECTION_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectCore(new FunctionData { ExtraData1 = share }, (NativeMethods.CONNECTION_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
                new OpenConnectionInfo(host, structure),
 
@@ -240,9 +236,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               var stripUnc = Utils.IsNullOrWhiteSpace(host)
-                  ? Environment.MachineName
-                  : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetConnectionEnum(stripUnc, functionData.ExtraData1, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 
@@ -267,86 +261,50 @@ namespace Alphaleonis.Win32.Network
       internal static IEnumerable<ShareInfo> EnumerateSharesCore(string host, ShareType shareType, bool continueOnException)
       {
          // When host == null, the local computer is used.
-         // However, the resulting Host property will be empty.
+         // However, the resulting OpenResourceInfo.Host property will be empty.
          // So, explicitly state Environment.MachineName to prevent this.
          // Furthermore, the UNC prefix: \\ is not required and always removed.
-         var stripUnc = Utils.IsNullOrWhiteSpace(host)
-            ? Environment.MachineName
-            : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
+         var stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
          var fd = new FunctionData();
          var hasItems = false;
          var yieldAll = shareType == ShareType.All;
 
-
-         // Try with SHARE_INFO_503 structure.
+         // Try SHARE_INFO_503 structure.
          foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_503 structure, SafeGlobalMemoryBufferHandle buffer) =>
-
-                  new ShareInfo(stripUnc, ShareInfoLevel.Info503, structure),
-
-               (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                     NativeMethods.NetShareEnum(stripUnc, 503, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException)
-
-            .Where(si => yieldAll || si.ShareType == shareType))
+               new ShareInfo(stripUnc, ShareInfoLevel.Info503, structure),
+            (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+               NativeMethods.NetShareEnum(stripUnc, 503, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
          {
             yield return si;
             hasItems = true;
          }
 
-
-         // Previous structure is not supported/possible
-         // Try again with SHARE_INFO_502 structure.
-         if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_502 structure, SafeGlobalMemoryBufferHandle buffer) =>
-
-               new ShareInfo(stripUnc, ShareInfoLevel.Info502, structure),
-
-                  (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                        NativeMethods.NetShareEnum(stripUnc, 502, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException)
-
-               .Where(si => yieldAll || si.ShareType == shareType))
-            {
-               yield return si;
-               hasItems = true;
-            }
-
-
-         // Previous structure is not supported/possible
+         // SHARE_INFO_503 is requested, but not supported/possible.
          // Try again with SHARE_INFO_2 structure.
          if (!hasItems)
             foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) =>
-
-               new ShareInfo(stripUnc, ShareInfoLevel.Info2, structure),
-
-                  (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                        NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException)
-
-               .Where(si => yieldAll || si.ShareType == shareType))
-
+                  new ShareInfo(stripUnc, ShareInfoLevel.Info2, structure),
+               (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+                  NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
             {
                yield return si;
                hasItems = true;
             }
 
-
-         // Previous structure is not supported/possible
+         // SHARE_INFO_2 is requested, but not supported/possible.
          // Try again with SHARE_INFO_1 structure.
          if (!hasItems)
             foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
-
-               new ShareInfo(stripUnc, ShareInfoLevel.Info1, structure),
-
-                  (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                     NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException)
-
-               .Where(si => yieldAll || si.ShareType == shareType))
+                  new ShareInfo(stripUnc, ShareInfoLevel.Info1, structure),
+               (FunctionData functionData, out  SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+                  NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
             {
                yield return si;
             }
       }
 
       #endregion // EnumerateSharesCore
-
 
       #region GetShareInfoCore
 
@@ -364,13 +322,12 @@ namespace Alphaleonis.Win32.Network
             return null;
 
          // When host == null, the local computer is used.
-         // However, the resulting Host property will be empty.
+         // However, the resulting OpenResourceInfo.Host property will be empty.
          // So, explicitly state Environment.MachineName to prevent this.
          // Furthermore, the UNC prefix: \\ is not required and always removed.
-         var stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false) .Replace(Path.UncPrefix, string.Empty);
+         var stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
-         var fallback503 = false;
-         var fallback502 = false;
+         var fallback = false;
 
 
          startNetShareGetInfo:
@@ -393,18 +350,11 @@ namespace Alphaleonis.Win32.Network
                            NetFullPath = Path.CombineCore(false, Path.UncPrefix + stripUnc, share)
                         };
 
-
-                     case ShareInfoLevel.Info502:
-                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_502>(0));
-
-
                      case ShareInfoLevel.Info503:
                         return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_503>(0));
 
-
                      case ShareInfoLevel.Info2:
                         return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_2>(0));
-
 
                      case ShareInfoLevel.Info1:
                         return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_1>(0));
@@ -412,28 +362,22 @@ namespace Alphaleonis.Win32.Network
                   break;
 
 
-               // Observed when SHARE_INFO_503 or SHARE_INFO_502 is requested, but not supported/possible.
-               // Fall back on SHARE_INFO_502 or SHARE_INFO_2 structure and try again.
+               // Observed when SHARE_INFO_503 is requested, but not supported/possible.
+               // Fall back on SHARE_INFO_2 structure and try again.
                case Win32Errors.RPC_X_BAD_STUB_DATA:
-               case Win32Errors.ERROR_NOT_SUPPORTED:
+
                case Win32Errors.ERROR_ACCESS_DENIED:
-                  if (!fallback503 && shareLevel == ShareInfoLevel.Info503)
-                  {
-                     shareLevel = ShareInfoLevel.Info502;
-                     fallback503 = true;
-                     goto startNetShareGetInfo;
-                  }
-                  else if (!fallback502 && shareLevel == ShareInfoLevel.Info502)
+                  if (!fallback && shareLevel != ShareInfoLevel.Info2)
                   {
                      shareLevel = ShareInfoLevel.Info2;
-                     fallback502 = true;
+                     fallback = true;
                      goto startNetShareGetInfo;
                   }
                   break;
 
                default:
                   if (!continueOnException)
-                     throw new NetworkInformationException((int) lastError);
+                     throw new NetworkInformationException((int)lastError);
                   break;
             }
 

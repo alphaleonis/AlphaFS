@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -84,7 +84,7 @@ namespace AlphaFS.UnitTest
          var cnt = 0;
          var errorCount = 0;
 
-          // Get only .IsReady drives.
+         // Get only .IsReady drives.
          foreach (var drv in Directory.EnumerateLogicalDrives(false, true))
          {
             if (drv.DriveType == DriveType.NoRootDirectory)
@@ -105,20 +105,20 @@ namespace AlphaFS.UnitTest
 
                Assert.AreNotEqual(0, dsi.BytesPerSector);
                Assert.AreNotEqual(0, dsi.SectorsPerCluster);
-               Assert.AreNotEqual(0, (int) dsi.TotalNumberOfClusters);
-               Assert.AreNotEqual(0, (int) dsi.TotalNumberOfBytes);
+               Assert.AreNotEqual(0, (int)dsi.TotalNumberOfClusters);
+               Assert.AreNotEqual(0, (int)dsi.TotalNumberOfBytes);
 
                if (drv.DriveType == DriveType.CDRom)
                {
-                  Assert.AreEqual(0, (int) dsi.FreeBytesAvailable);
+                  Assert.AreEqual(0, (int)dsi.FreeBytesAvailable);
                   Assert.AreEqual(0, dsi.NumberOfFreeClusters);
-                  Assert.AreEqual(0, (int) dsi.TotalNumberOfFreeBytes);
+                  Assert.AreEqual(0, (int)dsi.TotalNumberOfFreeBytes);
                }
                else
                {
-                  Assert.AreNotEqual(0, (int) dsi.FreeBytesAvailable);
+                  Assert.AreNotEqual(0, (int)dsi.FreeBytesAvailable);
                   Assert.AreNotEqual(0, dsi.NumberOfFreeClusters);
-                  Assert.AreNotEqual(0, (int) dsi.TotalNumberOfFreeBytes);
+                  Assert.AreNotEqual(0, (int)dsi.TotalNumberOfFreeBytes);
                }
 
                // false == Size information only.
@@ -166,7 +166,7 @@ namespace AlphaFS.UnitTest
          #region UnitTestConstants.Local Drive
          if (isLocal)
          {
-            // System.IO.DriveInfo() can not handle UNC paths.
+            // System.IO.DriveInfo() cannot handle UNC paths.
             var expected = new System.IO.DriveInfo(tempPath);
             //Dump(expected, -21);
 
@@ -236,7 +236,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpClassDriveInfo
-     
+
       #region DumpClassDfsInfo
 
       private void DumpClassDfsInfo()
@@ -256,7 +256,7 @@ namespace AlphaFS.UnitTest
                   Console.Write("\n#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsNamespace);
 
                   var dfsInfo = Host.GetDfsInfo(dfsNamespace);
-                  
+
                   UnitTestConstants.Dump(dfsInfo, -21);
 
 
@@ -294,7 +294,7 @@ namespace AlphaFS.UnitTest
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
-         
+
          if (cnt == 0)
             Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
@@ -351,7 +351,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Filesystem_Class_DriveInfo
-     
+
       #endregion Filesystem
 
 

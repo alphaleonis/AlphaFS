@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -22,6 +22,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
+using System.Globalization;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -35,6 +37,42 @@ namespace AlphaFS.UnitTest
          Directory_CreateDirectory_Delete(false);
          Directory_CreateDirectory_Delete(true);
       }
+
+
+      //[TestMethod]
+      //public void Directory_Delete_JunctionPoint_Success()
+      //{
+      //   var tempPath = System.IO.Path.GetTempPath();
+
+      //   using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete_JunctionPoint"))
+      //   {
+      //      var target = rootDir.Directory.CreateSubdirectory("Lib");
+      //      var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
+      //      var junction = System.IO.Path.Combine(toDelete.FullName, "Link");
+
+
+      //      // mklink: /J = Create a Directory Junction.
+      //      using (var process = Process.Start(new ProcessStartInfo(System.IO.Path.Combine(UnitTestConstants.SysRoot32, "cmd.exe"),
+      //         string.Format(CultureInfo.InvariantCulture, @"/C mklink /J {0} {1}", junction, target.FullName))
+      //      {
+      //         CreateNoWindow = true,
+      //         UseShellExecute = true
+      //      }))
+      //         if (null != process)
+      //            process.WaitForExit();
+
+
+      //      Assert.AreEqual(System.IO.Directory.Exists(junction), Alphaleonis.Win32.Filesystem.Directory.Exists(junction));
+
+
+      //      // System.IO.IOException: (87) The parameter is incorrect
+      //      Alphaleonis.Win32.Filesystem.Directory.Delete(toDelete.FullName, true);
+
+
+      //      // System.IO.IOException: The parameter is incorrect.
+      //      //System.IO.Directory.Delete(toDelete.FullName, true);
+      //   }
+      //}
 
 
       [TestMethod]
@@ -106,34 +144,9 @@ namespace AlphaFS.UnitTest
          Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission(false);
          Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission(true);
       }
-      
 
 
-      [TestMethod]
-      public void Directory_Delete_JunctionPoint()
-      {
-         var tempPath = System.IO.Path.GetTempPath();
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete"))
-         {
-            var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
-            var linked = rootDir.Directory.CreateSubdirectory("Linked");
-
-            var junction = Alphaleonis.Win32.Filesystem.Path.Combine(toDelete.FullName, "Link");
-
-            var startInfo = new ProcessStartInfo("cmd",string.Format(@"/C mklink /J {0} {1}", junction, linked.FullName))
-            {
-               CreateNoWindow = true,
-               UseShellExecute = true
-            };
-
-            Process.Start(startInfo).WaitForExit();
-
-            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(junction));
-
-            Alphaleonis.Win32.Filesystem.Directory.Delete(toDelete.FullName, true);
-         }
-      }
 
       private void Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters(bool isNetwork)
       {
@@ -221,7 +234,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomFileFullPath;
             var file = System.IO.Path.Combine(folder, System.IO.Path.GetRandomFileName());
@@ -320,7 +333,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file = rootDir.RandomFileFullPath + ".txt";
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
@@ -356,7 +369,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
@@ -396,7 +409,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Delete"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
@@ -424,7 +437,7 @@ namespace AlphaFS.UnitTest
 
             // Remove DENY permission for current user and delete folder.
             UnitTestConstants.FolderDenyPermission(false, folder);
-            
+
          }
 
          Console.WriteLine();

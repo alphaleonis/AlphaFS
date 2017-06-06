@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -28,8 +28,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      #region SetAttributes
-
       /// <summary>Sets the specified <see cref="FileAttributes"/> of the file or directory on the specified path.</summary>
       /// <remarks>
       ///   Certain file attributes, such as <see cref="FileAttributes.Hidden"/> and <see cref="FileAttributes.ReadOnly"/>, can be combined.
@@ -64,8 +62,6 @@ namespace Alphaleonis.Win32.Filesystem
          SetAttributesCore(false, null, path, fileAttributes, pathFormat);
       }
 
-
-      #region Transactional
 
       /// <summary>[AlphaFS] Sets the specified <see cref="FileAttributes"/> of the file on the specified path.</summary>
       /// <remarks>
@@ -102,11 +98,8 @@ namespace Alphaleonis.Win32.Filesystem
          SetAttributesCore(false, transaction, path, fileAttributes, pathFormat);
       }
 
-      #endregion // Transacted
 
-      #endregion // SetAttributes
 
-      #region Internal Methods
 
       /// <summary>Sets the attributes for a Non-/Transacted file/directory.</summary>
       /// <remarks>
@@ -140,7 +133,7 @@ namespace Alphaleonis.Win32.Filesystem
             : NativeMethods.SetFileAttributesTransacted(pathLp, fileAttributes, transaction.SafeHandle);
 
 
-         var lastError = (uint) Marshal.GetLastWin32Error();
+         var lastError = (uint)Marshal.GetLastWin32Error();
          if (!success)
          {
             switch (lastError)
@@ -149,9 +142,11 @@ namespace Alphaleonis.Win32.Filesystem
                case Win32Errors.ERROR_INVALID_PARAMETER:
                   throw new ArgumentException(Resources.Invalid_File_Attribute);
 
+
+               case Win32Errors.ERROR_PATH_NOT_FOUND:
                case Win32Errors.ERROR_FILE_NOT_FOUND:
                   if (isFolder)
-                     lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+                     lastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
 
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid, (for example, it is on an unmapped drive).
                   // MSDN: .NET 3.5+: FileNotFoundException: The file cannot be found.
@@ -162,7 +157,5 @@ namespace Alphaleonis.Win32.Filesystem
             NativeError.ThrowException(lastError, pathLp);
          }
       }
-
-      #endregion // Internal Methods
    }
 }

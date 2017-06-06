@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -26,7 +26,7 @@ namespace Alphaleonis.Win32
       /// <summary>Use this to translate error codes into HRESULTs like 0x80070006 for ERROR_INVALID_HANDLE.</summary>
       public static int GetHrFromWin32Error(uint errorCode)
       {
-         return (int) unchecked(((int) 0x80070000) | errorCode);
+         return (int)unchecked((int)0x80070000 | errorCode);
       }
 
       // System Error Codes
@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_SIGNAL_REFUSED = 156;
       //public const uint ERROR_DISCARDED = 157;
 
-      // <summary>(158) The segment is already unlocked.</summary>
+      //// <summary>(158) The segment is already unlocked.</summary>
       //public const uint ERROR_NOT_LOCKED = 158;
 
       //public const uint ERROR_BAD_THREADID_ADDR = 159;
@@ -319,7 +319,7 @@ namespace Alphaleonis.Win32
 
       //public const uint ERROR_IO_INCOMPLETE = 996;
 
-      /// <summary>(997) Overlapped I/O operation is in progress.</summary>
+      //// <summary>(997) Overlapped I/O operation is in progress.</summary>
       //public const uint ERROR_IO_PENDING = 997;
 
       //public const uint ERROR_NOACCESS = 998;
@@ -448,7 +448,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_POTENTIAL_FILE_FOUND = 1180;
       //public const uint ERROR_JOURNAL_ENTRY_DELETED = 1181;
 
-      /// <summary>(1200) The specified device name is invalid.</summary>
+      //// <summary>(1200) The specified device name is invalid.</summary>
       //public const uint ERROR_BAD_DEVICE = 1200;
 
       //public const uint ERROR_CONNECTION_UNAVAIL = 1201;
@@ -459,7 +459,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_BAD_PROFILE = 1206;
       //public const uint ERROR_NOT_CONTAINER = 1207;
 
-      /// <summary>(1208) An extended error has occurred.</summary>
+      //// <summary>(1208) An extended error has occurred.</summary>
       //public const uint ERROR_EXTENDED_ERROR = 1208;
 
       //public const uint ERROR_INVALID_GROUPNAME = 1209;
@@ -476,7 +476,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_REMOTE_SESSION_LIMIT_EXCEEDED = 1220;
       //public const uint ERROR_DUP_DOMAINNAME = 1221;
 
-      /// <summary>(1222) The network is not present or not started.</summary>
+      //// <summary>(1222) The network is not present or not started.</summary>
       //public const uint ERROR_NO_NETWORK = 1222;
 
       //public const uint ERROR_CANCELLED = 1223;
@@ -3226,7 +3226,7 @@ namespace Alphaleonis.Win32
       // http://msdn.microsoft.com/en-us/library/windows/desktop/aa370674%28v=vs.85%29.aspx
 
       /// <summary>(0) The operation completed successfully.</summary>
-      public const uint NERR_Success = ERROR_SUCCESS;
+      public const uint NERR_Success = 0;
 
       ///// <summary>The workstation driver is not installed.</summary>
       //public const uint NERR_NetNotStarted = 2102;
@@ -3558,7 +3558,7 @@ namespace Alphaleonis.Win32
       ///// <summary>This replicant database is outdated; synchronization is required.</summary>
       //public const uint NERR_SyncRequired = 2249;
 
-      /// <summary>(2250) The network connection could not be found.</summary>
+      //// <summary>(2250) The network connection could not be found.</summary>
       //public const uint NERR_UseNotFound = 2250;
 
       ///// <summary>This asg_type is invalid.</summary>
@@ -3645,7 +3645,7 @@ namespace Alphaleonis.Win32
       ///// <summary>This operation is not supported on computers with multiple networks.</summary>
       //public const uint NERR_MultipleNets = 2300;
 
-      /// <summary>(2310) This shared resource does not exist.</summary>
+      //// <summary>(2310) This shared resource does not exist.</summary>
       //public const uint NERR_NetNameNotFound = 2310;
 
       ///// <summary>This device is not shared.</summary>

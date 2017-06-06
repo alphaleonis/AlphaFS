@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation directorys (the "Software"), to deal 
@@ -21,11 +21,12 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for FileInfo and is intended to contain all FileInfo UnitTests.</summary>
+   /// <summary>This is a test class for DirectoryInfo and is intended to contain all DirectoryInfo UnitTests.</summary>
    public partial class DirectoryInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
@@ -59,25 +60,25 @@ namespace AlphaFS.UnitTest
             dirInfo.Create();
 
 
-            dirInfo.Attributes |= System.IO.FileAttributes.ReadOnly;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.ReadOnly) != 0, "The directory is not ReadOnly, but is expected to be.");
+            dirInfo.Attributes |= FileAttributes.ReadOnly;
+            Assert.IsTrue((dirInfo.Attributes & FileAttributes.ReadOnly) != 0, "The directory is not ReadOnly, but is expected to be.");
 
-            dirInfo.Attributes &= ~System.IO.FileAttributes.ReadOnly;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.ReadOnly) == 0, "The directory is ReadOnly, but is expected not to be.");
-
-
-            dirInfo.Attributes |= System.IO.FileAttributes.Hidden;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.Hidden) != 0, "The directory is not Hidden, but is expected to be.");
-
-            dirInfo.Attributes &= ~System.IO.FileAttributes.Hidden;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.Hidden) == 0, "The directory is Hidden, but is expected not to be.");
+            dirInfo.Attributes &= ~FileAttributes.ReadOnly;
+            Assert.IsTrue((dirInfo.Attributes & FileAttributes.ReadOnly) == 0, "The directory is ReadOnly, but is expected not to be.");
 
 
-            dirInfo.Attributes |= System.IO.FileAttributes.System;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.System) != 0, "The directory is not System, but is expected to be.");
+            dirInfo.Attributes |= FileAttributes.Hidden;
+            Assert.IsTrue((dirInfo.Attributes & FileAttributes.Hidden) != 0, "The directory is not Hidden, but is expected to be.");
 
-            dirInfo.Attributes &= ~System.IO.FileAttributes.System;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.System) == 0, "The directory is System, but is expected not to be.");
+            dirInfo.Attributes &= ~FileAttributes.Hidden;
+            Assert.IsTrue((dirInfo.Attributes & FileAttributes.Hidden) == 0, "The directory is Hidden, but is expected not to be.");
+
+
+            dirInfo.Attributes |= FileAttributes.System;
+            Assert.IsTrue((dirInfo.Attributes & FileAttributes.System) != 0, "The directory is not System, but is expected to be.");
+
+            dirInfo.Attributes &= ~FileAttributes.System;
+            Assert.IsTrue((dirInfo.Attributes & FileAttributes.System) == 0, "The directory is System, but is expected not to be.");
          }
 
          Console.WriteLine();

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -47,8 +47,10 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       // A random prime number will be picked and added to the HashCode, each time an instance is created.
-      [NonSerialized] private static readonly int[] Primes = {17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919};
-      [NonSerialized] private readonly int _random = new Random().Next(0, 19);
+      [NonSerialized]
+      private static readonly int[] Primes = { 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919 };
+      [NonSerialized]
+      private readonly int _random = new Random().Next(0, 19);
 
 
       #region .NET
@@ -66,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       protected string OriginalPath;
 
       #endregion // .NET
-      
+
       #endregion // Fields
 
 
@@ -130,8 +132,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       public DateTime CreationTime
       {
-         [SecurityCritical] get { return CreationTimeUtc.ToLocalTime(); }
-         [SecurityCritical] set { CreationTimeUtc = value.ToUniversalTime(); }
+         [SecurityCritical]
+         get { return CreationTimeUtc.ToLocalTime(); }
+         [SecurityCritical]
+         set { CreationTimeUtc = value.ToUniversalTime(); }
       }
 
 
@@ -430,7 +434,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DataInitialised = File.FillAttributeInfoCore(Transaction, LongFullName, ref Win32AttributeData, false, false);
       }
-   
+
 
       /// <summary>Returns a string that represents the current object.</summary>
       /// <remarks>
@@ -459,7 +463,7 @@ namespace Alphaleonis.Win32.Filesystem
                 other.FullName.Equals(FullName, StringComparison.OrdinalIgnoreCase) && other.Attributes.Equals(Attributes) &&
                 other.CreationTimeUtc.Equals(CreationTimeUtc) && other.LastWriteTimeUtc.Equals(LastWriteTimeUtc);
       }
-      
+
 
       /// <summary>Serves as a hash function for a particular type.</summary>
       /// <returns>A hash code for the current Object.</returns>
@@ -495,7 +499,7 @@ namespace Alphaleonis.Win32.Filesystem
          return ReferenceEquals(left, null) && ReferenceEquals(right, null) ||
                 !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
       }
-      
+
       /// <summary>Implements the operator !=</summary>
       /// <param name="left">A.</param>
       /// <param name="right">B.</param>
@@ -510,8 +514,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Resets/Refreshes the current <see cref="FileInfo"/> instance with a new destination path.</summary>
-      internal void RefreshAfterCopyMove(string destinationPath, string destinationPathLp)
+      /// <summary>[AlphaFS] Refreshes the current <see cref="FileSystemInfo"/> instance (<see cref="DirectoryInfo"/> or <see cref="FileInfo"/>) with a new destination path.</summary>
+      internal void UpdateDestinationPath(string destinationPath, string destinationPathLp)
       {
          LongFullName = destinationPathLp;
          FullPath = null != destinationPathLp ? Path.GetRegularPathCore(LongFullName, GetFullPathOptions.None, false) : null;
@@ -535,7 +539,7 @@ namespace Alphaleonis.Win32.Filesystem
       protected void RefreshEntryInfo()
       {
          _entryInfo = File.GetFileSystemEntryInfoCore(IsDirectory, Transaction, LongFullName, true, PathFormat.LongFullPath);
-   
+
          if (_entryInfo == null)
             DataInitialised = -1;
          else
@@ -547,7 +551,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Resets the state of the file system object to uninitialized.</summary>
-      internal void Reset()
+      private void Reset()
       {
          DataInitialised = -1;
       }
@@ -574,17 +578,40 @@ namespace Alphaleonis.Win32.Filesystem
          IsDirectory = isFolder;
          Transaction = transaction;
 
-         OriginalPath = FullPath.Length == 2 && FullPath[1] == Path.VolumeSeparatorChar
-            ? Path.CurrentDirectoryPrefix
-            : path;
+         OriginalPath = FullPath.Length == 2 && FullPath[1] == Path.VolumeSeparatorChar ? Path.CurrentDirectoryPrefix : path;
 
          DisplayPath = OriginalPath.Length != 2 || OriginalPath[1] != Path.VolumeSeparatorChar
             ? Path.GetRegularPathCore(OriginalPath, GetFullPathOptions.None, false)
             : Path.CurrentDirectoryPrefix;
       }
 
+
+      internal static SafeFindFileHandle FindFirstFileCore(KernelTransaction transaction, string pathLp, NativeMethods.FINDEX_INFO_LEVELS infoLevel, NativeMethods.FINDEX_SEARCH_OPS searchOption, NativeMethods.FIND_FIRST_EX_AdditionalFlags additionalFlags, out int lastError, out NativeMethods.WIN32_FIND_DATA win32FindData)
+      {
+         var handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
+
+            // FindFirstFileEx() / FindFirstFileTransacted()
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // 2013-01-13: MSDN confirms LongPath usage.
+
+            // A trailing backslash is not allowed.
+            ? NativeMethods.FindFirstFileEx(Path.RemoveTrailingDirectorySeparator(pathLp, false), infoLevel, out win32FindData, searchOption, IntPtr.Zero, additionalFlags)
+            : NativeMethods.FindFirstFileTransacted(Path.RemoveTrailingDirectorySeparator(pathLp, false), infoLevel, out win32FindData, searchOption, IntPtr.Zero, additionalFlags, transaction.SafeHandle);
+
+         lastError = Marshal.GetLastWin32Error();
+
+         if (handle.IsInvalid)
+         {
+            handle.Close();
+            handle = null;
+         }
+
+         return handle;
+      }
+
       #endregion // AlphaFS
-      
+
       #endregion // Methods
    }
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -52,7 +52,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath)
       {
          string destinationPathLp;
-         CopyToMoveToCore(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, CopyOptions.FailIfExists, null, false, null, null, out destinationPathLp, PathFormat.RelativePath);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -77,7 +78,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, bool overwrite)
       {
          string destinationPathLp;
-         CopyToMoveToCore(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, out destinationPathLp, PathFormat.RelativePath);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -107,10 +109,11 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToCore(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, CopyOptions.FailIfExists, null, false, null, null, out destinationPathLp, pathFormat);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
-      
+
 
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file.
@@ -135,7 +138,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, bool overwrite, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToCore(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, out destinationPathLp, pathFormat);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -163,7 +167,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions)
       {
          string destinationPathLp;
-         CopyToMoveToCore(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, copyOptions, null, false, null, null, out destinationPathLp, PathFormat.RelativePath);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -190,7 +195,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToCore(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, copyOptions, null, false, null, null, out destinationPathLp, pathFormat);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -219,7 +225,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
          string destinationPathLp;
-         CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, copyOptions, null, preserveDates, null, null, out destinationPathLp, PathFormat.RelativePath);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -247,7 +254,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, copyOptions, null, preserveDates, null, null, out destinationPathLp, pathFormat);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -278,8 +286,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToCore(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
+         var cmr = CopyToMoveToCore(destinationPath, copyOptions, null, false, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -308,8 +316,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToCore(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
+         var cmr = CopyToMoveToCore(destinationPath, copyOptions, null, false, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -341,8 +349,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
+         var cmr = CopyToMoveToCore(destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -373,8 +381,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
+         var cmr = CopyToMoveToCore(destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -406,13 +414,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
       [SecurityCritical]
-      public CopyMoveResult MoveTo(string destinationPath)
+      public void MoveTo(string destinationPath)
       {
          string destinationPathLp;
-         var copyMoveResult = CopyToMoveToCore(destinationPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, PathFormat.RelativePath);
-         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
-
-         return copyMoveResult;
+         CopyToMoveToCore(destinationPath, null, MoveOptions.CopyAllowed, false, null, null, out destinationPathLp, PathFormat.RelativePath);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
       }
 
       #endregion // .NET
@@ -444,7 +450,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo MoveTo(string destinationPath, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToCore(destinationPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, null, MoveOptions.CopyAllowed, false, null, null, out destinationPathLp, pathFormat);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -474,8 +481,9 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo MoveTo(string destinationPath, MoveOptions moveOptions)
       {
          string destinationPathLp;
-         CopyToMoveToCore(destinationPath, false, null, moveOptions, null, null, out destinationPathLp, PathFormat.RelativePath);
-         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
+         CopyToMoveToCore(destinationPath, null, moveOptions, false, null, null, out destinationPathLp, PathFormat.RelativePath);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
+         return null != destinationPathLp ? new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath) : null;
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.
@@ -503,8 +511,9 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo MoveTo(string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToCore(destinationPath, false, null, moveOptions, null, null, out destinationPathLp, pathFormat);
-         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
+         CopyToMoveToCore(destinationPath, null, moveOptions, false, null, null, out destinationPathLp, pathFormat);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
+         return null != destinationPathLp ? new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath) : null;
       }
 
 
@@ -534,9 +543,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
+         // Reject DelayUntilReboot.
+         if ((moveOptions & MoveOptions.DelayUntilReboot) != 0)
+            throw new ArgumentException("Invalid MoveOptions.DelayUntilReboot for this method.");
+
          string destinationPathLp;
-         var cmr = CopyToMoveToCore(destinationPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
+         var cmr = CopyToMoveToCore(destinationPath, null, moveOptions, false, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -565,9 +578,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
+         // Reject DelayUntilReboot.
+         if ((moveOptions & MoveOptions.DelayUntilReboot) != 0)
+            throw new ArgumentException("Invalid MoveOptions.DelayUntilReboot for this method.");
+
          string destinationPathLp;
-         var cmr = CopyToMoveToCore(destinationPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
+         var cmr = CopyToMoveToCore(destinationPath, null, moveOptions, false, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         UpdateDestinationPath(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -587,9 +604,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       /// <param name="destinationPath"><para>A full path string to the destination directory</para></param>
-      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
       /// <param name="copyOptions"><para>This parameter can be <see langword="null"/>. Use <see cref="CopyOptions"/> to specify how the file is to be copied.</para></param>
       /// <param name="moveOptions"><para>This parameter can be <see langword="null"/>. Use <see cref="MoveOptions"/> that specify how the file is to be moved.</para></param>
+      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
       /// <param name="progressHandler"><para>This parameter can be <see langword="null"/>. A callback function that is called each time another portion of the file has been copied.</para></param>
       /// <param name="userProgressData"><para>This parameter can be <see langword="null"/>. The argument to be passed to the callback function.</para></param>
       /// <param name="longFullPath">[out] Returns the retrieved long full path.</param>
@@ -601,29 +618,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
-      private CopyMoveResult CopyToMoveToCore(string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
+      private CopyMoveResult CopyToMoveToCore(string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
       {
-         var destinationPathLp = Path.GetExtendedLengthPathCore(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         longFullPath = Path.GetExtendedLengthPathCore(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         longFullPath = destinationPathLp;
-
-         // Returns false when CopyMoveProgressResult is PROGRESS_CANCEL or PROGRESS_STOP.
-         return File.CopyMoveCore(false, Transaction, LongFullName, destinationPathLp, preserveDates, copyOptions, moveOptions, progressHandler, userProgressData, null, PathFormat.LongFullPath);
+         return File.CopyMoveCore(null, false, Transaction, LongFullName, longFullPath, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, PathFormat.LongFullPath);
       }
 
 
-      private void CopyToMoveToCoreRefresh(string destinationPath, string destinationPathLp)
+      /// <summary>Refreshes the current <see cref="FileInfo"/> instance with a new destination path.</summary>
+      private new void UpdateDestinationPath(string destinationPath, string destinationPathLp)
       {
-         LongFullName = destinationPathLp;
-         FullPath = Path.GetRegularPathCore(destinationPathLp, GetFullPathOptions.None, false);
-
-         OriginalPath = destinationPath;
-         DisplayPath = Path.GetRegularPathCore(OriginalPath, GetFullPathOptions.None, false);
-
          _name = Path.GetFileName(destinationPathLp, true);
 
-         // Flush any cached information about the file.
-         Reset();
+         base.UpdateDestinationPath(destinationPath, destinationPathLp);
       }
 
       #endregion // Internal Methods

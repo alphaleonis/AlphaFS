@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,25 +19,25 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace AlphaFS.UnitTest
 {
-   internal static partial class NativeMethods
+   /// <summary>This is a test class for Host and is intended to contain all Host Unit Tests.</summary>
+   public partial class HostTest
    {
-      /// <summary>Additional flags that control the search.</summary>
-      [Flags]
-      internal enum FindExAdditionalFlags
+      [TestMethod]
+      public void AlphaFS_Host_GetUncName()
       {
-         /// <summary>No additional flags used.</summary>
-         None = 0,
+         Console.WriteLine("Network.Host.GetUncName()");
 
-         /// <summary>Searches are case-sensitive.</summary>
-         CaseSensitive = 1,
+         var hostUncName = Alphaleonis.Win32.Network.Host.GetUncName();
+         Console.WriteLine("\nHost.GetUncName(): [{0}]", hostUncName);
 
-         /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.</summary>
-         /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
-         LargeFetch = 2
+         Assert.IsTrue(hostUncName.Contains(@"\"));
+
+         Assert.AreEqual(Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName, hostUncName);
       }
    }
 }

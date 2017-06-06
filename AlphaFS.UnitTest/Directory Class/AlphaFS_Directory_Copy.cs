@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -82,7 +82,7 @@ namespace AlphaFS.UnitTest
          Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory(false);
          Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory(true);
       }
-      
+
 
       [TestMethod]
       public void AlphaFS_Directory_Copy_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
@@ -131,6 +131,8 @@ namespace AlphaFS.UnitTest
 
             var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.CopyOptions.FailIfExists);
 
+            UnitTestConstants.Dump(copyResult, -12);
+
 
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
@@ -141,12 +143,13 @@ namespace AlphaFS.UnitTest
 
             // Test against copyResult results.
 
-            UnitTestConstants.Dump(copyResult, -12);
-            
             Assert.AreEqual(sourceTotal, copyResult.TotalFolders + copyResult.TotalFiles, "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, copyResult.TotalFiles, "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, copyResult.TotalBytes, "The total file size does not match.");
-
+            Assert.IsTrue(copyResult.IsCopy);
+            Assert.IsFalse(copyResult.IsMove);
+            Assert.IsTrue(copyResult.IsDirectory);
+            Assert.IsFalse(copyResult.IsFile);
 
             Assert.IsTrue(System.IO.Directory.Exists(folderSrc.FullName), "The original directory does not exist, but is expected to.");
          }
@@ -311,7 +314,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      
+
       private void Directory_Copy_CatchNotSupportedException_PathContainsColon(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -442,7 +445,7 @@ namespace AlphaFS.UnitTest
             var dirSecurity = dirInfo.GetAccessControl();
             dirSecurity.AddAccessRule(rule);
             dirInfo.SetAccessControl(dirSecurity);
-            
+
 
             var gotException = false;
             try

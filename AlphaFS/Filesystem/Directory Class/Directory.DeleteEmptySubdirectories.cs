@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DeleteEmptySubdirectoriesCore(null, null, path, recursive, false, pathFormat);
       }
-      
+
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -113,8 +113,6 @@ namespace Alphaleonis.Win32.Filesystem
          DeleteEmptySubdirectoriesCore(null, null, path, recursive, ignoreReadOnly, pathFormat);
       }
 
-
-      #region Transactional
 
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
       /// <exception cref="ArgumentException"/>
@@ -166,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DeleteEmptySubdirectoriesCore(null, transaction, path, recursive, false, pathFormat);
       }
-      
+
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -204,70 +202,7 @@ namespace Alphaleonis.Win32.Filesystem
          DeleteEmptySubdirectoriesCore(null, transaction, path, recursive, ignoreReadOnly, pathFormat);
       }
 
-      #endregion // Transactional
 
-
-      #region Internal Methods
-
-      /// <summary>[AlphaFS] Delete empty subdirectories from the specified directory.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="fsEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fsEntryInfo"/> or <paramref name="path"/>, not both.</param>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the directory to remove empty subdirectories from. Use either <paramref name="path"/> or <paramref name="fsEntryInfo"/>, not both.</param>
-      /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
-      /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
-      /// <param name="initialize">When <see langword="true"/> indicates the method is called externally.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      internal static void DeleteEmptySubdirectoriesCore0(FileSystemEntryInfo fsEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool initialize, PathFormat pathFormat)
-      {
-         #region Setup
-
-         if (fsEntryInfo == null)
-         {
-            if (pathFormat == PathFormat.RelativePath)
-               Path.CheckSupportedPathFormat(path, true, true);
-
-            if (!File.ExistsCore(true, transaction, path, pathFormat))
-               NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
-
-            fsEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck) , false, pathFormat);
-
-            if (fsEntryInfo == null)
-               return;
-         }
-         
-         #endregion // Setup
-
-
-         // Ensure path is a directory.
-         if (!fsEntryInfo.IsDirectory)
-            throw new IOException(string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, fsEntryInfo.LongFullPath));
-
-
-         var dirEnumOptions = DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.SkipReparsePoints;
-
-         if (recursive)
-            dirEnumOptions |= DirectoryEnumerationOptions.Recursive;
-
-
-         foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, dirEnumOptions, PathFormat.LongFullPath))
-            DeleteEmptySubdirectoriesCore0(fsei, transaction, null, recursive, ignoreReadOnly, false, PathFormat.LongFullPath);
-
-
-         if (!EnumerateFileSystemEntryInfosCore<string>(transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath).Any())
-         {
-            // Prevent deleting path itself.
-            if (!initialize)
-               DeleteDirectoryCore(fsEntryInfo, transaction, null, false, ignoreReadOnly, true, PathFormat.LongFullPath);
-         }
-      }
 
 
       /// <summary>[AlphaFS] Delete empty subdirectories from the specified directory.</summary>
@@ -327,7 +262,5 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
       }
-
-      #endregion // Internal Methods
    }
 }

@@ -288,7 +288,7 @@
     <Compile Include="Filesystem\Enumerations\DosDeviceAttributes.cs" />
     <Compile Include="Filesystem\Enumerations\FileInfoByHandleClass.cs" />
     <Compile Include="Filesystem\Enumerations\FinalPathFormats.cs" />
-    <Compile Include="Filesystem\Enumerations\FindExAdditionalFlags.cs" />
+    <Compile Include="Filesystem\Enumerations\FIND_FIRST_EX_AdditionalFlags.cs" />
     <Compile Include="Filesystem\Enumerations\FINDEX_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Enumerations\ErrorMode.cs" />
     <Compile Include="Filesystem\Enumerations\ReparsePointTag.cs" />
@@ -529,7 +529,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

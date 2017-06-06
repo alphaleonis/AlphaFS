@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,6 +34,13 @@ namespace AlphaFS.UnitTest
       {
          Directory_DeleteEmptySubdirectories(false);
          Directory_DeleteEmptySubdirectories(true);
+
+         //System.IO.Directory.CreateDirectory(@"c:\temp2\test\Foo");
+         //System.IO.Directory.CreateDirectory(@"c:\temp2\test\Bar");
+         //System.IO.Directory.CreateDirectory(@"c:\temp2\test\Foo\FooFoo");
+         //System.IO.Directory.CreateDirectory(@"c:\temp2\test\Foo\FooBar");
+
+         //Alphaleonis.Win32.Filesystem.Directory.DeleteEmptySubdirectories(@"c:\temp2\test", true);
       }
 
 
@@ -47,12 +55,12 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.DeleteEmptySubdirectories"))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
             Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
 
-            
+
             const int maxDepth = 10;
             const int totalDirectories = (maxDepth * maxDepth) + maxDepth;          // maxDepth = 10: 110 directories and 110 files.
             const int emptyDirectories = (maxDepth * maxDepth) / 2;                 // 50 empty directories.

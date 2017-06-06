@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -22,6 +22,7 @@
 using Microsoft.Win32.SafeHandles;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
 
@@ -37,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The file size, in bytes.</returns>      
       [SecurityCritical]
       public static long GetSize(string path, PathFormat pathFormat)
-      {         
+      {
          return GetSizeCore(null, null, path, pathFormat);
       }
 
@@ -84,21 +85,24 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>Retrieves the file size, in bytes to store a specified file.</summary>
-      /// <remarks>Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</remarks>
+      /// <summary>Retrieves the file size, in bytes to store a specified file.
+      /// <remarks>Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.
+      /// </remarks>
+      /// </summary>
+      /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
+      /// <exception/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="safeHandle">The <see cref="SafeFileHandle"/> to the file.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       internal static long GetSizeCore(KernelTransaction transaction, SafeFileHandle safeHandle, string path, PathFormat pathFormat)
       {
-         bool callerHandle = safeHandle != null;
+         var callerHandle = null != safeHandle;
          if (!callerHandle)
          {
-            string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+            var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
             safeHandle = CreateFileCore(transaction, pathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, PathFormat.LongFullPath);
          }
@@ -108,12 +112,16 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            NativeMethods.GetFileSizeEx(safeHandle, out fileSize);
+            var success = NativeMethods.GetFileSizeEx(safeHandle, out fileSize);
+            var lastError = Marshal.GetLastWin32Error();
+
+            if (!success && lastError != Win32Errors.ERROR_SUCCESS)
+               NativeError.ThrowException(lastError, path);
          }
          finally
          {
             // Handle is ours, dispose.
-            if (!callerHandle && safeHandle != null)
+            if (!callerHandle && null != safeHandle)
                safeHandle.Close();
          }
 
