@@ -25,6 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
+      public static readonly bool IsAtLeastWindows8 = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows8);
       public static readonly bool IsAtLeastWindows7 = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows7);
       public static readonly bool IsAtLeastWindowsVista = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.WindowsVista);
 

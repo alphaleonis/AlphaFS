@@ -172,8 +172,8 @@ namespace Alphaleonis.Win32.Filesystem
       internal static string GetFullPathCore(KernelTransaction transaction, string path, GetFullPathOptions options)
       {
          if (path != null)
-            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
-               return path;
+            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase) || path.StartsWith(SubstitutePrefix, StringComparison.OrdinalIgnoreCase))
+               return path; //skip the special paths recognised by Windows kernel only
          
          if (options != GetFullPathOptions.None)
          {

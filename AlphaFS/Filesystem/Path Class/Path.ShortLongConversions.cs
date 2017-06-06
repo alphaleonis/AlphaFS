@@ -146,7 +146,8 @@ namespace Alphaleonis.Win32.Filesystem
          // ".", "C:"
          if (path.Length <= 2 ||
              path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) ||
-             path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
+             path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase) ||
+             path.StartsWith(SubstitutePrefix, StringComparison.OrdinalIgnoreCase))
             return path;
 
          if (path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase))
