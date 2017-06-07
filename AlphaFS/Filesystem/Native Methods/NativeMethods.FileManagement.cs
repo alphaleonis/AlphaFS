@@ -124,10 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode, EntryPoint = "CreateFileMappingW"), SuppressUnmanagedCodeSecurity]
       internal static extern SafeFileHandle CreateFileMapping(SafeFileHandle hFile, SafeHandle lpSecurityAttributes, [MarshalAs(UnmanagedType.U4)] uint flProtect, [MarshalAs(UnmanagedType.U4)] uint dwMaximumSizeHigh, [MarshalAs(UnmanagedType.U4)] uint dwMaximumSizeLow, [MarshalAs(UnmanagedType.LPWStr)] string lpName);
 
-      /// <summary>
-      ///   Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only
-      ///   for files, not directories.
-      /// </summary>
+      /// <summary>Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only].</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only].</remarks>
       /// <returns>
@@ -139,10 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool CreateHardLink([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, IntPtr lpSecurityAttributes);
 
-      /// <summary>
-      ///   Establishes a hard link between an existing file and a new file as a transacted operation. This function is only supported on the
-      ///   NTFS file system, and only for files, not directories.
-      /// </summary>
+      /// <summary>Establishes a hard link between an existing file and a new file as a transacted operation. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only].</remarks>
       /// <returns>
