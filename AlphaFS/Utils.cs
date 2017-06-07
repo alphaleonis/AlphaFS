@@ -25,34 +25,30 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
 
 namespace Alphaleonis
 {
    internal static class Utils
    {
-      #region EnumMemberToList
-
+      [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
       public static IEnumerable<T> EnumMemberToList<T>()
       {
-         Type enumType = typeof(T);
+         var enumType = typeof(T);
 
          // Can't use generic type constraints on value types, so have to do check like this.
          if (enumType.BaseType != typeof(Enum))
-            throw new ArgumentException("T must be of type System.Enum");
+            throw new ArgumentException("T must be of type System.Enum", "T");
 
          //Array enumValArray = Enum.GetValues(enumType);
          //List<T> enumValList = new List<T>(enumValArray.Length);
-         IOrderedEnumerable<T> enumValArray = Enum.GetValues(enumType).Cast<T>().OrderBy(e => e.ToString());
+         var enumValArray = Enum.GetValues(enumType).Cast<T>().OrderBy(e => e.ToString());
          var enumValList = new List<T>(enumValArray.Count());
 
-         enumValList.AddRange(enumValArray.Select(val => (T)Enum.Parse(enumType, val.ToString())));
+         enumValList.AddRange(enumValArray.Select(val => (T) Enum.Parse(enumType, val.ToString())));
+
          return enumValList;
       }
 
-      #endregion // EnumMemberToList
-
-      #region GetEnumDescription
 
       /// <summary>Gets an attribute on an enum field value.</summary>
       /// <returns>The description belonging to the enum option, as a string</returns>
@@ -60,14 +56,11 @@ namespace Alphaleonis
       [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       public static string GetEnumDescription(Enum enumValue)
       {
-         FieldInfo fi = enumValue.GetType().GetField(enumValue.ToString());
+         var fi = enumValue.GetType().GetField(enumValue.ToString());
          var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
          return attributes.Length > 0 ? attributes[0].Description : enumValue.ToString();
       }
 
-      #endregion // GetEnumDescription
-
-      #region IsNullOrWhiteSpace
 
       /// <summary>Indicates whether a specified string is null, empty, or consists only of white-space characters.</summary>
       /// <returns><see langword="true"/> if the <paramref name="value"/> parameter is null or <see cref="string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
@@ -75,13 +68,11 @@ namespace Alphaleonis
       public static bool IsNullOrWhiteSpace(string value)
       {
 #if NET35
-         if (value != null)
+         if (null != value)
          {
-            for (int index = 0; index < value.Length; ++index)
-            {
+            for (int index = 0, l = value.Length; index < l; ++index)
                if (!char.IsWhiteSpace(value[index]))
                   return false;
-            }
          }
 
          return true;
@@ -90,32 +81,26 @@ namespace Alphaleonis
 #endif
       }
 
-      #endregion // IsNullOrWhiteSpace
-
-      #region UnitSizeToText
 
       /// <summary>Converts a number of type T to string, suffixed with a unit size.</summary>
       public static string UnitSizeToText<T>(T numberOfBytes)
       {
-         string[] sizeFormats =
-         {
-            "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"
-         };
-
+         const int kb = 1024;
+         string[] sizeFormats = {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
 
          var i = 0;
          var bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
 
-         while (i < sizeFormats.Length && bytes > 1024)
+         while (i < sizeFormats.Length && bytes > kb)
          {
             i++;
-            bytes /= 1024;
+            bytes /= kb;
          }
-
 
          // Will return "512 B" instead of "512,00 B".
          return string.Format(CultureInfo.InvariantCulture, i == 0 ? "{0:0} {1}" : "{0:0.##} {1}", bytes, sizeFormats[i]);
       }
+
 
       /// <summary>Calculates a percentage value.</summary>
       /// <param name="currentValue"/>
@@ -123,9 +108,7 @@ namespace Alphaleonis
       /// <param name="maximumValue"/>
       public static double PercentCalculate(double currentValue, double minimumValue, double maximumValue)
       {
-         return (currentValue < 0 || maximumValue <= 0) ? 0 : currentValue * 100 / (maximumValue - minimumValue);
+         return currentValue < 0 || maximumValue <= 0 ? 0 : currentValue * 100 / (maximumValue - minimumValue);
       }
-
-      #endregion // UnitSizeToText
    }
 }

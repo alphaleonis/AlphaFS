@@ -269,7 +269,7 @@ namespace Alphaleonis.Win32.Filesystem
                return GetFullPathCore(transaction, path, GetFullPathOptions.AsLongPath | options);
 
             default:
-               throw new ArgumentException("Invalid value for " + typeof(PathFormat).Name + ": " + pathFormat);
+               throw new ArgumentException("Invalid value: " + pathFormat, "pathFormat");
          }
       }
 

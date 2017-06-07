@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
                handle.Close();
 
             if (throwException)
-               throw new ArgumentException(Resources.Handle_Is_Invalid);
+               throw new ArgumentException(Resources.Handle_Is_Invalid, "handle");
 
             return false;
          }
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
                handle.Close();
 
             if (throwException)
-               throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Handle_Is_Invalid_Win32Error, lastError));
+               throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Handle_Is_Invalid_Win32Error, lastError), "handle");
 
             return false;
          }

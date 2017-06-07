@@ -140,7 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                // MSDN: .NET 3.5+: ArgumentException: FileSystemInfo().Attributes
                case Win32Errors.ERROR_INVALID_PARAMETER:
-                  throw new ArgumentException(Resources.Invalid_File_Attribute);
+                  throw new ArgumentException(Resources.Invalid_File_Attribute, "fileAttributes");
 
 
                case Win32Errors.ERROR_PATH_NOT_FOUND:

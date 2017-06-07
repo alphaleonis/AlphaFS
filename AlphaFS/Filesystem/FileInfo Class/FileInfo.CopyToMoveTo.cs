@@ -545,7 +545,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          // Reject DelayUntilReboot.
          if ((moveOptions & MoveOptions.DelayUntilReboot) != 0)
-            throw new ArgumentException("Invalid MoveOptions.DelayUntilReboot for this method.");
+            throw new ArgumentException("The DelayUntilReboot flag is invalid for this method.", "moveOptions");
 
          string destinationPathLp;
          var cmr = CopyToMoveToCore(destinationPath, null, moveOptions, false, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
@@ -580,7 +580,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          // Reject DelayUntilReboot.
          if ((moveOptions & MoveOptions.DelayUntilReboot) != 0)
-            throw new ArgumentException("Invalid MoveOptions.DelayUntilReboot for this method.");
+            throw new ArgumentException("The DelayUntilReboot flag is invalid for this method.", "moveOptions");
 
          string destinationPathLp;
          var cmr = CopyToMoveToCore(destinationPath, null, moveOptions, false, progressHandler, userProgressData, out destinationPathLp, pathFormat);

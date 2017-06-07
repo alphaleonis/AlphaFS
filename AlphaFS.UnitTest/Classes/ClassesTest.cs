@@ -316,7 +316,7 @@ namespace AlphaFS.UnitTest
       #region Filesystem_Class_ByHandleFileInfo
 
       [TestMethod]
-      public void AlphaFS_Class_ByHandleFileInfo()
+      public void AlphaFS_ByHandleFileInfo()
       {
          Console.WriteLine("Class Filesystem.ByHandleFileInfo()");
 
@@ -329,7 +329,7 @@ namespace AlphaFS.UnitTest
       #region Filesystem_Class_DiskSpaceInfo
 
       [TestMethod]
-      public void AlphaFS_Class_DiskSpaceInfo()
+      public void AlphaFS_DiskSpaceInfo()
       {
          Console.WriteLine("Class Filesystem.DiskSpaceInfo()");
 
@@ -342,7 +342,7 @@ namespace AlphaFS.UnitTest
       #region Filesystem_Class_DriveInfo
 
       [TestMethod]
-      public void AlphaFS_Class_DriveInfo()
+      public void AlphaFS_DriveInfo()
       {
          Console.WriteLine("Class Filesystem.DriveInfo()");
 
@@ -360,7 +360,7 @@ namespace AlphaFS.UnitTest
       #region Network_Class_DfsXxx
 
       [TestMethod]
-      public void AlphaFS_Class_Network_DfsXxx()
+      public void AlphaFS_Network_DfsXxx()
       {
          Console.WriteLine("Class Network.DfsInfo()");
          Console.WriteLine("Class Network.DfsStorageInfo()");
@@ -378,7 +378,7 @@ namespace AlphaFS.UnitTest
       #region Class_OperatingSystem
 
       [TestMethod]
-      public void AlphaFS_Class_OperatingSystem()
+      public void AlphaFS_OperatingSystem()
       {
          Console.WriteLine("VersionName          : [{0}]", OperatingSystem.VersionName);
          Console.WriteLine("OsVersion            : [{0}]", OperatingSystem.OSVersion);

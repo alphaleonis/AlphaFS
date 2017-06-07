@@ -200,11 +200,11 @@ namespace Alphaleonis.Win32.Filesystem
          if (handle.IsInvalid)
          {
             handle.Close();
-            throw new ArgumentException(Resources.Handle_Is_Invalid);
+            throw new ArgumentException(Resources.Handle_Is_Invalid, "handle");
          }
 
          if (handle.IsClosed)
-            throw new ArgumentException(Resources.Handle_Is_Closed);
+            throw new ArgumentException(Resources.Handle_Is_Closed, "handle");
 
 
          SafeFileHandle = handle;
@@ -345,7 +345,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new NotSupportedException("Stream does not support reading");
 
          if (offset + count > buffer.Length)
-            throw new ArgumentException("The sum of offset and count is larger than the size of the buffer.");
+            throw new ArgumentException("The sum of offset and count is larger than the size of the buffer.", "offset");
 
          if (offset < 0)
             throw new ArgumentOutOfRangeException("offset", offset, Resources.Negative_Offset);
@@ -414,7 +414,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentOutOfRangeException("count", count, Resources.Negative_Count);
 
          if (offset + count > buffer.Length)
-            throw new ArgumentException(Resources.Buffer_Not_Large_Enough);
+            throw new ArgumentException(Resources.Buffer_Not_Large_Enough, "offset");
 
 
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle(count))

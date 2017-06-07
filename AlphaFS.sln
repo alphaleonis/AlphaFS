@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{478C6563-C321-4AB5-9D4D-ABFC9C88EBF0}"
 	ProjectSection(SolutionItems) = preProject
@@ -29,6 +27,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PowerShell", "PowerShell", "{9D8AAD55-4083-454F-BBA9-1AB58D2B5FB9}"
 	ProjectSection(SolutionItems) = preProject
 		PowerShell\Enumerate-FileSystemEntryInfos.ps1 = PowerShell\Enumerate-FileSystemEntryInfos.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0C6848F4-3E55-423F-BE88-C8A72009927A}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
 Global

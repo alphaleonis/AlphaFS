@@ -26,12 +26,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AlphaFS.UnitTest
 {
    [TestClass]
-   public class Crc32Test
+   public class CrcTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Class_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString()
+      public void AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString()
       {
          using (var crc32 = new Alphaleonis.Win32.Security.Crc32())
          {
@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Class_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString2()
+      public void AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString2()
       {
          using (var crc32 = new Alphaleonis.Win32.Security.Crc32())
          {
@@ -58,6 +58,38 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tCRC32: {0}", hash);
 
             Assert.AreEqual("85cd3815", hash);
+         }
+      }
+
+
+      [TestMethod]
+      public void AlphaFS_Crc64Iso_StaticDefaultSeedAndPolynomialWithShortAsciiString()
+      {
+         using (var crc64 = new Alphaleonis.Win32.Security.Crc64())
+         {
+            var text = UnitTestConstants.StreamArrayContent[0];
+            var hash = crc64.ComputeHash(System.Text.Encoding.ASCII.GetBytes(text)).Aggregate(string.Empty, (current, b) => current + b.ToString("x2").ToLower());
+
+            Console.WriteLine("Input text: {0}", text);
+            Console.WriteLine("\n\tCRC64: {0}", hash);
+
+            Assert.AreEqual("724293319a37353f", hash);
+         }
+      }
+
+
+      [TestMethod]
+      public void AlphaFS_Crc64Iso_StaticDefaultSeedAndPolynomialWithShortAsciiString2()
+      {
+         using (var crc64 = new Alphaleonis.Win32.Security.Crc64())
+         {
+            var text = UnitTestConstants.StreamArrayContent[1];
+            var hash = crc64.ComputeHash(System.Text.Encoding.ASCII.GetBytes(text)).Aggregate(string.Empty, (current, b) => current + b.ToString("x2").ToLower());
+
+            Console.WriteLine("Input text: {0}", text);
+            Console.WriteLine("\n\tCRC64: {0}", hash);
+
+            Assert.AreEqual("4553d9246a204d67", hash);
          }
       }
    }

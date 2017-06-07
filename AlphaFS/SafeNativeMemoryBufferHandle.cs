@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32
             throw new ArgumentOutOfRangeException("length", Resources.Negative_Length);
 
          if (destinationOffset + length > destination.Length)
-            throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough);
+            throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough, "length");
 
          if (length > Capacity)
             throw new ArgumentOutOfRangeException("length", Resources.Source_Offset_And_Length_Outside_Bounds);
@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32
             throw new ArgumentOutOfRangeException("length", Resources.Negative_Length);
 
          if (destinationOffset + length > destination.Length)
-            throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough);
+            throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough, "length");
 
          if (length > Capacity)
             throw new ArgumentOutOfRangeException("length", Resources.Source_Offset_And_Length_Outside_Bounds);

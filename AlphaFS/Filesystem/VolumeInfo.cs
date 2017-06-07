@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          if (Utils.IsNullOrWhiteSpace(volumeName))
-            throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")");
+            throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")", "volumeName");
 
          Name = Path.AddTrailingDirectorySeparator(volumeName, false);
 

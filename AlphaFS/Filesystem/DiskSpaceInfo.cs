@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
             DriveName = Path.GetPathRoot(drivePath, false);
 
          if (Utils.IsNullOrWhiteSpace(DriveName))
-            throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")");
+            throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")", "drivePath");
 
          // MSDN:
          // If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").

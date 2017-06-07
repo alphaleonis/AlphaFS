@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Security
             throw new ArgumentOutOfRangeException("length", Resources.Negative_Length);
 
          if (destinationOffset + length > destination.Length)
-            throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough);
+            throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough, "length");
 
          Marshal.Copy(handle, destination, destinationOffset, length);
       }

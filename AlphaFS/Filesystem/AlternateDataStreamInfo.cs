@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (obj is AlternateDataStreamInfo)
          {
-            AlternateDataStreamInfo other = (AlternateDataStreamInfo) obj;
+            var other = (AlternateDataStreamInfo) obj;
             return StreamName.Equals(other.StreamName, StringComparison.OrdinalIgnoreCase) && Size.Equals(other.Size);
          }
 
@@ -113,22 +113,25 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Private Methods
 
-      private static string ParseStreamName(string input)
+      private static string ParseStreamName(string streamName)
       {
-         if (input == null || input.Length < 2)
+         if (null == streamName || streamName.Length < 2)
             return string.Empty;
 
-         if (input[0] != Path.StreamSeparatorChar)
-            throw new ArgumentException(Resources.Invalid_Stream_Name);
+         if (streamName[0] != Path.StreamSeparatorChar)
+            throw new ArgumentException(Resources.Invalid_Stream_Name, "streamName");
 
-         var sb = new StringBuilder();
-         for (int i = 1; i < input.Length; i++)
+         
+         var sb = new StringBuilder(streamName.Length);
+
+         for (int i = 1, l = streamName.Length; i < l; i++)
          {
-            if (input[i] == Path.StreamSeparatorChar)
+            if (streamName[i] == Path.StreamSeparatorChar)
                break;
 
-            sb.Append(input[i]);
+            sb.Append(streamName[i]);
          }
+
 
          return sb.ToString();
       }
