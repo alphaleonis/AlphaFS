@@ -283,11 +283,13 @@ namespace Alphaleonis.Win32.Filesystem
             if (pathFormat == PathFormat.RelativePath)
                Path.CheckSupportedPathFormat(path, true, true);
 
-            fsEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator), continueOnNotFound, pathFormat);
+            fsEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator), continueOnNotFound, pathFormat);
 
             if (fsEntryInfo == null)
                return;
          }
+
+         pathFormat = PathFormat.LongFullPath;
 
          #endregion // Setup
 
@@ -299,20 +301,20 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var dirs = new Stack<string>(1000);
 
-            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.Recursive, PathFormat.LongFullPath))
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.Recursive, pathFormat))
             {
                if (fsei.IsDirectory)
                {
                   // Check to see if this is a mount point, and unmount it.
                   // Now it is safe to delete the actual directory.
                   if (fsei.IsMountPoint)
-                     Volume.DeleteVolumeMountPointCore(fsei.LongFullPath, false, true);
+                     Volume.DeleteVolumeMountPointCore(transaction, fsei.LongFullPath, false, true, pathFormat);
 
                   dirs.Push(fsei.LongFullPath);
                }
 
                else
-                  File.DeleteFileCore(transaction, fsei.LongFullPath, ignoreReadOnly, PathFormat.LongFullPath);
+                  File.DeleteFileCore(transaction, fsei.LongFullPath, ignoreReadOnly, pathFormat);
             }
 
 
@@ -324,7 +326,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Check to see if this is a mount point, and unmount it.
          // Now it is safe to delete the actual directory.
          if (fsEntryInfo.IsMountPoint)
-            Volume.DeleteVolumeMountPointCore(fsEntryInfo.LongFullPath, false, true);
+            Volume.DeleteVolumeMountPointCore(transaction, fsEntryInfo.LongFullPath, false, true, pathFormat);
 
          DeleteDirectoryCore(transaction, fsEntryInfo.LongFullPath, ignoreReadOnly, continueOnNotFound);
       }
