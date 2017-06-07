@@ -132,7 +132,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region QueryAllDosDevices
 
       /// <summary>Retrieves a list of all existing MS-DOS device names.</summary>
-      /// <returns>An <see cref="IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>      
+      /// <returns>An <see cref="IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>
       [SecurityCritical]
       public static IEnumerable<string> QueryAllDosDevices()
       {
@@ -145,7 +145,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   "sort". In that case a sorted list of all existing MS-DOS device names is returned. This parameter can be <see langword="null"/>.
       ///   In that case, the <see cref="QueryDosDevice"/> function will store a list of all existing MS-DOS device names into the buffer.
       /// </param>
-      /// <returns>An <see cref="IEnumerable{String}"/> with or more existing MS-DOS device names.</returns>      
+      /// <returns>An <see cref="IEnumerable{String}"/> with or more existing MS-DOS device names.</returns>
       [SecurityCritical]
       public static IEnumerable<string> QueryAllDosDevices(string deviceName)
       {
@@ -167,7 +167,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options">
       ///   (Optional, default: <see langword="false"/>) If options[0] = <see langword="true"/> a sorted list will be returned.
       /// </param>
-      /// <returns>An <see cref="IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>      
+      /// <returns>An <see cref="IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>
       [SecurityCritical]
       public static IEnumerable<string> QueryDosDevice(string deviceName, params string[] options)
       {
@@ -330,7 +330,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="drivePath">
       ///   A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\".
       /// </param>
-      /// <returns>A <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>      
+      /// <returns>A <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>
       [SecurityCritical]
       public static DiskSpaceInfo GetDiskFreeSpace(string drivePath)
       {
@@ -349,7 +349,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see langword="null"/> gets both size- and disk cluster information. <see langword="true"/> Get only disk cluster information,
       ///   <see langword="false"/> Get only size information.
       /// </param>
-      /// <returns>A <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>      
+      /// <returns>A <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>
       [SecurityCritical]
       public static DiskSpaceInfo GetDiskFreeSpace(string drivePath, bool? spaceInfoType)
       {
@@ -420,7 +420,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteVolumeMountPoint(string volumeMountPoint)
       {
-         DeleteVolumeMountPointCore(volumeMountPoint, false, false);
+         DeleteVolumeMountPointCore(null, volumeMountPoint, false, false, PathFormat.RelativePath);
       }
 
       #endregion // DeleteVolumeMountPoint
@@ -433,7 +433,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <param name="volumeGuid">A <see cref="string"/> containing the volume <see cref="Guid"/>.</param>
-      /// <returns>An enumerable collection of <see cref="String"/> of all volume mount points on the specified volume.</returns>      
+      /// <returns>An enumerable collection of <see cref="String"/> of all volume mount points on the specified volume.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumeMountPoints(string volumeGuid)
       {
@@ -508,7 +508,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <param name="volumeGuid">A volume <see cref="Guid"/> path: \\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\.</param>
-      /// <returns>An enumerable collection of <see cref="String"/> containing the path names for the specified volume.</returns>      
+      /// <returns>An enumerable collection of <see cref="String"/> containing the path names for the specified volume.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumePathNames(string volumeGuid)
       {
@@ -562,7 +562,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnumerateVolumes
 
       /// <summary>Returns an enumerable collection of <see cref="String"/> volumes on the computer.</summary>
-      /// <returns>An enumerable collection of <see cref="String"/> volume names on the computer.</returns>      
+      /// <returns>An enumerable collection of <see cref="String"/> volume names on the computer.</returns>
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumes()
@@ -763,7 +763,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="volumeMountPoint">
       ///   The path of a mounted folder (for example, "Y:\MountX\") or a drive letter (for example, "X:\").
       /// </param>
-      /// <returns>The unique volume name of the form: "\\?\Volume{GUID}\".</returns>      
+      /// <returns>The unique volume name of the form: "\\?\Volume{GUID}\".</returns>
       [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
       [SecurityCritical]
       public static string GetVolumeGuid(string volumeMountPoint)
@@ -842,7 +842,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves information about the file system and volume associated with the specified root file or directorystream.</summary>
       /// <param name="volumePath">A path that contains the root directory.</param>
-      /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>      
+      /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
       [SecurityCritical]
       public static VolumeInfo GetVolumeInfo(string volumePath)
       {
@@ -851,7 +851,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves information about the file system and volume associated with the specified root file or directorystream.</summary>
       /// <param name="volumeHandle">An instance to a <see cref="SafeFileHandle"/> handle.</param>
-      /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>      
+      /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
       [SecurityCritical]
       public static VolumeInfo GetVolumeInfo(SafeFileHandle volumeHandle)
       {
@@ -1020,8 +1020,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region SetVolumeMountPoint
 
       /// <summary>Associates a volume with a Drive letter or a directory on another volume.</summary>
-      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeMountPoint">
       ///   The user-mode path to be associated with the volume. This may be a Drive letter (for example, "X:\")
       ///   or a directory on another volume (for example, "Y:\MountX\").
@@ -1074,6 +1074,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internal Methods
 
       /// <summary>Defines, redefines, or deletes MS-DOS device names.</summary>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="isDefine">
       ///   <see langword="true"/> defines a new MS-DOS device. <see langword="false"/> deletes a previously defined MS-DOS device.
@@ -1093,8 +1094,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <see langword="true"/>,
       ///   <paramref name="targetPath"/> must be the same path used to create the mapping.
       /// </param>
-      ///
-      /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>      
       [SecurityCritical]
       internal static void DefineDosDeviceCore(bool isDefine, string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
       {
@@ -1127,25 +1126,28 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      /// <summary>Deletes a Drive letter or mounted folder.</summary>
+      /// <summary>Deletes a Drive letter or mounted folder.
       /// <remarks>
       ///   <para>It's not an error to attempt to unmount a volume from a volume mount point when there is no volume actually mounted at that volume mount point.</para>
       ///   <para>Deleting a mounted folder does not cause the underlying directory to be deleted.</para>
       /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="volumeMountPoint">The Drive letter or mounted folder to be deleted. For example, X:\ or Y:\MountX\.</param>
-      /// <param name="continueOnException">
-      ///   <see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.
-      /// </param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       /// <param name="continueIfJunction"><see langword="true"/> suppress an exception due to this mount point being a Junction.</param>
-      /// <returns>If completed successfully returns <see cref="Win32Errors.ERROR_SUCCESS"/>, otherwise the last error number.</returns>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static int DeleteVolumeMountPointCore(string volumeMountPoint, bool continueOnException, bool continueIfJunction)
+      internal static void DeleteVolumeMountPointCore(KernelTransaction transaction, string volumeMountPoint, bool continueOnException, bool continueIfJunction, PathFormat pathFormat)
       {
-         if (Utils.IsNullOrWhiteSpace(volumeMountPoint))
-            throw new ArgumentNullException("volumeMountPoint");
+         if (pathFormat != PathFormat.LongFullPath)
+            Path.CheckSupportedPathFormat(volumeMountPoint, true, true);
 
-         var lastError = (int)Win32Errors.ERROR_SUCCESS;
+         volumeMountPoint = Path.GetExtendedLengthPathCore(transaction, volumeMountPoint, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
+
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
@@ -1154,22 +1156,20 @@ namespace Alphaleonis.Win32.Filesystem
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-            if (!NativeMethods.DeleteVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeMountPoint, false)))
-               lastError = Marshal.GetLastWin32Error();
+            var success = NativeMethods.DeleteVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeMountPoint, false));
 
-            if (lastError != Win32Errors.ERROR_SUCCESS && !continueOnException)
+            var lastError = Marshal.GetLastWin32Error();
+            if (!success && !continueOnException)
             {
-               if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND)
-                  lastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
+               if (lastError == Win32Errors.ERROR_INVALID_PARAMETER && continueIfJunction)
+                  return;
 
-               if (continueIfJunction && lastError == Win32Errors.ERROR_INVALID_PARAMETER)
-                  return lastError;
+               if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND)
+                  lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
 
                NativeError.ThrowException(lastError, volumeMountPoint);
             }
          }
-
-         return lastError;
       }
 
       #endregion // Internal Methods

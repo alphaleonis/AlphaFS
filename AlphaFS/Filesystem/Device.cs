@@ -242,6 +242,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetLinkTargetInfoCore
 
       /// <summary>Get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
+      /// <exception cref="UnrecognizedReparsePointException"/>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]
       [SecurityCritical]
       internal static LinkTargetInfo GetLinkTargetInfoCore(SafeFileHandle safeHandle)
@@ -258,9 +259,11 @@ namespace Alphaleonis.Win32.Filesystem
                // DeviceIoControlFileDevice.FileSystem = 9
                // FsctlGetReparsePoint = (DeviceIoControlFileDevice.FileSystem << 16) | (42 << 2) | DeviceIoControlMethod.Buffered | (0 << 14)
 
-               if (!NativeMethods.DeviceIoControl(safeHandle, ((9 << 16) | (42 << 2) | 0 | (0 << 14)), IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero))
+               var success = NativeMethods.DeviceIoControl(safeHandle, (9 << 16) | (42 << 2) | 0 | (0 << 14), IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+
+               var lastError = Marshal.GetLastWin32Error();
+               if (!success)
                {
-                  var lastError = Marshal.GetLastWin32Error();
                   switch ((uint) lastError)
                   {
                      case Win32Errors.ERROR_MORE_DATA:
@@ -275,18 +278,20 @@ namespace Alphaleonis.Win32.Filesystem
                         break;
                   }
                }
+
                else
                   break;
             }
 
 
-            var marshalReparseBuffer = (int) Marshal.OffsetOf(typeof(NativeMethods.ReparseDataBufferHeader), "data");
+            const string dataText = "data";
+            var marshalReparseBuffer = (int) Marshal.OffsetOf(typeof(NativeMethods.ReparseDataBufferHeader), dataText);
 
             var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>(0);
 
             var dataOffset = (int) (marshalReparseBuffer + (header.ReparseTag == ReparsePointTag.MountPoint
-               ? Marshal.OffsetOf(typeof (NativeMethods.MountPointReparseBuffer), "data")
-               : Marshal.OffsetOf(typeof (NativeMethods.SymbolicLinkReparseBuffer), "data")).ToInt64());
+               ? Marshal.OffsetOf(typeof(NativeMethods.MountPointReparseBuffer), dataText)
+               : Marshal.OffsetOf(typeof(NativeMethods.SymbolicLinkReparseBuffer), dataText)).ToInt64());
 
             var dataBuffer = new byte[bytesReturned - dataOffset];
 
@@ -340,7 +345,7 @@ namespace Alphaleonis.Win32.Filesystem
             // FsctlSetCompression = (DeviceIoControlFileDevice.FileSystem << 16) | (16 << 2) | DeviceIoControlMethod.Buffered | ((FileAccess.Read | FileAccess.Write) << 14)
 
             // 0 = Decompress, 1 = Compress.
-            InvokeIoControlUnknownSize(handle, ((9 << 16) | (16 << 2) | 0 | ((uint)(FileAccess.Read | FileAccess.Write) << 14)), (compress) ? 1 : 0);
+            InvokeIoControlUnknownSize(handle, (9 << 16) | (16 << 2) | 0 | ((uint)(FileAccess.Read | FileAccess.Write) << 14), compress ? 1 : 0);
          }
       }
 
@@ -389,7 +394,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Build a Device Interface Detail Data structure.
          var didd = new NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA
          {
-            cbSize = (IntPtr.Size == 4) ? (uint) (Marshal.SystemDefaultCharSize + 4) : 8
+            cbSize = IntPtr.Size == 4 ? (uint) (Marshal.SystemDefaultCharSize + 4) : 8
          };
 
          // Get device interace details.
@@ -423,7 +428,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (!NativeMethods.DeviceIoControl(handle, controlCode, input, inputSize, output, outputLength, out bytesReturned, IntPtr.Zero))
             {
                var lastError = Marshal.GetLastWin32Error();
-               switch ((uint)lastError)
+               switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
                   case Win32Errors.ERROR_INSUFFICIENT_BUFFER:

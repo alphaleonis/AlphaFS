@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] MsDosNamespacePrefix = "\\.\" Provides standard logical drive prefix.</summary>
       public static readonly string LogicalDrivePrefix = string.Format(CultureInfo.InvariantCulture, "{0}{0}.{0}", DirectorySeparatorChar);
 
-      /// <summary>[AlphaFS] SubstitutePrefix = "\??\" Provides a SUBST.EXE Path prefix to a Logical Drive.</summary>
+      /// <summary>[AlphaFS] SubstitutePrefix = "\??\" Provides a non-interpreted path.</summary>
       public static readonly string SubstitutePrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{0}", DirectorySeparatorChar, WildcardQuestion, WildcardQuestion);
 
       /// <summary>[AlphaFS] VolumePrefix = "\\?\Volume" Provides standard Windows Volume prefix.</summary>

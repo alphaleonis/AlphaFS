@@ -1149,6 +1149,9 @@ namespace Alphaleonis.Win32.Filesystem
                Path.CheckSupportedPathFormat(destinationPath, true, true);
                destinationPathLp = Path.GetExtendedLengthPathCore(transaction, destinationPath, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
             }
+
+
+            pathFormat = PathFormat.LongFullPath;
          }
 
 
@@ -1266,7 +1269,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                   default:
-                     var destExists = ExistsCore(isFolder, transaction, destinationPathLp, PathFormat.LongFullPath);
+                     var destExists = ExistsCore(isFolder, transaction, destinationPathLp, pathFormat);
 
                      // For a number of error codes (sharing violation, path not found, etc)
                      // we don't know if the problem was with the source or destination file.
@@ -1282,7 +1285,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // Ensure that the source file or directory exists.
                         // Directory.Move()
                         // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive). 
-                        if (!ExistsCore(isFolder, transaction, sourcePathLp, PathFormat.LongFullPath))
+                        if (!ExistsCore(isFolder, transaction, sourcePathLp, pathFormat))
                            NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourcePathLp);
                      }
 
@@ -1292,7 +1295,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                      if (!isFolder)
                      {
-                        using (var safeHandle = CreateFileCore(transaction, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, PathFormat.LongFullPath))
+                        using (var safeHandle = CreateFileCore(transaction, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, pathFormat))
                            if (safeHandle != null && safeHandle.IsInvalid)
                               fileNameLp = sourcePathLp;
                      }
@@ -1322,7 +1325,7 @@ namespace Alphaleonis.Win32.Filesystem
                                  if (HasReplaceExisting(moveOptions))
                                  {
                                     // Reset file system object attributes to Normal.
-                                    SetAttributesCore(isFolder, transaction, destinationPathLp, FileAttributes.Normal, PathFormat.LongFullPath);
+                                    SetAttributesCore(isFolder, transaction, destinationPathLp, FileAttributes.Normal, pathFormat);
 
                                     goto startCopyMove;
                                  }
@@ -1365,11 +1368,11 @@ namespace Alphaleonis.Win32.Filesystem
             if (!isFolder)
             {
                if (isSingleFileCopyMoveAction)
-                  cmr.TotalBytes = GetSizeCore(transaction, null, destinationPathLp, PathFormat.LongFullPath);
+                  cmr.TotalBytes = GetSizeCore(transaction, null, destinationPathLp, pathFormat);
 
 
                if (preserveDates)
-                  CopyTimestampsCore(false, transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
+                  CopyTimestampsCore(false, transaction, sourcePathLp, destinationPathLp, false, pathFormat);
 
 
                cmr.TotalFiles++;
@@ -1384,6 +1387,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Determine the Copy or Move action.</summary>
+      /// <exception cref="NotSupportedException"/>
       internal static bool IsCopyAction(CopyOptions? copyOptions, MoveOptions? moveOptions)
       {
          // Determine Copy or Move action.

@@ -23,11 +23,12 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Enumeration specifying the different reparse point tags.</summary>
+   /// <summary>Enumeration specifying the different reparse point tags.
    /// <remarks>
    ///   <para>Reparse tags, with the exception of IO_REPARSE_TAG_SYMLINK, are processed on the server and are not processed by a client after transmission over the wire.</para>
    ///   <para>Clients should treat associated reparse data as opaque data.</para>
-   /// </remarks>   
+   /// </remarks>
+   /// </summary>
    public enum ReparsePointTag
    {
       /// <summary>The entry is not a reparse point.</summary>

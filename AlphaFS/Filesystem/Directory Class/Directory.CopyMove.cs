@@ -1049,6 +1049,9 @@ namespace Alphaleonis.Win32.Filesystem
             if (!delayUntilReboot && File.HasReplaceExisting(moveOptions))
                DeleteDirectoryCore(null, transaction, destinationPathLp, true, true, true, PathFormat.LongFullPath);
 
+            // 2017-06-07: A large target directory will probably create a progress-less delay in UI.
+            // One way to get around this is to perform the delete in the File.CopyMove method.
+
 
             // Moves a file or directory, including its children.
             // Copies an existing directory, including its children to a new directory.
@@ -1083,6 +1086,8 @@ namespace Alphaleonis.Win32.Filesystem
          while (dirs.Count > 0)
          {
             var srcLp = dirs.Dequeue();
+
+            // Current TODO: Not 100% yet with local + UNC paths.
             var dstLp = srcLp.Replace(sourcePathLp, destinationPathLp);
 
             // Traverse the source folder, processing files and folders.
@@ -1135,6 +1140,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (preserveDates)
             {
+               // Current TODO: Not 100% yet with local + UNC paths.
                var dstLp = sourcePathLp.Replace(sourcePathLp, destinationPathLp);
 
                // Traverse the source folder, processing subfolders.
