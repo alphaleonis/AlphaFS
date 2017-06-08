@@ -101,8 +101,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] MsDosNamespacePrefix = "\\.\" Provides standard logical drive prefix.</summary>
       public static readonly string LogicalDrivePrefix = string.Format(CultureInfo.InvariantCulture, "{0}{0}.{0}", DirectorySeparatorChar);
 
-      /// <summary>[AlphaFS] SubstitutePrefix = "\??\" Provides a non-interpreted path.</summary>
-      public static readonly string SubstitutePrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{0}", DirectorySeparatorChar, WildcardQuestion, WildcardQuestion);
+      /// <summary>[AlphaFS] NonInterpretedPathPrefix = "\??\" Provides a non-interpreted path prefix.</summary>
+      public static readonly string NonInterpretedPathPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{0}", DirectorySeparatorChar, WildcardQuestion, WildcardQuestion);
 
       /// <summary>[AlphaFS] VolumePrefix = "\\?\Volume" Provides standard Windows Volume prefix.</summary>
       public static readonly string VolumePrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}", LongPathPrefix, "Volume");
@@ -119,6 +119,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static readonly string DosDeviceMupPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", DevicePrefix, "Mup", DirectorySeparatorChar);
 
       /// <summary>[AlphaFS] DosDeviceUncPrefix = "\??\UNC\" Provides a SUBST.EXE Path UNC prefix to a network share.</summary>
-      public static readonly string DosDeviceUncPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", SubstitutePrefix, "UNC", DirectorySeparatorChar);
+      public static readonly string DosDeviceUncPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", NonInterpretedPathPrefix, "UNC", DirectorySeparatorChar);
    }
 }

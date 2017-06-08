@@ -221,7 +221,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Indicates if this drive is a SUBST.EXE / DefineDosDevice drive mapping.</summary>
       public bool IsDosDeviceSubstitute
       {
-         get { return !Utils.IsNullOrWhiteSpace(DosDeviceName) && DosDeviceName.StartsWith(Path.SubstitutePrefix, StringComparison.OrdinalIgnoreCase); }
+         get { return !Utils.IsNullOrWhiteSpace(DosDeviceName) && DosDeviceName.StartsWith(Path.NonInterpretedPathPrefix, StringComparison.OrdinalIgnoreCase); }
       }
 
       /// <summary>[AlphaFS] Indicates if this drive is a UNC path.</summary>
