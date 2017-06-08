@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsPathRooted(string path, bool checkInvalidPathChars)
       {
-         if (path != null)
+         if (!string.IsNullOrEmpty(path))
          {
             if (checkInvalidPathChars)
                CheckInvalidPathChars(path, false, true);
