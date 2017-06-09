@@ -148,7 +148,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool CreateHardLinkTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, IntPtr lpSecurityAttributes, SafeHandle hTransaction);
 
-      /// <summary>Creates a symbolic link.</summary>
+      /// <summary>Creates a symbolic link (soft link).</summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only].</remarks>
       /// <remarks>
@@ -167,7 +167,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.I1)]
       internal static extern bool CreateSymbolicLink([MarshalAs(UnmanagedType.LPWStr)] string lpSymlinkFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpTargetFileName, [MarshalAs(UnmanagedType.U4)] SymbolicLinkTarget dwFlags);
 
-      /// <summary>Creates a symbolic link as a transacted operation.</summary>
+      /// <summary>Creates a symbolic link (soft link) as a transacted operation.</summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only].</remarks>
       /// <remarks>

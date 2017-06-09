@@ -123,133 +123,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      private void DumpEncryptDecrypt(bool isLocal)
-      {
-         #region Setup
-
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         var tempPath = Path.Combine(Path.GetTempPath(), "Directory.EncryptDecrypt()-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-
-
-         int cnt;
-         var report = "";
-         Directory.CreateDirectory(tempPath);
-         var actual = File.GetAttributes(tempPath);
-         var action = (actual & FileAttributes.Encrypted) != 0;
-
-         Console.WriteLine("\nDirectory Encrypted (Should be False): [{0}]\tAttributes: [{1}]", action, actual);
-         Assert.IsFalse(action, "Encryption should be False");
-         Assert.IsFalse((actual & FileAttributes.Encrypted) != 0, "Encryption should be False");
-
-         // Create some directories and files.
-         for (var i = 0; i < 5; i++)
-         {
-            var file = Path.Combine(tempPath, Path.GetRandomFileName());
-
-            var dir = file + "-dir";
-            System.IO.Directory.CreateDirectory(dir);
-
-            // using() == Dispose() == Close() = deletable.
-            using (System.IO.File.Create(file)) { }
-            using (System.IO.File.Create(Path.Combine(dir, Path.GetFileName(file, true)))) { }
-
-            actual = System.IO.File.GetAttributes(file);
-            action = (actual & FileAttributes.Encrypted) != 0;
-            Assert.IsFalse(action, "Encryption should be False");
-         }
-
-         #endregion // Setup
-
-         #region Encrypt
-
-         // Encrypt directory recursively.
-         UnitTestConstants.StopWatcher(true);
-         try
-         {
-            Directory.Encrypt(tempPath, true);
-            report = UnitTestConstants.Reporter();
-            action = true;
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            action = false;
-            report = UnitTestConstants.Reporter();
-         }
-         Assert.IsTrue(action, "Unexpected Exception");
-
-         actual = System.IO.File.GetAttributes(tempPath);
-         action = (actual & FileAttributes.Encrypted) != 0;
-         Assert.IsTrue(action, "File system ojbect should be encrypted.");
-         Console.WriteLine("\nDirectory Encrypted (Should be True): [{0}]\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
-
-
-         // Verify that everything is encrypted.
-         cnt = 0;
-         foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
-         {
-            actual = fsei.Attributes;
-            action = (actual & FileAttributes.Encrypted) != 0;
-
-            Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tEncrypted (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
-            Assert.IsTrue(action, "File system ojbect should be encrypted.");
-         }
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
-
-         #endregion // Encrypt
-
-         #region Decrypt
-
-         // Decrypt directory only.
-         UnitTestConstants.StopWatcher(true);
-         try
-         {
-            Directory.Decrypt(tempPath);
-            report = UnitTestConstants.Reporter();
-            action = true;
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            action = false;
-            report = UnitTestConstants.Reporter();
-         }
-         Assert.IsTrue(action, "Unexpected Exception");
-
-         actual = System.IO.File.GetAttributes(tempPath);
-         action = (actual & FileAttributes.Encrypted) == 0;
-         Assert.IsTrue(action, "File system ojbect should be decrypted.");
-         Console.WriteLine("\nDirectory Decrypted (Should be True): [{0}]\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
-
-
-         // Verify that everything is still decrypted.
-         cnt = 0;
-         foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
-         {
-            actual = fsei.Attributes;
-            action = (actual & FileAttributes.Encrypted) == 0;
-
-            Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tDecrypted (Should be False): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
-            Assert.IsFalse(action, "File system ojbect should be encrypted.");
-         }
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
-
-         #endregion // Decrypt
-
-         Directory.Delete(tempPath, true);
-         Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
-      }
-
       private void DumpEnumerateDirectories(bool isLocal)
       {
          var isNetwork = !isLocal;
@@ -370,7 +243,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
          Console.WriteLine();
 
@@ -393,7 +266,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
          #region DirectoryEnumerationOptions
 
@@ -442,7 +315,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\tEnumerated: Directories = [{0}] Files = [{1}]\t{2}", numDirectories, numFiles, report);
 
          if (!foundFse)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
          var matchAll = directories == numDirectories && files == numFiles;
          Assert.IsTrue(matchAll, "Number of directories and/or files don't match.");
@@ -567,7 +440,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
          Console.WriteLine();
 
@@ -590,7 +463,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
          #region DirectoryEnumerationOptions
 
@@ -726,7 +599,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
          Console.WriteLine();
 
@@ -749,7 +622,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
          #region DirectoryEnumerationOptions
 
@@ -910,7 +783,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
          Console.WriteLine();
       }
@@ -937,7 +810,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\t{0}", report);
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
          Assert.IsTrue(total > 0, "0 Objects.");
          Assert.IsTrue(file > 0, "0 Files.");
@@ -1158,15 +1031,6 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
-
-      [TestMethod]
-      public void AlphaFS_Directory_Encrypt()
-      {
-         Console.WriteLine("Directory.Encrypt()");
-
-         DumpEncryptDecrypt(true);
-         DumpEncryptDecrypt(false);
-      }
 
       [TestMethod]
       public void AlphaFS_Directory_EnableEncryption()

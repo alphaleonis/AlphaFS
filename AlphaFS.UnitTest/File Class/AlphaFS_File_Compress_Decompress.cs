@@ -30,16 +30,16 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_Compress_And_Decompress_LocalAndNetwork_Success()
+      public void AlphaFS_File_CompressAndDecompress_LocalAndNetwork_Success()
       {
-         File_Compress_And_Decompress(false);
-         File_Compress_And_Decompress(true);
+         File_CompressAndDecompress(false);
+         File_CompressAndDecompress(true);
       }
 
 
 
 
-      private void File_Compress_And_Decompress(bool isNetwork)
+      private void File_CompressAndDecompress(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 

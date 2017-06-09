@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class File
    {
-      /// <summary>[AlphaFS] Creates a symbolic link.
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link).
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
       /// <exception cref="PlatformNotSupportedException"/>
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link.
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link).
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
       /// <exception cref="PlatformNotSupportedException"/>
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) as a transacted operation.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
       /// <exception cref="PlatformNotSupportedException"/>
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) as a transacted operation.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
       /// <exception cref="PlatformNotSupportedException"/>
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>Creates a symbolic link.
+      /// <summary>Creates a symbolic link (soft link).
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
       /// <exception cref="PlatformNotSupportedException"/>
@@ -133,7 +133,7 @@ namespace Alphaleonis.Win32.Filesystem
          targetFileName = Path.GetRegularPathCore(targetFileName, GetFullPathOptions.None, false);
 
 
-         if (!(null == transaction
+         var success = null == transaction
 
             // CreateSymbolicLink() / CreateSymbolicLinkTransacted()
             // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -143,13 +143,11 @@ namespace Alphaleonis.Win32.Filesystem
             // 2017-05-30: MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
             ? NativeMethods.CreateSymbolicLink(symlinkFileName, targetFileName, targetType)
-            : NativeMethods.CreateSymbolicLinkTransacted(symlinkFileName, targetFileName, targetType, transaction.SafeHandle)))
-         {
-            var lastError = Marshal.GetLastWin32Error();
+            : NativeMethods.CreateSymbolicLinkTransacted(symlinkFileName, targetFileName, targetType, transaction.SafeHandle);
 
-            if (lastError != Win32Errors.ERROR_SUCCESS)
-               NativeError.ThrowException(lastError, symlinkFileName, targetFileName);
-         }
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success)
+            NativeError.ThrowException(lastError, symlinkFileName, targetFileName);
       }
    }
 }

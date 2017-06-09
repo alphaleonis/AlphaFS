@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Directory_Compress_And_Decompress_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_CompressAndDecompress_LocalAndNetwork_Success()
       {
          Directory_Compress_Decompress(false, false);
          Directory_Compress_Decompress(true, false);
@@ -38,7 +38,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Compress_And_Decompress_Recursive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_CompressAndDecompress_Recursive_LocalAndNetwork_Success()
       {
          Directory_Compress_Decompress(false, true);
          Directory_Compress_Decompress(true, true);

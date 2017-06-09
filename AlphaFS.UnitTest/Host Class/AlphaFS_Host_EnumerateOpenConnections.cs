@@ -68,7 +68,7 @@ namespace AlphaFS.UnitTest
          
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected. Try another server name if applicable.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
 
          Console.WriteLine();
       }

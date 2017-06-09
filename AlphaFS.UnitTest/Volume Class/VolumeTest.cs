@@ -79,7 +79,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("{0}\n\n", UnitTestConstants.Reporter(true));
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
       }
 
       private void DumpGetVolumePathName(bool isLocal)
@@ -125,7 +125,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\t{0}\n", UnitTestConstants.Reporter(true));
 
          if (isLocal && cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
       }
 
       private void DumpGetUniqueVolumeNameForPath(bool isLocal)
@@ -168,7 +168,7 @@ namespace AlphaFS.UnitTest
          if (isLocal)
          {
             if (cnt == 0)
-               Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+               Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
             Assert.IsTrue(testedSystemDrive);
          }
@@ -334,7 +334,7 @@ namespace AlphaFS.UnitTest
          }
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
          Assert.IsTrue(query.Any());
       }
@@ -576,7 +576,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\t{0}\n", UnitTestConstants.Reporter(true));
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
       }
 
       #endregion // EnumerateVolumes
@@ -876,7 +876,7 @@ namespace AlphaFS.UnitTest
          }
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
          #endregion // Logical Drives
       }

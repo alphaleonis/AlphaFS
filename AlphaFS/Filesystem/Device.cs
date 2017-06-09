@@ -117,16 +117,16 @@ namespace Alphaleonis.Win32.Filesystem
                   var deviceInterfaceDetailData = GetDeviceInterfaceDetailDataInstance(safeHandle, deviceInterfaceData, deviceInfoData);
 
                   // Get device interace details.
-                  if (!NativeMethods.SetupDiGetDeviceInterfaceDetail(safeHandle, ref deviceInterfaceData, ref deviceInterfaceDetailData, NativeMethods.DefaultFileBufferSize, IntPtr.Zero, ref deviceInfoData))
-                  {
-                     lastError = Marshal.GetLastWin32Error();
-                     if (lastError != Win32Errors.NO_ERROR)
-                        NativeError.ThrowException(lastError, hostName);
-                  }
+                  var success = NativeMethods.SetupDiGetDeviceInterfaceDetail(safeHandle, ref deviceInterfaceData, ref deviceInterfaceDetailData, NativeMethods.DefaultFileBufferSize, IntPtr.Zero, ref deviceInfoData);
+
+                  lastError = Marshal.GetLastWin32Error();
+                  if (!success)
+                     NativeError.ThrowException(lastError, hostName);
+
 
                   // Create DeviceInfo instance.
                   // Set DevicePath property of DeviceInfo instance.
-                  var deviceInfo = new DeviceInfo(hostName) { DevicePath = deviceInterfaceDetailData.DevicePath };
+                  var deviceInfo = new DeviceInfo(hostName) {DevicePath = deviceInterfaceDetailData.DevicePath};
 
 
                   // Current InstanceId is at the "USBSTOR" level, so we
@@ -249,7 +249,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          // Start with a large buffer to prevent a 2nd call.
          // MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384
-         uint bytesReturned = 4*NativeMethods.DefaultFileBufferSize;
+         uint bytesReturned = 4 * NativeMethods.DefaultFileBufferSize;
          
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle((int) bytesReturned))
          {
@@ -398,12 +398,11 @@ namespace Alphaleonis.Win32.Filesystem
          };
 
          // Get device interace details.
-         if (!NativeMethods.SetupDiGetDeviceInterfaceDetail(safeHandle, ref deviceInterfaceData, ref didd, NativeMethods.DefaultFileBufferSize, IntPtr.Zero, ref deviceInfoData))
-         {
-            var lastError = Marshal.GetLastWin32Error();
-            if (lastError != Win32Errors.NO_ERROR)
-               NativeError.ThrowException(lastError);
-         }
+         var success = NativeMethods.SetupDiGetDeviceInterfaceDetail(safeHandle, ref deviceInterfaceData, ref didd, NativeMethods.DefaultFileBufferSize, IntPtr.Zero, ref deviceInfoData);
+
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success)
+            NativeError.ThrowException(lastError);
 
          return didd;
       }
@@ -425,9 +424,12 @@ namespace Alphaleonis.Win32.Filesystem
          do
          {
             output = new byte[outputLength];
-            if (!NativeMethods.DeviceIoControl(handle, controlCode, input, inputSize, output, outputLength, out bytesReturned, IntPtr.Zero))
+
+            var success = NativeMethods.DeviceIoControl(handle, controlCode, input, inputSize, output, outputLength, out bytesReturned, IntPtr.Zero);
+            
+            var lastError = Marshal.GetLastWin32Error();
+            if (!success)
             {
-               var lastError = Marshal.GetLastWin32Error();
                switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
@@ -445,9 +447,11 @@ namespace Alphaleonis.Win32.Filesystem
 
          } while (true);
 
+
          // Return the result
          if (output.Length == bytesReturned)
             return output;
+
 
          var res = new byte[bytesReturned];
          Array.Copy(output, res, bytesReturned);

@@ -64,7 +64,7 @@ namespace AlphaFS.UnitTest
          var existSystemIO = System.IO.Directory.Exists(driveSysIO);
          Console.WriteLine(existSystemIO);
          var existAlphaFS = Alphaleonis.Win32.Filesystem.Directory.Exists(drive);
-         Console.Write("Drive path (AlphaFS, should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
+         Console.Write("Drive path (AlphaFS  , should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
          Console.WriteLine(existAlphaFS);
          Assert.AreEqual(shouldBe, existSystemIO, "The result should be: " + shouldBe);
          Assert.AreEqual(existSystemIO, existAlphaFS, "The results are not equal, but were expected to be.");
@@ -112,11 +112,11 @@ namespace AlphaFS.UnitTest
             var folder = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The directory exists, but is expected not to.");
+            Assert.AreEqual(System.IO.Directory.Exists(folder), Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The results are not equal, but were expected to be.");
 
             System.IO.Directory.CreateDirectory(folder);
 
-            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The directory does not exists, but is expected to be.");
+            Assert.AreEqual(System.IO.Directory.Exists(folder), Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The results are not equal, but were expected to be.");
          }
 
 

@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
       }
    }
 }

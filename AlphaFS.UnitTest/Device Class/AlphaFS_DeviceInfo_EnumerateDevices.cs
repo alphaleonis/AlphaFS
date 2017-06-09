@@ -56,7 +56,7 @@ namespace AlphaFS.UnitTest
          }
 
          if (classCnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
       }
    }
 }

@@ -10,6 +10,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #325: `DeleteEmptySubdirectories` (with `recursive=true`) throws `System.IO.DirectoryNotFoundException`  (Thx kryvoplias)
 - Issue #328: Several instances of `ArgumentException.ParamName` not set/used correctly  (Thx elgonzo)
 - Issue #330: Correct the parameter order for Privilege class constructors using the `ArgumentNullException`.
+- Issue #339: `Directory/File.Encrypt/Decrypt` should restore read-only attribute.
 
 ### New Features/Enhancements
 

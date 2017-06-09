@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_CreateHardlink_And_EnumerateHardlinks_Local_Success()
+      public void AlphaFS_File_CreateHardlinkAndEnumerateHardlinks_Local_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();

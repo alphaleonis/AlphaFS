@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
       /// <remarks>
-      ///   <para>If the <see cref="DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.</para>
+      ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.</para>
       ///   <para>Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.</para>
       /// </remarks>
       /// <exception cref="ArgumentException"/>
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
       /// <remarks>
-      ///   <para>If the <see cref="DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.</para>
+      ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.</para>
       ///   <para>Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.</para>
       /// </remarks>
       /// <exception cref="ArgumentException"/>

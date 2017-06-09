@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo_LocalUNC_Success()
+      public void AlphaFS_File_CreateSymbolicLinkAndGetLinkTargetInfo_LocalUNC_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();

@@ -151,7 +151,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t\tSystem.IO: [{3}]", ++cnt, file, expected, actual);
 
                if (cnt == 0)
-                  Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+                  Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
                Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
             }
@@ -184,7 +184,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t\tSystem.IO: [{3}]", ++cnt, file, expected, actual);
 
                if (cnt == 0)
-                  Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+                  Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 
                Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
             }

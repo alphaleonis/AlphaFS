@@ -28,11 +28,11 @@ namespace Alphaleonis.Win32.Filesystem
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct MountPointReparseBuffer
       {
-         public readonly ushort SubstituteNameOffset;
-         public readonly ushort SubstituteNameLength;
-         public readonly ushort PrintNameOffset;
-         public readonly ushort PrintNameLength;
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)] public readonly byte[] data;
+         public ushort SubstituteNameOffset;
+         public ushort SubstituteNameLength;
+         public ushort PrintNameOffset;
+         public ushort PrintNameLength;
+         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)] public byte[] data;
       }
    }
 }

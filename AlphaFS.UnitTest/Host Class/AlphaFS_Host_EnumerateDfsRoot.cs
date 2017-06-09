@@ -73,7 +73,7 @@ namespace AlphaFS.UnitTest
             Console.Write("\n{0}", UnitTestConstants.Reporter(true));
 
             if (cnt == 0)
-               Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+               Assert.Inconclusive("Nothing is enumerated, but it is expected.");
          }
          catch (NetworkInformationException ex)
          {
@@ -91,7 +91,7 @@ namespace AlphaFS.UnitTest
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
          else if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated, but it was expected.");
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
       }
    }
 }

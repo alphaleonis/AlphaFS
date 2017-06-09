@@ -177,7 +177,7 @@
   <data name="Negative_Length" xml:space="preserve">
     <value>Length cannot be negative.</value>
   </data>
-  <data name="Source_Offset_And_Length_Outside_Bounds" xml:space="preserve">
+  <data name="Source_OffsetAndLength_Outside_Bounds" xml:space="preserve">
     <value>Source offset and length outside the bounds of the array</value>
   </data>
   <data name="Privilege_Name_Cannot_Be_Empty" xml:space="preserve">

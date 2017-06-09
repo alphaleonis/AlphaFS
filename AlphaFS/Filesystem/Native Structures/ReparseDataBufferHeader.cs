@@ -28,10 +28,10 @@ namespace Alphaleonis.Win32.Filesystem
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct ReparseDataBufferHeader
       {
-         [MarshalAs(UnmanagedType.U4)] public readonly ReparsePointTag ReparseTag;
-         public readonly ushort ReparseDataLength;
-         public readonly ushort Reserved;
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)] public readonly byte[] data;
+         [MarshalAs(UnmanagedType.U4)] public ReparsePointTag ReparseTag;
+         public ushort ReparseDataLength;
+         public ushort Reserved;
+         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)] public byte[] data;
       }
    }
 }

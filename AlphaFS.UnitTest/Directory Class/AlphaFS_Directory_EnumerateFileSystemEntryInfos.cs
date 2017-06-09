@@ -87,7 +87,7 @@ namespace AlphaFS.UnitTest
             count++;
          }
 
-         Assert.IsTrue(count > 0, "Nothing was enumerated, but it was expected.");
+         Assert.IsTrue(count > 0, "Nothing is enumerated, but it is expected.");
       }
 
 
@@ -109,7 +109,7 @@ namespace AlphaFS.UnitTest
             count++;
          }
 
-         Assert.IsTrue(count > 0, "Nothing was enumerated, but it was expected.");
+         Assert.IsTrue(count > 0, "Nothing is enumerated, but it is expected.");
       }
 
 
@@ -131,7 +131,7 @@ namespace AlphaFS.UnitTest
             count++;
          }
 
-         Assert.IsTrue(count > 0, "Nothing was enumerated, but it was expected.");
+         Assert.IsTrue(count > 0, "Nothing is enumerated, but it is expected.");
       }
 
 
@@ -153,7 +153,7 @@ namespace AlphaFS.UnitTest
             count++;
          }
 
-         Assert.IsTrue(count > 0, "Nothing was enumerated, but it was expected.");
+         Assert.IsTrue(count > 0, "Nothing is enumerated, but it is expected.");
       }
 
 
@@ -177,7 +177,7 @@ namespace AlphaFS.UnitTest
       //      count++;
       //   }
 
-      //   Assert.IsTrue(count > 0, "Nothing was enumerated, but it was expected.");
+      //   Assert.IsTrue(count > 0, "Nothing is enumerated, but it is expected.");
       //}
    }
 }

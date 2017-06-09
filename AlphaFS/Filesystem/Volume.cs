@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="targetPath">
       ///   &gt;An MS-DOS path that will implement this device. If <paramref name="deviceAttributes"/> parameter has the
-      ///   <see cref="DosDeviceAttributes.RawTargetPath"/> flag specified, <paramref name="targetPath"/> is used as is.
+      ///   <see cref="DosDeviceAttributes.RawTargetPath"/> flag specified, <paramref name="targetPath"/> is used as-is.
       /// </param>
       /// <param name="deviceAttributes">
       ///   The controllable aspects of the DefineDosDevice function, <see cref="DosDeviceAttributes"/> flags which will be combined with the
@@ -933,7 +933,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsSameVolume
 
       /// <summary>Determines whether the volume of two file system objects is the same, by comparing their serial numbers.</summary>
-      /// <param name="path1">The first filesystem ojbect with full path information.</param>
+      /// <param name="path1">The first filesystem object with full path information.</param>
       /// <param name="path2">The second file system object with full path information.</param>
       /// <returns><see langword="true"/> if both filesytem objects reside on the same volume, <see langword="false"/> otherwise.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]

@@ -27,8 +27,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class Directory
    {
-      #region Decrypt
-
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -43,6 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          EncryptDecryptDirectoryCore(path, false, false, pathFormat);
       }
+
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <exception cref="ArgumentException"/>
@@ -60,6 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
          EncryptDecryptDirectoryCore(path, false, recursive, pathFormat);
       }
 
+
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -73,6 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          EncryptDecryptDirectoryCore(path, false, false, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <exception cref="ArgumentException"/>
@@ -89,9 +90,8 @@ namespace Alphaleonis.Win32.Filesystem
          EncryptDecryptDirectoryCore(path, false, recursive, PathFormat.RelativePath);
       }
 
-      #endregion // Decrypt
 
-      #region Encrypt
+
 
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <exception cref="ArgumentException"/>
@@ -154,9 +154,8 @@ namespace Alphaleonis.Win32.Filesystem
          EncryptDecryptDirectoryCore(path, true, recursive, PathFormat.RelativePath);
       }
 
-      #endregion // Encrypt
 
-      #region DisableEncryption
+
 
       /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it.
       ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and disables encryption by writing: "Disable=1"</para>
@@ -181,9 +180,8 @@ namespace Alphaleonis.Win32.Filesystem
          EnableDisableEncryptionCore(path, false, PathFormat.RelativePath);
       }
 
-      #endregion // DisableEncryption
 
-      #region EnableEncryption
+
 
       /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it.
       ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and enables encryption by writing: "Disable=0"</para>
@@ -208,9 +206,8 @@ namespace Alphaleonis.Win32.Filesystem
          EnableDisableEncryptionCore(path, true, PathFormat.RelativePath);
       }
 
-      #endregion // EnableEncryption
 
-      #region Internal Methods
+
 
       /// <summary>Enables/disables encryption of the specified directory and the files in it.
       ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and  enables/disables encryption by writing: "Disable=0" or "Disable=1".</para>
@@ -225,7 +222,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         var pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // EncryptionDisable()
          // In the ANSI version of this function, the name is limited to 248 characters.
@@ -235,6 +232,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!NativeMethods.EncryptionDisable(pathLp, !enable))
             NativeError.ThrowException(pathLp);
       }
+
 
       /// <summary>Decrypts/encrypts a directory recursively so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <exception cref="ArgumentException"/>
@@ -250,23 +248,23 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void EncryptDecryptDirectoryCore(string path, bool encrypt, bool recursive, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         if (pathFormat != PathFormat.LongFullPath)
+         {
+            path = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         var options = DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.AsLongPath;
+            pathFormat = PathFormat.LongFullPath;
+         }
+
 
          // Process folders and files when recursive. 
          if (recursive)
          {
-            options |= DirectoryEnumerationOptions.Recursive;
-
-            foreach (string fsei in EnumerateFileSystemEntryInfosCore<string>(null, pathLp, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath))
-               File.EncryptDecryptFileCore(true, fsei, encrypt, PathFormat.LongFullPath);
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<string>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.AsLongPath | DirectoryEnumerationOptions.Recursive, pathFormat))
+               File.EncryptDecryptFileCore(true, fsei, encrypt, pathFormat);
          }
 
          // Process the root folder, the given path.
-         File.EncryptDecryptFileCore(true, pathLp, encrypt, PathFormat.LongFullPath);
+         File.EncryptDecryptFileCore(true, path, encrypt, pathFormat);
       }
-
-      #endregion // Internal Methods
    }
 }
