@@ -165,9 +165,6 @@
   <data name="UNC_Path_Should_Match_Format" xml:space="preserve">
     <value>Network share path should match the format: \\server\share</value>
   </data>
-  <data name="Unlock_Position_Negative" xml:space="preserve">
-    <value>Backup FileStream Unlock Position must not be negative.</value>
-  </data>
   <data name="Negative_Lock_Length" xml:space="preserve">
     <value>Lock length cannot be negative.</value>
   </data>

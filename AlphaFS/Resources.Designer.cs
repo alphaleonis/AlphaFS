@@ -413,15 +413,6 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Backup FileStream Unlock Position must not be negative..
-        /// </summary>
-        internal static string Unlock_Position_Negative {
-            get {
-                return ResourceManager.GetString("Unlock_Position_Negative", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The given path&apos;s format is not supported: [{0}].
         /// </summary>
         internal static string Unsupported_Path_Format {

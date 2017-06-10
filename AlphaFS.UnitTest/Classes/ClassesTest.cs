@@ -19,14 +19,11 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using OperatingSystem = Alphaleonis.Win32.OperatingSystem;
@@ -38,10 +35,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public partial class ClassesTest
    {
-      #region Unit Tests
-
-      #region DumpClassByHandleFileInfo
-
       private void DumpClassByHandleFileInfo(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
@@ -70,88 +63,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpClassByHandleFileInfo
-
-      #region DumpClassDiskSpaceInfo
-
-      private void DumpClassDiskSpaceInfo(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         var tempPath = UnitTestConstants.SysDrive;
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-         Console.WriteLine("\nInput Path: [{0}]", tempPath);
-
-         var cnt = 0;
-         var errorCount = 0;
-
-         // Get only .IsReady drives.
-         foreach (var drv in Directory.EnumerateLogicalDrives(false, true))
-         {
-            if (drv.DriveType == DriveType.NoRootDirectory)
-               continue;
-
-            var drive = isLocal ? drv.Name : Path.LocalToUnc(drv.Name);
-
-            UnitTestConstants.StopWatcher(true);
-
-            try
-            {
-               // null (default) == All information.
-               var dsi = drv.DiskSpaceInfo;
-               var report = UnitTestConstants.Reporter(true);
-
-               Console.WriteLine("\n#{0:000}\tInput Path: [{1}]{2}", ++cnt, drive, report);
-               Assert.IsTrue(UnitTestConstants.Dump(dsi, -26));
-
-               Assert.AreNotEqual(0, dsi.BytesPerSector);
-               Assert.AreNotEqual(0, dsi.SectorsPerCluster);
-               Assert.AreNotEqual(0, (int)dsi.TotalNumberOfClusters);
-               Assert.AreNotEqual(0, (int)dsi.TotalNumberOfBytes);
-
-               if (drv.DriveType == DriveType.CDRom)
-               {
-                  Assert.AreEqual(0, (int)dsi.FreeBytesAvailable);
-                  Assert.AreEqual(0, dsi.NumberOfFreeClusters);
-                  Assert.AreEqual(0, (int)dsi.TotalNumberOfFreeBytes);
-               }
-               else
-               {
-                  Assert.AreNotEqual(0, (int)dsi.FreeBytesAvailable);
-                  Assert.AreNotEqual(0, dsi.NumberOfFreeClusters);
-                  Assert.AreNotEqual(0, (int)dsi.TotalNumberOfFreeBytes);
-               }
-
-               // false == Size information only.
-               dsi = Volume.GetDiskFreeSpace(drive, false);
-               Assert.AreEqual(0, dsi.BytesPerSector);
-               Assert.AreEqual(0, dsi.NumberOfFreeClusters);
-               Assert.AreEqual(0, dsi.SectorsPerCluster);
-               Assert.AreEqual(0, (int)dsi.TotalNumberOfClusters);
-
-
-               // true == Cluster information only.
-               dsi = Volume.GetDiskFreeSpace(drive, true);
-               Assert.AreEqual(0, (int)dsi.FreeBytesAvailable);
-               Assert.AreEqual(0, (int)dsi.TotalNumberOfBytes);
-               Assert.AreEqual(0, (int)dsi.TotalNumberOfFreeBytes);
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\n\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-               errorCount++;
-            }
-         }
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
-
-         Assert.AreEqual(0, errorCount, "No errors were expected.");
-         Console.WriteLine();
-      }
-
-      #endregion // DumpClassDiskSpaceInfo
-
-      #region DumpClassDriveInfo
 
       private void DumpClassDriveInfo(bool isLocal, string drive)
       {
@@ -235,9 +146,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpClassDriveInfo
-
-      #region DumpClassDfsInfo
 
       private void DumpClassDfsInfo()
       {
@@ -301,19 +209,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpClassDfsInfo
-
-      #region DumpClassShareInfo
-
-      #endregion // DumpClassShareInfo
-
-      #endregion // Unit Tests
-
-      #region Unit Test Callers
-
-      #region Filesystem
-
-      #region Filesystem_Class_ByHandleFileInfo
 
       [TestMethod]
       public void AlphaFS_ByHandleFileInfo()
@@ -324,25 +219,9 @@ namespace AlphaFS.UnitTest
          DumpClassByHandleFileInfo(false);
       }
 
-      #endregion // Filesystem_Class_ByHandleFileInfo
-
-      #region Filesystem_Class_DiskSpaceInfo
 
       [TestMethod]
-      public void AlphaFS_DiskSpaceInfo()
-      {
-         Console.WriteLine("Class Filesystem.DiskSpaceInfo()");
-
-         DumpClassDiskSpaceInfo(true);
-         DumpClassDiskSpaceInfo(false);
-      }
-
-      #endregion // Filesystem_Class_DiskSpaceInfo
-
-      #region Filesystem_Class_DriveInfo
-
-      [TestMethod]
-      public void AlphaFS_DriveInfo()
+      public void AlphaFS_DriveInfo_With_DiskSpaceInfo_And_VolumeInfo()
       {
          Console.WriteLine("Class Filesystem.DriveInfo()");
 
@@ -350,14 +229,8 @@ namespace AlphaFS.UnitTest
          DumpClassDriveInfo(false, UnitTestConstants.SysDrive);
       }
 
-      #endregion // Filesystem_Class_DriveInfo
-
-      #endregion Filesystem
 
 
-      #region Network
-
-      #region Network_Class_DfsXxx
 
       [TestMethod]
       public void AlphaFS_Network_DfsXxx()
@@ -368,14 +241,6 @@ namespace AlphaFS.UnitTest
          DumpClassDfsInfo();
       }
 
-      #endregion // Network_Class_DfsXxx
-
-      #endregion // Network
-
-
-      #region OperatingSystem
-
-      #region Class_OperatingSystem
 
       [TestMethod]
       public void AlphaFS_OperatingSystem()
@@ -408,11 +273,5 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\tOS Later             : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Later));
          Console.WriteLine();
       }
-
-      #endregion // Class_OperatingSystem
-
-      #endregion // OperatingSystem
-
-      #endregion Unit Test Callers
    }
 }

@@ -32,41 +32,62 @@ namespace Alphaleonis.Win32
 {
    internal static class NativeError
    {
-      internal static void ThrowException()
-      {
-         ThrowException((uint)Marshal.GetLastWin32Error(), null, null);
-      }
-
       public static void ThrowException(int errorCode)
       {
-         ThrowException((uint)errorCode, null, null);
+         ThrowException((uint) errorCode, null, null);
       }
 
+      
       public static void ThrowException(int errorCode, string readPath)
       {
-         ThrowException((uint)errorCode, readPath, null);
+         ThrowException((uint) errorCode, readPath, null);
       }
 
+      
       public static void ThrowException(int errorCode, string readPath, string writePath)
       {
-         ThrowException((uint)errorCode, readPath, writePath);
+         ThrowException((uint) errorCode, readPath, writePath);
       }
 
+      
       public static void ThrowException(uint errorCode, string readPath)
       {
          ThrowException(errorCode, readPath, null);
       }
 
+
+      public static void ThrowException(string readPath)
+      {
+         ThrowException((uint) Marshal.GetLastWin32Error(), readPath, null);
+      }
+
+
+      public static void ThrowException(string readPath, string writePath)
+      {
+         ThrowException((uint) Marshal.GetLastWin32Error(), readPath, writePath);
+      }
+
+
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       public static void ThrowException(uint errorCode, string readPath, string writePath)
       {
-         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int)errorCode).Message);
+         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message.TrimEnd('.'));
 
-         if (!Utils.IsNullOrWhiteSpace(readPath))
-            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), readPath);
+         var hasReadPath = !Utils.IsNullOrWhiteSpace(readPath);
+         var hasWritePath = !Utils.IsNullOrWhiteSpace(writePath);
 
-         if (!Utils.IsNullOrWhiteSpace(writePath))
-            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), writePath);
+
+         if (hasReadPath && hasWritePath)
+            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: Read path: [{1}] Write path: [{2}]", errorMessage.TrimEnd('.'), readPath, writePath);
+
+
+         else if (hasReadPath)
+            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: Read path: [{1}]", errorMessage.TrimEnd('.'), readPath);
+
+
+         else if (hasWritePath)
+            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: Write path: [{1}]", errorMessage.TrimEnd('.'), writePath);
+
 
          switch (errorCode)
          {
@@ -144,17 +165,6 @@ namespace Alphaleonis.Win32
                // We don't have a specific exception to generate for this error.               
                throw new IOException(errorMessage, Win32Errors.GetHrFromWin32Error(errorCode));
          }
-      }
-
-
-      public static void ThrowException(string readPath)
-      {
-         ThrowException((uint)Marshal.GetLastWin32Error(), readPath, null);
-      }
-
-      public static void ThrowException(string readPath, string writePath)
-      {
-         ThrowException((uint)Marshal.GetLastWin32Error(), readPath, writePath);
       }
    }
 }

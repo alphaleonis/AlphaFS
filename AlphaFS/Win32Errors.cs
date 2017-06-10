@@ -188,7 +188,11 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_WAIT_NO_CHILDREN = 128;
       //public const uint ERROR_CHILD_NOT_COMPLETE = 129;
       //public const uint ERROR_DIRECT_ACCESS_HANDLE = 130;
-      //public const uint ERROR_NEGATIVE_SEEK = 131;
+
+      /// <summary>(131) An attempt was made to move the file pointer before the beginning of the file.</summary>
+      public const uint ERROR_NEGATIVE_SEEK = 131;
+
+
       //public const uint ERROR_SEEK_ON_DEVICE = 132;
       //public const uint ERROR_IS_JOIN_TARGET = 133;
       //public const uint ERROR_IS_JOINED = 134;
@@ -579,7 +583,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_INVALID_SUB_AUTHORITY = 1335;
       //public const uint ERROR_INVALID_ACL = 1336;
       //public const uint ERROR_INVALID_SID = 1337;
-      //public const uint ERROR_INVALID_SECURITY_DESCR = 1338;
+
+      /// <summary>(1338) The security descriptor structure is invalid.</summary>
+      public const uint ERROR_INVALID_SECURITY_DESCR = 1338;
+
       //public const uint ERROR_BAD_INHERITANCE_ACL = 1340;
       //public const uint ERROR_SERVER_DISABLED = 1341;
       //public const uint ERROR_SERVER_NOT_DISABLED = 1342;

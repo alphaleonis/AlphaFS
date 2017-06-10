@@ -22,6 +22,7 @@
 using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -38,8 +39,6 @@ namespace Alphaleonis.Win32.Filesystem
    /// </remarks>
    public sealed class BackupFileStream : Stream
    {
-      #region Private Fields
-
       private readonly bool _canRead;
       private readonly bool _canWrite;
       private readonly bool _processSecurity;
@@ -47,9 +46,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
       private IntPtr _context = IntPtr.Zero;
 
-      #endregion // Private Fields
 
-      #region Construction and Destruction
+
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path and creation mode.</summary>
       /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
@@ -57,10 +55,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>The file will be opened for exclusive access for both reading and writing.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(string path, FileMode mode)
-         : this(File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, PathFormat.RelativePath), FileSystemRights.Read | FileSystemRights.Write)
+      public BackupFileStream(string path, FileMode mode) : this(File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, PathFormat.RelativePath), FileSystemRights.Read | FileSystemRights.Write)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode and access rights.</summary>
       /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
@@ -69,10 +67,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>The file will be opened for exclusive access.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(string path, FileMode mode, FileSystemRights access)
-         : this(File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, PathFormat.RelativePath), access)
+      public BackupFileStream(string path, FileMode mode, FileSystemRights access) : this(File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, PathFormat.RelativePath), access)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission.</summary>
       /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
@@ -81,10 +79,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share)
-         : this(File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, PathFormat.RelativePath), access)
+      public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share) : this(File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, and additional file attributes.</summary>
       /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
@@ -94,10 +92,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
-         : this(File.CreateFileCore(null, path, attributes, null, mode, access, share, true, PathFormat.RelativePath), access)
+      public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes) : this(File.CreateFileCore(null, path, attributes, null, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, additional file attributes, access control and audit security.</summary>
       /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
@@ -108,12 +106,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <see langword="null"/>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
-         : this(File.CreateFileCore(null, path, attributes, security, mode, access, share, true, PathFormat.RelativePath), access)
+      public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security) : this(File.CreateFileCore(null, path, attributes, security, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
 
-      #region Transactional
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path and creation mode.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -122,10 +118,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>The file will be opened for exclusive access for both reading and writing.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode)
-         : this(File.CreateFileCore(transaction, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, PathFormat.RelativePath), FileSystemRights.Read | FileSystemRights.Write)
+      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode) : this(File.CreateFileCore(transaction, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, PathFormat.RelativePath), FileSystemRights.Read | FileSystemRights.Write)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode and access rights.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -135,10 +131,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>The file will be opened for exclusive access.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access)
-         : this(File.CreateFileCore(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, PathFormat.RelativePath), access)
+      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access) : this(File.CreateFileCore(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, PathFormat.RelativePath), access)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -148,10 +144,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share)
-         : this(File.CreateFileCore(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, PathFormat.RelativePath), access)
+      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share) : this(File.CreateFileCore(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, and additional file attributes.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -162,10 +158,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
-         : this(File.CreateFileCore(transaction, path, attributes, null, mode, access, share, true, PathFormat.RelativePath), access)
+      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes) : this(File.CreateFileCore(transaction, path, attributes, null, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, additional file attributes, access control and audit security.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -177,24 +173,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <see langword="null"/>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
-         : this(File.CreateFileCore(transaction, path, attributes, security, mode, access, share, true, PathFormat.RelativePath), access)
+      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security) : this(File.CreateFileCore(transaction, path, attributes, security, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
 
-      #endregion // Transacted
-
-
-      #region Stream
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class for the specified file handle, with the specified read/write permission.</summary>
       /// <param name="handle">A file handle for the file that this <see cref="BackupFileStream"/> object will encapsulate.</param>
       /// <param name="access">A <see cref="FileSystemRights"/> constant that gets the <see cref="CanRead"/> and <see cref="CanWrite"/> properties of the <see cref="BackupFileStream"/> object.</param>
-
       [SecurityCritical]
       public BackupFileStream(SafeFileHandle handle, FileSystemRights access)
       {
-         if (handle == null)
+         if (null == handle)
             throw new ArgumentNullException("handle", Resources.Handle_Is_Invalid);
 
          if (handle.IsInvalid)
@@ -214,11 +204,6 @@ namespace Alphaleonis.Win32.Filesystem
          _processSecurity = true;
       }
 
-      #endregion // Stream
-
-      #endregion // Construction and Destruction
-
-      #region NotSupportedException
 
       /// <summary>When overridden in a derived class, gets the length in bytes of the stream.</summary>
       /// <value>This method always throws an exception.</value>
@@ -227,6 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get { throw new NotSupportedException(Resources.No_Stream_Seeking_Support); }
       }
+
 
       /// <summary>When overridden in a derived class, gets or sets the position within the current stream.</summary>
       /// <value>This method always throws an exception.</value>
@@ -259,10 +245,9 @@ namespace Alphaleonis.Win32.Filesystem
          throw new NotSupportedException(Resources.No_Stream_Seeking_Support);
       }
       
-      #endregion // NotSupportedException
-
-      #region Properties
       
+
+
       /// <summary>Gets a value indicating whether the current stream supports reading.</summary>
       /// <returns><see langword="true"/> if the stream supports reading, <see langword="false"/> otherwise.</returns>
       public override bool CanRead
@@ -289,9 +274,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// the current <see cref="BackupFileStream"/> object encapsulates.</value>
       private SafeFileHandle SafeFileHandle { get; set; }
 
-      #endregion // Properties
 
-      #region Methods
+
 
       /// <summary>Reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.</summary>
       /// <remarks>This method will not backup the access-control list (ACL) data for the file or directory.</remarks>
@@ -318,6 +302,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return Read(buffer, offset, count, false);
       }
+
 
       /// <summary>When overridden in a derived class, reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.</summary>
       /// <param name="buffer">An array of bytes. When this method returns, the buffer contains the specified byte array with the values
@@ -358,13 +343,17 @@ namespace Alphaleonis.Win32.Filesystem
          {
             uint numberOfBytesRead;
 
-            if (!NativeMethods.BackupRead(SafeFileHandle, safeBuffer, (uint)safeBuffer.Capacity, out numberOfBytesRead, false, processSecurity, ref _context))
-               NativeError.ThrowException(Marshal.GetLastWin32Error());
+            var success = NativeMethods.BackupRead(SafeFileHandle, safeBuffer, (uint) safeBuffer.Capacity, out numberOfBytesRead, false, processSecurity, ref _context);
+            
+            var lastError = Marshal.GetLastWin32Error();
+            if (!success)
+               NativeError.ThrowException(lastError);
+
 
             // See File.GetAccessControlCore(): .CopyTo() does not work there?
             safeBuffer.CopyTo(buffer, offset, count);
 
-            return (int)numberOfBytesRead;
+            return (int) numberOfBytesRead;
          }
       }
 
@@ -386,6 +375,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Write(buffer, offset, count, false);
       }
+
 
       /// <summary>When overridden in a derived class, writes a sequence of bytes to the current stream and advances the current position within this stream by the number of bytes written.</summary>
       /// <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from <paramref name="buffer"/> to the current stream.</param>
@@ -423,8 +413,11 @@ namespace Alphaleonis.Win32.Filesystem
 
             uint bytesWritten;
 
-            if (!NativeMethods.BackupWrite(SafeFileHandle, safeBuffer, (uint)safeBuffer.Capacity, out bytesWritten, false, processSecurity, ref _context))
-               NativeError.ThrowException(Marshal.GetLastWin32Error());
+            var success = NativeMethods.BackupWrite(SafeFileHandle, safeBuffer, (uint)safeBuffer.Capacity, out bytesWritten, false, processSecurity, ref _context);
+            
+            var lastError = Marshal.GetLastWin32Error();
+            if (!success)
+               NativeError.ThrowException(lastError);
          }
       }
 
@@ -432,8 +425,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Clears all buffers for this stream and causes any buffered data to be written to the underlying device.</summary>
       public override void Flush()
       {
-         if (!NativeMethods.FlushFileBuffers(SafeFileHandle))
-            NativeError.ThrowException(Marshal.GetLastWin32Error());
+         var success = NativeMethods.FlushFileBuffers(SafeFileHandle);
+
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success)
+            NativeError.ThrowException(lastError);
       }
 
 
@@ -452,13 +448,14 @@ namespace Alphaleonis.Win32.Filesystem
       public long Skip(long bytes)
       {
          uint lowSought, highSought;
-         if (!NativeMethods.BackupSeek(SafeFileHandle, NativeMethods.GetLowOrderDword(bytes), NativeMethods.GetHighOrderDword(bytes), out lowSought, out highSought, ref _context))
-         {
-            int lastError = Marshal.GetLastWin32Error();
 
+         var success = NativeMethods.BackupSeek(SafeFileHandle, NativeMethods.GetLowOrderDword(bytes), NativeMethods.GetHighOrderDword(bytes), out lowSought, out highSought, ref _context);
+
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success && lastError != Win32Errors.ERROR_SEEK)
+         {
             // Error Code 25 indicates a seek error, we just skip that here.
-            if (lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_SEEK)
-               NativeError.ThrowException(lastError);
+            NativeError.ThrowException(lastError);
          }
 
          return NativeMethods.ToLong(highSought, lowSought);
@@ -478,28 +475,28 @@ namespace Alphaleonis.Win32.Filesystem
          IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
          SafeGlobalMemoryBufferHandle pSecurityDescriptor;
 
-         uint lastError = SecurityNativeMethods.GetSecurityInfo(SafeFileHandle, ObjectType.FileObject,
-            SecurityInformation.Group | SecurityInformation.Owner | SecurityInformation.Label | SecurityInformation.Dacl | SecurityInformation.Sacl,
-            out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
+         var lastError = SecurityNativeMethods.GetSecurityInfo(SafeFileHandle, ObjectType.FileObject, SecurityInformation.Group | SecurityInformation.Owner | SecurityInformation.Label | SecurityInformation.Dacl | SecurityInformation.Sacl, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
 
          try
          {
             if (lastError != Win32Errors.ERROR_SUCCESS)
-               NativeError.ThrowException((int)lastError);
+               NativeError.ThrowException((int) lastError);
 
-            if (pSecurityDescriptor != null && pSecurityDescriptor.IsInvalid)
+            if (null != pSecurityDescriptor && pSecurityDescriptor.IsInvalid)
             {
                pSecurityDescriptor.Close();
-               throw new IOException(Resources.Returned_Invalid_Security_Descriptor);
+               pSecurityDescriptor = null;
+
+               throw new IOException(new Win32Exception((int) Win32Errors.ERROR_INVALID_SECURITY_DESCR).Message);
             }
 
-            uint length = SecurityNativeMethods.GetSecurityDescriptorLength(pSecurityDescriptor);
 
-            byte[] managedBuffer = new byte[length];
+            var length = SecurityNativeMethods.GetSecurityDescriptorLength(pSecurityDescriptor);
+            var managedBuffer = new byte[length];
 
             
             // .CopyTo() does not work there?
-            if (pSecurityDescriptor != null)
+            if (null != pSecurityDescriptor)
                pSecurityDescriptor.CopyTo(managedBuffer, 0, (int) length);
 
 
@@ -510,7 +507,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
          finally
          {
-            if (pSecurityDescriptor != null)
+            if (null != pSecurityDescriptor)
                pSecurityDescriptor.Close();
          }
       }
@@ -534,13 +531,17 @@ namespace Alphaleonis.Win32.Filesystem
       public void Lock(long position, long length)
       {
          if (position < 0)
-            throw new ArgumentOutOfRangeException("position", position, Resources.Unlock_Position_Negative);
+            throw new ArgumentOutOfRangeException("position", position, new Win32Exception((int) Win32Errors.ERROR_NEGATIVE_SEEK).Message);
 
          if (length < 0)
             throw new ArgumentOutOfRangeException("length", length, Resources.Negative_Lock_Length);
 
-         if (!NativeMethods.LockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
-            NativeError.ThrowException(Marshal.GetLastWin32Error());
+
+         var success = NativeMethods.LockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length));
+
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success)
+            NativeError.ThrowException(lastError);
       }
 
 
@@ -554,13 +555,17 @@ namespace Alphaleonis.Win32.Filesystem
       public void Unlock(long position, long length)
       {
          if (position < 0)
-            throw new ArgumentOutOfRangeException("position", position, Resources.Unlock_Position_Negative);
+            throw new ArgumentOutOfRangeException("position", position, new Win32Exception((int) Win32Errors.ERROR_NEGATIVE_SEEK).Message);
 
          if (length < 0)
             throw new ArgumentOutOfRangeException("length", length, Resources.Negative_Lock_Length);
 
-         if (!NativeMethods.UnlockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
-            NativeError.ThrowException(Marshal.GetLastWin32Error());
+
+         var success = NativeMethods.UnlockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length));
+
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success)
+            NativeError.ThrowException(lastError);
       }
 
 
@@ -579,8 +584,11 @@ namespace Alphaleonis.Win32.Filesystem
          {
             uint numberOfBytesRead;
 
-            if (!NativeMethods.BackupRead(SafeFileHandle, hBuf, (uint) sizeOf, out numberOfBytesRead, false, _processSecurity, ref _context))
-               NativeError.ThrowException();
+            var success = NativeMethods.BackupRead(SafeFileHandle, hBuf, (uint) sizeOf, out numberOfBytesRead, false, _processSecurity, ref _context);
+
+            var lastError = Marshal.GetLastWin32Error();
+            if (!success)
+               NativeError.ThrowException(lastError);
 
 
             if (numberOfBytesRead == 0)
@@ -590,54 +598,28 @@ namespace Alphaleonis.Win32.Filesystem
             if (numberOfBytesRead < sizeOf)
                throw new IOException(Resources.Read_Incomplete_Header);
 
+
             var streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>(0);
+            var nameLength = (uint) Math.Min(streamID.dwStreamNameSize, hBuf.Capacity);
 
-            uint nameLength = (uint) Math.Min(streamID.dwStreamNameSize, hBuf.Capacity);
+
+            success = NativeMethods.BackupRead(SafeFileHandle, hBuf, nameLength, out numberOfBytesRead, false, _processSecurity, ref _context);
+
+            lastError = Marshal.GetLastWin32Error();
+            if (!success)
+               NativeError.ThrowException(lastError);
 
 
-            if (!NativeMethods.BackupRead(SafeFileHandle, hBuf, nameLength, out numberOfBytesRead, false, _processSecurity, ref _context))
-               NativeError.ThrowException();
-
-            string name = hBuf.PtrToStringUni(0, (int) nameLength/2);
+            var name = hBuf.PtrToStringUni(0, (int) nameLength / 2);
 
             return new BackupStreamInfo(streamID, name);
          }
       }
 
-      #endregion // Methods
+
+
 
       #region Disposable Members
-
-      /// <summary>Releases the unmanaged resources used by the <see cref="System.IO.Stream"/> and optionally releases the managed resources.</summary>
-      /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      protected override void Dispose(bool disposing)
-      {
-         // If one of the constructors previously threw an exception,
-         // than the object hasn't been initialized properly and call from finalize will fail.         
-
-         if (SafeFileHandle != null && !SafeFileHandle.IsInvalid)
-         {
-            if (_context != IntPtr.Zero)
-            {
-               try
-               {
-                  uint temp;
-
-                  // MSDN: To release the memory used by the data structure, call BackupRead with the bAbort parameter set to TRUE when the backup operation is complete.
-                  if (!NativeMethods.BackupRead(SafeFileHandle, new SafeGlobalMemoryBufferHandle(), 0, out temp, true, false, ref _context))
-                     NativeError.ThrowException(Marshal.GetLastWin32Error());
-               }
-               finally
-               {
-                  _context = IntPtr.Zero;
-                  SafeFileHandle.Close();
-               }
-            }
-         }
-
-         base.Dispose(disposing);
-      }
 
       /// <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="BackupFileStream"/> is reclaimed by garbage collection.</summary>
       ~BackupFileStream()
@@ -645,6 +627,52 @@ namespace Alphaleonis.Win32.Filesystem
          Dispose(false);
       }
 
+
+      public void Dispose()
+      {
+         Dispose(true);
+         GC.SuppressFinalize(this);
+      }
+
+
+      /// <summary>Releases the unmanaged resources used by the <see cref="System.IO.Stream"/> and optionally releases the managed resources.</summary>
+      /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      protected override void Dispose(bool disposing)
+      {
+         if (disposing)
+         {
+            // If one of the constructors previously threw an exception,
+            // than the object hasn't been initialized properly and call from finalize will fail.         
+
+            if (null != SafeFileHandle && !SafeFileHandle.IsInvalid)
+            {
+               if (_context != IntPtr.Zero)
+               {
+                  try
+                  {
+                     uint temp;
+
+                     // MSDN: To release the memory used by the data structure, call BackupRead with the bAbort parameter set to TRUE when the backup operation is complete.
+                     var success = NativeMethods.BackupRead(SafeFileHandle, new SafeGlobalMemoryBufferHandle(), 0, out temp, true, false, ref _context);
+
+                     var lastError = Marshal.GetLastWin32Error();
+                     if (!success)
+                        NativeError.ThrowException(lastError);
+                  }
+                  finally
+                  {
+                     _context = IntPtr.Zero;
+                     SafeFileHandle.Close();
+                  }
+               }
+            }
+         }
+
+
+         base.Dispose(disposing);
+      }
+      
       #endregion // Disposable Members
    }
 }
