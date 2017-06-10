@@ -33,26 +33,26 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
+
       /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyCommittedException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public TransactionAlreadyCommittedException(string message)
-         : base(message)
+      public TransactionAlreadyCommittedException(string message) : base(message)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyCommittedException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public TransactionAlreadyCommittedException(string message, Exception innerException)
-         : base(message, innerException)
+      public TransactionAlreadyCommittedException(string message, Exception innerException) : base(message, innerException)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyCommittedException"/> class.</summary>
       /// <param name="info">The object that holds the serialized object data.</param>
       /// <param name="context">The contextual information about the source or destination.</param>
-      protected TransactionAlreadyCommittedException(SerializationInfo info, StreamingContext context)
-         : base(info, context)
+      protected TransactionAlreadyCommittedException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
       }
    }

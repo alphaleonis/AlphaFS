@@ -20,31 +20,35 @@
  */
 
 using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The exception that is thrown when an attempt to create a directory or file that already exists was made.</summary>
+   /// <summary>The exception that is thrown when an attempt to create a file or directory that already exists was made.</summary>
    [Serializable]
    public class AlreadyExistsException : System.IO.IOException
    {
-      private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_ALREADY_EXISTS);
+      private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_ALREADY_EXISTS);
+      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_ALREADY_EXISTS, new Win32Exception((int) Win32Errors.ERROR_ALREADY_EXISTS).Message.TrimEnd('.'));
+
 
       /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
-      public AlreadyExistsException() : base(Resources.File_Or_Directory_Already_Exists, s_errorCode)
+      public AlreadyExistsException() : base(string.Format(CultureInfo.InvariantCulture, "{0}.", ErrorText), ErrorCode)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
-      /// <param name="message">The message.</param>
-      public AlreadyExistsException(string message) : base(message, s_errorCode)
+      /// <param name="path">The path to the file system object.</param>
+      public AlreadyExistsException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), ErrorCode)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
-      /// <param name="message">The message.</param>
+      /// <param name="path">The path to the file system object.</param>
       /// <param name="innerException">The inner exception.</param>
-      public AlreadyExistsException(string message, Exception innerException) : base(message, innerException)
+      public AlreadyExistsException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), innerException)
       {
       }
 

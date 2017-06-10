@@ -20,6 +20,8 @@
  */
 
 using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -28,34 +30,35 @@ namespace Alphaleonis.Win32.Filesystem
    [Serializable]
    public class DeviceNotReadyException : System.IO.IOException
    {
-      private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_READY);
+      private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_READY);
+      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_NOT_READY, new Win32Exception((int) Win32Errors.ERROR_NOT_READY).Message.TrimEnd('.'));
+
 
       /// <summary>Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.</summary>
-      public DeviceNotReadyException()
-         : base(Resources.Device_Not_Ready, s_errorCode)
+      public DeviceNotReadyException() : base(string.Format(CultureInfo.InvariantCulture, "{0}.", ErrorText), ErrorCode)
       {
       }
 
+
       /// <summary>Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.</summary>
-      /// <param name="message">The message.</param>
-      public DeviceNotReadyException(string message)
-         : base(message, s_errorCode)
+      /// <param name="path">The path to the device.</param>
+      public DeviceNotReadyException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), ErrorCode)
       {
       }
 
+
       /// <summary>Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.</summary>
-      /// <param name="message">The message.</param>
+      /// <param name="path">The path to the device.</param>
       /// <param name="innerException">The inner exception.</param>
-      public DeviceNotReadyException(string message, Exception innerException)
-         : base(message, innerException)
+      public DeviceNotReadyException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), innerException)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
-      protected DeviceNotReadyException(SerializationInfo info, StreamingContext context)
-         : base(info, context)
+      protected DeviceNotReadyException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
       }
    }

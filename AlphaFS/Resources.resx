@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Transaction_Invalid" xml:space="preserve">
     <value>Invalid transaction object.</value>
@@ -219,11 +219,8 @@
   <data name="Invalid_Stream_Name" xml:space="preserve">
     <value>Invalid stream name.</value>
   </data>
-  <data name="Not_A_Reparse_Point" xml:space="preserve">
-    <value>The file or directory is not a reparse point.</value>
-  </data>
   <data name="File_Or_Directory_Already_Exists" xml:space="preserve">
-    <value>The file or directory already exists.</value>
+    <value>The file or directory already exists</value>
   </data>
   <data name="Destination_Buffer_Not_Large_Enough" xml:space="preserve">
     <value>Destination buffer not large enough for the requested operation.</value>
@@ -235,13 +232,13 @@
   <data name="Not_A_Valid_Guid" xml:space="preserve">
     <value>Argument is not a valid Volume GUID.</value>
   </data>
-  <data name="Device_Not_Ready" xml:space="preserve">
-    <value>The device is not ready.</value>
-  </data>
   <data name="Invalid_Subpath" xml:space="preserve">
     <value>Invalid Subpath</value>
   </data>
   <data name="Handle_Is_Closed" xml:space="preserve">
     <value>The handle is closed.</value>
+  </data>
+  <data name="Invalid_Reparse_Data" xml:space="preserve">
+    <value>The data present in the reparse point buffer is invalid</value>
   </data>
 </root>

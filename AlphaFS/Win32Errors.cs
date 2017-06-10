@@ -1046,7 +1046,10 @@ namespace Alphaleonis.Win32
       public const uint ERROR_NOT_A_REPARSE_POINT = 4390;
 
       //public const uint ERROR_REPARSE_ATTRIBUTE_CONFLICT = 4391;
-      //public const uint ERROR_INVALID_REPARSE_DATA = 4392;
+
+      /// <summary>The data present in the reparse point buffer is invalid.</summary>
+      public const uint ERROR_INVALID_REPARSE_DATA = 4392;
+
       //public const uint ERROR_REPARSE_TAG_INVALID = 4393;
       //public const uint ERROR_REPARSE_TAG_MISMATCH = 4394;
       //public const uint ERROR_VOLUME_NOT_SIS_ENABLED = 4500;

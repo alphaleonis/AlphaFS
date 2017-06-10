@@ -33,11 +33,13 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
+
       /// <summary>Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
       public TransactionException(string message) : base(message)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
@@ -45,6 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       public TransactionException(string message, Exception innerException) : base(message, innerException)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>

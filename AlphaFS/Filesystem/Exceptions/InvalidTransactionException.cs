@@ -33,26 +33,26 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
+
       /// <summary>Initializes a new instance of the <see cref="InvalidTransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public InvalidTransactionException(string message)
-         : base(message)
+      public InvalidTransactionException(string message) : base(message)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="InvalidTransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public InvalidTransactionException(string message, Exception innerException)
-         : base(message, innerException)
+      public InvalidTransactionException(string message, Exception innerException) : base(message, innerException)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="InvalidTransactionException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
-      protected InvalidTransactionException(SerializationInfo info, StreamingContext context)
-         : base(info, context)
+      protected InvalidTransactionException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
       }
    }

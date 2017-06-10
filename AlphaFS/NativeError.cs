@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32
                throw new UnsupportedRemoteTransactionException(Resources.Invalid_Transaction_Request, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
-               throw new NotAReparsePointException(Resources.Not_A_Reparse_Point, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new NotAReparsePointException(new Win32Exception((int) Win32Errors.ERROR_NOT_A_REPARSE_POINT).Message, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             #endregion // Transacted
 

@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32
             throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough, "length");
 
          if (length > Capacity)
-            throw new ArgumentOutOfRangeException("length", Resources.Source_Offset_And_Length_Outside_Bounds);
+            throw new ArgumentOutOfRangeException("length", Resources.Source_OffsetAndLength_Outside_Bounds);
 
          Marshal.Copy(handle, destination, destinationOffset, length);
       }
@@ -133,7 +133,7 @@ namespace Alphaleonis.Win32
             throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough, "length");
 
          if (length > Capacity)
-            throw new ArgumentOutOfRangeException("length", Resources.Source_Offset_And_Length_Outside_Bounds);
+            throw new ArgumentOutOfRangeException("length", Resources.Source_OffsetAndLength_Outside_Bounds);
 
          Marshal.Copy(new IntPtr(handle.ToInt64() + sourceOffset), destination, destinationOffset, length);
       }
