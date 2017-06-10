@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
@@ -35,6 +36,24 @@ namespace AlphaFS.UnitTest
          File_IsLocked(false);
          File_IsLocked(true);
       }
+
+
+      [TestMethod]
+      public void AlphaFS_File_GetProcessesForLockedFile_LocalAndNetwork_Success()
+      {
+         File_GetProcessesForLockedFile(false);
+         File_GetProcessesForLockedFile(true);
+      }
+
+
+      [TestMethod]
+      public void AlphaFS_File_GetProcessesForLockedFile_NoFileLocked_LocalAndNetwork_Success()
+      {
+         File_GetProcessesForLockedFile_NoFileLocked(false);
+         File_GetProcessesForLockedFile_NoFileLocked(true);
+      }
+
+
 
 
       private void File_IsLocked(bool isNetwork)
@@ -58,6 +77,72 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is not locked, but is expected to be.");
 
             Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is locked, but is expected not to be.");
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void File_GetProcessesForLockedFile(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         {
+            var file = rootDir.RandomFileFullPath + ".txt";
+            var fi = new System.IO.FileInfo(file);
+
+            Console.WriteLine("\nInput File Path: [{0}]]", file);
+
+
+            using (fi.CreateText())
+            {
+               var processes = Alphaleonis.Win32.Filesystem.File.GetProcessesForLockedFile(fi.FullName);
+
+               foreach (var process in processes)
+               {
+                  // Uncomment to see all properties.
+                  //UnitTestConstants.Dump(process, -26);
+
+                  Console.WriteLine("\n\tProcess Name: [{0}] | ID: [{1}]", process.ProcessName, process.Id);
+
+
+                  // The name of the Visual Studio unit test process.
+                  Assert.IsTrue(process.ProcessName.StartsWith("QTAgent", StringComparison.OrdinalIgnoreCase));
+               }
+            }
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void File_GetProcessesForLockedFile_NoFileLocked(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         {
+            var file = rootDir.RandomFileFullPath + ".txt";
+            var fi = new System.IO.FileInfo(file);
+
+            Console.WriteLine("\nInput File Path: [{0}]]\n", file);
+
+
+            using (fi.CreateText()) { }
+
+
+            Assert.AreEqual(0, Alphaleonis.Win32.Filesystem.File.GetProcessesForLockedFile(fi.FullName).Count());
          }
 
          Console.WriteLine();

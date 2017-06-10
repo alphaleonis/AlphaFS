@@ -750,5 +750,77 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool FindNextStreamW(SafeFindFileHandle handle, SafeGlobalMemoryBufferHandle lpFindStreamData);
+
+
+
+      #region Restart Manager
+
+      //private const int RmRebootReasonNone = 0;
+      private const int CCH_RM_MAX_APP_NAME = 255;
+      private const int CCH_RM_MAX_SVC_NAME = 63;
+
+
+      internal enum RM_APP_TYPE
+      {
+         RmUnknownApp = 0,
+         RmMainWindow = 1,
+         RmOtherWindow = 2,
+         RmService = 3,
+         RmExplorer = 4,
+         RmConsole = 5,
+         RmCritical = 1000
+      }
+
+
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      internal struct RM_UNIQUE_PROCESS
+      {
+         public readonly int dwProcessId;
+         public readonly FILETIME ProcessStartTime;
+      }
+
+
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      internal struct RM_PROCESS_INFO
+      {
+         public RM_UNIQUE_PROCESS Process;
+         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCH_RM_MAX_APP_NAME + 1)] public readonly string strAppName;
+         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCH_RM_MAX_SVC_NAME + 1)] public readonly string strServiceShortName;
+         [MarshalAs(UnmanagedType.I4)] public readonly RM_APP_TYPE ApplicationType;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint AppStatus;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint TSSessionId;
+         [MarshalAs(UnmanagedType.Bool)] public readonly bool bRestartable;
+      }
+
+
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.I4)]
+      internal static extern int RmRegisterResources([MarshalAs(UnmanagedType.U4)] uint pSessionHandle, [MarshalAs(UnmanagedType.U4)] uint nFiles, [MarshalAs(UnmanagedType.LPArray)] string[] rgsFilenames, [MarshalAs(UnmanagedType.U4)] uint nApplications, [In] RM_UNIQUE_PROCESS[] rgApplications, [MarshalAs(UnmanagedType.U4)] uint nServices, [MarshalAs(UnmanagedType.LPArray)] string[] rgsServiceNames);
+
+
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.I4)]
+      internal static extern int RmStartSession([MarshalAs(UnmanagedType.U4)] out uint pSessionHandle, [MarshalAs(UnmanagedType.I4)] int dwSessionFlags, [MarshalAs(UnmanagedType.LPWStr)] string strSessionKey);
+
+
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.I4)]
+      internal static extern int RmEndSession([MarshalAs(UnmanagedType.U4)] uint pSessionHandle);
+
+
+      /// <summary>Gets a list of all applications and services that are currently using resources that have been registered with the Restart Manager session.
+      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+      /// </summary>
+      /// <returns>This is the most recent error received. The function can return one of the system error codes that are defined in Winerror.h.</returns>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.I4)]
+      internal static extern int RmGetList([MarshalAs(UnmanagedType.U4)] uint dwSessionHandle, [MarshalAs(UnmanagedType.U4)] out uint pnProcInfoNeeded, [MarshalAs(UnmanagedType.U4)] ref uint pnProcInfo, [MarshalAs(UnmanagedType.LPArray)] [In, Out] RM_PROCESS_INFO[] rgAffectedApps, [MarshalAs(UnmanagedType.U4)] ref uint lpdwRebootReasons);
+
+      #endregion // Restart Manager
    }
 }

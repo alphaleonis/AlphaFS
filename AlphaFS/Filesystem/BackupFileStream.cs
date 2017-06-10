@@ -628,13 +628,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      public void Dispose()
-      {
-         Dispose(true);
-         GC.SuppressFinalize(this);
-      }
-
-
       /// <summary>Releases the unmanaged resources used by the <see cref="System.IO.Stream"/> and optionally releases the managed resources.</summary>
       /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
