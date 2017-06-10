@@ -420,7 +420,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_SET_POWER_STATE_VETOED = 1140;
       //public const uint ERROR_SET_POWER_STATE_FAILED = 1141;
       //public const uint ERROR_TOO_MANY_LINKS = 1142;
-      //public const uint ERROR_OLD_WIN_VERSION = 1150;
+
+      /// <summary>(1150) The specified program requires a newer version of Windows.</summary>
+      public const uint ERROR_OLD_WIN_VERSION = 1150;
+
       //public const uint ERROR_APP_WRONG_OS = 1151;
       //public const uint ERROR_SINGLE_INSTANCE_APP = 1152;
       //public const uint ERROR_RMODE_APP = 1153;

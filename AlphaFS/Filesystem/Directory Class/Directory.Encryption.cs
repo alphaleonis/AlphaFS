@@ -21,6 +21,7 @@
 
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -229,8 +230,11 @@ namespace Alphaleonis.Win32.Filesystem
          // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage and no Unicode version of this function exists.
 
-         if (!NativeMethods.EncryptionDisable(pathLp, !enable))
-            NativeError.ThrowException(pathLp);
+         var success = NativeMethods.EncryptionDisable(pathLp, !enable);
+
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success)
+            NativeError.ThrowException(lastError, pathLp);
       }
 
 

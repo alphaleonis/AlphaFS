@@ -39,6 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
          return IsLockedCore(null, path, PathFormat.RelativePath);
       }
 
+
       /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
       /// <returns>Returns <see langword="true"/> if the specified file is in use (locked); otherwise, <see langword="false"/></returns>
       /// <exception cref="FileNotFoundException"></exception>
@@ -52,7 +53,8 @@ namespace Alphaleonis.Win32.Filesystem
          return IsLockedCore(null, path, pathFormat);
       }
 
-      #region Transactional
+
+
 
       /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
       /// <returns>Returns <see langword="true"/> if the specified file is in use (locked); otherwise, <see langword="false"/></returns>
@@ -66,6 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return IsLockedCore(transaction, path, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
       /// <returns>Returns <see langword="true"/> if the specified file is in use (locked); otherwise, <see langword="false"/></returns>
@@ -81,7 +84,8 @@ namespace Alphaleonis.Win32.Filesystem
          return IsLockedCore(transaction, path, pathFormat);
       }
 
-      #endregion // Transactional
+
+
 
       /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
       /// <returns>Returns <see langword="true"/> if the specified file is in use (locked); otherwise, <see langword="false"/></returns>
@@ -101,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
          catch (IOException ex)
          {
-            int lastError = Marshal.GetHRForException(ex) & NativeMethods.OverflowExceptionBitShift;
+            var lastError = Marshal.GetHRForException(ex) & NativeMethods.OverflowExceptionBitShift;
             if (lastError == Win32Errors.ERROR_SHARING_VIOLATION || lastError == Win32Errors.ERROR_LOCK_VIOLATION)
                return true;
 

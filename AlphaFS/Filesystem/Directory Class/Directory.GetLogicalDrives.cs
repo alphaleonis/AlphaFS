@@ -40,6 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
       
+
       /// <summary>[AlphaFS] Retrieves the names of the logical drives on this computer in the form "&lt;drive letter&gt;:\".</summary>
       /// <returns>An array of type <see cref="String"/> that represents the logical drives on a computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
@@ -61,7 +62,8 @@ namespace Alphaleonis.Win32.Filesystem
          return EnumerateLogicalDrivesCore(fromEnvironment, isReady);
       }
 
-      #region Internal Methods
+
+
 
       /// <summary>Enumerates the drive names of all logical drives on a computer.</summary>
       /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
@@ -70,15 +72,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static IEnumerable<DriveInfo> EnumerateLogicalDrivesCore(bool fromEnvironment, bool isReady)
       {
-         #region Get from Environment
+         // Get from Environment.
 
          if (fromEnvironment)
          {
-            IEnumerable<string> drivesEnv = isReady
+            var drivesEnv = isReady
                ? Environment.GetLogicalDrives().Where(ld => File.ExistsCore(true, null, ld, PathFormat.FullPath))
                : Environment.GetLogicalDrives().Select(ld => ld);
 
-            foreach (string drive in drivesEnv)
+            foreach (var drive in drivesEnv)
             {
                // Optionally check Drive .IsReady.
                if (isReady)
@@ -86,6 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
                   if (File.ExistsCore(true, null, drive, PathFormat.FullPath))
                      yield return new DriveInfo(drive);
                }
+
                else
                   yield return new DriveInfo(drive);
             }
@@ -93,16 +96,18 @@ namespace Alphaleonis.Win32.Filesystem
             yield break;
          }
 
-         #endregion // Get from Environment
 
-         #region Get through NativeMethod
+         // Get through NativeMethod.
 
-         uint lastError = NativeMethods.GetLogicalDrives();
+         var lastError = NativeMethods.GetLogicalDrives();
+
+         // MSDN: GetLogicalDrives(): If the function fails, the return value is zero.
          if (lastError == Win32Errors.ERROR_SUCCESS)
-            NativeError.ThrowException((int)lastError);
+            NativeError.ThrowException(lastError);
 
-         uint drives = lastError;
-         int count = 0;
+
+         var drives = lastError;
+         var count = 0;
          while (drives != 0)
          {
             if ((drives & 1) != 0)
@@ -111,8 +116,8 @@ namespace Alphaleonis.Win32.Filesystem
             drives >>= 1;
          }
 
-         string[] result = new string[count];
-         char[] root = { 'A', Path.VolumeSeparatorChar };
+         var result = new string[count];
+         char[] root = {'A', Path.VolumeSeparatorChar};
 
          drives = lastError;
          count = 0;
@@ -121,11 +126,11 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if ((drives & 1) != 0)
             {
-               string drive = new string(root);
+               var drive = new string(root);
 
                if (isReady)
                {
-                  // Optionally check Drive .IsReady.
+                  // Optionally check Drive .IsReady property.
                   if (File.ExistsCore(true, null, drive, PathFormat.FullPath))
                      yield return new DriveInfo(drive);
                }
@@ -141,10 +146,6 @@ namespace Alphaleonis.Win32.Filesystem
             drives >>= 1;
             root[0]++;
          }
-
-         #endregion // Get through NativeMethod
       }
-
-      #endregion // Internal Methods
    }
 }

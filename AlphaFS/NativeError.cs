@@ -37,6 +37,12 @@ namespace Alphaleonis.Win32
          ThrowException((uint) errorCode, null, null);
       }
 
+
+      public static void ThrowException(uint errorCode)
+      {
+         ThrowException(errorCode, null, null);
+      }
+
       
       public static void ThrowException(int errorCode, string readPath)
       {

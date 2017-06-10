@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static T GetAccessControlCore<T>(bool isFolder, string path, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         SecurityInformation securityInfo = CreateSecurityInformation(includeSections);
+         var securityInfo = CreateSecurityInformation(includeSections);
 
 
          // We need the SE_SECURITY_NAME privilege enabled to be able to get the SACL descriptor.
@@ -144,20 +144,19 @@ namespace Alphaleonis.Win32.Filesystem
             IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
             SafeGlobalMemoryBufferHandle pSecurityDescriptor;
 
-            string pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+            var pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
 
             // Get/SetNamedSecurityInfo does not work with a handle but with a path, hence does not honor the privileges.
             // It magically does since Windows Server 2012 / 8 but not in previous OS versions.
 
-            uint lastError = Security.NativeMethods.GetNamedSecurityInfo(pathLp, ObjectType.FileObject, securityInfo,
-               out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
+            var lastError = Security.NativeMethods.GetNamedSecurityInfo(pathLp, ObjectType.FileObject, securityInfo, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
 
 
             // When GetNamedSecurityInfo() fails with ACCESS_DENIED, try again using GetSecurityInfo().
 
             if (lastError == Win32Errors.ERROR_ACCESS_DENIED)
-               using (SafeFileHandle handle = CreateFileCore(null, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Read, FileShare.Read, false, PathFormat.LongFullPath))
+               using (var handle = CreateFileCore(null, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Read, FileShare.Read, false, PathFormat.LongFullPath))
                   return GetAccessControlHandleCore<T>(true, isFolder, handle, includeSections, securityInfo);
 
             return GetSecurityDescriptor<T>(lastError, isFolder, pathLp, pSecurityDescriptor);
@@ -184,8 +183,7 @@ namespace Alphaleonis.Win32.Filesystem
             IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
             SafeGlobalMemoryBufferHandle pSecurityDescriptor;
 
-            uint lastError = Security.NativeMethods.GetSecurityInfo(handle, ObjectType.FileObject, securityInfo,
-               out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
+            var lastError = Security.NativeMethods.GetSecurityInfo(handle, ObjectType.FileObject, securityInfo, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
 
             return GetSecurityDescriptor<T>(lastError, isFolder, null, pSecurityDescriptor);
          }
@@ -224,26 +222,27 @@ namespace Alphaleonis.Win32.Filesystem
                lastError = isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND;
 
 
-            // If the function fails, the return value is zero.
+            // MSDN: GetNamedSecurityInfo() / GetSecurityInfo(): If the function fails, the return value is zero.
             if (lastError != Win32Errors.ERROR_SUCCESS)
             {
                if (!Utils.IsNullOrWhiteSpace(path))
                   NativeError.ThrowException(lastError, path);
+
                else
-                  NativeError.ThrowException((int) lastError);
+                  NativeError.ThrowException(lastError);
             }
 
             if (!NativeMethods.IsValidHandle(securityDescriptor, false))
                throw new IOException(Resources.Returned_Invalid_Security_Descriptor);
 
 
-            uint length = Security.NativeMethods.GetSecurityDescriptorLength(securityDescriptor);
+            var length = Security.NativeMethods.GetSecurityDescriptorLength(securityDescriptor);
 
             // Seems not to work: Method .CopyTo: length > Capacity, so an Exception is thrown.
             //byte[] managedBuffer = new byte[length];
             //pSecurityDescriptor.CopyTo(managedBuffer, 0, (int) length);
 
-            byte[] managedBuffer = securityDescriptor.ToByteArray(0, (int) length);
+            var managedBuffer = securityDescriptor.ToByteArray(0, (int) length);
 
             objectSecurity = isFolder ? (ObjectSecurity) new DirectorySecurity() : new FileSecurity();
             objectSecurity.SetSecurityDescriptorBinaryForm(managedBuffer);

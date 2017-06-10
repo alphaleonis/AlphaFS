@@ -264,25 +264,30 @@ namespace Alphaleonis.Win32.Security
       [SecurityCritical]
       public string LookupDisplayName()
       {
+         uint languageId;
          const uint initialCapacity = 10;
          var displayNameCapacity = initialCapacity;
-         var displayName = new StringBuilder((int)displayNameCapacity);
-         uint languageId;
+         var displayName = new StringBuilder((int) displayNameCapacity);
 
-         if (!NativeMethods.LookupPrivilegeDisplayName(_systemName, _name, ref displayName, ref displayNameCapacity, out languageId))
+
+         var success = NativeMethods.LookupPrivilegeDisplayName(_systemName, _name, ref displayName, ref displayNameCapacity, out languageId);
+
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success)
          {
-            var lastError = Marshal.GetLastWin32Error();
             if (lastError == Win32Errors.ERROR_INSUFFICIENT_BUFFER)
             {
-               displayName = new StringBuilder((int)displayNameCapacity + 1);
+               displayName = new StringBuilder((int) displayNameCapacity + 1);
 
-               if (!NativeMethods.LookupPrivilegeDisplayName(_systemName, _name, ref displayName, ref displayNameCapacity, out languageId))
-                  NativeError.ThrowException(Marshal.GetLastWin32Error());
+               success = NativeMethods.LookupPrivilegeDisplayName(_systemName, _name, ref displayName, ref displayNameCapacity, out languageId);
+
+               lastError = Marshal.GetLastWin32Error();
             }
 
-            else
+            if (!success)
                NativeError.ThrowException(lastError);
          }
+
 
          return displayName.ToString();
       }
@@ -296,8 +301,12 @@ namespace Alphaleonis.Win32.Security
       {
          Luid luid;
 
-         if (!NativeMethods.LookupPrivilegeValue(_systemName, _name, out luid))
-            NativeError.ThrowException(Marshal.GetLastWin32Error());
+         var success = NativeMethods.LookupPrivilegeValue(_systemName, _name, out luid);
+
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success)
+            NativeError.ThrowException(lastError);
+
 
          return Filesystem.NativeMethods.LuidToLong(luid);
       }

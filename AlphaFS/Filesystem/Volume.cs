@@ -570,7 +570,7 @@ namespace Alphaleonis.Win32.Filesystem
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (var handle = NativeMethods.FindFirstVolume(buffer, (uint)buffer.Capacity))
+         using (var handle = NativeMethods.FindFirstVolume(buffer, (uint) buffer.Capacity))
          {
             var lastError = Marshal.GetLastWin32Error();
 
@@ -578,7 +578,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                handle.Close();
 
-               switch ((uint)lastError)
+               switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_NO_MORE_FILES:
                   case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
@@ -593,7 +593,7 @@ namespace Alphaleonis.Win32.Filesystem
             yield return buffer.ToString();
 
 
-            while (NativeMethods.FindNextVolume(handle, buffer, (uint)buffer.Capacity))
+            while (NativeMethods.FindNextVolume(handle, buffer, (uint) buffer.Capacity))
             {
                lastError = Marshal.GetLastWin32Error();
 
@@ -601,7 +601,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   handle.Close();
 
-                  switch ((uint)lastError)
+                  switch ((uint) lastError)
                   {
                      case Win32Errors.ERROR_NO_MORE_FILES:
                      case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.

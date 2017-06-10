@@ -22,6 +22,7 @@
 using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -46,10 +47,12 @@ namespace Alphaleonis.Win32.Network
       public static IEnumerable<DfsInfo> EnumerateDfsLinks(string dfsName)
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
+
 
          if (Utils.IsNullOrWhiteSpace(dfsName))
             throw new ArgumentNullException("dfsName");
+
 
          var fd = new FunctionData();
 
@@ -188,7 +191,8 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<string> EnumerateDfsRootCore(string host, bool continueOnException)
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
+
 
          return EnumerateNetworkObjectCore(new FunctionData(), (NativeMethods.DFS_INFO_300 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
@@ -222,7 +226,8 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<string> EnumerateDomainDfsRootCore(string domain, bool continueOnException)
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
+
 
          return EnumerateNetworkObjectCore(new FunctionData(), (NativeMethods.DFS_INFO_200 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
@@ -267,13 +272,15 @@ namespace Alphaleonis.Win32.Network
       private static DfsInfo GetDfsInfoCore(bool getFromClient, string dfsName, string serverName, string shareName)
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
+
 
          if (Utils.IsNullOrWhiteSpace(dfsName))
             throw new ArgumentNullException("dfsName");
 
-         serverName = Utils.IsNullOrWhiteSpace(serverName) ? null : serverName;
-         shareName = Utils.IsNullOrWhiteSpace(shareName) ? null : shareName;
+
+         serverName = !Utils.IsNullOrWhiteSpace(serverName) ? serverName : null;
+         shareName = !Utils.IsNullOrWhiteSpace(shareName) ? shareName : null;
 
          SafeGlobalMemoryBufferHandle safeBuffer;
 
@@ -286,7 +293,7 @@ namespace Alphaleonis.Win32.Network
          if (lastError == Win32Errors.NERR_Success)
             return new DfsInfo(safeBuffer.PtrToStructure<NativeMethods.DFS_INFO_9>(0));
 
-         throw new NetworkInformationException((int)lastError);
+         throw new NetworkInformationException((int) lastError);
       }
 
       #endregion // Internal Methods

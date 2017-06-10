@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -89,18 +90,18 @@ namespace Alphaleonis.Win32.Filesystem
       internal static IEnumerable<string> EnumerateHardlinksCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
 
-         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // Default buffer length, will be extended if needed, although this should not happen.
          uint length = NativeMethods.MaxPathUnicode;
-         StringBuilder builder = new StringBuilder((int)length);
+         var builder = new StringBuilder((int) length);
 
 
-         getFindFirstFileName:
+      getFindFirstFileName:
 
-         using (SafeFindFileHandle handle = transaction == null
+         using (var handle = transaction == null
 
             // FindFirstFileName() / FindFirstFileNameTransacted()
             // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -111,16 +112,16 @@ namespace Alphaleonis.Win32.Filesystem
             ? NativeMethods.FindFirstFileName(pathLp, 0, out length, builder)
             : NativeMethods.FindFirstFileNameTransacted(pathLp, 0, out length, builder, transaction.SafeHandle))
          {
-            int lastError = Marshal.GetLastWin32Error();
+            var lastError = Marshal.GetLastWin32Error();
 
             if (handle.IsInvalid)
             {
                handle.Close();
 
-               switch ((uint)lastError)
+               switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
-                     builder = new StringBuilder((int)length);
+                     builder = new StringBuilder((int) length);
                      goto getFindFirstFileName;
 
                   default:
@@ -133,31 +134,29 @@ namespace Alphaleonis.Win32.Filesystem
             yield return builder.ToString();
 
 
-            //length = NativeMethods.MaxPathUnicode;
-            //builder = new StringBuilder((int)length);
-
             do
             {
                while (!NativeMethods.FindNextFileName(handle, out length, builder))
                {
                   lastError = Marshal.GetLastWin32Error();
 
-                  switch ((uint)lastError)
+                  switch ((uint) lastError)
                   {
                      // We've reached the end of the enumeration.
                      case Win32Errors.ERROR_HANDLE_EOF:
                         yield break;
 
                      case Win32Errors.ERROR_MORE_DATA:
-                        builder = new StringBuilder((int)length);
+                        builder = new StringBuilder((int) length);
                         continue;
 
                      default:
-                        //If the function fails, the return value is zero (0).
+                        // If the function fails, the return value is zero (0).
                         NativeError.ThrowException(lastError);
                         break;
                   }
                }
+
 
                yield return builder.ToString();
 

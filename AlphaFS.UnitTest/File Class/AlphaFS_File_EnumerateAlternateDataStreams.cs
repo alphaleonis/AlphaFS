@@ -34,7 +34,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_EnumerateAlternateDataStreams_LocalAndNetwork_Success()
+      public void AlphaFS_File_EnumerateAlternateDataStreams_LocalAndNetwork_Success()
       {
          File_EnumerateAlternateDataStreams(false);
          File_EnumerateAlternateDataStreams(true);

@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
          // 2016-09-29: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
          // 2017-05-30: MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
-         var folderNameLength = NativeMethods.GetCurrentDirectory((uint)nameBuffer.Capacity, nameBuffer);
+         var folderNameLength = NativeMethods.GetCurrentDirectory((uint) nameBuffer.Capacity, nameBuffer);
          var lastError = Marshal.GetLastWin32Error();
 
          if (folderNameLength == 0)
@@ -121,8 +121,11 @@ namespace Alphaleonis.Win32.Filesystem
          // 2016-09-29: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
          // 2017-05-30: MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
-         if (!NativeMethods.SetCurrentDirectory(pathLp))
-            NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
+         var success = NativeMethods.SetCurrentDirectory(pathLp);
+
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success)
+            NativeError.ThrowException(lastError, pathLp);
       }
    }
 }

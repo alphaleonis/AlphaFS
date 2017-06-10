@@ -305,15 +305,6 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This method requires Windows Vista or higher..
-        /// </summary>
-        internal static string Requires_Windows_Vista_Or_Higher {
-            get {
-                return ResourceManager.GetString("Requires_Windows_Vista_Or_Higher", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Invalid security descriptor returned from system..
         /// </summary>
         internal static string Returned_Invalid_Security_Descriptor {

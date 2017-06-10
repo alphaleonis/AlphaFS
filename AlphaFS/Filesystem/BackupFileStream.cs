@@ -475,12 +475,12 @@ namespace Alphaleonis.Win32.Filesystem
          IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
          SafeGlobalMemoryBufferHandle pSecurityDescriptor;
 
-         var lastError = SecurityNativeMethods.GetSecurityInfo(SafeFileHandle, ObjectType.FileObject, SecurityInformation.Group | SecurityInformation.Owner | SecurityInformation.Label | SecurityInformation.Dacl | SecurityInformation.Sacl, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
+         var lastError = (int) SecurityNativeMethods.GetSecurityInfo(SafeFileHandle, ObjectType.FileObject, SecurityInformation.Group | SecurityInformation.Owner | SecurityInformation.Label | SecurityInformation.Dacl | SecurityInformation.Sacl, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
 
          try
          {
             if (lastError != Win32Errors.ERROR_SUCCESS)
-               NativeError.ThrowException((int) lastError);
+               NativeError.ThrowException(lastError);
 
             if (null != pSecurityDescriptor && pSecurityDescriptor.IsInvalid)
             {

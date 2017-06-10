@@ -22,6 +22,7 @@
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -156,15 +157,18 @@ namespace Alphaleonis.Win32.Filesystem
       internal static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoCore(KernelTransaction transaction, SafeFileHandle safeHandle, string path, FileShare shareMode, bool continueOnException, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
 
-         bool callerHandle = safeHandle != null;
+
+         var pathLp = path;
+
+         var callerHandle = safeHandle != null;
          if (!callerHandle)
          {
             if (Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentNullException("path");
 
-            string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+            pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
             safeHandle = File.CreateFileCore(transaction, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, true, PathFormat.LongFullPath);
          }
@@ -175,16 +179,18 @@ namespace Alphaleonis.Win32.Filesystem
             if (!NativeMethods.IsValidHandle(safeHandle, Marshal.GetLastWin32Error(), !continueOnException))
                yield break;
 
-            var fileNameOffset = (int)Marshal.OffsetOf(typeof(NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName");
+            var fileNameOffset = (int) Marshal.OffsetOf(typeof(NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName");
 
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                while (true)
                {
-                  if (!NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, (uint)safeBuffer.Capacity))
+                  var success = NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, (uint) safeBuffer.Capacity);
+
+                  var lastError = Marshal.GetLastWin32Error();
+                  if (!success)
                   {
-                     uint lastError = (uint)Marshal.GetLastWin32Error();
-                     switch (lastError)
+                     switch ((uint) lastError)
                      {
                         case Win32Errors.ERROR_SUCCESS:
                         case Win32Errors.ERROR_NO_MORE_FILES:
@@ -195,32 +201,36 @@ namespace Alphaleonis.Win32.Filesystem
                            continue;
 
                         default:
-                           NativeError.ThrowException(lastError, path);
-                           yield break; // we should never get to this yield break.
+                           NativeError.ThrowException(lastError, pathLp);
+
+                           // Keep the compiler happy as we never get here.
+                           yield break;
                      }
                   }
                   
-                  int offset = 0;
+
+                  var offset = 0;
                   NativeMethods.FILE_ID_BOTH_DIR_INFO fibdi;
                   do
                   {
                      fibdi = safeBuffer.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>(offset);
-                     string fileName = safeBuffer.PtrToStringUni(offset + fileNameOffset, (int)(fibdi.FileNameLength / 2));
+                     var fileName =
+                        safeBuffer.PtrToStringUni(offset + fileNameOffset, (int) (fibdi.FileNameLength / 2));
 
-                     if (!fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
-                         !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
+                     if (!fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.InvariantCulture) &&
+                         !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.InvariantCulture))
                         yield return new FileIdBothDirectoryInfo(fibdi, fileName);
 
                      offset += fibdi.NextEntryOffset;
-                  }
-                  while (fibdi.NextEntryOffset != 0);
+
+                  } while (fibdi.NextEntryOffset != 0);
                }                           
             }
          }
          finally
          {
             // Handle is ours, dispose.
-            if (!callerHandle && safeHandle != null)
+            if (!callerHandle && null != safeHandle)
                safeHandle.Close();
          }
       }

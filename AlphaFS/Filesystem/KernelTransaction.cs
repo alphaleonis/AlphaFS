@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       public KernelTransaction(ObjectSecurity securityDescriptor, int timeout, string description)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
 
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(securityDescriptor))
          {
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       public void Commit()
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
 
          if (!NativeMethods.CommitTransaction(_hTrans))
             CheckTransaction();
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       public void Rollback()
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
 
          if (!NativeMethods.RollbackTransaction(_hTrans))
             CheckTransaction();

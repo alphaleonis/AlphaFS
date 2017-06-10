@@ -81,31 +81,32 @@ namespace Alphaleonis.Win32.Filesystem
       {
          using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
          {
-            string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat,
-               GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars |
-               GetFullPathOptions.CheckAdditional);
+            var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
-            using (SafeFindFileHandle handle = transaction == null
+            using (var handle = null == transaction
                ? NativeMethods.FindFirstStreamW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0)
                : NativeMethods.FindFirstStreamTransactedW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
             {
-               int errorCode = Marshal.GetLastWin32Error();
+               var lastError = Marshal.GetLastWin32Error();
 
                if (handle.IsInvalid)
                {
-                  if (errorCode == Win32Errors.ERROR_HANDLE_EOF)
+                  if (lastError == Win32Errors.ERROR_HANDLE_EOF)
                      yield break;
 
-                  NativeError.ThrowException(errorCode);
+                  NativeError.ThrowException(lastError);
                }
+
 
                while (true)
                {
                   yield return new AlternateDataStreamInfo(pathLp, buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0));
 
-                  if (!NativeMethods.FindNextStreamW(handle, buffer))
+                  var success = NativeMethods.FindNextStreamW(handle, buffer);
+                  
+                  lastError = Marshal.GetLastWin32Error();
+                  if (!success)
                   {
-                     int lastError = Marshal.GetLastWin32Error();
                      if (lastError == Win32Errors.ERROR_HANDLE_EOF)
                         break;
 

@@ -183,9 +183,6 @@
   <data name="Cannot_Create_Directory" xml:space="preserve">
     <value>Cannot create directory.</value>
   </data>
-  <data name="Requires_Windows_Vista_Or_Higher" xml:space="preserve">
-    <value>This method requires Windows Vista or higher.</value>
-  </data>
   <data name="Target_Directory_Is_A_File" xml:space="preserve">
     <value>The target directory is a file, not a directory: [{0}]</value>
   </data>
