@@ -30,6 +30,11 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
       /// <summary>Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="path">A path that describes a file to decrypt.</param>
       [SecurityCritical]
       public static void Decrypt(string path)
@@ -39,6 +44,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="path">A path that describes a file to decrypt.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -49,6 +59,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="path">A path that describes a file to encrypt.</param>
       [SecurityCritical]
       public static void Encrypt(string path)
@@ -58,6 +73,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="path">A path that describes a file to encrypt.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
@@ -70,11 +90,15 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Decrypts/encrypts a file or directory so that only the account used to encrypt the file can decrypt it.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="NotSupportedException"/>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">A path that describes a file to encrypt.</param>
       /// <param name="encrypt"><see langword="true"/> encrypt, <see langword="false"/> decrypt.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       internal static void EncryptDecryptFileCore(bool isFolder, string path, bool encrypt, PathFormat pathFormat)
       {
@@ -91,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
          var attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(null, path, pathFormat, true);
          var isReadOnly = (attrs.dwFileAttributes & FileAttributes.ReadOnly) != 0;
          if (isReadOnly)
-            SetAttributesCore(isFolder, null, path, FileAttributes.Normal, pathFormat);
+            SetAttributesCore(isFolder, null, path, attrs.dwFileAttributes &= ~FileAttributes.ReadOnly, pathFormat);
          
 
          // EncryptFile() / DecryptFile()
@@ -125,11 +149,17 @@ namespace Alphaleonis.Win32.Filesystem
             switch ((uint) lastError)
             {
                case Win32Errors.ERROR_ACCESS_DENIED:
-                  var root = Path.GetPathRoot(path, false);
-                  if (!string.Equals("NTFS", new DriveInfo(root).DriveFormat, StringComparison.OrdinalIgnoreCase))
-                     throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "The drive does not support NTFS encryption: [{0}]", root));
+                  if (!string.Equals("NTFS", new DriveInfo(path).DriveFormat, StringComparison.OrdinalIgnoreCase))
+                     throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "The drive does not support NTFS encryption: [{0}]", Path.GetPathRoot(path, false)));
 
                   break;
+
+
+               case Win32Errors.ERROR_FILE_READ_ONLY:
+                  if ((attrs.dwFileAttributes & FileAttributes.Directory) != 0)
+                     throw new DirectoryReadOnlyException(path);
+                  else
+                     throw new FileReadOnlyException(path);
 
 
                default:

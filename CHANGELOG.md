@@ -11,6 +11,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #328: Several instances of `ArgumentException.ParamName` not set/used correctly  (Thx elgonzo)
 - Issue #330: Correct the parameter order for Privilege class constructors using the `ArgumentNullException`.
 - Issue #339: `Directory/File.Encrypt/Decrypt` should restore read-only attribute.
+- Issue #340: DirectoryReadOnlyException inherits from System.IO.IOException, wrong?
 
 ### New Features/Enhancements
 
@@ -23,6 +24,9 @@ Version vNext  (xxxx-xx-xx)
 - Issue #306: Include `ShareInfoLevel.Info502` and set as a fallback in `GetShareInfoCore()`  (Thx damiarnold)
 - Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
 - Issue #335: Add overloaded methods to `File/Directory.TransferTimestamps` to apply to ReparsePoint.
+- Issue #338: Add convenience method `Directory.IsEmpty`
+- Issue #342: Add instance method: `FileInfo.IsLocked()`
+- Issue #343: Add method `File.GetProcessesForLockedFile`
 
 
 Version 2.1.3 (2017-06-05)

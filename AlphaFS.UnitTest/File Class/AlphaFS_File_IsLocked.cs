@@ -146,7 +146,7 @@ namespace AlphaFS.UnitTest
             using (fi.CreateText()) { }
 
 
-            Assert.AreEqual(null, Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(fi.FullName));
+            Assert.IsNull(Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(fi.FullName));
          }
 
          Console.WriteLine();

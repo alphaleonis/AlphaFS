@@ -20,7 +20,7 @@
  */
 
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -55,8 +55,6 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return IsLockedCore(null, path, pathFormat);
       }
-
-
 
 
       /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
@@ -125,81 +123,174 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
       /// <para>&#160;</para>
       /// <returns>
       /// <para>Returns null when no processes found that are locking the file specified by <paramref name="filePath"/>.</para>
       /// <para>Returns a list of processes locking the file specified by <paramref name="filePath"/>.</para>
       /// </returns>
       /// </summary>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="InvalidOperationException"/>
       /// <param name="filePath">The path to the file.</param>
-      public static List<Process> GetProcessForFileLock(string filePath)
+      public static Collection<Process> GetProcessForFileLock(string filePath)
       {
-         return GetProcessForFileLockCore(new List<string>(new[] {filePath}), PathFormat.RelativePath);
+         return GetProcessForFileLockCore(null, new Collection<string>(new[] {filePath}), PathFormat.RelativePath);
       }
 
 
-      /// <summary>Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
       /// <para>&#160;</para>
       /// <returns>
       /// <para>Returns null when no processes found that are locking the file specified by <paramref name="filePath"/>.</para>
       /// <para>Returns a list of processes locking the file specified by <paramref name="filePath"/>.</para>
       /// </returns>
       /// </summary>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="InvalidOperationException"/>
       /// <param name="filePath">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      public static List<Process> GetProcessForFileLock(string filePath, PathFormat pathFormat)
+      public static Collection<Process> GetProcessForFileLock(string filePath, PathFormat pathFormat)
       {
-         return GetProcessForFileLockCore(new List<string>(new[] {filePath}), pathFormat);
+         return GetProcessForFileLockCore(null, new Collection<string>(new[] {filePath}), pathFormat);
       }
 
 
-      /// <summary>Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
       /// <para>&#160;</para>
       /// <returns>
       /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
       /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
       /// </returns>
       /// </summary>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="InvalidOperationException"/>
       /// <param name="filePaths">A list with one or more file paths.</param>
-      public static List<Process> GetProcessForFileLock(List<string> filePaths)
+      public static Collection<Process> GetProcessForFileLock(Collection<string> filePaths)
       {
-         return GetProcessForFileLockCore(filePaths, PathFormat.RelativePath);
+         return GetProcessForFileLockCore(null, filePaths, PathFormat.RelativePath);
       }
 
 
-      /// <summary>Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
       /// <para>&#160;</para>
       /// <returns>
       /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
       /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
       /// </returns>
       /// </summary>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <param name="filePaths">A list with one or more file paths.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      public static List<Process> GetProcessForFileLock(List<string> filePaths, PathFormat pathFormat)
-      {
-         return GetProcessForFileLockCore(filePaths, pathFormat);
-      }
-
-
-
-
-      /// <summary>Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
-      /// <para>&#160;</para>
-      /// <returns>
-      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
-      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
-      /// </returns>
-      /// </summary>
-      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="InvalidOperationException"/>
       /// <param name="filePaths">A list with one or more file paths.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      internal static List<Process> GetProcessForFileLockCore(List<string> filePaths, PathFormat pathFormat)
+      public static Collection<Process> GetProcessForFileLock(Collection<string> filePaths, PathFormat pathFormat)
+      {
+         return GetProcessForFileLockCore(null, filePaths, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns null when no processes found that are locking the file specified by <paramref name="filePath"/>.</para>
+      /// <para>Returns a list of processes locking the file specified by <paramref name="filePath"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="InvalidOperationException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="filePath">The path to the file.</param>
+      public static Collection<Process> GetProcessForFileLock(KernelTransaction transaction, string filePath)
+      {
+         return GetProcessForFileLockCore(transaction, new Collection<string>(new[] { filePath }), PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns null when no processes found that are locking the file specified by <paramref name="filePath"/>.</para>
+      /// <para>Returns a list of processes locking the file specified by <paramref name="filePath"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="InvalidOperationException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="filePath">The path to the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      public static Collection<Process> GetProcessForFileLock(KernelTransaction transaction, string filePath, PathFormat pathFormat)
+      {
+         return GetProcessForFileLockCore(transaction, new Collection<string>(new[] { filePath }), pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="InvalidOperationException"/>
+      /// <param name="filePaths">A list with one or more file paths.</param>
+      public static Collection<Process> GetProcessForFileLock(KernelTransaction transaction, Collection<string> filePaths)
+      {
+         return GetProcessForFileLockCore(transaction, filePaths, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="InvalidOperationException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="filePaths">A list with one or more file paths.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      public static Collection<Process> GetProcessForFileLock(KernelTransaction transaction, Collection<string> filePaths, PathFormat pathFormat)
+      {
+         return GetProcessForFileLockCore(transaction, filePaths, pathFormat);
+      }
+
+
+
+
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="InvalidOperationException"/>
+      /// <param name="transaction"></param>
+      /// <param name="filePaths">A list with one or more file paths.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      internal static Collection<Process> GetProcessForFileLockCore(KernelTransaction transaction, Collection<string> filePaths, PathFormat pathFormat)
       {
          if (null == filePaths)
             throw new ArgumentNullException("filePaths");
@@ -208,13 +299,12 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentOutOfRangeException("filePaths", "No paths specified.");
 
 
-         var allPaths = new List<string>(filePaths.Count);
+         var isLongPath = pathFormat == PathFormat.LongFullPath;
+         var allPaths = isLongPath ? new Collection<string>(filePaths) : new Collection<string>();
 
-         if (pathFormat == PathFormat.LongFullPath)
-            allPaths = filePaths;
-
-         else
-            allPaths.AddRange(filePaths.Select(path => Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck)));
+         if (!isLongPath)
+            foreach (var path in filePaths)
+               allPaths.Add(Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck));
 
 
 
@@ -227,13 +317,14 @@ namespace Alphaleonis.Win32.Filesystem
             NativeError.ThrowException(lastError);
 
 
-         // A snapshot count of all running processes.
-         var processes = new List<Process>(Process.GetProcesses().Length);
 
+
+         var processes = new Collection<Process>();
 
          try
          {
-            var processesFound = (uint) processes.Capacity;
+            // A snapshot count of all running processes.
+            var processesFound = (uint) Process.GetProcesses().Length;
             uint lpdwRebootReasons = 0;
 
 
@@ -252,6 +343,8 @@ namespace Alphaleonis.Win32.Filesystem
 
             lastError = NativeMethods.RmGetList(sessionHandle, out processesFound, ref processesTotal, processInfo, ref lpdwRebootReasons);
 
+
+            // There would b no more need for this because we already have a/the total number of running processes.
             if (lastError == Win32Errors.ERROR_MORE_DATA)
                goto GetList;
 

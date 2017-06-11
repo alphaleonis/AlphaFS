@@ -149,6 +149,8 @@
     <Compile Include="Classes\AlphaFS_BackupFileStream.cs" />
     <Compile Include="Device Class\AlphaFS_DeviceInfo_InitializeInstance.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Compress_Decompress.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_Encryption.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_IsEmpty.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_EnumerateFileSystemEntryInfos.cs" />
     <Compile Include="Directory Class\Directory_CurrentDirectory.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_DeleteEmptySubdirectories.cs" />

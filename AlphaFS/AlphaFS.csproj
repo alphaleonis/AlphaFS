@@ -208,6 +208,7 @@
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFiles.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntryInfos.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntries.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.IsEmpty.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Exists.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetDirectories.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFiles.cs" />

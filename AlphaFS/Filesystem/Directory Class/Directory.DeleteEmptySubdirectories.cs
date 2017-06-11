@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -254,7 +253,7 @@ namespace Alphaleonis.Win32.Filesystem
             foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, dirs.Pop(), Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.ContinueOnException, PathFormat.LongFullPath))
             {
                // Ensure the directory is empty.
-               if (!EnumerateFileSystemEntryInfosCore<string>(transaction, fsei.LongFullPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath).Any())
+               if (IsEmptyCore(transaction, fsei.LongFullPath, pathFormat))
                   DeleteDirectoryCore(fsei, transaction, null, false, ignoreReadOnly, true, PathFormat.LongFullPath);
 
                else if (recursive)

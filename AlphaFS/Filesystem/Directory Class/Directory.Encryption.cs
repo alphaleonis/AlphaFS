@@ -31,7 +31,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
@@ -47,7 +48,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
@@ -64,7 +66,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
@@ -79,7 +82,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
@@ -97,7 +101,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
@@ -112,7 +117,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
@@ -129,7 +135,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
@@ -143,7 +150,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
@@ -162,6 +170,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and disables encryption by writing: "Disable=1"</para>
       ///   <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
       /// </summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">The name of the directory for which to disable encryption.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -174,6 +189,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and disables encryption by writing: "Disable=1"</para>
       ///   <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
       /// </summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">The name of the directory for which to disable encryption.</param>
       [SecurityCritical]
       public static void DisableEncryption(string path)
@@ -188,6 +210,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and enables encryption by writing: "Disable=0"</para>
       ///   <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
       /// </summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -200,6 +229,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and enables encryption by writing: "Disable=0"</para>
       ///   <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
       /// </summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
       [SecurityCritical]
       public static void EnableEncryption(string path)
@@ -214,6 +250,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and  enables/disables encryption by writing: "Disable=0" or "Disable=1".</para>
       ///   <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
       /// </summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
       /// <param name="enable"><see langword="true"/> enabled encryption, <see langword="false"/> disables encryption.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -241,7 +284,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Decrypts/encrypts a directory recursively so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
