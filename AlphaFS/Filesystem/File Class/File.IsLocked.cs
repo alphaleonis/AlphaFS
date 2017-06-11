@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -122,104 +123,161 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      
-      
-      /// <summary>Gets a list of processes that have a lock on the file specified by <paramref name="filePath"/></summary>
+
+
+      /// <summary>Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns null when no processes found that are locking the file specified by <paramref name="filePath"/>.</para>
+      /// <para>Returns a list of processes locking the file specified by <paramref name="filePath"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="filePath">The path to the file.</param>
-      /// <returns>A list of processes locking the file.</returns>
-      public static IEnumerable<Process> GetProcessesForLockedFile(string filePath)
+      public static List<Process> GetProcessForFileLock(string filePath)
       {
-         return GetProcessesForLockedFilesCore(new[] {filePath});
+         return GetProcessForFileLockCore(new List<string>(new[] {filePath}), PathFormat.RelativePath);
       }
 
 
-      /// <summary>Gets a list of processes that have a lock on the files specified by <paramref name="filePaths"/></summary>
-      /// <param name="filePaths">A list of file paths.</param>
-      /// <returns>A list of processes locking the files specified by <paramref name="filePaths"/></returns>
-      public static IEnumerable<Process> GetProcessesForLockedFiles(string[] filePaths)
+      /// <summary>Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns null when no processes found that are locking the file specified by <paramref name="filePath"/>.</para>
+      /// <para>Returns a list of processes locking the file specified by <paramref name="filePath"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <exception cref="ArgumentNullException"/>
+      /// <param name="filePath">The path to the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      public static List<Process> GetProcessForFileLock(string filePath, PathFormat pathFormat)
       {
-         return GetProcessesForLockedFilesCore(filePaths);
+         return GetProcessForFileLockCore(new List<string>(new[] {filePath}), pathFormat);
+      }
+
+
+      /// <summary>Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <exception cref="ArgumentNullException"/>
+      /// <param name="filePaths">A list with one or more file paths.</param>
+      public static List<Process> GetProcessForFileLock(List<string> filePaths)
+      {
+         return GetProcessForFileLockCore(filePaths, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <exception cref="ArgumentNullException"/>
+      /// <param name="filePaths">A list with one or more file paths.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      public static List<Process> GetProcessForFileLock(List<string> filePaths, PathFormat pathFormat)
+      {
+         return GetProcessForFileLockCore(filePaths, pathFormat);
       }
 
 
 
 
-      /// <summary>Gets a list of processes that have a lock on the files specified by <paramref name="filePaths"/></summary>
-      /// <param name="filePaths">A list of file paths.</param>
-      /// <returns>A list of processes locking the files specified by <paramref name="filePaths"/></returns>
-      internal static IEnumerable<Process> GetProcessesForLockedFilesCore(string[] filePaths)
+      /// <summary>Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <exception cref="ArgumentNullException"/>
+      /// <param name="filePaths">A list with one or more file paths.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      internal static List<Process> GetProcessForFileLockCore(List<string> filePaths, PathFormat pathFormat)
       {
-         uint handle;
-         var key = Guid.NewGuid().ToString();
+         if (null == filePaths)
+            throw new ArgumentNullException("filePaths");
+
+         if (filePaths.Count == 0)
+            throw new ArgumentOutOfRangeException("filePaths", "No paths specified.");
 
 
-         var success = NativeMethods.RmStartSession(out handle, 0, key) == Win32Errors.ERROR_SUCCESS;
+         var allPaths = new List<string>(filePaths.Count);
+
+         if (pathFormat == PathFormat.LongFullPath)
+            allPaths = filePaths;
+
+         else
+            allPaths.AddRange(filePaths.Select(path => Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck)));
+
+
+
+
+         uint sessionHandle;
+         var success = NativeMethods.RmStartSession(out sessionHandle, 0, Guid.NewGuid().ToString()) == Win32Errors.ERROR_SUCCESS;
 
          var lastError = Marshal.GetLastWin32Error();
          if (!success)
             NativeError.ThrowException(lastError);
 
 
-         var processes = new List<Process>(1000);
+         // A snapshot count of all running processes.
+         var processes = new List<Process>(Process.GetProcesses().Length);
+
 
          try
          {
-            uint pnProcInfoNeeded;
-            uint pnProcInfo = 0;
+            var processesFound = (uint) processes.Capacity;
             uint lpdwRebootReasons = 0;
 
-            success = NativeMethods.RmRegisterResources(handle, (uint) filePaths.Length, filePaths, 0, null, 0, null) == Win32Errors.ERROR_SUCCESS;
+
+            success = NativeMethods.RmRegisterResources(sessionHandle, (uint) allPaths.Count, allPaths.ToArray(), 0, null, 0, null) == Win32Errors.ERROR_SUCCESS;
 
             lastError = Marshal.GetLastWin32Error();
             if (!success)
                NativeError.ThrowException(lastError);
 
 
-            // Note: there's a race condition here -- the first call to RmGetList() returns the total number of process.
-            // However, when we call RmGetList() again to get the actual processes this number may have increased.
-            lastError = NativeMethods.RmGetList(handle, out pnProcInfoNeeded, ref pnProcInfo, null, ref lpdwRebootReasons);
+         GetList:
 
+            var processInfo = new NativeMethods.RM_PROCESS_INFO[processesFound];
+            var processesTotal = processesFound;
+
+
+            lastError = NativeMethods.RmGetList(sessionHandle, out processesFound, ref processesTotal, processInfo, ref lpdwRebootReasons);
 
             if (lastError == Win32Errors.ERROR_MORE_DATA)
+               goto GetList;
+
+
+            if (lastError != Win32Errors.ERROR_SUCCESS)
+               NativeError.ThrowException(lastError);
+
+
+            for (var i = 0; i < processesTotal; i++)
             {
-               // Create an array to store the process results
-               var processInfo = new NativeMethods.RM_PROCESS_INFO[pnProcInfoNeeded];
-               pnProcInfo = pnProcInfoNeeded;
-
-               success = NativeMethods.RmGetList(handle, out pnProcInfoNeeded, ref pnProcInfo, processInfo, ref lpdwRebootReasons) == Win32Errors.ERROR_SUCCESS;
-
-               lastError = Marshal.GetLastWin32Error();
-
-               if (!success)
-                  NativeError.ThrowException(lastError);
-
-
-               processes = new List<Process>((int) pnProcInfo);
-
-               for (var i = 0; i < pnProcInfo; i++)
+               try
                {
-                  try
-                  {
-                     processes.Add(Process.GetProcessById(processInfo[i].Process.dwProcessId));
-                  }
-                  // catch the error -- in case the process is no longer running
-                  catch (ArgumentException) {}
+                  processes.Add(Process.GetProcessById(processInfo[i].Process.dwProcessId));
                }
-            }
 
-            else
-            {
-               if (lastError != Win32Errors.ERROR_SUCCESS)
-                  NativeError.ThrowException(lastError);
+               // MSDN: The process specified by the processId parameter is not running. The identifier might be expired.
+               catch (ArgumentException) {}
             }
          }
          finally
          {
-            NativeMethods.RmEndSession(handle);
+            NativeMethods.RmEndSession(sessionHandle);
          }
 
 
-         return processes;
+         return processes.Count == 0 ? null : processes;
       }
    }
 }

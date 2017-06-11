@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
@@ -39,18 +38,18 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_GetProcessesForLockedFile_LocalAndNetwork_Success()
+      public void AlphaFS_File_GetProcessForFileLock_LocalAndNetwork_Success()
       {
-         File_GetProcessesForLockedFile(false);
-         File_GetProcessesForLockedFile(true);
+         File_GetProcessForFileLock(false);
+         File_GetProcessForFileLock(true);
       }
 
 
       [TestMethod]
-      public void AlphaFS_File_GetProcessesForLockedFile_NoFileLocked_LocalAndNetwork_Success()
+      public void AlphaFS_File_GetProcessForFileLock_NoLockReturnsNull_LocalAndNetwork_Success()
       {
-         File_GetProcessesForLockedFile_NoFileLocked(false);
-         File_GetProcessesForLockedFile_NoFileLocked(true);
+         File_GetProcessForFileLock_NoLockReturnsNull(false);
+         File_GetProcessForFileLock_NoLockReturnsNull(true);
       }
 
 
@@ -83,7 +82,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_GetProcessesForLockedFile(bool isNetwork)
+      private void File_GetProcessForFileLock(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -102,19 +101,24 @@ namespace AlphaFS.UnitTest
 
             using (fi.CreateText())
             {
-               var processes = Alphaleonis.Win32.Filesystem.File.GetProcessesForLockedFile(fi.FullName);
+               var processes = Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(fi.FullName);
+               var processesFound = processes.Count;
+
+               Console.WriteLine("\n\tProcesses found: [{0}]", processesFound);
+
+
+               Assert.AreEqual(1, processesFound);
+
 
                foreach (var process in processes)
-               {
-                  // Uncomment to see all properties.
-                  //UnitTestConstants.Dump(process, -26);
-
-                  Console.WriteLine("\n\tProcess Name: [{0}] | ID: [{1}]", process.ProcessName, process.Id);
+                  using (process)
+                  {
+                     UnitTestConstants.Dump(process, -26);
 
 
-                  // The name of the Visual Studio unit test process.
-                  Assert.IsTrue(process.ProcessName.StartsWith("QTAgent", StringComparison.OrdinalIgnoreCase));
-               }
+                     // The name of the Visual Studio unit test process.
+                     Assert.IsTrue(process.ProcessName.StartsWith("QTAgent", StringComparison.OrdinalIgnoreCase));
+                  }
             }
          }
 
@@ -122,7 +126,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_GetProcessesForLockedFile_NoFileLocked(bool isNetwork)
+      private void File_GetProcessForFileLock_NoLockReturnsNull(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -142,7 +146,7 @@ namespace AlphaFS.UnitTest
             using (fi.CreateText()) { }
 
 
-            Assert.AreEqual(0, Alphaleonis.Win32.Filesystem.File.GetProcessesForLockedFile(fi.FullName).Count());
+            Assert.AreEqual(null, Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(fi.FullName));
          }
 
          Console.WriteLine();

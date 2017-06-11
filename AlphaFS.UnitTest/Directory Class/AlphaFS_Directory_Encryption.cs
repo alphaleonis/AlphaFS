@@ -62,7 +62,7 @@ namespace AlphaFS.UnitTest
             var folder = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-            const int expectedFso = 50;
+            const int expectedFso = 10;
             UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false);
 
 

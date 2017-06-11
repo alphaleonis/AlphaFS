@@ -775,15 +775,15 @@ namespace Alphaleonis.Win32.Filesystem
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct RM_UNIQUE_PROCESS
       {
-         public readonly int dwProcessId;
-         public readonly FILETIME ProcessStartTime;
+         [MarshalAs(UnmanagedType.I4)] public readonly int dwProcessId;
+         [MarshalAs(UnmanagedType.Struct)] public readonly FILETIME ProcessStartTime;
       }
 
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct RM_PROCESS_INFO
       {
-         public RM_UNIQUE_PROCESS Process;
+         [MarshalAs(UnmanagedType.Struct)] public RM_UNIQUE_PROCESS Process;
          [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCH_RM_MAX_APP_NAME + 1)] public readonly string strAppName;
          [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCH_RM_MAX_SVC_NAME + 1)] public readonly string strServiceShortName;
          [MarshalAs(UnmanagedType.I4)] public readonly RM_APP_TYPE ApplicationType;
@@ -793,18 +793,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
-      [return: MarshalAs(UnmanagedType.I4)]
-      internal static extern int RmRegisterResources([MarshalAs(UnmanagedType.U4)] uint pSessionHandle, [MarshalAs(UnmanagedType.U4)] uint nFiles, [MarshalAs(UnmanagedType.LPArray)] string[] rgsFilenames, [MarshalAs(UnmanagedType.U4)] uint nApplications, [In] RM_UNIQUE_PROCESS[] rgApplications, [MarshalAs(UnmanagedType.U4)] uint nServices, [MarshalAs(UnmanagedType.LPArray)] string[] rgsServiceNames);
-
-
-      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
-      [return: MarshalAs(UnmanagedType.I4)]
-      internal static extern int RmStartSession([MarshalAs(UnmanagedType.U4)] out uint pSessionHandle, [MarshalAs(UnmanagedType.I4)] int dwSessionFlags, [MarshalAs(UnmanagedType.LPWStr)] string strSessionKey);
-
-
+      /// <summary>Ends the Restart Manager session. This function should be called by the primary installer that has previously started the session by calling the RmStartSession function.
+      /// <para>The RmEndSession function can be called by a secondary installer that is joined to the session once no more resources need to be registered by the secondary installer.</para>
+      /// <para>&#160;</para>
+      /// <returns>This is the most recent error received. The function can return one of the system error codes that are defined in Winerror.h.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows Vista [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2008 [desktop apps only]</para>
+      /// </remarks></summary>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.I4)]
@@ -812,15 +809,49 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets a list of all applications and services that are currently using resources that have been registered with the Restart Manager session.
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      /// </summary>
+      /// <para>&#160;</para>
       /// <returns>This is the most recent error received. The function can return one of the system error codes that are defined in Winerror.h.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows Vista [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2008 [desktop apps only]</para>
+      /// </remarks></summary>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.I4)]
       internal static extern int RmGetList([MarshalAs(UnmanagedType.U4)] uint dwSessionHandle, [MarshalAs(UnmanagedType.U4)] out uint pnProcInfoNeeded, [MarshalAs(UnmanagedType.U4)] ref uint pnProcInfo, [MarshalAs(UnmanagedType.LPArray)] [In, Out] RM_PROCESS_INFO[] rgAffectedApps, [MarshalAs(UnmanagedType.U4)] ref uint lpdwRebootReasons);
 
+
+      /// <summary>Registers resources to a Restart Manager session. The Restart Manager uses the list of resources registered with the session to determine which applications and services must be shut down and restarted.
+      /// <para>Resources can be identified by filenames, service short names, or RM_UNIQUE_PROCESS structures that describe running applications.</para>
+      /// <para>The RmRegisterResources function can be used by a primary or secondary installer.</para>
+      /// <para>&#160;</para>
+      /// <returns>This is the most recent error received. The function can return one of the system error codes that are defined in Winerror.h.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows Vista [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2008 [desktop apps only]</para>
+      /// </remarks></summary>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.I4)]
+      internal static extern int RmRegisterResources([MarshalAs(UnmanagedType.U4)] uint pSessionHandle, [MarshalAs(UnmanagedType.U4)] uint nFiles, [MarshalAs(UnmanagedType.LPArray)] string[] rgsFilenames, [MarshalAs(UnmanagedType.U4)] uint nApplications, [In] RM_UNIQUE_PROCESS[] rgApplications, [MarshalAs(UnmanagedType.U4)] uint nServices, [MarshalAs(UnmanagedType.LPArray)] string[] rgsServiceNames);
+
+
+      /// <summary>Starts a new Restart Manager session. A maximum of 64 Restart Manager sessions per user session can be open on the system at the same time.
+      /// <para>When this function starts a session, it returns a session handle and session key that can be used in subsequent calls to the Restart Manager API.</para>
+      /// <para>&#160;</para>
+      /// <returns>This is the most recent error received. The function can return one of the system error codes that are defined in Winerror.h.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows Vista [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2008 [desktop apps only]</para>
+      /// </remarks></summary>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.I4)]
+      internal static extern int RmStartSession([MarshalAs(UnmanagedType.U4)] out uint pSessionHandle, [MarshalAs(UnmanagedType.I4)] int dwSessionFlags, [MarshalAs(UnmanagedType.LPWStr)] string strSessionKey);
+      
       #endregion // Restart Manager
    }
 }

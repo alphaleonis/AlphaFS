@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.Diagnostics;
