@@ -22,6 +22,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -290,6 +291,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction"></param>
       /// <param name="filePaths">A list with one or more file paths.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Filesystem.NativeMethods.RmEndSession(System.UInt32)")]
       internal static Collection<Process> GetProcessForFileLockCore(KernelTransaction transaction, Collection<string> filePaths, PathFormat pathFormat)
       {
          if (null == filePaths)
