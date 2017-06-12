@@ -117,7 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static int FillAttributeInfoCore(KernelTransaction transaction, string pathLp, ref NativeMethods.WIN32_FILE_ATTRIBUTE_DATA win32AttrData, bool tryAgain, bool returnErrorOnNotFound)
       {
-         var lastError = (int)Win32Errors.ERROR_SUCCESS;
+         var lastError = (int) Win32Errors.ERROR_SUCCESS;
 
          #region Try Again
 
@@ -139,8 +139,8 @@ namespace Alphaleonis.Win32.Filesystem
                      if (!returnErrorOnNotFound)
                      {
                         // Return default value for backward compatibility
-                        lastError = (int)Win32Errors.ERROR_SUCCESS;
-                        win32AttrData.dwFileAttributes = (FileAttributes)(-1);
+                        lastError = (int) Win32Errors.ERROR_SUCCESS;
+                        win32AttrData.dwFileAttributes = NativeMethods.InvalidFileAttributes;
                      }
                   }
 
@@ -181,8 +181,8 @@ namespace Alphaleonis.Win32.Filesystem
                   if (!returnErrorOnNotFound)
                   {
                      // Return default value for backward compbatibility.
-                     lastError = (int)Win32Errors.ERROR_SUCCESS;
-                     win32AttrData.dwFileAttributes = (FileAttributes)(-1);
+                     lastError = (int) Win32Errors.ERROR_SUCCESS;
+                     win32AttrData.dwFileAttributes = NativeMethods.InvalidFileAttributes;
                   }
                }
             }

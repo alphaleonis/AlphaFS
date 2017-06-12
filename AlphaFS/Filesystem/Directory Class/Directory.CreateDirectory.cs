@@ -767,14 +767,14 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
                      case Win32Errors.ERROR_ALREADY_EXISTS:
                         if (File.ExistsCore(false, transaction, pathLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(lastError, pathLp);
+                           NativeError.ThrowException(lastError, null, pathLp);
 
                         if (File.ExistsCore(false, transaction, folderLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, folderLp);
+                           NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, null, folderLp);
                         break;
 
                      case Win32Errors.ERROR_BAD_NET_NAME:
-                        NativeError.ThrowException(lastError, pathLp);
+                        NativeError.ThrowException(lastError, null, pathLp);
                         break;
 
                      case Win32Errors.ERROR_DIRECTORY:
@@ -782,7 +782,7 @@ namespace Alphaleonis.Win32.Filesystem
                         throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, Resources.Unsupported_Path_Format, path));
 
                      default:
-                        NativeError.ThrowException(lastError, folderLp);
+                        NativeError.ThrowException(lastError, null, folderLp);
                         break;
                   }
                }
@@ -790,6 +790,7 @@ namespace Alphaleonis.Win32.Filesystem
                else if (compress)
                   Device.ToggleCompressionCore(true, transaction, folderLp, true, PathFormat.LongFullPath);
             }
+
 
             return new DirectoryInfo(transaction, pathLp, PathFormat.LongFullPath);
          }

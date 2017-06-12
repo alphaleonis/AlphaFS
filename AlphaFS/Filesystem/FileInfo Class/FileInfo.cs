@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
                   Refresh();
 
                var attrs = Win32AttributeData.dwFileAttributes;
-               return DataInitialised == 0 && attrs != (FileAttributes)(-1) && (attrs & FileAttributes.Directory) == 0;
+               return DataInitialised == 0 && File.HasValidAttributes(attrs) && !File.IsDirectory(attrs);
             }
             catch
             {
@@ -194,15 +194,18 @@ namespace Alphaleonis.Win32.Filesystem
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName);
 
+
             var attrs = Win32AttributeData.dwFileAttributes;
 
             // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
-            if (attrs == (FileAttributes)(-1))
+            if (attrs.Equals(NativeMethods.InvalidFileAttributes))
                NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, LongFullName);
 
+
             // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
-            if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
+            if (File.IsDirectory(attrs))
                NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, LongFullName));
+
 
             return Win32AttributeData.FileSize;
          }

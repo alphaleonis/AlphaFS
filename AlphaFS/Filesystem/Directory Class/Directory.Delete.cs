@@ -335,15 +335,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       private static void DeleteDirectoryCore(KernelTransaction transaction, string pathLp, bool ignoreReadOnly, bool continueOnNotFound)
       {
-         // Reset directory attributes upfront to avoid Exception route.
-         if (ignoreReadOnly && continueOnNotFound)
-         {
-            try
-            {
-               File.SetAttributesCore(true, transaction, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
-            }
-            catch { }
-         }
+         //// Reset directory attributes upfront to avoid Exception route.
+         //if (ignoreReadOnly && continueOnNotFound)
+         //{
+         //   try
+         //   {
+         //      File.SetAttributesCore(true, transaction, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
+         //   }
+         //   catch { }
+         //}
 
 
          startRemoveDirectory:
@@ -391,28 +391,25 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                case Win32Errors.ERROR_ACCESS_DENIED:
-                  var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-                  var dataInitialised = File.FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
+                  var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+                  var dataInitialised = File.FillAttributeInfoCore(transaction, pathLp, ref attrs, false, true);
 
-
-                  // Remove ReadOnly attribute.
-                  if (data.dwFileAttributes != (FileAttributes)(-1))
+                  
+                  if (File.IsReadOnly(attrs.dwFileAttributes))
                   {
-                     if ((data.dwFileAttributes & FileAttributes.ReadOnly) != 0)
+                     // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
+
+                     if (ignoreReadOnly)
                      {
-                        // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
+                        // Reset directory attributes to Normal.
+                        File.SetAttributesCore(true, transaction, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
 
-                        if (ignoreReadOnly)
-                        {
-                           // Reset directory attributes.
-                           File.SetAttributesCore(true, transaction, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
-
-                           goto startRemoveDirectory;
-                        }
-
-                        // MSDN: .NET 3.5+: IOException: The directory is read-only.
-                        throw new DirectoryReadOnlyException(pathLp);
+                        goto startRemoveDirectory;
                      }
+
+
+                     // MSDN: .NET 3.5+: IOException: The directory is read-only.
+                     throw new DirectoryReadOnlyException(pathLp);
                   }
 
 

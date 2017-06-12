@@ -58,10 +58,14 @@ namespace Alphaleonis.Win32.Filesystem
       internal const int MaxPath = 260;
 
       /// <summary>MaxPathUnicode = 32000</summary>
-      internal const int MaxPathUnicode = 32000;
+      internal const int MaxPathUnicode = 32700;
 
 
       /// <summary>When an exception is raised, bit shifting is needed to prevent: "System.OverflowException: Arithmetic operation resulted in an overflow."</summary>
       internal const int OverflowExceptionBitShift = 65535;
+
+
+      /// <summary>Invalid FileAttributes.</summary>
+      internal const System.IO.FileAttributes InvalidFileAttributes = (System.IO.FileAttributes) (-1);
    }
 }

@@ -135,8 +135,8 @@ namespace Alphaleonis.Win32.Filesystem
                if (DataInitialised == -1)
                   Refresh();
 
-               FileAttributes attrs = Win32AttributeData.dwFileAttributes;
-               return DataInitialised == 0 && attrs != (FileAttributes)(-1) && (attrs & FileAttributes.Directory) != 0;
+               var attrs = Win32AttributeData.dwFileAttributes;
+               return DataInitialised == 0 && File.HasValidAttributes(attrs) && File.IsDirectory(attrs);
             }
             catch
             {
@@ -170,12 +170,12 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          get
          {
-            string path = FullPath;
+            var path = FullPath;
 
             if (path.Length > 3)
                path = Path.RemoveTrailingDirectorySeparator(FullPath, false);
 
-            string dirName = Path.GetDirectoryName(path, false);
+            var dirName = Path.GetDirectoryName(path, false);
             return dirName == null ? null : new DirectoryInfo(Transaction, dirName, true, true);
          }
       }

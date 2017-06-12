@@ -26,11 +26,15 @@ namespace Alphaleonis.Win32
       /// <summary>Use this to translate error codes into HRESULTs like 0x80070006 for ERROR_INVALID_HANDLE.</summary>
       public static int GetHrFromWin32Error(uint errorCode)
       {
-         return (int)unchecked((int)0x80070000 | errorCode);
+         return (int) unchecked((int) 0x80070000 | errorCode);
       }
 
-      // System Error Codes
+      // System Error Codes.
       // http://msdn.microsoft.com/en-us/library/windows/desktop/ms681381%28v=vs.85%29.aspx
+
+      // Win32 Error Codes.
+      // https://infosys.beckhoff.com/content/1033/tcdiagnostics/html/tcdiagnostics_win32_errorcodes.htm
+
 
       public const uint ERROR_INVALID_FILE_SIZE = 0xFFFFFFFF;
 
@@ -191,7 +195,6 @@ namespace Alphaleonis.Win32
 
       /// <summary>(131) An attempt was made to move the file pointer before the beginning of the file.</summary>
       public const uint ERROR_NEGATIVE_SEEK = 131;
-
 
       //public const uint ERROR_SEEK_ON_DEVICE = 132;
       //public const uint ERROR_IS_JOIN_TARGET = 133;
@@ -1176,7 +1179,6 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_NO_USER_KEYS = 6006;
       //public const uint ERROR_FILE_NOT_ENCRYPTED = 6007;
       //public const uint ERROR_NOT_EXPORT_FORMAT = 6008;
-
 
       /// <summary>(6009) The specified file is read only.</summary>
       public const uint ERROR_FILE_READ_ONLY = 6009;

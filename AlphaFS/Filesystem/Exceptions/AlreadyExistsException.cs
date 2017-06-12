@@ -26,7 +26,10 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The exception that is thrown when an attempt to create a file or directory that already exists was made.</summary>
+   /// <summary>The exception that is thrown when an attempt to create a file or directory that already exists was made.
+   /// <para>&#160;</para>
+   /// <para>Both <see cref="Win32Errors.ERROR_ALREADY_EXISTS"/> and <see cref="Win32Errors.ERROR_FILE_EXISTS"/> can cause this Exception.</para>
+   /// </summary>
    [Serializable]
    public class AlreadyExistsException : System.IO.IOException
    {
@@ -39,11 +42,24 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
+
+      /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.
+      /// <para>&#160;</para>
+      /// <para>Both <see cref="Win32Errors.ERROR_ALREADY_EXISTS"/> and <see cref="Win32Errors.ERROR_FILE_EXISTS"/> can cause this Exception.</para>
+      /// </summary>
+      /// <param name="message">The custom error message..</param>
+      /// <param name="lastError">The GetLastWin32Error to distinguish between Win32Errors.ERROR_ALREADY_EXISTS and Win32Errors.ERROR_FILE_EXISTS errors.</param>
+      public AlreadyExistsException(string message, int lastError) : base(message, lastError)
+      {
+      }
+
+
       /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
       /// <param name="path">The path to the file system object.</param>
       public AlreadyExistsException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), ErrorCode)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
       /// <param name="path">The path to the file system object.</param>
@@ -51,6 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       public AlreadyExistsException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), innerException)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>

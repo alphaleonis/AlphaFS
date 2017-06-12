@@ -131,7 +131,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput Path: [{0}]", tempPath);
 
          // Create some folders and files.
-         UnitTestConstants.CreateDirectoriesAndFiles(tempPath, 10, true);
+         UnitTestConstants.CreateDirectoriesAndFiles(tempPath, 10, false, false, true);
 
          var apply = FileAttributes.Hidden | FileAttributes.Archive | FileAttributes.System | FileAttributes.ReadOnly;
          Console.WriteLine("\nSetAttributes(): [{0}]", apply);
@@ -198,7 +198,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(UnitTestConstants.Reporter());
 
 
-         Directory.Delete(tempPath, true);
+         Directory.Delete(tempPath, true, true);
          Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          Assert.IsTrue(allOk);
          Console.WriteLine();

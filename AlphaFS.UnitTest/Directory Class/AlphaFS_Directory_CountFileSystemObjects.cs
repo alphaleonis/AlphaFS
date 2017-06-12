@@ -87,7 +87,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
             const int expectedFso = 10;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false, false, false);
             
 
             var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Folders);
@@ -117,7 +117,7 @@ namespace AlphaFS.UnitTest
 
             const int expectedFso = 10;
             const int expectedSubfolders = expectedFso * expectedFso + expectedFso;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, true);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false, false, true);
 
 
             var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Folders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
@@ -145,7 +145,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
             const int expectedFso = 0;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, 10, false);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, 10, false, false, false);
 
 
             var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files);
@@ -174,7 +174,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
             const int expectedFso = 10;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false, false, false);
 
 
             var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
@@ -203,7 +203,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
             const int expectedFso = 200;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, 100, false);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, 100, false, false, false);
 
 
             var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);

@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source-") + System.IO.Path.GetRandomFileName());
+            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
             Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
 
 
@@ -71,7 +71,7 @@ namespace AlphaFS.UnitTest
             const Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions enumOptionsFile = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.ContinueOnException;
 
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, maxDepth, true);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, maxDepth, false, false, true);
 
             var dirs0 = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder.FullName, searchPattern, enumOptionsFolder);
             var files0 = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder.FullName, searchPattern, enumOptionsFile);

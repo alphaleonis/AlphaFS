@@ -134,6 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Checks that the given path format is supported.</summary>
       /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <param name="path">A path to the file or directory.</param>
       /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
@@ -161,8 +162,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Checks that the path contains only valid path-characters.</summary>
-      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">A path to the file or directory.</param>
       /// <param name="checkAdditional"><see langword="true"/> also checks for ? and * characters.</param>
       /// <param name="allowEmpty">When <see langword="false"/>, throws an <see cref="ArgumentException"/>.</param>

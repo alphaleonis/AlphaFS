@@ -273,8 +273,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Applies the <seealso cref="GetFullPathOptions"/> to <paramref name="path"/></summary>
       /// <returns><paramref name="path"/> with applied <paramref name="options"/>.</returns>
-      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path"></param>
       /// <param name="options"></param>
       private static string ApplyFullPathOptions(string path, GetFullPathOptions options)

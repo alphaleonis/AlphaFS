@@ -270,7 +270,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          using (var handle = FindFirstFile(InputPath, out win32FindData))
             return handle == null
-               ? (T)(object)null
+               ? (T) (object) null
                : NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
       }
 

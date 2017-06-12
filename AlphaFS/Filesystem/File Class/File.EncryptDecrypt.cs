@@ -156,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                case Win32Errors.ERROR_FILE_READ_ONLY:
-                  if ((attrs.dwFileAttributes & FileAttributes.Directory) != 0)
+                  if (IsDirectory(attrs.dwFileAttributes))
                      throw new DirectoryReadOnlyException(path);
                   else
                      throw new FileReadOnlyException(path);

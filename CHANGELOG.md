@@ -12,6 +12,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #330: Correct the parameter order for Privilege class constructors using the `ArgumentNullException`.
 - Issue #339: `Directory/File.Encrypt/Decrypt` should restore read-only attribute.
 - Issue #340: DirectoryReadOnlyException inherits from System.IO.IOException, wrong?
+- Issue #344: `Directory.Copy` throws `UnauthorizedAccessException` "The target file is a directory, not a file", while it is a file.
 
 ### New Features/Enhancements
 
@@ -27,6 +28,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #338: Add convenience method `Directory.IsEmpty`
 - Issue #342: Add instance method: `FileInfo.IsLocked()`
 - Issue #343: Add method `File.GetProcessesForLockedFile`
+- Issue #345: AlreadyExistsException should only throw message from 1 error.
 
 
 Version 2.1.3 (2017-06-05)

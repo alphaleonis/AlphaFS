@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
       public const string EMspace = "\u3000";
 
       public static readonly string LocalHost = Environment.MachineName;
-      public static readonly string LocalHostShare = Environment.SystemDirectory;
+      public static readonly string LocalHostShare = Environment.GetEnvironmentVariable("Temp");
 
       public static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
       public static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
@@ -163,31 +163,53 @@ namespace AlphaFS.UnitTest
       #region Methods
 
       // A high "max" increases the change of path too long.
-      public static void CreateDirectoriesAndFiles(string rootPath, int max, bool recurse)
+      public static void CreateDirectoriesAndFiles(string rootPath, int max, bool readOnly, bool hidden, bool recurse)
       {
+         var folderCount = 0;
+
          for (var i = 0; i < max; i++)
          {
             var file = System.IO.Path.Combine(rootPath, System.IO.Path.GetRandomFileName());
             var dir = file + "-" + i + "-dir";
             file = file + "-" + i + "-file";
 
+            folderCount++;
             System.IO.Directory.CreateDirectory(dir);
 
-            // Some directories will remain empty.
+            var filePath = System.IO.Path.Combine(dir, System.IO.Path.GetFileName(file));
+
+
+            // Every other folder is empty.
             if (i % 2 != 0)
             {
-               //System.IO.File.WriteAllText(file, TextHelloWorld);
                CreateFile(dir);
+               
+               System.IO.File.WriteAllText(filePath, TextGoodbyeWorld);
 
-               System.IO.File.WriteAllText(System.IO.Path.Combine(dir, System.IO.Path.GetFileName(file)), TextGoodbyeWorld);
+               switch (new Random().Next(0, 2))
+               {
+                  case 1:
+                     if (readOnly)
+                        System.IO.File.SetAttributes(filePath, System.IO.FileAttributes.ReadOnly);
+                     break;
+
+                  case 2:
+                     if (hidden)
+                        System.IO.File.SetAttributes(filePath, System.IO.FileAttributes.Hidden);
+                     break;
+               }
             }
          }
 
+         
          if (recurse)
          {
             foreach (var dir in System.IO.Directory.EnumerateDirectories(rootPath))
-               CreateDirectoriesAndFiles(dir, max, false);
+               CreateDirectoriesAndFiles(dir, max, readOnly, hidden, false);
          }
+
+
+         Assert.AreEqual(max, folderCount, "The number of folders does not equal the max folder-level, but is expected to.");
       }
 
 
@@ -198,7 +220,7 @@ namespace AlphaFS.UnitTest
          using (var fs = System.IO.File.Create(file))
          {
             if (fileLength <= 0)
-               fileLength = new Random().Next(1, 10485760);
+               fileLength = new Random().Next(0, 10485760);
 
             fs.SetLength(fileLength);
          }

@@ -1045,7 +1045,7 @@ namespace Alphaleonis.Win32.Filesystem
             // AlphaFS feature to overcome a MoveFileXxx limitation.
             // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
 
-            if (!delayUntilReboot && File.HasReplaceExisting(moveOptions))
+            if (!delayUntilReboot && File.CanOverwrite(moveOptions))
                DeleteDirectoryCore(null, transaction, destinationPathLp, true, true, true, PathFormat.LongFullPath);
 
             // 2017-06-07: A large target directory will probably create a progress-less delay in UI.
@@ -1220,7 +1220,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!isMove)
          {
             // A Move() can be emulated by using Copy() and Delete(), but only if the MoveOptions.CopyAllowed flag is set.
-            isMove = File.HasCopyAllowed(moveOptions);
+            isMove = File.AllowEmulate(moveOptions);
 
             // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
             if (!isMove)

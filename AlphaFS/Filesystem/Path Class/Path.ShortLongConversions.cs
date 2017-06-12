@@ -47,8 +47,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetLongFrom83ShortPath
 
       /// <summary>[AlphaFS] Converts the specified existing path to its regular long form.</summary>
-      /// <param name="path">An existing path to a folder or file.</param>
       /// <returns>The regular full path.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <param name="path">An existing path to a folder or file.</param>
       [SecurityCritical]
       public static string GetLongFrom83ShortPath(string path)
       {
@@ -56,9 +58,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Converts the specified existing path to its regular long form.</summary>
+      /// <returns>The regular full path.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">An existing path to a folder or file.</param>
-      /// <returns>The regular full path.</returns>
       [SecurityCritical]
       public static string GetLongFrom83ShortPathTransacted(KernelTransaction transaction, string path)
       {
@@ -72,6 +76,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
       /// <returns>Regular form path string.</returns>
       /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path.</param>
       [SecurityCritical]
       public static string GetRegularPath(string path)
@@ -87,6 +93,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A path that has the 8.3 path form.</returns>
       /// <remarks>Will fail on NTFS volumes with disabled 8.3 name generation.</remarks>
       /// <remarks>The path must actually exist to be able to get the short path name.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">An existing path to a folder or file.</param>
       [SecurityCritical]
       public static string GetShort83Path(string path)
@@ -98,6 +106,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A path that has the 8.3 path form.</returns>
       /// <remarks>Will fail on NTFS volumes with disabled 8.3 name generation.</remarks>
       /// <remarks>The path must actually exist to be able to get the short path name.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">An existing path to a folder or file.</param>
       [SecurityCritical]
@@ -127,8 +137,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Makes an extended long path from the specified <paramref name="path"/> by prefixing <see cref="LongPathPrefix"/>.</summary>
       /// <returns>The <paramref name="path"/> prefixed with a <see cref="LongPathPrefix"/>, the minimum required full path is: "C:\".</returns>
       /// <remarks>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</remarks>
-      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to the file or directory, this can also be an UNC path.</param>
       /// <param name="options">Options for controlling the full path retrieval.</param>
       [SecurityCritical]
@@ -166,6 +176,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Will fail on NTFS volumes with disabled 8.3 name generation.</para>
       ///   <para>The path must actually exist to be able to get the short- or long path name.</para>
       /// </remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">An existing path to a folder or file.</param>
       /// <param name="getShort"><see langword="true"/> to retrieve the short path form, <see langword="false"/> to retrieve the regular long form from the 8.3 <paramref name="path"/>.</param>
@@ -213,8 +225,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   MSDN: String.TrimEnd Method notes to Callers: http://msdn.microsoft.com/en-us/library/system.string.trimend%28v=vs.110%29.aspx
       /// </remarks>
-      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path.</param>
       /// <param name="options">Options for controlling the full path retrieval.</param>
       /// <param name="allowEmpty">When <see langword="false"/>, throws an <see cref="ArgumentException"/>.</param>

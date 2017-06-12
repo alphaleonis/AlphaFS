@@ -119,7 +119,7 @@ namespace Alphaleonis.Win32
 
             case Win32Errors.ERROR_ALREADY_EXISTS:
             case Win32Errors.ERROR_FILE_EXISTS:
-               throw new AlreadyExistsException(errorMessage);
+               throw new AlreadyExistsException(errorMessage, (int) errorCode);
 
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
                throw new DirectoryNotEmptyException(errorMessage);

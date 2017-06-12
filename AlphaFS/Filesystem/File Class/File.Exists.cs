@@ -203,16 +203,16 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);
+            var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat,
+               GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator |
+               GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);
 
-            var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-            var dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
+            var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+            var dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref attrs, false, true);
 
-            return (dataInitialised == Win32Errors.ERROR_SUCCESS &&
-                    data.dwFileAttributes != (FileAttributes)(-1) &&
-                    (isFolder
-                       ? (data.dwFileAttributes & FileAttributes.Directory) != 0
-                       : (data.dwFileAttributes & FileAttributes.Directory) == 0));
+            var attrIsFolder = IsDirectory(attrs.dwFileAttributes);
+
+            return dataInitialised == Win32Errors.ERROR_SUCCESS && (isFolder ? attrIsFolder : !attrIsFolder);
          }
          catch
          {
