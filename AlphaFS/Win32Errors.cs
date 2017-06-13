@@ -265,7 +265,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_RELOC_CHAIN_XEEDS_SEGLIM = 201;
       //public const uint ERROR_INFLOOP_IN_RELOC_CHAIN = 202;
 
-      /// <summary>(203) The system could not find the environment option that was entered.</summary>
+      //// <summary>(203) The system could not find the environment option that was entered.</summary>
       //public const uint ERROR_ENVVAR_NOT_FOUND = 203;
 
       //public const uint ERROR_NO_SIGNAL_SENT = 205;

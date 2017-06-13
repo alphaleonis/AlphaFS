@@ -248,6 +248,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="InvalidOperationException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="filePaths">A list with one or more file paths.</param>
       public static Collection<Process> GetProcessForFileLock(KernelTransaction transaction, Collection<string> filePaths)
       {
