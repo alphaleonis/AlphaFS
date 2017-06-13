@@ -285,7 +285,7 @@ namespace Alphaleonis.Win32.Security
             }
 
             if (!success)
-               NativeError.ThrowException(lastError);
+               NativeError.ThrowException(lastError, _name);
          }
 
 
@@ -305,7 +305,7 @@ namespace Alphaleonis.Win32.Security
 
          var lastError = Marshal.GetLastWin32Error();
          if (!success)
-            NativeError.ThrowException(lastError);
+            NativeError.ThrowException(lastError, _name);
 
 
          return Filesystem.NativeMethods.LuidToLong(luid);

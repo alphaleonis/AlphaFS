@@ -21,6 +21,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 
@@ -144,7 +145,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string GetLongPathCore(string path, GetFullPathOptions options)
       {
-         if (path == null)
+         if (null == path)
             throw new ArgumentNullException("path");
 
          if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
@@ -164,10 +165,9 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Don't use char.IsLetter() here as that can be misleading.
          // The only valid drive letters are: a-z and A-Z.
-         char c = path[0];
-         return IsPathRooted(path, false) && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-            ? LongPathPrefix + path
-            : path;
+         var c = path[0];
+
+         return IsPathRooted(path, false) && (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z') ? LongPathPrefix + path : path;
       }
 
       /// <summary>Retrieves the short path form, or the regular long form of the specified <paramref name="path"/>.</summary>
@@ -184,14 +184,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static string GetLongShort83PathCore(KernelTransaction transaction, string path, bool getShort)
       {
-         string pathLp = GetFullPathCore(transaction, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
+         var pathLp = GetFullPathCore(transaction, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
          var buffer = new StringBuilder();
-         uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint)path.Length;
+         var actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint) path.Length;
 
          while (actualLength > buffer.Capacity)
          {
-            buffer = new StringBuilder((int)actualLength);
+            buffer = new StringBuilder((int) actualLength);
             actualLength = getShort
 
                // GetShortPathName()
@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
                // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                // 2014-01-29: MSDN confirms LongPath usage.
 
-               ? NativeMethods.GetShortPathName(pathLp, buffer, (uint)buffer.Capacity)
+               ? NativeMethods.GetShortPathName(pathLp, buffer, (uint) buffer.Capacity)
                : transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
                   // GetLongPathName()
@@ -207,11 +207,13 @@ namespace Alphaleonis.Win32.Filesystem
                   // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                   // 2014-01-29: MSDN confirms LongPath usage.
 
-                  ? NativeMethods.GetLongPathName(pathLp, buffer, (uint)buffer.Capacity)
-                  : NativeMethods.GetLongPathNameTransacted(pathLp, buffer, (uint)buffer.Capacity, transaction.SafeHandle);
+                  ? NativeMethods.GetLongPathName(pathLp, buffer, (uint) buffer.Capacity)
+                  : NativeMethods.GetLongPathNameTransacted(pathLp, buffer, (uint) buffer.Capacity, transaction.SafeHandle);
 
-            if (actualLength == Win32Errors.ERROR_SUCCESS)
-               NativeError.ThrowException(pathLp);
+            var lastError = Marshal.GetLastWin32Error();
+
+            if (actualLength == 0)
+               NativeError.ThrowException(lastError, pathLp);
          }
 
          return GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None, false);

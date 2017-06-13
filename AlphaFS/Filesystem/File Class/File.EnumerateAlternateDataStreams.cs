@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
                   if (lastError == Win32Errors.ERROR_HANDLE_EOF)
                      yield break;
 
-                  NativeError.ThrowException(lastError);
+                  NativeError.ThrowException(lastError, pathLp);
                }
 
 

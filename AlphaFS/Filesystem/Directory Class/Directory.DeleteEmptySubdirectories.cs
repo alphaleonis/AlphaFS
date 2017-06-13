@@ -233,7 +233,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             fsEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck), false, pathFormat);
 
-            if (fsEntryInfo == null)
+            if (null == fsEntryInfo)
                return;
          }
 

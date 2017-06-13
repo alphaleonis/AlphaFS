@@ -56,11 +56,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
       /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
-      /// <param name="safeHandle">An open handle to the file or directory from which to retrieve information.</param>
+      /// <param name="safeFileHandle">An open handle to the file or directory from which to retrieve information.</param>
       [SecurityCritical]
-      public static DateTime GetChangeTime(SafeFileHandle safeHandle)
+      public static DateTime GetChangeTime(SafeFileHandle safeFileHandle)
       {
-         return GetChangeTimeCore(false, null, safeHandle, null, false, PathFormat.LongFullPath);
+         return GetChangeTimeCore(false, null, safeFileHandle, null, false, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
@@ -109,11 +109,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
       /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
-      /// <param name="safeHandle">An open handle to the file or directory from which to retrieve information.</param>
+      /// <param name="safeFileHandle">An open handle to the file or directory from which to retrieve information.</param>
       [SecurityCritical]
-      public static DateTime GetChangeTimeUtc(SafeFileHandle safeHandle)
+      public static DateTime GetChangeTimeUtc(SafeFileHandle safeFileHandle)
       {
-         return GetChangeTimeCore(false, null, safeHandle, null, true, PathFormat.LongFullPath);
+         return GetChangeTimeCore(false, null, safeFileHandle, null, true, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
@@ -143,25 +143,25 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the change date and time of the specified file.</summary>
       /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
-      /// <remarks><para>Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</para></remarks>
+      /// <remarks><para>Use either <paramref name="path"/> or <paramref name="safeFileHandle"/>, not both.</para></remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="safeHandle">An open handle to the file or directory from which to retrieve information.</param>
+      /// <param name="safeFileHandle">An open handle to the file or directory from which to retrieve information.</param>
       /// <param name="path">The file or directory for which to obtain creation date and time information.</param>
       /// <param name="getUtc"><see langword="true"/> gets the Coordinated Universal Time (UTC), <see langword="false"/> gets the local time.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing is under control.")]
       [SecurityCritical]
-      internal static DateTime GetChangeTimeCore(bool isFolder, KernelTransaction transaction, SafeFileHandle safeHandle, string path, bool getUtc, PathFormat pathFormat)
+      internal static DateTime GetChangeTimeCore(bool isFolder, KernelTransaction transaction, SafeFileHandle safeFileHandle, string path, bool getUtc, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
 
 
-         var callerHandle = null != safeHandle;
+         var callerHandle = null != safeFileHandle;
          if (!callerHandle)
          {
             if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
@@ -169,19 +169,19 @@ namespace Alphaleonis.Win32.Filesystem
 
             var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
-            safeHandle = CreateFileCore(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, PathFormat.LongFullPath);
+            safeFileHandle = CreateFileCore(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, PathFormat.LongFullPath);
          }
 
 
          try
          {
-            NativeMethods.IsValidHandle(safeHandle);
+            NativeMethods.IsValidHandle(safeFileHandle);
             
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(IntPtr.Size + Marshal.SizeOf(typeof(NativeMethods.FILE_BASIC_INFO))))
             {
                NativeMethods.FILE_BASIC_INFO fbi;
 
-               var success = NativeMethods.GetFileInformationByHandleEx_FileBasicInfo(safeHandle, NativeMethods.FileInfoByHandleClass.FileBasicInfo, out fbi, (uint) safeBuffer.Capacity);
+               var success = NativeMethods.GetFileInformationByHandleEx_FileBasicInfo(safeFileHandle, NativeMethods.FileInfoByHandleClass.FileBasicInfo, out fbi, (uint) safeBuffer.Capacity);
                
                var lastError = Marshal.GetLastWin32Error();
                if (!success)
@@ -198,8 +198,8 @@ namespace Alphaleonis.Win32.Filesystem
          finally
          {
             // Handle is ours, dispose.
-            if (!callerHandle && null != safeHandle)
-               safeHandle.Close();
+            if (!callerHandle && null != safeFileHandle)
+               safeFileHandle.Close();
          }
       }
 

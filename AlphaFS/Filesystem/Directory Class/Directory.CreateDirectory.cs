@@ -684,13 +684,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DirectoryInfo CreateDirectoryCore(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
-         bool fullCheck = pathFormat == PathFormat.RelativePath;
+         var fullCheck = pathFormat == PathFormat.RelativePath;
 
          Path.CheckSupportedPathFormat(path, fullCheck, fullCheck);
          Path.CheckSupportedPathFormat(templatePath, fullCheck, fullCheck);
 
          
-         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          // Return DirectoryInfo instance if the directory specified by path already exists.
          if (File.ExistsCore(true, transaction, pathLp, PathFormat.LongFullPath))
@@ -701,21 +701,21 @@ namespace Alphaleonis.Win32.Filesystem
             NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp);
 
 
-         string templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
+         var templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
             ? null
             : Path.GetExtendedLengthPathCore(transaction, templatePath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          
          #region Construct Full Path
 
-         string longPathPrefix = Path.IsUncPathCore(path, false, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
+         var longPathPrefix = Path.IsUncPathCore(path, false, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
          path = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false);
 
-         int length = path.Length;
+         var length = path.Length;
          if (length >= 2 && Path.IsDVsc(path[length - 1], false))
             --length;
 
-         int rootLength = Path.GetRootLength(path, false);
+         var rootLength = Path.GetRootLength(path, false);
          if (length == 2 && Path.IsDVsc(path[1], false))
             throw new ArgumentException(Resources.Cannot_Create_Directory, "path");
 
@@ -725,10 +725,10 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (length > rootLength)
          {
-            for (int index = length - 1; index >= rootLength; --index)
+            for (var index = length - 1; index >= rootLength; --index)
             {
-               string path1 = path.Substring(0, index + 1);
-               string path2 = longPathPrefix + path1.TrimStart('\\');
+               var path1 = path.Substring(0, index + 1);
+               var path2 = longPathPrefix + path1.TrimStart('\\');
 
                if (!File.ExistsCore(true, transaction, path2, PathFormat.LongFullPath))
                   list.Push(path2);
@@ -747,7 +747,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Create the directory paths.
             while (list.Count > 0)
             {
-               string folderLp = list.Pop();
+               var folderLp = list.Pop();
 
                // In the ANSI version of this function, the name is limited to 248 characters.
                // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
@@ -759,7 +759,7 @@ namespace Alphaleonis.Win32.Filesystem
                      : NativeMethods.CreateDirectoryEx(templatePathLp, folderLp, securityAttributes))
                   : NativeMethods.CreateDirectoryTransacted(templatePathLp, folderLp, securityAttributes, transaction.SafeHandle)))
                {
-                  int lastError = Marshal.GetLastWin32Error();
+                  var lastError = Marshal.GetLastWin32Error();
 
                   switch ((uint) lastError)
                   {
@@ -767,14 +767,14 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
                      case Win32Errors.ERROR_ALREADY_EXISTS:
                         if (File.ExistsCore(false, transaction, pathLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(lastError, null, pathLp);
+                           NativeError.ThrowException(lastError, pathLp);
 
                         if (File.ExistsCore(false, transaction, folderLp, PathFormat.LongFullPath))
                            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, null, folderLp);
                         break;
 
                      case Win32Errors.ERROR_BAD_NET_NAME:
-                        NativeError.ThrowException(lastError, null, pathLp);
+                        NativeError.ThrowException(lastError, pathLp);
                         break;
 
                      case Win32Errors.ERROR_DIRECTORY:
@@ -782,7 +782,7 @@ namespace Alphaleonis.Win32.Filesystem
                         throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, Resources.Unsupported_Path_Format, path));
 
                      default:
-                        NativeError.ThrowException(lastError, null, folderLp);
+                        NativeError.ThrowException(lastError, folderLp);
                         break;
                   }
                }

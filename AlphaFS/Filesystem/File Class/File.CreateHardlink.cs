@@ -122,15 +122,15 @@ namespace Alphaleonis.Win32.Filesystem
             ? NativeMethods.CreateHardLink(fileName, existingFileName, IntPtr.Zero)
             : NativeMethods.CreateHardLinkTransacted(fileName, existingFileName, IntPtr.Zero, transaction.SafeHandle)))
          {
-            var lastError = Marshal.GetLastWin32Error();
+            var lastError = (uint) Marshal.GetLastWin32Error();
 
-            switch ((uint) lastError)
+            switch (lastError)
             {
                case Win32Errors.ERROR_INVALID_FUNCTION:
                   throw new NotSupportedException(Resources.HardLinks_Not_Supported);
 
                default:
-                  NativeError.ThrowException(lastError, fileName, existingFileName);
+                  NativeError.ThrowException(lastError, existingFileName, fileName);
                   break;
             }
          }

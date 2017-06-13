@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 
@@ -171,10 +172,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string GetFullPathCore(KernelTransaction transaction, string path, GetFullPathOptions options)
       {
-         if (path != null)
-            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
+         if (null != path)
+            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) || path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
                return path;
          
+
          if (options != GetFullPathOptions.None)
          {
             if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
@@ -190,10 +192,11 @@ namespace Alphaleonis.Win32.Filesystem
                   options &= ~GetFullPathOptions.CheckAdditional;
             }
 
+
             // Do not remove trailing directory separator when path points to a drive like: "C:\"
             // Doing so makes path point to the current directory.
 
-            if (path == null || path.Length <= 3 || (!path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) && path[1] != VolumeSeparatorChar))
+            if (null == path || path.Length <= 3 || !path.StartsWith(LongPathPrefix, StringComparison.Ordinal) && path[1] != VolumeSeparatorChar)
                options &= ~GetFullPathOptions.RemoveTrailingDirectorySeparator;
          }
 
@@ -203,10 +206,11 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
-            startGetFullPathName:
 
-            var buffer = new StringBuilder((int)bufferSize);
-            var returnLength = (transaction == null || !NativeMethods.IsAtLeastWindowsVista
+         startGetFullPathName:
+
+            var buffer = new StringBuilder((int) bufferSize);
+            var returnLength = null == transaction || !NativeMethods.IsAtLeastWindowsVista
 
                // GetFullPathName() / GetFullPathNameTransacted()
                // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -214,7 +218,10 @@ namespace Alphaleonis.Win32.Filesystem
                // 2013-04-15: MSDN confirms LongPath usage.
 
                ? NativeMethods.GetFullPathName(pathLp, bufferSize, buffer, IntPtr.Zero)
-               : NativeMethods.GetFullPathNameTransacted(pathLp, bufferSize, buffer, IntPtr.Zero, transaction.SafeHandle));
+               : NativeMethods.GetFullPathNameTransacted(pathLp, bufferSize, buffer, IntPtr.Zero, transaction.SafeHandle);
+
+            var lastError = Marshal.GetLastWin32Error();
+
 
             if (returnLength != Win32Errors.NO_ERROR)
             {
@@ -229,7 +236,7 @@ namespace Alphaleonis.Win32.Filesystem
                if ((options & GetFullPathOptions.ContinueOnNonExist) != 0)
                   return null;
 
-               NativeError.ThrowException(pathLp);
+               NativeError.ThrowException(lastError, pathLp);
             }
 
 

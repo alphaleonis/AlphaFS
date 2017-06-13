@@ -37,62 +37,38 @@ namespace Alphaleonis.Win32
          ThrowException((uint) errorCode, null, null);
       }
 
-
       public static void ThrowException(uint errorCode)
       {
          ThrowException(errorCode, null, null);
       }
 
-      
+
       public static void ThrowException(int errorCode, string readPath)
       {
          ThrowException((uint) errorCode, readPath, null);
       }
 
-      
-      public static void ThrowException(int errorCode, string readPath, string writePath)
-      {
-         ThrowException((uint) errorCode, readPath, writePath);
-      }
-
-      
       public static void ThrowException(uint errorCode, string readPath)
       {
          ThrowException(errorCode, readPath, null);
       }
 
 
-      public static void ThrowException(string readPath)
+      public static void ThrowException(int errorCode, string readPath, string writePath)
       {
-         ThrowException((uint) Marshal.GetLastWin32Error(), readPath, null);
+         ThrowException((uint) errorCode, readPath, writePath);
       }
-
-
-      public static void ThrowException(string readPath, string writePath)
-      {
-         ThrowException((uint) Marshal.GetLastWin32Error(), readPath, writePath);
-      }
-
 
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       public static void ThrowException(uint errorCode, string readPath, string writePath)
       {
          var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message.Trim().TrimEnd('.').Trim());
 
-         var hasReadPath = !Utils.IsNullOrWhiteSpace(readPath);
-         var hasWritePath = !Utils.IsNullOrWhiteSpace(writePath);
+         if (!Utils.IsNullOrWhiteSpace(readPath) && !Utils.IsNullOrWhiteSpace(writePath))
+            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Read: [{1}] | Write: [{2}]", errorMessage, readPath, writePath);
 
-
-         if (hasReadPath && hasWritePath)
-            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Read path: [{1}] | Write path: [{2}]", errorMessage, readPath, writePath);
-
-
-         else if (hasReadPath)
-            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Read path: [{1}]", errorMessage, readPath);
-
-
-         else if (hasWritePath)
-            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Write path: [{1}]", errorMessage, writePath);
+         else
+            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), readPath ?? writePath);
 
 
          switch (errorCode)

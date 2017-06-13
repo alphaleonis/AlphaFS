@@ -30,10 +30,24 @@ namespace Alphaleonis.Win32.Filesystem
          SubstituteName = substituteName;
       }
 
+
+      internal LinkTargetInfo(bool isFolder, string substituteName, string printName)
+      {
+         IsDirectory = isFolder;
+         PrintName = printName;
+         SubstituteName = substituteName;
+      }
+
+
       /// <summary>The print name.</summary>
       public string PrintName { get; private set; }
 
+
       /// <summary>The substitute name.</summary>
       public string SubstituteName { get; private set; }
+
+
+      /// <summary>Indicates that the link is a directory.</summary>
+      public bool IsDirectory { get; private set; }
    }
 }

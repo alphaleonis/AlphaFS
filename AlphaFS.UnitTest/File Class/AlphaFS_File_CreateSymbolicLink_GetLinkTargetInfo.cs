@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_CreateSymbolicLinkAndGetLinkTargetInfo_LocalUNC_Success()
+      public void AlphaFS_File_CreateSymbolicLinkAndGetLinkTargetInfo_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
@@ -51,37 +51,64 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var symboliclinkFolder = System.IO.Path.Combine(rootDir.Directory.FullName, "DestinationFolder");
-            System.IO.Directory.CreateDirectory(symboliclinkFolder);
-
-            var fileName = "DestinationFile.txt";
-            var file = System.IO.Path.Combine(symboliclinkFolder, fileName);
-            using (System.IO.File.CreateText(file)) { }
-            Assert.IsTrue(System.IO.File.Exists(file));
-
-
-
-
             var folderLink = System.IO.Path.Combine(rootDir.Directory.FullName, "FolderLink-ToDestinationFolder");
-            Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(folderLink, symboliclinkFolder, Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.Directory);
-            Assert.IsTrue(System.IO.Directory.Exists(folderLink));
-            Assert.IsTrue(System.IO.File.Exists(System.IO.Path.Combine(folderLink, fileName)));
+
+            var dirInfo = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "DestinationFolder"));
+            dirInfo.Create();
+
+            Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
+            Console.WriteLine("Folder Link         : [{0}]", folderLink);
+
+
+            Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(folderLink, dirInfo.FullName, Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.Directory);
+
 
             var lvi = Alphaleonis.Win32.Filesystem.File.GetLinkTargetInfo(folderLink);
             UnitTestConstants.Dump(lvi, -14);
-            Assert.IsTrue(lvi.PrintName.Equals(symboliclinkFolder, StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(lvi.PrintName.Equals(dirInfo.FullName, StringComparison.OrdinalIgnoreCase));
+
+
+            UnitTestConstants.Dump(new System.IO.DirectoryInfo(folderLink), -17);
+            
+            var alphaFSDirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(folderLink);
+            UnitTestConstants.Dump(alphaFSDirInfo.EntryInfo, -17);
+
+            Assert.AreEqual(System.IO.Directory.Exists(alphaFSDirInfo.FullName), alphaFSDirInfo.Exists);
+            Assert.IsFalse(alphaFSDirInfo.EntryInfo.IsMountPoint);
+            Assert.IsTrue(alphaFSDirInfo.EntryInfo.IsReparsePoint);
+            Assert.IsTrue(alphaFSDirInfo.EntryInfo.IsSymbolicLink);
+            Assert.AreEqual(alphaFSDirInfo.EntryInfo.ReparsePointTag, Alphaleonis.Win32.Filesystem.ReparsePointTag.SymLink);
 
 
 
 
-            var fileLink = System.IO.Path.Combine(rootDir.Directory.FullName, "FileLink-ToDestinationFolder");
-            file = System.IO.Path.Combine(symboliclinkFolder, fileName);
-            Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(fileLink, file, Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.File);
-            Assert.IsTrue(System.IO.File.Exists(fileLink));
+            var fileLink = System.IO.Path.Combine(rootDir.Directory.FullName, "FileLink-ToDestinationFile.txt");
+
+            var fileInfo = new System.IO.FileInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "DestinationFile.txt"));
+            fileInfo.CreateText();
+
+            Console.WriteLine("\nInput File Path: [{0}]", fileInfo.FullName);
+            Console.WriteLine("File Link      : [{0}]", fileLink);
+            
+
+            Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(fileLink, fileInfo.FullName, Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.File);
+            
 
             lvi = Alphaleonis.Win32.Filesystem.File.GetLinkTargetInfo(fileLink);
             UnitTestConstants.Dump(lvi, -14);
-            Assert.IsTrue(lvi.PrintName.Equals(file, StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(lvi.PrintName.Equals(fileInfo.FullName, StringComparison.OrdinalIgnoreCase));
+
+
+            UnitTestConstants.Dump(new System.IO.FileInfo(fileLink), -17);
+
+            var alphaFSFileInfo = new Alphaleonis.Win32.Filesystem.FileInfo(fileLink);
+            UnitTestConstants.Dump(alphaFSFileInfo.EntryInfo, -17);
+
+            Assert.AreEqual(System.IO.File.Exists(alphaFSFileInfo.FullName), alphaFSFileInfo.Exists);
+            Assert.IsFalse(alphaFSFileInfo.EntryInfo.IsMountPoint);
+            Assert.IsTrue(alphaFSFileInfo.EntryInfo.IsReparsePoint);
+            Assert.IsTrue(alphaFSFileInfo.EntryInfo.IsSymbolicLink);
+            Assert.AreEqual(alphaFSFileInfo.EntryInfo.ReparsePointTag, Alphaleonis.Win32.Filesystem.ReparsePointTag.SymLink);
          }
 
          Console.WriteLine();

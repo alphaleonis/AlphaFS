@@ -21,6 +21,7 @@
 
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
 
@@ -878,9 +879,13 @@ namespace Alphaleonis.Win32.Filesystem
          using (var lastWriteTime = SafeGlobalMemoryBufferHandle.FromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?)null))
 
          using (var safeHandle = CreateFileCore(transaction, path, attributes, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, pathFormat))
+         {
+            var success = NativeMethods.SetFileTime(safeHandle, creationTime, lastAccessTime, lastWriteTime);
 
-            if (!NativeMethods.SetFileTime(safeHandle, creationTime, lastAccessTime, lastWriteTime))
-               NativeError.ThrowException(path);
+            var lastError = Marshal.GetLastWin32Error();
+            if (!success)
+               NativeError.ThrowException(lastError, path);
+         }
       }
 
       #endregion // Internal Methods

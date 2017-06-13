@@ -24,6 +24,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Security
 {
@@ -111,7 +112,7 @@ namespace Alphaleonis.Win32.Security
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint GetSecurityInfo(SafeHandle handle, ObjectType objectType, SecurityInformation securityInfo, out IntPtr pSidOwner, out IntPtr pSidGroup, out IntPtr pDacl, out IntPtr pSacl, out SafeGlobalMemoryBufferHandle pSecurityDescriptor);
+      internal static extern uint GetSecurityInfo(SafeFileHandle handle, ObjectType objectType, SecurityInformation securityInfo, out IntPtr pSidOwner, out IntPtr pSidGroup, out IntPtr pDacl, out IntPtr pSacl, out SafeGlobalMemoryBufferHandle pSecurityDescriptor);
 
       #endregion // GetSecurityInfo
 
@@ -128,7 +129,7 @@ namespace Alphaleonis.Win32.Security
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint SetSecurityInfo(SafeHandle handle, ObjectType objectType, SecurityInformation securityInfo, IntPtr psidOwner, IntPtr psidGroup, IntPtr pDacl, IntPtr pSacl);
+      internal static extern uint SetSecurityInfo(SafeFileHandle handle, ObjectType objectType, SecurityInformation securityInfo, IntPtr psidOwner, IntPtr psidGroup, IntPtr pDacl, IntPtr pSacl);
 
       #endregion // SetSecurityInfo
 

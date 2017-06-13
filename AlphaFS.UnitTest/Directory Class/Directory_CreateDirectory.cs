@@ -118,7 +118,7 @@ namespace AlphaFS.UnitTest
 //folder += UnitTestConstants.EMspace;
 #endif
 
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
             var root = folder;
@@ -128,7 +128,7 @@ namespace AlphaFS.UnitTest
 
             Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(root);
 
-            Console.WriteLine("Created directory structure: Depth: [{0}], path length: [{1}] characters.", level, root.Length);
+            Console.WriteLine("\nCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level, root.Length);
             Console.WriteLine("\n{0}", root);
 
             Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(root), "The directory does not exists, but is expected to.");
@@ -254,7 +254,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file = rootDir.RandomFileFullPath + ".txt";
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+            Console.WriteLine("\nInput File Path: [{0}]", file);
 
             using (System.IO.File.Create(file)) { }
 
@@ -287,7 +287,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
          var folder = tempPath + @"\Folder<>";
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+         Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
          var gotException = false;
@@ -312,7 +312,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
          var folder = @":AAAAAAAAAA";
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+         Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
          var gotException = false;
@@ -340,7 +340,7 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+         Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
          var gotException = false;
@@ -370,7 +370,7 @@ namespace AlphaFS.UnitTest
          var colonText = ":aaa.txt";
          var folder = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.LocalHostShare) : UnitTestConstants.SysDrive + @"\dev\test\") + colonText;
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+         Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
          var gotException = false;

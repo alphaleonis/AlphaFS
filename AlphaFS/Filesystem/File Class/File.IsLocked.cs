@@ -95,15 +95,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="Exception"/>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to check.</param>
+      /// <param name="filePath">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static bool IsLockedCore(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static bool IsLockedCore(KernelTransaction transaction, string filePath, PathFormat pathFormat)
       {
          try
          {
             // Use FileAccess.Read since FileAccess.ReadWrite always fails when file is read-only.
-            using (OpenCore(transaction, path, FileMode.Open, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat)) {}
+            using (OpenCore(transaction, filePath, FileMode.Open, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat)) {}
          }
          catch (IOException ex)
          {
@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
          catch (Exception ex)
          {
-            NativeError.ThrowException(Marshal.GetHRForException(ex) & NativeMethods.OverflowExceptionBitShift);
+            NativeError.ThrowException(Marshal.GetHRForException(ex) & NativeMethods.OverflowExceptionBitShift, filePath);
          }
 
          return false;

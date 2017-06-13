@@ -146,9 +146,10 @@ namespace Alphaleonis.Win32.Filesystem
             ? NativeMethods.CreateSymbolicLink(symlinkFileName, targetFileName, targetType)
             : NativeMethods.CreateSymbolicLinkTransacted(symlinkFileName, targetFileName, targetType, transaction.SafeHandle);
 
-         var lastError = Marshal.GetLastWin32Error();
+
+         var lastError = (uint) Marshal.GetLastWin32Error();
          if (!success)
-            NativeError.ThrowException(lastError, symlinkFileName, targetFileName);
+            NativeError.ThrowException(lastError, targetFileName, symlinkFileName);
       }
    }
 }

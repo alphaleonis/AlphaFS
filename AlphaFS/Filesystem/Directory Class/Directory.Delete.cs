@@ -364,7 +364,7 @@ namespace Alphaleonis.Win32.Filesystem
          var lastError = Marshal.GetLastWin32Error();
          if (!success)
          {
-            switch ((uint)lastError)
+            switch ((uint) lastError)
             {
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
                   // MSDN: .NET 3.5+: IOException: The directory specified by path is not an empty directory. 

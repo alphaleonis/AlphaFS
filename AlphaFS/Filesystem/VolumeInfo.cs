@@ -159,7 +159,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                      default:
                         if (!_continueOnAccessError)
-                           NativeError.ThrowException(Name);
+                           NativeError.ThrowException(lastError, Name);
                         break;
                   }
                }

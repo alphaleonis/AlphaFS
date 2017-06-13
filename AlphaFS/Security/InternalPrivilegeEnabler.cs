@@ -78,14 +78,16 @@ namespace Alphaleonis.Win32.Security
          {
             uint length;
             var hToken = currentIdentity.Token;
-            var newPrivilege = new TokenPrivileges();
             var mOldPrivilege = new TokenPrivileges();
 
-            newPrivilege.PrivilegeCount = 1;
-            newPrivilege.Luid = Filesystem.NativeMethods.LongToLuid(EnabledPrivilege.LookupLuid());
+            var newPrivilege = new TokenPrivileges
+            {
+               PrivilegeCount = 1,
+               Luid = Filesystem.NativeMethods.LongToLuid(EnabledPrivilege.LookupLuid()),
 
-            // 2 = SePrivilegeEnabled;
-            newPrivilege.Attributes = (uint)(enable ? 2 : 0);
+               // 2 = SePrivilegeEnabled;
+               Attributes = (uint) (enable ? 2 : 0)
+            };
 
 
             var success = NativeMethods.AdjustTokenPrivileges(hToken, false, ref newPrivilege, (uint) Marshal.SizeOf(mOldPrivilege), out mOldPrivilege, out length);

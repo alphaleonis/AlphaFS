@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <param name="handle">A <see cref="SafeHandle"/> to a file containing a <see cref="FileSecurity"/> object that describes the file's access control list (ACL) information.</param>
+      /// <param name="handle">A <see cref="SafeFileHandle"/> to a file containing a <see cref="FileSecurity"/> object that describes the file's access control list (ACL) information.</param>
       [SecurityCritical]
       public static FileSecurity GetAccessControl(SafeFileHandle handle)
       {
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <param name="handle">A <see cref="SafeHandle"/> to a file containing a <see cref="FileSecurity"/> object that describes the file's access control list (ACL) information.</param>
+      /// <param name="handle">A <see cref="SafeFileHandle"/> to a file containing a <see cref="FileSecurity"/> object that describes the file's access control list (ACL) information.</param>
       /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
       [SecurityCritical]
       public static FileSecurity GetAccessControl(SafeFileHandle handle, AccessControlSections includeSections)
@@ -224,13 +224,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: GetNamedSecurityInfo() / GetSecurityInfo(): If the function fails, the return value is zero.
             if (lastError != Win32Errors.ERROR_SUCCESS)
-            {
-               if (!Utils.IsNullOrWhiteSpace(path))
-                  NativeError.ThrowException(lastError, path);
-
-               else
-                  NativeError.ThrowException(lastError);
-            }
+               NativeError.ThrowException(lastError, !Utils.IsNullOrWhiteSpace(path) ? path : null);
 
             if (!NativeMethods.IsValidHandle(securityDescriptor, false))
                throw new IOException(Resources.Returned_Invalid_Security_Descriptor);

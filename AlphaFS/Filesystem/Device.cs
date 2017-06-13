@@ -88,12 +88,9 @@ namespace Alphaleonis.Win32.Filesystem
          {
             // Start at the "Root" of the device tree of the specified machine.
             if (!callerHandle)
-               safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref deviceGuid, IntPtr.Zero, IntPtr.Zero,
-                  NativeMethods.SetupDiGetClassDevsExFlags.Present |
-                  NativeMethods.SetupDiGetClassDevsExFlags.DeviceInterface,
-                  IntPtr.Zero, hostName, IntPtr.Zero);
+               safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref deviceGuid, IntPtr.Zero, IntPtr.Zero, NativeMethods.SetupDiGetClassDevsExFlags.Present | NativeMethods.SetupDiGetClassDevsExFlags.DeviceInterface, IntPtr.Zero, hostName, IntPtr.Zero);
 
-            if (safeHandle != null && safeHandle.IsInvalid)
+            if (null != safeHandle && safeHandle.IsInvalid)
             {
                safeHandle.Close();
                NativeError.ThrowException(Marshal.GetLastWin32Error(), Resources.Handle_Is_Invalid);
@@ -231,7 +228,7 @@ namespace Alphaleonis.Win32.Filesystem
             finally
             {
                // Handle is ours, dispose.
-               if (!callerHandle && safeHandle != null)
+               if (!callerHandle && null != safeHandle)
                   safeHandle.Close();
             }
          }
@@ -413,7 +410,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Repeatedly invokes InvokeIoControl with the specified input until enough memory has been allocated.</summary>
       [SecurityCritical]
-      private static byte[] InvokeIoControlUnknownSize<TV>(SafeFileHandle handle, uint controlCode, TV input, uint increment = 128)
+      private static byte[] InvokeIoControlUnknownSize<T>(SafeFileHandle handle, uint controlCode, T input, uint increment = 128)
       {
          byte[] output;
          uint bytesReturned;

@@ -71,20 +71,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified directory.</summary>
       /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
-      /// <param name="safeHandle">An open handle to the directory from which to retrieve information.</param>
+      /// <param name="safeFileHandle">An open handle to the directory from which to retrieve information.</param>
       [SecurityCritical]
-      public static DateTime GetChangeTime(SafeFileHandle safeHandle)
+      public static DateTime GetChangeTime(SafeFileHandle safeFileHandle)
       {
-         return File.GetChangeTimeCore(true, null, safeHandle, null, false, PathFormat.RelativePath);
+         return File.GetChangeTimeCore(true, null, safeFileHandle, null, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
       /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
-      /// <param name="safeHandle">An open handle to the directory from which to retrieve information.</param>
+      /// <param name="safeFileHandle">An open handle to the directory from which to retrieve information.</param>
       [SecurityCritical]
-      public static DateTime GetChangeTimeUtc(SafeFileHandle safeHandle)
+      public static DateTime GetChangeTimeUtc(SafeFileHandle safeFileHandle)
       {
-         return File.GetChangeTimeCore(true, null, safeHandle, null, true, PathFormat.RelativePath);
+         return File.GetChangeTimeCore(true, null, safeFileHandle, null, true, PathFormat.RelativePath);
       }
       
       #region Transactional

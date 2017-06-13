@@ -1011,8 +1011,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          // NTFS uses a limit of 32 characters for the volume label as of Windows Server 2003.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-            if (!NativeMethods.SetVolumeLabel(volumePath, volumeName))
-               NativeError.ThrowException(volumePath, volumeName);
+         {
+            var success = NativeMethods.SetVolumeLabel(volumePath, volumeName);
+            
+            var lastError = Marshal.GetLastWin32Error();
+            if (!success)
+               NativeError.ThrowException(lastError, volumePath, volumeName);
+         }
       }
 
       #endregion // SetVolumeLabel
@@ -1108,9 +1113,15 @@ namespace Alphaleonis.Win32.Filesystem
             deviceName = Path.GetRegularPathCore(deviceName, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars, false);
 
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-               if (!NativeMethods.DefineDosDevice(deviceAttributes, deviceName, targetPath))
-                  NativeError.ThrowException(deviceName, targetPath);
+            {
+               var success = NativeMethods.DefineDosDevice(deviceAttributes, deviceName, targetPath);
+
+               var lastError = Marshal.GetLastWin32Error();
+               if (!success)
+                  NativeError.ThrowException(lastError, deviceName, targetPath);
+            }
          }
+
          else
          {
             // A pointer to a path string that will implement this device.

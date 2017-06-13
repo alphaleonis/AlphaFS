@@ -141,20 +141,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns an enumerable collection of information about files in the directory handle specified.</summary>
       /// <returns>An IEnumerable of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>    
       /// <remarks>
-      ///   <para>Either use <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</para>
+      ///   <para>Either use <paramref name="path"/> or <paramref name="safeFileHandle"/>, not both.</para>
       ///   <para>
       ///   The number of files that are returned for each call to GetFileInformationByHandleEx depends on the size of the buffer that is passed to the function.
       ///   Any subsequent calls to GetFileInformationByHandleEx on the same handle will resume the enumeration operation after the last file is returned.
       /// </para>
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="safeHandle">An open handle to the directory from which to retrieve information.</param>
+      /// <param name="safeFileHandle">An open handle to the directory from which to retrieve information.</param>
       /// <param name="path">A path to the directory.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoCore(KernelTransaction transaction, SafeFileHandle safeHandle, string path, FileShare shareMode, bool continueOnException, PathFormat pathFormat)
+      internal static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoCore(KernelTransaction transaction, SafeFileHandle safeFileHandle, string path, FileShare shareMode, bool continueOnException, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
@@ -162,7 +162,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          var pathLp = path;
 
-         var callerHandle = safeHandle != null;
+         var callerHandle = null != safeFileHandle;
          if (!callerHandle)
          {
             if (Utils.IsNullOrWhiteSpace(path))
@@ -170,13 +170,13 @@ namespace Alphaleonis.Win32.Filesystem
 
             pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-            safeHandle = File.CreateFileCore(transaction, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, true, PathFormat.LongFullPath);
+            safeFileHandle = File.CreateFileCore(transaction, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, true, PathFormat.LongFullPath);
          }
 
 
          try
          {
-            if (!NativeMethods.IsValidHandle(safeHandle, Marshal.GetLastWin32Error(), !continueOnException))
+            if (!NativeMethods.IsValidHandle(safeFileHandle, Marshal.GetLastWin32Error(), !continueOnException))
                yield break;
 
             var fileNameOffset = (int) Marshal.OffsetOf(typeof(NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName");
@@ -185,7 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                while (true)
                {
-                  var success = NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, (uint) safeBuffer.Capacity);
+                  var success = NativeMethods.GetFileInformationByHandleEx(safeFileHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, (uint) safeBuffer.Capacity);
 
                   var lastError = Marshal.GetLastWin32Error();
                   if (!success)
@@ -230,8 +230,8 @@ namespace Alphaleonis.Win32.Filesystem
          finally
          {
             // Handle is ours, dispose.
-            if (!callerHandle && null != safeHandle)
-               safeHandle.Close();
+            if (!callerHandle && null != safeFileHandle)
+               safeFileHandle.Close();
          }
       }
 

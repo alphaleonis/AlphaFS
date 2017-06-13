@@ -351,6 +351,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             // See File.GetAccessControlCore(): .CopyTo() does not work there?
+            // 2017-06-13: Is .CopyTo() doing anything useful here?
             safeBuffer.CopyTo(buffer, offset, count);
 
             return (int) numberOfBytesRead;
