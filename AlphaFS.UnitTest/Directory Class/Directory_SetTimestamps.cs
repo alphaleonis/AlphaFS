@@ -68,7 +68,7 @@ namespace AlphaFS.UnitTest
 
 
             System.IO.Directory.CreateDirectory(folder);
-            Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(symlinkPath, folder, Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.Directory);
+            Alphaleonis.Win32.Filesystem.Directory.CreateSymbolicLink(symlinkPath, folder);
 
 
             var creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));

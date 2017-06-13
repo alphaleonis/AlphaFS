@@ -48,6 +48,6 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Indicates that the link is a directory.</summary>
-      public bool IsDirectory { get; private set; }
+      public bool IsDirectory { get; internal set; }
    }
 }

@@ -374,7 +374,7 @@ namespace Alphaleonis.Win32.Filesystem
                case Win32Errors.ERROR_DIRECTORY:
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: Path refers to a file instead of a directory.
                   if (File.ExistsCore(false, transaction, pathLp, PathFormat.LongFullPath))
-                     throw new DirectoryNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, pathLp)));
+                     throw new DirectoryNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", lastError, string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, pathLp)));
                   break;
 
 

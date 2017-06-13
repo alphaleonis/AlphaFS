@@ -90,7 +90,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex2)
             {
-               Console.WriteLine("Failed to delete TemporaryDirectory.\nError: [{0}]", ex2.Message);
+               Console.WriteLine("Failed to delete TemporaryDirectory.\nError: {0}", ex2.Message);
             }
          }
       }

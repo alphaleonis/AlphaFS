@@ -242,7 +242,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnrecognizedReparsePointException"/>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]
       [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfoCore(SafeFileHandle safeHandle)
+      internal static LinkTargetInfo GetLinkTargetInfoCore(bool isFolder, SafeFileHandle safeHandle)
       {
          // Start with a large buffer to prevent a 2nd call.
          // MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384
@@ -302,7 +302,10 @@ namespace Alphaleonis.Win32.Filesystem
 
                   return new LinkTargetInfo(
                      Encoding.Unicode.GetString(dataBuffer, mountPoint.SubstituteNameOffset, mountPoint.SubstituteNameLength),
-                     Encoding.Unicode.GetString(dataBuffer, mountPoint.PrintNameOffset, mountPoint.PrintNameLength));
+                     Encoding.Unicode.GetString(dataBuffer, mountPoint.PrintNameOffset, mountPoint.PrintNameLength))
+                  {
+                     IsDirectory = isFolder
+                  };
 
 
                case ReparsePointTag.SymLink:
@@ -312,7 +315,10 @@ namespace Alphaleonis.Win32.Filesystem
 
                   return new SymbolicLinkTargetInfo(
                      Encoding.Unicode.GetString(dataBuffer, symLink.SubstituteNameOffset, symLink.SubstituteNameLength),
-                     Encoding.Unicode.GetString(dataBuffer, symLink.PrintNameOffset, symLink.PrintNameLength), symLink.Flags);
+                     Encoding.Unicode.GetString(dataBuffer, symLink.PrintNameOffset, symLink.PrintNameLength), symLink.Flags)
+                  {
+                     IsDirectory = isFolder
+                  };
 
 
                default:

@@ -152,6 +152,7 @@
     <Compile Include="Directory Class\AlphaFS_Directory_Encryption.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_IsEmpty.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_EnumerateFileSystemEntryInfos.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_CreateSymbolicLinkAndGetLinkTargetInfo.cs" />
     <Compile Include="Directory Class\Directory_CurrentDirectory.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_DeleteEmptySubdirectories.cs" />
     <Compile Include="Directory Class\Directory_Move.cs" />
@@ -182,7 +183,7 @@
     <Compile Include="File Class\File_Delete.cs" />
     <Compile Include="File Class\File_SetTimestamps.cs" />
     <Compile Include="File Class\AlphaFS_File_IsLocked.cs" />
-    <Compile Include="File Class\AlphaFS_File_CreateSymbolicLink_GetLinkTargetInfo.cs" />
+    <Compile Include="File Class\AlphaFS_File_CreateSymbolicLinkAndGetLinkTargetInfo.cs" />
     <Compile Include="File Class\AlphaFS_File_CreateHardlink_EnumerateHardlinks.cs" />
     <Compile Include="File Class\AlphaFS_File_Compress_Decompress.cs" />
     <Compile Include="File Class\AlphaFS_File_GetCompressedSize.cs" />

@@ -19,13 +19,11 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public static partial class File
+   public static partial class Directory
    {
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       /// <param name="path">The path to the reparse point.</param>
@@ -36,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path)
       {
-         return GetLinkTargetInfoCore(false, null, path, PathFormat.RelativePath);
+         return File.GetLinkTargetInfoCore(true, null, path, PathFormat.RelativePath);
       }
 
 
@@ -50,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoCore(false, null, path, pathFormat);
+         return File.GetLinkTargetInfoCore(true, null, path, pathFormat);
       }
       
 
@@ -64,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path)
       {
-         return GetLinkTargetInfoCore(false, transaction, path, PathFormat.RelativePath);
+         return File.GetLinkTargetInfoCore(true, transaction, path, PathFormat.RelativePath);
       }
 
 
@@ -79,34 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoCore(false, transaction, path, pathFormat);
-      }
-
-
-      /// <summary>Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnrecognizedReparsePointException"/>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the reparse point.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
-      ///   or mount point pointed to by <paramref name="path"/>.
-      /// </returns>
-      [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfoCore(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         var eAttributes = ExtendedFileAttributes.OpenReparsePoint;
-
-         if (isFolder)
-            eAttributes |= ExtendedFileAttributes.BackupSemantics;
-
-
-         using (var safeHandle = CreateFileCore(transaction, path, eAttributes, null, FileMode.Open, 0, FileShare.ReadWrite, pathFormat != PathFormat.LongFullPath, pathFormat))
-            return Device.GetLinkTargetInfoCore(isFolder, safeHandle);
+         return File.GetLinkTargetInfoCore(true, transaction, path, pathFormat);
       }
    }
 }

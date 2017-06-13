@@ -70,7 +70,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nInput File Path: [{0}]", file);
 
 
-            Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(symlinkPath, file.FullName, Alphaleonis.Win32.Filesystem.SymbolicLinkTarget.File);
+            Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(symlinkPath, file.FullName);
 
 
             var creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
