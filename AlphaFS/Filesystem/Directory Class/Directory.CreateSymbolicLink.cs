@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkDirectoryName, string targetDirectoryName)
       {
-         File.CreateSymbolicLinkCore(true, null, symlinkDirectoryName, targetDirectoryName, SymbolicLinkTarget.Directory, PathFormat.RelativePath);
+         File.CreateSymbolicLinkCore(null, symlinkDirectoryName, targetDirectoryName, SymbolicLinkTarget.Directory, PathFormat.RelativePath);
       }
 
 
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkDirectoryName, string targetDirectoryName, PathFormat pathFormat)
       {
-         File.CreateSymbolicLinkCore(true, null, symlinkDirectoryName, targetDirectoryName, SymbolicLinkTarget.Directory, pathFormat);
+         File.CreateSymbolicLinkCore(null, symlinkDirectoryName, targetDirectoryName, SymbolicLinkTarget.Directory, pathFormat);
       }
 
 
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLinkTransacted(KernelTransaction transaction, string symlinkDirectoryName, string targetDirectoryName)
       {
-         File.CreateSymbolicLinkCore(true, transaction, symlinkDirectoryName, targetDirectoryName, SymbolicLinkTarget.Directory, PathFormat.RelativePath);
+         File.CreateSymbolicLinkCore(transaction, symlinkDirectoryName, targetDirectoryName, SymbolicLinkTarget.Directory, PathFormat.RelativePath);
       }
 
 
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLinkTransacted(KernelTransaction transaction, string symlinkDirectoryName, string targetDirectoryName, PathFormat pathFormat)
       {
-         File.CreateSymbolicLinkCore(true, transaction, symlinkDirectoryName, targetDirectoryName, SymbolicLinkTarget.Directory, pathFormat);
+         File.CreateSymbolicLinkCore(transaction, symlinkDirectoryName, targetDirectoryName, SymbolicLinkTarget.Directory, pathFormat);
       }
    }
 }

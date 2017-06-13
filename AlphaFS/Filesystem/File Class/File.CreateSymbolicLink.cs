@@ -22,6 +22,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -29,65 +30,74 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class File
    {
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link).
+      #region Obsolete
+
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="AlreadyExistsException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
+      [Obsolete("Methods with SymbolicLinkTarget parameter are obsolete.")]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
       {
          CreateSymbolicLinkCore(null, symlinkFileName, targetFileName, targetType, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link).
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="AlreadyExistsException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
+      [Obsolete("Methods with SymbolicLinkTarget parameter are obsolete.")]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
          CreateSymbolicLinkCore(null, symlinkFileName, targetFileName, targetType, pathFormat);
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="AlreadyExistsException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
+      [Obsolete("Methods with SymbolicLinkTarget parameter are obsolete.")]
       public static void CreateSymbolicLinkTransacted(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
       {
          CreateSymbolicLinkCore(transaction, symlinkFileName, targetFileName, targetType, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="AlreadyExistsException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
@@ -95,25 +105,99 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
+      [Obsolete("Methods with SymbolicLinkTarget parameter are obsolete.")]
       public static void CreateSymbolicLinkTransacted(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
          CreateSymbolicLinkCore(transaction, symlinkFileName, targetFileName, targetType, pathFormat);
       }
-      
+
+      #endregion // Obsolete
 
 
-
-      /// <summary>Creates a symbolic link (soft link).
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="AlreadyExistsException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
+      /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
+      /// <param name="targetFileName">The symbolic link to be created.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
+      [SecurityCritical]
+      public static void CreateSymbolicLink(string symlinkFileName, string targetFileName)
+      {
+         CreateSymbolicLinkCore(null, symlinkFileName, targetFileName, SymbolicLinkTarget.File, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
+      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
+      /// </summary>
+      /// <exception cref="AlreadyExistsException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
+      /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
+      /// <param name="targetFileName">The symbolic link to be created.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
+      [SecurityCritical]
+      public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, PathFormat pathFormat)
+      {
+         CreateSymbolicLinkCore(null, symlinkFileName, targetFileName, SymbolicLinkTarget.File, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
+      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
+      /// </summary>
+      /// <exception cref="AlreadyExistsException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
+      /// <param name="targetFileName">The symbolic link to be created.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
+      [SecurityCritical]
+      public static void CreateSymbolicLinkTransacted(KernelTransaction transaction, string symlinkFileName, string targetFileName)
+      {
+         CreateSymbolicLinkCore(transaction, symlinkFileName, targetFileName, SymbolicLinkTarget.File, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
+      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
+      /// </summary>
+      /// <exception cref="AlreadyExistsException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
+      /// <param name="targetFileName">The symbolic link to be created.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
+      [SecurityCritical]
+      public static void CreateSymbolicLinkTransacted(KernelTransaction transaction, string symlinkFileName, string targetFileName, PathFormat pathFormat)
+      {
+         CreateSymbolicLinkCore(transaction, symlinkFileName, targetFileName, SymbolicLinkTarget.File, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
+      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
+      /// </summary>
+      /// <exception cref="AlreadyExistsException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       internal static void CreateSymbolicLinkCore(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
@@ -134,6 +218,21 @@ namespace Alphaleonis.Win32.Filesystem
          targetFileName = Path.GetRegularPathCore(targetFileName, GetFullPathOptions.None, false);
 
 
+         if (targetType == SymbolicLinkTarget.Directory)
+         {
+            IfExistThrowException(false, transaction, targetFileName, pathFormat);
+            IfExistThrowException(false, transaction, symlinkFileName, pathFormat);
+         }
+
+         else
+         {
+            IfExistThrowException(true, transaction, targetFileName, pathFormat);
+            IfExistThrowException(true, transaction, symlinkFileName, pathFormat);
+         }
+
+
+
+
          var success = null == transaction
 
             // CreateSymbolicLink() / CreateSymbolicLinkTransacted()
@@ -150,6 +249,15 @@ namespace Alphaleonis.Win32.Filesystem
          var lastError = (uint) Marshal.GetLastWin32Error();
          if (!success)
             NativeError.ThrowException(lastError, targetFileName, symlinkFileName);
+      }
+
+
+      private static void IfExistThrowException(bool isFolder, KernelTransaction transaction, string fsoPath, PathFormat pathFormat)
+      {
+         if (ExistsCore(isFolder, transaction, fsoPath, pathFormat))
+            throw new AlreadyExistsException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_ALREADY_EXISTS,
+               string.Format(CultureInfo.InvariantCulture, isFolder ? Resources.Target_File_Is_A_Directory : Resources.Target_Directory_Is_A_File, fsoPath)), (int)Win32Errors.ERROR_ALREADY_EXISTS);
+
       }
    }
 }
