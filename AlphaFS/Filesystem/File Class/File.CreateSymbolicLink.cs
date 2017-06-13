@@ -36,7 +36,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
-      /// <exception cref="AlreadyExistsException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="PlatformNotSupportedException"/>
@@ -55,7 +54,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
-      /// <exception cref="AlreadyExistsException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="PlatformNotSupportedException"/>
@@ -75,7 +73,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
-      /// <exception cref="AlreadyExistsException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="PlatformNotSupportedException"/>
@@ -95,7 +92,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
-      /// <exception cref="AlreadyExistsException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="PlatformNotSupportedException"/>
@@ -116,11 +112,17 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
-      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
-      /// </summary>
-      /// <exception cref="AlreadyExistsException"/>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Symbolic links can point to a non-existent target.</para>
+      /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
+      /// <para>Symbolic links are reparse points.</para>
+      /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
+      /// <para>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      /// </remarks></summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
@@ -133,11 +135,17 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
-      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
-      /// </summary>
-      /// <exception cref="AlreadyExistsException"/>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Symbolic links can point to a non-existent target.</para>
+      /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
+      /// <para>Symbolic links are reparse points.</para>
+      /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
+      /// <para>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      /// </remarks></summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
@@ -151,11 +159,17 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
-      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
-      /// </summary>
-      /// <exception cref="AlreadyExistsException"/>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Symbolic links can point to a non-existent target.</para>
+      /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
+      /// <para>Symbolic links are reparse points.</para>
+      /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
+      /// <para>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      /// </remarks></summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
@@ -169,11 +183,17 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
-      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
-      /// </summary>
-      /// <exception cref="AlreadyExistsException"/>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Symbolic links can point to a non-existent target.</para>
+      /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
+      /// <para>Symbolic links are reparse points.</para>
+      /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
+      /// <para>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      /// </remarks></summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
@@ -187,12 +207,18 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
-      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
-      /// </summary>
-      /// <exception cref="AlreadyExistsException"/>
+      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file or directory as a transacted operation.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Symbolic links can point to a non-existent target.</para>
+      /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
+      /// <para>Symbolic links are reparse points.</para>
+      /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
+      /// <para>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      /// </remarks></summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
@@ -230,8 +256,6 @@ namespace Alphaleonis.Win32.Filesystem
             IfExistThrowException(true, transaction, targetFileName, pathFormat);
             IfExistThrowException(true, transaction, symlinkFileName, pathFormat);
          }
-
-
 
 
          var success = null == transaction
