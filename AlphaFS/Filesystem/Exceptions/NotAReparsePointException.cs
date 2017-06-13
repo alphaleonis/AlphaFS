@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
    public class NotAReparsePointException : System.IO.IOException
    {
       private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_A_REPARSE_POINT);
-      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_NOT_A_REPARSE_POINT, new Win32Exception((int) Win32Errors.ERROR_NOT_A_REPARSE_POINT).Message.TrimEnd('.'));
+      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_NOT_A_REPARSE_POINT, new Win32Exception((int) Win32Errors.ERROR_NOT_A_REPARSE_POINT).Message.Trim().TrimEnd('.').Trim());
 
 
       /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>

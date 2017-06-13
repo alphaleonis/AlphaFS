@@ -353,7 +353,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingFolder";
+            var folder = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExisting Source Folder";
             if (isNetwork)
                folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
 
@@ -424,7 +424,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = rootDir.RandomFileFullPath;
+            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
             Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc);
 
 
@@ -439,7 +439,7 @@ namespace AlphaFS.UnitTest
             var user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
             var rule = new System.Security.AccessControl.FileSystemAccessRule(user, System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.InheritanceFlags.ContainerInherit | System.Security.AccessControl.InheritanceFlags.ObjectInherit, System.Security.AccessControl.PropagationFlags.None, System.Security.AccessControl.AccessControlType.Deny);
 
-            var dirInfo = System.IO.Directory.CreateDirectory(folderSrc);
+            var dirInfo = System.IO.Directory.CreateDirectory(folderSrc.FullName);
 
             // Set DENY for current user.
             var dirSecurity = dirInfo.GetAccessControl();

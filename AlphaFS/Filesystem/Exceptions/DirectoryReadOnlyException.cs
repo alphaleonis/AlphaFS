@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    [Serializable]
    public class DirectoryReadOnlyException : UnauthorizedAccessException
    {
-      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int) Win32Errors.ERROR_FILE_READ_ONLY).Message.TrimEnd('.'));
+      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int) Win32Errors.ERROR_FILE_READ_ONLY).Message.Trim().TrimEnd('.').Trim());
 
 
       /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>

@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
    public class DirectoryNotEmptyException : System.IO.IOException
    {
       private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_DIR_NOT_EMPTY);
-      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_DIR_NOT_EMPTY, new Win32Exception((int) Win32Errors.ERROR_DIR_NOT_EMPTY).Message.TrimEnd('.'));
+      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_DIR_NOT_EMPTY, new Win32Exception((int) Win32Errors.ERROR_DIR_NOT_EMPTY).Message.Trim().TrimEnd('.').Trim());
 
 
       /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>

@@ -21,7 +21,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -40,8 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.
       /// The path parameter can be a file name, including a file on a Universal Naming Convention (UNC) share.
       /// </remarks>
-      public DirectoryInfo(string path)
-         : this(null, path, PathFormat.RelativePath)
+      public DirectoryInfo(string path) : this(null, path, PathFormat.RelativePath)
       {
       }
 
@@ -54,8 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
-      public DirectoryInfo(string path, PathFormat pathFormat)
-         : this(null, path, pathFormat)
+      public DirectoryInfo(string path, PathFormat pathFormat) : this(null, path, pathFormat)
       {
       }
 
@@ -88,8 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
-      public DirectoryInfo(KernelTransaction transaction, string path)
-         : this(transaction, path, PathFormat.RelativePath)
+      public DirectoryInfo(KernelTransaction transaction, string path) : this(transaction, path, PathFormat.RelativePath)
       {
       }
 

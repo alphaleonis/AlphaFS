@@ -77,22 +77,22 @@ namespace Alphaleonis.Win32
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       public static void ThrowException(uint errorCode, string readPath, string writePath)
       {
-         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message.TrimEnd('.'));
+         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message.Trim().TrimEnd('.').Trim());
 
          var hasReadPath = !Utils.IsNullOrWhiteSpace(readPath);
          var hasWritePath = !Utils.IsNullOrWhiteSpace(writePath);
 
 
          if (hasReadPath && hasWritePath)
-            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: Read path: [{1}] Write path: [{2}]", errorMessage.TrimEnd('.'), readPath, writePath);
+            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Read path: [{1}] | Write path: [{2}]", errorMessage, readPath, writePath);
 
 
          else if (hasReadPath)
-            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: Read path: [{1}]", errorMessage.TrimEnd('.'), readPath);
+            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Read path: [{1}]", errorMessage, readPath);
 
 
          else if (hasWritePath)
-            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: Write path: [{1}]", errorMessage.TrimEnd('.'), writePath);
+            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Write path: [{1}]", errorMessage, writePath);
 
 
          switch (errorCode)

@@ -1025,7 +1025,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Process paths.
-         ValidateAndUpdatePaths(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
+         File.ValidateAndUpdatePaths(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
 
 
          // Process Move action options, possible fallback to Copy action.
@@ -1157,47 +1157,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private static void ValidateAndUpdatePaths(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, PathFormat pathFormat, out string sourcePathLp, out string destinationPathLp, out bool isCopy, out bool emulateMove, out bool delayUntilReboot, out bool deleteOnStartup)
-      {
-         // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
-         // Do not use StringComparison.OrdinalIgnoreCase to allow renaming a folder with different casing.
-         if (!Utils.IsNullOrWhiteSpace(sourcePath) && sourcePath.Equals(destinationPath))
-            NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPath);
-
-
-         sourcePathLp = sourcePath;
-         destinationPathLp = destinationPath;
-
-
-         // Determine Copy or Move action.
-         isCopy = File.IsCopyAction(copyOptions, moveOptions);
-
-         var isMove = !isCopy;
-         emulateMove = false;
-
-         delayUntilReboot = isMove && File.VerifyDelayUntilReboot(sourcePathLp, moveOptions, pathFormat);
-
-         // When destinationPath is null, the directory needs to be removed on Computer startup.
-         deleteOnStartup = delayUntilReboot && null == destinationPath;
-
-
-         if (pathFormat != PathFormat.LongFullPath)
-         {
-            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
-            // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
-
-            const GetFullPathOptions fullPathOptions = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
-
-            Path.CheckSupportedPathFormat(sourcePath, true, true);
-            sourcePathLp = Path.GetExtendedLengthPathCore(transaction, sourcePath, pathFormat, fullPathOptions);
-
-            if (!deleteOnStartup)
-            {
-               Path.CheckSupportedPathFormat(destinationPath, true, true);
-               destinationPathLp = Path.GetExtendedLengthPathCore(transaction, destinationPath, pathFormat, fullPathOptions);
-            }
-         }
-      }
+      
 
 
       private static void ValidateAndUpdateMoveAction(string sourcePathLp, string destinationPathLp, CopyOptions? copyOptions, MoveOptions? moveOptions, out CopyOptions? newCopyOptions, out MoveOptions? newMoveOptions, out bool isCopy, out bool emulateMove)

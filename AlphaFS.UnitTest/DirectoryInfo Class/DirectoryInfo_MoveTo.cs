@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void DirectoryInfo_CatchArgumentException_UNCPathNotAllowed_CopyAllowedFlagCombinedWithDelayUntilRebootFlag_Network_Success()
+      public void DirectoryInfo_MoveTo_CatchArgumentException_UNCPathNotAllowed_DelayUntilRebootFlagCombinedWithCopyAllowedFlag_Network_Success()
       {
          DirectoryInfo_MoveTo_DelayUntilReboot(true);
       }
