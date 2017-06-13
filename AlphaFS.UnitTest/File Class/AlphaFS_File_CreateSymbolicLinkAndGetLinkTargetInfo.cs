@@ -41,13 +41,13 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_CreateSymbolicLink_CatchAlreadyExistsException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
+      public void AlphaFS_File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
 
-         File_CreateSymbolicLink_CatchAlreadyExistsException_DirectoryExistsWithSameNameAsFile(false);
-         File_CreateSymbolicLink_CatchAlreadyExistsException_DirectoryExistsWithSameNameAsFile(true);
+         File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(false);
+         File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(true);
       }
 
 
@@ -98,7 +98,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_CreateSymbolicLink_CatchAlreadyExistsException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
+      private void File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -128,7 +128,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                var exName = ex.GetType().Name;
-               gotException = exName.Equals("AlreadyExistsException", StringComparison.OrdinalIgnoreCase);
+               gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
                Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
             }
 

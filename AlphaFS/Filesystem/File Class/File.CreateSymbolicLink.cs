@@ -23,6 +23,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -255,8 +256,8 @@ namespace Alphaleonis.Win32.Filesystem
       private static void IfExistThrowException(bool isFolder, KernelTransaction transaction, string fsoPath, PathFormat pathFormat)
       {
          if (ExistsCore(isFolder, transaction, fsoPath, pathFormat))
-            throw new AlreadyExistsException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_ALREADY_EXISTS,
-               string.Format(CultureInfo.InvariantCulture, isFolder ? Resources.Target_File_Is_A_Directory : Resources.Target_Directory_Is_A_File, fsoPath)), (int)Win32Errors.ERROR_ALREADY_EXISTS);
+            throw new IOException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_ALREADY_EXISTS,
+               string.Format(CultureInfo.InvariantCulture, isFolder ? Resources.Target_File_Is_A_Directory : Resources.Target_Directory_Is_A_File, fsoPath)), (int) Win32Errors.ERROR_ALREADY_EXISTS);
 
       }
    }
