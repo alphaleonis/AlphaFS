@@ -229,7 +229,7 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\nFile.ReadLines()\n");
-         foreach (var s in File.ReadLines((tempFile)))
+         foreach (var s in File.ReadLines(tempFile))
          {
             Console.WriteLine("\t{0}", s);
             Assert.IsTrue(createText.Contains(s));

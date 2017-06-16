@@ -31,28 +31,20 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_CreateHardlinkAndEnumerateHardlinks_Local_Success()
+      public void AlphaFS_File_CreateHardlink_And_EnumerateHardlinks_Local_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
 
-         File_CreateEnumerateHardlinks(false);
-         File_CreateEnumerateHardlinks(true);
+         File_CreateHardlink_And_EnumerateHardlinks(false);
       }
 
 
-      private void File_CreateEnumerateHardlinks(bool isNetwork)
+      private void File_CreateHardlink_And_EnumerateHardlinks(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
          var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-         {
-            //tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-            Console.WriteLine("\nEnumerating Hardlinks does not work with UNC paths.");
-            return;
-         }
-
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
@@ -61,7 +53,7 @@ namespace AlphaFS.UnitTest
 
 
             var file = System.IO.Path.Combine(rootDir.Directory.FullName, "OriginalFile.txt");
-            Console.WriteLine("\n\tInput File Path: [{0}]\n", file);
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
             // Create original file with text content.
             System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);

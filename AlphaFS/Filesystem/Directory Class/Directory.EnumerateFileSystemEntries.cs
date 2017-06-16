@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern, SearchOption searchOption)
       {
-         var options = DirectoryEnumerationOptions.FilesAndFolders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+         var options = DirectoryEnumerationOptions.FilesAndFolders | (searchOption == SearchOption.AllDirectories ? DirectoryEnumerationOptions.Recursive : 0);
 
          return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, options, PathFormat.RelativePath);
       }
@@ -157,7 +157,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern, SearchOption searchOption, PathFormat pathFormat)
       {
-         var options = DirectoryEnumerationOptions.FilesAndFolders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+         var options = DirectoryEnumerationOptions.FilesAndFolders | (searchOption == SearchOption.AllDirectories ? DirectoryEnumerationOptions.Recursive : 0);
 
          return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, options, pathFormat);
       }
@@ -307,7 +307,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntriesTransacted(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         var options = DirectoryEnumerationOptions.FilesAndFolders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+         var options = DirectoryEnumerationOptions.FilesAndFolders | (searchOption == SearchOption.AllDirectories ? DirectoryEnumerationOptions.Recursive : 0);
 
          return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, options, PathFormat.RelativePath);
       }
@@ -378,7 +378,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntriesTransacted(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, PathFormat pathFormat)
       {
-         var options = DirectoryEnumerationOptions.FilesAndFolders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+         var options = DirectoryEnumerationOptions.FilesAndFolders | (searchOption == SearchOption.AllDirectories ? DirectoryEnumerationOptions.Recursive : 0);
 
          return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, options, pathFormat);
       }

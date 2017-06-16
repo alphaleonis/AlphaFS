@@ -64,13 +64,12 @@ namespace Alphaleonis.Win32.Filesystem
          /// <returns><see langword="true"/> if the specified Object is equal to the current Object; otherwise, <see langword="false"/>.</returns>
          public override bool Equals(object obj)
          {
-            if (obj == null || GetType() != obj.GetType())
+            if (null == obj || GetType() != obj.GetType())
                return false;
 
-            FILETIME other = obj as FILETIME? ?? new FILETIME();
+            var other = obj as FILETIME? ?? new FILETIME();
 
-            return (other.dwHighDateTime.Equals(dwHighDateTime) &&
-                    other.dwLowDateTime.Equals(dwLowDateTime));
+            return other.dwHighDateTime.Equals(dwHighDateTime) && other.dwLowDateTime.Equals(dwLowDateTime);
          }
 
          #endregion // Equals
@@ -83,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             unchecked
             {
-               int hash = 17;
+               var hash = 17;
                hash = hash * 23 + dwHighDateTime.GetHashCode();
                hash = hash * 11 + dwLowDateTime.GetHashCode();
                return hash;

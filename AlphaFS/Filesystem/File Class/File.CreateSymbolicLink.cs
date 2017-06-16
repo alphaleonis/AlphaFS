@@ -22,7 +22,6 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -33,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Obsolete
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
       /// <exception cref="ArgumentException"/>
@@ -51,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
       /// <exception cref="ArgumentException"/>
@@ -70,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
       /// <exception cref="ArgumentException"/>
@@ -89,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.
       /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// </summary>
       /// <exception cref="ArgumentException"/>
@@ -111,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Obsolete
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
@@ -134,7 +133,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
@@ -158,7 +157,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
@@ -182,7 +181,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
@@ -207,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a file or directory as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file or directory as a transacted operation.
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
@@ -247,14 +246,14 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (targetType == SymbolicLinkTarget.Directory)
          {
-            IfExistThrowException(false, transaction, targetFileName, pathFormat);
-            IfExistThrowException(false, transaction, symlinkFileName, pathFormat);
+            ThrowIOExceptionIfFsoExist(false, targetFileName, pathFormat);
+            ThrowIOExceptionIfFsoExist(false, symlinkFileName, pathFormat);
          }
 
          else
          {
-            IfExistThrowException(true, transaction, targetFileName, pathFormat);
-            IfExistThrowException(true, transaction, symlinkFileName, pathFormat);
+            ThrowIOExceptionIfFsoExist(true, targetFileName, pathFormat);
+            ThrowIOExceptionIfFsoExist(true, symlinkFileName, pathFormat);
          }
 
 
@@ -274,15 +273,6 @@ namespace Alphaleonis.Win32.Filesystem
          var lastError = (uint) Marshal.GetLastWin32Error();
          if (!success)
             NativeError.ThrowException(lastError, targetFileName, symlinkFileName);
-      }
-
-
-      private static void IfExistThrowException(bool isFolder, KernelTransaction transaction, string fsoPath, PathFormat pathFormat)
-      {
-         if (ExistsCore(isFolder, transaction, fsoPath, pathFormat))
-            throw new IOException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_ALREADY_EXISTS,
-               string.Format(CultureInfo.InvariantCulture, isFolder ? Resources.Target_File_Is_A_Directory : Resources.Target_Directory_Is_A_File, fsoPath)), (int) Win32Errors.ERROR_ALREADY_EXISTS);
-
       }
    }
 }

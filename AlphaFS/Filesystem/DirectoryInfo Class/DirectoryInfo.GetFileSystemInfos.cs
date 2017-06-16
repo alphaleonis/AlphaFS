@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSystemInfo[] GetFileSystemInfos(string searchPattern, SearchOption searchOption)
       {
-         var options = DirectoryEnumerationOptions.FilesAndFolders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+         var options = DirectoryEnumerationOptions.FilesAndFolders | (searchOption == SearchOption.AllDirectories ? DirectoryEnumerationOptions.Recursive : 0);
 
          return Directory.EnumerateFileSystemEntryInfosCore<FileSystemInfo>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath).ToArray();
       }

@@ -28,9 +28,18 @@ namespace Alphaleonis.Win32.Filesystem
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct ReparseDataBufferHeader
       {
+         /// <summary>Reparse point tag. Must be a Microsoft reparse point tag.</summary>
          [MarshalAs(UnmanagedType.U4)] public ReparsePointTag ReparseTag;
+
+         /// <summary>Size, in bytes, of the data after the Reserved member.
+         /// This can be calculated by: (4 * sizeof(ushort)) + SubstituteNameLength + PrintNameLength + (namesAreNullTerminated ? 2 * sizeof(char) : 0);
+         /// </summary>
          public ushort ReparseDataLength;
+
+         /// <summary>Reserved; do not use.</summary>
          public ushort Reserved;
+
+         /// <summary>A buffer containing the unicode-encoded path string. The path string contains the substitute name string and print name string.</summary>
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)] public byte[] data;
       }
    }

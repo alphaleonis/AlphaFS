@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       internal const int MaxPath = 260;
 
-      /// <summary>MaxPathUnicode = 32000</summary>
+      /// <summary>MaxPathUnicode = 32700</summary>
       internal const int MaxPathUnicode = 32700;
 
 
@@ -67,5 +67,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Invalid FileAttributes.</summary>
       internal const System.IO.FileAttributes InvalidFileAttributes = (System.IO.FileAttributes) (-1);
+
+
+
+
+      internal const int MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384;
+      internal const int REPARSE_DATA_BUFFER_HEADER_SIZE = 8;
+      private const int DeviceIoControlMethodBuffered = 0;
+      private const int DeviceIoControlFileDeviceFileSystem = 9;
+
+      // <summary>Command to set the reparse point data block.</summary>
+      internal const int FSCTL_SET_REPARSE_POINT = (DeviceIoControlFileDeviceFileSystem << 16) | (41 << 2) | DeviceIoControlMethodBuffered | (0 << 14);
+      
+      /// <summary>Command to delete the reparse point data base.</summary>
+      internal const int FSCTL_DELETE_REPARSE_POINT = (DeviceIoControlFileDeviceFileSystem << 16) | (43 << 2) | DeviceIoControlMethodBuffered | (0 << 14);
+
+      /// <summary>Command to get the reparse point data block.</summary>
+      internal const int FSCTL_GET_REPARSE_POINT = (DeviceIoControlFileDeviceFileSystem << 16) | (42 << 2) | DeviceIoControlMethodBuffered | (0 << 14);
    }
 }

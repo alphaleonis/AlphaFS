@@ -235,4 +235,16 @@
   <data name="Invalid_Reparse_Data" xml:space="preserve">
     <value>The data present in the reparse point buffer is invalid</value>
   </data>
+  <data name="Network_Path_Not_Allowed" xml:space="preserve">
+    <value>Network path is not allowed for directory junction: [{0}]</value>
+  </data>
+  <data name="MoveOptionsDelayUntilReboot_Not_Allowed_With_MoveOptionsCopyAllowed" xml:space="preserve">
+    <value>MoveOptions.CopyAllowed is not allowed when using the MoveOptions.DelayUntilReboot flag.</value>
+  </data>
+  <data name="MoveOptionsDelayUntilReboot_Not_Allowed_With_NetworkPath" xml:space="preserve">
+    <value>MoveOptions.DelayUntilReboot is not allowed when using a network path.</value>
+  </data>
+  <data name="Junction_And_Target_Must_Be_On_The_Same_Drive" xml:space="preserve">
+    <value>The target directory of the directory junction must be on the same local drive.</value>
+  </data>
 </root>

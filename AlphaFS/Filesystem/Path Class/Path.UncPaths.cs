@@ -221,7 +221,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Only leave trailing backslash if "localPath" also ends with backslash.
          addTrailingDirectorySeparator = addTrailingDirectorySeparator ||
-                                         (localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) && !removeTrailingDirectorySeparator);
+                                         localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) && !removeTrailingDirectorySeparator;
 
          var options = (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) |
                        (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0);

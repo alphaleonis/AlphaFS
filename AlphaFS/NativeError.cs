@@ -68,7 +68,11 @@ namespace Alphaleonis.Win32
             errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Read: [{1}] | Write: [{2}]", errorMessage, readPath, writePath);
 
          else
-            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), readPath ?? writePath);
+         {
+            // Prevent messages like: "(87) The parameter is incorrect: []"
+            if (!Utils.IsNullOrWhiteSpace(readPath ?? writePath))
+               errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), readPath ?? writePath);
+         }
 
 
          switch (errorCode)
@@ -104,6 +108,17 @@ namespace Alphaleonis.Win32
                throw new DeviceNotReadyException(errorMessage);
 
 
+            #region Reparse Point
+
+            case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
+               throw new NotAReparsePointException(errorMessage, (int) errorCode);
+
+            case Win32Errors.ERROR_INVALID_REPARSE_DATA:
+               throw new UnrecognizedReparsePointException(errorMessage, (int) errorCode);
+
+            #endregion Reparse Point
+
+
             #region Transactional
 
             case Win32Errors.ERROR_INVALID_TRANSACTION:
@@ -130,10 +145,7 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_TRANSACTIONS_UNSUPPORTED_REMOTE:
                throw new UnsupportedRemoteTransactionException(Resources.Invalid_Transaction_Request, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
-            case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
-               throw new NotAReparsePointException(new Win32Exception((int) Win32Errors.ERROR_NOT_A_REPARSE_POINT).Message, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
-
-            #endregion // Transacted
+            #endregion // Transactional
 
 
             case Win32Errors.ERROR_SUCCESS:

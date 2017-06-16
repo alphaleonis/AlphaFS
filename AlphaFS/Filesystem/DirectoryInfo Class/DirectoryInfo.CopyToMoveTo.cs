@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, preserveDates, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -132,7 +132,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, preserveDates, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -163,7 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -193,7 +193,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -225,7 +225,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -256,7 +256,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -287,7 +287,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          var cmr = CopyToMoveToCore(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -317,7 +317,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          var cmr = CopyToMoveToCore(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -347,7 +347,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          var cmr = CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -378,7 +378,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          var cmr = CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -413,7 +413,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, false, null, MoveOptions.None, null, null, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
       }
 
       #endregion // .NET
@@ -447,7 +447,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, false, null, MoveOptions.None, null, null, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -479,7 +479,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, false, null, moveOptions, null, null, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return null != destinationPathLp ? new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath) : null;
       }
 
@@ -510,7 +510,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToCore(destinationPath, false, null, moveOptions, null, null, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return null != destinationPathLp ? new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath) : null;
       }
 
@@ -549,7 +549,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          string destinationPathLp;
          var cmr = CopyToMoveToCore(destinationPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -589,7 +589,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          string destinationPathLp;
          var cmr = CopyToMoveToCore(destinationPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
          return cmr;
       }
 

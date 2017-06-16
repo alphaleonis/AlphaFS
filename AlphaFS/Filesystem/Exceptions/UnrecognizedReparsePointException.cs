@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.Serialization;
 
@@ -30,11 +31,19 @@ namespace Alphaleonis.Win32.Filesystem
    public class UnrecognizedReparsePointException : System.IO.IOException
    {
       private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_INVALID_REPARSE_DATA);
-      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_INVALID_REPARSE_DATA, Resources.Invalid_Reparse_Data);
+      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_INVALID_REPARSE_DATA, new Win32Exception((int) Win32Errors.ERROR_INVALID_REPARSE_DATA).Message.Trim().TrimEnd('.').Trim());
 
 
       /// <summary>Initializes a new instance of the <see cref="UnrecognizedReparsePointException"/> class.</summary>
       public UnrecognizedReparsePointException() : base(string.Format(CultureInfo.InvariantCulture, "{0}.", ErrorText), ErrorCode)
+      {
+      }
+
+
+      /// <summary>Initializes a new instance of the <see cref="UnrecognizedReparsePointException"/> class.</summary>
+      /// <param name="message">The custom error message..</param>
+      /// <param name="lastError">The GetLastWin32Error.</param>
+      public UnrecognizedReparsePointException(string message, int lastError) : base(message, lastError)
       {
       }
 

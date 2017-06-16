@@ -30,24 +30,24 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Directory_CompressAndDecompress_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Compress_And_Decompress_LocalAndNetwork_Success()
       {
-         Directory_Compress_Decompress(false, false);
-         Directory_Compress_Decompress(true, false);
+         Directory_Compress_And_Decompress(false, false);
+         Directory_Compress_And_Decompress(true, false);
       }
 
 
       [TestMethod]
-      public void AlphaFS_Directory_CompressAndDecompress_Recursive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Compress_And_Decompress_Recursive_LocalAndNetwork_Success()
       {
-         Directory_Compress_Decompress(false, true);
-         Directory_Compress_Decompress(true, true);
+         Directory_Compress_And_Decompress(false, true);
+         Directory_Compress_And_Decompress(true, true);
       }
 
 
 
 
-      private void Directory_Compress_Decompress(bool isNetwork, bool recursive)
+      private void Directory_Compress_And_Decompress(bool isNetwork, bool recursive)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 

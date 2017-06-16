@@ -836,7 +836,7 @@ namespace AlphaFS.UnitTest
                else
                {
                   var c = path[0];
-                  if (!Path.IsPathRooted(path) && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')))
+                  if (!Path.IsPathRooted(path) && (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'))
                      Assert.IsFalse(actual.StartsWith(Path.LongPathPrefix), "Path should not start with a long path prefix.");
                   else
                   {

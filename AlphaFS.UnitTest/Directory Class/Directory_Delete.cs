@@ -21,8 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
@@ -110,49 +108,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-      [TestMethod]
-      public void Directory_Delete_JunctionPoint_Local_Success()
-      {
-         var tempPath = System.IO.Path.GetTempPath();
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var target = rootDir.Directory.CreateSubdirectory("Lib");
-            var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
-            var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
-
-
-            // mklink: /J = Create a Directory Junction.
-            using (var process = Process.Start(new ProcessStartInfo(System.IO.Path.Combine(UnitTestConstants.SysRoot32, "cmd.exe"),
-               string.Format(CultureInfo.InvariantCulture, @"/C mklink /J {0} {1}", junction, target.FullName))
-            {
-               CreateNoWindow = true,
-               UseShellExecute = true
-            }))
-               if (null != process)
-                  process.WaitForExit();
-
-
-            var fsei = Alphaleonis.Win32.Filesystem.File.GetFileSystemEntryInfo(junction);
-            UnitTestConstants.Dump(fsei, -17);
-
-            Assert.AreEqual(System.IO.Directory.Exists(junction), Alphaleonis.Win32.Filesystem.Directory.Exists(junction));
-            Assert.IsTrue(fsei.IsDirectory);
-            Assert.IsTrue(fsei.IsMountPoint);
-            Assert.IsTrue(fsei.IsReparsePoint);
-
-
-
-
-            // System.IO.IOException: The parameter is incorrect
-            Alphaleonis.Win32.Filesystem.Directory.Delete(toDelete.FullName, true);
-
-
-            Assert.IsFalse(System.IO.Directory.Exists(toDelete.FullName));
-         }
-      }
-
-
 
 
       private void Directory_Delete_CatchArgumentException_PathContainsInvalidCharacters(bool isNetwork)
@@ -172,7 +127,7 @@ namespace AlphaFS.UnitTest
          {
             var exName = ex.GetType().Name;
             gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
@@ -197,7 +152,7 @@ namespace AlphaFS.UnitTest
          {
             var exName = ex.GetType().Name;
             gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
@@ -224,7 +179,7 @@ namespace AlphaFS.UnitTest
          {
             var exName = ex.GetType().Name;
             gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
@@ -263,7 +218,7 @@ namespace AlphaFS.UnitTest
             {
                var exName = ex.GetType().Name;
                gotException = exName.Equals("DirectoryNotEmptyException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
             }
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
@@ -292,7 +247,7 @@ namespace AlphaFS.UnitTest
          {
             var exName = ex.GetType().Name;
             gotException = exName.Equals("DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
@@ -323,7 +278,7 @@ namespace AlphaFS.UnitTest
 
             var exName = ex.GetType().Name;
             gotException = exName.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
@@ -358,7 +313,7 @@ namespace AlphaFS.UnitTest
             {
                var exName = ex.GetType().Name;
                gotException = exName.Equals("DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
             }
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
@@ -395,7 +350,7 @@ namespace AlphaFS.UnitTest
             {
                var exName = ex.GetType().Name;
                gotException = exName.Equals("DirectoryReadOnlyException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
             }
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
@@ -437,7 +392,7 @@ namespace AlphaFS.UnitTest
             {
                var exName = ex.GetType().Name;
                gotException = exName.Equals("UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught Exception: [{0}] Message: [{1}]", exName, ex.Message);
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
             }
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 

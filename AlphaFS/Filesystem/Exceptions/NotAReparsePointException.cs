@@ -41,6 +41,14 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
+      /// <param name="message">The custom error message..</param>
+      /// <param name="lastError">The GetLastWin32Error.</param>
+      public NotAReparsePointException(string message, int lastError) : base(message, lastError)
+      {
+      }
+
+
+      /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
       /// <param name="path">The path to the reparse point.</param>
       public NotAReparsePointException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), ErrorCode)
       {

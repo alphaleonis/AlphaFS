@@ -28,10 +28,19 @@ namespace Alphaleonis.Win32.Filesystem
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct MountPointReparseBuffer
       {
+         /// <summary>Offset, in bytes, of the substitute name string in the PathBuffer array.</summary>
          public ushort SubstituteNameOffset;
+
+         /// <summary>Length, in bytes, of the substitute name string. If this string is null-terminated, SubstituteNameLength does not include space for the null character.</summary>
          public ushort SubstituteNameLength;
+
+         /// <summary>Offset, in bytes, of the print name string in the PathBuffer array.</summary>
          public ushort PrintNameOffset;
+
+         /// <summary>Length, in bytes, of the print name string. If this string is null-terminated, PrintNameLength does not include space for the null character. </summary>
          public ushort PrintNameLength;
+
+         /// <summary>A buffer containing the unicode-encoded path string. The path string contains the substitute name string and print name string.</summary>
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)] public byte[] data;
       }
    }

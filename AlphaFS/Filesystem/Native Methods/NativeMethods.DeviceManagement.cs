@@ -162,9 +162,34 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="lpBytesReturned">[out] The bytes returned.</param>
       /// <param name="lpOverlapped">The overlapped.</param>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "DeviceIoControl"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool DeviceIoControl(SafeFileHandle hDevice, [MarshalAs(UnmanagedType.U4)] uint dwIoControlCode, [MarshalAs(UnmanagedType.AsAny)] object lpInBuffer, [MarshalAs(UnmanagedType.U4)] uint nInBufferSize, [MarshalAs(UnmanagedType.AsAny)] [Out] object lpOutBuffer, [MarshalAs(UnmanagedType.U4)] uint nOutBufferSize, [MarshalAs(UnmanagedType.U4)] out uint lpBytesReturned, IntPtr lpOverlapped);
+      internal static extern bool DeviceIoControl2(SafeFileHandle hDevice, [MarshalAs(UnmanagedType.U4)] uint dwIoControlCode, SafeGlobalMemoryBufferHandle lpInBuffer, [MarshalAs(UnmanagedType.U4)] uint nInBufferSize, IntPtr lpOutBuffer, [MarshalAs(UnmanagedType.U4)] uint nOutBufferSize, [MarshalAs(UnmanagedType.U4)] out uint lpBytesReturned, IntPtr lpOverlapped);
+
+      /// <summary>Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.</summary>
+      /// <returns>
+      ///   <para>If the operation completes successfully, the return value is nonzero.</para>
+      ///   <para>If the operation fails or is pending, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// </returns>
+      /// <remarks>
+      ///   <para>To retrieve a handle to the device, you must call the <see cref="CreateFile"/> function with either the name of a device or
+      ///   the name of the driver associated with a device.</para>
+      ///   <para>To specify a device name, use the following format: <c>\\.\DeviceName</c></para>
+      ///   <para>Minimum supported client: Windows XP</para>
+      ///   <para>Minimum supported server: Windows Server 2003</para>
+      /// </remarks>
+      /// <param name="hDevice">The device.</param>
+      /// <param name="dwIoControlCode">The i/o control code.</param>
+      /// <param name="lpInBuffer">Buffer for in data.</param>
+      /// <param name="nInBufferSize">Size of the in buffer.</param>
+      /// <param name="lpOutBuffer">Buffer for out data.</param>
+      /// <param name="nOutBufferSize">Size of the out buffer.</param>
+      /// <param name="lpBytesReturned">[out] The bytes returned.</param>
+      /// <param name="lpOverlapped">The overlapped.</param>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "DeviceIoControl"), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.Bool)]
+      internal static extern bool DeviceIoControlUnknownSize(SafeFileHandle hDevice, [MarshalAs(UnmanagedType.U4)] uint dwIoControlCode, [MarshalAs(UnmanagedType.AsAny)] object lpInBuffer, [MarshalAs(UnmanagedType.U4)] uint nInBufferSize, [MarshalAs(UnmanagedType.AsAny)] [Out] object lpOutBuffer, [MarshalAs(UnmanagedType.U4)] uint nOutBufferSize, [MarshalAs(UnmanagedType.U4)] out uint lpBytesReturned, IntPtr lpOverlapped);
 
       #endregion // DeviceIoControl
 

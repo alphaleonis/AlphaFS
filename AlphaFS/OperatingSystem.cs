@@ -262,8 +262,11 @@ namespace Alphaleonis.Win32
 
 
          // RtlGetVersion returns STATUS_SUCCESS (0).
-         if (NativeMethods.RtlGetVersion(ref verInfo))
-            throw new Win32Exception(Marshal.GetLastWin32Error(), "Function RtlGetVersion() failed to retrieve the operating system information.");
+         var success = !NativeMethods.RtlGetVersion(ref verInfo);
+         
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success)
+            throw new Win32Exception(lastError, "Function RtlGetVersion() failed to retrieve the operating system information.");
 
 
          _osVersion = new Version(verInfo.dwMajorVersion, verInfo.dwMinorVersion, verInfo.dwBuildNumber);

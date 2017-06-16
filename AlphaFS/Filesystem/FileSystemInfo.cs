@@ -34,6 +34,23 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Fields
 
+      #region .NET
+
+      /// <summary>Represents the fully qualified path of the file or directory.</summary>
+      /// <remarks>
+      ///   <para>Classes derived from <see cref="FileSystemInfo"/> can use the FullPath field</para>
+      ///   <para>to determine the full path of the object being manipulated.</para>
+      /// </remarks>
+      [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
+      protected string FullPath;
+
+      /// <summary>The path originally specified by the user, whether relative or absolute.</summary>
+      [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
+      protected string OriginalPath;
+
+      #endregion // .NET
+
+
       // We use this field in conjunction with the Refresh methods, if we succeed
       // we store a zero, on failure we store the HResult in it so that we can
       // give back a generic error back.
@@ -53,21 +70,9 @@ namespace Alphaleonis.Win32.Filesystem
       private readonly int _random = new Random().Next(0, 19);
 
 
-      #region .NET
-
-      /// <summary>Represents the fully qualified path of the file or directory.</summary>
-      /// <remarks>
-      ///   <para>Classes derived from <see cref="FileSystemInfo"/> can use the FullPath field</para>
-      ///   <para>to determine the full path of the object being manipulated.</para>
-      /// </remarks>
-      [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-      protected string FullPath;
-
-      /// <summary>The path originally specified by the user, whether relative or absolute.</summary>
-      [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-      protected string OriginalPath;
-
-      #endregion // .NET
+      /// <summary>The target path to the Hard/Soft (Symbolic)/Junction link as a long path.</summary>
+      [NonSerialized]
+      internal string linkTargetPath = null;
 
       #endregion // Fields
 
@@ -371,7 +376,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          get
          {
-            if (_entryInfo == null)
+            if (null == _entryInfo)
             {
                Win32AttributeData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                RefreshEntryInfo();
@@ -515,7 +520,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Refreshes the current <see cref="FileSystemInfo"/> instance (<see cref="DirectoryInfo"/> or <see cref="FileInfo"/>) with a new destination path.</summary>
-      internal void UpdateDestinationPath(string destinationPath, string destinationPathLp)
+      internal void UpdateSourcePath(string destinationPath, string destinationPathLp)
       {
          LongFullName = destinationPathLp;
          FullPath = null != destinationPathLp ? Path.GetRegularPathCore(LongFullName, GetFullPathOptions.None, false) : null;
@@ -540,8 +545,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          _entryInfo = File.GetFileSystemEntryInfoCore(IsDirectory, Transaction, LongFullName, true, PathFormat.LongFullPath);
 
-         if (_entryInfo == null)
+         if (null == _entryInfo)
             DataInitialised = -1;
+
          else
          {
             DataInitialised = 0;

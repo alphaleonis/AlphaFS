@@ -631,7 +631,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          _name = Path.GetFileName(destinationPathLp, true);
 
-         base.UpdateDestinationPath(destinationPath, destinationPathLp);
+         UpdateSourcePath(destinationPath, destinationPathLp);
       }
 
       #endregion // Internal Methods

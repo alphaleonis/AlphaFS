@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class Directory
    {
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a directory.
+      /// <summary>[AlphaFS] Creates a symbolic link  to a directory (similar to CMD command: "MKLINK /D").
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a directory.
+      /// <summary>[AlphaFS] Creates a symbolic link  to a directory (similar to CMD command: "MKLINK /D").
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a directory as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK /D") to a directory as a transacted operation.
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (soft link) to a directory as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK /D") to a directory as a transacted operation.
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>

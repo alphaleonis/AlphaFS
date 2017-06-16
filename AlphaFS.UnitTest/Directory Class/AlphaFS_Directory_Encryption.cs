@@ -31,24 +31,24 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_EncryptAndDecrypt_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Encrypt_And_Decrypt_LocalAndNetwork_Success()
       {
-         Directory_EncryptAndDecrypt(false);
-         Directory_EncryptAndDecrypt(true);
+         Directory_Encrypt_And_Decrypt(false);
+         Directory_Encrypt_And_Decrypt(true);
       }
 
 
       [TestMethod]
-      public void AlphaFS_Directory_EncryptAndDecrypt_Recursive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Encrypt_And_Decrypt_Recursive_LocalAndNetwork_Success()
       {
-         Directory_EncryptAndDecrypt_Recursive(false);
-         Directory_EncryptAndDecrypt_Recursive(true);
+         Directory_Encrypt_And_Decrypt_Recursive(false);
+         Directory_Encrypt_And_Decrypt_Recursive(true);
       }
 
 
 
 
-      private void Directory_EncryptAndDecrypt(bool isNetwork)
+      private void Directory_Encrypt_And_Decrypt(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -109,7 +109,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_EncryptAndDecrypt_Recursive(bool isNetwork)
+      private void Directory_Encrypt_And_Decrypt_Recursive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 

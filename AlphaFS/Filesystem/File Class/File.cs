@@ -20,6 +20,8 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -29,6 +31,11 @@ namespace Alphaleonis.Win32.Filesystem
    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]   
    public static partial class File
    {
-      // This file only exists for the documentation.
+      internal static void ThrowIOExceptionIfFsoExist(bool isFolder, string fsoPath, PathFormat pathFormat)
+      {
+         if (ExistsCore(isFolder, null, fsoPath, pathFormat))
+            throw new IOException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_ALREADY_EXISTS,
+               string.Format(CultureInfo.InvariantCulture, isFolder ? Resources.Target_File_Is_A_Directory : Resources.Target_Directory_Is_A_File, fsoPath)), (int) Win32Errors.ERROR_ALREADY_EXISTS);
+      }
    }
 }

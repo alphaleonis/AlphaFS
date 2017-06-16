@@ -62,8 +62,8 @@ namespace AlphaFS.UnitTest
 
 
             const int maxDepth = 10;
-            const int totalDirectories = (maxDepth * maxDepth) + maxDepth;          // maxDepth = 10: 110 directories and 110 files.
-            const int emptyDirectories = (maxDepth * maxDepth) / 2;                 // 50 empty directories.
+            const int totalDirectories = maxDepth * maxDepth + maxDepth;            // maxDepth = 10: 110 directories and 110 files.
+            const int emptyDirectories = maxDepth * maxDepth / 2;                   // 50 empty directories.
             const int remainingDirectories = totalDirectories - emptyDirectories;   // 60 remaining directories.
 
             const string searchPattern = Alphaleonis.Win32.Filesystem.Path.WildcardStarMatchAll;

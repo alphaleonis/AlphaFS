@@ -86,18 +86,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotAReparsePointException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnrecognizedReparsePointException"/>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
+      /// <param name="isFolder">Specifies that <paramref name="reparsePath"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the reparse point.</param>
+      /// <param name="reparsePath">The path to the reparse point.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
-      ///   or mount point pointed to by <paramref name="path"/>.
+      ///   or mount point pointed to by <paramref name="reparsePath"/>.
       /// </returns>
       [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfoCore(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static LinkTargetInfo GetLinkTargetInfoCore(bool isFolder, KernelTransaction transaction, string reparsePath, PathFormat pathFormat)
       {
          var eAttributes = ExtendedFileAttributes.OpenReparsePoint;
 
@@ -105,8 +106,8 @@ namespace Alphaleonis.Win32.Filesystem
             eAttributes |= ExtendedFileAttributes.BackupSemantics;
 
 
-         using (var safeHandle = CreateFileCore(transaction, path, eAttributes, null, FileMode.Open, 0, FileShare.ReadWrite, pathFormat != PathFormat.LongFullPath, pathFormat))
-            return Device.GetLinkTargetInfoCore(isFolder, safeHandle);
+         using (var safeHandle = CreateFileCore(transaction, reparsePath, eAttributes, null, FileMode.Open, 0, FileShare.ReadWrite, pathFormat != PathFormat.LongFullPath, pathFormat))
+            return Device.GetLinkTargetInfoCore(safeHandle, isFolder, reparsePath);
       }
    }
 }

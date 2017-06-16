@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories(string searchPattern, SearchOption searchOption)
       {
-         var options = DirectoryEnumerationOptions.Folders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+         var options = DirectoryEnumerationOptions.Folders | (searchOption == SearchOption.AllDirectories ? DirectoryEnumerationOptions.Recursive : 0);
 
          return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath).ToArray();
       }

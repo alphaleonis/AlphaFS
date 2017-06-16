@@ -30,13 +30,13 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_CreateSymbolicLinkAndGetLinkTargetInfo_LocalAndNetwork_Success()
+      public void AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
 
-         File_CreateSymbolicLink_GetLinkTargetInfo(false);
-         File_CreateSymbolicLink_GetLinkTargetInfo(true);
+         File_CreateSymbolicLink_And_GetLinkTargetInfo(false);
+         File_CreateSymbolicLink_And_GetLinkTargetInfo(true);
       }
 
 
@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
 
 
 
-      private void File_CreateSymbolicLink_GetLinkTargetInfo(bool isNetwork)
+      private void File_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
@@ -70,7 +70,7 @@ namespace AlphaFS.UnitTest
             using (fileInfo.CreateText()) {}
 
             Console.WriteLine("\nInput File Path: [{0}]", fileInfo.FullName);
-            Console.WriteLine("File Link      : [{0}]", fileLink);
+            Console.WriteLine("Input File Link: [{0}]", fileLink);
             
 
             Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(fileLink, fileInfo.FullName);
@@ -115,7 +115,7 @@ namespace AlphaFS.UnitTest
             dirInfo.Create();
 
             Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
-            Console.WriteLine("Folder Link         : [{0}]", folderLink);
+            Console.WriteLine("Input Folder Link   : [{0}]", folderLink);
 
 
             var gotException = false;

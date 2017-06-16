@@ -85,8 +85,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal static long LuidToLong(Luid luid)
       {
-         ulong high = (((ulong)luid.HighPart) << 32);
-         ulong low = (((ulong)luid.LowPart) & 0x00000000FFFFFFFF);
+         ulong high = (ulong)luid.HighPart << 32;
+         ulong low = (ulong)luid.LowPart & 0x00000000FFFFFFFF;
          return unchecked((long)(high | low));
       }
 
@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal static long ToLong(uint highPart, uint lowPart)
       {
-         return (((long)highPart) << 32) | (((long)lowPart) & 0xFFFFFFFF);
+         return ((long)highPart << 32) | ((long)lowPart & 0xFFFFFFFF);
       }
    }
 }

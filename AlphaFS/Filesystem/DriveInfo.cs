@@ -241,7 +241,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A VolumeInfo object that contains file-system volume information of the drive.</returns>
       public VolumeInfo VolumeInfo
       {
-         get { return (VolumeInfo)GetDeviceInfo(0, 0); }
+         get { return (VolumeInfo) GetDeviceInfo(0, 0); }
       }
 
 

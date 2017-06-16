@@ -30,13 +30,13 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Directory_CreateSymbolicLinkAndGetLinkTargetInfo_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_CreateSymbolicLink_And_GetLinkTargetInfo_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
 
-         Directory_CreateSymbolicLink_GetLinkTargetInfo(false);
-         Directory_CreateSymbolicLink_GetLinkTargetInfo(true);
+         Directory_CreateSymbolicLink_And_GetLinkTargetInfo(false);
+         Directory_CreateSymbolicLink_And_GetLinkTargetInfo(true);
       }
 
 
@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
 
 
 
-      private void Directory_CreateSymbolicLink_GetLinkTargetInfo(bool isNetwork)
+      private void Directory_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
@@ -70,7 +70,7 @@ namespace AlphaFS.UnitTest
             dirInfo.Create();
 
             Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
-            Console.WriteLine("Folder Link         : [{0}]", folderLink);
+            Console.WriteLine("Input Folder Link   : [{0}]", folderLink);
 
 
             Alphaleonis.Win32.Filesystem.Directory.CreateSymbolicLink(folderLink, dirInfo.FullName);
@@ -81,8 +81,16 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(lvi.PrintName.Equals(dirInfo.FullName, StringComparison.OrdinalIgnoreCase));
 
 
-            UnitTestConstants.Dump(new System.IO.DirectoryInfo(folderLink), -17);
-            
+
+
+            var dirInfoSysIO = new System.IO.DirectoryInfo(folderLink);
+            UnitTestConstants.Dump(dirInfoSysIO, -17);
+
+            Assert.IsTrue((dirInfoSysIO.Attributes & System.IO.FileAttributes.ReparsePoint) != 0);
+
+
+
+
             var alphaFSDirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(folderLink);
             UnitTestConstants.Dump(alphaFSDirInfo.EntryInfo, -17);
 

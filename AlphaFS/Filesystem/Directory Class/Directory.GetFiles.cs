@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFiles(string path, string searchPattern, SearchOption searchOption)
       {
-         var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+         var options = DirectoryEnumerationOptions.Files | (searchOption == SearchOption.AllDirectories ? DirectoryEnumerationOptions.Recursive : 0);
 
          return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, options, PathFormat.RelativePath).ToArray();
       }
@@ -206,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFilesTransacted(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+         var options = DirectoryEnumerationOptions.Files | (searchOption == SearchOption.AllDirectories ? DirectoryEnumerationOptions.Recursive : 0);
 
          return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, options, PathFormat.RelativePath).ToArray();
       }

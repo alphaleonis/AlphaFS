@@ -1381,24 +1381,28 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
+      /// <summary>Checks if the <see cref="MoveOptions.CopyAllowed"/> flag is specified.</summary>
       internal static bool AllowEmulate(MoveOptions? moveOptions)
       {
          return IsNotNull(moveOptions) && (moveOptions & MoveOptions.CopyAllowed) != 0;
       }
 
 
+      /// <summary>Checks if the <see cref="MoveOptions.ReplaceExisting"/> flag is specified.</summary>
       internal static bool CanOverwrite(MoveOptions? moveOptions)
       {
          return IsNotNull(moveOptions) && (moveOptions & MoveOptions.ReplaceExisting) != 0;
       }
 
 
+      /// <summary>Checks if the <see cref="MoveOptions.DelayUntilReboot"/> flag is specified.</summary>
       private static bool HasDelayUntilReboot(MoveOptions? moveOptions)
       {
          return IsNotNull(moveOptions) && (moveOptions & MoveOptions.DelayUntilReboot) != 0;
       }
 
 
+      /// <summary>Checks that the <see cref="FileAttributes"/> instance is valid.</summary>
       internal static bool HasValidAttributes(FileAttributes fileAttributes)
       {
          return IsNotNull(fileAttributes) && !fileAttributes.Equals(NativeMethods.InvalidFileAttributes);
@@ -1420,30 +1424,35 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      /// <summary>Checks that the file system object is a directory.</summary>
       internal static bool IsDirectory(FileAttributes fileAttributes)
       {
          return HasValidAttributes(fileAttributes) && (fileAttributes & FileAttributes.Directory) != 0;
       }
 
 
+      /// <summary>Checks that the file system object is a hidden.</summary>
       internal static bool IsHidden(FileAttributes fileAttributes)
       {
          return HasValidAttributes(fileAttributes) && (fileAttributes & FileAttributes.Hidden) != 0;
       }
 
 
+      /// <summary>Checks that the object is not null.</summary>
       private static bool IsNotNull<T>(T obj)
       {
          return !Equals(null, obj);
       }
 
-      
+
+      /// <summary>Checks that the file system object is a read-only.</summary>
       internal static bool IsReadOnly(FileAttributes fileAttributes)
       {
          return HasValidAttributes(fileAttributes) && (fileAttributes & FileAttributes.ReadOnly) != 0;
       }
 
 
+      /// <summary>Checks that the file system object is a read-only or hidden.</summary>
       private static bool IsReadOnlyOrHidden(FileAttributes fileAttributes)
       {
          return IsReadOnly(fileAttributes) || IsHidden(fileAttributes);
@@ -1500,14 +1509,14 @@ namespace Alphaleonis.Win32.Filesystem
          if (delayUntilReboot)
          {
             if (AllowEmulate(moveOptions))
-               throw new ArgumentException("This value cannot be used with " + MoveOptions.CopyAllowed, "moveOptions");
+               throw new ArgumentException(Resources.MoveOptionsDelayUntilReboot_Not_Allowed_With_MoveOptionsCopyAllowed, "moveOptions");
 
 
             // MoveFileXxx: (lpExistingFileName) If dwFlags specifies MOVEFILE_DELAY_UNTIL_REBOOT,
             // the file cannot exist on a remote share, because delayed operations are performed before the network is available.
 
             if (Path.IsUncPathCore(sourcePath, pathFormat != PathFormat.LongFullPath, false))
-               throw new ArgumentException("UNC path is not allowed when using the " + MoveOptions.CopyAllowed + " flag.", "moveOptions");
+               throw new ArgumentException(Resources.MoveOptionsDelayUntilReboot_Not_Allowed_With_NetworkPath, "moveOptions");
          }
 
          return delayUntilReboot;

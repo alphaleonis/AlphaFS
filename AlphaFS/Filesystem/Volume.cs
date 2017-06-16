@@ -191,7 +191,7 @@ namespace Alphaleonis.Win32.Filesystem
                       options.Any(s => s != null && s.Equals("sort", StringComparison.OrdinalIgnoreCase));
 
          // Start with a larger buffer when using a searchFilter.
-         var bufferSize = (uint)(searchFilter || doSort || (options == null) ? 8 * NativeMethods.DefaultFileBufferSize : 256);
+         var bufferSize = (uint) (searchFilter || doSort || null == options ? 8 * NativeMethods.DefaultFileBufferSize : 256);
          uint bufferResult = 0;
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
@@ -240,7 +240,7 @@ namespace Alphaleonis.Win32.Filesystem
                   ? dosDev.Where(dev => options != null && dev.StartsWith(options[0], StringComparison.OrdinalIgnoreCase))
                   : dosDev;
 
-               foreach (var dev in (doSort) ? selectQuery.OrderBy(n => n) : selectQuery)
+               foreach (var dev in doSort ? selectQuery.OrderBy(n => n) : selectQuery)
                   yield return dev;
             }
       }
@@ -701,7 +701,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Don't use char.IsLetter() here as that can be misleading.
             // The only valid drive letters are: a-z and A-Z.
             var c = volumeName[0];
-            doQueryDos = (volumeName[1] == Path.VolumeSeparatorChar && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')));
+            doQueryDos = volumeName[1] == Path.VolumeSeparatorChar && (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z');
          }
 
          #endregion // Logical Drive

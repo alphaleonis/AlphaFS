@@ -215,6 +215,33 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The target directory of the directory junction must be on the same local drive..
+        /// </summary>
+        internal static string Junction_And_Target_Must_Be_On_The_Same_Drive {
+            get {
+                return ResourceManager.GetString("Junction_And_Target_Must_Be_On_The_Same_Drive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MoveOptions.CopyAllowed is not allowed when using the MoveOptions.DelayUntilReboot flag..
+        /// </summary>
+        internal static string MoveOptionsDelayUntilReboot_Not_Allowed_With_MoveOptionsCopyAllowed {
+            get {
+                return ResourceManager.GetString("MoveOptionsDelayUntilReboot_Not_Allowed_With_MoveOptionsCopyAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MoveOptions.DelayUntilReboot is not allowed when using a network path..
+        /// </summary>
+        internal static string MoveOptionsDelayUntilReboot_Not_Allowed_With_NetworkPath {
+            get {
+                return ResourceManager.GetString("MoveOptionsDelayUntilReboot_Not_Allowed_With_NetworkPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Count cannot be negative..
         /// </summary>
         internal static string Negative_Count {
@@ -256,6 +283,15 @@ namespace Alphaleonis.Win32 {
         internal static string Negative_Offset {
             get {
                 return ResourceManager.GetString("Negative_Offset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network path is not allowed for directory junction: [{0}].
+        /// </summary>
+        internal static string Network_Path_Not_Allowed {
+            get {
+                return ResourceManager.GetString("Network_Path_Not_Allowed", resourceCulture);
             }
         }
         

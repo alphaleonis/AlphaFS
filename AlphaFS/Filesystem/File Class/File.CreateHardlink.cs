@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>[AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
+      /// <summary>[AlphaFS] Establishes a hard link (similar to CMD command: "MKLINK /H") between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
+      /// <summary>[AlphaFS] Establishes a hard link (similar to CMD command: "MKLINK /H") between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Establishes a hard link between an existing file and a new file as a transacted operation. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
+      /// <summary>[AlphaFS] Establishes a hard link (similar to CMD command: "MKLINK /H") between an existing file and a new file as a transacted operation. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Establishes a hard link between an existing file and a new file as a transacted operation. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
+      /// <summary>[AlphaFS] Establishes a hard link (similar to CMD command: "MKLINK /H") between an existing file and a new file as a transacted operation. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Establishes a hard link between an existing file and a new file as a transacted operation. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
+      /// <summary>[AlphaFS] Establishes a hard link (similar to CMD command: "MKLINK /H") between an existing file and a new file as a transacted operation. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>

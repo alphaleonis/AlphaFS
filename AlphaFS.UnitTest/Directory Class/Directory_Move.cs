@@ -649,7 +649,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = System.IO.Directory.CreateDirectory((System.IO.Path.Combine(rootDir.Directory.FullName, "Source")));
+            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source"));
             var upperCaseFolderName = System.IO.Path.GetFileName(folderSrc.FullName).ToUpperInvariant();
 
 

@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -26,11 +27,16 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
-      /// <param name="path">The path to the reparse point.</param>
       /// <returns>
       ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
       ///   or mount point pointed to by <paramref name="path"/>.
       /// </returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotAReparsePointException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnrecognizedReparsePointException"/>
+      /// <param name="path">The path to the reparse point.</param>
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path)
       {
@@ -39,12 +45,17 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
-      /// <param name="path">The path to the reparse point.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
       ///   or mount point pointed to by <paramref name="path"/>.
       /// </returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotAReparsePointException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnrecognizedReparsePointException"/>
+      /// <param name="path">The path to the reparse point.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path, PathFormat pathFormat)
       {
@@ -53,12 +64,17 @@ namespace Alphaleonis.Win32.Filesystem
       
 
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the reparse point.</param>
       /// <returns>
       ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
       ///   or mount point pointed to by <paramref name="path"/>.
       /// </returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotAReparsePointException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnrecognizedReparsePointException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the reparse point.</param>
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path)
       {
@@ -67,13 +83,23 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the reparse point.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
       ///   or mount point pointed to by <paramref name="path"/>.
       /// </returns>
+      /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
+      /// <returns>
+      ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
+      ///   or mount point pointed to by <paramref name="path"/>.
+      /// </returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotAReparsePointException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnrecognizedReparsePointException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the reparse point.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
