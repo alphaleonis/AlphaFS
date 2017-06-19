@@ -62,7 +62,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
-         var fsei = Alphaleonis.Win32.Filesystem.File.GetFileSystemEntryInfo(tempPath);
+         var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath);
          UnitTestConstants.Dump(fsei, -17);
 
          Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));

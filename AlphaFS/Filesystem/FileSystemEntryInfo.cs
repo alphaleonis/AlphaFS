@@ -144,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Gets a value indicating whether this instance is a mount point.</summary>
+      /// <summary>Gets a value indicating whether this instance is a mount point. Applicable to local directories and local volumes.</summary>
       /// <value><see langword="true"/> if this instance is a mount point; otherwise, <see langword="false"/>.</value>
       public bool IsMountPoint
       {

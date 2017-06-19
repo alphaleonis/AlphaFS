@@ -25,13 +25,12 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Security.Principal;
 using System.Text;
 
 namespace AlphaFS.UnitTest
 {
    /// <summary>Containts static variables, used by unit tests.</summary>
-   public static class UnitTestConstants
+   public static partial class UnitTestConstants
    {
       #region Fields
 
@@ -161,74 +160,7 @@ namespace AlphaFS.UnitTest
       #endregion // Fields
 
       #region Methods
-
-      // A high "max" increases the change of path too long.
-      public static void CreateDirectoriesAndFiles(string rootPath, int max, bool readOnly, bool hidden, bool recurse)
-      {
-         var folderCount = 0;
-
-         for (var i = 0; i < max; i++)
-         {
-            var file = System.IO.Path.Combine(rootPath, System.IO.Path.GetRandomFileName());
-            var dir = file + "-" + i + "-dir";
-            file = file + "-" + i + "-file";
-
-            folderCount++;
-            System.IO.Directory.CreateDirectory(dir);
-
-            var filePath = System.IO.Path.Combine(dir, System.IO.Path.GetFileName(file));
-
-
-            // Every other folder is empty.
-            if (i % 2 != 0)
-            {
-               CreateFile(dir);
-               
-               System.IO.File.WriteAllText(filePath, TextGoodbyeWorld);
-
-               switch (new Random().Next(0, 2))
-               {
-                  case 1:
-                     if (readOnly)
-                        System.IO.File.SetAttributes(filePath, System.IO.FileAttributes.ReadOnly);
-                     break;
-
-                  case 2:
-                     if (hidden)
-                        System.IO.File.SetAttributes(filePath, System.IO.FileAttributes.Hidden);
-                     break;
-               }
-            }
-         }
-
-         
-         if (recurse)
-         {
-            foreach (var dir in System.IO.Directory.EnumerateDirectories(rootPath))
-               CreateDirectoriesAndFiles(dir, max, readOnly, hidden, false);
-         }
-
-
-         Assert.AreEqual(max, folderCount, "The number of folders does not equal the max folder-level, but is expected to.");
-      }
-
-
-      public static System.IO.FileInfo CreateFile(string rootFolder, int fileLength = 0)
-      {
-         var file = System.IO.Path.Combine(rootFolder, System.IO.Path.GetRandomFileName());
-
-         using (var fs = System.IO.File.Create(file))
-         {
-            if (fileLength <= 0)
-               fileLength = new Random().Next(0, 10485760);
-
-            fs.SetLength(fileLength);
-         }
-
-         return new System.IO.FileInfo(file);
-      }
-
-
+      
       public static void FolderDenyPermission(bool create, string tempPath)
       {
          var user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
@@ -299,56 +231,6 @@ namespace AlphaFS.UnitTest
       }
 
       
-      public static bool IsAdmin()
-      {
-         var isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
-
-         if (!isAdmin)
-            Console.WriteLine("\nThis Unit Test must be run as Administrator.\n");
-
-         return isAdmin;
-      }
-
-
-      /// <summary>Shows the Object's available Properties and Values.</summary>
-      public static bool Dump(object obj, int width = -35, bool indent = false)
-      {
-         var cnt = 0;
-         const string nulll = "\t\tnull";
-         var template = "\t{0}#{1:000}\t{2, " + width + "} = [{3}]";
-
-         if (obj == null)
-         {
-            Console.WriteLine(nulll);
-            return false;
-         }
-
-         Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
-
-         var loopOk = false;
-         foreach (var descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
-         {
-            string propValue;
-            try
-            {
-               var value = descriptor.GetValue(obj);
-               propValue = (value == null) ? "null" : value.ToString();
-
-               loopOk = true;
-            }
-            catch (Exception ex)
-            {
-               // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, "  ");
-            }
-
-            Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
-         }
-
-         return loopOk;
-      }
-
-
       public static byte[] StringToByteArray(string str, params Encoding[] encoding)
       {
          var encode = encoding != null && encoding.Any() ? encoding[0] : new UTF8Encoding(true, true);

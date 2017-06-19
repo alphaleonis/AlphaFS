@@ -35,18 +35,19 @@ namespace Alphaleonis.Win32.Filesystem
    /// <summary>Provides static methods to retrieve device resource information from a local or remote host.</summary>
    public static class Device
    {
-      #region EnumerateDevices
+      #region Enumerate Devices
 
-      /// <summary>Enumerates all available devices on the local host.</summary>
+      /// <summary>[AlphaFS] Enumerates all available devices on the local host.</summary>
       /// <returns><see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> from the local host.</returns>
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
       [SecurityCritical]
       public static IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {
-         return EnumerateDevices(null, deviceGuid);
+         return EnumerateDevicesCore(null, null, deviceGuid);
       }
 
-      /// <summary>Enumerates all available devices of type <see cref="DeviceGuid"/> on the local or remote host.</summary>
+
+      /// <summary>[AlphaFS] Enumerates all available devices of type <see cref="DeviceGuid"/> on the local or remote host.</summary>
       /// <returns><see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> for the specified <paramref name="hostName"/>.</returns>
       /// <param name="hostName">The name of the local or remote host on which the device resides. <see langword="null"/> refers to the local host.</param>
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
@@ -55,14 +56,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return EnumerateDevicesCore(null, hostName, deviceGuid);
       }
+      
 
-      #endregion // EnumerateDevices
-
-      #region Internal Methods
-
-      #region EnumerateDevicesCore
-
-      /// <summary>Enumerates all available devices on the local or remote host.</summary>
+      /// <summary>[AlphaFS] Enumerates all available devices on the local or remote host.</summary>
       [SecurityCritical]
       internal static IEnumerable<DeviceInfo> EnumerateDevicesCore(SafeHandle safeHandle, string hostName, DeviceGuid deviceInterfaceGuid)
       {
@@ -234,130 +230,8 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // EnumerateDevicesCore
 
-      #region GetLinkTargetInfoCore
-
-      /// <summary>Get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
-      /// <exception cref="UnrecognizedReparsePointException"/>
-      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]
-      [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfoCore(bool isFolder, SafeFileHandle safeHandle)
-      {
-         // Start with a large buffer to prevent a 2nd call.
-         // MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384
-         uint bytesReturned = 4 * NativeMethods.DefaultFileBufferSize;
-         
-         using (var safeBuffer = new SafeGlobalMemoryBufferHandle((int) bytesReturned))
-         {
-            while (true)
-            {
-               // DeviceIoControlMethod.Buffered = 0,
-               // DeviceIoControlFileDevice.FileSystem = 9
-               // FsctlGetReparsePoint = (DeviceIoControlFileDevice.FileSystem << 16) | (42 << 2) | DeviceIoControlMethod.Buffered | (0 << 14)
-
-               var success = NativeMethods.DeviceIoControl(safeHandle, (9 << 16) | (42 << 2) | 0 | (0 << 14), IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
-
-               var lastError = Marshal.GetLastWin32Error();
-               if (!success)
-               {
-                  switch ((uint) lastError)
-                  {
-                     case Win32Errors.ERROR_MORE_DATA:
-                     case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
-                        if (safeBuffer.Capacity < bytesReturned)
-                        {
-                           safeBuffer.Close();
-                           break;
-                        }
-
-                        NativeError.ThrowException(lastError);
-                        break;
-                  }
-               }
-
-               else
-                  break;
-            }
-
-
-            const string dataText = "data";
-            var marshalReparseBuffer = (int) Marshal.OffsetOf(typeof(NativeMethods.ReparseDataBufferHeader), dataText);
-
-            var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>(0);
-
-            var dataOffset = (int) (marshalReparseBuffer + (header.ReparseTag == ReparsePointTag.MountPoint
-               ? Marshal.OffsetOf(typeof(NativeMethods.MountPointReparseBuffer), dataText)
-               : Marshal.OffsetOf(typeof(NativeMethods.SymbolicLinkReparseBuffer), dataText)).ToInt64());
-
-            var dataBuffer = new byte[bytesReturned - dataOffset];
-
-
-            switch (header.ReparseTag)
-            {
-               case ReparsePointTag.MountPoint:
-                  var mountPoint = safeBuffer.PtrToStructure<NativeMethods.MountPointReparseBuffer>(marshalReparseBuffer);
-
-                  safeBuffer.CopyTo(dataOffset, dataBuffer, 0, dataBuffer.Length);
-
-                  return new LinkTargetInfo(
-                     Encoding.Unicode.GetString(dataBuffer, mountPoint.SubstituteNameOffset, mountPoint.SubstituteNameLength),
-                     Encoding.Unicode.GetString(dataBuffer, mountPoint.PrintNameOffset, mountPoint.PrintNameLength))
-                  {
-                     IsDirectory = isFolder
-                  };
-
-
-               case ReparsePointTag.SymLink:
-                  var symLink = safeBuffer.PtrToStructure<NativeMethods.SymbolicLinkReparseBuffer>(marshalReparseBuffer);
-
-                  safeBuffer.CopyTo(dataOffset, dataBuffer, 0, dataBuffer.Length);
-
-                  return new SymbolicLinkTargetInfo(
-                     Encoding.Unicode.GetString(dataBuffer, symLink.SubstituteNameOffset, symLink.SubstituteNameLength),
-                     Encoding.Unicode.GetString(dataBuffer, symLink.PrintNameOffset, symLink.PrintNameLength), symLink.Flags)
-                  {
-                     IsDirectory = isFolder
-                  };
-
-
-               default:
-                  throw new UnrecognizedReparsePointException();
-            }
-         }
-      }
-
-      #endregion // GetLinkTargetInfoCore
-
-      #region ToggleCompressionCore
-
-      /// <summary>Sets the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
-      /// <param name="compress"><see langword="true"/> = compress, <see langword="false"/> = decompress</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-
-      [SecurityCritical]
-      internal static void ToggleCompressionCore(bool isFolder, KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
-      {
-         using (var handle = File.CreateFileCore(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, pathFormat))
-         {
-            // DeviceIoControlMethod.Buffered = 0,
-            // DeviceIoControlFileDevice.FileSystem = 9
-            // FsctlSetCompression = (DeviceIoControlFileDevice.FileSystem << 16) | (16 << 2) | DeviceIoControlMethod.Buffered | ((FileAccess.Read | FileAccess.Write) << 14)
-
-            // 0 = Decompress, 1 = Compress.
-            InvokeIoControlUnknownSize(handle, (9 << 16) | (16 << 2) | 0 | ((uint)(FileAccess.Read | FileAccess.Write) << 14), compress ? 1 : 0);
-         }
-      }
-
-      #endregion // ToggleCompressionCore
-
-
-      #region Private
-
-      #region CreateDeviceInfoDataInstance
+      #region Private Helpers
 
       /// <summary>Builds a DeviceInfo Data structure.</summary>
       /// <returns>An initialized NativeMethods.SP_DEVINFO_DATA instance.</returns>
@@ -365,14 +239,11 @@ namespace Alphaleonis.Win32.Filesystem
       private static NativeMethods.SP_DEVINFO_DATA CreateDeviceInfoDataInstance()
       {
          var did = new NativeMethods.SP_DEVINFO_DATA();
-         did.cbSize = (uint) Marshal.SizeOf(did);
+         did.cbSize = (uint)Marshal.SizeOf(did);
 
          return did;
       }
 
-      #endregion // CreateDeviceInfoDataInstance
-
-      #region CreateDeviceInterfaceDataInstance
 
       /// <summary>Builds a Device Interface Data structure.</summary>
       /// <returns>An initialized NativeMethods.SP_DEVICE_INTERFACE_DATA instance.</returns>
@@ -380,14 +251,11 @@ namespace Alphaleonis.Win32.Filesystem
       private static NativeMethods.SP_DEVICE_INTERFACE_DATA CreateDeviceInterfaceDataInstance()
       {
          var did = new NativeMethods.SP_DEVICE_INTERFACE_DATA();
-         did.cbSize = (uint) Marshal.SizeOf(did);
+         did.cbSize = (uint)Marshal.SizeOf(did);
 
          return did;
       }
 
-      #endregion // CreateDeviceInterfaceDataInstance
-
-      #region GetDeviceInterfaceDetailDataInstance
 
       /// <summary>Builds a Device Interface Detail Data structure.</summary>
       /// <returns>An initialized NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA instance.</returns>
@@ -397,7 +265,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Build a Device Interface Detail Data structure.
          var didd = new NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA
          {
-            cbSize = IntPtr.Size == 4 ? (uint) (Marshal.SystemDefaultCharSize + 4) : 8
+            cbSize = IntPtr.Size == 4 ? (uint)(Marshal.SystemDefaultCharSize + 4) : 8
          };
 
          // Get device interace details.
@@ -410,9 +278,6 @@ namespace Alphaleonis.Win32.Filesystem
          return didd;
       }
 
-      #endregion // GetDeviceInterfaceDetailDataInstance
-
-      #region InvokeIoControlUnknownSize
 
       /// <summary>Repeatedly invokes InvokeIoControl with the specified input until enough memory has been allocated.</summary>
       [SecurityCritical]
@@ -421,19 +286,19 @@ namespace Alphaleonis.Win32.Filesystem
          byte[] output;
          uint bytesReturned;
 
-         var inputSize = (uint) Marshal.SizeOf(input);
+         var inputSize = (uint)Marshal.SizeOf(input);
          var outputLength = increment;
 
          do
          {
             output = new byte[outputLength];
 
-            var success = NativeMethods.DeviceIoControl(handle, controlCode, input, inputSize, output, outputLength, out bytesReturned, IntPtr.Zero);
-            
+            var success = NativeMethods.DeviceIoControlUnknownSize(handle, controlCode, input, inputSize, output, outputLength, out bytesReturned, IntPtr.Zero);
+
             var lastError = Marshal.GetLastWin32Error();
             if (!success)
             {
-               switch ((uint) lastError)
+               switch ((uint)lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
                   case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
@@ -460,12 +325,210 @@ namespace Alphaleonis.Win32.Filesystem
          Array.Copy(output, res, bytesReturned);
 
          return res;
+
+
+         // TODO: Always return output?
       }
 
-      #endregion // InvokeIoControlUnknownSize
+      #endregion // Private Helpers
 
-      #endregion // Private
 
-      #endregion // Internal Methods
+      #endregion // Enumerate Devices
+
+
+      #region Compression
+
+      /// <summary>[AlphaFS] Sets the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
+      /// <param name="compress"><see langword="true"/> = compress, <see langword="false"/> = decompress</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      internal static void ToggleCompressionCore(bool isFolder, KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
+      {
+         using (var handle = File.CreateFileCore(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, pathFormat))
+         {
+            // DeviceIoControlMethod.Buffered = 0,
+            // DeviceIoControlFileDevice.FileSystem = 9
+            // FsctlSetCompression = (DeviceIoControlFileDevice.FileSystem << 16) | (16 << 2) | DeviceIoControlMethod.Buffered | ((FileAccess.Read | FileAccess.Write) << 14)
+
+            // 0 = Decompress, 1 = Compress.
+            InvokeIoControlUnknownSize(handle, (9 << 16) | (16 << 2) | 0 | ((uint)(FileAccess.Read | FileAccess.Write) << 14), compress ? 1 : 0);
+         }
+      }
+
+      #endregion // Compression
+
+
+      #region Link
+
+      /// <summary>[AlphaFS] Creates an NTFS directory junction (similar to CMD command: "MKLINK /J").</summary>
+      internal static void CreateDirectoryJunction(SafeFileHandle safeHandle, string directoryPath)
+      {
+         var targetDirBytes = Encoding.Unicode.GetBytes(Path.NonInterpretedPathPrefix + Path.GetRegularPathCore(directoryPath, GetFullPathOptions.AddTrailingDirectorySeparator, false));
+         
+         var header = new NativeMethods.ReparseDataBufferHeader
+         {
+            ReparseTag = ReparsePointTag.MountPoint,
+            ReparseDataLength = (ushort) (targetDirBytes.Length + 12)
+         };
+
+         var mountPoint = new NativeMethods.MountPointReparseBuffer
+         {
+            SubstituteNameOffset = 0,
+            SubstituteNameLength = (ushort) targetDirBytes.Length,
+            PrintNameOffset = (ushort) (targetDirBytes.Length + 2),
+            PrintNameLength = 0
+         };
+
+         var reparseDataBuffer = new NativeMethods.REPARSE_DATA_BUFFER
+         {
+            ReparseTag = header.ReparseTag,
+            ReparseDataLength = header.ReparseDataLength,
+
+            SubstituteNameOffset = mountPoint.SubstituteNameOffset,
+            SubstituteNameLength = mountPoint.SubstituteNameLength,
+            PrintNameOffset = mountPoint.PrintNameOffset,
+            PrintNameLength = mountPoint.PrintNameLength,
+
+            PathBuffer = new byte[NativeMethods.MAXIMUM_REPARSE_DATA_BUFFER_SIZE - 16] // 16368
+         };
+         
+         targetDirBytes.CopyTo(reparseDataBuffer.PathBuffer, 0);
+
+
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(reparseDataBuffer)))
+         {
+            safeBuffer.StructureToPtr(reparseDataBuffer, false);
+
+            uint bytesReturned;
+            var succes = NativeMethods.DeviceIoControl2(safeHandle, NativeMethods.FSCTL_SET_REPARSE_POINT, safeBuffer, (uint) (targetDirBytes.Length + 20), IntPtr.Zero, 0, out bytesReturned, IntPtr.Zero);
+
+            var lastError = Marshal.GetLastWin32Error();
+            if (!succes)
+               NativeError.ThrowException(lastError, directoryPath);
+         }
+      }
+
+
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
+      internal static void DeleteDirectoryJunction(SafeFileHandle safeHandle)
+      {
+         var reparseDataBuffer = new NativeMethods.REPARSE_DATA_BUFFER
+         {
+            ReparseTag = ReparsePointTag.MountPoint,
+            ReparseDataLength = 0,
+            PathBuffer = new byte[16368]
+         };
+
+
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(reparseDataBuffer)))
+         {
+            safeBuffer.StructureToPtr(reparseDataBuffer, false);
+
+            uint bytesReturned;
+            var success = NativeMethods.DeviceIoControl2(safeHandle, NativeMethods.FSCTL_DELETE_REPARSE_POINT, safeBuffer, NativeMethods.REPARSE_DATA_BUFFER_HEADER_SIZE, IntPtr.Zero, 0, out bytesReturned, IntPtr.Zero);
+
+            var lastError = Marshal.GetLastWin32Error();
+            if (!success)
+               NativeError.ThrowException(lastError);
+         }
+      }
+      
+
+      /// <summary>[AlphaFS] Get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
+      /// <exception cref="NotAReparsePointException"/>
+      /// <exception cref="UnrecognizedReparsePointException"/>
+      [SecurityCritical]
+      internal static LinkTargetInfo GetLinkTargetInfo(SafeFileHandle safeHandle, string reparsePath)
+      {
+         using (var safeBuffer = GetLinkTargetData(safeHandle, reparsePath))
+         {
+            var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>(0);
+            
+            var marshalReparseBuffer = (int) Marshal.OffsetOf(typeof(NativeMethods.ReparseDataBufferHeader), "data");
+
+            var dataOffset = (int) (marshalReparseBuffer + (header.ReparseTag == ReparsePointTag.MountPoint
+               ? Marshal.OffsetOf(typeof(NativeMethods.MountPointReparseBuffer), "data")
+               : Marshal.OffsetOf(typeof(NativeMethods.SymbolicLinkReparseBuffer), "data")).ToInt64());
+
+            var dataBuffer = new byte[NativeMethods.MAXIMUM_REPARSE_DATA_BUFFER_SIZE - dataOffset];
+
+
+            switch (header.ReparseTag)
+            {
+               // MountPoint can be a junction or mounted drive (mounted drive starts with "\??\Volume").
+
+               case ReparsePointTag.MountPoint:
+                  var mountPoint = safeBuffer.PtrToStructure<NativeMethods.MountPointReparseBuffer>(marshalReparseBuffer);
+
+                  safeBuffer.CopyTo(dataOffset, dataBuffer);
+
+                  return new LinkTargetInfo(
+                     Encoding.Unicode.GetString(dataBuffer, mountPoint.SubstituteNameOffset, mountPoint.SubstituteNameLength),
+                     Encoding.Unicode.GetString(dataBuffer, mountPoint.PrintNameOffset, mountPoint.PrintNameLength));
+
+
+               case ReparsePointTag.SymLink:
+                  var symLink = safeBuffer.PtrToStructure<NativeMethods.SymbolicLinkReparseBuffer>(marshalReparseBuffer);
+
+                  safeBuffer.CopyTo(dataOffset, dataBuffer);
+
+                  return new SymbolicLinkTargetInfo(
+                     Encoding.Unicode.GetString(dataBuffer, symLink.SubstituteNameOffset, symLink.SubstituteNameLength),
+                     Encoding.Unicode.GetString(dataBuffer, symLink.PrintNameOffset, symLink.PrintNameLength), symLink.Flags);
+
+
+               default:
+                  throw new UnrecognizedReparsePointException(reparsePath);
+            }
+         }
+      }
+
+
+      /// <summary>[AlphaFS] Get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
+      /// <exception cref="NotAReparsePointException"/>
+      /// <exception cref="UnrecognizedReparsePointException"/>
+      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing is controlled.")]
+      [SecurityCritical]
+      private static SafeGlobalMemoryBufferHandle GetLinkTargetData(SafeFileHandle safeHandle, string reparsePath)
+      {
+         var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.MAXIMUM_REPARSE_DATA_BUFFER_SIZE);
+
+         while (true)
+         {
+            uint bytesReturned;
+            var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.FSCTL_GET_REPARSE_POINT, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+
+            var lastError = Marshal.GetLastWin32Error();
+            if (!success)
+            {
+               switch ((uint) lastError)
+               {
+                  case Win32Errors.ERROR_MORE_DATA:
+                  case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
+
+                     // Should not happen since we already use the maximum size.
+
+                     if (safeBuffer.Capacity < bytesReturned)
+                        safeBuffer.Close();
+                     break;
+               }
+
+               if (lastError != Win32Errors.ERROR_SUCCESS)
+                  NativeError.ThrowException(lastError, reparsePath);
+            }
+
+            else
+               break;
+         }
+
+
+         return safeBuffer;
+      }
+
+      #endregion // Link
    }
 }

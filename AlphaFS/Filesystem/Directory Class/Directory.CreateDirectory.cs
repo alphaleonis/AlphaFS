@@ -680,36 +680,98 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The <see cref="DirectorySecurity"/> access control to apply to the directory, may be null.</param>
       /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static DirectoryInfo CreateDirectoryCore(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
-         var fullCheck = pathFormat == PathFormat.RelativePath;
+         if (pathFormat != PathFormat.LongFullPath)
+         {
+            Path.CheckSupportedPathFormat(path, true, true);
+            Path.CheckSupportedPathFormat(templatePath, true, true);
 
-         Path.CheckSupportedPathFormat(path, fullCheck, fullCheck);
-         Path.CheckSupportedPathFormat(templatePath, fullCheck, fullCheck);
+            path = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
+            pathFormat = PathFormat.LongFullPath;
+         }
          
-         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          // Return DirectoryInfo instance if the directory specified by path already exists.
-         if (File.ExistsCore(true, transaction, pathLp, PathFormat.LongFullPath))
-            return new DirectoryInfo(transaction, pathLp, PathFormat.LongFullPath);
+         if (File.ExistsCore(true, transaction, path, pathFormat))
+            return new DirectoryInfo(transaction, path, pathFormat);
+
 
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
-         if (File.ExistsCore(false, transaction, pathLp, PathFormat.LongFullPath))
-            NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp);
+         if (File.ExistsCore(false, transaction, path, pathFormat))
+            NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, path);
 
 
          var templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
             ? null
             : Path.GetExtendedLengthPathCore(transaction, templatePath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
-         
-         #region Construct Full Path
 
+         var list = ConstructFullPath(transaction, path, out path);
+
+
+         // Directory security.
+         using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(directorySecurity))
+         {
+            // Create the directory paths.
+            while (list.Count > 0)
+            {
+               var folderLp = list.Pop();
+
+               // In the ANSI version of this function, the name is limited to 248 characters.
+               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2013-01-13: MSDN confirms LongPath usage.
+
+               if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
+                  ? (templatePathLp == null
+                     ? NativeMethods.CreateDirectory(folderLp, securityAttributes)
+                     : NativeMethods.CreateDirectoryEx(templatePathLp, folderLp, securityAttributes))
+                  : NativeMethods.CreateDirectoryTransacted(templatePathLp, folderLp, securityAttributes, transaction.SafeHandle)))
+               {
+                  var lastError = Marshal.GetLastWin32Error();
+
+                  switch ((uint) lastError)
+                  {
+                     // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
+                     // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
+                     case Win32Errors.ERROR_ALREADY_EXISTS:
+                        if (File.ExistsCore(false, transaction, path, pathFormat))
+                           NativeError.ThrowException(lastError, path);
+
+                        if (File.ExistsCore(false, transaction, folderLp, pathFormat))
+                           NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, null, folderLp);
+                        break;
+
+                     case Win32Errors.ERROR_BAD_NET_NAME:
+                        NativeError.ThrowException(lastError, path);
+                        break;
+
+                     case Win32Errors.ERROR_DIRECTORY:
+                        // MSDN: .NET 3.5+: NotSupportedException: path contains a colon character (:) that is not part of a drive label ("C:\").
+                        throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, Resources.Unsupported_Path_Format, path));
+
+                     default:
+                        NativeError.ThrowException(lastError, folderLp);
+                        break;
+                  }
+               }
+
+               else if (compress)
+                  Device.ToggleCompressionCore(true, transaction, folderLp, true, pathFormat);
+            }
+
+
+            return new DirectoryInfo(transaction, path, pathFormat);
+         }
+      }
+
+
+      private static Stack<string> ConstructFullPath(KernelTransaction transaction, string path, out string pathNew)
+      {
          var longPathPrefix = Path.IsUncPathCore(path, false, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
-         path = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false);
+         path = Path.GetRegularPathCore(path, GetFullPathOptions.None, false);
 
          var length = path.Length;
          if (length >= 2 && Path.IsDVsc(path[length - 1], false))
@@ -738,62 +800,10 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
 
-         #endregion // Construct Full Path
 
+         pathNew = path;
 
-         // Directory security.
-         using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(directorySecurity))
-         {
-            // Create the directory paths.
-            while (list.Count > 0)
-            {
-               var folderLp = list.Pop();
-
-               // In the ANSI version of this function, the name is limited to 248 characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-01-13: MSDN confirms LongPath usage.
-
-               if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
-                  ? (templatePathLp == null
-                     ? NativeMethods.CreateDirectory(folderLp, securityAttributes)
-                     : NativeMethods.CreateDirectoryEx(templatePathLp, folderLp, securityAttributes))
-                  : NativeMethods.CreateDirectoryTransacted(templatePathLp, folderLp, securityAttributes, transaction.SafeHandle)))
-               {
-                  var lastError = Marshal.GetLastWin32Error();
-
-                  switch ((uint) lastError)
-                  {
-                     // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
-                     // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
-                     case Win32Errors.ERROR_ALREADY_EXISTS:
-                        if (File.ExistsCore(false, transaction, pathLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(lastError, pathLp);
-
-                        if (File.ExistsCore(false, transaction, folderLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, null, folderLp);
-                        break;
-
-                     case Win32Errors.ERROR_BAD_NET_NAME:
-                        NativeError.ThrowException(lastError, pathLp);
-                        break;
-
-                     case Win32Errors.ERROR_DIRECTORY:
-                        // MSDN: .NET 3.5+: NotSupportedException: path contains a colon character (:) that is not part of a drive label ("C:\").
-                        throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, Resources.Unsupported_Path_Format, path));
-
-                     default:
-                        NativeError.ThrowException(lastError, folderLp);
-                        break;
-                  }
-               }
-
-               else if (compress)
-                  Device.ToggleCompressionCore(true, transaction, folderLp, true, PathFormat.LongFullPath);
-            }
-
-
-            return new DirectoryInfo(transaction, pathLp, PathFormat.LongFullPath);
-         }
+         return list;
       }
 
       #endregion // Internal Methods

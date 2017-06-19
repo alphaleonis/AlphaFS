@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
          do
          {
-            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, prefix + "-" + Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture).Substring(0, 6)));
+            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, prefix + "." + Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture).Substring(0, 6)));
 
          } while (Directory.Exists);
 

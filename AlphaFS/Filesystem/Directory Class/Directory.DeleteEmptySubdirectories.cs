@@ -223,7 +223,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (fsEntryInfo == null)
+         if (null == fsEntryInfo)
          {
             if (pathFormat == PathFormat.RelativePath)
                Path.CheckSupportedPathFormat(path, true, true);
@@ -254,7 +254,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                // Ensure the directory is empty.
                if (IsEmptyCore(transaction, fsei.LongFullPath, pathFormat))
-                  DeleteDirectoryCore(fsei, transaction, null, false, ignoreReadOnly, true, PathFormat.LongFullPath);
+                  DeleteDirectoryCore(transaction, fsei, null, false, ignoreReadOnly, true, PathFormat.LongFullPath);
 
                else if (recursive)
                   dirs.Push(fsei.LongFullPath);

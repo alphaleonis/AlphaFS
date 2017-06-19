@@ -71,8 +71,13 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
+      /// <summary>MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384</summary>
       internal const int MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384;
+
+      /// <summary>REPARSE_DATA_BUFFER_HEADER_SIZE = 8</summary>
       internal const int REPARSE_DATA_BUFFER_HEADER_SIZE = 8;
+
+
       private const int DeviceIoControlMethodBuffered = 0;
       private const int DeviceIoControlFileDeviceFileSystem = 9;
 

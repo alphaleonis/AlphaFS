@@ -19,6 +19,8 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Information about the target of a symbolic link or mount point.</summary>
@@ -26,28 +28,26 @@ namespace Alphaleonis.Win32.Filesystem
    {
       internal LinkTargetInfo(string substituteName, string printName)
       {
-         PrintName = printName;
          SubstituteName = substituteName;
+
+
+         if (Utils.IsNullOrWhiteSpace(printName))
+         {
+            printName = substituteName;
+
+            if (printName.StartsWith(Path.NonInterpretedPathPrefix, StringComparison.OrdinalIgnoreCase))
+               printName = printName.Substring(Path.NonInterpretedPathPrefix.Length);
+         }
+
+         PrintName = Path.RemoveTrailingDirectorySeparator(printName);
       }
 
-
-      internal LinkTargetInfo(bool isFolder, string substituteName, string printName)
-      {
-         IsDirectory = isFolder;
-         PrintName = printName;
-         SubstituteName = substituteName;
-      }
-
-
+      
       /// <summary>The print name.</summary>
       public string PrintName { get; private set; }
 
 
       /// <summary>The substitute name.</summary>
       public string SubstituteName { get; private set; }
-
-
-      /// <summary>Indicates that the link is a directory.</summary>
-      public bool IsDirectory { get; internal set; }
    }
 }

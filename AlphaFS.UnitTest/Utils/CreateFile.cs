@@ -19,10 +19,25 @@
  *  THE SOFTWARE. 
  */
 
-namespace Alphaleonis.Win32.Filesystem
+using System;
+
+namespace AlphaFS.UnitTest
 {
-   partial class DirectoryInfo
+   public static partial class UnitTestConstants
    {
-      
+      public static System.IO.FileInfo CreateFile(string rootFolder, int fileLength = 0)
+      {
+         var file = System.IO.Path.Combine(rootFolder, System.IO.Path.GetRandomFileName());
+
+         using (var fs = System.IO.File.Create(file))
+         {
+            if (fileLength <= 0)
+               fileLength = new Random().Next(0, 10485760);
+
+            fs.SetLength(fileLength);
+         }
+
+         return new System.IO.FileInfo(file);
+      }
    }
 }

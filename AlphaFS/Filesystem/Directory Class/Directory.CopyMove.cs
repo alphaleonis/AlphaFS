@@ -1008,7 +1008,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="copyMoveResult"></param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static CopyMoveResult CopyMoveCore(KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult, PathFormat pathFormat)
       {
@@ -1046,7 +1045,7 @@ namespace Alphaleonis.Win32.Filesystem
             // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
 
             if (!delayUntilReboot && File.CanOverwrite(moveOptions))
-               DeleteDirectoryCore(null, transaction, destinationPathLp, true, true, true, PathFormat.LongFullPath);
+               DeleteDirectoryCore(transaction, null, destinationPathLp, true, true, true, PathFormat.LongFullPath);
 
             // 2017-06-07: A large target directory will probably create a progress-less delay in UI.
             // One way to get around this is to perform the delete in the File.CopyMove method.
@@ -1149,7 +1148,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             if (emulateMove)
-               DeleteDirectoryCore(null, transaction, sourcePathLp, true, true, true, PathFormat.LongFullPath);
+               DeleteDirectoryCore(transaction, null, sourcePathLp, true, true, true, PathFormat.LongFullPath);
          }
 
 

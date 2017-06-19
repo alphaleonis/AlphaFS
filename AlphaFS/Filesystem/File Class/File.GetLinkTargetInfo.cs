@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          using (var safeHandle = CreateFileCore(transaction, reparsePath, eAttributes, null, FileMode.Open, 0, FileShare.ReadWrite, pathFormat != PathFormat.LongFullPath, pathFormat))
-            return Device.GetLinkTargetInfoCore(safeHandle, isFolder, reparsePath);
+            return Device.GetLinkTargetInfo(safeHandle, reparsePath);
       }
    }
 }

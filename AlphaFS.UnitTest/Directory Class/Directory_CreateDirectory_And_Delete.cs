@@ -30,10 +30,10 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_CreateDirectory_LocalAndNetwork_Success()
+      public void Directory_CreateDirectory_And_Delete_LocalAndNetwork_Success()
       {
-         Directory_CreateDirectory_Delete(false);
-         Directory_CreateDirectory_Delete(true);
+         Directory_CreateDirectory_And_Delete(false);
+         Directory_CreateDirectory_And_Delete(true);
       }
 
 
@@ -97,7 +97,7 @@ namespace AlphaFS.UnitTest
 
 
 
-      private void Directory_CreateDirectory_Delete(bool isNetwork)
+      private void Directory_CreateDirectory_And_Delete(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 

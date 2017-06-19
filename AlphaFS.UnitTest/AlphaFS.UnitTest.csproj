@@ -152,9 +152,11 @@
     <Compile Include="Directory Class\AlphaFS_Directory_Encryption.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_IsEmpty.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_EnumerateFileSystemEntryInfos.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory_CreateSymbolicLinkAndGetLinkTargetInfo.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_CreateSymbolicLink_And_GetLinkTargetInfo.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_Junction.cs" />
     <Compile Include="Directory Class\Directory_CurrentDirectory.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_DeleteEmptySubdirectories.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo_Junction.cs" />
     <Compile Include="Directory Class\Directory_Move.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_CountFileSystemObjects.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Copy.cs" />
@@ -212,7 +214,7 @@
     <Compile Include="Host Class\AlphaFS_Host_EnumerateOpenConnections.cs" />
     <Compile Include="Host Class\AlphaFS_Host_EnumerateShares.cs" />
     <Compile Include="Classes\ClassesTest.cs" />
-    <Compile Include="Directory Class\Directory_CreateDirectory.cs" />
+    <Compile Include="Directory Class\Directory_CreateDirectory_And_Delete.cs" />
     <Compile Include="Directory Class\DirectoryTest.cs" />
     <Compile Include="Path Class\Path_GetFullPath.cs" />
     <Compile Include="Path Class\Path_IsPathRooted.cs" />
@@ -221,6 +223,9 @@
     <Compile Include="Shell32 Class\AlphaFS_Shell32Info_GetFileIcon.cs" />
     <Compile Include="Shell32 Class\AlphaFS_Shell32Info_GetVerbCommand.cs" />
     <Compile Include="Shell32 Class\AlphaFS_Shell32Info_InitializeInstance.cs" />
+    <Compile Include="Utils\IsAdmin.cs" />
+    <Compile Include="Utils\Dump.cs" />
+    <Compile Include="Utils\CreateFile.cs" />
     <Compile Include="Utils\DirectoryAssert.cs" />
     <Compile Include="Utils\FileAssert.cs" />
     <Compile Include="Shell32 Class\Shell32Test.cs" />
@@ -228,6 +233,7 @@
     <Compile Include="File Class\FileTest.cs" />
     <Compile Include="Path Class\PathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\CreateDirectoriesAndFiles.cs" />
     <Compile Include="Volume Class\VolumeInfo_InitializeInstance.cs" />
     <Compile Include="Volume Class\Volume_GetVolumeInfo.cs" />
     <Compile Include="Volume Class\VolumeTest.cs" />

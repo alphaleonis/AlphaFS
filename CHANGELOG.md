@@ -13,6 +13,8 @@ Version vNext  (xxxx-xx-xx)
 - Issue #339: `Directory/File.Encrypt/Decrypt` should restore read-only attribute.
 - Issue #340: DirectoryReadOnlyException inherits from System.IO.IOException, wrong?
 - Issue #344: `Directory.Copy` throws `UnauthorizedAccessException` "The target file is a directory, not a file", while it is a file.
+- Issue #349: `File.GetFileSystemEntryInfoCore` should throw `Directory/FileNotFoundException`, depending on `isFolder` argument.
+- Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
 
 ### New Features/Enhancements
 
@@ -25,13 +27,12 @@ Version vNext  (xxxx-xx-xx)
 - Issue #306: Include `ShareInfoLevel.Info502` and set as a fallback in `GetShareInfoCore()`  (Thx damiarnold)
 - Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
 - Issue #335: Add overloaded methods to `File/Directory.TransferTimestamps` to apply to ReparsePoint.
+- Issue #336: Implement methods for `Directory` class: `CreateJunction`, `DeleteJunction` and `ExistsJunction`.
 - Issue #338: Add convenience method `Directory.IsEmpty`
 - Issue #342: Add instance method: `FileInfo.IsLocked()`
 - Issue #343: Add method `File.GetProcessesForLockedFile`
 - Issue #345: AlreadyExistsException should only throw message from 1 error.
-- Issue #347: Implement method `Directory.CreateSymbolicLink`
 - Issue #348: Implement method `Directory.GetLinkTargetInfo`
-
 
 Version 2.1.3 (2017-06-05)
 -------------

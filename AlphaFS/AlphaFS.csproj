@@ -201,6 +201,9 @@
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CopyMove.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CountFileSystemObjects.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.ExistsJunction.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.DeleteJunction.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CreateJunction.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.DeleteEmptySubdirectories.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Delete.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CreateDirectory.cs" />
@@ -236,10 +239,12 @@
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetLinkTargetInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CreateSymbolicLink.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetFileSystemEntryInfo.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.DeleteJunction.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateJunction.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.RefreshEntryInfo.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Encryption.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.DeleteEmptySubdirectories.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Decrypt.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Compression.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CountFileSystemObjects.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CopyToMoveTo.cs" />
@@ -378,6 +383,7 @@
     <Compile Include="Filesystem\Native Methods\NativeMethods.BackupStreams.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.Utilities.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.PathManagement.cs" />
+    <Compile Include="Filesystem\Native Structures\REPARSE_DATA_BUFFER.cs" />
     <Compile Include="Filesystem\Native Structures\WIN32_FIND_STREAM_DATA.cs" />
     <Compile Include="Filesystem\Path Class\Path.cs" />
     <Compile Include="Filesystem\Path Class\Path.ValidationAndChecks.cs" />

@@ -97,6 +97,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The directory is not a mount point: [{0}].
+        /// </summary>
+        internal static string Directory_Is_Not_A_MountPoint {
+            get {
+                return ResourceManager.GetString("Directory_Is_Not_A_MountPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incorrectly implemented function attempting to generate exception from successful operation.
         ///.
         /// </summary>

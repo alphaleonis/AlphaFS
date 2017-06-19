@@ -19,23 +19,21 @@
  *  THE SOFTWARE. 
  */
 
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.IO;
+using System;
+using System.Security.Principal;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace AlphaFS.UnitTest
 {
-   /// <summary>Provides static methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="System.IO.FileStream"/> objects.
-   ///   <para>This class cannot be inherited.</para>
-   /// </summary>
-   [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]   
-   public static partial class File
+   public static partial class UnitTestConstants
    {
-      internal static void ThrowIOExceptionIfFsoExist(KernelTransaction transaction, bool isFolder, string fsoPath, PathFormat pathFormat)
+      public static bool IsAdmin()
       {
-         if (ExistsCore(isFolder, transaction, fsoPath, pathFormat))
-            throw new IOException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_ALREADY_EXISTS,
-               string.Format(CultureInfo.InvariantCulture, isFolder ? Resources.Target_File_Is_A_Directory : Resources.Target_Directory_Is_A_File, fsoPath)), (int) Win32Errors.ERROR_ALREADY_EXISTS);
+         var isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+
+         if (!isAdmin)
+            Console.WriteLine("\nThis Unit Test must be run as Administrator.\n");
+
+         return isAdmin;
       }
    }
 }

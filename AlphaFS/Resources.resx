@@ -247,4 +247,7 @@
   <data name="Junction_And_Target_Must_Be_On_The_Same_Drive" xml:space="preserve">
     <value>The target directory of the directory junction must be on the same local drive.</value>
   </data>
+  <data name="Directory_Is_Not_A_MountPoint" xml:space="preserve">
+    <value>The directory is not a mount point: [{0}]</value>
+  </data>
 </root>

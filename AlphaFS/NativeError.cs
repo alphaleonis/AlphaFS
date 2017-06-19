@@ -108,15 +108,15 @@ namespace Alphaleonis.Win32
                throw new DeviceNotReadyException(errorMessage);
 
 
-            #region Reparse Point
+            //#region Reparse Point
 
-            case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
-               throw new NotAReparsePointException(errorMessage, (int) errorCode);
+            //case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
+            //   throw new NotAReparsePointException(errorMessage, (int) errorCode);
 
-            case Win32Errors.ERROR_INVALID_REPARSE_DATA:
-               throw new UnrecognizedReparsePointException(errorMessage, (int) errorCode);
+            //case Win32Errors.ERROR_INVALID_REPARSE_DATA:
+            //   throw new UnrecognizedReparsePointException(errorMessage, (int) errorCode);
 
-            #endregion Reparse Point
+            //#endregion Reparse Point
 
 
             #region Transactional

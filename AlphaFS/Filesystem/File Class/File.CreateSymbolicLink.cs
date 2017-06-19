@@ -246,14 +246,14 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (targetType == SymbolicLinkTarget.Directory)
          {
-            ThrowIOExceptionIfFsoExist(false, targetFileName, pathFormat);
-            ThrowIOExceptionIfFsoExist(false, symlinkFileName, pathFormat);
+            ThrowIOExceptionIfFsoExist(transaction, false, targetFileName, pathFormat);
+            ThrowIOExceptionIfFsoExist(transaction, false, symlinkFileName, pathFormat);
          }
 
          else
          {
-            ThrowIOExceptionIfFsoExist(true, targetFileName, pathFormat);
-            ThrowIOExceptionIfFsoExist(true, symlinkFileName, pathFormat);
+            ThrowIOExceptionIfFsoExist(transaction, true, targetFileName, pathFormat);
+            ThrowIOExceptionIfFsoExist(transaction, true, symlinkFileName, pathFormat);
          }
 
 

@@ -69,10 +69,10 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory_LocalAndNetwork_Success()
+      public void Directory_Delete_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
       {
-         Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory(false);
-         Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory(true);
+         Directory_Delete_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(false);
+         Directory_Delete_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(true);
       }
 
 
@@ -97,14 +97,6 @@ namespace AlphaFS.UnitTest
       {
          Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission(false);
          Directory_Delete_CatchUnauthorizedAccessException_FolderWithDenyPermission(true);
-      }
-
-
-      [TestMethod]
-      public void Directory_Delete_LocalAndNetwork_Success()
-      {
-         Directory_CreateDirectory_Delete(false);
-         Directory_CreateDirectory_Delete(true);
       }
 
 
@@ -206,6 +198,7 @@ namespace AlphaFS.UnitTest
 
             System.IO.Directory.CreateDirectory(folder);
             using (System.IO.File.Create(System.IO.Path.Combine(folder, file))) { }
+            
 
 
             var gotException = false;
@@ -286,7 +279,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_Delete_CatchDirectoryNotFoundException_PathIsAFileNotADirectory(bool isNetwork)
+      private void Directory_Delete_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
