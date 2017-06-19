@@ -31,7 +31,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #338: Add convenience method `Directory.IsEmpty`
 - Issue #342: Add instance method: `FileInfo.IsLocked()`
 - Issue #343: Add method `File.GetProcessesForLockedFile`
-- Issue #345: AlreadyExistsException should only throw message from 1 error.
+- Issue #345: `AlreadyExistsException` should only throw message from 1 error.
 - Issue #348: Implement method `Directory.GetLinkTargetInfo`
 
 Version 2.1.3 (2017-06-05)
