@@ -283,6 +283,7 @@
     <Compile Include="Filesystem\File Class\File.EncryptDecrypt.cs" />
     <Compile Include="Filesystem\File Class\File.CreateText.cs" />
     <Compile Include="Filesystem\File Class\File.CopyMove.cs" />
+    <Compile Include="Filesystem\File Class\File.GetProcessForFileLock.cs" />
     <Compile Include="Filesystem\File Class\File.IsLocked.cs" />
     <Compile Include="Filesystem\File Class\File.CopyTimestamps.cs" />
     <Compile Include="Filesystem\File Class\File.WriteText.cs" />

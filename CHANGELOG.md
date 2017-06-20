@@ -30,7 +30,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #336: Implement methods for `Directory` class: `CreateJunction`, `DeleteJunction` and `ExistsJunction`.
 - Issue #338: Add convenience method `Directory.IsEmpty`
 - Issue #342: Add instance method: `FileInfo.IsLocked()`
-- Issue #343: Add method `File.GetProcessesForLockedFile`
+- Issue #343: Add method `File.GetProcessForFileLock`
 - Issue #345: `AlreadyExistsException` should only throw message from 1 error.
 - Issue #348: Implement method `Directory.GetLinkTargetInfo`
 - Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
