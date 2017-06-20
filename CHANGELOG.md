@@ -14,7 +14,6 @@ Version vNext  (xxxx-xx-xx)
 - Issue #340: DirectoryReadOnlyException inherits from System.IO.IOException, wrong?
 - Issue #344: `Directory.Copy` throws `UnauthorizedAccessException` "The target file is a directory, not a file", while it is a file.
 - Issue #349: `File.GetFileSystemEntryInfoCore` should throw `Directory/FileNotFoundException`, depending on `isFolder` argument.
-- Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
 
 ### New Features/Enhancements
 
@@ -34,6 +33,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #343: Add method `File.GetProcessesForLockedFile`
 - Issue #345: `AlreadyExistsException` should only throw message from 1 error.
 - Issue #348: Implement method `Directory.GetLinkTargetInfo`
+- Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
 
 Version 2.1.3 (2017-06-05)
 -------------
