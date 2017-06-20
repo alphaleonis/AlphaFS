@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
          var attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(null, path, pathFormat, true);
          var isReadOnly = (attrs.dwFileAttributes & FileAttributes.ReadOnly) != 0;
          if (isReadOnly)
-            SetAttributesCore(isFolder, null, path, attrs.dwFileAttributes &= ~FileAttributes.ReadOnly, pathFormat);
+            SetAttributesCore(null, isFolder, path, attrs.dwFileAttributes &= ~FileAttributes.ReadOnly, pathFormat);
          
 
          // EncryptFile() / DecryptFile()
@@ -140,7 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
                attrs.dwFileAttributes |= FileAttributes.Hidden;
 
 
-            SetAttributesCore(isFolder, null, path, attrs.dwFileAttributes, pathFormat);
+            SetAttributesCore(null, isFolder, path, attrs.dwFileAttributes, pathFormat);
          }
 
 

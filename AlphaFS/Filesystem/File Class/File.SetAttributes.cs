@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes)
       {
-         SetAttributesCore(false, null, path, fileAttributes, PathFormat.RelativePath);
+         SetAttributesCore(null, false, path, fileAttributes, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the specified <see cref="FileAttributes"/> of the file or directory on the specified path.</summary>
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
-         SetAttributesCore(false, null, path, fileAttributes, pathFormat);
+         SetAttributesCore(null, false, path, fileAttributes, pathFormat);
       }
 
 
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributesTransacted(KernelTransaction transaction, string path, FileAttributes fileAttributes)
       {
-         SetAttributesCore(false, transaction, path, fileAttributes, PathFormat.RelativePath);
+         SetAttributesCore(transaction, false, path, fileAttributes, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the specified <see cref="FileAttributes"/> of the file on the specified path.</summary>
@@ -95,10 +95,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributesTransacted(KernelTransaction transaction, string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
-         SetAttributesCore(false, transaction, path, fileAttributes, pathFormat);
+         SetAttributesCore(transaction, false, path, fileAttributes, pathFormat);
       }
-
-
 
 
       /// <summary>Sets the attributes for a Non-/Transacted file/directory.</summary>
@@ -110,15 +108,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///   It is not possible to change the <see cref="FileAttributes.Compressed"/> status of a File object using the SetAttributes method.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">The name of the file or directory whose attributes are to be set.</param>
       /// <param name="fileAttributes">
-      ///   The attributes to set for the file or directory. Note that all other values override <see cref="FileAttributes.Normal"/>.
+      ///    The attributes to set for the file or directory. Note that all other values override <see cref="FileAttributes.Normal"/>.
       /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void SetAttributesCore(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, PathFormat pathFormat)
+      internal static void SetAttributesCore(KernelTransaction transaction, bool isFolder, string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 

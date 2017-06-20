@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path)
       {
-         return GetLinkTargetInfoCore(false, null, path, PathFormat.RelativePath);
+         return GetLinkTargetInfoCore(null, false, path, PathFormat.RelativePath);
       }
 
 
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoCore(false, null, path, pathFormat);
+         return GetLinkTargetInfoCore(null, false, path, pathFormat);
       }
       
 
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path)
       {
-         return GetLinkTargetInfoCore(false, transaction, path, PathFormat.RelativePath);
+         return GetLinkTargetInfoCore(transaction, false, path, PathFormat.RelativePath);
       }
 
 
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoCore(false, transaction, path, pathFormat);
+         return GetLinkTargetInfoCore(transaction, false, path, pathFormat);
       }
 
 
@@ -89,8 +89,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotAReparsePointException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnrecognizedReparsePointException"/>
-      /// <param name="isFolder">Specifies that <paramref name="reparsePath"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
+      /// <param name="isFolder">Specifies that <paramref name="reparsePath"/> is a file or directory.</param>
       /// <param name="reparsePath">The path to the reparse point.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   or mount point pointed to by <paramref name="reparsePath"/>.
       /// </returns>
       [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfoCore(bool isFolder, KernelTransaction transaction, string reparsePath, PathFormat pathFormat)
+      internal static LinkTargetInfo GetLinkTargetInfoCore(KernelTransaction transaction, bool isFolder, string reparsePath, PathFormat pathFormat)
       {
          var eAttributes = ExtendedFileAttributes.OpenReparsePoint;
 

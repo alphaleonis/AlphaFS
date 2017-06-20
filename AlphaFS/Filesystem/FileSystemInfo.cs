@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          set
          {
-            File.SetAttributesCore(IsDirectory, Transaction, LongFullName, value, PathFormat.LongFullPath);
+            File.SetAttributesCore(Transaction, IsDirectory, LongFullName, value, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -183,7 +183,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeCore(IsDirectory, Transaction, LongFullName, value, null, null, false, PathFormat.LongFullPath);
+            File.SetFsoDateTimeCore(Transaction, IsDirectory, LongFullName, value, null, null, false, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -283,7 +283,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeCore(IsDirectory, Transaction, LongFullName, null, value, null, false, PathFormat.LongFullPath);
+            File.SetFsoDateTimeCore(Transaction, IsDirectory, LongFullName, null, value, null, false, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -339,7 +339,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeCore(IsDirectory, Transaction, LongFullName, null, null, value, false, PathFormat.LongFullPath);
+            File.SetFsoDateTimeCore(Transaction, IsDirectory, LongFullName, null, null, value, false, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -543,7 +543,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       protected void RefreshEntryInfo()
       {
-         _entryInfo = File.GetFileSystemEntryInfoCore(IsDirectory, Transaction, LongFullName, true, PathFormat.LongFullPath);
+         _entryInfo = File.GetFileSystemEntryInfoCore(Transaction, IsDirectory, LongFullName, true, PathFormat.LongFullPath);
 
          if (null == _entryInfo)
             DataInitialised = -1;
@@ -566,11 +566,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes the specified file name.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">The full path and name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      internal void InitializeCore(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal void InitializeCore(KernelTransaction transaction, bool isFolder, string path, PathFormat pathFormat)
       {
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);

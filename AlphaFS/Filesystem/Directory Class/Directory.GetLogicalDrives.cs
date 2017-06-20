@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (fromEnvironment)
          {
             var drivesEnv = isReady
-               ? Environment.GetLogicalDrives().Where(ld => File.ExistsCore(true, null, ld, PathFormat.FullPath))
+               ? Environment.GetLogicalDrives().Where(ld => File.ExistsCore(null, true, ld, PathFormat.FullPath))
                : Environment.GetLogicalDrives().Select(ld => ld);
 
             foreach (var drive in drivesEnv)
@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
                // Optionally check Drive .IsReady.
                if (isReady)
                {
-                  if (File.ExistsCore(true, null, drive, PathFormat.FullPath))
+                  if (File.ExistsCore(null, true, drive, PathFormat.FullPath))
                      yield return new DriveInfo(drive);
                }
 
@@ -131,7 +131,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (isReady)
                {
                   // Optionally check Drive .IsReady property.
-                  if (File.ExistsCore(true, null, drive, PathFormat.FullPath))
+                  if (File.ExistsCore(null, true, drive, PathFormat.FullPath))
                      yield return new DriveInfo(drive);
                }
                else

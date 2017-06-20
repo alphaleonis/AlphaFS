@@ -156,6 +156,7 @@
     <Compile Include="Directory Class\AlphaFS_Directory_Junction.cs" />
     <Compile Include="Directory Class\Directory_CurrentDirectory.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_DeleteEmptySubdirectories.cs" />
+    <Compile Include="Directory Class\Directory_EnumerateDirectories.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo_Junction.cs" />
     <Compile Include="Directory Class\Directory_Move.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_CountFileSystemObjects.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Shell32 Class\AlphaFS_Shell32Info_GetFileIcon.cs" />
     <Compile Include="Shell32 Class\AlphaFS_Shell32Info_GetVerbCommand.cs" />
     <Compile Include="Shell32 Class\AlphaFS_Shell32Info_InitializeInstance.cs" />
+    <Compile Include="Utils\FolderDenyPermission.cs" />
     <Compile Include="Utils\IsAdmin.cs" />
     <Compile Include="Utils\Dump.cs" />
     <Compile Include="Utils\CreateFile.cs" />

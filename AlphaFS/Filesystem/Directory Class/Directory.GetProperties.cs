@@ -51,6 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
          return GetPropertiesCore(null, path, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
       }
 
+
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
       ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
       ///   <para><b>Total:</b> is the total number of enumerated objects.</para>
@@ -98,6 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
          return GetPropertiesCore(null, path, options, PathFormat.RelativePath);
       }
 
+
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
       ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
       ///   <para><b>Total:</b> is the total number of enumerated objects.</para>
@@ -123,7 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
 
-      #region Transactional
+
 
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
       ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
@@ -222,9 +224,8 @@ namespace Alphaleonis.Win32.Filesystem
          return GetPropertiesCore(transaction, path, options, pathFormat);
       }
       
-      #endregion // Transactional
 
-      #region Internal Methods
+
 
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
       ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
@@ -260,7 +261,8 @@ namespace Alphaleonis.Win32.Filesystem
          var props = Enum.GetNames(typeOfAttrs).OrderBy(attrs => attrs).ToDictionary<string, string, long>(name => name, name => 0);
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath))
+
+         foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, pathLp, Path.WildcardStarMatchAll, null, options,  null, PathFormat.LongFullPath))
          {
             total++;
 
@@ -280,7 +282,5 @@ namespace Alphaleonis.Win32.Filesystem
 
          return props;
       }
-
-      #endregion // Internal Methods
    }
 }

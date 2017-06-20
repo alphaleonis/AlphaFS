@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath)
       {
-         File.CopyTimestampsCore(true, null, sourcePath, destinationPath, false, PathFormat.RelativePath);
+         File.CopyTimestampsCore(null, true, sourcePath, destinationPath, false, PathFormat.RelativePath);
       }
 
 
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         File.CopyTimestampsCore(true, null, sourcePath, destinationPath, false, pathFormat);
+         File.CopyTimestampsCore(null, true, sourcePath, destinationPath, false, pathFormat);
       }
 
 
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath, bool modifyReparsePoint)
       {
-         File.CopyTimestampsCore(true, null, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
+         File.CopyTimestampsCore(null, true, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
       }
 
 
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.CopyTimestampsCore(true, null, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
+         File.CopyTimestampsCore(null, true, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
       }
 
 
@@ -140,7 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         File.CopyTimestampsCore(true, transaction, sourcePath, destinationPath, false, PathFormat.RelativePath);
+         File.CopyTimestampsCore(transaction, true, sourcePath, destinationPath, false, PathFormat.RelativePath);
       }
 
 
@@ -153,7 +153,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         File.CopyTimestampsCore(true, transaction, sourcePath, destinationPath, false, pathFormat);
+         File.CopyTimestampsCore(transaction, true, sourcePath, destinationPath, false, pathFormat);
       }
 
 
@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool modifyReparsePoint)
       {
-         File.CopyTimestampsCore(true, transaction, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
+         File.CopyTimestampsCore(transaction, true, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
       }
 
 
@@ -180,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.CopyTimestampsCore(true, transaction, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
+         File.CopyTimestampsCore(transaction, true, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
       }
    }
 }

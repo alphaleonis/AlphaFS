@@ -228,10 +228,10 @@ namespace Alphaleonis.Win32.Filesystem
             if (pathFormat == PathFormat.RelativePath)
                Path.CheckSupportedPathFormat(path, true, true);
 
-            if (!File.ExistsCore(true, transaction, path, pathFormat))
+            if (!File.ExistsCore(transaction, true, path, pathFormat))
                NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
 
-            fsEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck), false, pathFormat);
+            fsEntryInfo = File.GetFileSystemEntryInfoCore(transaction, true, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck), false, pathFormat);
 
             if (null == fsEntryInfo)
                return;
@@ -250,7 +250,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          while (dirs.Count > 0)
          {
-            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, dirs.Pop(), Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.ContinueOnException, PathFormat.LongFullPath))
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, transaction, dirs.Pop(), Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.ContinueOnException, null, PathFormat.LongFullPath))
             {
                // Ensure the directory is empty.
                if (IsEmptyCore(transaction, fsei.LongFullPath, pathFormat))

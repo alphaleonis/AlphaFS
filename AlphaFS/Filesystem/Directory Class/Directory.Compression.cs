@@ -321,7 +321,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DisableCompression(string path)
       {
-         Device.ToggleCompressionCore(true, null, path, false, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(null, true, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
@@ -337,7 +337,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DisableCompression(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(true, null, path, false, pathFormat);
+         Device.ToggleCompressionCore(null, true, path, false, pathFormat);
       }
 
 
@@ -355,7 +355,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DisableCompressionTransacted(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionCore(true, transaction, path, false, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(transaction, true, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
@@ -372,7 +372,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DisableCompressionTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(true, transaction, path, false, pathFormat);
+         Device.ToggleCompressionCore(transaction, true, path, false, pathFormat);
       }
       
       #endregion // DisableCompression
@@ -391,7 +391,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void EnableCompression(string path)
       {
-         Device.ToggleCompressionCore(true, null, path, true, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(null, true, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
@@ -407,7 +407,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void EnableCompression(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(true, null, path, true, pathFormat);
+         Device.ToggleCompressionCore(null, true, path, true, pathFormat);
       }
 
 
@@ -425,7 +425,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void EnableCompressionTransacted(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionCore(true, transaction, path, true, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(transaction, true, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
@@ -442,7 +442,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void EnableCompressionTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(true, transaction, path, true, pathFormat);
+         Device.ToggleCompressionCore(transaction, true, path, true, pathFormat);
       }
       
       #endregion // EnableCompression
@@ -471,12 +471,12 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         // Process directories and files.
-         foreach (var fsei in EnumerateFileSystemEntryInfosCore<string>(transaction, pathLp, searchPattern, options | DirectoryEnumerationOptions.AsLongPath, PathFormat.LongFullPath))
-            Device.ToggleCompressionCore(true, transaction, fsei, compress, PathFormat.LongFullPath);
+         // Traverse the source folder, processing files and folders.
+         foreach (var fsei in EnumerateFileSystemEntryInfosCore<string>(null, transaction, pathLp, searchPattern, null, options | DirectoryEnumerationOptions.AsLongPath, null, PathFormat.LongFullPath))
+            Device.ToggleCompressionCore(transaction, true, fsei, compress, PathFormat.LongFullPath);
 
          // Compress the root directory, the given path.
-         Device.ToggleCompressionCore(true, transaction, pathLp, compress, PathFormat.LongFullPath);
+         Device.ToggleCompressionCore(transaction, true, pathLp, compress, PathFormat.LongFullPath);
       }
 
       #endregion // Internal Methods

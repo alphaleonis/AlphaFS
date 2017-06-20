@@ -1054,7 +1054,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Moves a file or directory, including its children.
             // Copies an existing directory, including its children to a new directory.
 
-            cmr = File.CopyMoveCore(cmr, true, transaction, sourcePathLp, destinationPathLp, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, PathFormat.LongFullPath);
+            cmr = File.CopyMoveCore(cmr, transaction, true, sourcePathLp, destinationPathLp, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, PathFormat.LongFullPath);
 
 
             // If the move happened on the same drive, we have no knowledge of the number of files/folders.
@@ -1089,7 +1089,7 @@ namespace Alphaleonis.Win32.Filesystem
             var dstLp = srcLp.Replace(sourcePathLp, destinationPathLp);
 
             // Traverse the source folder, processing files and folders.
-            foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, srcLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
+            foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, srcLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.LongFullPath))
             {
                var fseiSourcePath = fseiSource.LongFullPath;
                var fseiDestinationPath = Path.CombineCore(false, dstLp, fseiSource.FileName);
@@ -1110,7 +1110,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   // File count is done in File.CopyMoveCore method.
 
-                  cmr = File.CopyMoveCore(cmr, false, transaction, fseiSourcePath, fseiDestinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, PathFormat.LongFullPath);
+                  cmr = File.CopyMoveCore(cmr, transaction, false, fseiSourcePath, fseiDestinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, PathFormat.LongFullPath);
 
                   if (cmr.IsCanceled)
                   {
@@ -1142,8 +1142,8 @@ namespace Alphaleonis.Win32.Filesystem
                var dstLp = sourcePathLp.Replace(sourcePathLp, destinationPathLp);
 
                // Traverse the source folder, processing subfolders.
-               foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders, PathFormat.LongFullPath))
-                  File.CopyTimestampsCore(true, transaction, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
+               foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, transaction, sourcePathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Folders, null, PathFormat.LongFullPath))
+                  File.CopyTimestampsCore(transaction, true, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
             }
 
 

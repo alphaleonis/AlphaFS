@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -31,67 +32,171 @@ using System.Text.RegularExpressions;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Class that retrieves file system entries (i.e. files and directories) using Win32 API FindFirst()/FindNext().</summary>
-   [SerializableAttribute]
+   [Serializable]
    internal sealed class FindFileSystemEntryInfo
    {
+      #region Private
+
       private static readonly Regex WildcardMatchAll = new Regex(@"^(\*)+(\.\*+)+$", RegexOptions.IgnoreCase | RegexOptions.Compiled); // special case to recognize *.* or *.** etc
       private Regex _nameFilter;
       private string _searchPattern = Path.WildcardStarMatchAll;
 
 
-      public FindFileSystemEntryInfo(bool isFolder, KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, Type typeOfT, PathFormat pathFormat)
+      /// <summary>Initializes a new instance of the <see cref="FindFileSystemEntryInfo"/> class.</summary>
+      /// <param name="transaction">The NTFS Kernel transaction, if used.</param>
+      /// <param name="isFolder">if set to <c>true</c> the path is a folder.</param>
+      /// <param name="path">The path.</param>
+      /// <param name="searchPattern">The wildcard search pattern.</param>
+      /// <param name="options">The enumeration options.</param>
+      /// <param name="customFilters">The custom filters.</param>
+      /// <param name="pathFormat">The format of the path.</param>
+      /// <param name="typeOfT">The type of objects to be retrieved.</param>
+      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+      public FindFileSystemEntryInfo(KernelTransaction transaction, bool isFolder, string path, string searchPattern, DirectoryEnumerationOptions? options, DirectoryEnumerationFilters customFilters, PathFormat pathFormat, Type typeOfT)
       {
+         if (null == options)
+            throw new ArgumentNullException("options");
+
+
          Transaction = transaction;
+
 
          OriginalInputPath = path;
          InputPath = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
          IsRelativePath = !Path.IsPathRooted(OriginalInputPath, false);
 
+
          // .NET behaviour.
          SearchPattern = searchPattern.TrimEnd(Path.TrimEndChars);
 
+
+         Filter = null == customFilters ? null : customFilters.InclusionFilter;
+         RecursionFilter = null == customFilters ? null : customFilters.RecursionFilter;
+
+
          FileSystemObjectType = null;
 
+
          ContinueOnException = (options & DirectoryEnumerationOptions.ContinueOnException) != 0;
+         ErrorHandler = null == customFilters ? null : customFilters.ErrorFilter;
+
 
          AsLongPath = (options & DirectoryEnumerationOptions.AsLongPath) != 0;
+
 
          AsString = typeOfT == typeof(string);
          AsFileSystemInfo = !AsString && (typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo));
 
-         FindExInfoLevel = NativeMethods.IsAtLeastWindows7 && (options & DirectoryEnumerationOptions.BasicSearch) != 0
-            ? NativeMethods.FINDEX_INFO_LEVELS.Basic
-            : NativeMethods.FINDEX_INFO_LEVELS.Standard;
-
-         LargeCache = NativeMethods.IsAtLeastWindows7 && (options & DirectoryEnumerationOptions.LargeCache) != 0
-            ? NativeMethods.FIND_FIRST_EX_AdditionalFlags.LargeFetch
-            : NativeMethods.FIND_FIRST_EX_AdditionalFlags.None;
-
-         IsDirectory = isFolder;
-
-         if (IsDirectory)
+         
+         if (isFolder)
          {
+            IsDirectory = true;
+
             // Need files or folders to enumerate.
             if ((options & DirectoryEnumerationOptions.FilesAndFolders) == 0)
                options |= DirectoryEnumerationOptions.FilesAndFolders;
 
+
             FileSystemObjectType = (options & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.FilesAndFolders
-               ? (bool?)null
+               ? (bool?) null
                : (options & DirectoryEnumerationOptions.Folders) != 0;
+
 
             Recursive = (options & DirectoryEnumerationOptions.Recursive) != 0;
 
             SkipReparsePoints = (options & DirectoryEnumerationOptions.SkipReparsePoints) != 0;
          }
+
+
+         FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) != 0 && NativeMethods.IsAtLeastWindows7 ? NativeMethods.FINDEX_INFO_LEVELS.Basic : NativeMethods.FindexInfoLevel;
+         LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 && NativeMethods.IsAtLeastWindows7 ? NativeMethods.FIND_FIRST_EX_AdditionalFlags.LargeFetch : NativeMethods.LargeCache;
+      }
+      
+
+      private SafeFindFileHandle FindFirstFile(string pathLp, out NativeMethods.WIN32_FIND_DATA win32FindData)
+      {
+         int lastError;
+         var searchOption = null != FileSystemObjectType && (bool) FileSystemObjectType ? NativeMethods.FINDEX_SEARCH_OPS.SearchLimitToDirectories : NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch;
+
+         var handle = FileSystemInfo.FindFirstFileCore(Transaction, pathLp, FindExInfoLevel, searchOption, LargeCache, out lastError, out win32FindData);
+
+
+         if (!ContinueOnException)
+         {
+            if (null == handle)
+               ThrowPossibleException((uint) lastError, pathLp);
+
+            // When the handle is null and we are still here, it means the ErrorHandler is active,
+            // preventing the Exception from being thrown.
+
+            
+            if (null != handle)
+            {
+               var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
+
+               if (IsDirectory)
+               {
+                  if (!isFolder)
+                     NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, pathLp);
+               }
+
+               else if (isFolder)
+                  NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, pathLp);
+            }
+         }
+
+
+         return handle;
       }
 
 
+      private T NewFileSystemEntryType<T>(bool isFolder, NativeMethods.WIN32_FIND_DATA win32FindData, string fileName, string pathLp)
+      {
+         // Determine yield, e.g. don't return files when only folders are requested and vice versa.
+         if (null != FileSystemObjectType && (!(bool) FileSystemObjectType || !isFolder) && (!(bool) !FileSystemObjectType || isFolder))
+            return (T) (object) null;
+
+
+         // Determine yield.
+         if (null != fileName && !(_nameFilter == null || _nameFilter != null && _nameFilter.IsMatch(fileName)))
+            return (T) (object) null;
+
+
+         var fullPathLp = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp) + (!Utils.IsNullOrWhiteSpace(fileName) ? fileName : string.Empty);
+
+
+         // Return object instance FullPath property as string, optionally in long path format.
+         if (AsString)
+            return null == Filter || Filter(new FileSystemEntryInfo(win32FindData) {FullPath = fullPathLp})
+               ? (T) (object) (AsLongPath
+                  ? fullPathLp
+                  : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None, false))
+               : (T) (object) null;
+
+
+         // Make sure the requested file system object type is returned.
+         // null = Return files and directories.
+         // true = Return only directories.
+         // false = Return only files.
+
+         var fsei = new FileSystemEntryInfo(win32FindData) {FullPath = fullPathLp};
+
+         return null != Filter && !Filter(fsei)
+            ? (T) (object) null
+            : (AsFileSystemInfo
+               // Return object instance of type FileSystemInfo.
+               ? (T) (object) (fsei.IsDirectory
+                  ? (FileSystemInfo)
+                  new DirectoryInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei}
+                  : new FileInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei})
+
+               // Return object instance of type FileSystemEntryInfo.
+               : (T) (object) fsei);
+      }
 
 
       private void ThrowPossibleException(uint lastError, string pathLp)
       {
-         //Answer
-
          switch (lastError)
          {
             case Win32Errors.ERROR_NO_MORE_FILES:
@@ -103,7 +208,7 @@ namespace Alphaleonis.Win32.Filesystem
                // MSDN: .NET 3.5+: DirectoryNotFoundException: Path is invalid, such as referring to an unmapped drive.
                // Directory.Delete()
 
-               lastError = IsDirectory ? (int) Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND;
+               lastError = IsDirectory ? (int)Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND;
                break;
 
 
@@ -122,84 +227,20 @@ namespace Alphaleonis.Win32.Filesystem
             //   break;
          }
 
+
          if (lastError != Win32Errors.NO_ERROR)
-            NativeError.ThrowException(lastError, pathLp);
-      }
-
-
-      private SafeFindFileHandle FindFirstFile(string pathLp, out NativeMethods.WIN32_FIND_DATA win32FindData)
-      {
-         int lastError;
-         var searchOption = null != FileSystemObjectType && (bool) FileSystemObjectType ? NativeMethods.FINDEX_SEARCH_OPS.SearchLimitToDirectories : NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch;
-
-         var handle = FileSystemInfo.FindFirstFileCore(Transaction, pathLp, FindExInfoLevel, searchOption, NativeMethods.LargeCache, out lastError, out win32FindData);
-
-         
-         if (!ContinueOnException)
          {
-            if (null == handle)
-               ThrowPossibleException((uint) lastError, pathLp);
-
-
-            var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
-
-            if (IsDirectory)
-            {
-               if (!isFolder)
-                  NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, pathLp);
-            }
-
-            else if (isFolder)
-               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, pathLp);
+            if (null == ErrorHandler || !ErrorHandler((int)lastError, new Win32Exception((int)lastError).Message, pathLp.TrimEnd(Path.WildcardStarMatchAllChar)))
+               NativeError.ThrowException(lastError, pathLp);
          }
-
-
-         return handle;
       }
 
-
-      private T NewFileSystemEntryType<T>(bool isFolder, NativeMethods.WIN32_FIND_DATA win32FindData, string fileName, string pathLp)
-      {
-         // Determine yield, e.g. don't return files when only folders are requested and vice versa.
-         if (null != FileSystemObjectType && (!(bool) FileSystemObjectType || !isFolder) && (!(bool) !FileSystemObjectType || isFolder))
-            return (T) (object) null;
-
-         // Determine yield.
-         if (null != fileName && !(_nameFilter == null || _nameFilter != null && _nameFilter.IsMatch(fileName)))
-            return (T) (object) null;
-
-
-         var fullPathLp = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp) + (!Utils.IsNullOrWhiteSpace(fileName) ? fileName : string.Empty);
-
-
-         // Return object instance FullPath property as string, optionally in long path format.
-         if (AsString)
-            return (T) (object) (AsLongPath ? fullPathLp : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None, false));
-
-
-         // Make sure the requested file system object type is returned.
-         // null = Return files and directories.
-         // true = Return only directories.
-         // false = Return only files.
-
-         var fsei = new FileSystemEntryInfo(win32FindData) {FullPath = fullPathLp};
-
-         return AsFileSystemInfo
-            // Return object instance of type FileSystemInfo.
-            ? (T) (object) (fsei.IsDirectory
-               ? (FileSystemInfo)
-               new DirectoryInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei}
-               : new FileInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei})
-
-            // Return object instance of type FileSystemEntryInfo.
-            : (T) (object) fsei;
-      }
+      #endregion // Private
 
 
 
-
-      /// <summary>Get an enumerator that returns all of the file system objects that match the wildcards that are in any of the directories to be searched.</summary>
-      /// <returns>An <see cref="IEnumerable{T}"/> instance: FileSystemEntryInfo, DirectoryInfo, FileInfo or string (full path).</returns>
+      /// <summary>Gets an enumerator that returns all of the file system objects that match both the wildcards that are in any of the directories to be searched and the custom predicate.</summary>
+      /// <returns>An <see cref="IEnumerable{T}" /> instance: FileSystemEntryInfo, DirectoryInfo, FileInfo or string (full path).</returns>
       [SecurityCritical]
       public IEnumerable<T> Enumerate<T>()
       {
@@ -227,7 +268,9 @@ namespace Alphaleonis.Win32.Filesystem
 
                using (var handle = FindFirstFile(pathLp, out win32FindData))
                {
-                  if (null == handle && ContinueOnException)
+                  // When the handle is null and we are still here, it means the ErrorHandler is active.
+                  // We hit an inaccessible folder, so break and continue with the next one.
+                  if (null == handle)
                      continue;
 
                   do
@@ -240,27 +283,47 @@ namespace Alphaleonis.Win32.Filesystem
                      var fileName = win32FindData.cFileName;
 
                      var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
-                     if (isFolder)
+
+                     // Skip entries "." and ".."
+                     if (isFolder && (fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.Ordinal) ||
+                                      fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.Ordinal)))
+                        continue;
+
+
+                     var res = NewFileSystemEntryType<T>(isFolder, win32FindData, fileName, path);
+
+
+                     // If recursion is requested, add it to the queue for later traversal.
+                     if (isFolder && Recursive)
                      {
-                        // Skip entries "." and ".."
-                        if (fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.InvariantCulture) ||
-                            fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.InvariantCulture))
-                           continue;
+                        // Is there anything we can take from res?
+                        var fsei = null != res
+                           ? AsString
+                              ? new FileSystemEntryInfo(win32FindData) {FullPath = (string) (object) res}
+                              : AsFileSystemInfo
+                                 ? ((DirectoryInfo) (object) res).EntryInfo
+                                 : (FileSystemEntryInfo) (object) res
+
+                           
+                           // No, create new instance.
+                           : new FileSystemEntryInfo(win32FindData)
+                           {
+                              FullPath = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp)
+                                         +
+                                         (!Utils.IsNullOrWhiteSpace(fileName) ? fileName : string.Empty)
+                           };
 
 
-                        // If recursion is requested, add it to the queue for later traversal.
-                        if (Recursive)
+                        if (null == RecursionFilter || RecursionFilter(fsei))
                            dirs.Enqueue(path + fileName);
                      }
 
 
-                     var res = NewFileSystemEntryType<T>(isFolder, win32FindData, fileName, path);
-                     if (res == null)
+                     if (null == res)
                         continue;
 
                      yield return res;
-
-
+                     
                   } while (NativeMethods.FindNextFile(handle, out win32FindData));
 
 
@@ -282,13 +345,71 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public T Get<T>()
       {
-         NativeMethods.WIN32_FIND_DATA win32FindData;
-
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (var handle = FindFirstFile(InputPath, out win32FindData))
-            return null == handle
-               ? (T) (object) null
-               : NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
+         {
+            NativeMethods.WIN32_FIND_DATA win32FindData;
+
+            if (!IsDirectory)
+            {
+               // Not explicitly set to be a folder.
+               using (var handle = FindFirstFile(InputPath, out win32FindData))
+                  return null == handle
+                     ? (T) (object) null
+                     : NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
+
+            }
+
+
+            using (var handle = FindFirstFile(InputPath, out win32FindData))
+            {
+               // If the input path is root in full path format, e.g., D:\, FindFirstFile, after trimming 
+               // the ending directory separator, returns a descriptor of D:, whilst if the path is in long format,
+               // e.g., \\?\D:\, FindFirstFile fails, unable to return anything meaningful.
+               // 
+               // Here we will fix that issue.
+
+               //var savedContinueOnException = ContinueOnException;
+               //ContinueOnException = true;    // Skip exceptions.
+
+
+               if (null == handle)
+               {
+                  // Probably root path not supported by FindFirstFile.
+                  var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+
+                  var lastError = File.FillAttributeInfoCore(Transaction, InputPath, ref attrs, false, true);
+                  if (lastError != Win32Errors.NO_ERROR)
+                  {
+                     //// Restore the flag.
+                     //ContinueOnException = savedContinueOnException;
+
+                     if (!ContinueOnException)
+                        ThrowPossibleException((uint) lastError, InputPath);
+
+                     return (T) (object) null;
+                  }
+
+
+                  win32FindData = new NativeMethods.WIN32_FIND_DATA
+                  {
+                     cAlternateFileName = null,
+                     cFileName = ".",
+                     dwFileAttributes = attrs.dwFileAttributes,
+                     ftCreationTime = attrs.ftCreationTime,
+                     ftLastAccessTime = attrs.ftLastAccessTime,
+                     ftLastWriteTime = attrs.ftLastWriteTime,
+                     nFileSizeHigh = attrs.nFileSizeHigh,
+                     nFileSizeLow = attrs.nFileSizeLow
+                  };
+               }
+
+
+               //// Restore the flag.
+               //ContinueOnException = savedContinueOnException;
+
+               return NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
+            }
+         }
       }
 
 
@@ -384,5 +505,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Get or sets the KernelTransaction instance.</summary>
       /// <value>The transaction.</value>
       public KernelTransaction Transaction { get; internal set; }
+
+
+      /// <summary>Gets or sets the custom filter.</summary>
+      /// <value>The method determining if the object should be excluded from the output or not.</value>
+      public Predicate<FileSystemEntryInfo> Filter { get; internal set; }
+
+
+      /// <summary>Gets or sets the custom filter.</summary>
+      /// <value>The method determining if the directory should be recursively traversed or not.</value>
+      public Predicate<FileSystemEntryInfo> RecursionFilter { get; internal set; }
+
+
+      /// <summary>Gets or sets the handler of errors that may occur.</summary>
+      /// <value>The error handler method.</value>
+      public ErrorHandler ErrorHandler { get; internal set; }
    }
 }

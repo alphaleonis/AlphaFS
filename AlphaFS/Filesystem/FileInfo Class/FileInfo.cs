@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public FileInfo(KernelTransaction transaction, string fileName, PathFormat pathFormat)
       {
-         InitializeCore(false, transaction, fileName, pathFormat);
+         InitializeCore(transaction, false, fileName, pathFormat);
 
          _name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fileName, false), pathFormat != PathFormat.LongFullPath);
       }

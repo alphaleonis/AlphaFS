@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
 
-            fsEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction, junctionPath, true, pathFormat);
+            fsEntryInfo = File.GetFileSystemEntryInfoCore(transaction, true, junctionPath, true, pathFormat);
          }
 
 

@@ -240,7 +240,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
 
-            fsEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction, junctionPath, false, pathFormat);
+            fsEntryInfo = File.GetFileSystemEntryInfoCore(transaction, true, junctionPath, false, pathFormat);
 
             if (!fsEntryInfo.IsMountPoint)
                throw new NotAReparsePointException(string.Format(CultureInfo.InvariantCulture, Resources.Directory_Is_Not_A_MountPoint, fsEntryInfo.LongFullPath), (int) Win32Errors.ERROR_NOT_A_REPARSE_POINT);

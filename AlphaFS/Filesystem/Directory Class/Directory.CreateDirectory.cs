@@ -695,12 +695,12 @@ namespace Alphaleonis.Win32.Filesystem
          
 
          // Return DirectoryInfo instance if the directory specified by path already exists.
-         if (File.ExistsCore(true, transaction, path, pathFormat))
+         if (File.ExistsCore(transaction, true, path, pathFormat))
             return new DirectoryInfo(transaction, path, pathFormat);
 
 
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
-         if (File.ExistsCore(false, transaction, path, pathFormat))
+         if (File.ExistsCore(transaction, false, path, pathFormat))
             NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, path);
 
 
@@ -737,10 +737,10 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
                      case Win32Errors.ERROR_ALREADY_EXISTS:
-                        if (File.ExistsCore(false, transaction, path, pathFormat))
+                        if (File.ExistsCore(transaction, false, path, pathFormat))
                            NativeError.ThrowException(lastError, path);
 
-                        if (File.ExistsCore(false, transaction, folderLp, pathFormat))
+                        if (File.ExistsCore(transaction, false, folderLp, pathFormat))
                            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, null, folderLp);
                         break;
 
@@ -759,7 +759,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
                else if (compress)
-                  Device.ToggleCompressionCore(true, transaction, folderLp, true, pathFormat);
+                  Device.ToggleCompressionCore(transaction, true, folderLp, true, pathFormat);
             }
 
 
@@ -792,7 +792,7 @@ namespace Alphaleonis.Win32.Filesystem
                var path1 = path.Substring(0, index + 1);
                var path2 = longPathPrefix + path1.TrimStart('\\');
 
-               if (!File.ExistsCore(true, transaction, path2, PathFormat.LongFullPath))
+               if (!File.ExistsCore(transaction, true, path2, PathFormat.LongFullPath))
                   list.Push(path2);
 
                while (index > rootLength && !Path.IsDVsc(path[index], false))

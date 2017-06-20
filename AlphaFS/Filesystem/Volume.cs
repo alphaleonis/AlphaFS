@@ -368,7 +368,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsReady(string drivePath)
       {
-         return File.ExistsCore(true, null, drivePath, PathFormat.FullPath);
+         return File.ExistsCore(null, true, drivePath, PathFormat.FullPath);
       }
 
       #endregion // IsReady

@@ -440,7 +440,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Check for existing directory junction folder.
-         if (File.ExistsCore(true, transaction, junctionPath, pathFormat))
+         if (File.ExistsCore(transaction, true, junctionPath, pathFormat))
          {
             if (overwrite)
             {
@@ -468,7 +468,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Copy the target date and time stamps to the directory junction.
          if (copyTargetTimestamps)
-            File.CopyTimestampsCore(true, transaction, directoryPath, junctionPath, true, pathFormat);
+            File.CopyTimestampsCore(transaction, true, directoryPath, junctionPath, true, pathFormat);
 
 
          return junctionPath;

@@ -307,7 +307,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Process folders and files when recursive. 
          if (recursive)
          {
-            foreach (var fsei in EnumerateFileSystemEntryInfosCore<string>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.AsLongPath | DirectoryEnumerationOptions.Recursive, pathFormat))
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<string>(null, null, path, Path.WildcardStarMatchAll, null, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.AsLongPath | DirectoryEnumerationOptions.Recursive, null, pathFormat))
                File.EncryptDecryptFileCore(true, fsei, encrypt, pathFormat);
          }
 

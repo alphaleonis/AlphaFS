@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Compress(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(false, null, path, true, pathFormat);
+         Device.ToggleCompressionCore(null, false, path, true, pathFormat);
       }
 
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Compress(string path)
       {
-         Device.ToggleCompressionCore(false, null, path, true, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(null, false, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(false, transaction, path, true, pathFormat);
+         Device.ToggleCompressionCore(transaction, false, path, true, pathFormat);
       }
 
 
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CompressTransacted(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionCore(false, transaction, path, true, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(transaction, false, path, true, PathFormat.RelativePath);
       }
 
       #endregion
@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decompress(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(false, null, path, false, pathFormat);
+         Device.ToggleCompressionCore(null, false, path, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
@@ -82,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decompress(string path)
       {
-         Device.ToggleCompressionCore(false, null, path, false, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(null, false, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DecompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(false, transaction, path, false, pathFormat);
+         Device.ToggleCompressionCore(transaction, false, path, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DecompressTransacted(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionCore(false, transaction, path, false, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(transaction, false, path, false, PathFormat.RelativePath);
       }
 
       #endregion

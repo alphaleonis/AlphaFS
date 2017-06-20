@@ -146,7 +146,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public bool IsReady
       {
-         get { return File.ExistsCore(true, null, Name, PathFormat.LongFullPath); }
+         get { return File.ExistsCore(null, true, Name, PathFormat.LongFullPath); }
       }
 
 

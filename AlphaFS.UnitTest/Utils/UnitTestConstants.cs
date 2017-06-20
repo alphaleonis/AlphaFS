@@ -161,45 +161,6 @@ namespace AlphaFS.UnitTest
 
       #region Methods
       
-      public static void FolderDenyPermission(bool create, string tempPath)
-      {
-         var user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
-
-         var dirInfo = new System.IO.DirectoryInfo(tempPath);
-         System.Security.AccessControl.DirectorySecurity dirSecurity;
-
-         // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
-         // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
-         // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
-         // ║ Propagation ║ none        ║ none                          ║ none                   ║ none             ║ InheritOnly           ║ InheritOnly ║ InheritOnly ║
-         // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
-         // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
-
-         var rule = new System.Security.AccessControl.FileSystemAccessRule(user,
-            System.Security.AccessControl.FileSystemRights.FullControl,
-            System.Security.AccessControl.InheritanceFlags.ContainerInherit |
-            System.Security.AccessControl.InheritanceFlags.ObjectInherit,
-            System.Security.AccessControl.PropagationFlags.None, System.Security.AccessControl.AccessControlType.Deny);
-
-         if (create)
-         {
-            dirInfo.Create();
-
-            // Set DENY for current user.
-            dirSecurity = dirInfo.GetAccessControl();
-            dirSecurity.AddAccessRule(rule);
-            dirInfo.SetAccessControl(dirSecurity);
-         }
-         else
-         {
-            // Remove DENY for current user.
-            dirSecurity = dirInfo.GetAccessControl();
-            dirSecurity.RemoveAccessRule(rule);
-            dirInfo.SetAccessControl(dirSecurity);
-         }
-      }
-
-
       public static string StopWatcher(bool start = false)
       {
          if (_stopWatcher == null)

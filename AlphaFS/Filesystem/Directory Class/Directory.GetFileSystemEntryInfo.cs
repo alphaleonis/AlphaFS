@@ -28,21 +28,63 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory.</returns>
       /// <param name="path">The path to the directory.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, PathFormat pathFormat)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
       {
-         return File.GetFileSystemEntryInfoCore(true, null, path, false, pathFormat);
+         return File.GetFileSystemEntryInfoCore(null, true, path, false, PathFormat.RelativePath);
       }
 
 
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory.</returns>
       /// <param name="path">The path to the directory.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, PathFormat pathFormat)
       {
-         return File.GetFileSystemEntryInfoCore(true, null, path, false, PathFormat.RelativePath);
+         return File.GetFileSystemEntryInfoCore(null, true, path, false, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
+      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory.</returns>
+      /// <param name="path">The path to the directory.</param>
+      /// <param name="continueOnException">
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      [SecurityCritical]
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool continueOnException)
+      {
+         return File.GetFileSystemEntryInfoCore(null, true, path, continueOnException, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
+      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory.</returns>
+      /// <param name="path">The path to the directory.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="continueOnException">
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      [SecurityCritical]
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool continueOnException, PathFormat pathFormat)
+      {
+         return File.GetFileSystemEntryInfoCore(null, true, path, continueOnException, pathFormat);
+      }
+
+
+
+
+      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
+      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory.</returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the directory.</param>
+      [SecurityCritical]
+      public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path)
+      {
+         return File.GetFileSystemEntryInfoCore(transaction, true, path, false, PathFormat.RelativePath);
       }
 
 
@@ -54,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetFileSystemEntryInfoCore(true, transaction, path, false, pathFormat);
+         return File.GetFileSystemEntryInfoCore(transaction, true, path, false, pathFormat);
       }
 
 
@@ -62,10 +104,30 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
+      /// <param name="continueOnException">
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path)
+      public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path, bool continueOnException)
       {
-         return File.GetFileSystemEntryInfoCore(true, transaction, path, false, PathFormat.RelativePath);
+         return File.GetFileSystemEntryInfoCore(transaction, true, path, continueOnException, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
+      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory.</returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the directory.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="continueOnException">
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      [SecurityCritical]
+      public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path, bool continueOnException, PathFormat pathFormat)
+      {
+         return File.GetFileSystemEntryInfoCore(transaction, true, path, continueOnException, pathFormat);
       }
    }
 }

@@ -270,6 +270,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void DeleteDirectoryCore(KernelTransaction transaction, FileSystemEntryInfo fsEntryInfo, string path, bool recursive, bool ignoreReadOnly, bool continueOnNotFound, PathFormat pathFormat)
       {
+         // TODO
+         // continueOnNotFound should be continueOnException.
+         ///// <param name="continueOnException">
+         /////    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+         /////    <para>such as ACLs protected directories or non-accessible reparse points.</para>
+         ///// </param>
+         
+         
          if (null == fsEntryInfo)
          {
             // MSDN: .NET 3.5+: DirectoryNotFoundException:
@@ -280,7 +288,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (pathFormat == PathFormat.RelativePath)
                Path.CheckSupportedPathFormat(path, true, true);
 
-            fsEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator), continueOnNotFound, pathFormat);
+            fsEntryInfo = File.GetFileSystemEntryInfoCore(transaction, true, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator), continueOnNotFound, pathFormat);
 
             if (null == fsEntryInfo)
                return;
@@ -296,7 +304,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var dirs = new Stack<string>(1000);
 
-            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.Recursive, pathFormat))
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.Recursive, null, pathFormat))
             {
                if (fsei.IsDirectory)
                {
@@ -360,7 +368,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_DIRECTORY:
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: Path refers to a file instead of a directory.
-                  if (File.ExistsCore(false, transaction, pathLp, PathFormat.LongFullPath))
+                  if (File.ExistsCore(transaction, false, pathLp, PathFormat.LongFullPath))
                      throw new DirectoryNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", lastError, string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, pathLp)));
                   break;
 
@@ -389,7 +397,7 @@ namespace Alphaleonis.Win32.Filesystem
                      if (ignoreReadOnly)
                      {
                         // Reset directory attributes to Normal.
-                        File.SetAttributesCore(true, transaction, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
+                        File.SetAttributesCore(transaction, true, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
 
                         goto startRemoveDirectory;
                      }

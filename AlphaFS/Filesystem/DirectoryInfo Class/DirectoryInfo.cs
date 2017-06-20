@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
       public DirectoryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         InitializeCore(true, transaction, path, pathFormat);
+         InitializeCore(transaction, true, path, pathFormat);
       }
 
       #endregion // Transactional

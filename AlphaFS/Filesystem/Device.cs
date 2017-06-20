@@ -339,13 +339,13 @@ namespace Alphaleonis.Win32.Filesystem
       #region Compression
 
       /// <summary>[AlphaFS] Sets the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
       /// <param name="compress"><see langword="true"/> = compress, <see langword="false"/> = decompress</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void ToggleCompressionCore(bool isFolder, KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
+      internal static void ToggleCompressionCore(KernelTransaction transaction, bool isFolder, string path, bool compress, PathFormat pathFormat)
       {
          using (var handle = File.CreateFileCore(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, pathFormat))
          {

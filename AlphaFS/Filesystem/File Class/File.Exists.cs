@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path)
       {
-         return ExistsCore(false, null, path, PathFormat.RelativePath);
+         return ExistsCore(null, false, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Determines whether the specified file exists.</summary>
@@ -82,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path, PathFormat pathFormat)
       {
-         return ExistsCore(false, null, path, pathFormat);
+         return ExistsCore(null, false, path, pathFormat);
       }
 
       #region Transactional
@@ -117,7 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool ExistsTransacted(KernelTransaction transaction, string path)
       {
-         return ExistsCore(false, transaction, path, PathFormat.RelativePath);
+         return ExistsCore(transaction, false, path, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool ExistsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ExistsCore(false, transaction, path, pathFormat);
+         return ExistsCore(transaction, false, path, pathFormat);
       }
 
       #endregion // Transacted
@@ -175,8 +175,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Be aware that another process can potentially do something with the file in between
       ///   the time you call the Exists method and perform another operation on the file, such as Delete.</para>
       /// </remarks>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">The file to check.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
@@ -185,7 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
-      internal static bool ExistsCore(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static bool ExistsCore(KernelTransaction transaction, bool isFolder, string path, PathFormat pathFormat)
       {
          // Will be caught later and be thrown as an ArgumentException or ArgumentNullException.
          // Let's take a shorter route, preventing an Exception from being thrown altogether.

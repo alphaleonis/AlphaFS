@@ -622,12 +622,12 @@ namespace Alphaleonis.Win32.Filesystem
       {
          longFullPath = Path.GetExtendedLengthPathCore(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         return File.CopyMoveCore(null, false, Transaction, LongFullName, longFullPath, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, PathFormat.LongFullPath);
+         return File.CopyMoveCore(null, Transaction, false, LongFullName, longFullPath, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, PathFormat.LongFullPath);
       }
 
 
       /// <summary>Refreshes the current <see cref="FileInfo"/> instance with a new destination path.</summary>
-      private new void UpdateDestinationPath(string destinationPath, string destinationPathLp)
+      private void UpdateDestinationPath(string destinationPath, string destinationPathLp)
       {
          _name = Path.GetFileName(destinationPathLp, true);
 

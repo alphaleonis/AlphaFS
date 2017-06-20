@@ -18,6 +18,7 @@ Version vNext  (xxxx-xx-xx)
 
 ### New Features/Enhancements
 
+- Issue #212: Provide a way to retrieve errors when you choose to `ContinueOnException`
 - Issue #273: Improve methods `Directory/File.CopyMoveCore`: Make code recursive-aware, skip additional path checks and validations.
 - Issue #274: Improve methods `Directory/File.CopyMoveCore`: Improve detection of same volume.
 - Issue #275: Improve methods `Directory/File.CopyMoveCore`: Eliminate recursion.
