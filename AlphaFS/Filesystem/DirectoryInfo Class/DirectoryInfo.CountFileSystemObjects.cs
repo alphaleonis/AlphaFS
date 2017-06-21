@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long CountFileSystemObjects(DirectoryEnumerationOptions options)
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<string>(null, Transaction, LongFullName, Path.WildcardStarMatchAll, null, options,  null, PathFormat.LongFullPath).Count();
+         return Directory.EnumerateFileSystemEntryInfosCore<string>(null, Transaction, LongFullName, Path.WildcardStarMatchAll, null, options, null, PathFormat.LongFullPath).Count();
       }
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long CountFileSystemObjects(string searchPattern, DirectoryEnumerationOptions options)
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<string>(null, Transaction, LongFullName, searchPattern, null, options,  null, PathFormat.LongFullPath).Count();
+         return Directory.EnumerateFileSystemEntryInfosCore<string>(null, Transaction, LongFullName, searchPattern, null, options, null, PathFormat.LongFullPath).Count();
       }
 
       #endregion // AlphaFS

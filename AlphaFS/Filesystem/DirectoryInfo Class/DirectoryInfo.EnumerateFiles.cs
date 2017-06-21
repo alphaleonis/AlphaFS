@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles()
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(false, Transaction, LongFullName, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Files, null, PathFormat.LongFullPath);
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(false, Transaction, LongFullName, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file information that matches a search pattern.</summary>
@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(false, Transaction, LongFullName, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Files, null, PathFormat.LongFullPath);
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(false, Transaction, LongFullName, searchPattern, null, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file information that matches a specified search pattern and search subdirectory option.</summary>
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(DirectoryEnumerationOptions options)
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(false, Transaction, LongFullName, Path.WildcardStarMatchAll, null, options,  null, PathFormat.LongFullPath);
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(false, Transaction, LongFullName, Path.WildcardStarMatchAll, null, options, null, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file information that matches a search pattern.</summary>
@@ -122,7 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(string searchPattern, DirectoryEnumerationOptions options)
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(false, Transaction, LongFullName, searchPattern, null, options,  null, PathFormat.LongFullPath);
+         return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(false, Transaction, LongFullName, searchPattern, null, options, null, PathFormat.LongFullPath);
       }
    }
 }

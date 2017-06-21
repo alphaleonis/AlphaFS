@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, null, null, pathFormat);
       }
 
 
@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -238,7 +238,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, null, null, pathFormat);
       }
 
 
@@ -351,7 +351,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, DirectoryEnumerationFilters filters)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, filters, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, null, filters, PathFormat.RelativePath);
       }
 
 
@@ -386,7 +386,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, filters, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, null, filters, pathFormat);
       }
 
 
@@ -496,7 +496,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationFilters filters)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, filters, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, null, filters, PathFormat.RelativePath);
       }
 
 
@@ -536,7 +536,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, filters, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, null, filters, pathFormat);
       }
 
 
@@ -653,7 +653,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -688,7 +688,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, null, null, pathFormat);
       }
       
 
@@ -798,7 +798,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -838,7 +838,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, null, null, pathFormat);
       }
       
 
@@ -954,7 +954,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, DirectoryEnumerationFilters filters)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, filters, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, null, filters, PathFormat.RelativePath);
       }
 
 
@@ -990,7 +990,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, filters, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, null, filters, pathFormat);
       }
 
 
@@ -1103,7 +1103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationFilters filters)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, filters, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, null, filters, PathFormat.RelativePath);
       }
 
 
@@ -1144,7 +1144,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, filters, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, null, filters, pathFormat);
       }
 
 

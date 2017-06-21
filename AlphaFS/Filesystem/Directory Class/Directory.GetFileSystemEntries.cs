@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(null, null, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
       /// <summary>Returns an array of file system entries that match the specified search criteria.</summary>
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, null, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(null, null, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
       /// <summary>Gets an array of all the file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFileSystemEntriesTransacted(KernelTransaction transaction, string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(null, transaction, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
       /// <summary>Returns an array of file system entries that match the specified search criteria.</summary>
@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFileSystemEntriesTransacted(KernelTransaction transaction, string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, transaction, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(null, transaction, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
       /// <summary>Gets an array of all the file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>

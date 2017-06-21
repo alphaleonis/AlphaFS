@@ -250,7 +250,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          while (dirs.Count > 0)
          {
-            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, transaction, dirs.Pop(), Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.ContinueOnException, null, PathFormat.LongFullPath))
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, transaction, dirs.Pop(), Path.WildcardStarMatchAll, null, DirectoryEnumerationOptions.ContinueOnException, null, PathFormat.LongFullPath))
             {
                // Ensure the directory is empty.
                if (IsEmptyCore(transaction, fsei.LongFullPath, pathFormat))

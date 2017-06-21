@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos()
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<FileSystemInfo>(null, Transaction, LongFullName, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.LongFullPath);
+         return Directory.EnumerateFileSystemEntryInfosCore<FileSystemInfo>(null, Transaction, LongFullName, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern.</summary>
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<FileSystemInfo>(null, Transaction, LongFullName, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.LongFullPath);
+         return Directory.EnumerateFileSystemEntryInfosCore<FileSystemInfo>(null, Transaction, LongFullName, searchPattern, null, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern and search subdirectory option.</summary>

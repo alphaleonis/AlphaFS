@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectories(string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Folders, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(true, null, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
 
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectories(string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Folders, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
 
@@ -141,7 +141,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectoriesTransacted(KernelTransaction transaction, string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Folders, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
 
@@ -170,7 +170,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Folders, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
 

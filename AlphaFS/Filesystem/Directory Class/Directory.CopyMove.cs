@@ -1088,7 +1088,7 @@ namespace Alphaleonis.Win32.Filesystem
             var dstLp = srcLp.Replace(sourcePathLp, destinationPathLp);
 
             // Traverse the source folder, processing files and folders.
-            foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, srcLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, PathFormat.LongFullPath))
+            foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, srcLp, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath))
             {
                var fseiSourcePath = fseiSource.LongFullPath;
                var fseiDestinationPath = Path.CombineCore(false, dstLp, fseiSource.FileName);
@@ -1141,7 +1141,7 @@ namespace Alphaleonis.Win32.Filesystem
                var dstLp = sourcePathLp.Replace(sourcePathLp, destinationPathLp);
 
                // Traverse the source folder, processing subfolders.
-               foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, transaction, sourcePathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Folders, null, PathFormat.LongFullPath))
+               foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, transaction, sourcePathLp, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath))
                   File.CopyTimestampsCore(transaction, true, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
             }
 

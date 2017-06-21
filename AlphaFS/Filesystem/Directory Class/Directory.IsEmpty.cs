@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static bool IsEmptyCore(KernelTransaction transaction, string directoryPath, PathFormat pathFormat)
       {
-         return !EnumerateFileSystemEntryInfosCore<string>(null, transaction, directoryPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders, null, pathFormat).Any();
+         return !EnumerateFileSystemEntryInfosCore<string>(null, transaction, directoryPath, Path.WildcardStarMatchAll, null, null, null, pathFormat).Any();
       }
    }
 }

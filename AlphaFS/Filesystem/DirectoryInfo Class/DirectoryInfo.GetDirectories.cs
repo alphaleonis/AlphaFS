@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories()
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(true, Transaction, LongFullName, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Folders, null, PathFormat.LongFullPath).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(true, Transaction, LongFullName, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria.</summary>
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(true, Transaction, LongFullName, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Folders, null, PathFormat.LongFullPath).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(true, Transaction, LongFullName, searchPattern, null, null, null, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria and using a value to determine whether to search subdirectories.</summary>

@@ -230,7 +230,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (lastError != Win32Errors.NO_ERROR)
          {
-            if (null == ErrorHandler || !ErrorHandler((int)lastError, new Win32Exception((int)lastError).Message, pathLp.TrimEnd(Path.WildcardStarMatchAllChar)))
+            if (null == ErrorHandler || !ErrorHandler((int) lastError, new Win32Exception((int) lastError).Message, pathLp.TrimEnd(Path.WildcardStarMatchAllChar)))
                NativeError.ThrowException(lastError, pathLp);
          }
       }

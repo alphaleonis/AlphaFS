@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(string path)
       {
-         return GetPropertiesCore(null, path, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
+         return GetPropertiesCore(null, path, null, PathFormat.RelativePath);
       }
 
 
@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(string path, PathFormat pathFormat)
       {
-         return GetPropertiesCore(null, path, DirectoryEnumerationOptions.FilesAndFolders, pathFormat);
+         return GetPropertiesCore(null, path, null, pathFormat);
       }
 
 
@@ -147,7 +147,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static Dictionary<string, long> GetPropertiesTransacted(KernelTransaction transaction, string path)
       {
-         return GetPropertiesCore(transaction, path, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
+         return GetPropertiesCore(transaction, path, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
@@ -171,7 +171,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static Dictionary<string, long> GetPropertiesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetPropertiesCore(transaction, path, DirectoryEnumerationOptions.FilesAndFolders, pathFormat);
+         return GetPropertiesCore(transaction, path, null, pathFormat);
       }
 
 
@@ -247,7 +247,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static Dictionary<string, long> GetPropertiesCore(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      internal static Dictionary<string, long> GetPropertiesCore(KernelTransaction transaction, string path, DirectoryEnumerationOptions? options, PathFormat pathFormat)
       {
          long total = 0;
          long size = 0;

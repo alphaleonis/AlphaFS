@@ -348,14 +348,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void ToggleCompressionCore(KernelTransaction transaction, bool isFolder, string path, bool compress, PathFormat pathFormat)
       {
          using (var handle = File.CreateFileCore(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, pathFormat))
-         {
-            // DeviceIoControlMethod.Buffered = 0,
-            // DeviceIoControlFileDevice.FileSystem = 9
-            // FsctlSetCompression = (DeviceIoControlFileDevice.FileSystem << 16) | (16 << 2) | DeviceIoControlMethod.Buffered | ((FileAccess.Read | FileAccess.Write) << 14)
-
-            // 0 = Decompress, 1 = Compress.
-            InvokeIoControlUnknownSize(handle, (9 << 16) | (16 << 2) | 0 | ((uint)(FileAccess.Read | FileAccess.Write) << 14), compress ? 1 : 0);
-         }
+            InvokeIoControlUnknownSize(handle, NativeMethods.FSCTL_SET_COMPRESSION, compress ? 1 : 0);
       }
 
       #endregion // Compression

@@ -304,7 +304,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var dirs = new Stack<string>(1000);
 
-            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.Recursive, null, pathFormat))
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, SearchOption.AllDirectories, null, null, pathFormat))
             {
                if (fsei.IsDirectory)
                {

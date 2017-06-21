@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System.IO;
 using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -80,6 +81,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       private const int DeviceIoControlMethodBuffered = 0;
       private const int DeviceIoControlFileDeviceFileSystem = 9;
+
+      // <summary>Command to compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
+      internal const int FSCTL_SET_COMPRESSION = (DeviceIoControlFileDeviceFileSystem << 16) | (16 << 2) | DeviceIoControlMethodBuffered | (int) (FileAccess.Read | FileAccess.Write) << 14;
 
       // <summary>Command to set the reparse point data block.</summary>
       internal const int FSCTL_SET_REPARSE_POINT = (DeviceIoControlFileDeviceFileSystem << 16) | (41 << 2) | DeviceIoControlMethodBuffered | (0 << 14);

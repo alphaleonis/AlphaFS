@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFiles(string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Files, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
 
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFiles(string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Files, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
 
@@ -145,7 +145,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFilesTransacted(KernelTransaction transaction, string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Files, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
       /// <summary>[AlphaFS] Returns the names of files (including their paths) that match the specified search pattern in the specified directory.</summary>
@@ -174,7 +174,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFilesTransacted(KernelTransaction transaction, string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.Files, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
       /// <summary>[AlphaFS] Returns the names of files (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.</summary>
