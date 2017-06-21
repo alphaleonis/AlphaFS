@@ -28,10 +28,9 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class Directory
    {
-      #region Copy
-
       // .NET: Directory class does not contain the Copy() method.
       // Mimic .NET File.Copy() methods.
+
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.
       /// <remarks>
@@ -53,6 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(null, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.
       /// <remarks>
@@ -77,7 +77,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
@@ -99,6 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(null, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.
       /// <remarks>
@@ -124,8 +124,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transactional
-
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
@@ -147,6 +145,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(transaction, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.
       /// <remarks>
@@ -172,7 +171,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
@@ -195,6 +193,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(transaction, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.
       /// <remarks>
@@ -220,12 +219,8 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(transaction, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, null, pathFormat);
       }
 
-      #endregion // Transactional
-
-      #endregion // Copy
 
 
-      #region Copy (CopyOptions)
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
       /// <remarks>
@@ -249,6 +244,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, null, null, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
       /// <remarks>
@@ -274,6 +270,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, null, null, null, pathFormat);
       }
 
+
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
@@ -297,6 +294,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(null, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
       /// <remarks>
@@ -322,6 +320,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(null, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, null, pathFormat);
       }
+
 
 
 
@@ -351,6 +350,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
+
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       ///   and the possibility of notifying the application of its progress through a callback function.
       /// <remarks>
@@ -378,6 +378,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, null, pathFormat);
       }
 
+
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       ///   and the possibility of notifying the application of its progress through a callback function.
       /// <remarks>
@@ -404,6 +405,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(null, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       ///   and the possibility of notifying the application of its progress through a callback function.
@@ -434,7 +436,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transactional
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
       /// <remarks>
@@ -459,6 +460,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, null, null, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
       /// <remarks>
@@ -485,6 +487,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, null, null, null, pathFormat);
       }
 
+
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
@@ -509,6 +512,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
       /// <remarks>
@@ -535,6 +539,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, null, pathFormat);
       }
+
 
 
 
@@ -565,6 +570,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
+
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       ///   and the possibility of notifying the application of its progress through a callback function.
       /// <remarks>
@@ -593,6 +599,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, null, pathFormat);
       }
 
+
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       ///   and the possibility of notifying the application of its progress through a callback function.
       /// <remarks>
@@ -620,6 +627,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       ///   and the possibility of notifying the application of its progress through a callback function.
@@ -650,333 +658,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, null, pathFormat);
       }
 
-      #endregion // Transactional
 
-      #endregion // Copy (CopyOptions)
-
-
-      #region Move
-
-      #region .NET
-
-      /// <summary>Moves a file or a directory and its contents to a new location.
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      [SecurityCritical]
-      public static void Move(string sourcePath, string destinationPath)
-      {
-         CopyMoveCore(null, sourcePath, destinationPath, false, null, MoveOptions.None, null, null, null, PathFormat.RelativePath);
-      }
-
-      #endregion // .NET
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static CopyMoveResult Move(string sourcePath, string destinationPath, PathFormat pathFormat)
-      {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, null, MoveOptions.None, null, null, null, pathFormat);
-      }
-
-
-      #region Transactional
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
-      {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, null, MoveOptions.None, null, null, null, PathFormat.RelativePath);
-      }
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
-      {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, null, MoveOptions.None, null, null, null, pathFormat);
-      }
-
-      #endregion // Transactional
-
-      #endregion // Move
-
-
-      #region Move (MoveOptions)
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      [SecurityCritical]
-      public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions)
-      {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, null, moveOptions, null, null, null, PathFormat.RelativePath);
-      }
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
-      {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, null, moveOptions, null, null, null, pathFormat);
-      }
-
-
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
-      ///   and the possibility of notifying the application of its progress through a callback function.
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      [SecurityCritical]
-      public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, null, moveOptions, progressHandler, userProgressData, null, PathFormat.RelativePath);
-      }
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
-      ///   and the possibility of notifying the application of its progress through a callback function.
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, null, moveOptions, progressHandler, userProgressData, null, pathFormat);
-      }
-
-
-      #region Transactional
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions)
-      {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, null, moveOptions, null, null, null, PathFormat.RelativePath);
-      }
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
-      {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, null, moveOptions, null, null, null, pathFormat);
-      }
-
-
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
-      ///   and the possibility of notifying the application of its progress through a callback function.
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, null, moveOptions, progressHandler, userProgressData, null, PathFormat.RelativePath);
-      }
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
-      ///   and the possibility of notifying the application of its progress through a callback function.
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <remarks>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, null, moveOptions, progressHandler, userProgressData, null, pathFormat);
-      }
-
-      #endregion // Transactional
-
-      #endregion // Move (MoveOptions)
 
 
       #region Internal Methods
@@ -1153,10 +835,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          return cmr;
       }
-
-
       
-
 
       private static void ValidateAndUpdateMoveAction(string sourcePathLp, string destinationPathLp, CopyOptions? copyOptions, MoveOptions? moveOptions, out CopyOptions? newCopyOptions, out MoveOptions? newMoveOptions, out bool isCopy, out bool emulateMove)
       {
