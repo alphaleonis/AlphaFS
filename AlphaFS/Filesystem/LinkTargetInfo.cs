@@ -30,16 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          SubstituteName = substituteName;
 
-
-         if (Utils.IsNullOrWhiteSpace(printName))
-         {
-            printName = substituteName;
-
-            if (printName.StartsWith(Path.NonInterpretedPathPrefix, StringComparison.OrdinalIgnoreCase))
-               printName = printName.Substring(Path.NonInterpretedPathPrefix.Length);
-         }
-
-         PrintName = Path.RemoveTrailingDirectorySeparator(printName);
+         PrintName = Path.RemoveTrailingDirectorySeparator(printName ?? Path.GetRegularPathCore(substituteName, GetFullPathOptions.None, false));
       }
 
       

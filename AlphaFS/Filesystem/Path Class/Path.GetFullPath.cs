@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 
@@ -58,8 +57,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
 
-
-      #region AlphaFS
 
       /// <summary>Returns the absolute path for the specified path string.</summary>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
@@ -144,9 +141,8 @@ namespace Alphaleonis.Win32.Filesystem
          return GetFullPathTackleCore(transaction, path, options);
       }
 
-      #endregion // AlphaFS
 
-      #region Internal Methods
+
 
       /// <summary>Retrieves the absolute path for the specified <paramref name="path"/> string.</summary>
       /// <returns>The fully qualified location of <paramref name="path"/>, such as "C:\MyFile.txt".</returns>
@@ -172,10 +168,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string GetFullPathCore(KernelTransaction transaction, string path, GetFullPathOptions options)
       {
+         // Skip the special paths recognised by Windows kernel only.
+
          if (null != path)
-            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) || path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
+            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith(NonInterpretedPathPrefix, StringComparison.Ordinal))
                return path;
-         
+
 
          if (options != GetFullPathOptions.None)
          {
@@ -192,11 +192,10 @@ namespace Alphaleonis.Win32.Filesystem
                   options &= ~GetFullPathOptions.CheckAdditional;
             }
 
-
             // Do not remove trailing directory separator when path points to a drive like: "C:\"
             // Doing so makes path point to the current directory.
 
-            if (null == path || path.Length <= 3 || !path.StartsWith(LongPathPrefix, StringComparison.Ordinal) && path[1] != VolumeSeparatorChar)
+            if (null == path || path.Length <= 3 || !path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) && path[1] != VolumeSeparatorChar)
                options &= ~GetFullPathOptions.RemoveTrailingDirectorySeparator;
          }
 
@@ -206,7 +205,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
-
+         
          startGetFullPathName:
 
             var buffer = new StringBuilder((int) bufferSize);
@@ -219,8 +218,6 @@ namespace Alphaleonis.Win32.Filesystem
 
                ? NativeMethods.GetFullPathName(pathLp, bufferSize, buffer, IntPtr.Zero)
                : NativeMethods.GetFullPathNameTransacted(pathLp, bufferSize, buffer, IntPtr.Zero, transaction.SafeHandle);
-
-            var lastError = Marshal.GetLastWin32Error();
 
 
             if (returnLength != Win32Errors.NO_ERROR)
@@ -236,7 +233,7 @@ namespace Alphaleonis.Win32.Filesystem
                if ((options & GetFullPathOptions.ContinueOnNonExist) != 0)
                   return null;
 
-               NativeError.ThrowException(lastError, pathLp);
+               NativeError.ThrowException(returnLength, pathLp);
             }
 
 
@@ -250,7 +247,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if ((options & GetFullPathOptions.KeepDotOrSpace) != 0)
             {
-               if (pathLp.EndsWith(".", StringComparison.OrdinalIgnoreCase))
+               if (pathLp.EndsWith(".", StringComparison.Ordinal))
                   finalFullPath += ".";
 
                var lastChar = pathLp[pathLp.Length - 1];
@@ -258,10 +255,11 @@ namespace Alphaleonis.Win32.Filesystem
                   finalFullPath += lastChar;
             }
 
-            
+
             return finalFullPath;
          }
       }
+
 
       private static string GetFullPathTackleCore(KernelTransaction transaction, string path, GetFullPathOptions options)
       {
@@ -306,7 +304,5 @@ namespace Alphaleonis.Win32.Filesystem
 
          return path;
       }
-
-      #endregion // Internal Methods
    }
 }

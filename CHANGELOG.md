@@ -36,6 +36,8 @@ Version vNext  (xxxx-xx-xx)
 - Issue #348: Implement method `Directory.GetLinkTargetInfo`
 - Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
 - Issue #351: Enable copying of Directory symbolic links.
+- Issue #352: Ignore `NonInterpretedPathPrefix` in methods: `Path.GetFullPathCore` and `Path.GetLongPathCore`  (Thx besoft)
+- Issue #353: Modify method `Directory.GetFileSystemEntryInfo` to return `FileSystemEntryInfo` structure for directories supporting also root directories, e.g., `C:\`  (Thx besoft)
 
 Version 2.1.3 (2017-06-05)
 -------------

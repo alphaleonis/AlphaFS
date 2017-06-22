@@ -29,8 +29,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      #region GetLongPath
-
       /// <summary>Makes an extended long path from the specified <paramref name="path"/> by prefixing <see cref="LongPathPrefix"/>.</summary>
       /// <returns>The <paramref name="path"/> prefixed with a <see cref="LongPathPrefix"/>, the minimum required full path is: "C:\".</returns>
       /// <remarks>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</remarks>
@@ -43,9 +41,6 @@ namespace Alphaleonis.Win32.Filesystem
          return GetLongPathCore(path, GetFullPathOptions.None);
       }
 
-      #endregion // GetLongPath
-
-      #region GetLongFrom83ShortPath
 
       /// <summary>[AlphaFS] Converts the specified existing path to its regular long form.</summary>
       /// <returns>The regular full path.</returns>
@@ -57,6 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetLongShort83PathCore(null, path, false);
       }
+
 
       /// <summary>[AlphaFS] Converts the specified existing path to its regular long form.</summary>
       /// <returns>The regular full path.</returns>
@@ -70,9 +66,6 @@ namespace Alphaleonis.Win32.Filesystem
          return GetLongShort83PathCore(transaction, path, false);
       }
 
-      #endregion // GetLongFrom83ShortPath
-
-      #region GetRegularPath
 
       /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
       /// <returns>Regular form path string.</returns>
@@ -86,9 +79,6 @@ namespace Alphaleonis.Win32.Filesystem
          return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
       }
 
-      #endregion // GetRegularPath
-
-      #region GetShort83Path
 
       /// <summary>[AlphaFS] Retrieves the short path form of the specified path.</summary>
       /// <returns>A path that has the 8.3 path form.</returns>
@@ -102,6 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetLongShort83PathCore(null, path, true);
       }
+
 
       /// <summary>[AlphaFS] Retrieves the short path form of the specified path.</summary>
       /// <returns>A path that has the 8.3 path form.</returns>
@@ -117,9 +108,6 @@ namespace Alphaleonis.Win32.Filesystem
          return GetLongShort83PathCore(transaction, path, true);
       }
 
-      #endregion // GetShort83Path
-
-      #region IsLongPath
 
       /// <summary>[AlphaFS] Determines whether the specified path starts with a <see cref="LongPathPrefix"/> or <see cref="LongPathUncPrefix"/>.</summary>
       /// <returns><see langword="true"/> if the specified path has a long path (UNC) prefix, <see langword="false"/> otherwise.</returns>
@@ -131,9 +119,8 @@ namespace Alphaleonis.Win32.Filesystem
          return !Utils.IsNullOrWhiteSpace(path) && path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase);
       }
 
-      #endregion // IsLongPath
+      
 
-      #region Internals Methods
 
       /// <summary>Makes an extended long path from the specified <paramref name="path"/> by prefixing <see cref="LongPathPrefix"/>.</summary>
       /// <returns>The <paramref name="path"/> prefixed with a <see cref="LongPathPrefix"/>, the minimum required full path is: "C:\".</returns>
@@ -157,7 +144,8 @@ namespace Alphaleonis.Win32.Filesystem
          // ".", "C:"
          if (path.Length <= 2 ||
              path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) ||
-             path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
+             path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase) ||
+             path.StartsWith(NonInterpretedPathPrefix, StringComparison.OrdinalIgnoreCase))
             return path;
 
          if (path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase))
@@ -166,9 +154,9 @@ namespace Alphaleonis.Win32.Filesystem
          // Don't use char.IsLetter() here as that can be misleading.
          // The only valid drive letters are: a-z and A-Z.
          var c = path[0];
-
          return IsPathRooted(path, false) && (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z') ? LongPathPrefix + path : path;
       }
+
 
       /// <summary>Retrieves the short path form, or the regular long form of the specified <paramref name="path"/>.</summary>
       /// <returns>If <paramref name="getShort"/> is <see langword="true"/>, a path of the 8.3 form otherwise the regular long form.</returns>
@@ -219,6 +207,7 @@ namespace Alphaleonis.Win32.Filesystem
          return GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None, false);
       }
 
+
       /// <summary>Gets the regular path from a long path.</summary>
       /// <returns>
       ///   <para>Returns the regular form of a long <paramref name="path"/>.</para>
@@ -261,6 +250,7 @@ namespace Alphaleonis.Win32.Filesystem
                : path.Substring(LongPathPrefix.Length));
       }
 
+
       /// <summary>Gets the path as a long full path.</summary>
       /// <returns>The path as an extended length path.</returns>
       /// <exception cref="ArgumentException"/>
@@ -294,7 +284,5 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException("Invalid value: " + pathFormat, "pathFormat");
          }
       }
-
-      #endregion // Internals Methods
    }
 }

@@ -368,8 +368,8 @@ namespace Alphaleonis.Win32.Filesystem
                // 
                // Here we will fix that issue.
 
-               //var savedContinueOnException = ContinueOnException;
-               //ContinueOnException = true;    // Skip exceptions.
+               var savedContinueOnException = ContinueOnException;
+               ContinueOnException = true;    // Skip exceptions.
 
 
                if (null == handle)
@@ -380,8 +380,8 @@ namespace Alphaleonis.Win32.Filesystem
                   var lastError = File.FillAttributeInfoCore(Transaction, InputPath, ref attrs, false, true);
                   if (lastError != Win32Errors.NO_ERROR)
                   {
-                     //// Restore the flag.
-                     //ContinueOnException = savedContinueOnException;
+                     // Restore the flag.
+                     ContinueOnException = savedContinueOnException;
 
                      if (!ContinueOnException)
                         ThrowPossibleException((uint) lastError, InputPath);
@@ -404,8 +404,8 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
 
-               //// Restore the flag.
-               //ContinueOnException = savedContinueOnException;
+               // Restore the flag.
+               ContinueOnException = savedContinueOnException;
 
                return NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
             }
