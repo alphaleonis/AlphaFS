@@ -31,18 +31,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>No MoveOptions used, this fails when the file name already exists.</summary>
       None = 0,
 
+
       /// <summary>MOVE_FILE_REPLACE_EXISTSING
       /// <para>If the destination file name already exists, the function replaces its contents with the contents of the source file.</para>
       /// <para>This value cannot be used if lpNewFileName or lpExistingFileName names a directory.</para>
       /// <para>This value cannot be used if either source or destination names a directory.</para>
       /// </summary>
-      ReplaceExisting = 1,
+      ReplaceExisting = NativeMethods.MOVE_FILE_OPTIONS.MOVE_FILE_REPLACE_EXISTSING,
+
 
       /// <summary>MOVE_FILE_COPY_ALLOWED
       /// <para>If the file is to be moved to a different volume, the function simulates the move by using the CopyFile and DeleteFile functions.</para>
       /// <para>This value cannot be used with <see cref="MoveOptions.DelayUntilReboot"/>.</para>
       /// </summary>
-      CopyAllowed = 2,
+      CopyAllowed = NativeMethods.MOVE_FILE_OPTIONS.MOVE_FILE_COPY_ALLOWED,
+
 
       /// <summary>MOVE_FILE_DELAY_UNTIL_REBOOT
       /// <para>
@@ -55,7 +58,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// </para>
       /// <para>This value cannot be used with <see cref="MoveOptions.CopyAllowed"/>.</para>
       /// </summary>
-      DelayUntilReboot = 4,
+      DelayUntilReboot = NativeMethods.MOVE_FILE_OPTIONS.MOVE_FILE_DELAY_UNTIL_REBOOT,
+
 
       /// <summary>MOVE_FILE_WRITE_THROUGH
       /// <para>The function does not return until the file has actually been moved on the disk.</para>
@@ -65,19 +69,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// </para>
       /// <para>This value has no effect if <see cref="MoveOptions.DelayUntilReboot"/> is set.</para>
       /// </summary>
-      WriteThrough = 8,
+      WriteThrough = NativeMethods.MOVE_FILE_OPTIONS.MOVE_FILE_WRITE_THROUGH,
+
 
       /// <summary>MOVE_FILE_CREATE_HARDLINK
       /// <para>Reserved for future use.</para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
-      CreateHardlink = 16,
+      CreateHardlink = NativeMethods.MOVE_FILE_OPTIONS.MOVE_FILE_CREATE_HARDLINK,
+
 
       /// <summary>MOVE_FILE_FAIL_IF_NOT_TRACKABLE
       /// <para>The function fails if the source file is a link source, but the file cannot be tracked after the move.</para>
       /// <para>This situation can occur if the destination is a volume formatted with the FAT file system.</para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Trackable")]
-      FailIfNotTrackable = 32
+      FailIfNotTrackable = NativeMethods.MOVE_FILE_OPTIONS.MOVE_FILE_FAIL_IF_NOT_TRACKABLE
    }
 }

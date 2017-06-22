@@ -31,10 +31,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>No CopyOptions used, this allows overwriting the file.</summary>
       None = 0,
 
+
       /// <summary>COPY_FILE_FAIL_IF_EXISTS
       /// <para>The copy operation fails immediately if the target file already exists.</para>
       /// </summary>
-      FailIfExists = 1,
+      FailIfExists = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_FAIL_IF_EXISTS,
+
 
       /// <summary>COPY_FILE_RESTARTABLE
       /// <para>
@@ -44,26 +46,30 @@ namespace Alphaleonis.Win32.Filesystem
       /// </para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Restartable")]
-      Restartable = 2,
+      Restartable = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_RESTARTABLE,
+
 
       /// <summary>COPY_FILE_OPEN_SOURCE_FOR_WRITE
       /// <para>The file is copied and the original file is opened for write access.</para>
       /// </summary>
-      OpenSourceForWrite = 4,
+      OpenSourceForWrite = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_OPEN_SOURCE_FOR_WRITE,
+
 
       /// <summary>COPY_FILE_ALLOW_DECRYPTED_DESTINATION
       /// <para>An attempt to copy an encrypted file will succeed even if the destination copy cannot be encrypted.</para>
       /// </summary>
-      AllowDecryptedDestination = 8,
+      AllowDecryptedDestination = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_ALLOW_DECRYPTED_DESTINATION,
+
 
       /// <summary>COPY_FILE_COPY_SYMLINK
       /// <para>If the source file is a symbolic link, the destination file is also a symbolic link pointing to the same file that the source symbolic link is pointing to.</para>
       /// </summary>
-      CopySymbolicLink = 2048,
+      CopySymbolicLink = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_COPY_SYMLINK,
+
 
       /// <summary>COPY_FILE_NO_BUFFERING
       /// <para>The copy operation is performed using unbuffered I/O, bypassing system I/O cache resources. Recommended for very large file transfers.</para>
       /// </summary>
-      NoBuffering = 4096
+      NoBuffering = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_NO_BUFFERING
    }
 }
