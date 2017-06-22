@@ -878,7 +878,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (var lastAccessTime = SafeGlobalMemoryBufferHandle.FromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (var lastWriteTime = SafeGlobalMemoryBufferHandle.FromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?)null))
 
-         using (var safeHandle = CreateFileCore(transaction, path, attributes, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, pathFormat))
+         using (var safeHandle = CreateFileCore(transaction, path, attributes, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, false, pathFormat))
          {
             var success = NativeMethods.SetFileTime(safeHandle, creationTime, lastAccessTime, lastWriteTime);
 

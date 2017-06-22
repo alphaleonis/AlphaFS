@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>COPY_FILE_FAIL_IF_EXISTS
       /// <para>The copy operation fails immediately if the target file already exists.</para>
       /// </summary>
-      FailIfExists = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_FAIL_IF_EXISTS,
+      FailIfExists = NativeMethods.COPY_FILE_FLAGS.COPY_FILE_FAIL_IF_EXISTS,
 
 
       /// <summary>COPY_FILE_RESTARTABLE
@@ -46,30 +46,30 @@ namespace Alphaleonis.Win32.Filesystem
       /// </para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Restartable")]
-      Restartable = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_RESTARTABLE,
+      Restartable = NativeMethods.COPY_FILE_FLAGS.COPY_FILE_RESTARTABLE,
 
 
       /// <summary>COPY_FILE_OPEN_SOURCE_FOR_WRITE
       /// <para>The file is copied and the original file is opened for write access.</para>
       /// </summary>
-      OpenSourceForWrite = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_OPEN_SOURCE_FOR_WRITE,
+      OpenSourceForWrite = NativeMethods.COPY_FILE_FLAGS.COPY_FILE_OPEN_SOURCE_FOR_WRITE,
 
 
       /// <summary>COPY_FILE_ALLOW_DECRYPTED_DESTINATION
       /// <para>An attempt to copy an encrypted file will succeed even if the destination copy cannot be encrypted.</para>
       /// </summary>
-      AllowDecryptedDestination = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_ALLOW_DECRYPTED_DESTINATION,
+      AllowDecryptedDestination = NativeMethods.COPY_FILE_FLAGS.COPY_FILE_ALLOW_DECRYPTED_DESTINATION,
 
 
-      /// <summary>COPY_FILE_COPY_SYMLINK
+      /// <summary>COPY_FILE_COPY_SYMLINK, similar to XCOPY /B = Copies the Symbolic Link itself versus the target of the link.
       /// <para>If the source file is a symbolic link, the destination file is also a symbolic link pointing to the same file that the source symbolic link is pointing to.</para>
       /// </summary>
-      CopySymbolicLink = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_COPY_SYMLINK,
+      CopySymbolicLink = NativeMethods.COPY_FILE_FLAGS.COPY_FILE_COPY_SYMLINK,
 
 
       /// <summary>COPY_FILE_NO_BUFFERING
       /// <para>The copy operation is performed using unbuffered I/O, bypassing system I/O cache resources. Recommended for very large file transfers.</para>
       /// </summary>
-      NoBuffering = NativeMethods.COPY_FILE_OPTIONS.COPY_FILE_NO_BUFFERING
+      NoBuffering = NativeMethods.COPY_FILE_FLAGS.COPY_FILE_NO_BUFFERING
    }
 }

@@ -477,7 +477,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       private static SafeFileHandle OpenDirectoryJunction(KernelTransaction transaction, string junctionPath, PathFormat pathFormat)
       {
-         return File.CreateFileCore(transaction, junctionPath, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.OpenReparsePoint, null, FileMode.Open, FileSystemRights.WriteData, FileShare.ReadWrite, false, pathFormat);
+         return File.CreateFileCore(transaction, junctionPath, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.OpenReparsePoint, null, FileMode.Open, FileSystemRights.WriteData, FileShare.ReadWrite, false, false, pathFormat);
       }
    }
 }

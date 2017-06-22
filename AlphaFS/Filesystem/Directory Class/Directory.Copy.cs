@@ -702,22 +702,41 @@ namespace Alphaleonis.Win32.Filesystem
          // A file or folder will be deleted or renamed on Computer startup.
          bool delayUntilReboot;
          bool deleteOnStartup;
+         
 
-
-         // Process paths.
-         File.ValidateAndUpdatePaths(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
+         File.ValidateAndUpdatePathsAndOptions(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
 
 
          // Process Move action options, possible fallback to Copy action.
          if (!isCopy && !deleteOnStartup)
-            ValidateAndUpdateMoveAction(sourcePathLp, destinationPathLp, copyOptions, moveOptions, out copyOptions, out moveOptions, out isCopy, out emulateMove);
+            ValidateAndUpdateCopyMoveAction(sourcePathLp, destinationPathLp, copyOptions, moveOptions, out copyOptions, out moveOptions, out isCopy, out emulateMove);
 
+
+         pathFormat = PathFormat.LongFullPath;
 
          var cmr = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, isCopy, true, preserveDates, emulateMove);
 
 
          if (isCopy)
-            cmr = CopyDeleteCore(cmr, transaction, sourcePathLp, destinationPathLp, preserveDates, emulateMove, copyOptions, progressHandler, userProgressData);
+         {
+            // Copy folder SymbolicLinks.
+            // Cannot be done by CopyFileEx() so emulate this.
+            
+            if (File.HasCopySymbolicLink(copyOptions))
+            {
+               var lvi = File.GetLinkTargetInfoCore(transaction, true, sourcePathLp, true, pathFormat);
+
+               if (null != lvi)
+               {
+                  File.CreateSymbolicLinkCore(transaction, destinationPathLp, lvi.SubstituteName, SymbolicLinkTarget.Directory, pathFormat);
+
+                  cmr.TotalFolders = 1;
+               }
+            }
+
+            else
+               cmr = CopyDeleteCore(cmr, transaction, sourcePathLp, destinationPathLp, preserveDates, emulateMove, copyOptions, progressHandler, userProgressData);
+         }
 
          // Move
          else
@@ -726,7 +745,7 @@ namespace Alphaleonis.Win32.Filesystem
             // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
 
             if (!delayUntilReboot && File.CanOverwrite(moveOptions))
-               DeleteDirectoryCore(transaction, null, destinationPathLp, true, true, true, PathFormat.LongFullPath);
+               DeleteDirectoryCore(transaction, null, destinationPathLp, true, true, true, pathFormat);
 
             // 2017-06-07: A large target directory will probably create a progress-less delay in UI.
             // One way to get around this is to perform the delete in the File.CopyMove method.
@@ -735,13 +754,13 @@ namespace Alphaleonis.Win32.Filesystem
             // Moves a file or directory, including its children.
             // Copies an existing directory, including its children to a new directory.
 
-            cmr = File.CopyMoveCore(cmr, transaction, true, sourcePathLp, destinationPathLp, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, PathFormat.LongFullPath);
+            cmr = File.CopyMoveCore(cmr, transaction, true, sourcePathLp, destinationPathLp, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, pathFormat);
 
 
             // If the move happened on the same drive, we have no knowledge of the number of files/folders.
             // However, we do know that the one folder was moved successfully.
 
-            if (cmr.ErrorCode == Win32Errors.ERROR_SUCCESS)
+            if (cmr.ErrorCode == Win32Errors.NO_ERROR)
                cmr.TotalFolders = 1;
          }
 
@@ -758,6 +777,7 @@ namespace Alphaleonis.Win32.Filesystem
          var dirs = new Queue<string>(items);
 
          dirs.Enqueue(sourcePathLp);
+         
 
          CreateDirectoryCore(transaction, destinationPathLp, null, null, false, PathFormat.LongFullPath);
 
@@ -837,7 +857,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
 
-      private static void ValidateAndUpdateMoveAction(string sourcePathLp, string destinationPathLp, CopyOptions? copyOptions, MoveOptions? moveOptions, out CopyOptions? newCopyOptions, out MoveOptions? newMoveOptions, out bool isCopy, out bool emulateMove)
+      private static void ValidateAndUpdateCopyMoveAction(string sourcePathLp, string destinationPathLp, CopyOptions? copyOptions, MoveOptions? moveOptions, out CopyOptions? newCopyOptions, out MoveOptions? newMoveOptions, out bool isCopy, out bool emulateMove)
       {
          // Determine if a Move action or Copy action-fallback is possible.
          isCopy = emulateMove = false;

@@ -46,6 +46,17 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
+      public void AlphaFS_Directory_Copy_CopyOptions_CopySymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink_LocalAndNetwork_Success()
+      {
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
+         Directory_Copy_CopyOptions_CopySymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(false);
+         Directory_Copy_CopyOptions_CopySymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(true);
+      }
+
+
+      [TestMethod]
       public void AlphaFS_Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
          Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
@@ -220,6 +231,51 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(sourceTotal, copyResult.TotalFolders + copyResult.TotalFiles, "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, copyResult.TotalFiles, "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, copyResult.TotalBytes, "The total file size does not match.");
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_Copy_CopyOptions_CopySymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         {
+            var sourceFolderLink = System.IO.Path.Combine(rootDir.Directory.FullName, "SourceDirectoryLink-ToOriginalDirectory");
+
+            var dirInfo = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "OriginalDirectory"));
+            dirInfo.Create();
+
+            Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
+            Console.WriteLine("Input Directory Link: [{0}]", sourceFolderLink);
+
+            Alphaleonis.Win32.Filesystem.Directory.CreateSymbolicLink(sourceFolderLink, dirInfo.FullName);
+
+
+            var destinationFolderLink = System.IO.Path.Combine(rootDir.Directory.FullName, "DestinationDirectoryLink-ToOriginalDirectory");
+
+            Alphaleonis.Win32.Filesystem.Directory.Copy(sourceFolderLink, destinationFolderLink, Alphaleonis.Win32.Filesystem.CopyOptions.CopySymbolicLink);
+
+
+            var lviSrc = Alphaleonis.Win32.Filesystem.Directory.GetLinkTargetInfo(sourceFolderLink);
+            var lviDst = Alphaleonis.Win32.Filesystem.Directory.GetLinkTargetInfo(destinationFolderLink);
+
+            Console.WriteLine("\n\tLink Info of source Link:");
+            UnitTestConstants.Dump(lviSrc, -14);
+
+            Console.WriteLine("\n\tLink Info of copied Link:");
+            UnitTestConstants.Dump(lviDst, -14);
+
+
+            Assert.AreEqual(lviSrc.PrintName, lviDst.PrintName);
+            Assert.AreEqual(lviSrc.SubstituteName, lviDst.SubstituteName);
          }
 
          Console.WriteLine();

@@ -244,6 +244,14 @@ namespace Alphaleonis.Win32.Filesystem
          if (options != GetFullPathOptions.None)
             path = ApplyFullPathOptions(path, options);
 
+
+         if (path.StartsWith(DosDeviceUncPrefix, StringComparison.OrdinalIgnoreCase))
+            return UncPrefix + path.Substring(DosDeviceUncPrefix.Length);
+
+         if (path.StartsWith(NonInterpretedPathPrefix, StringComparison.OrdinalIgnoreCase))
+            return path.Substring(NonInterpretedPathPrefix.Length);
+
+
          return path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase)
                 || path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase)
                 || !path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase)

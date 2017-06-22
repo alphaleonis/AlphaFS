@@ -64,9 +64,9 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var fileLink = System.IO.Path.Combine(rootDir.Directory.FullName, "FileLink-ToDestinationFile.txt");
+            var fileLink = System.IO.Path.Combine(rootDir.Directory.FullName, "FileLink-ToOriginalFile.txt");
 
-            var fileInfo = new System.IO.FileInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "DestinationFile.txt"));
+            var fileInfo = new System.IO.FileInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "OriginalFile.txt"));
             using (fileInfo.CreateText()) {}
 
             Console.WriteLine("\nInput File Path: [{0}]", fileInfo.FullName);

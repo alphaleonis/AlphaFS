@@ -25,7 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      public enum MOVE_FILE_OPTIONS
+      public enum MOVE_FILE_FLAGS
       {
          /// <summary>No MoveOptions used, this fails when the file name already exists.</summary>
          None = 0,
@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>MOVE_FILE_COPY_ALLOWED
          /// <para>If the file is to be moved to a different volume, the function simulates the move by using the CopyFile and DeleteFile functions.</para>
-         /// <para>This value cannot be used with <see cref="MOVE_FILE_OPTIONS.MOVE_FILE_DELAY_UNTIL_REBOOT"/>.</para>
+         /// <para>This value cannot be used with <see cref="MOVE_FILE_FLAGS.MOVE_FILE_DELAY_UNTIL_REBOOT"/>.</para>
          /// </summary>
          MOVE_FILE_COPY_ALLOWED = 2,
 
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// Consequently, this parameter enables the function to delete paging files from previous startups.
          /// This value can only be used if the process is in the context of a user who belongs to the administrators group or the LocalSystem account.
          /// </para>
-         /// <para>This value cannot be used with <see cref="MOVE_FILE_OPTIONS.MOVE_FILE_COPY_ALLOWED"/>.</para>
+         /// <para>This value cannot be used with <see cref="MOVE_FILE_FLAGS.MOVE_FILE_COPY_ALLOWED"/>.</para>
          /// </summary>
          MOVE_FILE_DELAY_UNTIL_REBOOT = 4,
 
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// Setting this value guarantees that a move performed as a copy and delete operation is flushed to disk before the function returns.
          /// The flush occurs at the end of the copy operation.
          /// </para>
-         /// <para>This value has no effect if <see cref="MOVE_FILE_OPTIONS.MOVE_FILE_DELAY_UNTIL_REBOOT"/> is set.</para>
+         /// <para>This value has no effect if <see cref="MOVE_FILE_FLAGS.MOVE_FILE_DELAY_UNTIL_REBOOT"/> is set.</para>
          /// </summary>
          MOVE_FILE_WRITE_THROUGH = 8,
 

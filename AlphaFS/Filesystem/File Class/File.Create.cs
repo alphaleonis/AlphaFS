@@ -320,13 +320,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            safeHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, true, pathFormat);
+            safeHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, true, false, pathFormat);
 
             return new FileStream(safeHandle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
          }
          catch
          {
-            if (safeHandle != null)
+            if (null != safeHandle)
                safeHandle.Dispose();
 
             throw;
@@ -350,10 +350,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileSystemRights">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file or directory.</param>
       /// <param name="fileShare">A <see cref="FileShare"/> constant that determines how the file or directory will be shared by processes.</param>
       /// <param name="checkPath">.</param>
-      /// <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>      
+      /// <param name="continueOnException">
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      /// <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      internal static SafeFileHandle CreateFileCore(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, PathFormat pathFormat)
+      internal static SafeFileHandle CreateFileCore(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, bool continueOnException, PathFormat pathFormat)
       {
          if (checkPath && pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);
@@ -403,20 +407,24 @@ namespace Alphaleonis.Win32.Filesystem
                ? NativeMethods.CreateFile(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero)
                : NativeMethods.CreateFileTransacted(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero, transaction.SafeHandle, IntPtr.Zero, IntPtr.Zero);
 
+
             var lastError = Marshal.GetLastWin32Error();
 
             if (handle.IsInvalid)
             {
                handle.Close();
-               NativeError.ThrowException(lastError, pathLp);
+               handle = null;
+
+               if (!continueOnException)
+                  NativeError.ThrowException(lastError, pathLp);
             }
 
-
-            if (isAppend)
+            else if (isAppend)
             {
                var stream = new FileStream(handle, FileAccess.Write, NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
                stream.Seek(0, SeekOrigin.End);
             }
+
 
             return handle;
          }

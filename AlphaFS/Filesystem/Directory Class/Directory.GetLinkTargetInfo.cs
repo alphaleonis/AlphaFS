@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path)
       {
-         return File.GetLinkTargetInfoCore(null, true, path, PathFormat.RelativePath);
+         return File.GetLinkTargetInfoCore(null, true, path, false, PathFormat.RelativePath);
       }
 
 
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path, PathFormat pathFormat)
       {
-         return File.GetLinkTargetInfoCore(null, true, path, pathFormat);
+         return File.GetLinkTargetInfoCore(null, true, path, false, pathFormat);
       }
       
 
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetLinkTargetInfoCore(transaction, true, path, PathFormat.RelativePath);
+         return File.GetLinkTargetInfoCore(transaction, true, path, false, PathFormat.RelativePath);
       }
 
 
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetLinkTargetInfoCore(transaction, true, path, pathFormat);
+         return File.GetLinkTargetInfoCore(transaction, true, path, false, pathFormat);
       }
    }
 }

@@ -25,7 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      public enum COPY_FILE_OPTIONS
+      public enum COPY_FILE_FLAGS
       {
          /// <summary>COPY_FILE_FAIL_IF_EXISTS
          /// <para>The copy operation fails immediately if the target file already exists.</para>

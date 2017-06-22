@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path)
       {
-         return GetLinkTargetInfoCore(null, false, path, PathFormat.RelativePath);
+         return GetLinkTargetInfoCore(null, false, path, false, PathFormat.RelativePath);
       }
 
 
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoCore(null, false, path, pathFormat);
+         return GetLinkTargetInfoCore(null, false, path, false, pathFormat);
       }
       
 
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path)
       {
-         return GetLinkTargetInfoCore(transaction, false, path, PathFormat.RelativePath);
+         return GetLinkTargetInfoCore(transaction, false, path, false, PathFormat.RelativePath);
       }
 
 
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoCore(transaction, false, path, pathFormat);
+         return GetLinkTargetInfoCore(transaction, false, path, false, pathFormat);
       }
 
 
@@ -92,13 +92,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="isFolder">Specifies that <paramref name="reparsePath"/> is a file or directory.</param>
       /// <param name="reparsePath">The path to the reparse point.</param>
+      /// <param name="continueOnException">
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
       ///   or mount point pointed to by <paramref name="reparsePath"/>.
       /// </returns>
       [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfoCore(KernelTransaction transaction, bool isFolder, string reparsePath, PathFormat pathFormat)
+      internal static LinkTargetInfo GetLinkTargetInfoCore(KernelTransaction transaction, bool isFolder, string reparsePath, bool continueOnException, PathFormat pathFormat)
       {
          var eAttributes = ExtendedFileAttributes.OpenReparsePoint;
 
@@ -106,8 +110,8 @@ namespace Alphaleonis.Win32.Filesystem
             eAttributes |= ExtendedFileAttributes.BackupSemantics;
 
 
-         using (var safeHandle = CreateFileCore(transaction, reparsePath, eAttributes, null, FileMode.Open, 0, FileShare.ReadWrite, pathFormat != PathFormat.LongFullPath, pathFormat))
-            return Device.GetLinkTargetInfo(safeHandle, reparsePath);
+         using (var safeHandle = CreateFileCore(transaction, reparsePath, eAttributes, null, FileMode.Open, 0, FileShare.ReadWrite, pathFormat != PathFormat.LongFullPath, continueOnException, pathFormat))
+            return null != safeHandle ? Device.GetLinkTargetInfo(safeHandle, reparsePath) : null;
       }
    }
 }

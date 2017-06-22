@@ -7,6 +7,7 @@ Version vNext  (xxxx-xx-xx)
 ### Bugs Fixed
 
 - Issue #268: There are multiple warnings when building the documentation.
+- Issue #292: `CopyOptions.CopySymbolicLink` not working in 2.1.2  (Thx v2kiran)
 - Issue #325: `DeleteEmptySubdirectories` (with `recursive=true`) throws `System.IO.DirectoryNotFoundException`  (Thx kryvoplias)
 - Issue #328: Several instances of `ArgumentException.ParamName` not set/used correctly  (Thx elgonzo)
 - Issue #330: Correct the parameter order for Privilege class constructors using the `ArgumentNullException`.
@@ -34,6 +35,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #345: `AlreadyExistsException` should only throw message from 1 error.
 - Issue #348: Implement method `Directory.GetLinkTargetInfo`
 - Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
+- Issue #351: Enable copying of Directory symbolic links.
 
 Version 2.1.3 (2017-06-05)
 -------------

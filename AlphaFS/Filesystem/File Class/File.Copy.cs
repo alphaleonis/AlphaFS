@@ -760,8 +760,9 @@ namespace Alphaleonis.Win32.Filesystem
          // A file or folder will be deleted or renamed on Computer startup.
          bool delayUntilReboot;
          bool deleteOnStartup;
+         
 
-         ValidateAndUpdatePaths(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
+         ValidateAndUpdatePathsAndOptions(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
 
 
          var isMove = !isCopy;
@@ -919,8 +920,8 @@ namespace Alphaleonis.Win32.Filesystem
 
                      if (!isFolder)
                      {
-                        using (var safeHandle = CreateFileCore(transaction, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, pathFormat))
-                           if (null != safeHandle && safeHandle.IsInvalid)
+                        using (var safeHandle = CreateFileCore(transaction, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, false, pathFormat))
+                           if (null != safeHandle)
                               fileNameLp = sourcePathLp;
                      }
 
@@ -1022,6 +1023,13 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      /// <summary>Checks if the <see cref="CopyOptions.CopySymbolicLink"/> flag is specified.</summary>
+      internal static bool HasCopySymbolicLink(CopyOptions? copyOptions)
+      {
+         return IsNotNull(copyOptions) && (copyOptions & CopyOptions.CopySymbolicLink) != 0;
+      }
+
+
       /// <summary>Checks if the <see cref="MoveOptions.DelayUntilReboot"/> flag is specified.</summary>
       private static bool HasDelayUntilReboot(MoveOptions? moveOptions)
       {
@@ -1087,7 +1095,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      internal static void ValidateAndUpdatePaths(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, PathFormat pathFormat, out string sourcePathLp, out string destinationPathLp, out bool isCopy, out bool emulateMove, out bool delayUntilReboot, out bool deleteOnStartup)
+      internal static void ValidateAndUpdatePathsAndOptions(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, PathFormat pathFormat,
+         out string sourcePathLp, out string destinationPathLp, out bool isCopy, out bool emulateMove, out bool delayUntilReboot, out bool deleteOnStartup)
       {
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
          // Do not use StringComparison.OrdinalIgnoreCase to allow renaming a folder with different casing.
@@ -1108,7 +1117,7 @@ namespace Alphaleonis.Win32.Filesystem
          // When destinationPath is null, the file or folder needs to be removed on Computer startup.
          deleteOnStartup = delayUntilReboot && null == destinationPath;
 
-
+         
          if (pathFormat != PathFormat.LongFullPath)
          {
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.

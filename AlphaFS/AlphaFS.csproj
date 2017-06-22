@@ -392,8 +392,8 @@
     <Compile Include="Filesystem\Native Methods\NativeMethods.BackupStreams.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.Utilities.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.PathManagement.cs" />
-    <Compile Include="Filesystem\Native Structures And Enumerations\MOVE_FILE_OPTIONS.cs" />
-    <Compile Include="Filesystem\Native Structures And Enumerations\COPY_FILE_OPTIONS.cs" />
+    <Compile Include="Filesystem\Native Structures And Enumerations\MOVE_FILE_FLAGS.cs" />
+    <Compile Include="Filesystem\Native Structures And Enumerations\COPY_FILE_FLAGS.cs" />
     <Compile Include="Filesystem\Native Structures And Enumerations\FILE_BASIC_INFO.cs" />
     <Compile Include="Filesystem\Native Structures And Enumerations\REPARSE_DATA_BUFFER.cs" />
     <Compile Include="Filesystem\Native Structures And Enumerations\WIN32_FIND_STREAM_DATA.cs" />
