@@ -257,6 +257,7 @@
     <Compile Include="Filesystem\Enumerations\EncryptedFileRawMode.cs" />
     <Compile Include="Filesystem\Enumerations\STREAM_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
+    <Compile Include="Filesystem\Exceptions\NotSameDeviceException.cs" />
     <Compile Include="Filesystem\Exceptions\AlreadyExistsException.cs" />
     <Compile Include="Filesystem\Exceptions\DeviceNotReadyException.cs" />
     <Compile Include="Filesystem\Exceptions\DirectoryReadOnlyException.cs" />
@@ -528,7 +529,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

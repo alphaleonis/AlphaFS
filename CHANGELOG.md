@@ -1,6 +1,12 @@
 ﻿Changelog
 =========
 
+Version 2.1.4 (2017-XX-XX)
+-------------
+
+### Enhancements:
+- Issue 355: Methods throwing an IOException due to error code 17 (ERROR_NOT_SAME_DEVICE) now throw a specific exception (NotSameDeviceException)
+
 Version 2.1.3  (2017-06-05)
 -------------
 
@@ -33,10 +39,10 @@ Version 2.1  (2016-09-29)
 ### New Features/Enhancements
 
 - Issue #3: Added methods for backing up and restoring encrypted files:
-	* `File.ImportEncryptedFileRaw`
-	* `File.ExportEncryptedFileRaw`
-	* `Directory.ImportEncryptedDirectoryRaw`
-	* `Directory.ExportEncryptedDirectoryRaw`
+   * `File.ImportEncryptedFileRaw`
+   * `File.ExportEncryptedFileRaw`
+   * `Directory.ImportEncryptedDirectoryRaw`
+   * `Directory.ExportEncryptedDirectoryRaw`
 - Issue #2  : Unit tests for methods: `File.OpenRead()`, `File.OpenText()` and `File.Replace()` are missing.
 - Issue #101: The release now also contains a build targetting .NET 4.5.2.
 - Issue #109: Add overloaded methods for `Host.EnumerateShares()`.
@@ -160,17 +166,17 @@ Version 2.0  (2015-01-16)
 * New: Supports enumerating connected PnP devices (AlphaFS.Filesystem.Device() / AlphaFS.Filesystem.DeviceInfo() classes).
 * New: Supports extracting icons from files and folders (AlphaFS.Filesystem.Shell32Info() class).
 * New: Supports PathFormat parameter for numerous methods to control path normalization. This speeds up things internally (less string processing and GetFullPath() calls) and also enables working with files and folders with a trailing dot or space:
-	* `RelativePath` (slow): (default) Path will be checked and resolved to an absolute path. Unicode prefix is applied.
-	* `FullPath`  (fast): Path is an absolute path. Unicode prefix is applied.
-	* `LongFullPath`  (fastest): Path is already an absolute path with Unicode prefix. Use as is.
+   * `RelativePath` (slow): (default) Path will be checked and resolved to an absolute path. Unicode prefix is applied.
+   * `FullPath`  (fast): Path is an absolute path. Unicode prefix is applied.
+   * `LongFullPath`  (fastest): Path is already an absolute path with Unicode prefix. Use as is.
 * Mod: Enabled KernelTransaction parameter for all Win32 API functions that support it.
 * Mod: Added public read only properties to class FileSystemInfo(). Available for: DirectoryInfo() / FileInfo():
-	* EntryInfo	 : Instance of the FileSystemEntryInfo() class.
-	* Transaction  : Represents the KernelTransaction that was passed to the constructor.	
+   * EntryInfo	 : Instance of the FileSystemEntryInfo() class.
+   * Transaction  : Represents the KernelTransaction that was passed to the constructor.	
 * Mod: Added more entries to enum ReparsePointTag.
 * Mod: Removed method Directory.CountFiles() and added method Directory.CountFileSystemObjects().	
 * Mod: Removed method Directory.GetFullFileSystemEntries() and added method Directory.EnumerateFileSystemEntryInfos().
-	* Note: This new method currently does not support DirectoryEnumerationExceptionHandler, this will probably be added in a future release.
+   * Note: This new method currently does not support DirectoryEnumerationExceptionHandler, this will probably be added in a future release.
 * Mod: Renamed method Directory.GetFileIdBothDirectoryInfo() to Directory.EnumerateFileIdBothDirectoryInfo().
 * Mod: Method Directory.CreateDirectory() signature change: Using template directory. Ability for NTFS-compressed folders added.
 * Mod: Method Directory.GetProperties() signature change.
