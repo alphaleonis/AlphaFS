@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -118,6 +118,8 @@ namespace Alphaleonis.Win32
 
             //#endregion Reparse Point
 
+            case Win32Errors.ERROR_NOT_SAME_DEVICE:
+               throw new NotSameDeviceException(errorMessage);
 
             #region Transactional
 
