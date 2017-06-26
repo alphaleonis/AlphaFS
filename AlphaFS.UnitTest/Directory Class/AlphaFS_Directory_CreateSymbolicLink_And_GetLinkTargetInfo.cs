@@ -70,7 +70,7 @@ namespace AlphaFS.UnitTest
             dirInfo.Create();
 
             Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
-            Console.WriteLine("Input Folder Link   : [{0}]", folderLink);
+            Console.WriteLine("Input Directory Link: [{0}]", folderLink);
 
 
             Alphaleonis.Win32.Filesystem.Directory.CreateSymbolicLink(folderLink, dirInfo.FullName);
@@ -122,8 +122,8 @@ namespace AlphaFS.UnitTest
             var fileInfo = new System.IO.FileInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "OriginalFile.txt"));
             using (fileInfo.Create()) {}
 
-            Console.WriteLine("\nInput File Path  : [{0}]", fileInfo.FullName);
-            Console.WriteLine("Input Folder Link: [{0}]", folderLink);
+            Console.WriteLine("\nInput File Path     : [{0}]", fileInfo.FullName);
+            Console.WriteLine("Input Directory Link: [{0}]", folderLink);
 
 
             var gotException = false;

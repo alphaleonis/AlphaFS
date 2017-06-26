@@ -211,12 +211,12 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomFileFullPath;
+            var folder = rootDir.RandomDirectoryFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
-            var pathExpected = rootDir.RandomFileFullPath + ".txt";
-            var pathActual = rootDir.RandomFileFullPath + ".txt";
+            var pathExpected = rootDir.RandomDirectoryFullPath;
+            var pathActual = rootDir.RandomDirectoryFullPath;
 
             var expectedFileSecurity = new System.Security.AccessControl.DirectorySecurity();
             expectedFileSecurity.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.AccessControlType.Allow));
@@ -253,7 +253,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath + ".txt";
+            var file = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput File Path: [{0}]", file);
 
             using (System.IO.File.Create(file)) { }

@@ -99,7 +99,7 @@ namespace AlphaFS.UnitTest
             // We can not compare ChangeTime against .NET because it does not exist.
             // Creating a file and renaming it triggers ChangeTime, so test for that.
 
-            file = rootDir.RandomFileFullPath + ".txt";
+            file = rootDir.RandomFileFullPath;
             if (isNetwork) file = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(file);
             Console.WriteLine("Input File Path: [{0}]\n", file);
 

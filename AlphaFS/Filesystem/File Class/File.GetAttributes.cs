@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             {
-               var handle = FileSystemInfo.FindFirstFileCore(transaction, pathLp, NativeMethods.FindexInfoLevel, NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch, NativeMethods.LargeCache, out lastError, out win32FindData);
+               var handle = FileSystemInfo.FindFirstFileCore(transaction, pathLp, NativeMethods.FindexInfoLevel, NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch, NativeMethods.UseLargeCache, out lastError, out win32FindData);
 
                if (null == handle)
                {

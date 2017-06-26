@@ -61,7 +61,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath + ".txt";
+            var file = rootDir.RandomFileFullPath;
 
 #if NET35
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
@@ -101,12 +101,12 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath + ".txt";
+            var file = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
-            var pathExpected = rootDir.RandomFileFullPath + ".txt";
-            var pathActual = rootDir.RandomFileFullPath + ".txt";
+            var pathExpected = rootDir.RandomFileFullPath;
+            var pathActual = rootDir.RandomFileFullPath;
 
             var expectedFileSecurity = new System.Security.AccessControl.FileSecurity();
             expectedFileSecurity.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.AccessControlType.Allow));

@@ -115,7 +115,7 @@ namespace AlphaFS.UnitTest
             dirInfo.Create();
 
             Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
-            Console.WriteLine("Input Folder Link   : [{0}]", folderLink);
+            Console.WriteLine("Input Directory Link: [{0}]", folderLink);
 
 
             var gotException = false;

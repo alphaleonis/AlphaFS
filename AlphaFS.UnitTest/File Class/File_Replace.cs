@@ -58,9 +58,9 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var fileSrc = rootDir.RandomFileFullPath + "-" + UnitTestConstants.TextHelloWorld + ".txt";
-            var fileDst = rootDir.RandomFileFullPath + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
-            var fileBackup = rootDir.RandomFileFullPath + "-Backup.txt";
+            var fileSrc = rootDir.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextHelloWorld + ".txt";
+            var fileDst = rootDir.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
+            var fileBackup = rootDir.RandomFileFullPathNoExtension + "-Backup.txt";
             Console.WriteLine("\nInput File Path: [{0}]", fileSrc);
 
 
@@ -98,9 +98,9 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var fileSrc = rootDir.RandomFileFullPath + "-" + UnitTestConstants.TextHelloWorld + ".txt";
-            var fileDst = rootDir.RandomFileFullPath + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
-            var fileBackup = rootDir.RandomFileFullPath + "-Backup.txt";
+            var fileSrc = rootDir.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextHelloWorld + ".txt";
+            var fileDst = rootDir.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
+            var fileBackup = rootDir.RandomFileFullPathNoExtension + "-Backup.txt";
             Console.WriteLine("\nInput File Path: [{0}]", fileSrc);
 
 

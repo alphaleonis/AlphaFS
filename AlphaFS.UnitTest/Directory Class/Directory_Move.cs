@@ -30,10 +30,10 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_Move_DifferentVolume_EmulateUsingCopyDelete_LocalAndNetwork_Success()
+      public void Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete_LocalAndNetwork_Success()
       {
-         Directory_Move_DifferentVolume_EmulateUsingCopyDelete(false);
-         Directory_Move_DifferentVolume_EmulateUsingCopyDelete(true);
+         Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete(false);
+         Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete(true);
       }
 
 
@@ -134,7 +134,7 @@ namespace AlphaFS.UnitTest
 
 
 
-      private void Directory_Move_DifferentVolume_EmulateUsingCopyDelete(bool isNetwork)
+      private void Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -554,7 +554,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = rootDir.RandomFileFullPath;
+            var folderSrc = rootDir.RandomDirectoryFullPath;
             Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc);
 
 

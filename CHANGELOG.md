@@ -38,6 +38,8 @@ Version vNext  (xxxx-xx-xx)
 - Issue #351: Enable copying of Directory symbolic links.
 - Issue #352: Ignore `NonInterpretedPathPrefix` in methods: `Path.GetFullPathCore` and `Path.GetLongPathCore`  (Thx besoft)
 - Issue #353: Modify method `Directory.GetFileSystemEntryInfo` to return `FileSystemEntryInfo` structure for directories supporting also root directories, e.g., `C:\`  (Thx besoft)
+- Issue #354: Add methods `File.GetFileId` and `Directory.GetFileId` to return a unique file identifier.  (Thx besoft)
+- Issue #357: Added new Windows 10 property: `FILE_DAX_VOLUME` to `VolumeInfo` class.
 
 Version 2.1.3 (2017-06-05)
 -------------

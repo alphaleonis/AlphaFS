@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
-            safeFileHandle = CreateFileCore(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, PathFormat.LongFullPath);
+            safeFileHandle = CreateFileCore(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.ReadOnly, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, PathFormat.LongFullPath);
          }
 
 
@@ -181,7 +181,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                NativeMethods.FILE_BASIC_INFO fbi;
 
-               var success = NativeMethods.GetFileInformationByHandleEx_FileBasicInfo(safeFileHandle, NativeMethods.FileInfoByHandleClass.FileBasicInfo, out fbi, (uint) safeBuffer.Capacity);
+               var success = NativeMethods.GetFileInformationByHandleEx_FileBasicInfo(safeFileHandle, NativeMethods.FILE_INFO_BY_HANDLE_CLASS.FILE_BASIC_INFO, out fbi, (uint) safeBuffer.Capacity);
                
                var lastError = Marshal.GetLastWin32Error();
                if (!success)

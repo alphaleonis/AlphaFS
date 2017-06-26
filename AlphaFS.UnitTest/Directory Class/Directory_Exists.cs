@@ -109,7 +109,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomFileFullPath;
+            var folder = rootDir.RandomDirectoryFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
             Assert.AreEqual(System.IO.Directory.Exists(folder), Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The results are not equal, but were expected to be.");

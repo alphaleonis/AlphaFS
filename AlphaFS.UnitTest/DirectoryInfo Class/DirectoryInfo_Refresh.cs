@@ -51,7 +51,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomFileFullPath;
+            var folder = rootDir.RandomDirectoryFullPath;
             var diSysIo = new System.IO.DirectoryInfo(folder + "-System.IO");
             var diAlphaFS = new Alphaleonis.Win32.Filesystem.DirectoryInfo(folder + "-AlphaFS");
 

@@ -143,11 +143,19 @@
     <Compile Include="..\AlphaFS\AssemblyVersionInfo.cs">
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
-    <Compile Include="Classes\AlphaFS_FileSystemEntryInfo.cs" />
-    <Compile Include="Crc\AlphaFS_Class_Crc.cs" />
-    <Compile Include="Device Class\AlphaFS_DeviceInfo_EnumerateDevices.cs" />
-    <Compile Include="Classes\AlphaFS_BackupFileStream.cs" />
-    <Compile Include="Device Class\AlphaFS_DeviceInfo_InitializeInstance.cs" />
+    <Compile Include="FileIdInfo\AlphaFS_Directory_GetFileId_LocalAndNetwork_Success.cs" />
+    <Compile Include="FileIdInfo\AlphaFS_File_GetFileId_LocalAndNetwork_Success.cs" />
+    <Compile Include="ByHandleFileInfo Class\AlphaFS_Directory_GetFileInfo_LocalAndNetwork_Success.cs" />
+    <Compile Include="CRC Class\AlphaFS_Crc64Iso_StaticDefaultSeedAndPolynomialWithShortAsciiString2.cs" />
+    <Compile Include="CRC Class\AlphaFS_Crc64Iso_StaticDefaultSeedAndPolynomialWithShortAsciiString.cs" />
+    <Compile Include="CRC Class\AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString2.cs" />
+    <Compile Include="CRC Class\AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString.cs" />
+    <Compile Include="ByHandleFileInfo Class\AlphaFS_File_GetFileInfoByHandle_LocalAndNetwork_Success.cs" />
+    <Compile Include="FileSystemEntryInfo Class\AlphaFS_Directory_GetFileSystemEntryInfo_LocalAndNetwork_Success.cs" />
+    <Compile Include="FileSystemEntryInfo Class\AlphaFS_File_GetFileSystemEntryInfo_LocalAndNetwork_Success.cs" />
+    <Compile Include="DeviceInfo Class\AlphaFS_Device_EnumerateDevices_Local_Success.cs" />
+    <Compile Include="BackupFileStream Class\AlphaFS_BackupFileStream_InitializeInstance_LocalAndNetwork_Success.cs" />
+    <Compile Include="DeviceInfo Class\AlphaFS_DeviceInfo_InitializeInstance_LocalAndNetwork_Success.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Compress_Decompress.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Encryption.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_IsEmpty.cs" />
@@ -175,6 +183,7 @@
     <Compile Include="DirectoryInfo Class\DirectoryInfo_MoveTo.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo_Attributes.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo_Refresh.cs" />
+    <Compile Include="DriveInfo Class\DriveInfo_InitializeInstance_LocalAndNetwork_Success.cs" />
     <Compile Include="File Class\AlphaFS_File_GetHash.cs" />
     <Compile Include="File Class\File_CreateText.cs" />
     <Compile Include="File Class\File_OpenWrite.cs" />
@@ -199,9 +208,9 @@
     <Compile Include="File Class\File_Exists.cs" />
     <Compile Include="File Class\File_SetAccessControl.cs" />
     <Compile Include="File Class\File_GetAccessControl.cs" />
-    <Compile Include="FileInfo Class\FileInfo_Attributes.cs" />
-    <Compile Include="FileInfo Class\FileInfo_InitializeInstance.cs" />
-    <Compile Include="FileInfo Class\FileInfo_Refresh.cs" />
+    <Compile Include="FileInfo Class\FileInfo_Attributes_LocalAndNetwork_Success.cs" />
+    <Compile Include="FileInfo Class\FileInfo_InitializeInstance_ExistingFile_LocalAndNetwork_Success.cs" />
+    <Compile Include="FileInfo Class\FileInfo_Refresh_LocalAndNetwork_Success.cs" />
     <Compile Include="Host Class\AlphaFS_Host_EnumerateDomainDfsRoot.cs" />
     <Compile Include="Host Class\AlphaFS_Host_EnumerateDfsRoot.cs" />
     <Compile Include="Host Class\AlphaFS_Host_EnumerateDfsLinks.cs" />
@@ -214,9 +223,10 @@
     <Compile Include="Host Class\AlphaFS_Host_EnumerateOpenResources.cs" />
     <Compile Include="Host Class\AlphaFS_Host_EnumerateOpenConnections.cs" />
     <Compile Include="Host Class\AlphaFS_Host_EnumerateShares.cs" />
-    <Compile Include="Classes\ClassesTest.cs" />
+    <Compile Include="DFS Class\AlphaFS_Network_DfsXxx.cs" />
     <Compile Include="Directory Class\Directory_CreateDirectory_And_Delete.cs" />
     <Compile Include="Directory Class\DirectoryTest.cs" />
+    <Compile Include="OperatingSystem Class\AlphaFS_BackupFileStream_InitializeInstance_LocalAndNetwork_Success.cs" />
     <Compile Include="Path Class\Path_GetFullPath.cs" />
     <Compile Include="Path Class\Path_IsPathRooted.cs" />
     <Compile Include="Path Class\Path_GetExtension.cs" />
@@ -254,6 +264,7 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

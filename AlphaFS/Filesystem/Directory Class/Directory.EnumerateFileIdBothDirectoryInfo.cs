@@ -27,6 +27,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
+using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -185,7 +186,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                while (true)
                {
-                  var success = NativeMethods.GetFileInformationByHandleEx(safeFileHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, (uint) safeBuffer.Capacity);
+                  var success = NativeMethods.GetFileInformationByHandleEx(safeFileHandle, NativeMethods.FILE_INFO_BY_HANDLE_CLASS.FILE_ID_BOTH_DIR_INFO, safeBuffer, (uint) safeBuffer.Capacity);
 
                   var lastError = Marshal.GetLastWin32Error();
                   if (!success)
@@ -211,17 +212,26 @@ namespace Alphaleonis.Win32.Filesystem
 
                   var offset = 0;
                   NativeMethods.FILE_ID_BOTH_DIR_INFO fibdi;
+
                   do
                   {
                      fibdi = safeBuffer.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>(offset);
-                     var fileName =
-                        safeBuffer.PtrToStringUni(offset + fileNameOffset, (int) (fibdi.FileNameLength / 2));
 
-                     if (!fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.InvariantCulture) &&
-                         !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.InvariantCulture))
-                        yield return new FileIdBothDirectoryInfo(fibdi, fileName);
+                     var fileName = safeBuffer.PtrToStringUni(offset + fileNameOffset, (int) (fibdi.FileNameLength / UnicodeEncoding.CharSize));
 
                      offset += fibdi.NextEntryOffset;
+
+
+                     if (File.IsDirectory(fibdi.FileAttributes) &&
+                         (fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.Ordinal) ||
+                          fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.Ordinal)))
+                        continue;
+
+
+                     yield return new FileIdBothDirectoryInfo(fibdi, fileName);
+
+
+                     //offset += fibdi.NextEntryOffset;
 
                   } while (fibdi.NextEntryOffset != 0);
                }                           

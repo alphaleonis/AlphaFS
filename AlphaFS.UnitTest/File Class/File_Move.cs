@@ -122,7 +122,7 @@ namespace AlphaFS.UnitTest
             // Min: 1 byte, Max: 10485760 = 10 MB.
             var fileLength = new Random().Next(1, 10485760);
             var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName, fileLength);
-            var fileCopy = rootDir.RandomFileFullPath + ".txt";
+            var fileCopy = rootDir.RandomFileFullPath;
             Console.WriteLine("\nSource File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
 
 
@@ -171,7 +171,7 @@ namespace AlphaFS.UnitTest
             // Min: 1 byte, Max: 10485760 = 10 MB.
             var fileLength = new Random().Next(1, 10485760);
             var src = UnitTestConstants.CreateFile(rootDir.Directory.FullName, fileLength).FullName;
-            var dst = rootDir.RandomFileFullPath + ".txt";
+            var dst = rootDir.RandomFileFullPath;
 
 
             if (isNetwork)
@@ -211,7 +211,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-            var fileCopy = rootDir.RandomFileFullPath + ".txt";
+            var fileCopy = rootDir.RandomFileFullPath;
             Console.WriteLine("\nSource File Path: [{0}]", fileSource);
 
             // Copy it.
@@ -253,7 +253,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-            var fileCopy = rootDir.RandomFileFullPath + ".txt";
+            var fileCopy = rootDir.RandomFileFullPath;
             Console.WriteLine("\nSource File Path: [{0}]", fileSource);
 
             System.IO.File.Copy(fileSource.FullName, fileCopy);

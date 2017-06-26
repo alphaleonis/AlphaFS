@@ -592,7 +592,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      internal static SafeFindFileHandle FindFirstFileCore(KernelTransaction transaction, string pathLp, NativeMethods.FINDEX_INFO_LEVELS infoLevel, NativeMethods.FINDEX_SEARCH_OPS searchOption, NativeMethods.FIND_FIRST_EX_AdditionalFlags additionalFlags, out int lastError, out NativeMethods.WIN32_FIND_DATA win32FindData)
+      internal static SafeFindFileHandle FindFirstFileCore(KernelTransaction transaction, string pathLp, NativeMethods.FINDEX_INFO_LEVELS infoLevel, NativeMethods.FINDEX_SEARCH_OPS searchOption, NativeMethods.FIND_FIRST_EX_FLAGS additionalFlags, out int lastError, out NativeMethods.WIN32_FIND_DATA win32FindData)
       {
          var handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 

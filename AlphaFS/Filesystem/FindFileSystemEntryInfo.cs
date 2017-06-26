@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) != 0 && NativeMethods.IsAtLeastWindows7 ? NativeMethods.FINDEX_INFO_LEVELS.Basic : NativeMethods.FindexInfoLevel;
-         LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 && NativeMethods.IsAtLeastWindows7 ? NativeMethods.FIND_FIRST_EX_AdditionalFlags.LargeFetch : NativeMethods.LargeCache;
+         LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 && NativeMethods.IsAtLeastWindows7 ? NativeMethods.FIND_FIRST_EX_FLAGS.LARGE_FETCH : NativeMethods.UseLargeCache;
       }
       
 
@@ -468,8 +468,8 @@ namespace Alphaleonis.Win32.Filesystem
       public bool IsDirectory { get; internal set; }
 
 
-      /// <summary>Gets the value indicating which <see cref="NativeMethods.FIND_FIRST_EX_AdditionalFlags"/> to use.</summary>
-      public NativeMethods.FIND_FIRST_EX_AdditionalFlags LargeCache { get; internal set; }
+      /// <summary>Gets the value indicating which <see cref="NativeMethods.FIND_FIRST_EX_FLAGS"/> to use.</summary>
+      public NativeMethods.FIND_FIRST_EX_FLAGS LargeCache { get; internal set; }
 
 
       /// <summary>Specifies whether the search should include only the current directory or should include all subdirectories.</summary>

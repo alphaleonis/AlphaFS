@@ -52,7 +52,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath + ".txt";
+            var file = rootDir.RandomFileFullPath;
 
             using (System.IO.File.CreateText(file)) {}
             Console.WriteLine("\nInput File Path: [{0}]\n", file);

@@ -61,7 +61,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomFileFullPath;
+            var folder = rootDir.RandomDirectoryFullPath;
             var symlinkPath = System.IO.Path.Combine(rootDir.Directory.FullName, System.IO.Path.GetRandomFileName()) + "-symlink";
 
             Console.WriteLine("\nInput Directory Path: [{0}]", folder);
@@ -126,8 +126,8 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomFileFullPath;
-            var folder2 = rootDir.RandomFileFullPath;
+            var folder = rootDir.RandomDirectoryFullPath;
+            var folder2 = rootDir.RandomDirectoryFullPath;
             if (isNetwork)
             {
                folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);

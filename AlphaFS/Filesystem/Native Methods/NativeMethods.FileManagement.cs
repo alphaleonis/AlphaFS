@@ -317,7 +317,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileExW"), SuppressUnmanagedCodeSecurity]
-      internal static extern SafeFindFileHandle FindFirstFileEx([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FINDEX_INFO_LEVELS fInfoLevelId, out WIN32_FIND_DATA lpFindFileData, FINDEX_SEARCH_OPS fSearchOp, IntPtr lpSearchFilter, FIND_FIRST_EX_AdditionalFlags dwAdditionalFlags);
+      internal static extern SafeFindFileHandle FindFirstFileEx([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FINDEX_INFO_LEVELS fInfoLevelId, out WIN32_FIND_DATA lpFindFileData, FINDEX_SEARCH_OPS fSearchOp, IntPtr lpSearchFilter, FIND_FIRST_EX_FLAGS dwAdditionalFlags);
 
       /// <summary>
       ///   Searches a directory for a file or subdirectory with a name that matches a specific name as a transacted operation.
@@ -333,7 +333,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileTransactedW"), SuppressUnmanagedCodeSecurity]
-      internal static extern SafeFindFileHandle FindFirstFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FINDEX_INFO_LEVELS fInfoLevelId, out WIN32_FIND_DATA lpFindFileData, FINDEX_SEARCH_OPS fSearchOp, IntPtr lpSearchFilter, FIND_FIRST_EX_AdditionalFlags dwAdditionalFlags, SafeHandle hTransaction);
+      internal static extern SafeFindFileHandle FindFirstFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FINDEX_INFO_LEVELS fInfoLevelId, out WIN32_FIND_DATA lpFindFileData, FINDEX_SEARCH_OPS fSearchOp, IntPtr lpSearchFilter, FIND_FIRST_EX_FLAGS dwAdditionalFlags, SafeHandle hTransaction);
 
       /// <summary>
       ///   Creates an enumeration of all the hard links to the specified file. The FindFirstFileNameW function returns a handle to the
@@ -508,9 +508,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetFileInformationByHandle(SafeFileHandle hFile, [MarshalAs(UnmanagedType.Struct)] out BY_HANDLE_FILE_INFORMATION lpByHandleFileInformation);
 
-      /// <summary>
-      ///   Retrieves file information for the specified file.
-      /// </summary>
+      /// <summary>Retrieves file information for the specified file.</summary>
       /// <remarks>
       ///   <para>Minimum supported client: Windows Vista [desktop apps | Windows Store apps]</para>
       ///   <para>Minimum supported server: Windows Server 2008 [desktop apps | Windows Store apps]</para>
@@ -528,7 +526,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetFileInformationByHandleEx(SafeFileHandle hFile, [MarshalAs(UnmanagedType.I4)] FileInfoByHandleClass fileInfoByHandleClass, SafeGlobalMemoryBufferHandle lpFileInformation, [MarshalAs(UnmanagedType.U4)] uint dwBufferSize);
+      internal static extern bool GetFileInformationByHandleEx(SafeFileHandle hFile, [MarshalAs(UnmanagedType.I4)] FILE_INFO_BY_HANDLE_CLASS fileInfoByHandleClass, SafeGlobalMemoryBufferHandle lpFileInformation, [MarshalAs(UnmanagedType.U4)] uint dwBufferSize);
 
       /// <summary>Retrieves file information for the specified file.</summary>
       /// <remarks>
@@ -548,11 +546,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFileInformationByHandleEx"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetFileInformationByHandleEx_FileBasicInfo(SafeFileHandle hFile, [MarshalAs(UnmanagedType.I4)] FileInfoByHandleClass fileInfoByHandleClass, [MarshalAs(UnmanagedType.Struct)] out FILE_BASIC_INFO lpFileInformation, [MarshalAs(UnmanagedType.U4)] uint dwBufferSize);
+      internal static extern bool GetFileInformationByHandleEx_FileBasicInfo(SafeFileHandle hFile, [MarshalAs(UnmanagedType.I4)] FILE_INFO_BY_HANDLE_CLASS fileInfoByHandleClass, [MarshalAs(UnmanagedType.Struct)] out FILE_BASIC_INFO lpFileInformation, [MarshalAs(UnmanagedType.U4)] uint dwBufferSize);
 
-      /// <summary>
-      ///   Retrieves the size of the specified file.
-      /// </summary>
+      /// <summary>Retrieves the size of the specified file.</summary>
       /// <remarks>
       ///   <para>Minimum supported client: Windows XP [desktop apps only]</para>
       ///   <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>

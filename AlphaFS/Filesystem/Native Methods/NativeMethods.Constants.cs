@@ -26,6 +26,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
+      public static readonly bool IsAtLeastWindows8 = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows8);
       public static readonly bool IsAtLeastWindows7 = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows7);
       public static readonly bool IsAtLeastWindowsVista = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.WindowsVista);
 
@@ -41,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.</summary>
       /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
-      public static readonly FIND_FIRST_EX_AdditionalFlags LargeCache = IsAtLeastWindows7 ? FIND_FIRST_EX_AdditionalFlags.LargeFetch : FIND_FIRST_EX_AdditionalFlags.None;
+      public static readonly FIND_FIRST_EX_FLAGS UseLargeCache = IsAtLeastWindows7 ? FIND_FIRST_EX_FLAGS.LARGE_FETCH : FIND_FIRST_EX_FLAGS.NONE;
 
       /// <summary>DefaultFileBufferSize = 4096; Default type buffer size used for reading and writing files.</summary>
       public const int DefaultFileBufferSize = 4096;
@@ -67,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Invalid FileAttributes = -1</summary>
-      internal const System.IO.FileAttributes InvalidFileAttributes = (System.IO.FileAttributes) (-1);
+      internal const FileAttributes InvalidFileAttributes = (FileAttributes) (-1);
 
 
 

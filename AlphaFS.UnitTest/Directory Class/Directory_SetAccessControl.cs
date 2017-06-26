@@ -53,8 +53,8 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomFileFullPath;
-            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder);
+            var folder = rootDir.RandomDirectoryFullPath;
+            System.IO.Directory.CreateDirectory(folder);
 
             var sysIO = System.IO.Directory.GetAccessControl(folder);
             var sysIOaccessRules = sysIO.GetAccessRules(true, true, typeof(NTAccount));

@@ -46,9 +46,19 @@ namespace AlphaFS.UnitTest
 
       public System.IO.DirectoryInfo Directory { get; private set; }
 
+      public string RandomDirectoryFullPath
+      {
+         get { return System.IO.Path.Combine(Directory.FullName, "Directory-" + System.IO.Path.GetRandomFileName()); }
+      }
+
       public string RandomFileFullPath
       {
-         get { return System.IO.Path.Combine(Directory.FullName, System.IO.Path.GetRandomFileName()); }
+         get { return RandomFileFullPathNoExtension + ".txt"; }
+      }
+
+      public string RandomFileFullPathNoExtension
+      {
+         get { return System.IO.Path.Combine(Directory.FullName, "File-" + System.IO.Path.GetRandomFileName()); }
       }
 
       #region Disposable Members

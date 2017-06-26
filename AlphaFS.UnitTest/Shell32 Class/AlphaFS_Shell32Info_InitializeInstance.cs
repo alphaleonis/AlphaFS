@@ -51,7 +51,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath + ".txt";
+            var file = rootDir.RandomFileFullPath;
 
             var shell32Info = new Alphaleonis.Win32.Filesystem.Shell32Info(file);
             
