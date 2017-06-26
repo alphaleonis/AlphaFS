@@ -20,6 +20,8 @@
  */
 
 using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -28,27 +30,29 @@ namespace Alphaleonis.Win32.Filesystem
    [Serializable]
    public class NotSameDeviceException : System.IO.IOException
    {
-      private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_SAME_DEVICE);
+      private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_SAME_DEVICE);
+      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_NOT_SAME_DEVICE, new Win32Exception((int) Win32Errors.ERROR_NOT_SAME_DEVICE).Message.Trim().TrimEnd('.').Trim());
+
 
       /// <summary>Initializes a new instance of the <see cref="NotSameDeviceException"/> class.</summary>
-      public NotSameDeviceException() : base(Resources.File_Or_Directory_Already_Exists, s_errorCode)
+      public NotSameDeviceException() : base(Resources.File_Or_Directory_Already_Exists, ErrorCode)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="NotSameDeviceException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public NotSameDeviceException(string message) : base(message, s_errorCode)
+      public NotSameDeviceException(string message) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, message), ErrorCode)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="NotSameDeviceException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public NotSameDeviceException(string message, Exception innerException) : base(message, innerException)
+      public NotSameDeviceException(string message, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, message), innerException)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="NotSameDeviceException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
       protected NotSameDeviceException(SerializationInfo info, StreamingContext context) : base(info, context)

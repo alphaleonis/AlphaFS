@@ -26,6 +26,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #278: `Directory.DeleteEmptySubdirectoriesCore()`: Eliminate recursion.
 - Issue #303: `Path.Constants.cs`: Don't use `CurrentCulture`  (Thx HugoRoss)
 - Issue #306: Include `ShareInfoLevel.Info502` and set as a fallback in `GetShareInfoCore()`  (Thx damiarnold)
+- Issue #314: Added Feature: `Directory.GetFileSystemEntryInfo`  (Thx besoft)
 - Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
 - Issue #335: Add overloaded methods to `File/Directory.TransferTimestamps` to apply to ReparsePoint.
 - Issue #336: Implement methods for `Directory` class: `CreateJunction`, `DeleteJunction` and `ExistsJunction`.
