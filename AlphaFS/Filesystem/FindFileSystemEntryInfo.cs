@@ -62,7 +62,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          OriginalInputPath = path;
+
          InputPath = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         
          IsRelativePath = !Path.IsPathRooted(OriginalInputPath, false);
 
 
@@ -111,9 +113,9 @@ namespace Alphaleonis.Win32.Filesystem
          FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) != 0 && NativeMethods.IsAtLeastWindows7 ? NativeMethods.FINDEX_INFO_LEVELS.Basic : NativeMethods.FindexInfoLevel;
          LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 && NativeMethods.IsAtLeastWindows7 ? NativeMethods.FIND_FIRST_EX_FLAGS.LARGE_FETCH : NativeMethods.UseLargeCache;
       }
-      
 
-      private SafeFindFileHandle FindFirstFile(string pathLp, out NativeMethods.WIN32_FIND_DATA win32FindData)
+
+      private SafeFindFileHandle FindFirstFile(string pathLp, out NativeMethods.WIN32_FIND_DATA win32FindData, bool suppressException = false)
       {
          int lastError;
          var searchOption = null != FileSystemObjectType && (bool) FileSystemObjectType ? NativeMethods.FINDEX_SEARCH_OPS.SearchLimitToDirectories : NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch;
@@ -121,29 +123,30 @@ namespace Alphaleonis.Win32.Filesystem
          var handle = FileSystemInfo.FindFirstFileCore(Transaction, pathLp, FindExInfoLevel, searchOption, LargeCache, out lastError, out win32FindData);
 
 
-         if (!ContinueOnException)
-         {
-            if (null == handle)
-               ThrowPossibleException((uint) lastError, pathLp);
-
-            // When the handle is null and we are still here, it means the ErrorHandler is active,
-            // preventing the Exception from being thrown.
-
-            
-            if (null != handle)
+         if (!suppressException)
+            if (!ContinueOnException)
             {
-               var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
+               if (null == handle)
+                  ThrowPossibleException((uint) lastError, pathLp);
 
-               if (IsDirectory)
+               // When the handle is null and we are still here, it means the ErrorHandler is active,
+               // preventing the Exception from being thrown.
+
+
+               if (null != handle)
                {
-                  if (!isFolder)
-                     NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, pathLp);
-               }
+                  var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
 
-               else if (isFolder)
-                  NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, pathLp);
+                  if (IsDirectory)
+                  {
+                     if (!isFolder)
+                        NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, pathLp);
+                  }
+
+                  else if (isFolder)
+                     NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, pathLp);
+               }
             }
-         }
 
 
          return handle;
@@ -358,31 +361,19 @@ namespace Alphaleonis.Win32.Filesystem
                      : NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
 
             }
+            
 
-
-            using (var handle = FindFirstFile(InputPath, out win32FindData))
+            using (var handle = FindFirstFile(InputPath, out win32FindData, true))
             {
-               // If the input path is root in full path format, e.g., D:\, FindFirstFile, after trimming 
-               // the ending directory separator, returns a descriptor of D:, whilst if the path is in long format,
-               // e.g., \\?\D:\, FindFirstFile fails, unable to return anything meaningful.
-               // 
-               // Here we will fix that issue.
-
-               var savedContinueOnException = ContinueOnException;
-               ContinueOnException = true;    // Skip exceptions.
-
-
                if (null == handle)
                {
-                  // Probably root path not supported by FindFirstFile.
+                  // InputPath might be a drive letter like: C:\, D:\
+                  
                   var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
 
-                  var lastError = File.FillAttributeInfoCore(Transaction, InputPath, ref attrs, false, true);
+                  var lastError = File.FillAttributeInfoCore(Transaction, Path.GetRegularPathCore(InputPath, GetFullPathOptions.None, false), ref attrs, false, true);
                   if (lastError != Win32Errors.NO_ERROR)
                   {
-                     // Restore the flag.
-                     ContinueOnException = savedContinueOnException;
-
                      if (!ContinueOnException)
                         ThrowPossibleException((uint) lastError, InputPath);
 
@@ -393,7 +384,7 @@ namespace Alphaleonis.Win32.Filesystem
                   win32FindData = new NativeMethods.WIN32_FIND_DATA
                   {
                      cAlternateFileName = null,
-                     cFileName = ".",
+                     cFileName = Path.CurrentDirectoryPrefix,
                      dwFileAttributes = attrs.dwFileAttributes,
                      ftCreationTime = attrs.ftCreationTime,
                      ftLastAccessTime = attrs.ftLastAccessTime,
@@ -402,13 +393,10 @@ namespace Alphaleonis.Win32.Filesystem
                      nFileSizeLow = attrs.nFileSizeLow
                   };
                }
-
-
-               // Restore the flag.
-               ContinueOnException = savedContinueOnException;
-
-               return NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
             }
+
+
+            return NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
          }
       }
 

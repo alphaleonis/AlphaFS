@@ -29,6 +29,7 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
       public void Directory_Exists_LocalAndNetwork_Success()
       {
@@ -58,50 +59,48 @@ namespace AlphaFS.UnitTest
          // AlphaFS : "\\?\C:"
          var shouldBe = true;
          var driveSysIO = UnitTestConstants.SysDrive;
-         var drive = @"\\?\" + UnitTestConstants.SysDrive;
-         if (isNetwork) { driveSysIO = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveSysIO); drive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(drive); }
-         Console.Write("\nDrive path (System.IO, should be " + shouldBe + "):\t\t" + driveSysIO + "\t\t\t");
-         var existSystemIO = System.IO.Directory.Exists(driveSysIO);
-         Console.WriteLine(existSystemIO);
-         var existAlphaFS = Alphaleonis.Win32.Filesystem.Directory.Exists(drive);
-         Console.Write("Drive path (AlphaFS  , should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
-         Console.WriteLine(existAlphaFS);
-         Assert.AreEqual(shouldBe, existSystemIO, "The result should be: " + shouldBe);
-         Assert.AreEqual(existSystemIO, existAlphaFS, "The results are not equal, but were expected to be.");
-         Console.WriteLine();
+         var driveAlpha = @"\\?\" + driveSysIO;
+         if (isNetwork) { driveSysIO = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveSysIO); driveAlpha = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveAlpha); }
+         var existSyIO = System.IO.Directory.Exists(driveSysIO);
+         var existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(driveAlpha);
+         Console.WriteLine("\nDrive path (System.IO, should be {0}):\t{1}\t\t{2}", shouldBe.ToString().ToUpperInvariant(), existSyIO, driveSysIO);
+         Console.WriteLine("Drive path (AlphaFS  , should be {0}):\t{1}\t\t{2}", shouldBe.ToString().ToUpperInvariant(), existAlpha, driveAlpha);
+
+         Assert.AreEqual(shouldBe, existSyIO, "The result should be: " + shouldBe.ToString().ToUpperInvariant());
+         Assert.AreEqual(existSyIO, existAlpha, "The results are not equal, but are expected to be.");
 
 
 
 
          // Both: "\\?\C:\"
          shouldBe = isNetwork; // True when network (UNC path), false when local path.
-         drive = @"\\?\" + UnitTestConstants.SysDrive + @"\";
-         if (isNetwork) drive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(drive);
-         Console.Write("Drive path (System.IO, should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
-         existSystemIO = System.IO.Directory.Exists(drive);
-         existAlphaFS = Alphaleonis.Win32.Filesystem.Directory.Exists(drive);
-         Console.WriteLine(existSystemIO);
-         Assert.AreEqual(shouldBe, existSystemIO, "The result should be: " + shouldBe);
-         Assert.AreEqual(existSystemIO, existAlphaFS, "The results are not equal, but were expected to be.");
+         driveAlpha = @"\\?\" + driveSysIO + @"\";
+         if (isNetwork) driveAlpha = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveAlpha);
+         existSyIO = System.IO.Directory.Exists(driveAlpha);
+         existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(driveAlpha);
+         Console.WriteLine("\nDrive path (System.IO, should be {0}):\t{1}\t\t{2}", shouldBe.ToString().ToUpperInvariant(), existSyIO, driveAlpha);
+         
+         Assert.AreEqual(shouldBe, existSyIO, "The result should be: " + shouldBe.ToString().ToUpperInvariant());
+         Assert.AreEqual(existSyIO, existAlpha, "The results are not equal, but are expected to be.");
+
 
 
 
          // Both: "C:\"
          shouldBe = true;
-         drive = UnitTestConstants.SysDrive + @"\";
-         if (isNetwork) drive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(drive);
-         Console.Write("Drive path (System.IO, should be " + shouldBe + "):\t\t" + drive + "\t\t\t");
-         existSystemIO = System.IO.Directory.Exists(drive);
-         existAlphaFS = Alphaleonis.Win32.Filesystem.Directory.Exists(drive);
-         Console.WriteLine(existSystemIO);
-         Assert.AreEqual(shouldBe, existSystemIO, "The result should be: " + shouldBe);
-         Assert.AreEqual(existSystemIO, existAlphaFS, "The results are not equal, but were expected to be.");
+         driveAlpha = UnitTestConstants.SysDrive + @"\";
+         if (isNetwork) driveAlpha = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveAlpha);
+         existSyIO = System.IO.Directory.Exists(driveAlpha);
+         existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(driveAlpha);
+         Console.WriteLine("Drive path (System.IO, should be {0}):\t{1}\t\t{2}", shouldBe.ToString().ToUpperInvariant(), existSyIO, driveAlpha);
+
+         Assert.AreEqual(shouldBe, existSyIO, "The result should be: " + shouldBe.ToString().ToUpperInvariant());
+         Assert.AreEqual(existSyIO, existAlpha, "The results are not equal, but are expected to be.");
 
 
 
 
          // Test Folder.
-
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
@@ -112,12 +111,42 @@ namespace AlphaFS.UnitTest
             var folder = rootDir.RandomDirectoryFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-            Assert.AreEqual(System.IO.Directory.Exists(folder), Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The results are not equal, but were expected to be.");
+            Assert.AreEqual(System.IO.Directory.Exists(folder), Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The results are not equal, but are expected to be.");
 
             System.IO.Directory.CreateDirectory(folder);
 
-            Assert.AreEqual(System.IO.Directory.Exists(folder), Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The results are not equal, but were expected to be.");
+            Assert.AreEqual(System.IO.Directory.Exists(folder), Alphaleonis.Win32.Filesystem.Directory.Exists(folder), "The results are not equal, but are expected to be.");
          }
+
+
+         // #288: Directory.Exists on root drive problem has come back with recent updates
+
+         //// Test some use cases.
+         //var paths = new[]
+         //{
+         //   @"\\?\c:\",             // True
+         //   @"\\?\c:",              // True
+         //   @"\\?\c:\temp",         // True
+         //   @"\\?\c:\temp\",        // True
+         //   @"\\?\c:\nonexistent",  // False
+         //   @"\\?\c:\nonexistent\", // False
+         //   @"c:\nonexistent",      // False
+         //   @"c:\nonexistent\",     // False
+         //   @"c:\temp",             // True
+         //   @"c:\temp\",            // True
+         //   @"c:",                  // True
+         //   @"c:\",                 // True
+         //   @"c:temp",              // True
+         //   @"\\?\c:temp",          // False
+         //   @"\\?\c:temp\",         // False
+         //   @"c:\temp\"             // True
+         //};
+
+         //foreach (var path in paths)
+         //{
+         //   Console.WriteLine("S exists: [{0}]\t\tpath: {1}", System.IO.Directory.Exists(path), path);
+         //   Console.WriteLine("A exists: [{0}]\t\tpath: {1}", Alphaleonis.Win32.Filesystem.Directory.Exists(path), path);
+         //}
 
 
          Console.WriteLine();

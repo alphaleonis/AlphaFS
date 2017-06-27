@@ -173,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          // deviceName is allowed to be null.
          // The deviceName cannot have a trailing backslash.
-         deviceName = Path.RemoveTrailingDirectorySeparator(deviceName, false);
+         deviceName = Path.RemoveTrailingDirectorySeparator(deviceName);
 
          var searchFilter = deviceName != null;
 
@@ -671,7 +671,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(volumeName))
             throw new ArgumentNullException("volumeName");
 
-         volumeName = Path.RemoveTrailingDirectorySeparator(volumeName, false);
+         volumeName = Path.RemoveTrailingDirectorySeparator(volumeName);
 
          #region GlobalRoot
 
@@ -1053,22 +1053,24 @@ namespace Alphaleonis.Win32.Filesystem
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-
+         {
             // SetVolumeMountPoint()
             // In the ANSI version of this function, the name is limited to MAX_PATH characters.
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2014-01-29: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-            if (!NativeMethods.SetVolumeMountPoint(volumeMountPoint, volumeGuid))
-            {
-               var lastError = Marshal.GetLastWin32Error();
+            var success = NativeMethods.SetVolumeMountPoint(volumeMountPoint, volumeGuid);
 
+            var lastError = Marshal.GetLastWin32Error();
+            if (!success)
+            {
                // If the lpszVolumeMountPoint parameter contains a path to a mounted folder,
                // GetLastError returns ERROR_DIR_NOT_EMPTY, even if the directory is empty.
 
                if (lastError != Win32Errors.ERROR_DIR_NOT_EMPTY)
                   NativeError.ThrowException(lastError, volumeGuid);
             }
+         }
       }
 
       #endregion // SetVolumeMountPoint

@@ -224,7 +224,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             try
             {
-               var path = RemoveTrailingDirectorySeparator(drive, false);
+               var path = RemoveTrailingDirectorySeparator(drive);
                foreach (var devNt in Volume.QueryDosDevice(path).Where(dosDevice.StartsWith))
                   return dosDevice.Replace(devNt, deviceReplacement ?? path);
             }
@@ -317,7 +317,7 @@ namespace Alphaleonis.Win32.Filesystem
          // turned into \foo.cs\bar.cs.
          if (path.Length > 0 && (path[0] == DirectorySeparatorChar || path[0] == AltDirectorySeparatorChar))
          {
-            newBuffer.Append('\\');
+            newBuffer.Append(DirectorySeparatorChar);
             index++;
             lastSigChar = 0;
          }
@@ -359,8 +359,7 @@ namespace Alphaleonis.Win32.Filesystem
                      if (path[start] != CurrentDirectoryPrefixChar)
                         throw new ArgumentException(path, "path");
 
-                     // Only allow "[dot]+[space]*", and normalize the 
-                     // legal ones to "." or ".."
+                     // Only allow "[dot]+[space]*", and normalize the legal ones to "." or ".."
                      if (numDots >= 2)
                      {
                         // Reject "C:..."
@@ -574,42 +573,54 @@ namespace Alphaleonis.Win32.Filesystem
          if ((options & GetFullPathOptions.FullCheck) != 0)
          {
             var newBufferString = newBuffer.ToString();
-            if (newBufferString.StartsWith("http:", StringComparison.OrdinalIgnoreCase) || newBufferString.StartsWith("file:", StringComparison.OrdinalIgnoreCase))
+            if (newBufferString.StartsWith(Uri.UriSchemeHttp + ":", StringComparison.OrdinalIgnoreCase) || newBufferString.StartsWith(Uri.UriSchemeFile + ":", StringComparison.OrdinalIgnoreCase))
                throw new ArgumentException(path, "path");
          }
 
+
          // Call the Win32 API to do the final canonicalization step.
-         var result = 1;
+         const int result = 1;
 
+         /* Throw an ArgumentException for paths like \\, \\server, \\server\
+            This check can only be properly done after normalizing, so
+            \\foo\.. will be properly rejected.  Also, reject \\?\GLOBALROOT\
+            (an internal kernel path) because it provides aliases for drives. */
 
-         if (result != 0)
+         if (newBuffer.Length > 1 && newBuffer[0] == DirectorySeparatorChar && newBuffer[1] == DirectorySeparatorChar)
          {
-            /* Throw an ArgumentException for paths like \\, \\server, \\server\
-               This check can only be properly done after normalizing, so
-               \\foo\.. will be properly rejected.  Also, reject \\?\GLOBALROOT\
-               (an internal kernel path) because it provides aliases for drives. */
-            if (newBuffer.Length > 1 && newBuffer[0] == '\\' && newBuffer[1] == '\\')
+            var startIndex = 2;
+            while (startIndex < result)
             {
-               var startIndex = 2;
-               while (startIndex < result)
+               if (newBuffer[startIndex] == DirectorySeparatorChar)
                {
-                  if (newBuffer[startIndex] == '\\')
-                  {
-                     startIndex++;
-                     break;
-                  }
-
                   startIndex++;
+                  break;
                }
 
-               if (startIndex == result)
-                  throw new ArgumentException(path, "path");
+               startIndex++;
             }
+
+            if (startIndex == result)
+               throw new ArgumentException(path, "path");
          }
 
 
          return newBuffer.ToString();
       }
+
+
+      //// Input to this method should already be fullpath. This method will ensure that we append 
+      //// the trailing slash only when appropriate and when thisDirOnly is specified append a "." 
+      //// at the end of the path to indicate that the demand is only for the fullpath and not 
+      //// everything underneath it.
+      //internal static string GetDemandDir(string fullPath, bool thisDirOnly)
+      //{
+      //   var endWithSeparator = fullPath.EndsWith(DirectorySeparator, StringComparison.Ordinal) || fullPath.EndsWith(AltDirectorySeparator, StringComparison.Ordinal);
+
+      //   return thisDirOnly
+      //      ? (endWithSeparator ? fullPath + CurrentDirectoryPrefix : fullPath + DirectorySeparator + CurrentDirectoryPrefix)
+      //      : (!endWithSeparator ? fullPath + DirectorySeparator : fullPath);
+      //}
 
       #endregion // Internal Methods
    }

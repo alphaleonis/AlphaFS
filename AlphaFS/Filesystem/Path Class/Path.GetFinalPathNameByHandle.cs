@@ -153,11 +153,11 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (!Utils.IsNullOrWhiteSpace(dosPath))
                {
-                  var driveLetter = RemoveTrailingDirectorySeparator(GetPathRoot(dosPath, false), false);
+                  var driveLetter = RemoveTrailingDirectorySeparator(GetPathRoot(dosPath, false));
                   var file = GetFileName(dosPath, true);
 
                   if (!Utils.IsNullOrWhiteSpace(file))
-                     foreach (var drive in Directory.EnumerateLogicalDrivesCore(false, false).Select(drv => drv.Name).Where(drv => driveLetter.Equals(RemoveTrailingDirectorySeparator(drv, false), StringComparison.OrdinalIgnoreCase)))
+                     foreach (var drive in Directory.EnumerateLogicalDrivesCore(false, false).Select(drv => drv.Name).Where(drv => driveLetter.Equals(RemoveTrailingDirectorySeparator(drv), StringComparison.OrdinalIgnoreCase)))
                         return CombineCore(false, Volume.GetUniqueVolumeNameForPath(drive), GetSuffixedDirectoryNameWithoutRootCore(null, dosPath), file);
                }
 

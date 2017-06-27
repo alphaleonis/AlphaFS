@@ -165,8 +165,8 @@ namespace Alphaleonis.Win32.Filesystem
                   // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                   // 2013-01-13: MSDN confirms LongPath usage.
 
-                  ? NativeMethods.GetFileAttributesEx(pathLp, NativeMethods.GetFileExInfoLevels.GetFileExInfoStandard, out win32AttrData)
-                  : NativeMethods.GetFileAttributesTransacted(pathLp, NativeMethods.GetFileExInfoLevels.GetFileExInfoStandard, out win32AttrData, transaction.SafeHandle)))
+                  ? NativeMethods.GetFileAttributesEx(pathLp, NativeMethods.GET_FILEEX_INFO_LEVELS.GetFileExInfoStandard, out win32AttrData)
+                  : NativeMethods.GetFileAttributesTransacted(pathLp, NativeMethods.GET_FILEEX_INFO_LEVELS.GetFileExInfoStandard, out win32AttrData, transaction.SafeHandle)))
                {
                   lastError = Marshal.GetLastWin32Error();
 

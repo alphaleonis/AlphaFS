@@ -383,7 +383,7 @@
     <Compile Include="Filesystem\FindFileSystemEntryInfo.cs" />
     <Compile Include="Filesystem\FileSystemEntryInfo.cs" />
     <Compile Include="Filesystem\FileSystemInfo.cs" />
-    <Compile Include="Filesystem\Structures And Enumerations\GetFileExInfoLevels.cs" />
+    <Compile Include="Filesystem\Native Other\GET_FILEEX_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\GetFullPathOptions.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.EncryptedFileRaw.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.Shell32.cs" />
@@ -557,7 +557,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

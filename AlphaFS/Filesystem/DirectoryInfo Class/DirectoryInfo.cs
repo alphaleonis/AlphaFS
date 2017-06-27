@@ -153,7 +153,7 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             return FullPath.Length > 3
-               ? Path.GetFileName(Path.RemoveTrailingDirectorySeparator(FullPath, false), true)
+               ? Path.GetFileName(Path.RemoveTrailingDirectorySeparator(FullPath), true)
                : FullPath;
          }
       }
@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
             var path = FullPath;
 
             if (path.Length > 3)
-               path = Path.RemoveTrailingDirectorySeparator(FullPath, false);
+               path = Path.RemoveTrailingDirectorySeparator(FullPath);
 
             var dirName = Path.GetDirectoryName(path, false);
             return dirName == null ? null : new DirectoryInfo(Transaction, dirName, true, true);

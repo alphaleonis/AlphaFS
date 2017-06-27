@@ -602,8 +602,8 @@ namespace Alphaleonis.Win32.Filesystem
             // 2013-01-13: MSDN confirms LongPath usage.
 
             // A trailing backslash is not allowed.
-            ? NativeMethods.FindFirstFileEx(Path.RemoveTrailingDirectorySeparator(pathLp, false), infoLevel, out win32FindData, searchOption, IntPtr.Zero, additionalFlags)
-            : NativeMethods.FindFirstFileTransacted(Path.RemoveTrailingDirectorySeparator(pathLp, false), infoLevel, out win32FindData, searchOption, IntPtr.Zero, additionalFlags, transaction.SafeHandle);
+            ? NativeMethods.FindFirstFileEx(Path.RemoveTrailingDirectorySeparator(pathLp), infoLevel, out win32FindData, searchOption, IntPtr.Zero, additionalFlags)
+            : NativeMethods.FindFirstFileTransacted(Path.RemoveTrailingDirectorySeparator(pathLp), infoLevel, out win32FindData, searchOption, IntPtr.Zero, additionalFlags, transaction.SafeHandle);
 
          lastError = Marshal.GetLastWin32Error();
 

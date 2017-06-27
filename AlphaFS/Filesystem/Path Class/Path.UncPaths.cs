@@ -209,7 +209,7 @@ namespace Alphaleonis.Win32.Filesystem
                // Only leave trailing backslash if "localPath" also ends with backslash.
                return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase)
                   ? AddTrailingDirectorySeparator(unc.lpConnectionName, false)
-                  : RemoveTrailingDirectorySeparator(unc.lpConnectionName, false);
+                  : RemoveTrailingDirectorySeparator(unc.lpConnectionName);
 
             // Split: localDrive[0] = "C", localDrive[1] = "\Windows"
             string[] localDrive = localPath.Split(VolumeSeparatorChar);

@@ -21,6 +21,8 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -31,34 +33,38 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetVolumeInfo_GlobalRootPath_Success()
+      public void AlphaFS_Volume_SetVolumeMountPoint_And_DeleteVolumeMountPoint_Local_Success()
       {
-         // From an elevated prompt, type: vssadmin list shadows
-         // and pick any Shadow Copy Volume: \\?\GLOBALROOT\Device\HarddiskVolume...
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
 
-         var globalRootPath = @"\\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1";
 
-         try
+         UnitTestConstants.PrintUnitTestHeader(false);
+
+         var tempPath = System.IO.Path.GetTempPath();
+
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var volume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(globalRootPath);
-            Console.WriteLine("Volume full path: " + volume.FullPath);
+            var dirInfo = System.IO.Directory.CreateDirectory(rootDir.RandomDirectoryFullPath);
+            Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
 
-            Assert.AreEqual(globalRootPath + @"\", volume.FullPath);
+
+            var guid = Alphaleonis.Win32.Filesystem.Volume.GetUniqueVolumeNameForPath(UnitTestConstants.SysDrive);
+
+
+
+
+            Alphaleonis.Win32.Filesystem.Volume.SetVolumeMountPoint(dirInfo.FullName, guid);
+
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumeMountPoints(guid).Any(mountPoint => dirInfo.FullName.EndsWith(mountPoint.TrimEnd('\\'))));
+
+
+
+
+            Alphaleonis.Win32.Filesystem.Volume.DeleteVolumeMountPoint(dirInfo.FullName);
+
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumeMountPoints(guid).Any(mountPoint => dirInfo.FullName.EndsWith(mountPoint.TrimEnd('\\'))));
          }
-         catch (Exception)
-         {
-            Assert.Inconclusive("Volume not found: " + globalRootPath);
-         }
-      }
-
-
-      [TestMethod]
-      public void AlphaFS_Volume_GetVolumeInfo_SystemDrivePath_Success()
-      {
-         var volume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(UnitTestConstants.SysDrive);
-         Console.WriteLine("Volume full path: " + volume.FullPath);
-
-         Assert.AreEqual(UnitTestConstants.SysDrive + @"\", volume.FullPath);
       }
    }
 }

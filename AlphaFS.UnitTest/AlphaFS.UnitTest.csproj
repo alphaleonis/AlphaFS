@@ -246,11 +246,12 @@
     <Compile Include="Path Class\PathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\CreateDirectoriesAndFiles.cs" />
-    <Compile Include="Volume Class\VolumeInfo_InitializeInstance.cs" />
+    <Compile Include="Volume Class\AlphaFS_Volume_SetVolumeMountPoint_Local_Success.cs" />
     <Compile Include="Volume Class\Volume_GetVolumeInfo.cs" />
     <Compile Include="Volume Class\VolumeTest.cs" />
     <Compile Include="Utils\UnitTestConstants.cs" />
     <Compile Include="Utils\TemporaryDirectory.cs" />
+    <Compile Include="VolumeInfo\AlphaFS_InitializeInstance_LocalAndNetwork_Success.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\AlphaFS.snk">

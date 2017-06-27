@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          InitializeCore(transaction, false, fileName, pathFormat);
 
-         _name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fileName, false), pathFormat != PathFormat.LongFullPath);
+         _name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fileName), pathFormat != PathFormat.LongFullPath);
       }
 
       #endregion // Transacted

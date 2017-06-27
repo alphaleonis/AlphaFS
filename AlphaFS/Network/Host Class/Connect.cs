@@ -397,7 +397,7 @@ namespace Alphaleonis.Win32.Network
 
          // Always remove backslash for local device.
          if (!Utils.IsNullOrWhiteSpace(arguments.LocalName))
-            arguments.LocalName = Path.RemoveTrailingDirectorySeparator(arguments.LocalName, false).ToUpperInvariant();
+            arguments.LocalName = Path.RemoveTrailingDirectorySeparator(arguments.LocalName).ToUpperInvariant();
 
 
          #region Disconnect

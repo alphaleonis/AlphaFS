@@ -52,6 +52,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on a computer with the ready status.</summary>
+      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
+      [SecurityCritical]
+      public static IEnumerable<DriveInfo> EnumerateLogicalDrives()
+      {
+         return EnumerateLogicalDrivesCore(false, true);
+      }
+
+
       /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on a computer.</summary>
       /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>

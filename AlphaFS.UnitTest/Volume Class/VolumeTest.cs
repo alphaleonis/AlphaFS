@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
@@ -36,6 +37,9 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public partial class VolumeTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       #region Unit Tests
 
       private readonly string TempFolder = Path.GetTempPath();
@@ -510,8 +514,6 @@ namespace AlphaFS.UnitTest
                {
                   foreach (var mountPoint in Volume.EnumerateVolumeMountPoints(uniqueVolName).Where(mp => !string.IsNullOrWhiteSpace(mp)))
                   {
-                     UnitTestConstants.StopWatcher(true);
-
                      string guid = null;
                      try { guid = Volume.GetVolumeGuid(Path.Combine(drive, mountPoint)); }
                      catch (Exception ex)
@@ -519,7 +521,7 @@ namespace AlphaFS.UnitTest
                         Console.WriteLine("\n\tCaught (unexpected #1) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
                      }
 
-                     Console.WriteLine("\t#{0:000}\tLogical Drive: [{1}]\tGUID: [{2}]\n\t\tDestination  : [{3}]\n\t{4}", ++cnt, drive, guid ?? "null", mountPoint, UnitTestConstants.Reporter(true));
+                     Console.WriteLine("\t#{0:000}\tLogical Drive: [{1}]\tGUID: [{2}]\n\t\tDestination  : [{3}]\n", ++cnt, drive, guid ?? "null", mountPoint);
                   }
                }
             }
@@ -802,86 +804,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // SetVolumeLabel
-
-      #region SetVolumeMountPoint
-
-      [TestMethod]
-      public void AlphaFS_Volume_SetVolumeMountPoint()
-      {
-         Console.WriteLine("Volume.SetVolumeMountPoint()");
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-         #region Logical Drives
-
-         var cnt = 0;
-         var destFolder = Path.Combine(TempFolder, "Volume.SetVolumeMountPoint()-" + Path.GetRandomFileName());
-         Directory.CreateDirectory(destFolder);
-
-         var guid = Volume.GetUniqueVolumeNameForPath(UnitTestConstants.SysDrive);
-
-         try
-         {
-            UnitTestConstants.StopWatcher(true);
-
-            Volume.SetVolumeMountPoint(destFolder, guid);
-            Console.WriteLine(
-               "\t#{0:000}\tSystem Drive: [{1}]\tGUID: [{2}]\n\t\tDestination : [{3}]\n\t\tCreated Mount Point.\n\t{4}",
-               ++cnt, UnitTestConstants.SysDrive, guid, destFolder, UnitTestConstants.Reporter(true));
-
-            Console.WriteLine("\n");
-            AlphaFS_Volume_EnumerateVolumeMountPoints();
-
-            Console.WriteLine("\n\nFile.GetLinkTargetInfo()");
-
-            var lti = File.GetLinkTargetInfo(destFolder);
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(lti.PrintName));
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(lti.SubstituteName));
-            Assert.IsTrue(UnitTestConstants.Dump(lti, -14), "Unable to dump object.");
-
-            // Cleanup.
-            UnitTestConstants.StopWatcher(true);
-            var deleteOk = false;
-            try
-            {
-               Volume.DeleteVolumeMountPoint(destFolder);
-               deleteOk = true;
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-
-            Console.WriteLine("\n\nVolume.DeleteVolumeMountPoint() (Should be True): [{0}]\tFolder: [{1}]\n{2}\n",
-               deleteOk, destFolder, UnitTestConstants.Reporter());
-
-            Directory.Delete(destFolder, true, true);
-            Assert.IsTrue(deleteOk && !Directory.Exists(destFolder));
-
-            AlphaFS_Volume_EnumerateVolumeMountPoints();
-         }
-         catch (Exception ex)
-         {
-            cnt = 0;
-
-            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         finally
-         {
-            // Always remove mount point.
-            // Experienced: CCleaner deletes through mount points!
-            try { Volume.DeleteVolumeMountPoint(destFolder); }
-            catch { }
-         }
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
-
-         #endregion // Logical Drives
-      }
-
-      #endregion // SetVolumeMountPoint
 
       #endregion // Volume
 

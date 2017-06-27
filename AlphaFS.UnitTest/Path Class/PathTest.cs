@@ -384,17 +384,6 @@ namespace AlphaFS.UnitTest
 
       #region .NET
 
-      #region ChangeExtension (.NET)
-
-      [TestMethod]
-      public void Path_ChangeExtension_NET()
-      {
-         Console.WriteLine("Path.ChangeExtension()");
-         Console.WriteLine("\nThe .NET method is used.");
-      }
-
-      #endregion // ChangeExtension (.NET)
-
       #region Combine
 
       [TestMethod]
@@ -562,38 +551,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetFileNameWithoutExtension
 
-      #region GetInvalidFileNameChars (.NET)
-
-      [TestMethod]
-      public void Path_GetInvalidFileNameChars_NET()
-      {
-         Console.WriteLine("Path.GetInvalidFileNameChars()");
-         Console.WriteLine("\nThe .NET method is used.\n");
-
-         UnitTestConstants.StopWatcher(true);
-         foreach (var c in Path.GetInvalidFileNameChars())
-            Console.WriteLine("\tChar: [{0}]", c);
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
-      }
-
-      #endregion // GetInvalidFileNameChars (.NET)
-
-      #region GetInvalidPathChars (.NET)
-
-      [TestMethod]
-      public void Path_GetInvalidPathChars_NET()
-      {
-         Console.WriteLine("Path.GetInvalidPathChars()");
-         Console.WriteLine("\nThe .NET method is used.\n");
-
-         UnitTestConstants.StopWatcher(true);
-         foreach (var c in Path.GetInvalidPathChars())
-            Console.WriteLine("\tChar: [{0}]", c);
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
-      }
-
-      #endregion // GetInvalidPathChars (.NET)
-
       #region GetPathRoot
 
       [TestMethod]
@@ -666,58 +623,8 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetPathRoot
 
-      #region GetRandomFileName (.NET)
+      
 
-      [TestMethod]
-      public void Path_GetRandomFileName_NET()
-      {
-         Console.WriteLine("Path.GetRandomFileName()");
-         Console.WriteLine("\nThe .NET method is used.");
-      }
-
-      #endregion //GetRandomFileName (.NET)
-
-      #region GetTempFileName (.NET)
-
-      [TestMethod]
-      public void Path_GetTempFileName_NET()
-      {
-         Console.WriteLine("Path.GetTempFileName()");
-         Console.WriteLine("\nThe .NET method is used.");
-      }
-
-      #endregion // GetTempFileName (.NET)
-
-      #region GetTempPath (.NET)
-
-      [TestMethod]
-      public void Path_GetTempPath_NET()
-      {
-         Console.WriteLine("Path.GetTempPath()");
-         Console.WriteLine("\nThe .NET method is used.");
-      }
-
-      #endregion // GetTempPath (.NET)
-
-      #region HasExtension (.NET)
-
-      [TestMethod]
-      public void Path_HasExtension_NET()
-      {
-         Console.WriteLine("Path.HasExtension()");
-         Console.WriteLine("\nThe .NET method is used.\n");
-
-         UnitTestConstants.StopWatcher(true);
-         foreach (var path in UnitTestConstants.InputPaths)
-         {
-            var action = Path.HasExtension(path);
-            Console.WriteLine("\tHasExtension: [{0}]\t\tInput Path: [{1}]", action, path);
-            Assert.AreEqual(System.IO.Path.HasExtension(path), action);
-         }
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
-      }
-
-      #endregion // HasExtension (.NET)
 
       #endregion // .NET
 

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,52 +19,64 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for FileInfo and is intended to contain all FileInfo UnitTests.</summary>
-   public partial class VolumeTest
+   [TestClass]
+   public partial class VolumeInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void AlphaFS_VolumeInfo_InitializeInstance_LocalAndNetwork_Success()
       {
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
          VolumeInfo_InitializeInstance(false);
          VolumeInfo_InitializeInstance(true);
       }
-
-
 
 
       private void VolumeInfo_InitializeInstance(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
+         var tempPath = UnitTestConstants.SysDrive;
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
-         var cnt = 0;
-         foreach (var drive in System.IO.Directory.GetLogicalDrives())
+
+         var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(tempPath);
+         UnitTestConstants.Dump(volInfo, -26);
+
+
+         if (isNetwork)
          {
-            var tempPath = drive;
-            if (isNetwork) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+            var driveInfo = new Alphaleonis.Win32.Filesystem.DriveInfo(tempPath);
 
-            try
-            {
-               var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(tempPath);
-               Console.WriteLine("\n#{0:000}\tLogical Drive: [{1}]", ++cnt, tempPath);
-               UnitTestConstants.Dump(volInfo, -26);
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("#{0:000}\tLogical Drive: [{1}]\n\tCaught: {2}: {3}", ++cnt, tempPath, ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine();
+            Assert.AreEqual(driveInfo.VolumeLabel, volInfo.Name);
+            Assert.AreEqual(driveInfo.DriveFormat, volInfo.FileSystemName);
+            Assert.AreEqual(driveInfo.Name, volInfo.FullPath);
+
+            Assert.IsNull(volInfo.Guid);
          }
 
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+         else
+         {
+            // System.IO.DriveInfo does not support UNC paths.
+
+            var driveInfo = new System.IO.DriveInfo(tempPath);
+
+            Assert.AreEqual(driveInfo.VolumeLabel, volInfo.Name);
+            Assert.AreEqual(driveInfo.DriveFormat, volInfo.FileSystemName);
+            Assert.AreEqual(driveInfo.Name, volInfo.FullPath);
+
+            Assert.IsNotNull(volInfo.Guid);
+         }
 
          Console.WriteLine();
       }

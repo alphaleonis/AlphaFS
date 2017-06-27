@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Network
             return new NativeMethods.REMOTE_NAME_INFO
             {
                lpUniversalName = Path.AddTrailingDirectorySeparator(path, false),
-               lpConnectionName = Path.RemoveTrailingDirectorySeparator(path, false),
+               lpConnectionName = Path.RemoveTrailingDirectorySeparator(path),
                lpRemainingPath = Path.DirectorySeparator
             };
 
