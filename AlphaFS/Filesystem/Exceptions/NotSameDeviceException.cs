@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
    public class NotSameDeviceException : System.IO.IOException
    {
       private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_SAME_DEVICE);
-      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_NOT_SAME_DEVICE, new Win32Exception((int) Win32Errors.ERROR_NOT_SAME_DEVICE).Message.Trim().TrimEnd('.').Trim());
+      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_NOT_SAME_DEVICE, new Win32Exception((int)Win32Errors.ERROR_NOT_SAME_DEVICE).Message.Trim().TrimEnd('.').Trim());
 
 
       /// <summary>Initializes a new instance of the <see cref="NotSameDeviceException"/> class.</summary>
@@ -39,18 +39,29 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
+
       /// <summary>Initializes a new instance of the <see cref="NotSameDeviceException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public NotSameDeviceException(string message) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, message), ErrorCode)
+      public NotSameDeviceException(string message) : base(message, ErrorCode)
       {
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="NotSameDeviceException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public NotSameDeviceException(string message, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, message), innerException)
+      public NotSameDeviceException(string message, Exception innerException) : base(message, innerException)
       {
       }
+
+
+      /// <summary>Initializes a new instance of the <see cref="NotSameDeviceException"/> class.</summary>
+      /// <param name="path">The path to the device.</param>
+      /// <param name="isPath">Always set to true when using this constructor.</param>
+      public NotSameDeviceException(string path, bool isPath) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), ErrorCode)
+      {
+      }
+
 
       /// <summary>Initializes a new instance of the <see cref="NotSameDeviceException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>

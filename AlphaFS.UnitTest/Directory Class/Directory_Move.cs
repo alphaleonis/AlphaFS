@@ -125,10 +125,17 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny_LocalAndNetwork_Success()
+      public void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny_Local_Success()
       {
-         Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny(false);
-         Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny(true);
+         Directory_Move_CatchUnauthorizedAccessException_And_NotSameDeviceException_UserExplicitDeny(false);
+      }
+
+
+
+      [TestMethod]
+      public void Directory_Move_CatchNotSameDeviceException_UserExplicitDeny_Network_Success()
+      {
+         Directory_Move_CatchUnauthorizedAccessException_And_NotSameDeviceException_UserExplicitDeny(true);
       }
 
 
@@ -543,7 +550,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDeny(bool isNetwork)
+      private void Directory_Move_CatchUnauthorizedAccessException_And_NotSameDeviceException_UserExplicitDeny(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -580,15 +587,15 @@ namespace AlphaFS.UnitTest
             var gotException = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Move(UnitTestConstants.SysRoot, dirInfo.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
+               Alphaleonis.Win32.Filesystem.Directory.Move(UnitTestConstants.SysDrive + @"\NonExistingFolder", dirInfo.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
             }
             catch (Exception ex)
             {
                // Local: UnauthorizedAccessException.
-               // UNC: IOException.
+               // UNC: NotSameDeviceException.
 
                var exName = ex.GetType().Name;
-               gotException = exName.Equals(isNetwork ? "IOException" : "UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
+               gotException = exName.Equals(isNetwork ? "NotSameDeviceException" : "UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
                Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
             }
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");

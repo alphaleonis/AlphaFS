@@ -452,9 +452,9 @@ namespace Alphaleonis.Win32.Filesystem
             {
                // Ensure the folder is empty.
                if (!IsEmptyCore(transaction, junctionPath, pathFormat))
-                  throw new DirectoryNotEmptyException(junctionPath);
+                  throw new DirectoryNotEmptyException(junctionPath, true);
 
-               throw new AlreadyExistsException(junctionPath);
+               throw new AlreadyExistsException(junctionPath, true);
             }
          }
 

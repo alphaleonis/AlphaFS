@@ -41,8 +41,16 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
-      /// <param name="path">The path to the file.</param>
-      public DirectoryNotEmptyException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), ErrorCode)
+      /// <param name="message">The message.</param>
+      public DirectoryNotEmptyException(string message) : base(message, ErrorCode)
+      {
+      }
+
+
+      /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
+      /// <param name="path">The path to the directory.</param>
+      /// <param name="isPath">Always set to true when using this constructor.</param>
+      public DirectoryNotEmptyException(string path, bool isPath) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), ErrorCode)
       {
       }
 

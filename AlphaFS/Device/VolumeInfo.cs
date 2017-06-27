@@ -146,7 +146,7 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      case Win32Errors.ERROR_NOT_READY:
                         if (!_continueOnAccessError)
-                           throw new DeviceNotReadyException();
+                           throw new DeviceNotReadyException(Name, true);
                         break;
 
                      case Win32Errors.ERROR_MORE_DATA:

@@ -363,7 +363,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
                   // MSDN: .NET 3.5+: IOException: The directory specified by path is not an empty directory. 
-                  throw new DirectoryNotEmptyException(pathLp);
+                  throw new DirectoryNotEmptyException(pathLp, true);
 
 
                case Win32Errors.ERROR_DIRECTORY:

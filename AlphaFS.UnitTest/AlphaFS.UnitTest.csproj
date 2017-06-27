@@ -154,7 +154,7 @@
     <Compile Include="FileSystemEntryInfo Class\AlphaFS_Directory_GetFileSystemEntryInfo_LocalAndNetwork_Success.cs" />
     <Compile Include="FileSystemEntryInfo Class\AlphaFS_File_GetFileSystemEntryInfo_LocalAndNetwork_Success.cs" />
     <Compile Include="DeviceInfo Class\AlphaFS_Device_EnumerateDevices_Local_Success.cs" />
-    <Compile Include="BackupFileStream Class\AlphaFS_BackupFileStream_InitializeInstance_LocalAndNetwork_Success.cs" />
+    <Compile Include="BackupStreamInfo Class\AlphaFS_BackupFileStream_InitializeInstance_LocalAndNetwork_Success.cs" />
     <Compile Include="DeviceInfo Class\AlphaFS_DeviceInfo_InitializeInstance_LocalAndNetwork_Success.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Compress_Decompress.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Encryption.cs" />

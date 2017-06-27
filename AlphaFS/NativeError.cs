@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32
 
             case Win32Errors.ERROR_ALREADY_EXISTS:
             case Win32Errors.ERROR_FILE_EXISTS:
-               throw new AlreadyExistsException(errorMessage, (int) errorCode);
+               throw new AlreadyExistsException(errorMessage, false);
 
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
                throw new DirectoryNotEmptyException(errorMessage);
@@ -118,8 +118,10 @@ namespace Alphaleonis.Win32
 
             //#endregion Reparse Point
 
+
             case Win32Errors.ERROR_NOT_SAME_DEVICE:
                throw new NotSameDeviceException(errorMessage);
+
 
             #region Transactional
 
