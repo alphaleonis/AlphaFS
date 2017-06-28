@@ -41,9 +41,9 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_GetFileSystemEntryInfo_SystemDrive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_GetFileSystemEntryInfo_LogicalDrives_Local_Success()
       {
-         Directory_GetFileSystemEntryInfo_SystemDrive();
+         Directory_GetFileSystemEntryInfo_LogicalDrives();
       }
 
 
@@ -78,7 +78,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_GetFileSystemEntryInfo_SystemDrive()
+      private void Directory_GetFileSystemEntryInfo_LogicalDrives()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 

@@ -35,8 +35,6 @@ namespace Alphaleonis.Win32.Filesystem
    [Serializable]
    internal sealed class FindFileSystemEntryInfo
    {
-      #region Private
-
       private static readonly Regex WildcardMatchAll = new Regex(@"^(\*)+(\.\*+)+$", RegexOptions.IgnoreCase | RegexOptions.Compiled); // special case to recognize *.* or *.** etc
       private Regex _nameFilter;
       private string _searchPattern = Path.WildcardStarMatchAll;
@@ -107,11 +105,11 @@ namespace Alphaleonis.Win32.Filesystem
             Recursive = (options & DirectoryEnumerationOptions.Recursive) != 0;
 
             SkipReparsePoints = (options & DirectoryEnumerationOptions.SkipReparsePoints) != 0;
+
+            LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 ? NativeMethods.UseLargeCache : NativeMethods.FIND_FIRST_EX_FLAGS.NONE;
          }
 
-
-         FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) != 0 && NativeMethods.IsAtLeastWindows7 ? NativeMethods.FINDEX_INFO_LEVELS.Basic : NativeMethods.FindexInfoLevel;
-         LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 && NativeMethods.IsAtLeastWindows7 ? NativeMethods.FIND_FIRST_EX_FLAGS.LARGE_FETCH : NativeMethods.UseLargeCache;
+         FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) != 0 ? NativeMethods.FindexInfoLevel : NativeMethods.FINDEX_INFO_LEVELS.Standard;
       }
 
 
@@ -167,34 +165,30 @@ namespace Alphaleonis.Win32.Filesystem
 
          var fullPathLp = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp) + (!Utils.IsNullOrWhiteSpace(fileName) ? fileName : string.Empty);
 
-
-         // Return object instance FullPath property as string, optionally in long path format.
-         if (AsString)
-            return null == Filter || Filter(new FileSystemEntryInfo(win32FindData) {FullPath = fullPathLp})
-               ? (T) (object) (AsLongPath
-                  ? fullPathLp
-                  : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None, false))
-               : (T) (object) null;
-
-
-         // Make sure the requested file system object type is returned.
-         // null = Return files and directories.
-         // true = Return only directories.
-         // false = Return only files.
-
          var fsei = new FileSystemEntryInfo(win32FindData) {FullPath = fullPathLp};
 
-         return null != Filter && !Filter(fsei)
-            ? (T) (object) null
-            : (AsFileSystemInfo
-               // Return object instance of type FileSystemInfo.
-               ? (T) (object) (fsei.IsDirectory
-                  ? (FileSystemInfo)
-                  new DirectoryInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei}
-                  : new FileInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei})
 
-               // Return object instance of type FileSystemEntryInfo.
-               : (T) (object) fsei);
+         // Return object instance FullPath property as string, optionally in long path format.
+         return AsString
+            ? null == Filter || Filter(fsei)
+               ? (T) (object) (AsLongPath ? fullPathLp : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None, false))
+               : (T) (object) null
+
+            // Make sure the requested file system object type is returned.
+            // null = Return files and directories.
+            // true = Return only directories.
+            // false = Return only files.
+            : null != Filter && !Filter(fsei)
+               ? (T) (object) null
+
+               // Return object instance of type FileSystemInfo.
+               : AsFileSystemInfo
+                  ? (T) (object) (fsei.IsDirectory
+                     ? (FileSystemInfo) new DirectoryInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei}
+                     : new FileInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei})
+
+                  // Return object instance of type FileSystemEntryInfo.
+                  : (T) (object) fsei;
       }
 
 
@@ -238,7 +232,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // Private
 
 
 
@@ -307,7 +300,7 @@ namespace Alphaleonis.Win32.Filesystem
                                  ? ((DirectoryInfo) (object) res).EntryInfo
                                  : (FileSystemEntryInfo) (object) res
 
-                           
+
                            // No, create new instance.
                            : new FileSystemEntryInfo(win32FindData)
                            {
@@ -418,7 +411,8 @@ namespace Alphaleonis.Win32.Filesystem
       public bool AsString { get; internal set; }
 
 
-      /// <summary>Gets the value indicating which <see cref="NativeMethods.FINDEX_INFO_LEVELS"/> to use.</summary>
+      /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.</summary>
+      /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
       public NativeMethods.FINDEX_INFO_LEVELS FindExInfoLevel { get; internal set; }
 
 
@@ -456,7 +450,8 @@ namespace Alphaleonis.Win32.Filesystem
       public bool IsDirectory { get; internal set; }
 
 
-      /// <summary>Gets the value indicating which <see cref="NativeMethods.FIND_FIRST_EX_FLAGS"/> to use.</summary>
+      /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.</summary>
+      /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
       public NativeMethods.FIND_FIRST_EX_FLAGS LargeCache { get; internal set; }
 
 
