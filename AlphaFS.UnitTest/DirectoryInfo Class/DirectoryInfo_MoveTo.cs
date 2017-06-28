@@ -98,7 +98,7 @@ namespace AlphaFS.UnitTest
 
                foreach (var line in pendingList)
                {
-                  found = !Alphaleonis.Utils.IsNullOrWhiteSpace(line) && line.Replace(pendingEntry, string.Empty).Equals(@"\??\", StringComparison.OrdinalIgnoreCase);
+                  found = !Alphaleonis.Utils.IsNullOrWhiteSpace(line) && line.Replace(pendingEntry, string.Empty).Equals(Alphaleonis.Win32.Filesystem.Path.NonInterpretedPathPrefix, StringComparison.Ordinal);
 
                   if (found)
                   {

@@ -281,17 +281,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Repeatedly invokes InvokeIoControl with the specified input until enough memory has been allocated.</summary>
       [SecurityCritical]
-      private static byte[] InvokeIoControlUnknownSize<T>(SafeFileHandle handle, uint controlCode, T input, uint increment = 128)
+      private static void InvokeIoControlUnknownSize<T>(SafeFileHandle handle, uint controlCode, T input, uint increment = 128)
       {
-         byte[] output;
-         uint bytesReturned;
-
+         //byte[] output;
+         //uint bytesReturned;
          var inputSize = (uint) Marshal.SizeOf(input);
          var outputLength = increment;
 
          do
          {
-            output = new byte[outputLength];
+            var output = new byte[outputLength];
+            uint bytesReturned;
 
             var success = NativeMethods.DeviceIoControlUnknownSize(handle, controlCode, input, inputSize, output, outputLength, out bytesReturned, IntPtr.Zero);
 
@@ -316,18 +316,15 @@ namespace Alphaleonis.Win32.Filesystem
          } while (true);
 
 
-         // Return the result.
-         if (output.Length == bytesReturned)
-            return output;
+         // 2017-06-28: Disabled; results are currently not used.
 
+         //// Return the result.
+         //if (output.Length == bytesReturned)
+         //   return output;
 
-         var res = new byte[bytesReturned];
-         Array.Copy(output, res, bytesReturned);
-
-         return res;
-
-
-         // TODO: Always return output?
+         //var res = new byte[bytesReturned];
+         //Array.Copy(output, res, bytesReturned);
+         //return res;
       }
 
       #endregion // Private Helpers

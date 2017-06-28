@@ -7,6 +7,7 @@ Version vNext  (xxxx-xx-xx)
 ### Bugs Fixed
 
 - Issue #268: There are multiple warnings when building the documentation.
+- Issue #286: Property `FileSystemEntryInfo.AlternateFileName` is always an empty string.
 - Issue #292: `CopyOptions.CopySymbolicLink` not working in 2.1.2  (Thx v2kiran)
 - Issue #325: `DeleteEmptySubdirectories` (with `recursive=true`) throws `System.IO.DirectoryNotFoundException`  (Thx kryvoplias)
 - Issue #328: Several instances of `ArgumentException.ParamName` not set/used correctly  (Thx elgonzo)
