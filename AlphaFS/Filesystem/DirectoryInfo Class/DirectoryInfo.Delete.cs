@@ -42,6 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
          Directory.DeleteDirectoryCore(Transaction, EntryInfo, null, false, false, false, PathFormat.LongFullPath);
       }
 
+
       /// <summary>Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
       /// <remarks>
       ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.</para>
@@ -62,7 +63,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
 
-      #region AlphaFS
 
       /// <summary>[AlphaFS] Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
       /// <remarks>
@@ -83,6 +83,25 @@ namespace Alphaleonis.Win32.Filesystem
          Directory.DeleteDirectoryCore(Transaction, EntryInfo, null, recursive, ignoreReadOnly, false, PathFormat.LongFullPath);
       }
 
-      #endregion // AlphaFS
+
+      /// <summary>[AlphaFS] Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
+      /// <remarks>
+      ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.</para>
+      ///   <para>Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="recursive"><see langword="true"/> to delete this directory, its subdirectories, and all files; otherwise, <see langword="false"/>.</param>
+      /// <param name="ignoreReadOnly"><see langword="true"/> ignores read only attribute of files and directories.</param>
+      /// <param name="continueOnNotFound">When <see langword="true"/> does not throw an <see cref="DirectoryNotFoundException"/> when the directory does not exist.</param>
+      [SecurityCritical]
+      public void Delete(bool recursive, bool ignoreReadOnly, bool continueOnNotFound)
+      {
+         Directory.DeleteDirectoryCore(Transaction, EntryInfo, null, recursive, ignoreReadOnly, continueOnNotFound, PathFormat.LongFullPath);
+      }
    }
 }

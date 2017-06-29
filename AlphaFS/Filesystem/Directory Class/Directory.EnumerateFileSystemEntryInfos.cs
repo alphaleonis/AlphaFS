@@ -1231,6 +1231,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+
+
       /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path using <see cref="DirectoryEnumerationOptions"/> and <see cref="DirectoryEnumerationFilters"/>.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>

@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
          AsString = typeOfT == typeof(string);
          AsFileSystemInfo = !AsString && (typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo));
 
-         
+
          if (isFolder)
          {
             IsDirectory = true;
@@ -102,12 +102,22 @@ namespace Alphaleonis.Win32.Filesystem
                : (options & DirectoryEnumerationOptions.Folders) != 0;
 
 
-            Recursive = (options & DirectoryEnumerationOptions.Recursive) != 0;
+            Recursive = (options & DirectoryEnumerationOptions.Recursive) != 0 || null != RecursionFilter;
 
             SkipReparsePoints = (options & DirectoryEnumerationOptions.SkipReparsePoints) != 0;
-
-            LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 ? NativeMethods.UseLargeCache : NativeMethods.FIND_FIRST_EX_FLAGS.NONE;
          }
+
+         else
+         {
+            if ((options & DirectoryEnumerationOptions.Folders) == 0)
+               options &= ~DirectoryEnumerationOptions.Folders;
+
+            if ((options & DirectoryEnumerationOptions.Files) == 0)
+               options |= DirectoryEnumerationOptions.Files;
+         }
+
+
+         LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 ? NativeMethods.UseLargeCache : NativeMethods.FIND_FIRST_EX_FLAGS.NONE;
 
          FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) != 0 ? NativeMethods.FindexInfoLevel : NativeMethods.FINDEX_INFO_LEVELS.Standard;
       }
@@ -409,12 +419,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets or sets the ability to return the object instance as a <see cref="string"/>.</summary>
       /// <value><see langword="true"/> returns the full path of the object as a <see cref="string"/></value>
       public bool AsString { get; internal set; }
-
-
-      /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.</summary>
-      /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
-      public NativeMethods.FINDEX_INFO_LEVELS FindExInfoLevel { get; internal set; }
-
+      
 
       /// <summary>Gets or sets the ability to skip on access errors.</summary>
       /// <value><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as ACLs protected directories or non-accessible reparse points.</value>
@@ -453,6 +458,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.</summary>
       /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
       public NativeMethods.FIND_FIRST_EX_FLAGS LargeCache { get; internal set; }
+
+
+      /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.</summary>
+      /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
+      public NativeMethods.FINDEX_INFO_LEVELS FindExInfoLevel { get; internal set; }
 
 
       /// <summary>Specifies whether the search should include only the current directory or should include all subdirectories.</summary>

@@ -265,19 +265,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory to remove. Use either <paramref name="path"/> or <paramref name="fsEntryInfo"/>, not both.</param>
       /// <param name="recursive"><see langword="true"/> to remove all files and subdirectories recursively; <see langword="false"/> otherwise only the top level empty directory.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only attribute of files and directories.</param>
-      /// <param name="continueOnNotFound">When <see langword="true"/> does not throw an Exception when the directory does not exist.</param>
+      /// <param name="continueOnNotFound">When <see langword="true"/> does not throw an <see cref="DirectoryNotFoundException"/> when the directory does not exist.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       internal static void DeleteDirectoryCore(KernelTransaction transaction, FileSystemEntryInfo fsEntryInfo, string path, bool recursive, bool ignoreReadOnly, bool continueOnNotFound, PathFormat pathFormat)
       {
-         // TODO
-         // continueOnNotFound should be continueOnException.
-         ///// <param name="continueOnException">
-         /////    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
-         /////    <para>such as ACLs protected directories or non-accessible reparse points.</para>
-         ///// </param>
-         
-         
          if (null == fsEntryInfo)
          {
             // MSDN: .NET 3.5+: DirectoryNotFoundException:

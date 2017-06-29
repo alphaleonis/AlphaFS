@@ -61,6 +61,15 @@ namespace AlphaFS.UnitTest
 
 
 
+            var lvi = Alphaleonis.Win32.Filesystem.Directory.GetLinkTargetInfo(dirInfo.FullName);
+            UnitTestConstants.Dump(lvi, -14);
+
+            Assert.IsTrue(lvi.SubstituteName.StartsWith(Alphaleonis.Win32.Filesystem.Path.NonInterpretedPathPrefix));
+            Assert.IsTrue(lvi.SubstituteName.EndsWith(guid.Replace(Alphaleonis.Win32.Filesystem.Path.LongPathPrefix, string.Empty)));
+
+
+
+
             Alphaleonis.Win32.Filesystem.Volume.DeleteVolumeMountPoint(dirInfo.FullName);
 
             Assert.IsFalse(Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumeMountPoints(guid).Any(mountPoint => dirInfo.FullName.EndsWith(mountPoint.TrimEnd('\\'))));
