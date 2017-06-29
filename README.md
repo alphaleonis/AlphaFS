@@ -9,7 +9,7 @@ The file system support in .NET is pretty good for most uses. However there are 
 ### Feature Highlights
 
 * Support for extended length paths (longer than 260 characters)
-* Creating Hardlinks
+* Creating Junctions/Hardlinks
 * Accessing hidden volumes
 * Enumeration of volumes
 * Transactional file operations
