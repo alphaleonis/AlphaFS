@@ -47,7 +47,7 @@ Function Invoke-GenericMethod {
     [Collections.ArrayList]$Private:parameterTypes = @{}
     ForEach ($Private:paramType In $MethodParameters) { [Void]$parameterTypes.Add($paramType.GetType()) }
 
-    $Private:method = $Instance.GetMethod($methodName, "Instance,Static,Public", $Null, $parameterTypes, $Null)
+    $Private:method = $Instance.GetMethod($methodName, "Instance, Static, Public", $Null, $parameterTypes, $Null)
 
     If ($Null -eq $method) { Throw ('Method: [{0}] not found.' -f ($Instance.ToString() + '.' + $methodName)) }
     Else {
@@ -57,12 +57,32 @@ Function Invoke-GenericMethod {
 }
 
 
+[Alphaleonis.Win32.Filesystem.ErrorHandler]$ReportException = {
+
+    [OutputType([Bool])]
+    Param(
+        [Int]$errorCode,
+        [String]$errorMessage,
+        [String]$pathProcessed
+    )
+    
+
+    [Int]$Private:ERROR_ACCESS_DENIED = 5;
+    
+    if ($errorCode -eq $ERROR_ACCESS_DENIED) { Write-Host -ForegroundColor Red ('({0}) {1}  Path: [{2}]' -f $errorCode, $errorMessage, $pathProcessed) }
+    
+    # Continue enumeration.
+    return $True
+}
+
+
+
 Function Enumerate-FileSystemEntryInfos {
 
 <#
     .SYNOPSIS
         [Alphaleonis.Win32.Filesystem.Directory]::EnumerateFileSystemEntryInfos()
-        AlphaFS 2.1+: A powerful folder/file enumerator which can recover from access denied exceptions.
+        AlphaFS 2.1+: A powerful folder/file enumerator which can recover from, and report, access denied exceptions.
 
 
     .EXAMPLE
@@ -99,23 +119,35 @@ Function Enumerate-FileSystemEntryInfos {
     # Skip ReparsePoints by default.
 	$Private:dirEnumOptions = [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::SkipReparsePoints
 
-	If ($ContinueOnException.IsPresent) { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::ContinueOnException }
-	If ($Recurse.IsPresent)             { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::Recursive }
+	If ($ContinueOnException.IsPresent) { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = "$dirEnumOptions, ContinueOnException" }
+	If ($Recurse.IsPresent)             { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = "$dirEnumOptions, Recursive" }
 
-	If (-not $Directory.IsPresent -and -not $File.IsPresent) { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::FilesAndFolders }
-	Else {
-		If ($Directory.IsPresent) { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::Folders }
-		If ($File.IsPresent)      { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::Files }
-	}
+	If (-not $Directory.IsPresent -and -not $File.IsPresent) {
+        [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = "$dirEnumOptions, FilesAndFolders"
+        $Directory = $True
+        $File = $True
+    }
+
+	If ($Directory.IsPresent -or $Directory) { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = "$dirEnumOptions, Folders, LargeCache, BasicSearch" }
+	If ($File.IsPresent -or $File)           { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = "$dirEnumOptions, Files"  }
 	
+
+    [Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters]$Private:dirEnumFilters = New-Object Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
+    $dirEnumFilters.ErrorFilter = $ReportException
+	
+
+    Write-Progress -Activity $Path -Status ('Processing input path: {0}' -f $Path)
 
 	ForEach ($Private:fsei In (Invoke-GenericMethod `
 		-Instance           ([Alphaleonis.Win32.Filesystem.Directory]) `
 		-MethodName         EnumerateFileSystemEntryInfos `
 		-TypeParameters     Alphaleonis.Win32.Filesystem.FileSystemEntryInfo `
-		-MethodParameters   $Path, $Filter, $dirEnumOptions, ([Alphaleonis.Win32.Filesystem.PathFormat]::RelativePath))) {
+		-MethodParameters   $Path, $Filter, $dirEnumOptions, $dirEnumFilters, ([Alphaleonis.Win32.Filesystem.PathFormat]::RelativePath))) {
 
-		Write-Output $fsei
+        Write-Progress -Activity $fsei.FullPath -Status ('Processing input path: {0}' -f $Path)
+
+        # Return object.
+		#Write-Output $fsei.FullPath
 	}
 }
 
