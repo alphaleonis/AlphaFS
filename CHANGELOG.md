@@ -44,6 +44,17 @@ Version vNext  (xxxx-xx-xx)
 - Issue #355: Methods throwing an `IOException` due to error code 17 (`ERROR_NOT_SAME_DEVICE`) now throw a specific exception (`NotSameDeviceException`)
 - Issue #357: Added new Windows 10 property: `FILE_DAX_VOLUME` to `VolumeInfo` class.
 
+### Breaking Changes
+
+- Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
+
+   Current code to retrieve a directory using `File.GetFileSystemEntryInfo` will now fail.
+   Use Directory.GetFileSystemEntryInfo instead.
+
+- Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
+   Currently non-breaking, the old methods are still there.
+
+
 Version 2.1.3 (2017-06-05)
 -------------
 

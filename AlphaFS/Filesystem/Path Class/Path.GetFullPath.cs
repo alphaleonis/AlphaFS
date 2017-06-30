@@ -195,6 +195,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Do not remove trailing directory separator when path points to a drive like: "C:\"
             // Doing so makes path point to the current directory.
 
+            // ".", "C:", "C:\"
             if (null == path || path.Length <= 3 || !path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) && path[1] != VolumeSeparatorChar)
                options &= ~GetFullPathOptions.RemoveTrailingDirectorySeparator;
          }

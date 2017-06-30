@@ -141,7 +141,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="checkAdditional">.</param>
       internal static void CheckSupportedPathFormat(string path, bool checkInvalidPathChars, bool checkAdditional)
       {
-         if (Utils.IsNullOrWhiteSpace(path) || path.Length < 2)
+         // "."
+         if (Utils.IsNullOrWhiteSpace(path) || path.Length == 1)
             return;
 
          var regularPath = GetRegularPathCore(path, GetFullPathOptions.None, false);

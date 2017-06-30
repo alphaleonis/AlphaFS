@@ -30,6 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file.</returns>
       /// <param name="path">The path to the file.</param>
       [SecurityCritical]
+      [Obsolete("This method is now invalid for directories; use method: Directory.GetFileSystemEntryInfo")]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
       {
          return GetFileSystemEntryInfoCore(null, false, path, false, PathFormat.RelativePath);
@@ -41,6 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("This method is now invalid for directories; use method: Directory.GetFileSystemEntryInfo")]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, PathFormat pathFormat)
       {
          return GetFileSystemEntryInfoCore(null, false, path, false, pathFormat);
@@ -55,6 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
+      [Obsolete("This method is now invalid for directories; use method: Directory.GetFileSystemEntryInfo")]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool continueOnException)
       {
          return GetFileSystemEntryInfoCore(null, false, path, continueOnException, PathFormat.RelativePath);
@@ -70,6 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
+      [Obsolete("This method is now invalid for directories; use method: Directory.GetFileSystemEntryInfo")]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool continueOnException, PathFormat pathFormat)
       {
          return GetFileSystemEntryInfoCore(null, false, path, continueOnException, pathFormat);
@@ -83,6 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       [SecurityCritical]
+      [Obsolete("This method is now invalid for directories; use method: Directory.GetFileSystemEntryInfo")]
       public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path)
       {
          return GetFileSystemEntryInfoCore(transaction, false, path, false, PathFormat.RelativePath);
@@ -95,6 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("This method is now invalid for directories; use method: Directory.GetFileSystemEntryInfo")]
       public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return GetFileSystemEntryInfoCore(transaction, false, path, false, pathFormat);
@@ -110,6 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
+      [Obsolete("This method is now invalid for directories; use method: Directory.GetFileSystemEntryInfo")]
       public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path, bool continueOnException)
       {
          return GetFileSystemEntryInfoCore(transaction, false, path, continueOnException, PathFormat.RelativePath);
@@ -126,6 +133,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
+      [Obsolete("This method is now invalid for directories; use method: Directory.GetFileSystemEntryInfo")]
       public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path, bool continueOnException, PathFormat pathFormat)
       {
          return GetFileSystemEntryInfoCore(transaction, false, path, continueOnException, pathFormat);
