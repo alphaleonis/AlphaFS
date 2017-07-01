@@ -47,6 +47,14 @@ namespace AlphaFS.UnitTest
       }
 
 
+      [TestMethod]
+      public void AlphaFS_Directory_GetFileSystemEntryInfo_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
+      {
+         Directory_GetFileSystemEntryInfo_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(false);
+         Directory_GetFileSystemEntryInfo_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(true);
+      }
+
+
 
 
       private void Directory_GetFileSystemEntryInfo(bool isNetwork)
@@ -67,7 +75,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
          var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath);
-         UnitTestConstants.Dump(fsei, -17);
+         UnitTestConstants.Dump(fsei, -19);
 
 
          Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));
@@ -91,7 +99,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nInput Directory Path: [{0}]", driveName);
 
             var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(driveName);
-            UnitTestConstants.Dump(fsei, -17);
+            UnitTestConstants.Dump(fsei, -19);
 
 
             Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));
@@ -112,6 +120,42 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine();
          }
+      }
+
+
+      private void Directory_GetFileSystemEntryInfo_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(bool isNetwork)
+      {
+         var path = UnitTestConstants.NotepadExe;
+
+         if (!System.IO.File.Exists(path))
+            Assert.Inconclusive("Test ignored because {0} was not found.", path);
+
+
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = path;
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
+
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath);
+         }
+         catch (Exception ex)
+         {
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+         }
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+
+         Console.WriteLine();
       }
    }
 }

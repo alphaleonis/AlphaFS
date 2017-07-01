@@ -143,16 +143,18 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (null != handle)
                {
-                  var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
+                  VerifyInstance(win32FindData);
 
-                  if (IsDirectory)
-                  {
-                     if (!isFolder)
-                        NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, pathLp);
-                  }
+                  //var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
 
-                  else if (isFolder)
-                     NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, pathLp);
+                  //if (IsDirectory)
+                  //{
+                  //   if (!isFolder)
+                  //      NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, pathLp);
+                  //}
+
+                  //else if (isFolder)
+                  //   NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, pathLp);
                }
             }
 
@@ -240,6 +242,21 @@ namespace Alphaleonis.Win32.Filesystem
             if (null == ErrorHandler || !ErrorHandler((int) lastError, new Win32Exception((int) lastError).Message, pathLp.TrimEnd(Path.WildcardStarMatchAllChar)))
                NativeError.ThrowException(lastError, pathLp);
          }
+      }
+
+
+      private void VerifyInstance(NativeMethods.WIN32_FIND_DATA win32FindData)
+      {
+         var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
+
+         if (IsDirectory)
+         {
+            if (!isFolder)
+               throw new DirectoryNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_PATH_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, InputPath)));
+         }
+
+         else if (isFolder)
+            throw new FileNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, InputPath)));
       }
 
 
@@ -386,7 +403,6 @@ namespace Alphaleonis.Win32.Filesystem
 
                   win32FindData = new NativeMethods.WIN32_FIND_DATA
                   {
-                     cAlternateFileName = null,
                      cFileName = Path.CurrentDirectoryPrefix,
                      dwFileAttributes = attrs.dwFileAttributes,
                      ftCreationTime = attrs.ftCreationTime,
@@ -396,6 +412,9 @@ namespace Alphaleonis.Win32.Filesystem
                      nFileSizeLow = attrs.nFileSizeLow
                   };
                }
+
+
+               VerifyInstance(win32FindData);
             }
 
 

@@ -48,10 +48,12 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>The file attributes of a file.</summary>
          public FileAttributes dwFileAttributes;
 
+         
          /// <summary>A <see cref="FILETIME"/> structure that specifies when a file or directory was created.
          /// If the underlying file system does not support creation time, this member is zero.</summary>
          public FILETIME ftCreationTime;
 
+         
          /// <summary>A <see cref="FILETIME"/> structure.
          /// For a file, the structure specifies when the file was last read from, written to, or for executable files, run.
          /// For a directory, the structure specifies when the directory is created. If the underlying file system does not support last access time, this member is zero.
@@ -59,6 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// </summary>
          public FILETIME ftLastAccessTime;
 
+         
          /// <summary>A <see cref="FILETIME"/> structure.
          /// For a file, the structure specifies when the file was last written to, truncated, or overwritten, for example, when WriteFile or SetEndOfFile are used.
          /// The date and time are not updated when file attributes or security descriptors are changed.
@@ -66,28 +69,34 @@ namespace Alphaleonis.Win32.Filesystem
          /// </summary>
          public FILETIME ftLastWriteTime;
 
+         
          /// <summary>The high-order DWORD of the file size. This member does not have a meaning for directories.
          /// This value is zero unless the file size is greater than MAXDWORD.
          /// The size of the file is equal to (nFileSizeHigh * (MAXDWORD+1)) + nFileSizeLow.
          /// </summary>
          public uint nFileSizeHigh;
 
+         
          /// <summary>The low-order DWORD of the file size. This member does not have a meaning for directories.</summary>
          public uint nFileSizeLow;
 
+         
          /// <summary>If the dwFileAttributes member includes the FILE_ATTRIBUTE_REPARSE_POINT attribute, this member specifies the reparse point tag.
          /// Otherwise, this value is undefined and should not be used.
          /// </summary>
          public readonly ReparsePointTag dwReserved0;
 
+         
          /// <summary>Reserved for future use.</summary>
          private readonly uint dwReserved1;
 
+         
          /// <summary>The name of the file.</summary>
          [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] public string cFileName;
 
+         
          /// <summary>An alternative name for the file. This name is in the classic 8.3 file name format.</summary>
-         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)] public string cAlternateFileName;
+         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)] public readonly string cAlternateFileName;
       }
    }
 }
