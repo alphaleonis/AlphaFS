@@ -140,22 +140,8 @@ namespace Alphaleonis.Win32.Filesystem
                // When the handle is null and we are still here, it means the ErrorHandler is active,
                // preventing the Exception from being thrown.
 
-
                if (null != handle)
-               {
-                  VerifyInstance(win32FindData);
-
-                  //var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
-
-                  //if (IsDirectory)
-                  //{
-                  //   if (!isFolder)
-                  //      NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, pathLp);
-                  //}
-
-                  //else if (isFolder)
-                  //   NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, pathLp);
-               }
+                  VerifyInstanceType(win32FindData);
             }
 
 
@@ -245,7 +231,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private void VerifyInstance(NativeMethods.WIN32_FIND_DATA win32FindData)
+      private void VerifyInstanceType(NativeMethods.WIN32_FIND_DATA win32FindData)
       {
          var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
 
@@ -414,7 +400,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
 
-               VerifyInstance(win32FindData);
+               VerifyInstanceType(win32FindData);
             }
 
 

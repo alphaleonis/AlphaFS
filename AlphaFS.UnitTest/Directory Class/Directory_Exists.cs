@@ -273,8 +273,6 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\nSystem.IO (should be {0}):\t[{1}]\t\tdirectory= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputPath);
                   Console.WriteLine("AlphaFS   (should be {0}):\t[{1}]\t\tdirectory= {2}", alphaFSshouldBe.ToString().ToUpperInvariant(), existAlpha, inputPath);
 
-                  Console.WriteLine();
-
 
                   //if (sysIOshouldBe)
                   //   Assert.IsTrue(existSysIO);
