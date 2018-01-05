@@ -468,7 +468,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Copy the target date and time stamps to the directory junction.
          if (copyTargetTimestamps)
-            File.CopyTimestampsCore(transaction, true, directoryPath, junctionPath, true, pathFormat);
+            File.CopyTimestampsCore(transaction, directoryPath, junctionPath, true, pathFormat);
 
 
          return junctionPath;

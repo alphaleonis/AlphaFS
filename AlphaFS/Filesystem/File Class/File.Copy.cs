@@ -994,7 +994,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             if (preserveDates)
-               CopyTimestampsCore(transaction, false, sourcePathLp, destinationPathLp, false, pathFormat);
+               CopyTimestampsCore(transaction, sourcePathLp, destinationPathLp, false, pathFormat);
 
 
             cmr.TotalFiles++;

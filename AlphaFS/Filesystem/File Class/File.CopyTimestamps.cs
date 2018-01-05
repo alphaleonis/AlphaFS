@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath)
       {
-         CopyTimestampsCore(null, false, sourcePath, destinationPath, false, PathFormat.RelativePath);
+         CopyTimestampsCore(null, sourcePath, destinationPath, false, PathFormat.RelativePath);
       }
 
 
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         CopyTimestampsCore(null, false, sourcePath, destinationPath, false, pathFormat);
+         CopyTimestampsCore(null, sourcePath, destinationPath, false, pathFormat);
       }
 
 
@@ -112,7 +112,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath, bool modifyReparsePoint)
       {
-         CopyTimestampsCore(null, false, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
+         CopyTimestampsCore(null, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
       }
 
 
@@ -125,7 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         CopyTimestampsCore(null, false, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
+         CopyTimestampsCore(null, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
       }
 
 
@@ -139,7 +139,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         CopyTimestampsCore(transaction, false, sourcePath, destinationPath, false, PathFormat.RelativePath);
+         CopyTimestampsCore(transaction, sourcePath, destinationPath, false, PathFormat.RelativePath);
       }
 
 
@@ -152,7 +152,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         CopyTimestampsCore(transaction, false, sourcePath, destinationPath, false, pathFormat);
+         CopyTimestampsCore(transaction, sourcePath, destinationPath, false, pathFormat);
       }
 
 
@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool modifyReparsePoint)
       {
-         CopyTimestampsCore(transaction, false, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
+         CopyTimestampsCore(transaction, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
       }
 
 
@@ -179,7 +179,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         CopyTimestampsCore(transaction, false, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
+         CopyTimestampsCore(transaction, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
       }
 
 
@@ -189,13 +189,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This method uses BackupSemantics flag to get Timestamp changed for directories.</para>
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="isFolder">Specifies that <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are a file or directory.</param>
       /// <param name="sourcePath">The source path.</param>
       /// <param name="destinationPath">The destination path.</param>
       /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void CopyTimestampsCore(KernelTransaction transaction, bool isFolder, string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)
+      internal static void CopyTimestampsCore(KernelTransaction transaction, string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)
       {
          var attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, sourcePath, pathFormat, true);
 
