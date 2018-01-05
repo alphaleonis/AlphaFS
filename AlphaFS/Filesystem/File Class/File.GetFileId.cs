@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileId GetFileId(string path)
       {
-         return GetFileIdCore(null, false, path, PathFormat.RelativePath);
+         return GetFileIdCore(null, path, PathFormat.RelativePath);
       }
 
 
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileId GetFileId(string path, PathFormat pathFormat)
       {
-         return GetFileIdCore(null, false, path, pathFormat);
+         return GetFileIdCore(null, path, pathFormat);
       }
 
 
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileId GetFileIdTransacted(KernelTransaction transaction, string path)
       {
-         return GetFileIdCore(transaction, false, path, PathFormat.RelativePath);
+         return GetFileIdCore(transaction, path, PathFormat.RelativePath);
       }
 
 
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileId GetFileIdTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetFileIdCore(transaction, false, path, pathFormat);
+         return GetFileIdCore(transaction, path, pathFormat);
       }
 
 
@@ -95,18 +95,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
-
       /// <summary>[AlphaFS] Gets the unique identifier for a file. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static FileId GetFileIdCore(KernelTransaction transaction, bool isFolder, string path, PathFormat pathFormat)
+      internal static FileId GetFileIdCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         using (var handle = CreateFileCore(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.ReadOnly, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
+         using (var handle = CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
          {
             if (NativeMethods.IsAtLeastWindows8)
             {

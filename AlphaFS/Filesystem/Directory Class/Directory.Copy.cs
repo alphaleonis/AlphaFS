@@ -724,7 +724,7 @@ namespace Alphaleonis.Win32.Filesystem
             
             if (File.HasCopySymbolicLink(copyOptions))
             {
-               var lvi = File.GetLinkTargetInfoCore(transaction, true, sourcePathLp, true, pathFormat);
+               var lvi = File.GetLinkTargetInfoCore(transaction, sourcePathLp, true, pathFormat);
 
                if (null != lvi)
                {

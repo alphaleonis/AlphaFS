@@ -759,7 +759,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
                else if (compress)
-                  Device.ToggleCompressionCore(transaction, true, folderLp, true, pathFormat);
+                  Device.ToggleCompressionCore(transaction, folderLp, true, pathFormat);
             }
 
 

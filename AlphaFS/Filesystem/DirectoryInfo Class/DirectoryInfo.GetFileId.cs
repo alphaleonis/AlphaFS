@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileId GetFileId()
       {
-         return File.GetFileIdCore(Transaction, true, LongFullName, PathFormat.LongFullPath);
+         return File.GetFileIdCore(Transaction, LongFullName, PathFormat.LongFullPath);
       }
    }
 }

@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -32,6 +33,14 @@ namespace AlphaFS.UnitTest
       //public void aaaDirectory_EnumerateFileSystemEntryInfos_ReportException_LocalAndNetwork_Success()
       //{
       //   Directory_EnumerateFileSystemEntryInfos_ReportException(false);
+      //}
+
+
+      //[TestMethod]
+      //public void AlphaFS_Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName_LocalAndNetwork_Success()
+      //{
+      //   Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(false);
+      //   //Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(true);
       //}
 
 
@@ -67,6 +76,34 @@ namespace AlphaFS.UnitTest
       }
 
 
+
+
+      // 2018-01-05 TODO: The "space folder" is not created.
+      //private void Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(bool isNetwork)
+      //{
+      //   UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+      //   var tempPath = System.IO.Path.GetTempPath();
+      //   if (isNetwork)
+      //      tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+      //   using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+      //   {
+      //      var folder = rootDir.RandomDirectoryFullPath;
+      //      Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
+      //      UnitTestConstants.CreateDirectoriesAndFiles(folder, 2, false, false, false);
+
+
+      //      // Create  folder with a single space as the folder name.
+      //      var spaceFolder = folder + @"\ ";
+
+      //      Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(spaceFolder, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
+      //   }
+
+      //   Console.WriteLine();
+      //}
 
 
       private void Directory_EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo(bool isNetwork)

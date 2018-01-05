@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileId GetFileId(string path)
       {
-         return File.GetFileIdCore(null, true, path, PathFormat.RelativePath);
+         return File.GetFileIdCore(null, path, PathFormat.RelativePath);
       }
 
 
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileId GetFileId(string path, PathFormat pathFormat)
       {
-         return File.GetFileIdCore(null, true, path, pathFormat);
+         return File.GetFileIdCore(null, path, pathFormat);
       }
 
 
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileId GetFileIdTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetFileIdCore(transaction, true, path, PathFormat.RelativePath);
+         return File.GetFileIdCore(transaction, path, PathFormat.RelativePath);
       }
 
 
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileId GetFileIdTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetFileIdCore(transaction, true, path, pathFormat);
+         return File.GetFileIdCore(transaction, path, pathFormat);
       }
    }
 }

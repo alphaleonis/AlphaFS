@@ -16,6 +16,8 @@ Version vNext  (xxxx-xx-xx)
 - Issue #340: DirectoryReadOnlyException inherits from System.IO.IOException, wrong?
 - Issue #344: `Directory.Copy` throws `UnauthorizedAccessException` "The target file is a directory, not a file", while it is a file.
 - Issue #349: `File.GetFileSystemEntryInfoCore` should throw `Directory/FileNotFoundException`, depending on `isFolder` argument.
+- Issue #371: Fix `.gitignore` to accommodate new directory structure in AlphaFS.UnitTest project.  (Thx damiarnold)
+- Issue #372: `SetFsoDateTimeCore` should always use `BackupSemantics`.  (Thx damiarnold)
 
 ### New Features/Enhancements
 

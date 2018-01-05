@@ -155,7 +155,7 @@ namespace Alphaleonis.Win32.Filesystem
             // When GetNamedSecurityInfo() fails with ACCESS_DENIED, try again using GetSecurityInfo().
 
             if (lastError == Win32Errors.ERROR_ACCESS_DENIED)
-               using (var handle = CreateFileCore(null, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.ReadOnly, null, FileMode.Open, FileSystemRights.Read, FileShare.Read, false, false, PathFormat.LongFullPath))
+               using (var handle = CreateFileCore(null, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Read, FileShare.Read, false, false, PathFormat.LongFullPath))
                   return GetAccessControlHandleCore<T>(true, isFolder, handle, includeSections, securityInfo);
 
             return GetSecurityDescriptor<T>(lastError, isFolder, pathLp, pSecurityDescriptor);

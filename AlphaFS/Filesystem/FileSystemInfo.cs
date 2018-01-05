@@ -183,7 +183,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeCore(Transaction, IsDirectory, LongFullName, value, null, null, false, PathFormat.LongFullPath);
+            File.SetFsoDateTimeCore(Transaction, LongFullName, value, null, null, false, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -283,7 +283,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeCore(Transaction, IsDirectory, LongFullName, null, value, null, false, PathFormat.LongFullPath);
+            File.SetFsoDateTimeCore(Transaction, LongFullName, null, value, null, false, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -339,7 +339,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeCore(Transaction, IsDirectory, LongFullName, null, null, value, false, PathFormat.LongFullPath);
+            File.SetFsoDateTimeCore(Transaction, LongFullName, null, null, value, false, PathFormat.LongFullPath);
             Reset();
          }
       }

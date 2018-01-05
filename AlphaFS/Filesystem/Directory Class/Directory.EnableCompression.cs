@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void EnableCompression(string path)
       {
-         Device.ToggleCompressionCore(null, true, path, true, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(null, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void EnableCompression(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(null, true, path, true, pathFormat);
+         Device.ToggleCompressionCore(null, path, true, pathFormat);
       }
 
 
@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void EnableCompressionTransacted(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionCore(transaction, true, path, true, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(transaction, path, true, PathFormat.RelativePath);
       }
 
 
@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void EnableCompressionTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(transaction, true, path, true, pathFormat);
+         Device.ToggleCompressionCore(transaction, path, true, pathFormat);
       }
    }
 }

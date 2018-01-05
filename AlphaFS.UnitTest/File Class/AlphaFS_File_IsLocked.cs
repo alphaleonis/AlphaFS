@@ -118,7 +118,7 @@ namespace AlphaFS.UnitTest
 
                      // The name(s) of the Visual Studio unit test process.
                      Assert.IsTrue(process.ProcessName.StartsWith("QTAgent", StringComparison.OrdinalIgnoreCase) ||
-                                   process.ProcessName.Equals("vstest.executionengine.x86", StringComparison.OrdinalIgnoreCase));
+                                   process.ProcessName.StartsWith("vstest.executionengine", StringComparison.OrdinalIgnoreCase));
                   }
             }
          }

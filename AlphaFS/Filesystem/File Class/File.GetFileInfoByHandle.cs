@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandle(string path)
       {
-         return GetFileInfoByHandleCore(null, false, path, PathFormat.RelativePath);
+         return GetFileInfoByHandleCore(null, path, PathFormat.RelativePath);
       }
 
 
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandle(string path, PathFormat pathFormat)
       {
-         return GetFileInfoByHandleCore(null, false, path, pathFormat);
+         return GetFileInfoByHandleCore(null, path, pathFormat);
       }
 
 
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandleTransacted(KernelTransaction transaction, string path)
       {
-         return GetFileInfoByHandleCore(transaction, false, path, PathFormat.RelativePath);
+         return GetFileInfoByHandleCore(transaction, path, PathFormat.RelativePath);
       }
 
 
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandleTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetFileInfoByHandleCore(transaction, false, path, pathFormat);
+         return GetFileInfoByHandleCore(transaction, path, pathFormat);
       }
 
 
@@ -96,18 +96,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
-
       /// <summary>[AlphaFS] Retrieves file information for the specified file.</summary>
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static ByHandleFileInfo GetFileInfoByHandleCore(KernelTransaction transaction, bool isFolder, string path, PathFormat pathFormat)
+      internal static ByHandleFileInfo GetFileInfoByHandleCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         using (var handle = CreateFileCore(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.ReadOnly, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
+         using (var handle = CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
             return GetFileInfoByHandle(handle);
       }
    }

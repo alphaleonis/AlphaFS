@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, sourcePath, pathFormat, true);
 
-         SetFsoDateTimeCore(transaction, isFolder, destinationPath, DateTime.FromFileTimeUtc(attrs.ftCreationTime),
+         SetFsoDateTimeCore(transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.ftCreationTime),
             DateTime.FromFileTimeUtc(attrs.ftLastAccessTime), DateTime.FromFileTimeUtc(attrs.ftLastWriteTime), modifyReparsePoint, pathFormat);
       }
    }
