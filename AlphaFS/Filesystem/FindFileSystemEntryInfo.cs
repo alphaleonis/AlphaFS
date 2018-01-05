@@ -147,8 +147,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          return handle;
       }
-
-
+      
+      
       private T NewFileSystemEntryType<T>(bool isFolder, NativeMethods.WIN32_FIND_DATA win32FindData, string fileName, string pathLp)
       {
          // Determine yield, e.g. don't return files when only folders are requested and vice versa.
@@ -161,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
             return (T) (object) null;
 
 
-         var fullPathLp = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp) + (!Utils.IsNullOrWhiteSpace(fileName) ? fileName : string.Empty);
+         var fullPathLp = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp) + fileName;
 
          var fsei = new FileSystemEntryInfo(win32FindData) {FullPath = fullPathLp};
 
@@ -315,12 +315,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                            // No, create new instance.
-                           : new FileSystemEntryInfo(win32FindData)
-                           {
-                              FullPath = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp)
-                                         +
-                                         (!Utils.IsNullOrWhiteSpace(fileName) ? fileName : string.Empty)
-                           };
+                           : new FileSystemEntryInfo(win32FindData) {FullPath = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp) + fileName};
 
 
                         if (null == RecursionFilter || RecursionFilter(fsei))

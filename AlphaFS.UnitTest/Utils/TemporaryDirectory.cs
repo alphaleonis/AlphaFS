@@ -83,7 +83,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\nSystem.IO failed to delete TemporaryDirectory: [{0}]\nError: [{1}]", Directory.FullName, ex.Message);
+            Console.WriteLine("\n\nSystem.IO failed to delete TemporaryDirectory: [{0}]\nError: [{1}]", Directory.FullName, ex.Message.Replace(Environment.NewLine, string.Empty));
             Console.Write("Retry using AlphaFS... ");
 
             try
@@ -100,7 +100,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex2)
             {
-               Console.WriteLine("Failed to delete TemporaryDirectory.\nError: {0}", ex2.Message);
+               Console.WriteLine("Failed to delete TemporaryDirectory.\nError: {0}", ex2.Message.Replace(Environment.NewLine, string.Empty));
             }
          }
       }

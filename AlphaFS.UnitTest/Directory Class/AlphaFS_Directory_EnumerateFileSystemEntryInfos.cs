@@ -36,12 +36,12 @@ namespace AlphaFS.UnitTest
       //}
 
 
-      //[TestMethod]
-      //public void AlphaFS_Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName_LocalAndNetwork_Success()
-      //{
-      //   Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(false);
-      //   //Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(true);
-      //}
+      [TestMethod]
+      public void AlphaFS_Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName_LocalAndNetwork_Success()
+      {
+         Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(false);
+         Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(true);
+      }
 
 
       [TestMethod]
@@ -78,32 +78,61 @@ namespace AlphaFS.UnitTest
 
 
 
-      // 2018-01-05 TODO: The "space folder" is not created.
-      //private void Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(bool isNetwork)
-      //{
-      //   UnitTestConstants.PrintUnitTestHeader(isNetwork);
+      private void Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-      //   var tempPath = System.IO.Path.GetTempPath();
-      //   if (isNetwork)
-      //      tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-      //   using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-      //   {
-      //      var folder = rootDir.RandomDirectoryFullPath;
-      //      Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
-
-      //      UnitTestConstants.CreateDirectoriesAndFiles(folder, 2, false, false, false);
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-      //      // Create  folder with a single space as the folder name.
-      //      var spaceFolder = folder + @"\ ";
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         {
+            var folder = rootDir.Directory.FullName;
 
-      //      Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(spaceFolder, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
-      //   }
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-      //   Console.WriteLine();
-      //}
+
+            var maxFolder = 10;
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, maxFolder / 2, false, false, false);
+
+
+            for (var i = 0; i < maxFolder / 2; i++)
+            {
+               var spaceFolder = folder + @"\" + new string(' ', i + 1);
+
+               Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(spaceFolder, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
+            }
+
+
+
+            var countNamedFolders = 0;
+            var countSpaceFolders = 0;
+
+            foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemInfo>(folder))
+            {
+               var path = fsei.FullName;
+
+               Console.WriteLine("\tDirectory: [{0}]", path);
+
+
+               if (char.IsWhiteSpace(path[path.Length - 1]))
+               {
+                  countSpaceFolders++;
+                  Assert.IsTrue(fsei.Exists);
+               }
+
+               else
+                  countNamedFolders++;
+            }
+
+
+            Assert.AreEqual(maxFolder, countNamedFolders + countSpaceFolders);
+         }
+
+         Console.WriteLine();
+      }
 
 
       private void Directory_EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo(bool isNetwork)

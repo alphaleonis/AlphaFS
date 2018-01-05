@@ -16,6 +16,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #340: DirectoryReadOnlyException inherits from System.IO.IOException, wrong?
 - Issue #344: `Directory.Copy` throws `UnauthorizedAccessException` "The target file is a directory, not a file", while it is a file.
 - Issue #349: `File.GetFileSystemEntryInfoCore` should throw `Directory/FileNotFoundException`, depending on `isFolder` argument.
+- Issue #369: `Directory.EnumerateFileSystemEntryInfos` does not return subdirectories with spaces as name.  (Thx Lupinho)
 - Issue #371: Fix `.gitignore` to accommodate new directory structure in AlphaFS.UnitTest project.  (Thx damiarnold)
 - Issue #372: `SetFsoDateTimeCore` should always use `BackupSemantics`.  (Thx damiarnold)
 
@@ -45,6 +46,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #354: Add methods `File.GetFileId` and `Directory.GetFileId` to return a unique file identifier.  (Thx besoft)
 - Issue #355: Methods throwing an `IOException` due to error code 17 (`ERROR_NOT_SAME_DEVICE`) now throw a specific exception (`NotSameDeviceException`)
 - Issue #357: Added new Windows 10 property: `FILE_DAX_VOLUME` to `VolumeInfo` class.
+- Issue #373: Improve method `Directory.CreateDirectory` to allow creating a folder consisting only of spaces.
 
 ### Breaking Changes
 

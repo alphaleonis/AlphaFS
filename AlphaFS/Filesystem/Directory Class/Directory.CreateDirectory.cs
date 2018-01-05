@@ -692,11 +692,14 @@ namespace Alphaleonis.Win32.Filesystem
 
             pathFormat = PathFormat.LongFullPath;
          }
-         
 
-         // Return DirectoryInfo instance if the directory specified by path already exists.
-         if (File.ExistsCore(transaction, true, path, pathFormat))
-            return new DirectoryInfo(transaction, path, pathFormat);
+
+         if (!char.IsWhiteSpace(path[path.Length - 1]))
+         {
+            // Return DirectoryInfo instance if the directory specified by path already exists.
+            if (File.ExistsCore(transaction, true, path, pathFormat))
+               return new DirectoryInfo(transaction, path, pathFormat);
+         }
 
 
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.

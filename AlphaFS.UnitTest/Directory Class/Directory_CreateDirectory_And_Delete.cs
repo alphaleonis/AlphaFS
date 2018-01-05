@@ -38,6 +38,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
+      public void Directory_CreateDirectory_FolderWithSpaceAsName_LocalAndNetwork_Success()
+      {
+         Directory_CreateDirectory_FolderWithSpaceAsName(false);
+         Directory_CreateDirectory_FolderWithSpaceAsName(true);
+      }
+
+
+      [TestMethod]
       public void Directory_CreateDirectory_WithMultipleSpacesAndSlashes_LocalAndNetwork_Success()
       {
          Directory_CreateDirectory_WithMultipleSpacesAndSlashes(false);
@@ -143,6 +151,42 @@ namespace AlphaFS.UnitTest
       }
 
 
+      private void Directory_CreateDirectory_FolderWithSpaceAsName(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         {
+            var folder = rootDir.Directory.FullName;
+
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
+
+            var numSpace = 1;
+            var spaceFolder1 = folder + @"\" + new string(' ', numSpace);
+
+            var dirInfo1 = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(spaceFolder1, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
+
+            Assert.IsTrue(dirInfo1.Exists, "The folder with " + numSpace + " space does not exist, but is expected to.");
+
+
+            numSpace = 5;
+            var spaceFolder2 = folder + @"\" + new string(' ', numSpace);
+
+            var dirInfo2 = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(spaceFolder2, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
+
+            Assert.IsTrue(dirInfo2.Exists, "The folder with " + numSpace + " spaces does not exist, but is expected to.");
+         }
+
+         Console.WriteLine();
+      }
+      
+      
       private void Directory_CreateDirectory_WithMultipleSpacesAndSlashes(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
