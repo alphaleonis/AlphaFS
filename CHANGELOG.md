@@ -19,6 +19,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #369: `Directory.EnumerateFileSystemEntryInfos` does not return subdirectories with spaces as name.  (Thx Lupinho)
 - Issue #371: Fix `.gitignore` to accommodate new directory structure in AlphaFS.UnitTest project.  (Thx damiarnold)
 - Issue #372: `SetFsoDateTimeCore` should always use `BackupSemantics`.  (Thx damiarnold)
+- Issue #374: Initializing `DriveInfo` instance with only a letter throws `System.ArgumentException`.
 
 ### New Features/Enhancements
 

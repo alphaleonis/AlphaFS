@@ -80,13 +80,12 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(driveName))
             throw new ArgumentNullException("driveName");
 
-         if (driveName.Length == 1)
-            _name += Path.VolumeSeparatorChar;
-         else
-            _name = Path.GetPathRoot(driveName, false);
+
+         _name = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
 
          if (Utils.IsNullOrWhiteSpace(_name))
             throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")", "driveName");
+
 
          // If an exception is thrown, the original drivePath is used.
          _name = Path.AddTrailingDirectorySeparator(_name, false);
