@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_DriveConnection()
       {
-         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.LocalHostShare);
+         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder);
 
          using (var connection = new Alphaleonis.Win32.Network.DriveConnection(share))
          {

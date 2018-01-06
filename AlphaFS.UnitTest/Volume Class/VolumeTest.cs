@@ -89,11 +89,11 @@ namespace AlphaFS.UnitTest
       private void DumpGetVolumePathName(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
-         var tempPath = UnitTestConstants.LocalHostShare;
+         var tempPath = UnitTestConstants.TempFolder;
          Console.WriteLine("Input Path: [{0}]", tempPath);
 
          UnitTestConstants.StopWatcher(true);
-         var volumePathName = Volume.GetVolumePathName(UnitTestConstants.LocalHostShare);
+         var volumePathName = Volume.GetVolumePathName(UnitTestConstants.TempFolder);
          var report = UnitTestConstants.Reporter(true);
          Console.WriteLine("\n\tGetVolumePathName(): [{0}]", volumePathName);
 

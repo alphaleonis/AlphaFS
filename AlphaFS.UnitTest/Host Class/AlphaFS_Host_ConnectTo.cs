@@ -91,7 +91,7 @@ namespace AlphaFS.UnitTest
 
          #region Connect to share
 
-         share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.LocalHostShare);
+         share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder);
          try
          {
             UnitTestConstants.StopWatcher(true);

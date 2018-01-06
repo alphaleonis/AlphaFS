@@ -37,11 +37,8 @@ namespace AlphaFS.UnitTest
       public const string Local = @"LOCAL";
       public const string Network = @"NETWORK";
 
-      public const string EMspace = "\u3000";
-
       public static readonly string LocalHost = Environment.MachineName;
-      public static readonly string LocalHostShare = Environment.GetEnvironmentVariable("Temp");
-
+      public static readonly string TempFolder = Environment.GetEnvironmentVariable("Temp");
       public static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
       public static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
       public static readonly string SysRoot32 = System.IO.Path.Combine(SysRoot, "System32");
