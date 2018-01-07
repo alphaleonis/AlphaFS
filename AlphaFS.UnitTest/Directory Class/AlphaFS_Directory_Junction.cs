@@ -73,7 +73,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          using (var connection = new Alphaleonis.Win32.Network.DriveConnection(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder)))
          {
-            var mappedPath = connection.LocalName + @"\" + System.IO.Path.GetRandomFileName();
+            var mappedPath = connection.LocalName + @"\" + UnitTestConstants.GetRandomFileName();
             Console.WriteLine("\nUsing mapped drive: [{0}] to: [{1}]", connection.LocalName, connection.Share);
 
             var target = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(mappedPath);

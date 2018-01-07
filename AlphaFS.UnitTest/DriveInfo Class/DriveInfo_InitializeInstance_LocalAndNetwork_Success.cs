@@ -53,32 +53,27 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput Drive Path: [{0}]", tempPath);
 
 
-         // System.IO.DriveInfo cannot handle UNC paths.
+         var actual = new Alphaleonis.Win32.Filesystem.DriveInfo(tempPath);
+
+         Assert.IsTrue(actual.IsReady);
+         Assert.IsTrue(actual.IsVolume);
 
          if (isNetwork)
-         {
-            var actual = new Alphaleonis.Win32.Filesystem.DriveInfo(tempPath);
-
-            Assert.IsTrue(actual.IsReady);
             Assert.IsTrue(actual.IsUnc);
-            Assert.IsTrue(actual.IsVolume);
-
-            UnitTestConstants.Dump(actual, -21);
-            UnitTestConstants.Dump(actual.DiskSpaceInfo, -26);
-            UnitTestConstants.Dump(actual.VolumeInfo, -26);
-         }
-
          else
+            Assert.IsFalse(actual.IsUnc);
+
+
+         // System.IO.DriveInfo cannot handle UNC paths.
+
+         if (!isNetwork)
          {
             // Even 1 byte more or less results in failure, so do these tests asap.
-
-            var actual = new Alphaleonis.Win32.Filesystem.DriveInfo(tempPath);
+            
             var expected = new System.IO.DriveInfo(tempPath);
 
 
-            Assert.IsTrue(actual.IsReady);
-            Assert.IsFalse(actual.IsUnc);
-            Assert.IsTrue(actual.IsVolume);
+            
 
 
             Assert.AreEqual(expected.AvailableFreeSpace, actual.AvailableFreeSpace, "AvailableFreeSpace AlphaFS != System.IO");
@@ -92,12 +87,12 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(expected.Name, actual.Name, "Name AlphaFS != System.IO");
             Assert.AreEqual(expected.RootDirectory.ToString(), actual.RootDirectory.ToString(), "RootDirectory AlphaFS != System.IO");
             Assert.AreEqual(expected.VolumeLabel, actual.VolumeLabel, "VolumeLabel AlphaFS != System.IO");
-
-
-            UnitTestConstants.Dump(actual, -21);
-            UnitTestConstants.Dump(actual.DiskSpaceInfo, -26);
-            UnitTestConstants.Dump(actual.VolumeInfo, -26);
          }
+
+
+         UnitTestConstants.Dump(actual, -21);
+         UnitTestConstants.Dump(actual.DiskSpaceInfo, -26);
+         UnitTestConstants.Dump(actual.VolumeInfo, -26);
 
          Console.WriteLine();
       }

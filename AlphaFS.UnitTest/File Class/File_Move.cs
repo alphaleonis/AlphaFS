@@ -366,7 +366,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-            var fileCopy = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter\" + System.IO.Path.GetRandomFileName();
+            var fileCopy = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter\" + UnitTestConstants.GetRandomFileName();
             if (isNetwork)
                fileCopy = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(fileCopy);
 

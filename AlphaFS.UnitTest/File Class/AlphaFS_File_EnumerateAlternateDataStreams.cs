@@ -54,7 +54,7 @@ namespace AlphaFS.UnitTest
          const int defaultStreamsFile = 1; // The default number of data streams for a file.
 
          Console.WriteLine("\nInput File Path: [{0}]", tempPath);
-         Console.WriteLine("\nA file is created and {0} streams are added.", UnitTestConstants.AllStreams.Count());
+         Console.WriteLine("\nA file is created and {0} streams are added.", UnitTestConstants.AllStreams.Length);
 
 
          try

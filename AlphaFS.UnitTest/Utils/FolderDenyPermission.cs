@@ -20,6 +20,8 @@
  */
 
 using System;
+using System.IO;
+using System.Security.AccessControl;
 
 namespace AlphaFS.UnitTest
 {
@@ -29,8 +31,8 @@ namespace AlphaFS.UnitTest
       {
          var user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
 
-         var dirInfo = new System.IO.DirectoryInfo(tempPath);
-         System.Security.AccessControl.DirectorySecurity dirSecurity;
+         var dirInfo = new DirectoryInfo(tempPath);
+         DirectorySecurity dirSecurity;
 
          // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
          // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
@@ -39,11 +41,11 @@ namespace AlphaFS.UnitTest
          // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
          // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
 
-         var rule = new System.Security.AccessControl.FileSystemAccessRule(user,
-            System.Security.AccessControl.FileSystemRights.FullControl,
-            System.Security.AccessControl.InheritanceFlags.ContainerInherit |
-            System.Security.AccessControl.InheritanceFlags.ObjectInherit,
-            System.Security.AccessControl.PropagationFlags.None, System.Security.AccessControl.AccessControlType.Deny);
+         var rule = new FileSystemAccessRule(user,
+            FileSystemRights.FullControl,
+            InheritanceFlags.ContainerInherit |
+            InheritanceFlags.ObjectInherit,
+            PropagationFlags.None, AccessControlType.Deny);
 
 
          // Create and set DENY for current user.

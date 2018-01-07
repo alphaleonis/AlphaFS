@@ -59,7 +59,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.Directory.FullName;
-            var folderSrc = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(folder, "Source-" + System.IO.Path.GetRandomFileName()));
+            var folderSrc = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(folder, "Source-" + UnitTestConstants.GetRandomFileName()));
             var pendingEntry = folderSrc.FullName;
 
             Console.WriteLine("\nSrc Directory Path: [{0}]", pendingEntry);
@@ -78,7 +78,7 @@ namespace AlphaFS.UnitTest
             {
                var exName = ex.GetType().Name;
                gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\tCaught Exception (Expected): [{0}] Message: [{1}]", exName, ex.Message);
+               Console.WriteLine("\tCaught EXPECTED Exception: [{0}] Message: [{1}]", exName, ex.Message);
             }
 
 

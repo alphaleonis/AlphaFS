@@ -25,6 +25,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 
 namespace AlphaFS.UnitTest
@@ -54,7 +55,7 @@ namespace AlphaFS.UnitTest
 
       private static Stopwatch _stopWatcher;
 
-      private static readonly string RandomName = System.IO.Path.GetRandomFileName();
+      private static readonly string RandomName = GetRandomFileName();
       public static readonly string MyStream = "ӍƔŞtrëƛɱ-" + RandomName;
       public static readonly string MyStream2 = "myStreamTWO-" + RandomName;
       public static readonly string[] AllStreams = {MyStream, MyStream2};
@@ -173,7 +174,7 @@ namespace AlphaFS.UnitTest
          var ms = _stopWatcher.ElapsedMilliseconds;
          var elapsed = _stopWatcher.Elapsed;
 
-         return string.Format(CultureInfo.InvariantCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
+         return String.Format(CultureInfo.InvariantCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
       }
 
 
@@ -184,8 +185,8 @@ namespace AlphaFS.UnitTest
          StopWatcher();
 
          return onlyTime
-            ? string.Format(CultureInfo.InvariantCulture, "\t\t{0}", StopWatcher())
-            : string.Format(CultureInfo.InvariantCulture, "\t{0} [{1}: {2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
+            ? String.Format(CultureInfo.InvariantCulture, "\t\t{0}", StopWatcher())
+            : String.Format(CultureInfo.InvariantCulture, "\t{0} [{1}: {2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
       }
 
       
@@ -196,7 +197,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      public static void TestAccessRules(System.Security.AccessControl.ObjectSecurity sysIO, System.Security.AccessControl.ObjectSecurity alphaFS)
+      public static void TestAccessRules(ObjectSecurity sysIO, ObjectSecurity alphaFS)
       {
          Console.WriteLine();
 
@@ -249,6 +250,42 @@ namespace AlphaFS.UnitTest
       public static void PrintUnitTestHeader(bool isNetwork)
       {
          Console.WriteLine("\n=== TEST {0} ===", isNetwork ? Network : Local);
+      }
+
+
+      public static string GetRandomFileName()
+      {
+         var randomFileName = System.IO.Path.GetRandomFileName();
+
+         switch (new Random().Next(0, 4))
+         {
+            case 0:
+               break;
+
+            case 1:
+               randomFileName = randomFileName.Replace("a", "ä");
+               randomFileName = randomFileName.Replace("e", "ë");
+               randomFileName = randomFileName.Replace("o", "ö");
+               randomFileName = randomFileName.Replace("u", "ü");
+               break;
+
+            case 2:
+               randomFileName = randomFileName.Replace("a", "á");
+               randomFileName = randomFileName.Replace("e", "é");
+               randomFileName = randomFileName.Replace("o", "ó");
+               randomFileName = randomFileName.Replace("u", "ú");
+               break;
+
+            case 3:
+               randomFileName = randomFileName.Replace("a", "â");
+               randomFileName = randomFileName.Replace("e", "ê");
+               randomFileName = randomFileName.Replace("o", "ô");
+               randomFileName = randomFileName.Replace("u", "û");
+               break;
+         }
+
+
+         return randomFileName;
       }
 
       #endregion // Methods

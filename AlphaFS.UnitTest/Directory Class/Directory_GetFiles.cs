@@ -66,7 +66,7 @@ namespace AlphaFS.UnitTest
          var searchPattern = Alphaleonis.Win32.Filesystem.Path.WildcardStarMatchAll;
          var searchOption = System.IO.SearchOption.TopDirectoryOnly;
 
-         var random = System.IO.Path.GetRandomFileName();
+         var random = UnitTestConstants.GetRandomFileName();
          var folderSource = @"folder-source-" + random;
 
          var originalLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":";
@@ -104,7 +104,7 @@ namespace AlphaFS.UnitTest
 
          #region IOException
 
-         var tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory.GetFiles-" + System.IO.Path.GetRandomFileName());
+         var tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory.GetFiles-" + UnitTestConstants.GetRandomFileName());
          if (!isLocal) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
@@ -184,7 +184,7 @@ namespace AlphaFS.UnitTest
 
          UnitTestConstants.PrintUnitTestHeader(!isLocal);
 
-         var tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Directory.GetDirectories_With_SearchPattern()-" + System.IO.Path.GetRandomFileName());
+         var tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Directory.GetDirectories_With_SearchPattern()-" + UnitTestConstants.GetRandomFileName());
          if (!isLocal) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);

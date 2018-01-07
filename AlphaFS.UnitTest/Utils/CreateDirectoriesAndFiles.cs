@@ -33,7 +33,7 @@ namespace AlphaFS.UnitTest
 
          for (var i = 0; i < max; i++)
          {
-            var file = System.IO.Path.Combine(rootPath, System.IO.Path.GetRandomFileName());
+            var file = System.IO.Path.Combine(rootPath, GetRandomFileName());
             var dir = file + "-" + i + "-dir";
             file = file + "-" + i + "-file";
 

@@ -128,7 +128,9 @@ namespace AlphaFS.UnitTest
             var fileLength = new Random().Next(1, 10485760);
             var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName, fileLength);
             var fileCopy = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
+
+            Console.WriteLine("\nInput  Source      File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
+            Console.WriteLine("\nOutput Destination File Path: [{0}]", fileCopy);
             
 
             Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy);
@@ -358,7 +360,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-            var fileCopy = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter\" + System.IO.Path.GetRandomFileName();
+            var fileCopy = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter\" + UnitTestConstants.GetRandomFileName();
             if (isNetwork)
                fileCopy = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(fileCopy);
 

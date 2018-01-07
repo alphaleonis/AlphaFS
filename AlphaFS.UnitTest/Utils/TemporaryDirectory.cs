@@ -21,7 +21,6 @@
 
 using Alphaleonis;
 using System;
-using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
@@ -37,7 +36,7 @@ namespace AlphaFS.UnitTest
 
          do
          {
-            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, prefix + "." + Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture).Substring(0, 6)));
+            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, prefix + "." + UnitTestConstants.GetRandomFileName().Substring(0, 6)));
 
          } while (Directory.Exists);
 
@@ -48,7 +47,7 @@ namespace AlphaFS.UnitTest
 
       public string RandomDirectoryFullPath
       {
-         get { return System.IO.Path.Combine(Directory.FullName, "Directory-" + System.IO.Path.GetRandomFileName()); }
+         get { return System.IO.Path.Combine(Directory.FullName, "Directory-" + UnitTestConstants.GetRandomFileName()); }
       }
 
       public string RandomFileFullPath
@@ -58,9 +57,9 @@ namespace AlphaFS.UnitTest
 
       public string RandomFileFullPathNoExtension
       {
-         get { return System.IO.Path.Combine(Directory.FullName, "File-" + System.IO.Path.GetRandomFileName()); }
+         get { return System.IO.Path.Combine(Directory.FullName, "File-" + UnitTestConstants.GetRandomFileName()); }
       }
-
+      
       #region Disposable Members
 
       ~TemporaryDirectory()

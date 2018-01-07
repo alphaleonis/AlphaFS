@@ -22,11 +22,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using Alphaleonis.Win32.Filesystem;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using File = Alphaleonis.Win32.Filesystem.File;
-using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
-using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
 {
@@ -48,9 +43,9 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = Path.GetTempPath("Directory-EnumerateAlternateDataStreams-" + Path.GetRandomFileName());
+         var tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory-EnumerateAlternateDataStreams-" + UnitTestConstants.GetRandomFileName());
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
          const int defaultStreamsDirectory = 0; // The default number of data streams for a folder.
 
@@ -60,13 +55,13 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            var di = new DirectoryInfo(tempPath);
+            var di = new Alphaleonis.Win32.Filesystem.DirectoryInfo(tempPath);
             di.Create();
 
             var currentNumberofStreams = di.EnumerateAlternateDataStreams().Count();
 
             Assert.AreEqual(defaultStreamsDirectory, currentNumberofStreams, "Total amount of default streams do not match.");
-            Assert.AreEqual(currentNumberofStreams, Directory.EnumerateAlternateDataStreams(tempPath).Count(), "Total amount of Directory.EnumerateAlternateDataStreams() streams do not match.");
+            Assert.AreEqual(currentNumberofStreams, Alphaleonis.Win32.Filesystem.Directory.EnumerateAlternateDataStreams(tempPath).Count(), "Total amount of Directory.EnumerateAlternateDataStreams() streams do not match.");
             Assert.AreEqual(currentNumberofStreams, di.EnumerateAlternateDataStreams().Count(), "Total amount of DirectoryInfo() streams do not match.");
 
 
@@ -74,11 +69,11 @@ namespace AlphaFS.UnitTest
             // Because of the colon, you must supply a full path and use PathFormat.FullPath or PathFormat.LongFullPath,
             // to prevent a: "NotSupportedException: path is in an invalid format." exception.
 
-            File.WriteAllLines(tempPath + Path.StreamSeparator + UnitTestConstants.MyStream, UnitTestConstants.StreamArrayContent, PathFormat.FullPath);
-            File.WriteAllText(tempPath + Path.StreamSeparator + UnitTestConstants.MyStream2, UnitTestConstants.StreamStringContent, PathFormat.FullPath);
+            Alphaleonis.Win32.Filesystem.File.WriteAllLines(tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream, UnitTestConstants.StreamArrayContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
+            Alphaleonis.Win32.Filesystem.File.WriteAllText(tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream2, UnitTestConstants.StreamStringContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
 
-            
-            var newNumberofStreams = Directory.EnumerateAlternateDataStreams(tempPath).Count();
+
+            var newNumberofStreams = Alphaleonis.Win32.Filesystem.Directory.EnumerateAlternateDataStreams(tempPath).Count();
             Console.WriteLine("\n\nCurrent stream Count(): [{0}]", newNumberofStreams);
 
 
@@ -98,7 +93,7 @@ namespace AlphaFS.UnitTest
                // Because of the colon, you must supply a full path and use PathFormat.FullPath or PathFormat.LongFullPath,
                // to prevent a: "NotSupportedException: path is in an invalid format." exception.
 
-               foreach (var line in File.ReadAllLines(tempPath + Path.StreamSeparator + streamName, PathFormat.FullPath))
+               foreach (var line in Alphaleonis.Win32.Filesystem.File.ReadAllLines(tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + streamName, Alphaleonis.Win32.Filesystem.PathFormat.FullPath))
                   Console.WriteLine("\t\t{0}", line);
             }
          }
@@ -109,8 +104,8 @@ namespace AlphaFS.UnitTest
          }
          finally
          {
-            Directory.Delete(tempPath);
-            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            Alphaleonis.Win32.Filesystem.Directory.Delete(tempPath);
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          }
 
          Console.WriteLine();

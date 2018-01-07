@@ -230,7 +230,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath() + "File.Delete-" + System.IO.Path.GetRandomFileName();
+         var tempPath = System.IO.Path.GetTempPath() + "File.Delete-" + UnitTestConstants.GetRandomFileName();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 

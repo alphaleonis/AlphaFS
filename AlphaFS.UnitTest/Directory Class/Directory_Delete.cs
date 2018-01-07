@@ -191,7 +191,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomDirectoryFullPath;
-            var file = System.IO.Path.Combine(folder, System.IO.Path.GetRandomFileName());
+            var file = System.IO.Path.Combine(folder, UnitTestConstants.GetRandomFileName());
 
             Console.WriteLine("\nInput Directory Path: [{0}]", folder);
             Console.WriteLine("Input File Path     : [{0}]\n", file);
@@ -224,7 +224,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath() + "Directory.Delete-" + System.IO.Path.GetRandomFileName();
+         var tempPath = System.IO.Path.GetTempPath() + "Directory.Delete-" + UnitTestConstants.GetRandomFileName();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 

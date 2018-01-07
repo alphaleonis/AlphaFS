@@ -40,7 +40,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Directory.GetAccessControl()-" + System.IO.Path.GetRandomFileName());
+         var tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Directory.GetAccessControl()-" + UnitTestConstants.GetRandomFileName());
 
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
