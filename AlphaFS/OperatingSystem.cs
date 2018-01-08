@@ -76,8 +76,8 @@ namespace Alphaleonis.Win32
          /// <summary>Windows 10</summary>
          Windows10 = 11,
 
-         /// <summary>Windows Server</summary>
-         WindowsServer = 12,
+         /// <summary>Windows Server 2016</summary>
+         WindowsServer2016 = 12,
 
          /// <summary>A later version of Windows than currently installed.</summary>
          Later = 65535
@@ -283,7 +283,7 @@ namespace Alphaleonis.Win32
          //    Operating system	            Version number    Other
          // ================================================================================
          //    Windows 10                    10.0              OSVERSIONINFOEX.wProductType == VER_NT_WORKSTATION
-         //    Windows Server                10.0              OSVERSIONINFOEX.wProductType != VER_NT_WORKSTATION
+         //    Windows Server 2016           10.0              OSVERSIONINFOEX.wProductType != VER_NT_WORKSTATION
          //    Windows 8.1                   6.3               OSVERSIONINFOEX.wProductType == VER_NT_WORKSTATION
          //    Windows Server 2012 R2        6.3               OSVERSIONINFOEX.wProductType != VER_NT_WORKSTATION
          //    Windows 8	                  6.2               OSVERSIONINFOEX.wProductType == VER_NT_WORKSTATION
@@ -299,7 +299,7 @@ namespace Alphaleonis.Win32
          //    Windows 2000	               5.0               Not applicable
 
 
-         // 10 == The lastest MajorVersion of Windows.
+         // 2017-01-07: 10 == The lastest MajorVersion of Windows.
          if (verInfo.dwMajorVersion > 10)
             _enumOsName = EnumOsName.Later;
 
@@ -309,37 +309,31 @@ namespace Alphaleonis.Win32
                #region Version 10
 
                case 10:
-                  switch (verInfo.dwMinorVersion)
-                  {
-                     // Windows 10 or Windows Server
-                     case 0:
-                        _enumOsName = verInfo.wProductType == NativeMethods.VER_NT_WORKSTATION
-                           ? EnumOsName.Windows10
-                           : EnumOsName.WindowsServer;
-                        break;
-                  }
+
+                  // Windows 10 or Windows Server 2016
+
+                  _enumOsName = verInfo.wProductType == NativeMethods.VER_NT_WORKSTATION
+                     ? EnumOsName.Windows10
+                     : EnumOsName.WindowsServer2016;
+
                   break;
+                  
 
                #endregion // Version 10
+
 
                #region Version 6
 
                case 6:
                   switch (verInfo.dwMinorVersion)
                   {
-                     // Windows Vista or Windows Server 2008
-                     case 0:
+                     // Windows 8.1 or Windows Server 2012 R2
+                     case 3:
                         _enumOsName = verInfo.wProductType == NativeMethods.VER_NT_WORKSTATION
-                           ? EnumOsName.WindowsVista
-                           : EnumOsName.WindowsServer2008;
+                           ? EnumOsName.Windows81
+                           : EnumOsName.WindowsServer2012R2;
                         break;
 
-                     // Windows 7 or Windows Server 2008 R2
-                     case 1:
-                        _enumOsName = verInfo.wProductType == NativeMethods.VER_NT_WORKSTATION
-                           ? EnumOsName.Windows7
-                           : EnumOsName.WindowsServer2008R2;
-                        break;
 
                      // Windows 8 or Windows Server 2012
                      case 2:
@@ -348,39 +342,54 @@ namespace Alphaleonis.Win32
                            : EnumOsName.WindowsServer2012;
                         break;
 
-                     // Windows 8.1 or Windows Server 2012 R2
-                     case 3:
+
+                     // Windows 7 or Windows Server 2008 R2
+                     case 1:
                         _enumOsName = verInfo.wProductType == NativeMethods.VER_NT_WORKSTATION
-                           ? EnumOsName.Windows81
-                           : EnumOsName.WindowsServer2012R2;
+                           ? EnumOsName.Windows7
+                           : EnumOsName.WindowsServer2008R2;
                         break;
+
+
+                     // Windows Vista or Windows Server 2008
+                     case 0:
+                        _enumOsName = verInfo.wProductType == NativeMethods.VER_NT_WORKSTATION
+                           ? EnumOsName.WindowsVista
+                           : EnumOsName.WindowsServer2008;
+                        break;
+                        
 
                      default:
                         _enumOsName = EnumOsName.Later;
                         break;
                   }
+
                   break;
 
                #endregion // Version 6
+
 
                #region Version 5
 
                case 5:
                   switch (verInfo.dwMinorVersion)
                   {
-                     case 0:
-                        _enumOsName = EnumOsName.Windows2000;
-                        break;
-
-                     case 1:
-                        _enumOsName = EnumOsName.WindowsXP;
-                        break;
-
                      case 2:
                         _enumOsName = verInfo.wProductType == NativeMethods.VER_NT_WORKSTATION && _processorArchitecture == EnumProcessorArchitecture.X64
                            ? EnumOsName.WindowsXP
                            : verInfo.wProductType != NativeMethods.VER_NT_WORKSTATION ? EnumOsName.WindowsServer2003 : EnumOsName.Later;
                         break;
+
+
+                     case 1:
+                        _enumOsName = EnumOsName.WindowsXP;
+                        break;
+
+
+                     case 0:
+                        _enumOsName = EnumOsName.Windows2000;
+                        break;
+
 
                      default:
                         _enumOsName = EnumOsName.Later;
@@ -389,6 +398,7 @@ namespace Alphaleonis.Win32
                   break;
 
                #endregion // Version 5
+
 
                default:
                   _enumOsName = EnumOsName.Earlier;
