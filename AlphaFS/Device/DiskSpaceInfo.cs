@@ -35,9 +35,9 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    public sealed class DiskSpaceInfo
    {
-      private readonly bool _initGetClusterInfo = true;
-      private readonly bool _initGetSpaceInfo = true;
-      private readonly bool _continueOnAccessError;
+      [NonSerialized] private readonly bool _initGetClusterInfo = true;
+      [NonSerialized] private readonly bool _initGetSpaceInfo = true;
+      [NonSerialized] private readonly bool _continueOnAccessError;
 
 
       /// <summary>Initializes a DiskSpaceInfo instance.</summary>
@@ -50,19 +50,18 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(drivePath))
             throw new ArgumentNullException("drivePath");
 
-         if (drivePath.Length == 1)
-            DriveName += Path.VolumeSeparatorChar;
-         else
-            DriveName = Path.GetPathRoot(drivePath, false);
 
-         if (Utils.IsNullOrWhiteSpace(DriveName))
-            throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")", "drivePath");
+         drivePath = drivePath.Length == 1 ? drivePath + Path.VolumeSeparatorChar : Path.GetPathRoot(drivePath, false);
+
+         if (Utils.IsNullOrWhiteSpace(drivePath))
+            throw new ArgumentException(Resources.InvalidDriveLetterArgument, "drivePath");
+
 
          // MSDN:
          // If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").
          // Furthermore, a drive specification must have a trailing backslash (for example, "C:\").
          // The calling application must have FILE_LIST_DIRECTORY access rights for this directory.
-         DriveName = Path.AddTrailingDirectorySeparator(DriveName, false);
+         DriveName = Path.AddTrailingDirectorySeparator(drivePath, false);
       }
 
 

@@ -250,4 +250,7 @@
   <data name="Directory_Is_Not_A_MountPoint" xml:space="preserve">
     <value>The directory is not a mount point: [{0}]</value>
   </data>
+  <data name="InvalidDriveLetterArgument" xml:space="preserve">
+    <value>Argument must be a drive letter: "C", RootDir: "C:\" or UNC path: "\\server\share"</value>
+  </data>
 </root>

@@ -38,30 +38,14 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    public sealed class DriveInfo 
    {
-      #region Private Fields
+      [NonSerialized] private readonly VolumeInfo _volumeInfo;
+      [NonSerialized] private readonly DiskSpaceInfo _dsi;
+      [NonSerialized] private bool _initDsie;
+      [NonSerialized] private DriveType? _driveType;
+      [NonSerialized] private string _dosDeviceName;
+      [NonSerialized] private DirectoryInfo _rootDirectory;
+      [NonSerialized] private readonly string _name;
 
-      [NonSerialized]
-      private readonly VolumeInfo _volumeInfo;
-
-      [NonSerialized]
-      private readonly DiskSpaceInfo _dsi;
-
-      [NonSerialized]
-      private bool _initDsie;
-
-      [NonSerialized]
-      private DriveType? _driveType;
-
-      [NonSerialized]
-      private string _dosDeviceName;
-
-      [NonSerialized]
-      private DirectoryInfo _rootDirectory;
-
-      private readonly string _name;
-
-
-      #endregion
 
       #region Constructors
 
@@ -81,15 +65,13 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("driveName");
 
 
-         _name = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
+         driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
 
-         if (Utils.IsNullOrWhiteSpace(_name))
-            throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")", "driveName");
+         if (Utils.IsNullOrWhiteSpace(driveName))
+            throw new ArgumentException(Resources.InvalidDriveLetterArgument, "driveName");
 
 
-         // If an exception is thrown, the original drivePath is used.
-         _name = Path.AddTrailingDirectorySeparator(_name, false);
-
+         _name = Path.AddTrailingDirectorySeparator(driveName, false);
 
          // Initiate VolumeInfo() lazyload instance.
          _volumeInfo = new VolumeInfo(_name, false, true);

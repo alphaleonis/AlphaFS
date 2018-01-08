@@ -43,25 +43,28 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <param name="volumeName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share.</param>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
+      [SecurityCritical]
       public VolumeInfo(string volumeName)
       {
          if (Utils.IsNullOrWhiteSpace(volumeName))
             throw new ArgumentNullException("volumeName");
 
-         if (!volumeName.StartsWith(Path.LongPathPrefix, StringComparison.OrdinalIgnoreCase))
-            volumeName = Path.IsUncPathCore(volumeName, false, false)
-               ? Path.GetLongPathCore(volumeName, GetFullPathOptions.None)
-               : Path.LongPathPrefix + volumeName;
+
+         if (!volumeName.StartsWith(Path.LongPathPrefix, StringComparison.Ordinal))
+            volumeName = Path.IsUncPathCore(volumeName, false, false) ? Path.GetLongPathCore(volumeName, GetFullPathOptions.None) : Path.LongPathPrefix + volumeName;
+
          else
          {
-            if (volumeName.Length == 1)
-               volumeName += Path.VolumeSeparatorChar;
-            else if (!volumeName.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+            volumeName = volumeName.Length == 1 ? volumeName + Path.VolumeSeparatorChar : Path.GetPathRoot(volumeName, false);
+
+            if (!volumeName.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
                volumeName = Path.GetPathRoot(volumeName, false);
          }
 
+
          if (Utils.IsNullOrWhiteSpace(volumeName))
-            throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")", "volumeName");
+            throw new ArgumentException(Resources.InvalidDriveLetterArgument, "volumeName");
+
 
          Name = Path.AddTrailingDirectorySeparator(volumeName, false);
 
