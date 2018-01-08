@@ -226,7 +226,7 @@
     <Compile Include="DFS Class\AlphaFS_Network_DfsXxx.cs" />
     <Compile Include="Directory Class\Directory_CreateDirectory_And_Delete.cs" />
     <Compile Include="Directory Class\DirectoryTest.cs" />
-    <Compile Include="OperatingSystem Class\AlphaFS_BackupFileStream_InitializeInstance_LocalAndNetwork_Success.cs" />
+    <Compile Include="OperatingSystem Class\AlphaFS_OperatingSystem.cs" />
     <Compile Include="Path Class\Path_GetFullPath.cs" />
     <Compile Include="Path Class\Path_IsPathRooted.cs" />
     <Compile Include="Path Class\Path_GetExtension.cs" />

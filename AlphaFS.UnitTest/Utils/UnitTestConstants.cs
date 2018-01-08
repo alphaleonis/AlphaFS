@@ -265,6 +265,7 @@ namespace AlphaFS.UnitTest
             case 1:
                randomFileName = randomFileName.Replace("a", "ä");
                randomFileName = randomFileName.Replace("e", "ë");
+               randomFileName = randomFileName.Replace("i", "ï");
                randomFileName = randomFileName.Replace("o", "ö");
                randomFileName = randomFileName.Replace("u", "ü");
                break;
@@ -272,6 +273,7 @@ namespace AlphaFS.UnitTest
             case 2:
                randomFileName = randomFileName.Replace("a", "á");
                randomFileName = randomFileName.Replace("e", "é");
+               randomFileName = randomFileName.Replace("i", "í");
                randomFileName = randomFileName.Replace("o", "ó");
                randomFileName = randomFileName.Replace("u", "ú");
                break;
@@ -279,6 +281,7 @@ namespace AlphaFS.UnitTest
             case 3:
                randomFileName = randomFileName.Replace("a", "â");
                randomFileName = randomFileName.Replace("e", "ê");
+               randomFileName = randomFileName.Replace("i", "î");
                randomFileName = randomFileName.Replace("o", "ô");
                randomFileName = randomFileName.Replace("u", "û");
                break;

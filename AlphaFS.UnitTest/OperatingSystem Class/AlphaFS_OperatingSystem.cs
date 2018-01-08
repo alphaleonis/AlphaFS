@@ -57,9 +57,12 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\tWindows Server 2008R2: [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.WindowsServer2008R2));
          Console.WriteLine("\tWindows Server 2012  : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.WindowsServer2012));
          Console.WriteLine("\tWindows Server 2012R2: [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.WindowsServer2012R2));
-         Console.WriteLine("\tWindows Server       : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.WindowsServer));
+         Console.WriteLine("\tWindows Server 2016  : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.WindowsServer2016));
 
          Console.WriteLine("\tOS Later             : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Later));
+
+
+         Assert.Inconclusive("TODO: Create tests.");
       }
    }
 }
