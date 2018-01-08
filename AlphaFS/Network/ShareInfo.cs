@@ -136,14 +136,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>The <see cref="DirectoryInfo"/> instance associated with this share.</summary>
       public DirectoryInfo DirectoryInfo
       {
-         get
-         {
-            // Do not use ?? expression here.
-            if (null == _directoryInfo)
-               _directoryInfo = new DirectoryInfo(null, NetFullPath, PathFormat.FullPath);
-
-            return _directoryInfo;
-         }
+         get { return _directoryInfo ?? (_directoryInfo = new DirectoryInfo(null, NetFullPath, PathFormat.FullPath)); }
       }
 
 

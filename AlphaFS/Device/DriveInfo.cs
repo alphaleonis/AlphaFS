@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// </remarks>
    [Serializable]
    [SecurityCritical]
-   public sealed class DriveInfo 
+   public sealed class DriveInfo
    {
       [NonSerialized] private readonly VolumeInfo _volumeInfo;
       [NonSerialized] private readonly DiskSpaceInfo _dsi;
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Initiate DiskSpaceInfo() lazyload instance.
          _dsi = new DiskSpaceInfo(_name, null, false, true);
-      } 
+      }
 
       #endregion // Constructors
 
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Use DriveFormat to determine what formatting a drive uses.</remarks>
       public string DriveFormat
       {
-         get { return (string)GetDeviceInfo(0, 1); }
+         get { return (string) GetDeviceInfo(0, 1); }
       }
 
       /// <summary>Gets the drive type.</summary>
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public DriveType DriveType
       {
-         get { return (DriveType)GetDeviceInfo(2, 0); }
+         get { return (DriveType) GetDeviceInfo(2, 0); }
       }
 
       /// <summary>Gets a value indicating whether a drive is ready.</summary>
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A DirectoryInfo object that contains the root directory of the drive.</returns>
       public DirectoryInfo RootDirectory
       {
-         get { return (DirectoryInfo)GetDeviceInfo(2, 1); }
+         get { return (DirectoryInfo) GetDeviceInfo(2, 1); }
       }
 
       /// <summary>Gets the total amount of free space available on a drive.</summary>
@@ -176,10 +176,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// The label length is determined by the operating system. For example, NTFS allows a volume label
       /// to be up to 32 characters long. Note that <see langword="null"/> is a valid VolumeLabel.
       /// </remarks>
-
       public string VolumeLabel
       {
-         get { return (string)GetDeviceInfo(0, 2); }
+         get { return (string) GetDeviceInfo(0, 2); }
          set { Volume.SetVolumeLabel(Name, value); }
       }
 
@@ -196,7 +195,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] The MS-DOS device name.</summary>
       public string DosDeviceName
       {
-         get { return (string)GetDeviceInfo(1, 0); }
+         get { return (string) GetDeviceInfo(1, 0); }
       }
 
       /// <summary>[AlphaFS] Indicates if this drive is a SUBST.EXE / DefineDosDevice drive mapping.</summary>
@@ -232,7 +231,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves the drive names of all logical drives on a computer.</summary>
       /// <returns>An array of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
-      
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
       {
@@ -265,7 +263,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the first available drive letter on the local system.</summary>
       /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
       /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
-      
       public static char GetFreeDriveLetter()
       {
          return GetFreeDriveLetter(false);
@@ -275,12 +272,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="getLastAvailable">When <see langword="true"/> get the last available drive letter. When <see langword="false"/> gets the first available drive letter.</param>
       /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
       /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
-      
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
       public static char GetFreeDriveLetter(bool getLastAvailable)
       {
-         IEnumerable<char> freeDriveLetters = "CDEFGHIJKLMNOPQRSTUVWXYZ".Except(Directory.EnumerateLogicalDrivesCore(false, false).Select(d => d.Name[0]));
+         var freeDriveLetters = "CDEFGHIJKLMNOPQRSTUVWXYZ".Except(Directory.EnumerateLogicalDrivesCore(false, false).Select(d => d.Name[0]));
 
          try
          {
@@ -327,6 +323,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // VolumeLabel
                         return _volumeInfo == null ? string.Empty : _volumeInfo.Name ?? string.Empty;
                   }
+
                   break;
 
                // Volume related.
@@ -335,13 +332,9 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      case 0:
                         // DosDeviceName
-
-                        // Do not use ?? expression here.
-                        if (_dosDeviceName == null)
-                           _dosDeviceName = Volume.QueryDosDevice(Name).FirstOrDefault();
-
-                        return _dosDeviceName;
+                        return _dosDeviceName ?? (_dosDeviceName = Volume.QueryDosDevice(Name).FirstOrDefault());
                   }
+
                   break;
 
                #endregion // Volume
@@ -354,21 +347,13 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      case 0:
                         // DriveType
-                        // Do not use ?? expression here.
-                        if (_driveType == null)
-                           _driveType = Volume.GetDriveType(Name);
-
-                        return _driveType;
+                        return _driveType ?? (_driveType = Volume.GetDriveType(Name));
 
                      case 1:
                         // RootDirectory
-
-                        // Do not use ?? expression here.
-                        if (_rootDirectory == null)
-                           _rootDirectory = new DirectoryInfo(null, Name, PathFormat.RelativePath);
-
-                        return _rootDirectory;
+                        return _rootDirectory ?? (_rootDirectory = new DirectoryInfo(null, Name, PathFormat.RelativePath));
                   }
+
                   break;
 
                // DiskSpaceInfo related.
@@ -382,8 +367,10 @@ namespace Alphaleonis.Win32.Filesystem
                            _dsi.Refresh();
                            _initDsie = true;
                         }
+
                         break;
                   }
+
                   break;
 
                #endregion // Drive

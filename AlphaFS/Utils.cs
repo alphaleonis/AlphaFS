@@ -82,33 +82,35 @@ namespace Alphaleonis
       }
 
 
-      /// <summary>Converts a number of type T to string, suffixed with a unit size.</summary>
+      /// <summary>Converts a number of type T to string formated using <see cref="CultureInfo.InvariantCulture"/>, suffixed with a unit size.</summary>
       public static string UnitSizeToText<T>(T numberOfBytes)
       {
-         const int kb = 1024;
-         string[] sizeFormats = {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
+         // CultureInfo.CurrentCulture uses the culture as set in the Region applet.
 
-         var i = 0;
-         var bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
-
-         while (i < sizeFormats.Length && bytes > kb)
-         {
-            i++;
-            bytes /= kb;
-         }
-
-         // Will return "512 B" instead of "512,00 B".
-         return string.Format(CultureInfo.InvariantCulture, i == 0 ? "{0:0} {1}" : "{0:0.##} {1}", bytes, sizeFormats[i]);
+         return UnitSizeToText(numberOfBytes, CultureInfo.CurrentCulture);
       }
 
 
-      /// <summary>Calculates a percentage value.</summary>
-      /// <param name="currentValue"/>
-      /// <param name="minimumValue"/>
-      /// <param name="maximumValue"/>
-      public static double PercentCalculate(double currentValue, double minimumValue, double maximumValue)
+      /// <summary>Converts a number of type T to string formated using the specified <paramref name="cultureInfo"/>, suffixed with a unit size.</summary>
+      public static string UnitSizeToText<T>(T numberOfBytes, CultureInfo cultureInfo)
       {
-         return currentValue < 0 || maximumValue <= 0 ? 0 : currentValue * 100 / (maximumValue - minimumValue);
+         const int kb = 1024;
+
+         var sizeFormats = new[] {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
+         var formatLength = sizeFormats.Length;
+         var bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
+
+         var index = 0;
+         while (index < formatLength && bytes > kb)
+         {
+            index++;
+            bytes /= kb;
+         }
+
+
+         // Will return "512 B" instead of "512,00 B".
+
+         return string.Format(cultureInfo, "{0} {1}", bytes.ToString(index == 0 ? "0" : "0.##", cultureInfo), sizeFormats[index]);
       }
    }
 }
