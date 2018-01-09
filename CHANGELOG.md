@@ -40,6 +40,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #353: Modify method `Directory.GetFileSystemEntryInfo` to return `FileSystemEntryInfo` structure for directories supporting also root directories, e.g., `C:\`  (Thx besoft)
 - Issue #354: Add methods `File.GetFileId` and `Directory.GetFileId` to return a unique file identifier.  (Thx besoft)
 - Issue #357: Added new Windows 10 property: `FILE_DAX_VOLUME` to `VolumeInfo` class.
+- Issue #370: Relative path from a full path  (Thx QbProg)
 - Issue #373: Improve method `Directory.CreateDirectory` to allow creating a folder consisting only of spaces.
 
 ### New Improvements
