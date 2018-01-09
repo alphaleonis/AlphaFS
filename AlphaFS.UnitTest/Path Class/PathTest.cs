@@ -950,34 +950,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // IsUncPath
       
-      #region LocalToUnc
-
-      [TestMethod]
-      public void AlphaFS_Path_LocalToUnc()
-      {
-         Console.WriteLine("Path.LocalToUnc()");
-
-         Console.WriteLine("\nInput Path: [{0}]\n", UnitTestConstants.SysRoot);
-
-         var cnt = 0;
-         UnitTestConstants.StopWatcher(true);
-         foreach (var path2 in Directory.EnumerateFileSystemEntries(UnitTestConstants.SysRoot))
-         {
-            var uncPath = Path.LocalToUnc(path2);
-            Console.WriteLine("\t#{0:000}\tLocal: [{1}]\t\t\tUNC: [{2}]", ++cnt, path2, uncPath);
-
-            Assert.IsTrue(Path.IsUncPath(uncPath));
-
-         }
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
-
-         Console.WriteLine();
-      }
-
-      #endregion // LocalToUnc
 
       #region RemoveTrailingDirectorySeparator
 

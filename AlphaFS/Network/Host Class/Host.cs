@@ -158,51 +158,37 @@ namespace Alphaleonis.Win32.Network
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         path = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
 
-         // If path already is a network share path, we fill the REMOTE_NAME_INFO structure ourselves.
-         if (Path.IsUncPathCore(path, true, false))
-            return new NativeMethods.REMOTE_NAME_INFO
-            {
-               lpUniversalName = Path.AddTrailingDirectorySeparator(path, false),
-               lpConnectionName = Path.RemoveTrailingDirectorySeparator(path),
-               lpRemainingPath = Path.DirectorySeparator
-            };
+         path = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
 
 
          uint lastError;
-
-         // Use large enough buffer to prevent a 2nd call.
          uint bufferSize = 1024;
 
          do
          {
-            using (var buffer = new SafeGlobalMemoryBufferHandle((int)bufferSize))
+            using (var buffer = new SafeGlobalMemoryBufferHandle((int) bufferSize))
             {
                // Structure: UNIVERSAL_NAME_INFO_LEVEL = 1 (not used in AlphaFS).
                // Structure: REMOTE_NAME_INFO_LEVEL    = 2
 
                lastError = NativeMethods.WNetGetUniversalName(path, 2, buffer, out bufferSize);
 
-               switch (lastError)
-               {
-                  case Win32Errors.NO_ERROR:
-                     return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>(0);
-
-                  case Win32Errors.ERROR_MORE_DATA:
-                     //bufferSize = Received the required buffer size, retry.
-                     break;
-               }
+               if (lastError == Win32Errors.NO_ERROR)
+                  return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>(0);
             }
 
          } while (lastError == Win32Errors.ERROR_MORE_DATA);
 
-         if (!continueOnException && lastError != Win32Errors.NO_ERROR)
+
+         if (lastError != Win32Errors.NO_ERROR && !continueOnException)
             throw new NetworkInformationException((int) lastError);
+
 
          // Return an empty structure (all fields set to null).
          return new NativeMethods.REMOTE_NAME_INFO();
       }
+
 
       internal struct ConnectDisconnectArguments
       {

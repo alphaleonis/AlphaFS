@@ -228,6 +228,7 @@
     <Compile Include="Directory Class\DirectoryTest.cs" />
     <Compile Include="OperatingSystem Class\AlphaFS_OperatingSystem.cs" />
     <Compile Include="Path Class\Path_GetFullPath.cs" />
+    <Compile Include="Path Class\AlphaFS_Path_LocalToUnc.cs" />
     <Compile Include="Path Class\Path_IsPathRooted.cs" />
     <Compile Include="Path Class\Path_GetExtension.cs" />
     <Compile Include="Path Class\Path_GetDirectoryName.cs" />

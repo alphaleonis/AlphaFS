@@ -20,6 +20,8 @@ Version vNext  (xxxx-xx-xx)
 - Issue #371: Fix `.gitignore` to accommodate new directory structure in AlphaFS.UnitTest project.  (Thx damiarnold)
 - Issue #372: `SetFsoDateTimeCore` should always use `BackupSemantics`.  (Thx damiarnold)
 - Issue #374: Initializing `DriveInfo` instance with only a letter throws `System.ArgumentException`.
+- Issue #375: What is the expected result of `Path.LocalToUnc()` ?  (Thx damiarnold)
+- Issue #376: `Path.LocalToUnc(path, true)` does not return UNC path in long path form.  (Thx damiarnold) 
 
 ### New Features
 
