@@ -23,7 +23,7 @@ using System;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class NativeMethods
+   internal partial class NativeMethods
    {
       /// <summary>Indicates the operation to be performed when opening a file using the OpenEncryptedFileRaw.</summary>
       [Flags]

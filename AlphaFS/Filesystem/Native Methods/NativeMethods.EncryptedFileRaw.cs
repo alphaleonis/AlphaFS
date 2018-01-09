@@ -5,7 +5,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class NativeMethods
+   internal partial class NativeMethods
    {
       /// <summary>Opens an encrypted file in order to backup (export) or restore (import) the file.</summary>
       /// <returns>If the function succeeds, it returns ERROR_SUCCESS.</returns>

@@ -27,8 +27,23 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class NativeMethods
+   internal partial class NativeMethods
    {
+      /// <summary>The WNetAddConnection3 function makes a connection to a network resource. The function can redirect a local device to the network resource.</summary>
+      /// <returns>
+      /// If the function succeeds, the return value is <see cref="Win32Errors.NO_ERROR"/>
+      /// If the function fails, the return value is a system error code.
+      /// </returns>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows 2000 Professional [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows 2000 Server [desktop apps only]</para>
+      /// </remarks>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("mpr.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "WNetAddConnection3W"), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.U4)]
+      internal static extern uint WNetAddConnection3(IntPtr hWndOwner, [MarshalAs(UnmanagedType.Struct)] ref NETRESOURCE lpNetResource, [MarshalAs(UnmanagedType.LPWStr)] string lpPassword, [MarshalAs(UnmanagedType.LPWStr)] string lpUserName, [MarshalAs(UnmanagedType.U4)] uint dwFlags);
+
+
       /// <summary>The WNetCancelConnection function cancels an existing network connection. You can also call the function to remove remembered network connections that are not currently connected.</summary>
       /// <returns>
       /// If the function succeeds, the return value is <see cref="Win32Errors.NO_ERROR"/>
