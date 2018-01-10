@@ -46,8 +46,10 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
          var tempPath = UnitTestConstants.SysDrive[0].ToString();
+
          if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+            // Only using a drive letter results in a wrong UNC path.
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.SysDrive);
 
 
          Console.WriteLine("\nInput Drive Path: [{0}]", tempPath);

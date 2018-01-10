@@ -38,7 +38,9 @@ namespace AlphaFS.UnitTest
       public const string Local = @"LOCAL";
       public const string Network = @"NETWORK";
 
+#if NET35
       public const string EMspace = "\u3000";
+#endif
 
       public static readonly string LocalHost = Environment.MachineName;
       public static readonly string TempFolder = Environment.GetEnvironmentVariable("Temp");
