@@ -786,7 +786,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var srcLp = dirs.Dequeue();
 
-            // Current TODO: Not 100% yet with local + UNC paths.
+            // TODO 2018-01-09: Not 100% yet with local + UNC paths.
             var dstLp = srcLp.Replace(sourcePathLp, destinationPathLp);
 
             // Traverse the source folder, processing files and folders.
@@ -839,7 +839,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (preserveDates)
             {
-               // Current TODO: Not 100% yet with local + UNC paths.
+               // TODO 2018-01-09: Not 100% yet with local + UNC paths.
                var dstLp = sourcePathLp.Replace(sourcePathLp, destinationPathLp);
 
                // Traverse the source folder, processing subfolders.
