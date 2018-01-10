@@ -427,7 +427,7 @@ namespace Alphaleonis.Win32.Network
          //   throw new ArgumentNullException("localName");
 
          if (Utils.IsNullOrWhiteSpace(arguments.RemoteName) && !arguments.IsDeviceMap)
-            throw new ArgumentNullException("remoteName");
+            throw new ArgumentNullException("arguments.RemoteName");
 
 
          // When supplied, use data from NetworkCredential instance.
