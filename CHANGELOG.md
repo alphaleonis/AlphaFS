@@ -1,4 +1,4 @@
-﻿Changelog
+Changelog
 =========
 
 Version vNext  (xxxx-xx-xx)
@@ -22,6 +22,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #374: Initializing `DriveInfo` instance with only a letter throws `System.ArgumentException`.
 - Issue #375: What is the expected result of `Path.LocalToUnc()` ?  (Thx damiarnold)
 - Issue #376: `Path.LocalToUnc(path, true)` does not return UNC path in long path form.  (Thx damiarnold) 
+- Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
 
 ### New Features
 
@@ -51,8 +52,10 @@ Version vNext  (xxxx-xx-xx)
 - Issue #277: `Directory.DeleteDirectoryCore()`: Eliminate recursion.
 - Issue #278: `Directory.DeleteEmptySubdirectoriesCore()`: Eliminate recursion.
 - Issue #303: `Path.Constants.cs`: Don't use `CurrentCulture`  (Thx HugoRoss)
+- Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
 - Issue #345: `AlreadyExistsException` should only throw message from 1 error.
 - Issue #355: Methods throwing an `IOException` due to error code 17 (`ERROR_NOT_SAME_DEVICE`) now throw a specific exception (`NotSameDeviceException`)
+- Issue #377: Rename enum member: `OperatingSystem.EnumOsName.WindowsServer` to: `OperatingSystem.EnumOsName.WindowsServer2016`
 - Issue #378: `DiskSpaceInfo` should respect `CultureInfo.CurrentCulture` for number formatting.
 
 ### Breaking Changes
@@ -65,6 +68,7 @@ Version vNext  (xxxx-xx-xx)
    Use Directory.GetFileSystemEntryInfo instead.
 
 - Issue #377: Rename enum member: `OperatingSystem.EnumOsName.WindowsServer` to: `OperatingSystem.EnumOsName.WindowsServer2016`
+- Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
 
 
 Version 2.1.3 (2017-06-05)
