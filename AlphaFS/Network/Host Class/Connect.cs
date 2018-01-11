@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Network
       ///   The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <see langword="null"/> or
       ///   <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.
       /// </param>
-      /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
+      /// <param name="remoteName">The network resource to connect to. The string can be up to <see cref="Filesystem.NativeMethods.MaxPath"/> characters in length.</param>
       [SecurityCritical]
       public static string ConnectDrive(string localName, string remoteName)
       {
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Network
       ///   The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <see langword="null"/> or
       ///   <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.
       /// </param>
-      /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
+      /// <param name="remoteName">The network resource to connect to. The string can be up to <see cref="Filesystem.NativeMethods.MaxPath"/> characters in length.</param>
       /// <param name="userName">
       ///   The user name for making the connection. If <paramref name="userName"/> is <see langword="null"/>, the function uses the default
       ///   user name. (The user context for the process provides the default user name)
@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Network
       ///   The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <see langword="null"/> or
       ///   <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.
       /// </param>
-      /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
+      /// <param name="remoteName">The network resource to connect to. The string can be up to <see cref="Filesystem.NativeMethods.MaxPath"/> characters in length.</param>
       /// <param name="credentials">
       ///   An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic,
       ///   digest, NTLM, and Kerberos authentication.
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Network
       ///   The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <see langword="null"/> or
       ///   <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.
       /// </param>
-      /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
+      /// <param name="remoteName">The network resource to connect to. The string can be up to <see cref="Filesystem.NativeMethods.MaxPath"/> characters in length.</param>
       /// <param name="userName">
       ///   The user name for making the connection. If <paramref name="userName"/> is <see langword="null"/>, the function uses the default
       ///   user name. (The user context for the process provides the default user name)
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Network
       ///   The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <see langword="null"/> or
       ///   <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.
       /// </param>
-      /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
+      /// <param name="remoteName">The network resource to connect to. The string can be up to <see cref="Filesystem.NativeMethods.MaxPath"/> characters in length.</param>
       /// <param name="credentials">
       ///   An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic,
       ///   digest, NTLM, and Kerberos authentication.
@@ -395,7 +395,7 @@ namespace Alphaleonis.Win32.Network
       {
          uint lastError;
 
-         // Always remove backslash for local device.
+         // Always remove backslash.
          if (!Utils.IsNullOrWhiteSpace(arguments.LocalName))
             arguments.LocalName = Path.RemoveTrailingDirectorySeparator(arguments.LocalName).ToUpperInvariant();
 
@@ -404,11 +404,12 @@ namespace Alphaleonis.Win32.Network
 
          if (arguments.IsDisconnect)
          {
-            bool force = arguments.Prompt; // Use value of prompt variable for force value.
-            string target = arguments.IsDeviceMap ? arguments.LocalName : arguments.RemoteName;
+            var force = arguments.Prompt; // Use value of prompt variable for force value.
+            var target = arguments.IsDeviceMap ? arguments.LocalName : arguments.RemoteName;
 
             if (Utils.IsNullOrWhiteSpace(target))
                throw new ArgumentNullException(arguments.IsDeviceMap ? "localName" : "remoteName");
+
 
             lastError = NativeMethods.WNetCancelConnection(target, arguments.UpdateProfile ? NativeMethods.Connect.UpdateProfile : NativeMethods.Connect.None, force);
 
@@ -428,6 +429,10 @@ namespace Alphaleonis.Win32.Network
 
          if (Utils.IsNullOrWhiteSpace(arguments.RemoteName) && !arguments.IsDeviceMap)
             throw new ArgumentNullException("arguments.RemoteName");
+
+         // Always remove backslash.
+         if (!Utils.IsNullOrWhiteSpace(arguments.RemoteName))
+            arguments.RemoteName = Path.RemoveTrailingDirectorySeparator(arguments.RemoteName);
 
 
          // When supplied, use data from NetworkCredential instance.
@@ -471,7 +476,7 @@ namespace Alphaleonis.Win32.Network
 
          do
          {
-            buffer = new StringBuilder((int)bufferSize);
+            buffer = new StringBuilder((int) bufferSize);
 
             uint result;
             lastError = NativeMethods.WNetUseConnection(arguments.WinOwner, ref resource, arguments.Password, arguments.UserName, connect, buffer, out bufferSize, out result);
@@ -496,6 +501,7 @@ namespace Alphaleonis.Win32.Network
 
          if (lastError != Win32Errors.NO_ERROR)
             throw new NetworkInformationException((int)lastError);
+
 
          return arguments.IsDeviceMap ? buffer.ToString() : null;
 

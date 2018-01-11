@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Doing so makes path point to the current directory.
 
             // ".", "C:", "C:\"
-            if (null == path || path.Length <= 3 || !path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) && path[1] != VolumeSeparatorChar)
+            if (null == path || path.Length <= 3 || !path.StartsWith(LongPathPrefix, StringComparison.Ordinal) && path[1] != VolumeSeparatorChar)
                options &= ~GetFullPathOptions.RemoveTrailingDirectorySeparator;
          }
 
@@ -207,7 +207,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
          
-         startGetFullPathName:
+      startGetFullPathName:
 
             var buffer = new StringBuilder((int) bufferSize);
             var returnLength = null == transaction || !NativeMethods.IsAtLeastWindowsVista
@@ -238,9 +238,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
 
-            var finalFullPath = (options & GetFullPathOptions.AsLongPath) != 0
-               ? GetLongPathCore(buffer.ToString(), GetFullPathOptions.None)
-               : GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None, false);
+            var finalFullPath = (options & GetFullPathOptions.AsLongPath) != 0 ? GetLongPathCore(buffer.ToString(), GetFullPathOptions.None) : GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None, false);
 
 
             finalFullPath = NormalizePath(finalFullPath, options);
@@ -248,8 +246,8 @@ namespace Alphaleonis.Win32.Filesystem
 
             if ((options & GetFullPathOptions.KeepDotOrSpace) != 0)
             {
-               if (pathLp.EndsWith(".", StringComparison.Ordinal))
-                  finalFullPath += ".";
+               if (pathLp.EndsWith(CurrentDirectoryPrefix, StringComparison.Ordinal))
+                  finalFullPath += CurrentDirectoryPrefix;
 
                var lastChar = pathLp[pathLp.Length - 1];
                if (char.IsWhiteSpace(lastChar))

@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -36,6 +36,13 @@ namespace AlphaFS.UnitTest
          Path_LocalToUnc();
       }
 
+      
+      [TestMethod]
+      public void AlphaFS_Path_LocalToUnc_LocalFolderEndsWithTrailingDirectorySeparator_Success()
+      {
+         Path_LocalToUnc_LocalFolderEndsWithTrailingDirectorySeparator();
+      }
+
 
       [TestMethod]
       public void AlphaFS_Path_LocalToUnc_MappedDrive_Success()
@@ -44,6 +51,13 @@ namespace AlphaFS.UnitTest
       }
 
 
+      [TestMethod]
+      public void AlphaFS_Path_LocalToUnc_MappedDriveAddTrailingDirectorySeparator_Success()
+      {
+         Path_LocalToUnc_MappedDriveAddTrailingDirectorySeparator();
+      }
+
+      
       [TestMethod]
       public void AlphaFS_Path_LocalToUnc_MappedDriveWithSubFolder_Success()
       {
@@ -96,7 +110,7 @@ namespace AlphaFS.UnitTest
             var shouldBeUncLongPath = localToUncPaths[2 + i];
 
             var uncPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(localPath);
-            var uncLongPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(localPath, true);
+            var uncLongPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(localPath, Alphaleonis.Win32.Filesystem.GetFullPathOptions.AsLongPath);
 
             Console.WriteLine("\tLocal Path   : [{0}]", localPath);
             Console.WriteLine("\tUNC Path     : [{0}]", uncPath);
@@ -106,9 +120,50 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(shouldBeUncPath, uncPath, "The UNC paths do not match, but are expected to.");
             Assert.AreEqual(shouldBeUncLongPath, uncLongPath, "The UNC paths do not match, but are expected to.");
 
+            if (i % 2 != 0)
+               Assert.IsTrue(uncPath.EndsWith(backslash), "The UNC path does not end with a " + backslash + " but is expected to.");
 
             Console.WriteLine();
          }
+      }
+
+
+      private void Path_LocalToUnc_LocalFolderEndsWithTrailingDirectorySeparator()
+      {
+         UnitTestConstants.PrintUnitTestHeader(false);
+         Console.WriteLine();
+
+
+         var backslash = Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
+         var hostName = Alphaleonis.Win32.Network.Host.GetUncName() + backslash;
+         var localFolder = UnitTestConstants.SysRoot32 + backslash;
+         var netFolder = localFolder.Replace(":", "$");
+
+
+         string[] localToUncPaths =
+         {
+            localFolder,
+            hostName + netFolder,
+            Alphaleonis.Win32.Filesystem.Path.GetLongPath(hostName + netFolder)
+         };
+
+
+         var uncPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(localToUncPaths[0]);
+         var uncLongPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(localToUncPaths[0], Alphaleonis.Win32.Filesystem.GetFullPathOptions.AsLongPath);
+
+
+         Console.WriteLine("\tLocal Folder: [{0}]", localToUncPaths[0]);
+         Console.WriteLine();
+
+         Console.WriteLine("\tUNC Path     : [{0}]", uncPath);
+         Console.WriteLine("\tUNC Long Path: [{0}]", uncLongPath);
+         Console.WriteLine();
+
+
+         Assert.AreEqual(localToUncPaths[1], uncPath);
+         Assert.AreEqual(localToUncPaths[2], uncLongPath);
+
+         Assert.IsTrue(uncPath.EndsWith(backslash), "The UNC path does not end with a " + backslash + " but is expected to.");
       }
 
 
@@ -136,7 +191,7 @@ namespace AlphaFS.UnitTest
          {
             var driveLetter = connection.LocalName;
             var uncPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveLetter);
-            var uncLongPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveLetter, true);
+            var uncLongPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveLetter, Alphaleonis.Win32.Filesystem.GetFullPathOptions.AsLongPath);
 
 
             Console.WriteLine("\tMapped letter: [{0}] to: [{1}]", driveLetter, connection.Share);
@@ -152,6 +207,47 @@ namespace AlphaFS.UnitTest
          }
       }
 
+
+      private void Path_LocalToUnc_MappedDriveAddTrailingDirectorySeparator()
+      {
+         UnitTestConstants.PrintUnitTestHeader(false);
+         Console.WriteLine();
+
+
+         var backslash = Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
+         var hostName = Alphaleonis.Win32.Network.Host.GetUncName() + backslash;
+         var localTempFolder = UnitTestConstants.TempFolder;
+         var netTempFolder = localTempFolder.Replace(":", "$");
+
+
+         string[] localToUncPaths =
+         {
+            localTempFolder,
+            hostName + netTempFolder,
+            Alphaleonis.Win32.Filesystem.Path.GetLongPath(hostName + netTempFolder)
+         };
+
+
+         using (var connection = new Alphaleonis.Win32.Network.DriveConnection(localToUncPaths[1]))
+         {
+            var driveLetter = connection.LocalName;
+            var uncPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveLetter, Alphaleonis.Win32.Filesystem.GetFullPathOptions.AddTrailingDirectorySeparator);
+            var uncLongPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveLetter, Alphaleonis.Win32.Filesystem.GetFullPathOptions.AsLongPath | Alphaleonis.Win32.Filesystem.GetFullPathOptions.AddTrailingDirectorySeparator);
+
+
+            Console.WriteLine("\tMapped letter: [{0}] to: [{1}]", driveLetter, connection.Share);
+            Console.WriteLine();
+
+            Console.WriteLine("\tUNC Path     : [{0}]", uncPath);
+            Console.WriteLine("\tUNC Long Path: [{0}]", uncLongPath);
+            Console.WriteLine();
+
+
+            Assert.AreEqual(localToUncPaths[1] + backslash, uncPath);
+            Assert.AreEqual(localToUncPaths[2] + backslash, uncLongPath);
+         }
+      }
+      
 
       private void Path_LocalToUnc_MappedDriveWithSubFolder()
       {
@@ -182,7 +278,7 @@ namespace AlphaFS.UnitTest
             var subFolder = driveLetter + backslash + subFolderName;
             
             var uncPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(subFolder);
-            var uncLongPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(subFolder, true);
+            var uncLongPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(subFolder, Alphaleonis.Win32.Filesystem.GetFullPathOptions.AsLongPath);
 
 
             Console.WriteLine("\tMapped letter: [{0}] to: [{1}]", driveLetter, connection.Share);

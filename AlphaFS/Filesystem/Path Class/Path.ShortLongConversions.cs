@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsLongPath(string path)
       {
-         return !Utils.IsNullOrWhiteSpace(path) && path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase);
+         return !Utils.IsNullOrWhiteSpace(path) && path.StartsWith(LongPathPrefix, StringComparison.Ordinal);
       }
 
       
@@ -135,26 +135,28 @@ namespace Alphaleonis.Win32.Filesystem
          if (null == path)
             throw new ArgumentNullException("path");
 
+
          if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
+
 
          if (options != GetFullPathOptions.None)
             path = ApplyFullPathOptions(path, options);
 
+
          // ".", "C:"
-         if (path.Length <= 2 ||
-             path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) ||
-             path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase) ||
-             path.StartsWith(NonInterpretedPathPrefix, StringComparison.OrdinalIgnoreCase))
+         if (path.Length <= 2 || path.StartsWith(LongPathPrefix, StringComparison.Ordinal) || path.StartsWith(LogicalDrivePrefix, StringComparison.Ordinal) || path.StartsWith(NonInterpretedPathPrefix, StringComparison.Ordinal))
             return path;
 
-         if (path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase))
+
+         if (path.StartsWith(UncPrefix, StringComparison.Ordinal))
             return LongPathUncPrefix + path.Substring(UncPrefix.Length);
 
-         // Don't use char.IsLetter() here as that can be misleading.
-         // The only valid drive letters are: a-z and A-Z.
-         var c = path[0];
-         return IsPathRooted(path, false) && (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z') ? LongPathPrefix + path : path;
+
+         // Don't use char.IsLetter() here as that can be misleading; The only valid drive letters are: A-Z.
+         var c = path.ToUpperInvariant()[0];
+
+         return IsPathRooted(path, false) && c >= 'A' && c <= 'Z' ? LongPathPrefix + path : path;
       }
 
 
@@ -237,13 +239,13 @@ namespace Alphaleonis.Win32.Filesystem
          if (path.StartsWith(DosDeviceUncPrefix, StringComparison.OrdinalIgnoreCase))
             return UncPrefix + path.Substring(DosDeviceUncPrefix.Length);
 
-         if (path.StartsWith(NonInterpretedPathPrefix, StringComparison.OrdinalIgnoreCase))
+         if (path.StartsWith(NonInterpretedPathPrefix, StringComparison.Ordinal))
             return path.Substring(NonInterpretedPathPrefix.Length);
 
 
          return path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase)
                 || path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase)
-                || !path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase)
+                || !path.StartsWith(LongPathPrefix, StringComparison.Ordinal)
             ? path
             : (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase)
                ? UncPrefix + path.Substring(LongPathUncPrefix.Length)

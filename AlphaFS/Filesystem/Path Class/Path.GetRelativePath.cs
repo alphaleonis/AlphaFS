@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 
@@ -56,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          for (var index = 0; index < length; index++)
          {
-            if (string.Compare(fromDirectories[index], toDirectories[index], true, CultureInfo.InvariantCulture) != 0)
+            if (string.Compare(fromDirectories[index], toDirectories[index], StringComparison.OrdinalIgnoreCase) != 0)
                break;
 
             lastCommonRoot = index;
@@ -116,7 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       //   if (IsPathRooted(startPath) && IsPathRooted(selectedPath))
       //   {
-      //      if (string.Compare(GetPathRoot(startPath), GetPathRoot(selectedPath), true, CultureInfo.InvariantCulture) != 0)
+      //      if (string.Compare(GetPathRoot(startPath), GetPathRoot(selectedPath), CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) != 0)
       //         return selectedPath;
       //   }
 

@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation directorys (the "Software"), to deal 
@@ -41,6 +41,10 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void DirectoryInfo_MoveTo_DelayUntilReboot_Local_Success()
       {
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
+
          DirectoryInfo_MoveTo_DelayUntilReboot(false);
       }
 

@@ -33,6 +33,10 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_SetTimestampsXxx_LocalAndNetwork_Success()
       {
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
+
          Directory_SetTimestampsXxx(false);
          Directory_SetTimestampsXxx(true);
       }

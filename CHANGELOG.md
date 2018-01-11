@@ -22,6 +22,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #374: Initializing `DriveInfo` instance with only a letter throws `System.ArgumentException`.
 - Issue #375: What is the expected result of `Path.LocalToUnc()` ?  (Thx damiarnold)
 - Issue #376: `Path.LocalToUnc(path, true)` does not return UNC path in long path form.  (Thx damiarnold) 
+- Issue #379: `Path.LocalToUnc()` isn't handling trailing directory separators for mapped drives.  (Thx damiarnold)
 - Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
 
 ### New Features
@@ -44,7 +45,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #370: Relative path from a full path  (Thx QbProg)
 - Issue #373: Improve method `Directory.CreateDirectory` to allow creating a folder consisting only of spaces.
 
-### New Improvements
+### Improvements
 
 - Issue #273: Improve methods `Directory/File.CopyMoveCore`: Make code recursive-aware, skip additional path checks and validations.
 - Issue #274: Improve methods `Directory/File.CopyMoveCore`: Improve detection of same volume.

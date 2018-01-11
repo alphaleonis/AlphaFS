@@ -253,4 +253,7 @@
   <data name="InvalidDriveLetterArgument" xml:space="preserve">
     <value>Argument must be a drive letter: "C", RootDir: "C:\" or UNC path: "\\server\share"</value>
   </data>
+  <data name="GetFullPathOptions_Add_And_Remove_DirectorySeparator_Invalid" xml:space="preserve">
+    <value>Cannot add and remove trailing DirectorySeparator simultaneously.</value>
+  </data>
 </root>

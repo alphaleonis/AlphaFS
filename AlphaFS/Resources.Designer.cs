@@ -19,7 +19,7 @@ namespace Alphaleonis.Win32 {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -130,6 +130,15 @@ namespace Alphaleonis.Win32 {
         internal static string File_Or_Directory_Already_Exists {
             get {
                 return ResourceManager.GetString("File_Or_Directory_Already_Exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot add and remove trailing DirectorySeparator simultaneously..
+        /// </summary>
+        internal static string GetFullPathOptions_Add_And_Remove_DirectorySeparator_Invalid {
+            get {
+                return ResourceManager.GetString("GetFullPathOptions_Add_And_Remove_DirectorySeparator_Invalid", resourceCulture);
             }
         }
         

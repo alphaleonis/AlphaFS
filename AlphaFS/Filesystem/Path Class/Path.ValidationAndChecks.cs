@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void CheckInvalidUncPath(string path)
       {
          // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." which is the current directory.
-         if (!IsLongPath(path) && path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase))
+         if (!IsLongPath(path) && path.StartsWith(UncPrefix, StringComparison.Ordinal))
          {
             var tackle = GetRegularPathCore(path, GetFullPathOptions.None, false).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
 

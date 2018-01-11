@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Network
       {
          return Utils.IsNullOrWhiteSpace(computerName)
             ? GetUncName()
-            : (computerName.StartsWith(Path.UncPrefix, StringComparison.OrdinalIgnoreCase)
+            : (computerName.StartsWith(Path.UncPrefix, StringComparison.Ordinal)
                ? computerName.Trim()
                : Path.UncPrefix + computerName.Trim());
       }
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Network
             throw new NetworkInformationException((int) lastError);
       }
 
-      /// <summary>This method uses <see cref="NativeMethods.REMOTE_NAME_INFO"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
+      /// <summary>This method uses <see cref="NativeMethods.REMOTE_NAME_INFO"/> level to retrieve full REMOTE_NAME_INFO structure.</summary>
       /// <returns>A <see cref="NativeMethods.REMOTE_NAME_INFO"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid.</remarks>
       /// <exception cref="ArgumentException"/>
@@ -198,7 +198,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>The name of a local device to be redirected, such as "F:". When <see cref="LocalName"/> is <see langword="null"/> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</summary>
          public string LocalName;
 
-         /// <summary>A network resource to connect to/disconnect from, for example: \\server or \\server\share</summary>
+         /// <summary>A network resource to connect to/disconnect from, for example: \\server or \\server\share. The string can be up to <see cref="Filesystem.NativeMethods.MaxPath"/> characters in length.</summary>
          public string RemoteName;
 
          /// <summary>A <see cref="NetworkCredential"/> instance. Use either this or the combination of <see cref="UserName"/> and <see cref="Password"/>.</summary>

@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
          // http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx
 
          SafeCmConnectMachineHandle safeMachineHandle;
-         var lastError = NativeMethods.CM_Connect_Machine(Path.LocalToUncCore(Host.GetUncName(hostName), false, false, false), out safeMachineHandle);
+         var lastError = NativeMethods.CM_Connect_Machine(Host.GetUncName(hostName), out safeMachineHandle);
 
          if (safeMachineHandle != null && safeMachineHandle.IsInvalid)
          {

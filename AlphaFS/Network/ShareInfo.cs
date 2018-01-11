@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -37,11 +37,14 @@ namespace Alphaleonis.Win32.Network
       /// <param name="shareInfo">A <see cref="NativeMethods.SHARE_INFO_2"/> or <see cref="NativeMethods.SHARE_INFO_503"/> instance.</param>
       internal ShareInfo(string host, ShareInfoLevel shareLevel, object shareInfo)
       {
+         host = host ?? Environment.MachineName;
+
+
          switch (shareLevel)
          {
             case ShareInfoLevel.Info1005:
                var s1005 = (NativeMethods.SHARE_INFO_1005) shareInfo;
-               ServerName = host ?? Environment.MachineName;
+               ServerName = host;
                ResourceType = s1005.shi1005_flags;
                break;
 
@@ -55,7 +58,7 @@ namespace Alphaleonis.Win32.Network
                Path = Utils.IsNullOrWhiteSpace(s503.shi503_path) ? null : s503.shi503_path;
                Permissions = s503.shi503_permissions;
                Remark = s503.shi503_remark;
-               ServerName = s503.shi503_servername == "*" ? host ?? Environment.MachineName : s503.shi503_servername;
+               ServerName = s503.shi503_servername == "*" ? host : s503.shi503_servername;
                ShareType = s503.shi503_type;
                SecurityDescriptor = s503.shi503_security_descriptor;
                break;
@@ -70,7 +73,7 @@ namespace Alphaleonis.Win32.Network
                Path = Utils.IsNullOrWhiteSpace(s502.shi502_path) ? null : s502.shi502_path;
                Permissions = s502.shi502_permissions;
                Remark = s502.shi502_remark;
-               ServerName = host ?? Environment.MachineName;
+               ServerName = host;
                ShareType = s502.shi502_type;
                SecurityDescriptor = s502.shi502_security_descriptor;
                break;
@@ -85,7 +88,7 @@ namespace Alphaleonis.Win32.Network
                Path = Utils.IsNullOrWhiteSpace(s2.shi2_path) ? null : s2.shi2_path;
                Permissions = s2.shi2_permissions;
                Remark = s2.shi2_remark;
-               ServerName = host ?? Environment.MachineName;
+               ServerName = host;
                ShareType = s2.shi2_type;
                break;
 
@@ -99,7 +102,7 @@ namespace Alphaleonis.Win32.Network
                Path = null;
                Permissions = AccessPermissions.None;
                Remark = s1.shi1_remark;
-               ServerName = host ?? Environment.MachineName;
+               ServerName = host;
                ShareType = s1.shi1_type;
                break;
          }
