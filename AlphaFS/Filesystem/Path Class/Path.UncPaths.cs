@@ -111,9 +111,30 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return LocalToUncCore(localPath, pathFormat, GetFullPathOptions.None);
       }
-      
 
-      /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it in a long path format and the ability to add or remove a trailing backslash.
+
+      /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it as a long path format and the ability to add or remove a trailing backslash.
+      ///   <para>A Local path, e.g.: "C:\Windows" or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
+      ///   <para>If a logical drive points to a network share path (mapped drive), the share path will be returned without a trailing <see cref="DirectorySeparator"/> character.</para>
+      /// </summary>
+      /// <returns>On successful conversion a UNC path is returned.
+      ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
+      ///   <para>If <paramref name="localPath"/> is an empty string or <see langword="null"/>, <see langword="null"/> is returned.</para>
+      /// </returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="PathTooLongException"/>
+      /// <exception cref="NetworkInformationException"/>
+      /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <param name="fullPathOptions">Options for controlling the full path retrieval.</param>
+      [SecurityCritical]
+      public static string LocalToUnc(string localPath, PathFormat pathFormat, GetFullPathOptions fullPathOptions)
+      {
+         return LocalToUncCore(localPath, pathFormat, fullPathOptions);
+      }
+
+
+      /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it as a long path format and the ability to add or remove a trailing backslash.
       ///   <para>A Local path, e.g.: "C:\Windows" or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
       ///   <para>If a logical drive points to a network share path (mapped drive), the share path will be returned without a trailing <see cref="DirectorySeparator"/> character.</para>
       /// </summary>
