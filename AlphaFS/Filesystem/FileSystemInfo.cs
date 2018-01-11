@@ -62,14 +62,6 @@ namespace Alphaleonis.Win32.Filesystem
       [NonSerialized]
       internal NativeMethods.WIN32_FILE_ATTRIBUTE_DATA Win32AttributeData;
 
-
-      // A random prime number will be picked and added to the HashCode, each time an instance is created.
-      [NonSerialized]
-      private static readonly int[] Primes = { 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919 };
-      [NonSerialized]
-      private readonly int _random = new Random().Next(0, 19);
-
-
       /// <summary>The target path to the Hard/Soft (Symbolic)/Junction link as a long path.</summary>
       [NonSerialized]
       internal string linkTargetPath = null;
@@ -474,25 +466,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A hash code for the current Object.</returns>
       public override int GetHashCode()
       {
-         var fullName = FullName;
-         var name = Name;
-
-         unchecked
-         {
-            var hash = Primes[_random];
-
-            if (!Utils.IsNullOrWhiteSpace(fullName))
-               hash = hash * Primes[1] + fullName.GetHashCode();
-
-            if (!Utils.IsNullOrWhiteSpace(name))
-               hash = hash * Primes[1] + name.GetHashCode();
-
-            hash = hash * Primes[1] + Attributes.GetHashCode();
-            hash = hash * Primes[1] + CreationTimeUtc.GetHashCode();
-            hash = hash * Primes[1] + LastWriteTimeUtc.GetHashCode();
-
-            return hash;
-         }
+         return FullName?.GetHashCode() ?? 0;
       }
 
       /// <summary>Implements the operator ==</summary>

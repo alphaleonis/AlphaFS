@@ -44,7 +44,7 @@ namespace Alphaleonis
          var enumValArray = Enum.GetValues(enumType).Cast<T>().OrderBy(e => e.ToString());
          var enumValList = new List<T>(enumValArray.Count());
 
-         enumValList.AddRange(enumValArray.Select(val => (T) Enum.Parse(enumType, val.ToString())));
+         enumValList.AddRange(enumValArray.Select(val => (T)Enum.Parse(enumType, val.ToString())));
 
          return enumValList;
       }
@@ -96,7 +96,7 @@ namespace Alphaleonis
       {
          const int kb = 1024;
 
-         var sizeFormats = new[] {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
+         var sizeFormats = new[] { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
          var formatLength = sizeFormats.Length;
          var bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
 
@@ -111,6 +111,32 @@ namespace Alphaleonis
          // Will return "512 B" instead of "512,00 B".
 
          return string.Format(cultureInfo, "{0} {1}", bytes.ToString(index == 0 ? "0" : "0.##", cultureInfo), sizeFormats[index]);
+      }
+
+      public static int CombineHashCodesOf<T1, T2>(T1 arg1, T2 arg2)
+      {
+         unchecked
+         {
+            int hash = 17;
+            hash = hash * 23 + (arg1?.GetHashCode() ?? 0);
+            hash = hash * 23 + (arg2?.GetHashCode() ?? 0);
+            return hash;
+         }
+      }
+
+      public static int CombineHashCodesOf<T1, T2, T3>(T1 arg1, T2 arg2, T3 arg3)
+      {
+         unchecked
+         {
+            int hash = CombineHashCodesOf(arg1, arg2);
+            hash = hash * 23 + (arg3?.GetHashCode() ?? 0);
+            return hash;
+         }
+      }
+
+      public static int CombineHashCodesOf<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+      {
+         return CombineHashCodesOf(CombineHashCodesOf(arg1, arg2), CombineHashCodesOf(arg3, arg4));
       }
    }
 }
