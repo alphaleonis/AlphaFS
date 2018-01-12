@@ -123,7 +123,7 @@ Function Enumerate-FileSystemEntryInfos {
 		IsOffline           = [False]
 		IsReadOnly          = [False]
 		IsReparsePoint      = [False]
-		IsSparseFile        = [False]
+        IsSparseFile        = [False]
 		IsSymbolicLink      = [False]
 		IsSystem            = [False]
 		IsTemporary         = [False]

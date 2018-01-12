@@ -24,6 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Principal;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
@@ -935,7 +936,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_GetFileSystemEntries_LongPathWithPrefix_ShouldReturnCorrectEntries()
       {
-         using (var tempDir = new TemporaryDirectory("GetFileSystemEntries"))
+         using (var tempDir = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
          {
             var longDir = Path.Combine(tempDir.Directory.FullName, new string('x', 128), new string('x', 128), new string('x', 128), new string('x', 128));
             Directory.CreateDirectory(longDir);
@@ -952,7 +953,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_GetFileSystemEntries_LongPathWithoutPrefix_ShouldReturnCorrectEntries()
       {
-         using (var tempDir = new TemporaryDirectory("GetFileSystemEntries"))
+         using (var tempDir = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
          {
             var longDir = Path.Combine(tempDir.Directory.FullName, new string('x', 128), new string('x', 128), new string('x', 128), new string('x', 128));
             Directory.CreateDirectory(longDir);

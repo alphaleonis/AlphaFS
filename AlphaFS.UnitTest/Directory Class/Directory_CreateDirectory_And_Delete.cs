@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -54,13 +54,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_WithFileSecurity_LocalAndNetwork_Success()
+      public void Directory_CreateDirectory_WithDirectorySecurity_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
 
-         Directory_CreateDirectory_WithFileSecurity(false);
-         Directory_CreateDirectory_WithFileSecurity(true);
+
+         Directory_CreateDirectory_WithDirectorySecurity(false);
+         Directory_CreateDirectory_WithDirectorySecurity(true);
       }
 
 
@@ -108,6 +109,8 @@ namespace AlphaFS.UnitTest
       private void Directory_CreateDirectory_And_Delete(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
+
 
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
@@ -122,22 +125,29 @@ namespace AlphaFS.UnitTest
             var level = new Random().Next(10, 1000);
 
 #if NET35
-// MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-//folder += UnitTestConstants.EMspace;
+            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
+            //folder += UnitTestConstants.EMspace;
 #endif
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("\tInput Directory Path: [{0}]", folder);
+            Console.WriteLine();
 
 
             var root = folder;
 
             for (var i = 0; i < level; i++)
-               root = System.IO.Path.Combine(root, "Level-" + (i + 1) + "-subFolder");
+            {
+               var isEven = i % 2 == 0;
+               root = System.IO.Path.Combine(root, (isEven ? "Level-" : "Lëvél-") + (i + 1) + (isEven ? "-subFolder" : "-sübFôldér"));
+            }
 
             Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(root);
 
-            Console.WriteLine("\nCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level, root.Length);
-            Console.WriteLine("\n{0}", root);
+            Console.WriteLine("\tCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level, root.Length);
+            Console.WriteLine();
+
+            Console.WriteLine("\t{0}", root);
+            Console.WriteLine();
 
             Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(root), "The directory does not exists, but is expected to.");
 
@@ -244,9 +254,11 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_CreateDirectory_WithFileSecurity(bool isNetwork)
+      private void Directory_CreateDirectory_WithDirectorySecurity(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
+
 
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
@@ -256,30 +268,35 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("\tInput Directory Path: [{0}]", folder);
+            Console.WriteLine();
 
 
             var pathExpected = rootDir.RandomDirectoryFullPath;
             var pathActual = rootDir.RandomDirectoryFullPath;
 
-            var expectedFileSecurity = new System.Security.AccessControl.DirectorySecurity();
-            expectedFileSecurity.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.AccessControlType.Allow));
-            expectedFileSecurity.AddAuditRule(new System.Security.AccessControl.FileSystemAuditRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.Read, System.Security.AccessControl.AuditFlags.Success));
+            var sid = new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null);
+            var expectedDirectorySecurity = new System.Security.AccessControl.DirectorySecurity();
+            expectedDirectorySecurity.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(sid, System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.AccessControlType.Allow));
+            expectedDirectorySecurity.AddAuditRule(new System.Security.AccessControl.FileSystemAuditRule(sid, System.Security.AccessControl.FileSystemRights.Read, System.Security.AccessControl.AuditFlags.Success));
 
 
             using (new Alphaleonis.Win32.Security.PrivilegeEnabler(Alphaleonis.Win32.Security.Privilege.Security))
             {
-               var s1 = System.IO.Directory.CreateDirectory(pathExpected, expectedFileSecurity);
-               var s2 = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(pathActual, expectedFileSecurity);
+               var s1 = System.IO.Directory.CreateDirectory(pathExpected, expectedDirectorySecurity);
+               var s2 = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(pathActual, expectedDirectorySecurity);
 
-               UnitTestConstants.Dump(s1);
-               UnitTestConstants.Dump(s2);
+
+               var expected = s1.GetAccessControl().GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
+               var actual = s2.GetAccessControl().GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
+
+
+               Console.WriteLine("\tSystem.IO: {0}", expected);
+               Console.WriteLine("\tAlphaFS  : {0}", actual);
+
+
+               Assert.AreEqual(expected, actual);
             }
-
-            var expected = System.IO.File.GetAccessControl(pathExpected).GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
-            var actual = Alphaleonis.Win32.Filesystem.File.GetAccessControl(pathActual).GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
-
-            Assert.AreEqual(expected, actual);
          }
 
          Console.WriteLine();
