@@ -62,10 +62,6 @@ namespace Alphaleonis.Win32.Filesystem
       [NonSerialized]
       internal NativeMethods.WIN32_FILE_ATTRIBUTE_DATA Win32AttributeData;
 
-      /// <summary>The target path to the Hard/Soft (Symbolic)/Junction link as a long path.</summary>
-      [NonSerialized]
-      internal string linkTargetPath = null;
-
       #endregion // Fields
 
 
