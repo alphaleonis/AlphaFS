@@ -30,15 +30,16 @@ Version vNext  (xxxx-xx-xx)
 - Issue #212: Provide a way to retrieve errors when you choose to `ContinueOnException`
 - Issue #306: Include `ShareInfoLevel.Info502` and set as a fallback in `GetShareInfoCore()`  (Thx damiarnold)
 - Issue #314: Added Feature: `Directory.GetFileSystemEntryInfo`  (Thx besoft)
+- Issue #326: Add parameter `bool preserveDates` and created overloaded `Directory.Copy` methods to support this.
 - Issue #335: Add overloaded methods to `File/Directory.TransferTimestamps` to apply to ReparsePoint.
 - Issue #336: Implement methods for `Directory` class: `CreateJunction`, `DeleteJunction` and `ExistsJunction`.
 - Issue #338: Add convenience method `Directory.IsEmpty`
 - Issue #342: Add instance method: `FileInfo.IsLocked()`
 - Issue #343: Add method `File.GetProcessForFileLock`
+- Issue #347: Implement method `Directory.CreateSymbolicLink`
 - Issue #348: Implement method `Directory.GetLinkTargetInfo`
 - Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
 - Issue #351: Enable copying of Directory symbolic links.
-- Issue #352: Ignore `NonInterpretedPathPrefix` in methods: `Path.GetFullPathCore` and `Path.GetLongPathCore`  (Thx besoft)
 - Issue #353: Modify method `Directory.GetFileSystemEntryInfo` to return `FileSystemEntryInfo` structure for directories supporting also root directories, e.g., `C:\`  (Thx besoft)
 - Issue #354: Add methods `File.GetFileId` and `Directory.GetFileId` to return a unique file identifier.  (Thx besoft)
 - Issue #357: Added new Windows 10 property: `FILE_DAX_VOLUME` to `VolumeInfo` class.
@@ -54,8 +55,11 @@ Version vNext  (xxxx-xx-xx)
 - Issue #278: `Directory.DeleteEmptySubdirectoriesCore()`: Eliminate recursion.
 - Issue #303: `Path.Constants.cs`: Don't use `CurrentCulture`  (Thx HugoRoss)
 - Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
+- Issue #341: Improve usage of method `NativeError.ThrowException` and `Marshal.GetLastWin32Error`
 - Issue #345: `AlreadyExistsException` should only throw message from 1 error.
+- Issue #352: Ignore `NonInterpretedPathPrefix` in methods: `Path.GetFullPathCore` and `Path.GetLongPathCore`  (Thx besoft)
 - Issue #355: Methods throwing an `IOException` due to error code 17 (`ERROR_NOT_SAME_DEVICE`) now throw a specific exception (`NotSameDeviceException`)
+- Issue #364: Avoid unnecessary allocations from Random construction in FileSystemInfo  (Thx danmosemsft)
 - Issue #377: Rename enum member: `OperatingSystem.EnumOsName.WindowsServer` to: `OperatingSystem.EnumOsName.WindowsServer2016`
 - Issue #378: `DiskSpaceInfo` should respect `CultureInfo.CurrentCulture` for number formatting.
 
@@ -63,6 +67,8 @@ Version vNext  (xxxx-xx-xx)
 
 - Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
    Currently non-breaking, the old methods are still there.
+
+- Issue #340: DirectoryReadOnlyException inherits from System.IO.IOException, wrong?
 
 - Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
    Current code to retrieve a directory using `File.GetFileSystemEntryInfo` will now fail.
