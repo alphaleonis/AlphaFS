@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -21,52 +21,40 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class FileIdTest
+   public partial class DeviceTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
-      public void AlphaFS_File_GetFileId_LocalAndNetwork_Success()
+      public void AlphaFS_Device_EnumerateDevices_Local_Success()
       {
-         File_GetFileId(false);
-         File_GetFileId(true);
+         Console.WriteLine("\nMSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.");
+         Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
+
+         Device_EnumerateDevices(false);
       }
 
 
 
 
-      private void File_GetFileId(bool isNetwork)
+      private void Device_EnumerateDevices(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+         var tempPath = UnitTestConstants.LocalHost;
+         var classCnt = 0;
 
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         foreach (var guid in Alphaleonis.Utils.EnumMemberToList<Alphaleonis.Win32.Filesystem.DeviceGuid>())
          {
-            var file = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]]", file);
+            Console.WriteLine("\n#{0:000}\tClass: [{1}]", ++classCnt, guid);
 
-
-            var fileInfo = new System.IO.FileInfo(file);
-            using (fileInfo.Create()) { }
-
-
-            var fid = Alphaleonis.Win32.Filesystem.File.GetFileId(fileInfo.FullName);
-
-            Console.WriteLine("\n\tToString(): {0}", fid);
-
-            Assert.IsNotNull(fid);
+            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(tempPath, guid))
+               UnitTestConstants.Dump(device, -24);
          }
 
-         Console.WriteLine();
+         if (classCnt == 0)
+            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
       }
    }
 }

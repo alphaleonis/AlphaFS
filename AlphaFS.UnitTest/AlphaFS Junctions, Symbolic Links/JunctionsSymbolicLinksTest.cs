@@ -20,43 +20,11 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Device and is intended to contain all Device Unit Tests.</summary>
    [TestClass]
-   public class DeviceTest
+   public partial class JunctionsSymbolicLinksTest
    {
-      [TestMethod]
-      public void AlphaFS_Device_EnumerateDevices_Local_Success()
-      {
-         Console.WriteLine("\nMSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.");
-         Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
-
-         Device_EnumerateDevices(false);
-      }
-
-
-
-
-      private void Device_EnumerateDevices(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.LocalHost;
-         var classCnt = 0;
-
-         foreach (var guid in Alphaleonis.Utils.EnumMemberToList<Alphaleonis.Win32.Filesystem.DeviceGuid>())
-         {
-            Console.WriteLine("\n#{0:000}\tClass: [{1}]", ++classCnt, guid);
-
-            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(tempPath, guid))
-               UnitTestConstants.Dump(device, -24);
-         }
-
-         if (classCnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
-      }
    }
 }

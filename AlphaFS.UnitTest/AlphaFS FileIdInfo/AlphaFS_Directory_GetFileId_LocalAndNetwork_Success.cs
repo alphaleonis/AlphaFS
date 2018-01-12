@@ -19,63 +19,52 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   [TestClass]
-   public partial class VolumeInfoTest
+   public partial class DirectoryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_VolumeInfo_InitializeInstance_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_GetFileId_LocalAndNetwork_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-         VolumeInfo_InitializeInstance(false);
-         VolumeInfo_InitializeInstance(true);
+         Directory_GetFileId(false);
+         Directory_GetFileId(true);
       }
 
 
-      private void VolumeInfo_InitializeInstance(bool isNetwork)
+
+
+      private void Directory_GetFileId(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = UnitTestConstants.SysDrive;
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(tempPath);
-         UnitTestConstants.Dump(volInfo, -26);
-
-
-         if (isNetwork)
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var driveInfo = new Alphaleonis.Win32.Filesystem.DriveInfo(tempPath);
+            var folder = rootDir.RandomDirectoryFullPath;
+            Console.WriteLine("\nInput Directory Path: [{0}]]", folder);
 
-            Assert.AreEqual(driveInfo.VolumeLabel, volInfo.Name);
-            Assert.AreEqual(driveInfo.DriveFormat, volInfo.FileSystemName);
-            Assert.AreEqual(driveInfo.Name, volInfo.FullPath);
 
-            Assert.IsNull(volInfo.Guid);
-         }
+            var dirInfo = new System.IO.DirectoryInfo(folder);
+            dirInfo.Create();
 
-         else
-         {
-            // System.IO.DriveInfo does not support UNC paths.
 
-            var driveInfo = new System.IO.DriveInfo(tempPath);
+            var fid = Alphaleonis.Win32.Filesystem.Directory.GetFileId(folder);
 
-            Assert.AreEqual(driveInfo.VolumeLabel, volInfo.Name);
-            Assert.AreEqual(driveInfo.DriveFormat, volInfo.FileSystemName);
-            Assert.AreEqual(driveInfo.Name, volInfo.FullPath);
+            Console.WriteLine("\n\tToString(): {0}", fid);
 
-            Assert.IsNotNull(volInfo.Guid);
+            Assert.IsNotNull(fid);
+
          }
 
          Console.WriteLine();

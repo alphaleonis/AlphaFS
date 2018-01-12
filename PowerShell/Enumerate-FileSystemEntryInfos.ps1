@@ -81,7 +81,7 @@ Function Invoke-GenericMethod {
     [Int]$Private:ERROR_ACCESS_DENIED = 5
 
 
-    if ($errorCode -eq $ERROR_ACCESS_DENIED) { Write-Warning -Message ('Error: {0}  {1}  Path: [{2}]' -f $errorCode, $errorMessage, $pathProcessed) }
+    If ($errorCode -eq $ERROR_ACCESS_DENIED) { Write-Warning -Message ('Error: {0}  {1}  Path: [{2}]' -f $errorCode, $errorMessage, $pathProcessed) }
 
     # Continue enumeration.
     return $True
@@ -104,28 +104,35 @@ Function Enumerate-FileSystemEntryInfos {
     .OUTPUTS
         An [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo] instance:
 
-        AlternateFileName :
-        Attributes        : Archive
-        CreationTime      : 27-4-2016 01:01:14
-        CreationTimeUtc   : 26-4-2016 23:01:14
-        FileName          : notepad.exe
-        FileSize          : 215040
-        FullPath          : C:\windows\notepad.exe
-        IsCompressed      : False
-        IsHidden          : False
-        IsDirectory       : False
-        IsEncrypted       : False
-        IsMountPoint      : False
-        IsOffline         : False
-        IsReadOnly        : False
-        IsReparsePoint    : False
-        IsSymbolicLink    : False
-        LastAccessTime    : 27-4-2016 01:01:14
-        LastAccessTimeUtc : 26-4-2016 23:01:14
-        LastWriteTime     : 3-8-2015 03:19:54
-        LastWriteTimeUtc  : 3-8-2015 01:19:54
-        LongFullPath      : \\?\C:\windows\notepad.exe
-        ReparsePointTag   : None
+        AlternateFileName   = []
+		Attributes          = [Directory]
+		CreationTime        = [22-8-2013 15:36:16]
+		CreationTimeUtc     = [22-8-2013 13:36:16]
+		FileName            = [Windows]
+		FileSize            = [0]
+		FullPath            = [C:\Windows]
+		IsArchive           = [False]
+		IsCompressed        = [False]
+		IsDevice            = [False]
+		IsDirectory         = [True]
+		IsEncrypted         = [False]
+		IsHidden            = [False]
+		IsMountPoint        = [False]
+		IsNormal            = [False]
+		IsNotContentIndexed = [False]
+		IsOffline           = [False]
+		IsReadOnly          = [False]
+		IsReparsePoint      = [False]
+		IsSparseFile        = [False]
+		IsSymbolicLink      = [False]
+		IsSystem            = [False]
+		IsTemporary         = [False]
+		LastAccessTime      = [12-1-2018 15:54:39]
+		LastAccessTimeUtc   = [12-1-2018 14:54:39]
+		LastWriteTime       = [12-1-2018 15:54:39]
+		LastWriteTimeUtc    = [12-1-2018 14:54:39]
+		LongFullPath        = [\\?\C:\Windows]
+		ReparsePointTag     = [None]
 #>
 
     # SkipReparsePoints = Skip reparse points by default.

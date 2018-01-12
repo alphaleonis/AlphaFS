@@ -24,9 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for FileSystemEntryInfo and is intended to contain all FileSystemEntryInfo Unit Tests.</summary>
-   [TestClass]
-   public partial class FileSystemEntryInfoTest
+   public partial class DirectoryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

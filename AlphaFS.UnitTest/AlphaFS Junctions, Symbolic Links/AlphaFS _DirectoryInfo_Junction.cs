@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DirectoryInfoTest
+   public partial class JunctionsSymbolicLinksTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

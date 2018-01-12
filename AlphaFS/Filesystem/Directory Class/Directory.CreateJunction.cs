@@ -426,7 +426,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Directory Junction logic.
 
 
-         // Check if network path / if drive letter is a mapped network drive.
+         // Check if drive letter is a mapped network drive.
          if (new DriveInfo(directoryPath).IsUnc)
             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Network_Path_Not_Allowed, directoryPath), "directoryPath");
 

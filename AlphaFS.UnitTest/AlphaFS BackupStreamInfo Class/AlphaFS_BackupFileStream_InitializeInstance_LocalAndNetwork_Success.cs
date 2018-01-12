@@ -26,7 +26,7 @@ namespace AlphaFS.UnitTest
 {
    /// <summary>This is a test class for BackupFileStream and is intended to contain all BackupFileStream Unit Tests.</summary>
    [TestClass]
-   public partial class BackupFileStream
+   public partial class BackupFileStreamTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

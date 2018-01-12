@@ -33,7 +33,7 @@ using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Volume and is intended to contain all Volume class Unit Tests.</summary>
+   /// <summary>This is a test class for Volume and is intended to contain all Volume and VolumeInfo class Unit Tests.</summary>
    [TestClass]
    public partial class VolumeTest
    {
