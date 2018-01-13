@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DirectoryTest
+   public partial class AlphaFS_FileSystemEntryInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

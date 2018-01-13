@@ -24,10 +24,10 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Shell32 and is intended to contain all Shell32 Unit Tests.</summary>
-   partial class Shell32Test
+   public partial class AlphaFS_Shell32Test
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void AlphaFS_Shell32_GetFileIcon_LocalAndNetwork_Success()

@@ -143,20 +143,27 @@
     <Compile Include="..\AlphaFS\AssemblyVersionInfo.cs">
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
-    <Compile Include="AlphaFS Device Class\JunctionsSymbolicLinksTest.cs" />
-    <Compile Include="AlphaFS FileIdInfo\AlphaFS_Directory_GetFileId_LocalAndNetwork_Success.cs" />
-    <Compile Include="AlphaFS FileIdInfo\AlphaFS_File_GetFileId_LocalAndNetwork_Success.cs" />
+    <Compile Include="AlphaFS Alternate Data Streams\AlphaFS_AlternateDataStreams.cs" />
+    <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream.cs" />
+    <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_ByHandleFileInfo.cs" />
+    <Compile Include="AlphaFS Crc Class\AlphaFS_Crc.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS_DeviceTest.cs" />
+    <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_Directory_GetFileIdInfo_LocalAndNetwork_Success.cs" />
+    <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_File_GetFileIdInfo_LocalAndNetwork_Success.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_Directory_GetFileInfo_LocalAndNetwork_Success.cs" />
-    <Compile Include="AlphaFS CRC Class\AlphaFS_Crc64Iso_StaticDefaultSeedAndPolynomialWithShortAsciiString2.cs" />
-    <Compile Include="AlphaFS CRC Class\AlphaFS_Crc64Iso_StaticDefaultSeedAndPolynomialWithShortAsciiString.cs" />
-    <Compile Include="AlphaFS CRC Class\AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString2.cs" />
-    <Compile Include="AlphaFS CRC Class\AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString.cs" />
+    <Compile Include="AlphaFS Crc Class\AlphaFS_Crc64Iso_StaticDefaultSeedAndPolynomialWithShortAsciiString2.cs" />
+    <Compile Include="AlphaFS Crc Class\AlphaFS_Crc64Iso_StaticDefaultSeedAndPolynomialWithShortAsciiString.cs" />
+    <Compile Include="AlphaFS Crc Class\AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString2.cs" />
+    <Compile Include="AlphaFS Crc Class\AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_File_GetFileInfoByHandle_LocalAndNetwork_Success.cs" />
+    <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_FileIdInfoTest.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory_GetFileSystemEntryInfo_LocalAndNetwork_Success.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File_GetFileSystemEntryInfo_LocalAndNetwork_Success.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device_EnumerateDevices_Local_Success.cs" />
-    <Compile Include="AlphaFS BackupStreamInfo Class\AlphaFS_BackupFileStream_InitializeInstance_LocalAndNetwork_Success.cs" />
+    <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_InitializeInstance_LocalAndNetwork_Success.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_DeviceInfo_InitializeInstance_LocalAndNetwork_Success.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host.cs" />
+    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Compress_Decompress.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Encryption.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_IsEmpty.cs" />
@@ -172,7 +179,7 @@
     <Compile Include="Directory Class\AlphaFS_Directory_Copy.cs" />
     <Compile Include="Directory Class\Directory_GetDirectories.cs" />
     <Compile Include="Directory Class\Directory_GetFiles.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory_EnumerateAlternateDataStreams.cs" />
+    <Compile Include="AlphaFS Alternate Data Streams\AlphaFS_Directory_EnumerateAlternateDataStreams.cs" />
     <Compile Include="Directory Class\Directory_Exists.cs" />
     <Compile Include="Directory Class\Directory_Delete.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_ExportImportEncryptedDirectoryRaw.cs" />
@@ -201,7 +208,7 @@
     <Compile Include="File Class\AlphaFS_File_Compress_Decompress.cs" />
     <Compile Include="File Class\AlphaFS_File_GetCompressedSize.cs" />
     <Compile Include="File Class\AlphaFS_File_GetSize.cs" />
-    <Compile Include="File Class\AlphaFS_File_EnumerateAlternateDataStreams.cs" />
+    <Compile Include="AlphaFS Alternate Data Streams\AlphaFS_File_EnumerateAlternateDataStreams.cs" />
     <Compile Include="File Class\File_Create.cs" />
     <Compile Include="File Class\File_GetTimestamps.cs" />
     <Compile Include="File Class\File_Open.cs" />
@@ -224,10 +231,10 @@
     <Compile Include="AlphaFS Host Class\AlphaFS_Host_EnumerateOpenResources.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host_EnumerateOpenConnections.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host_EnumerateShares.cs" />
-    <Compile Include="AlphaFS DFS Class\AlphaFS_Network_DfsXxx.cs" />
+    <Compile Include="AlphaFS DfsInfo Class\AlphaFS_DfsInfo.cs" />
     <Compile Include="Directory Class\Directory_CreateDirectory_And_Delete.cs" />
     <Compile Include="Directory Class\DirectoryTest.cs" />
-    <Compile Include="AlphaFS Junctions, Symbolic Links\JunctionsSymbolicLinksTest.cs" />
+    <Compile Include="AlphaFS Junctions, Symbolic Links\AlphaFS_JunctionsSymbolicLinksTest.cs" />
     <Compile Include="AlphaFS OperatingSystem Class\AlphaFS_OperatingSystem.cs" />
     <Compile Include="Path Class\Path_GetFullPath.cs" />
     <Compile Include="Path Class\AlphaFS_Path_LocalToUnc.cs" />
@@ -235,7 +242,7 @@
     <Compile Include="Path Class\Path_IsPathRooted.cs" />
     <Compile Include="Path Class\Path_GetExtension.cs" />
     <Compile Include="Path Class\Path_GetDirectoryName.cs" />
-    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info_GetFileIcon.cs" />
+    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32_GetFileIcon.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info_GetVerbCommand.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info_InitializeInstance.cs" />
     <Compile Include="_Utils\FolderDenyPermission.cs" />
@@ -244,7 +251,7 @@
     <Compile Include="_Utils\CreateFile.cs" />
     <Compile Include="_Utils\DirectoryAssert.cs" />
     <Compile Include="_Utils\FileAssert.cs" />
-    <Compile Include="AlphaFS Shell32 Class\Shell32Test.cs" />
+    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo_InitializeInstance.cs" />
     <Compile Include="File Class\FileTest.cs" />
     <Compile Include="Path Class\PathTest.cs" />
@@ -252,7 +259,6 @@
     <Compile Include="_Utils\CreateDirectoriesAndFiles.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS_Volume_SetVolumeMountPoint_Local_Success.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS_Volume_GetVolumeInfo.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_VolumeTest.cs" />
     <Compile Include="_Utils\UnitTestConstants.cs" />
     <Compile Include="_Utils\TemporaryDirectory.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS_VolumeInfo_InitializeInstance_LocalAndNetwork_Success.cs" />

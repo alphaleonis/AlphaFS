@@ -25,7 +25,7 @@ namespace AlphaFS.UnitTest
 {
    /// <summary>This is a test class for DeviceInfoTest and is intended to contain all Device and DeviceInfo Unit Tests.</summary>
    [TestClass]
-   public partial class DeviceTest
+   public partial class AlphaFS_DeviceTest
    {
    }
 }

@@ -20,41 +20,12 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_DeviceTest
+   /// <summary>This is a test class for DeviceInfoTest and is intended to contain all FileIdInfo Unit Tests.</summary>
+   [TestClass]
+   public partial class AlphaFS_FileIdInfoTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_DeviceInfo_InitializeInstance_LocalAndNetwork_Success()
-      {
-         Console.WriteLine("\nMSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.");
-         Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
-
-         DeviceInfo_InitializeInstance(false);
-         DeviceInfo_InitializeInstance(true);
-      }
-
-
-
-
-      private void DeviceInfo_InitializeInstance(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var deviceInfo = new Alphaleonis.Win32.Filesystem.DeviceInfo(isNetwork ? UnitTestConstants.LocalHost : string.Empty);
-
-         UnitTestConstants.Dump(deviceInfo, -24);
-
-         Assert.AreEqual(deviceInfo.HostName, UnitTestConstants.LocalHost);
-         Assert.AreEqual(deviceInfo.Class, null);
-         Assert.AreEqual(deviceInfo.ClassGuid, new Guid());
-
-         Console.WriteLine();
-      }
    }
 }

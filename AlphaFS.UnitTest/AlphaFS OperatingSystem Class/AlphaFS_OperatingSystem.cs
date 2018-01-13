@@ -26,7 +26,7 @@ namespace AlphaFS.UnitTest
 {
    /// <summary>This is a test class for OperatingSystem and is intended to contain all OperatingSystem Unit Tests.</summary>
    [TestClass]
-   public class OperatingSystemTest
+   public class AlphaFS_OperatingSystemTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

@@ -27,9 +27,9 @@ using System.Net.NetworkInformation;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for DFS and is intended to contain all DFS Unit Tests.</summary>
+   /// <summary>This is a test class for DFS and is intended to contain all DfsInfo Unit Tests.</summary>
    [TestClass]
-   public class DFSTest
+   public class AlphaFS_DfsInfoTest
    {
       [TestMethod]
       public void AlphaFS_Network_DfsXxx()

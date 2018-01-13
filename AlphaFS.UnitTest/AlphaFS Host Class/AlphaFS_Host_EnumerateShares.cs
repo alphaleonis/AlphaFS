@@ -24,8 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for FileInfo and is intended to contain all FileInfo UnitTests.</summary>
-   partial class HostTest
+   public partial class AlphaFS_HostTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

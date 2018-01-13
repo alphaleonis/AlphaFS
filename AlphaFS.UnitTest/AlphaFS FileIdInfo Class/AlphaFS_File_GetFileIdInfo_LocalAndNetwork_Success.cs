@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -25,22 +25,22 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DirectoryTest
+   public partial class AlphaFS_FileIdInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_GetFileId_LocalAndNetwork_Success()
+      public void AlphaFS_File_GetFileIdInfo_LocalAndNetwork_Success()
       {
-         Directory_GetFileId(false);
-         Directory_GetFileId(true);
+         File_GetFileIdInfo(false);
+         File_GetFileIdInfo(true);
       }
 
 
 
 
-      private void Directory_GetFileId(bool isNetwork)
+      private void File_GetFileIdInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -51,20 +51,19 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]]", folder);
+            var file = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput File Path: [{0}]]", file);
 
 
-            var dirInfo = new System.IO.DirectoryInfo(folder);
-            dirInfo.Create();
+            var fileInfo = new System.IO.FileInfo(file);
+            using (fileInfo.Create()) { }
 
 
-            var fid = Alphaleonis.Win32.Filesystem.Directory.GetFileId(folder);
+            var fid = Alphaleonis.Win32.Filesystem.File.GetFileId(fileInfo.FullName);
 
             Console.WriteLine("\n\tToString(): {0}", fid);
 
             Assert.IsNotNull(fid);
-
          }
 
          Console.WriteLine();

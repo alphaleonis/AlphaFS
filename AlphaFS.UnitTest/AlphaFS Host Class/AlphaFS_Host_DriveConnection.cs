@@ -24,9 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Host and is intended to contain all Host Unit Tests.</summary>
-   [TestClass]
-   public partial class HostTest
+   public partial class AlphaFS_HostTest
    {
       [TestMethod]
       public void AlphaFS_Host_DriveConnection()

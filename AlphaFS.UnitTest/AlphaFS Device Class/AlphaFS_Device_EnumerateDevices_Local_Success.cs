@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DeviceTest
+   public partial class AlphaFS_DeviceTest
    {
       [TestMethod]
       public void AlphaFS_Device_EnumerateDevices_Local_Success()

@@ -25,17 +25,15 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
-using File = Alphaleonis.Win32.Filesystem.File;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Volume and is intended to contain all Volume and VolumeInfo class Unit Tests.</summary>
+   /// <summary>This is a test class for Shell32 and is intended to contain all Volume and VolumeInfo Unit Tests.</summary>
    [TestClass]
-   public partial class VolumeTest
+   public partial class AlphaFS_VolumeTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
