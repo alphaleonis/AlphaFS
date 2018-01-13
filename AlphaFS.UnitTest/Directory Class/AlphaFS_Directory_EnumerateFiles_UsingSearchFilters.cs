@@ -19,9 +19,10 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using Alphaleonis.Win32;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,16 +31,16 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Directory_EnumerateFiles_UsingMultipleSearchFilters_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_EnumerateFiles_UsingSearchFilters_LocalAndNetwork_Success()
       {
-         Directory_EnumerateFiles_UsingMultipleSearchFilters(false);
-         Directory_EnumerateFiles_UsingMultipleSearchFilters(true);
+         Directory_EnumerateFiles_UsingSearchFilters(false);
+         Directory_EnumerateFiles_UsingSearchFilters(true);
       }
 
 
 
 
-      private void Directory_EnumerateFiles_UsingMultipleSearchFilters(bool isNetwork)
+      private void Directory_EnumerateFiles_UsingSearchFilters(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -55,24 +56,22 @@ namespace AlphaFS.UnitTest
 
          var searchForExtensions = new[] {".ocx", ".tlb", ".cpl"};
 
-         Console.WriteLine("Extensions to search for: [{0}]", string.Join(", ", searchForExtensions));
+         Console.WriteLine("Extensions to search for: [{0}]", string.Join(" | ", searchForExtensions));
          Console.WriteLine();
 
 
          var gotException = false;
          var exceptionCount = 0;
          var foundCount = 0;
-         
+
 
          var filters = new Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
          {
-            InclusionFilter = delegate(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo fsei)
+            InclusionFilter = fsei =>
             {
-               var ext = Alphaleonis.Win32.Filesystem.Path.GetExtension(fsei.FileName, false);
+               var extension = System.IO.Path.GetExtension(fsei.FileName);
 
-               var gotMatch = ext.Equals(".ocx", StringComparison.OrdinalIgnoreCase) ||
-                              ext.Equals(".tlb", StringComparison.OrdinalIgnoreCase) ||
-                              ext.Equals(".cpl", StringComparison.OrdinalIgnoreCase);
+               var gotMatch = searchForExtensions.Any(found => found.Equals(extension, StringComparison.OrdinalIgnoreCase));
 
                if (gotMatch)
                   Console.WriteLine("\t#{0:N0}\t\t[{1}]", ++foundCount, fsei.FullPath);
@@ -83,7 +82,7 @@ namespace AlphaFS.UnitTest
 
             ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
             {
-               gotException = errorCode == Alphaleonis.Win32.Win32Errors.ERROR_ACCESS_DENIED;
+               gotException = errorCode == Win32Errors.ERROR_ACCESS_DENIED;
 
                if (gotException)
                   Console.WriteLine("\t#{0:N0}\t\t({1}) {2}: [{3}]", ++exceptionCount, errorCode, errorMessage, pathProcessed);
