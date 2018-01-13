@@ -173,7 +173,7 @@
     <Compile Include="AlphaFS Junctions, Symbolic Links\AlphaFS_Directory_Junction.cs" />
     <Compile Include="Directory Class\Directory_CurrentDirectory.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_DeleteEmptySubdirectories.cs" />
-    <Compile Include="Directory Class\Directory_EnumerateDirectories.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_EnumerateDirectories_ContinueOnAccessDeniedExceptionUsingErrorFilter.cs" />
     <Compile Include="AlphaFS Junctions, Symbolic Links\AlphaFS _DirectoryInfo_Junction.cs" />
     <Compile Include="Directory Class\Directory_Move.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_CountFileSystemObjects.cs" />

@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
    public class AlphaFS_DfsInfoTest
    {
       [TestMethod]
-      public void AlphaFS_Network_DfsXxx()
+      public void AlphaFS_DfsInfo()
       {
          var cnt = 0;
          var noDomainConnection = true;

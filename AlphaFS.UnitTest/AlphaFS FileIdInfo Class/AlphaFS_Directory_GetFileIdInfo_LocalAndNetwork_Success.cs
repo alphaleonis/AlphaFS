@@ -59,7 +59,7 @@ namespace AlphaFS.UnitTest
             dirInfo.Create();
 
 
-            var fid = Alphaleonis.Win32.Filesystem.Directory.GetFileId(folder);
+            var fid = Alphaleonis.Win32.Filesystem.Directory.GetFileIdInfo(folder);
 
             Console.WriteLine("\n\tToString(): {0}", fid);
 

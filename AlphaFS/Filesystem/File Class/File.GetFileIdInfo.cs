@@ -33,9 +33,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
       /// <param name="path">The path to the file.</param>
       [SecurityCritical]
-      public static FileId GetFileId(string path)
+      public static FileIdInfo GetFileIdInfo(string path)
       {
-         return GetFileIdCore(null, path, PathFormat.RelativePath);
+         return GetFileIdInfoCore(null, path, PathFormat.RelativePath);
       }
 
 
@@ -44,9 +44,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static FileId GetFileId(string path, PathFormat pathFormat)
+      public static FileIdInfo GetFileIdInfo(string path, PathFormat pathFormat)
       {
-         return GetFileIdCore(null, path, pathFormat);
+         return GetFileIdInfoCore(null, path, pathFormat);
       }
 
 
@@ -57,9 +57,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       [SecurityCritical]
-      public static FileId GetFileIdTransacted(KernelTransaction transaction, string path)
+      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path)
       {
-         return GetFileIdCore(transaction, path, PathFormat.RelativePath);
+         return GetFileIdInfoCore(transaction, path, PathFormat.RelativePath);
       }
 
 
@@ -69,9 +69,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static FileId GetFileIdTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetFileIdCore(transaction, path, pathFormat);
+         return GetFileIdInfoCore(transaction, path, pathFormat);
       }
 
 
@@ -79,9 +79,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves file information for the specified <see cref="SafeFileHandle"/>.</summary>
       /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the open file or directory from which to retrieve the information.</param>
-      /// <returns>A <see cref="FileId"/> object containing the requested information.</returns>
+      /// <returns>A <see cref="FileIdInfo"/> object containing the requested information.</returns>
       [SecurityCritical]
-      public static FileId GetFileId(SafeFileHandle handle)
+      public static FileIdInfo GetFileIdInfo(SafeFileHandle handle)
       {
          NativeMethods.BY_HANDLE_FILE_INFORMATION info;
 
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!success)
             NativeError.ThrowException(lastError);
 
-         return new FileId(info);
+         return new FileIdInfo(info);
       }
 
 
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static FileId GetFileIdCore(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static FileIdInfo GetFileIdInfoCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          using (var handle = CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
          {
@@ -116,13 +116,13 @@ namespace Alphaleonis.Win32.Filesystem
                   if (!success)
                      NativeError.ThrowException(lastError, path);
 
-                  return new FileId(safeBuffer.PtrToStructure<NativeMethods.FILE_ID_INFO>(0));
+                  return new FileIdInfo(safeBuffer.PtrToStructure<NativeMethods.FILE_ID_INFO>(0));
                }
             }
 
 
             // Only NTFS is supported.
-            return GetFileId(handle);
+            return GetFileIdInfo(handle);
          }
       }
    }

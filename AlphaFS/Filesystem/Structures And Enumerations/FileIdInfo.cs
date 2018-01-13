@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -26,14 +26,14 @@ namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Contains information that the GetFileInformationByHandle function retrieves.</summary>
    [Serializable]
-   public struct FileId : IComparable, IComparable<FileId>, IEquatable<FileId>
+   public struct FileIdInfo : IComparable, IComparable<FileIdInfo>, IEquatable<FileIdInfo>
    {
-      private readonly long _volumeSerialNumber;
-      private readonly long _fileIdHighPart;
-      private readonly long _fileIdLowPart;
+      [NonSerialized] private readonly long _volumeSerialNumber;
+      [NonSerialized] private readonly long _fileIdHighPart;
+      [NonSerialized] private readonly long _fileIdLowPart;
 
 
-      internal FileId(NativeMethods.BY_HANDLE_FILE_INFORMATION fibh)
+      internal FileIdInfo(NativeMethods.BY_HANDLE_FILE_INFORMATION fibh)
       {
          _volumeSerialNumber = fibh.dwVolumeSerialNumber;
 
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      internal FileId(NativeMethods.FILE_ID_INFO fi)
+      internal FileIdInfo(NativeMethods.FILE_ID_INFO fi)
       {
          _volumeSerialNumber = fi.VolumeSerialNumber;
 
@@ -65,9 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
          value = 0;
 
          for (var i = 0; i < count; i++)
-         {
             value |= (long) fileId[startIndex + i] << (8 * i);
-         }
       }
 
 
@@ -79,24 +77,26 @@ namespace Alphaleonis.Win32.Filesystem
          if (null == obj)
             return 1;
 
-         if (!(obj is FileId))
+         if (!(obj is FileIdInfo))
             throw new ArgumentException("Object must be of type FileIdInfo");
 
-         return CompareTo((FileId) obj);
+         return CompareTo((FileIdInfo) obj);
       }
 
 
       /// <summary>Compares the current object with another object of the same type.</summary>
       /// <param name="other">An object to compare with this object.</param>
       /// <returns>A value that indicates the relative order of the objects being compared. The return value has the following meanings: Value Meaning Less than zero This object is less than the <paramref name="other" /> parameter.Zero This object is equal to <paramref name="other" />. Greater than zero This object is greater than <paramref name="other" />.</returns>        
-      public int CompareTo(FileId other)
+      public int CompareTo(FileIdInfo other)
       {
-         if (_volumeSerialNumber != other._volumeSerialNumber)
-            return Math.Sign(_volumeSerialNumber - other._volumeSerialNumber);
+         return _volumeSerialNumber != other._volumeSerialNumber
 
-         return _fileIdHighPart != other._fileIdHighPart
-            ? Math.Sign(_fileIdHighPart - other._fileIdHighPart)
-            : Math.Sign(_fileIdLowPart - other._fileIdLowPart);
+            ? Math.Sign(_volumeSerialNumber - other._volumeSerialNumber)
+
+            : (_fileIdHighPart != other._fileIdHighPart
+
+               ? Math.Sign(_fileIdHighPart - other._fileIdHighPart)
+               : Math.Sign(_fileIdLowPart - other._fileIdLowPart));
       }
 
 
@@ -105,42 +105,36 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
       public override bool Equals(object obj)
       {
-         return obj is FileId && Equals((FileId) obj);
+         return obj is FileIdInfo && Equals((FileIdInfo) obj);
       }
 
 
       /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
       /// <param name="other">An object to compare with this object.</param>
       /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
-      public bool Equals(FileId other)
+      public bool Equals(FileIdInfo other)
       {
-         return _fileIdLowPart == other._fileIdLowPart &&
-                _fileIdHighPart == other._fileIdHighPart &&
-                _volumeSerialNumber == other._volumeSerialNumber;
+         return _fileIdLowPart == other._fileIdLowPart && _fileIdHighPart == other._fileIdHighPart && _volumeSerialNumber == other._volumeSerialNumber;
       }
 
 
-      /// <summary>Indicates whether the values of two specified <see cref="FileId" /> objects are equal.</summary>
+      /// <summary>Indicates whether the values of two specified <see cref="FileIdInfo" /> objects are equal.</summary>
       /// <param name="first">The first object to compare.</param>
       /// <param name="second">The second object to compare.</param>
       /// <returns>true if <paramref name="first" /> and <paramref name="second" /> are equal; otherwise, false.</returns>
-      public static bool operator ==(FileId first, FileId second)
+      public static bool operator ==(FileIdInfo first, FileIdInfo second)
       {
-         return first._fileIdLowPart == second._fileIdLowPart &&
-                first._fileIdHighPart == second._fileIdHighPart &&
-                first._volumeSerialNumber == second._volumeSerialNumber;
+         return first._fileIdLowPart == second._fileIdLowPart && first._fileIdHighPart == second._fileIdHighPart && first._volumeSerialNumber == second._volumeSerialNumber;
       }
 
 
-      /// <summary>Indicates whether the values of two specified <see cref="FileId" /> objects are not equal.</summary>
+      /// <summary>Indicates whether the values of two specified <see cref="FileIdInfo" /> objects are not equal.</summary>
       /// <param name="first">The first object to compare.</param>
       /// <param name="second">The second object to compare.</param>
       /// <returns>true if <paramref name="first" /> and <paramref name="second" /> are not equal; otherwise, false.</returns>
-      public static bool operator !=(FileId first, FileId second)
+      public static bool operator !=(FileIdInfo first, FileIdInfo second)
       {
-         return first._fileIdLowPart != second._fileIdLowPart ||
-                first._fileIdHighPart != second._fileIdHighPart ||
-                first._volumeSerialNumber != second._volumeSerialNumber;
+         return first._fileIdLowPart != second._fileIdLowPart || first._fileIdHighPart != second._fileIdHighPart || first._volumeSerialNumber != second._volumeSerialNumber;
       }
 
 
@@ -148,12 +142,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="first">The first operand.</param>
       /// <param name="second">The second operand.</param>
       /// <returns>The result of the operator.</returns>
-      public static bool operator <(FileId first, FileId second)
+      public static bool operator <(FileIdInfo first, FileIdInfo second)
       {
-         //N.B. must be tested in this order
-         return first._volumeSerialNumber < second._volumeSerialNumber ||
-                first._fileIdHighPart < second._fileIdHighPart ||
-                first._fileIdLowPart < second._fileIdLowPart;
+         // Note: Must be tested in this order.
+
+         return first._volumeSerialNumber < second._volumeSerialNumber || first._fileIdHighPart < second._fileIdHighPart || first._fileIdLowPart < second._fileIdLowPart;
       }
 
 
@@ -161,13 +154,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="first">The first operand.</param>
       /// <param name="second">The second operand.</param>
       /// <returns>The result of the operator.</returns>
-      public static bool operator >(FileId first, FileId second)
+      public static bool operator >(FileIdInfo first, FileIdInfo second)
       {
          // Note: Must be tested in this order.
 
-         return first._volumeSerialNumber > second._volumeSerialNumber ||
-                first._fileIdHighPart > second._fileIdHighPart ||
-                first._fileIdLowPart > second._fileIdLowPart;
+         return first._volumeSerialNumber > second._volumeSerialNumber || first._fileIdHighPart > second._fileIdHighPart || first._fileIdLowPart > second._fileIdLowPart;
       }
 
 
@@ -184,23 +175,23 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Returns a <see cref="System.String" /> that represents this instance.</summary>
-      /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+      /// <summary>Returns a <see cref="string" /> that represents this instance.</summary>
+      /// <returns>A <see cref="string" /> that represents this instance.</returns>
       public override string ToString()
       {
          unchecked
          {
             // The identifier is composed of 64-bit volume serial number and 128-bit file system entry identifier.
 
-            return string.Format(CultureInfo.CurrentCulture, "{0}-{1}-{2} : {3}-{4}-{5}",
+            return string.Format(CultureInfo.InvariantCulture, "{0}-{1}-{2} : {3}-{4}-{5}",
 
-               ((uint) (_volumeSerialNumber >> 32)).ToString("X", CultureInfo.CurrentCulture),
-               ((ushort) (_volumeSerialNumber >> 16)).ToString("X", CultureInfo.CurrentCulture),
-               ((ushort) _volumeSerialNumber).ToString("X", CultureInfo.CurrentCulture),
+               ((uint) (_volumeSerialNumber >> 32)).ToString("X", CultureInfo.InvariantCulture),
+               ((ushort) (_volumeSerialNumber >> 16)).ToString("X", CultureInfo.InvariantCulture),
+               ((ushort) _volumeSerialNumber).ToString("X", CultureInfo.InvariantCulture),
 
-               _fileIdHighPart.ToString("X", CultureInfo.CurrentCulture),
-               ((uint) (_fileIdLowPart >> 32)).ToString("X", CultureInfo.CurrentCulture),
-               ((uint) _fileIdLowPart).ToString("X", CultureInfo.CurrentCulture));
+               _fileIdHighPart.ToString("X", CultureInfo.InvariantCulture),
+               ((uint) (_fileIdLowPart >> 32)).ToString("X", CultureInfo.InvariantCulture),
+               ((uint) _fileIdLowPart).ToString("X", CultureInfo.InvariantCulture));
          }
       }
    }

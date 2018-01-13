@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -29,9 +29,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a directory can change over time.</remarks>
       /// <param name="path">The path to the directory.</param>
       [SecurityCritical]
-      public static FileId GetFileId(string path)
+      public static FileIdInfo GetFileIdInfo(string path)
       {
-         return File.GetFileIdCore(null, path, PathFormat.RelativePath);
+         return File.GetFileIdInfoCore(null, path, PathFormat.RelativePath);
       }
 
 
@@ -40,9 +40,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static FileId GetFileId(string path, PathFormat pathFormat)
+      public static FileIdInfo GetFileIdInfo(string path, PathFormat pathFormat)
       {
-         return File.GetFileIdCore(null, path, pathFormat);
+         return File.GetFileIdInfoCore(null, path, pathFormat);
       }
 
 
@@ -53,9 +53,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
       [SecurityCritical]
-      public static FileId GetFileIdTransacted(KernelTransaction transaction, string path)
+      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetFileIdCore(transaction, path, PathFormat.RelativePath);
+         return File.GetFileIdInfoCore(transaction, path, PathFormat.RelativePath);
       }
 
 
@@ -65,9 +65,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static FileId GetFileIdTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetFileIdCore(transaction, path, pathFormat);
+         return File.GetFileIdInfoCore(transaction, path, pathFormat);
       }
    }
 }

@@ -30,9 +30,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
-      public FileId GetFileId()
+      public FileIdInfo GetFileId()
       {
-         return File.GetFileIdCore(Transaction, LongFullName, PathFormat.LongFullPath);
+         return File.GetFileIdInfoCore(Transaction, LongFullName, PathFormat.LongFullPath);
       }
    }
 }
