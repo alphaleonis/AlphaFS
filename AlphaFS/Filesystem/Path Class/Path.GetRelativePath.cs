@@ -29,8 +29,8 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Path
    {
       /// <summary>[AlphaFS] Gets the relative path from the <paramref name="startPath"/> path to the end path.</summary>
-      /// <param name="startPath">The absolute folder path.</param>
-      /// <param name="selectedPath">The selected path containing the directory or file.</param>
+      /// <param name="startPath">The absolute or relative folder path.</param>
+      /// <param name="selectedPath">The absolute or relative path containing the directory or file.</param>
       /// <returns>The relative path containing the directory or file, from the <paramref name="startPath"/> path to the end path.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="UriFormatException"/>
@@ -100,8 +100,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       ///// <summary>[AlphaFS] Gets the relative path from the <paramref name="startPath"/> path to the end path.</summary>
-      ///// <param name="startPath">The absolute folder path.</param>
-      ///// <param name="selectedPath">The selected path containing the directory or file.</param>
+      ///// <param name="startPath">The absolute or relative folder path.</param>
+      ///// <param name="selectedPath">The absolute or relative path containing the directory or file.</param>
       ///// <returns>The relative path from the <paramref name="startPath"/> path to the end path.</returns>
       ///// <exception cref="ArgumentNullException"/>
       ///// <exception cref="UriFormatException"/>
