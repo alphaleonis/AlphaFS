@@ -57,35 +57,35 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          Transaction = transaction;
-
-
+         
          OriginalInputPath = path;
 
          InputPath = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
          
          IsRelativePath = !Path.IsPathRooted(OriginalInputPath, false);
 
-
-         // .NET behaviour.
-         SearchPattern = searchPattern.TrimEnd(Path.TrimEndChars);
-
-
-         Filter = null == customFilters ? null : customFilters.InclusionFilter;
-         RecursionFilter = null == customFilters ? null : customFilters.RecursionFilter;
-
+         SearchPattern = searchPattern.TrimEnd(Path.TrimEndChars); // .NET behaviour.
 
          FileSystemObjectType = null;
-
-
+         
          ContinueOnException = (options & DirectoryEnumerationOptions.ContinueOnException) != 0;
-         ErrorHandler = null == customFilters ? null : customFilters.ErrorFilter;
-
-
+         
          AsLongPath = (options & DirectoryEnumerationOptions.AsLongPath) != 0;
-
-
+         
          AsString = typeOfT == typeof(string);
          AsFileSystemInfo = !AsString && (typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo));
+
+         LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 ? NativeMethods.UseLargeCache : NativeMethods.FIND_FIRST_EX_FLAGS.NONE;
+
+         FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) != 0 ? NativeMethods.FindexInfoLevel : NativeMethods.FINDEX_INFO_LEVELS.Standard;
+
+
+         if (null != customFilters)
+         {
+            Filter = customFilters.InclusionFilter;
+            RecursionFilter = customFilters.RecursionFilter;
+            ErrorHandler = customFilters.ErrorFilter;
+         }
 
 
          if (isFolder)
@@ -115,11 +115,6 @@ namespace Alphaleonis.Win32.Filesystem
             if ((options & DirectoryEnumerationOptions.Files) == 0)
                options |= DirectoryEnumerationOptions.Files;
          }
-
-
-         LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 ? NativeMethods.UseLargeCache : NativeMethods.FIND_FIRST_EX_FLAGS.NONE;
-
-         FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) != 0 ? NativeMethods.FindexInfoLevel : NativeMethods.FINDEX_INFO_LEVELS.Standard;
       }
 
 
