@@ -167,6 +167,7 @@
     <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Compress_Decompress.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Encryption.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory_EnumerateFiles_UsingMultipleSearchFilters.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_IsEmpty.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory_EnumerateFileSystemEntryInfos.cs" />
     <Compile Include="AlphaFS Junctions, Symbolic Links\AlphaFS_Directory_CreateSymbolicLink_And_GetLinkTargetInfo.cs" />
