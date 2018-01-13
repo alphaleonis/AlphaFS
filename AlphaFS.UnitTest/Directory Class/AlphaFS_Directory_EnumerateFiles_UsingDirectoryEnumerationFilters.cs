@@ -54,8 +54,8 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
 
 
-         var findExtensions = new[] {".ini", ".tlb", ".sys"};
-         var skipFolders = new[] { "assembly", "System32", "SysWOW64", "WinSxS"};
+         var findExtensions = new[] {".txt", ".ini", ".exe"};
+         var skipFolders = new[] { "assembly", "SysWOW64", "WinSxS" };
 
          Console.WriteLine("Extensions to search for: {0}", string.Join(" | ", findExtensions));
          Console.WriteLine("Directories to skip     : {0}\\{1}, {0}\\{2}, {0}\\{3}", inputPath, skipFolders[0], skipFolders[1], skipFolders[2]);
