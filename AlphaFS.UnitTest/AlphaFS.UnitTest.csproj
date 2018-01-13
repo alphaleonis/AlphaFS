@@ -156,8 +156,9 @@
     <Compile Include="AlphaFS Crc Class\AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString2.cs" />
     <Compile Include="AlphaFS Crc Class\AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_File_GetFileInfoByHandle_LocalAndNetwork_Success.cs" />
-    <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_FileIdInfoTest.cs" />
+    <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_FileIdInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory_GetFileSystemEntryInfo_LocalAndNetwork_Success.cs" />
+    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_FileSystemEntryInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File_GetFileSystemEntryInfo_LocalAndNetwork_Success.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device_EnumerateDevices_Local_Success.cs" />
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_InitializeInstance_LocalAndNetwork_Success.cs" />
