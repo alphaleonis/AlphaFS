@@ -323,6 +323,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No drive letters available..
+        /// </summary>
+        internal static string No_Drive_Letters_Available {
+            get {
+                return ResourceManager.GetString("No_Drive_Letters_Available", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This stream does not support seeking..
         /// </summary>
         internal static string No_Stream_Seeking_Support {

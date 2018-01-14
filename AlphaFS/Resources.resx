@@ -256,4 +256,7 @@
   <data name="GetFullPathOptions_Add_And_Remove_DirectorySeparator_Invalid" xml:space="preserve">
     <value>Cannot add and remove trailing DirectorySeparator simultaneously.</value>
   </data>
+  <data name="No_Drive_Letters_Available" xml:space="preserve">
+    <value>No drive letters available.</value>
+  </data>
 </root>
