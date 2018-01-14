@@ -30,7 +30,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #212: Provide a way to retrieve errors when you choose to `ContinueOnException`
 - Issue #306: Include `ShareInfoLevel.Info502` and set as a fallback in `GetShareInfoCore()`  (Thx damiarnold)
 - Issue #314: Added Feature: `Directory.GetFileSystemEntryInfo`  (Thx besoft)
-- Issue #322: multiple extension search  (Thx besoft)
+- Issue #322: Search files/folders using multiple filters. (Thx besoft)
 - Issue #326: Add parameter `bool preserveDates` and created overloaded `Directory.Copy` methods to support this.
 - Issue #335: Add overloaded methods to `File/Directory.TransferTimestamps` to apply to ReparsePoint.
 - Issue #336: Implement methods for `Directory` class: `CreateJunction`, `DeleteJunction` and `ExistsJunction`.
