@@ -285,7 +285,6 @@ namespace Alphaleonis.Win32.Filesystem
          catch
          {
             throw new ArgumentOutOfRangeException(Resources.No_Drive_Letters_Available);
-            throw new Exception("There are no drive letters available.");
          }
       }
 
