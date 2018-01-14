@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void FileInfo_InitializeInstance_ExistingFile_LocalAndNetwork_Success()
+      public void AlphaFS_FileInfo_InitializeInstance_ExistingFile_LocalAndNetwork_Success()
       {
          FileInfo_InitializeInstance_ExistingFile(false);
          FileInfo_InitializeInstance_ExistingFile(true);
@@ -40,7 +40,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void FileInfo_InitializeInstance_NonExistingFile_LocalAndNetwork_Success()
+      public void AlphaFS_FileInfo_InitializeInstance_NonExistingFile_LocalAndNetwork_Success()
       {
          FileInfo_InitializeInstance_NonExistingFile(false);
          FileInfo_InitializeInstance_NonExistingFile(true);

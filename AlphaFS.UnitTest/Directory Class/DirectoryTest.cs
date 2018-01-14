@@ -653,7 +653,7 @@ namespace AlphaFS.UnitTest
          {
             Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++cnt, actual.Name);
 
-            if (actual.IsReady && actual.DriveType != DriveType.CDRom)
+            if (actual.IsReady && actual.DriveType == DriveType.Fixed)
             {
                // GetFreeSpaceEx()
                Assert.IsTrue(actual.AvailableFreeSpace > 0 && actual.TotalSize > 0 && actual.TotalFreeSpace > 0);

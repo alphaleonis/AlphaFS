@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
@@ -38,10 +39,9 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_GetFileSystemEntryInfo_LogicalDrives_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_GetFileSystemEntryInfo_LogicalDrives_Local_Success()
       {
-         Directory_GetFileSystemEntryInfo_LogicalDrives(false);
-         Directory_GetFileSystemEntryInfo_LogicalDrives(true);
+         Directory_GetFileSystemEntryInfo_LogicalDrives();
       }
 
 
@@ -84,36 +84,42 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_GetFileSystemEntryInfo_LogicalDrives(bool isNetwork)
+      private void Directory_GetFileSystemEntryInfo_LogicalDrives()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         foreach (var drive in Alphaleonis.Win32.Filesystem.Directory.EnumerateLogicalDrives())
+         var drives = Alphaleonis.Win32.Filesystem.Directory.EnumerateLogicalDrives().ToList();
+
+         foreach (var drive in drives)
          {
-            var driveName = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(drive.Name) : drive.Name;
+            Console.WriteLine("\nInput Directory Path: [{0}]", drive.Name);
+
+            try
+            { 
+               var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(drive.Name);
+               UnitTestConstants.Dump(fsei, -19);
 
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", driveName);
-
-            var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(driveName);
-            UnitTestConstants.Dump(fsei, -19);
+               Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));
+               Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Directory) != 0, "The Directory attribute is not found, but is expected.");
 
 
-            Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));
-            Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Directory) != 0, "The Directory attribute is not found, but is expected.");
+               // Fixed local drives should have these attributes.
+               if (new Alphaleonis.Win32.Filesystem.DriveInfo(drive.Name).DriveType == System.IO.DriveType.Fixed)
+               {
+                  Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Hidden) != 0, "The Hidden attribute is not found, but is expected.");
+                  Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.System) != 0, "The System attribute is not found, but is expected.");
+               }
 
 
-            // Fixed local drives should have these attributes.
-            if (new Alphaleonis.Win32.Filesystem.DriveInfo(driveName).DriveType == System.IO.DriveType.Fixed)
-            {
-               Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Hidden) != 0, "The Hidden attribute is not found, but is expected.");
-               Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.System) != 0, "The System attribute is not found, but is expected.");
+               Assert.AreEqual(".", fsei.FileName, "The file names are not equal, but are expected to be.");
+               Assert.AreEqual(drive.Name, fsei.FullPath, "The full paths are not equal, but are expected to be.");
             }
-
-
-            Assert.AreEqual(".", fsei.FileName, "The file names are not equal, but are expected to be.");
-            Assert.AreEqual(driveName, fsei.FullPath, "The full paths are not equal, but are expected to be.");
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught UNEXPECTED Exception: [{0}] {1}", ex.GetType().Name, ex.Message);
+            }
 
 
             Console.WriteLine();

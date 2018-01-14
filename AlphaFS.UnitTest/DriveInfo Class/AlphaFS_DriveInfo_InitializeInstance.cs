@@ -19,8 +19,8 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
@@ -32,10 +32,17 @@ namespace AlphaFS.UnitTest
 
       
       [TestMethod]
-      public void DriveInfo_InitializeInstance_LocalAndNetwork_Success()
+      public void AlphaFS_DriveInfo_InitializeInstance_LocalAndNetwork_Success()
       {
          DriveInfo_InitializeInstance(false);
          DriveInfo_InitializeInstance(true);
+      }
+
+
+      [TestMethod]
+      public void AlphaFS_DriveInfo_GetDrives_LocalAndNetwork_Success()
+      {
+         DriveInfo_InitializeInstance_GetDrives(false);
       }
 
 
@@ -44,6 +51,8 @@ namespace AlphaFS.UnitTest
       private void DriveInfo_InitializeInstance(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
+
 
          var tempPath = UnitTestConstants.SysDrive[0].ToString();
 
@@ -52,7 +61,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.SysDrive);
 
 
-         Console.WriteLine("\nInput Drive Path: [{0}]", tempPath);
+         Console.WriteLine("Input Drive Path: [{0}]", tempPath);
 
 
          var actual = new Alphaleonis.Win32.Filesystem.DriveInfo(tempPath);
@@ -73,10 +82,7 @@ namespace AlphaFS.UnitTest
             // Even 1 byte more or less results in failure, so do these tests asap.
             
             var expected = new System.IO.DriveInfo(tempPath);
-
-
             
-
 
             Assert.AreEqual(expected.AvailableFreeSpace, actual.AvailableFreeSpace, "AvailableFreeSpace AlphaFS != System.IO");
             Assert.AreEqual(expected.TotalFreeSpace, actual.TotalFreeSpace, "TotalFreeSpace AlphaFS != System.IO");
@@ -89,6 +95,10 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(expected.Name, actual.Name, "Name AlphaFS != System.IO");
             Assert.AreEqual(expected.RootDirectory.ToString(), actual.RootDirectory.ToString(), "RootDirectory AlphaFS != System.IO");
             Assert.AreEqual(expected.VolumeLabel, actual.VolumeLabel, "VolumeLabel AlphaFS != System.IO");
+
+
+            UnitTestConstants.Dump(expected, -21);
+            Console.WriteLine();
          }
 
 
@@ -98,5 +108,26 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
       }
+
+
+      private void DriveInfo_InitializeInstance_GetDrives(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+
+         var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives();
+
+         foreach (var drive in drives)
+         {
+            UnitTestConstants.Dump(drive, -21);
+            Console.WriteLine();
+         }
+
+
+         Assert.IsTrue(drives.Length > 0);
+
+         Assert.AreEqual(drives[0].Name[0], UnitTestConstants.SysDrive[0]);
+      }
    }
 }
+
