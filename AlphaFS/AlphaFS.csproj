@@ -455,12 +455,12 @@
     <Compile Include="Network\Enumerations\AccessPermissions.cs" />
     <Compile Include="Network\Enumerations\ShareResourceTypes.cs" />
     <Compile Include="Network\Enumerations\ShareType.cs" />
-    <Compile Include="Network\Host Class\EnumerateOpenResources.cs" />
-    <Compile Include="Network\Host Class\EnumerateDrives.cs" />
-    <Compile Include="Network\Host Class\ServerMessageBlock.cs" />
-    <Compile Include="Network\Host Class\DriveConnection.cs" />
-    <Compile Include="Network\Host Class\DistributedFileSystem.cs" />
-    <Compile Include="Network\Host Class\Connect.cs" />
+    <Compile Include="Network\Host Class\Host.EnumerateOpenResources.cs" />
+    <Compile Include="Network\Host Class\Host.EnumerateDrives.cs" />
+    <Compile Include="Network\Host Class\Host.ServerMessageBlock.cs" />
+    <Compile Include="Network\Host Class\Host.DriveConnection.cs" />
+    <Compile Include="Network\Host Class\Host.DistributedFileSystem.cs" />
+    <Compile Include="Network\Host Class\Host.Connect.cs" />
     <Compile Include="Network\Host Class\Host.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.WindowsNetworking.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.NetworkShareManagement.cs" />
@@ -560,7 +560,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
