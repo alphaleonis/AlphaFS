@@ -61,11 +61,11 @@ namespace AlphaFS.UnitTest
             var file = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file exists, but is expected not to be.");
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file exists, but is expected not to.");
 
             using (System.IO.File.Create(file)) {}
 
-            Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file does not exists, but is expected to be.");
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file does not exists, but is expected to.");
          }
 
          Console.WriteLine();
@@ -84,19 +84,19 @@ namespace AlphaFS.UnitTest
          var path = tempPath + "   ";
          Console.WriteLine("\nInput File Path: [{0}]\n", path);
 
-         Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(path), "The file does not exist, but is expected to be.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(path), "The file does not exist, but is expected to.");
 
 
          path = "   " + tempPath + "   ";
          Console.WriteLine("Input File Path: [{0}]\n", path);
 
-         Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(path), "The file does not exist, but is expected to be.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(path), "The file does not exist, but is expected to.");
 
 
          path = "   " + tempPath;
          Console.WriteLine("Input File Path: [{0}]\n", path);
 
-         Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(path), "The file does not exist, but is expected to be.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(path), "The file does not exist, but is expected to.");
 
          Console.WriteLine();
       }

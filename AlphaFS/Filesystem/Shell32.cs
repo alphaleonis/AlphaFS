@@ -659,8 +659,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static bool PathFileExists(string path)
       {
          // PathFileExists()
-         // In the ANSI version of this function, the name is limited to 248 characters.
-         // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
          return !Utils.IsNullOrWhiteSpace(path) && NativeMethods.PathFileExists(Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck | GetFullPathOptions.ContinueOnNonExist));
@@ -766,8 +764,6 @@ namespace Alphaleonis.Win32.Filesystem
             buffer = new StringBuilder((int)bufferSize);
 
             // AssocQueryString()
-            // In the ANSI version of this function, the name is limited to 248 characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2014-02-05: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
             // 2015-07-17: This function does not support long paths.
 
@@ -823,8 +819,6 @@ namespace Alphaleonis.Win32.Filesystem
          if (!Utils.IsNullOrWhiteSpace(path))
          {
             // ShGetFileInfo()
-            // In the ANSI version of this function, the name is limited to 248 characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
             // 2015-07-17: This function does not support long paths.
 

@@ -253,8 +253,6 @@ namespace Alphaleonis.Win32.Filesystem
                if (!Utils.IsNullOrWhiteSpace(pathLp))
                {
                   // SetNamedSecurityInfo()
-                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                   // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
                   lastError = (int) Security.NativeMethods.SetNamedSecurityInfo(pathLp, ObjectType.FileObject, securityInfo, pOwner, pGroup, pDacl, pSacl);

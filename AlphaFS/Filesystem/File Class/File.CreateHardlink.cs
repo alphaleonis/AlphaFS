@@ -114,10 +114,8 @@ namespace Alphaleonis.Win32.Filesystem
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
             // CreateHardLink() / CreateHardLinkTransacted()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-            // 2017-05-30: MSDN confirms LongPath usage: Starting with Windows 10, version 1607
+            // 2017-05-30: CreateHardLink() MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
             ? NativeMethods.CreateHardLink(fileName, existingFileName, IntPtr.Zero)
             : NativeMethods.CreateHardLinkTransacted(fileName, existingFileName, IntPtr.Zero, transaction.SafeHandle)))

@@ -723,8 +723,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                var folderLp = list.Pop();
 
-               // In the ANSI version of this function, the name is limited to 248 characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // CreateDirectory() / CreateDirectoryEx()
                // 2013-01-13: MSDN confirms LongPath usage.
 
                if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista

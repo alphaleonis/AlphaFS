@@ -74,25 +74,25 @@ namespace AlphaFS.UnitTest
       public static void IsEncrypted(string filePath)
       {
          if ((System.IO.File.GetAttributes(filePath) & System.IO.FileAttributes.Encrypted) == 0)
-            throw new AssertFailedException(string.Format("The file: [{0}] is not encrypted, but is expected to be.", filePath));
+            throw new AssertFailedException(string.Format("The file: [{0}] is not encrypted, but is expected to.", filePath));
       }
 
       public static void IsNotEncrypted(string filePath)
       {
          if ((System.IO.File.GetAttributes(filePath) & System.IO.FileAttributes.Encrypted) != 0)
-            throw new AssertFailedException(string.Format("The file: [{0}] is encrypted, but is expected not to be.", filePath));
+            throw new AssertFailedException(string.Format("The file: [{0}] is encrypted, but is expected not to.", filePath));
       }
 
       public static void IsCompressed(string filePath)
       {
          if ((System.IO.File.GetAttributes(filePath) & System.IO.FileAttributes.Compressed) == 0)
-            throw new AssertFailedException(string.Format("The file: [{0}] is not compressed, but is expected to be.", filePath));
+            throw new AssertFailedException(string.Format("The file: [{0}] is not compressed, but is expected to.", filePath));
       }
 
       public static void IsNotCompressed(string filePath)
       {
          if ((System.IO.File.GetAttributes(filePath) & System.IO.FileAttributes.Compressed) != 0)
-            throw new AssertFailedException(string.Format("The file: [{0}] is compressed, but is expected not to be.", filePath));
+            throw new AssertFailedException(string.Format("The file: [{0}] is compressed, but is expected not to.", filePath));
       }
    }
 }

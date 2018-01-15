@@ -564,11 +564,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal static SafeFindFileHandle FindFirstFileCore(KernelTransaction transaction, string pathLp, NativeMethods.FINDEX_INFO_LEVELS infoLevel, NativeMethods.FINDEX_SEARCH_OPS searchOption, NativeMethods.FIND_FIRST_EX_FLAGS additionalFlags, out int lastError, out NativeMethods.WIN32_FIND_DATA win32FindData)
       {
-         var handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
+         var safeHandle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
             // FindFirstFileEx() / FindFirstFileTransacted()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN confirms LongPath usage.
 
             // A trailing backslash is not allowed.
@@ -577,13 +575,11 @@ namespace Alphaleonis.Win32.Filesystem
 
          lastError = Marshal.GetLastWin32Error();
 
-         if (handle.IsInvalid)
-         {
-            handle.Close();
-            handle = null;
-         }
+         if (!NativeMethods.IsValidHandle(safeHandle, false))
+            safeHandle = null;
 
-         return handle;
+
+         return safeHandle;
       }
 
       #endregion // AlphaFS

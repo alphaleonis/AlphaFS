@@ -347,8 +347,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///   information, call the GetLastError function.
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileNameW"), SuppressUnmanagedCodeSecurity]
-      internal static extern SafeFindFileHandle FindFirstFileName([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] uint dwFlags, [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName);
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      internal static extern SafeFindFileHandle FindFirstFileNameW([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] uint dwFlags, [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName);
 
       /// <summary>
       ///   Creates an enumeration of all the hard links to the specified file as a transacted operation. The function returns a handle to the
@@ -362,8 +362,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///   information, call the GetLastError function.
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileNameTransactedW"), SuppressUnmanagedCodeSecurity]
-      internal static extern SafeFindFileHandle FindFirstFileNameTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] uint dwFlags, [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName, SafeHandle hTransaction);
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      internal static extern SafeFindFileHandle FindFirstFileNameTransactedW([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] uint dwFlags, [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName, SafeHandle hTransaction);
 
       /// <summary>
       ///   Continues a file search from a previous call to the FindFirstFile, FindFirstFileEx, or FindFirstFileTransacted functions.
@@ -391,9 +391,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   information, call GetLastError. If no matching files can be found, the GetLastError function returns ERROR_HANDLE_EOF.
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindNextFileNameW"), SuppressUnmanagedCodeSecurity]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool FindNextFileName(SafeFindFileHandle hFindStream, [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName);
+      internal static extern bool FindNextFileNameW(SafeFindFileHandle hFindStream, [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName);
 
       /// <summary>Flushes the buffers of a specified file and causes all buffered data to be written to a file.</summary>
       /// <remarks>Minimum supported client: Windows XP [desktop apps | Windows Store apps].</remarks>
@@ -734,14 +734,39 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool UnmapViewOfFile(SafeLocalMemoryBufferHandle lpBaseAddress);
 
+      
+      /// <summary>Enumerates the first stream with a ::$DATA stream type in the specified file or directory.</summary>
+      /// <returns>
+      /// If the function succeeds, the return value is a search handle that can be used in subsequent calls to the <see cref="FindNextStreamW"/> function.
+      /// If the function fails, the return value is INVALID_HANDLE_VALUE. To get extended error information, call GetLastError.
+      /// If no streams can be found, the function fails and GetLastError returns <see cref="Win32Errors.ERROR_HANDLE_EOF"/> (38).
+      /// </returns>
+      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
-      internal static extern SafeFindFileHandle FindFirstStreamTransactedW(string fileName, STREAM_INFO_LEVELS infoLevel, SafeGlobalMemoryBufferHandle lpFindStreamData, int flags, SafeHandle hTransaction);
+      internal static extern SafeFindFileHandle FindFirstStreamW(string lpFileName, STREAM_INFO_LEVELS infoLevel, SafeGlobalMemoryBufferHandle lpFindStreamData, int dwFlags);
 
+
+      /// <summary>Enumerates the first stream in the specified file or directory as a transacted operation.</summary>
+      /// <returns>
+      /// If the function succeeds, the return value is a search handle that can be used in subsequent calls to the <see cref="FindNextStreamW"/> function.
+      /// If the function fails, the return value is INVALID_HANDLE_VALUE. To get extended error information, call GetLastError.
+      /// </returns>
+      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
-      internal static extern SafeFindFileHandle FindFirstStreamW(string fileName, STREAM_INFO_LEVELS infoLevel, SafeGlobalMemoryBufferHandle lpFindStreamData, int flags);
+      internal static extern SafeFindFileHandle FindFirstStreamTransactedW(string lpFileName, STREAM_INFO_LEVELS infoLevel, SafeGlobalMemoryBufferHandle lpFindStreamData, int dwFlags, SafeHandle hTransaction);
 
+
+      /// <summary>Continues a stream search started by a previous call to the <see cref="FindFirstStreamW"/> function.</summary>
+      /// <returns>
+      /// If the function succeeds, the return value is nonzero.
+      /// If the function fails, the return value is zero. To get extended error information, call GetLastError. If no more streams can be found, GetLastError returns <see cref="Win32Errors.ERROR_HANDLE_EOF"/> (38).
+      /// </returns>
+      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]

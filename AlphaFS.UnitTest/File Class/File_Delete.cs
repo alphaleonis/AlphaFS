@@ -111,7 +111,7 @@ namespace AlphaFS.UnitTest
 
             Alphaleonis.Win32.Filesystem.File.Delete(file.FullName);
 
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file.FullName), "The file exists, but is expected not to be.");
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file.FullName), "The file exists, but is expected not to.");
          }
 
          Console.WriteLine();

@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
          {
             connectOk = false;
 
-            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
             Console.WriteLine("\nFailed ConnectTo(): [{0}]", share);
          }
@@ -77,7 +77,7 @@ namespace AlphaFS.UnitTest
             {
                disconnectOk = false;
 
-               Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
                Console.WriteLine("\nFailed DisconnectFrom(): [{0}]", share);
             }
@@ -104,7 +104,7 @@ namespace AlphaFS.UnitTest
          {
             connectOk = false;
 
-            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
             Console.WriteLine("\nFailed ConnectTo(): [{0}]", share);
          }
@@ -133,7 +133,7 @@ namespace AlphaFS.UnitTest
             {
                disconnectOk = false;
 
-               Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
                Console.WriteLine("\nFailed DisconnectFrom(): [{0}]", share);
             }

@@ -83,15 +83,21 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
-            using (var handle = null == transaction
+            using (var safeHandle = null == transaction
+
+               // FindFirstStreamW() / FindFirstStreamTransactedW()
+               // 2018-01-15: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+
                ? NativeMethods.FindFirstStreamW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0)
                : NativeMethods.FindFirstStreamTransactedW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
             {
                var lastError = Marshal.GetLastWin32Error();
+               var reachedEOF = lastError == Win32Errors.ERROR_HANDLE_EOF;
 
-               if (handle.IsInvalid)
+
+               if (!NativeMethods.IsValidHandle(safeHandle, false))
                {
-                  if (lastError == Win32Errors.ERROR_HANDLE_EOF)
+                  if (reachedEOF)
                      yield break;
 
                   NativeError.ThrowException(lastError, pathLp);
@@ -102,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   yield return new AlternateDataStreamInfo(pathLp, buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0));
 
-                  var success = NativeMethods.FindNextStreamW(handle, buffer);
+                  var success = NativeMethods.FindNextStreamW(safeHandle, buffer);
                   
                   lastError = Marshal.GetLastWin32Error();
                   if (!success)

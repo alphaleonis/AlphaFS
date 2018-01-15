@@ -157,8 +157,6 @@ namespace Alphaleonis.Win32.Filesystem
          var success = null == transaction || !NativeMethods.IsAtLeastWindowsVista
 
             // SetFileAttributes()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN confirms LongPath usage.
 
             ? NativeMethods.SetFileAttributes(path, fileAttributes)

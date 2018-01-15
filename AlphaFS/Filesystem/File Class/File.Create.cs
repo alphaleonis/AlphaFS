@@ -397,11 +397,9 @@ namespace Alphaleonis.Win32.Filesystem
          using (privilegeEnabler)
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
          {
-            var handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
+            var safeHandle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
                // CreateFile() / CreateFileTransacted()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                // 2013-01-13: MSDN confirms LongPath usage.
 
                ? NativeMethods.CreateFile(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero)
@@ -410,23 +408,17 @@ namespace Alphaleonis.Win32.Filesystem
 
             var lastError = Marshal.GetLastWin32Error();
 
-            if (handle.IsInvalid)
-            {
-               handle.Close();
-               handle = null;
+            NativeMethods.IsValidHandle(safeHandle, lastError, pathLp, !continueOnException);
 
-               if (!continueOnException)
-                  NativeError.ThrowException(lastError, pathLp);
-            }
 
-            else if (isAppend)
+            if (isAppend)
             {
-               var stream = new FileStream(handle, FileAccess.Write, NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
+               var stream = new FileStream(safeHandle, FileAccess.Write, NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
                stream.Seek(0, SeekOrigin.End);
             }
 
 
-            return handle;
+            return safeHandle;
          }
       }
 

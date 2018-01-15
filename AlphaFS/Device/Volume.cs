@@ -181,14 +181,13 @@ namespace Alphaleonis.Win32.Filesystem
          if (searchFilter)
          {
             // Check that at least one "options[]" has something to say. If so, rebuild them.
-            options = options != null && options.Any() ? new[] { deviceName, options[0] } : new[] { deviceName, string.Empty };
+            options = options != null && options.Any() ? new[] {deviceName, options[0]} : new[] {deviceName, string.Empty};
 
             deviceName = null;
          }
 
          // Choose sorted output.
-         var doSort = options != null &&
-                      options.Any(s => s != null && s.Equals("sort", StringComparison.OrdinalIgnoreCase));
+         var doSort = options != null && options.Any(s => s != null && s.Equals("sort", StringComparison.OrdinalIgnoreCase));
 
          // Start with a larger buffer when using a searchFilter.
          var bufferSize = (uint) (searchFilter || doSort || null == options ? 8 * NativeMethods.DefaultFileBufferSize : 256);
@@ -200,8 +199,6 @@ namespace Alphaleonis.Win32.Filesystem
                var cBuffer = new char[bufferSize];
 
                // QueryDosDevice()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                // 2014-01-29: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
                bufferResult = NativeMethods.QueryDosDevice(deviceName, cBuffer, bufferSize);
@@ -453,11 +450,9 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var lastError = Marshal.GetLastWin32Error();
 
-            if (handle.IsInvalid)
+            if (!NativeMethods.IsValidHandle(handle, false))
             {
-               handle.Close();
-
-               switch ((uint)lastError)
+               switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_NO_MORE_FILES:
                   case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
@@ -472,26 +467,14 @@ namespace Alphaleonis.Win32.Filesystem
             yield return buffer.ToString();
 
 
-            while (NativeMethods.FindNextVolumeMountPoint(handle, buffer, (uint)buffer.Capacity))
+            while (NativeMethods.FindNextVolumeMountPoint(handle, buffer, (uint) buffer.Capacity))
             {
                lastError = Marshal.GetLastWin32Error();
 
-               if (handle.IsInvalid)
-               {
-                  handle.Close();
+               var throwException = lastError != Win32Errors.ERROR_NO_MORE_FILES && lastError != Win32Errors.ERROR_PATH_NOT_FOUND && lastError != Win32Errors.ERROR_MORE_DATA;
 
-                  switch ((uint)lastError)
-                  {
-                     case Win32Errors.ERROR_NO_MORE_FILES:
-                     case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
-                     case Win32Errors.ERROR_MORE_DATA:
-                        yield break;
-
-                     default:
-                        NativeError.ThrowException(lastError, volumeGuid);
-                        break;
-                  }
-               }
+               if (!NativeMethods.IsValidHandle(handle, lastError, volumeGuid, throwException))
+                  yield break;
 
                yield return buffer.ToString();
             }
@@ -574,21 +557,10 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var lastError = Marshal.GetLastWin32Error();
 
-            if (handle.IsInvalid)
-            {
-               handle.Close();
+            var throwException = lastError != Win32Errors.ERROR_NO_MORE_FILES && lastError != Win32Errors.ERROR_PATH_NOT_FOUND;
 
-               switch ((uint) lastError)
-               {
-                  case Win32Errors.ERROR_NO_MORE_FILES:
-                  case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
-                     yield break;
-
-                  default:
-                     NativeError.ThrowException(lastError);
-                     break;
-               }
-            }
+            if (!NativeMethods.IsValidHandle(handle, lastError, string.Empty, throwException))
+               yield break;
 
             yield return buffer.ToString();
 
@@ -597,22 +569,10 @@ namespace Alphaleonis.Win32.Filesystem
             {
                lastError = Marshal.GetLastWin32Error();
 
-               if (handle.IsInvalid)
-               {
-                  handle.Close();
+               throwException = lastError != Win32Errors.ERROR_NO_MORE_FILES && lastError != Win32Errors.ERROR_PATH_NOT_FOUND && lastError != Win32Errors.ERROR_MORE_DATA;
 
-                  switch ((uint) lastError)
-                  {
-                     case Win32Errors.ERROR_NO_MORE_FILES:
-                     case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
-                     case Win32Errors.ERROR_MORE_DATA:
-                        yield break;
-
-                     default:
-                        NativeError.ThrowException(lastError);
-                        break;
-                  }
-               }
+               if (!NativeMethods.IsValidHandle(handle, lastError, string.Empty, throwException))
+                  yield break;
 
                yield return buffer.ToString();
             }
@@ -782,20 +742,21 @@ namespace Alphaleonis.Win32.Filesystem
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             {
                // GetVolumeNameForVolumeMountPoint()
-               // In the ANSI version of this function, the name is limited to 248 characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-               return NativeMethods.GetVolumeNameForVolumeMountPoint(volumeMountPoint, volumeGuid, (uint)volumeGuid.Capacity)
-                  ? NativeMethods.GetVolumeNameForVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeGuid.ToString(), false), uniqueName, (uint)uniqueName.Capacity)
+               return NativeMethods.GetVolumeNameForVolumeMountPoint(volumeMountPoint, volumeGuid, (uint) volumeGuid.Capacity)
+
+                  // The string must end with a trailing backslash.
+                  ? NativeMethods.GetVolumeNameForVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeGuid.ToString(), false), uniqueName, (uint) uniqueName.Capacity)
                      ? uniqueName.ToString()
                      : null
+
                   : null;
             }
          }
          finally
          {
-            var lastError = (uint)Marshal.GetLastWin32Error();
+            var lastError = (uint) Marshal.GetLastWin32Error();
 
             switch (lastError)
             {
@@ -900,8 +861,6 @@ namespace Alphaleonis.Win32.Filesystem
             var pathLp = Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
             // GetVolumePathName()
-            // In the ANSI version of this function, the name is limited to 248 characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
             var getOk = NativeMethods.GetVolumePathName(pathLp, volumeRootPath, (uint)volumeRootPath.Capacity);
@@ -1055,10 +1014,9 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             // SetVolumeMountPoint()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2014-01-29: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
+            // The string must end with a trailing backslash.
             var success = NativeMethods.SetVolumeMountPoint(volumeMountPoint, volumeGuid);
 
             var lastError = Marshal.GetLastWin32Error();
@@ -1165,10 +1123,9 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             // DeleteVolumeMountPoint()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
+            // A trailing backslash is required.
             var success = NativeMethods.DeleteVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeMountPoint, false));
 
             var lastError = Marshal.GetLastWin32Error();

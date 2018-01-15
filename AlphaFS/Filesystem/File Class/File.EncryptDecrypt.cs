@@ -119,8 +119,6 @@ namespace Alphaleonis.Win32.Filesystem
          
 
          // EncryptFile() / DecryptFile()
-         // In the ANSI version of this function, the name is limited to 248 characters.
-         // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
          var success = encrypt ? NativeMethods.EncryptFile(path) : NativeMethods.DecryptFile(path, 0);

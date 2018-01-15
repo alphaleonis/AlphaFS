@@ -312,19 +312,19 @@ namespace AlphaFS.UnitTest
          var path = tempPath + "   ";
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
 
-         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to be.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to.");
 
 
          path = "   " + tempPath + "   ";
          Console.WriteLine("Input Directory Path: [{0}]\n", path);
 
-         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to be.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to.");
 
 
          path = "   " + tempPath;
          Console.WriteLine("Input Directory Path: [{0}]\n", path);
 
-         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to be.");
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to.");
       }
    }
 }

@@ -69,7 +69,6 @@ namespace AlphaFS.UnitTest
 
             Assert.AreEqual(defaultStreamsFile, currentNumberofStreams, "Total amount of default streams do not match.");
             Assert.AreEqual(currentNumberofStreams, File.EnumerateAlternateDataStreams(tempPath).Count(), "Total amount of File.EnumerateAlternateDataStreams() streams do not match.");
-            Assert.AreEqual(currentNumberofStreams, fi.EnumerateAlternateDataStreams().Count(), "Total amount of FileInfo() streams do not match.");
 
 
             var fileSize = File.GetSize(tempPath);
@@ -114,7 +113,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             Assert.IsTrue(false);
          }
          finally

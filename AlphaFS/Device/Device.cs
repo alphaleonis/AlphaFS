@@ -86,12 +86,8 @@ namespace Alphaleonis.Win32.Filesystem
             if (!callerHandle)
                safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref deviceGuid, IntPtr.Zero, IntPtr.Zero, NativeMethods.SetupDiGetClassDevsExFlags.Present | NativeMethods.SetupDiGetClassDevsExFlags.DeviceInterface, IntPtr.Zero, hostName, IntPtr.Zero);
 
-            if (null != safeHandle && safeHandle.IsInvalid)
-            {
-               safeHandle.Close();
-               NativeError.ThrowException(Marshal.GetLastWin32Error(), Resources.Handle_Is_Invalid);
-            }
-
+            NativeMethods.IsValidHandle(safeHandle, Marshal.GetLastWin32Error());
+            
 
             try
             {

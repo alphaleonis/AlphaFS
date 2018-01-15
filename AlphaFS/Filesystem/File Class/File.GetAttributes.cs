@@ -161,8 +161,6 @@ namespace Alphaleonis.Win32.Filesystem
                if (!(null == transaction || !NativeMethods.IsAtLeastWindowsVista
 
                   // GetFileAttributesEx() / GetFileAttributesTransacted()
-                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                   // 2013-01-13: MSDN confirms LongPath usage.
 
                   ? NativeMethods.GetFileAttributesEx(pathLp, NativeMethods.GET_FILEEX_INFO_LEVELS.GetFileExInfoStandard, out win32AttrData)

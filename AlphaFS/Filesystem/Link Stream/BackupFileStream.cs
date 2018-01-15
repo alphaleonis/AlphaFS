@@ -185,18 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public BackupFileStream(SafeFileHandle handle, FileSystemRights access)
       {
-         if (null == handle)
-            throw new ArgumentNullException("handle", Resources.Handle_Is_Invalid);
-
-         if (handle.IsInvalid)
-         {
-            handle.Close();
-            throw new ArgumentException(Resources.Handle_Is_Invalid, "handle");
-         }
-
-         if (handle.IsClosed)
-            throw new ArgumentException(Resources.Handle_Is_Closed, "handle");
-
+         NativeMethods.IsValidHandle(handle);
 
          SafeFileHandle = handle;
 

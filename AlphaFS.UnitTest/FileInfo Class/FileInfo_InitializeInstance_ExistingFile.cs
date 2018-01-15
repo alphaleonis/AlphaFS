@@ -117,53 +117,53 @@ namespace AlphaFS.UnitTest
             switch (cnt)
             {
                case 0:
-                  Assert.AreEqual(expected.Attributes, actual.Attributes, "The property Attributes is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.Attributes, actual.Attributes, "The property Attributes is not the same, but is expected to.");
                   break;
                case 1:
-                  Assert.AreEqual(expected.CreationTime, actual.CreationTime, "The property CreationTime is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.CreationTime, actual.CreationTime, "The property CreationTime is not the same, but is expected to.");
                   break;
                case 2:
-                  Assert.AreEqual(expected.CreationTimeUtc, actual.CreationTimeUtc, "The property CreationTimeUtc is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.CreationTimeUtc, actual.CreationTimeUtc, "The property CreationTimeUtc is not the same, but is expected to.");
                   break;
 
                // Need .ToString() here since the object types are obviously not the same.
                case 3:
-                  Assert.AreEqual(expected.Directory.ToString(), actual.Directory.ToString(), "The property Directory is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.Directory.ToString(), actual.Directory.ToString(), "The property Directory is not the same, but is expected to.");
                   break;
 
                case 4:
-                  Assert.AreEqual(expected.DirectoryName, actual.DirectoryName, "The property DirectoryName is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.DirectoryName, actual.DirectoryName, "The property DirectoryName is not the same, but is expected to.");
                   break;
                case 5:
-                  Assert.AreEqual(expected.Exists, actual.Exists, "The property Exists is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.Exists, actual.Exists, "The property Exists is not the same, but is expected to.");
                   break;
                case 6:
-                  Assert.AreEqual(expected.Extension, actual.Extension, "The property Extension is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.Extension, actual.Extension, "The property Extension is not the same, but is expected to.");
                   break;
                case 7:
-                  Assert.AreEqual(expected.FullName, actual.FullName, "The property FullName is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.FullName, actual.FullName, "The property FullName is not the same, but is expected to.");
                   break;
                case 8:
-                  Assert.AreEqual(expected.IsReadOnly, actual.IsReadOnly, "The property IsReadOnly is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.IsReadOnly, actual.IsReadOnly, "The property IsReadOnly is not the same, but is expected to.");
                   break;
                case 9:
-                  Assert.AreEqual(expected.LastAccessTime, actual.LastAccessTime, "The property LastAccessTime is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.LastAccessTime, actual.LastAccessTime, "The property LastAccessTime is not the same, but is expected to.");
                   break;
                case 10:
-                  Assert.AreEqual(expected.LastAccessTimeUtc, actual.LastAccessTimeUtc, "The property LastAccessTimeUtc is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.LastAccessTimeUtc, actual.LastAccessTimeUtc, "The property LastAccessTimeUtc is not the same, but is expected to.");
                   break;
                case 11:
-                  Assert.AreEqual(expected.LastWriteTime, actual.LastWriteTime, "The property LastWriteTime is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.LastWriteTime, actual.LastWriteTime, "The property LastWriteTime is not the same, but is expected to.");
                   break;
                case 12:
-                  Assert.AreEqual(expected.LastWriteTimeUtc, actual.LastWriteTimeUtc, "The property LastWriteTimeUtc is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.LastWriteTimeUtc, actual.LastWriteTimeUtc, "The property LastWriteTimeUtc is not the same, but is expected to.");
                   break;
                case 13:
                   if (exists)
-                     Assert.AreEqual(expected.Length, actual.Length, "The property Length is not the same, but is expected to be.");
+                     Assert.AreEqual(expected.Length, actual.Length, "The property Length is not the same, but is expected to.");
                   break;
                case 14:
-                  Assert.AreEqual(expected.Name, actual.Name, "The property Name is not the same, but is expected to be.");
+                  Assert.AreEqual(expected.Name, actual.Name, "The property Name is not the same, but is expected to.");
                   break;
             }
          }

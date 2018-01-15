@@ -108,6 +108,30 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
+      /// <param name="handle">The current handle to check.</param>
+      /// <param name="lastError">The result of Marshal.GetLastWin32Error()</param>
+      /// <param name="path">The path on which the Exception occurred.</param>
+      /// <param name="throwException"><see langword="true"/> will throw an <exception cref="Resources.Handle_Is_Invalid_Win32Error"/>, <see langword="false"/> will not raise this exception..</param>
+      /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
+      /// <exception cref="ArgumentException"/>
+      internal static bool IsValidHandle(SafeHandle handle, int lastError, string path, bool throwException = true)
+      {
+         if (null == handle || handle.IsClosed || handle.IsInvalid)
+         {
+            if (null != handle)
+               handle.Close();
+
+            if (throwException)
+               NativeError.ThrowException(lastError, path);
+
+            return false;
+         }
+
+         return true;
+      }
+
+
       /// <summary>Controls whether the system will handle the specified types of serious errors or whether the process will handle them.</summary>
       /// <remarks>
       ///   Because the error mode is set for the entire process, you must ensure that multi-threaded applications do not set different error-

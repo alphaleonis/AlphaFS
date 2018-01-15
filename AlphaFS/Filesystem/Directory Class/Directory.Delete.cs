@@ -338,8 +338,6 @@ namespace Alphaleonis.Win32.Filesystem
          var success = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
             // RemoveDirectory() / RemoveDirectoryTransacted()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2014-09-09: MSDN confirms LongPath usage.
 
             // RemoveDirectory on a symbolic link will remove the link itself.

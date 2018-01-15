@@ -122,8 +122,6 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             // GetVolumeInformationXxx()
-            // In the ANSI version of this function, the name is limited to 248 characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
             uint lastError;
@@ -133,12 +131,11 @@ namespace Alphaleonis.Win32.Filesystem
                var success = null != _volumeHandle && NativeMethods.IsAtLeastWindowsVista
 
                   // GetVolumeInformationByHandle() / GetVolumeInformation()
-                  // In the ANSI version of this function, the name is limited to 248 characters.
-                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                   // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-                  // A trailing backslash is required.
                   ? NativeMethods.GetVolumeInformationByHandle(_volumeHandle, volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity)
+
+                  // A trailing backslash is required.
                   : NativeMethods.GetVolumeInformation(Path.AddTrailingDirectorySeparator(Name, false), volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity);
 
 

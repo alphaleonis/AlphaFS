@@ -51,7 +51,7 @@ namespace AlphaFS.UnitTest
          {
             connectOk = false;
 
-            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
             Console.WriteLine("\nFailed ConnectDrive(): [{0}] to: [{1}]", drive, share);
          }
@@ -80,7 +80,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                disconnectOk = false;
-               Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
                Console.WriteLine("\nFailed DisconnectDrive(): [{0}] from: [{1}]", drive, share);
             }
@@ -110,7 +110,7 @@ namespace AlphaFS.UnitTest
          {
             connectOk = false;
 
-            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
             Console.WriteLine("\nFailed ConnectDrive(): [{0}] to: [{1}]", drive, share);
          }
@@ -140,7 +140,7 @@ namespace AlphaFS.UnitTest
             {
                disconnectOk = false;
 
-               Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
                Console.WriteLine("\nFailed DisconnectDrive(): [{0}] from: [{1}]", drive, share);
             }

@@ -101,23 +101,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       getFindFirstFileName:
 
-         using (var handle = transaction == null
+         using (var safeHandle = transaction == null
 
-            // FindFirstFileName() / FindFirstFileNameTransacted()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // FindFirstFileNameW() / FindFirstFileNameTransactedW() / FindNextFileNameW()
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-            // 2017-05-30: MSDN confirms LongPath usage: Starting with Windows 10, version 1607
+            // 2017-05-30: FindFirstFileNameW() MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
-            ? NativeMethods.FindFirstFileName(pathLp, 0, out length, builder)
-            : NativeMethods.FindFirstFileNameTransacted(pathLp, 0, out length, builder, transaction.SafeHandle))
+            ? NativeMethods.FindFirstFileNameW(pathLp, 0, out length, builder)
+            : NativeMethods.FindFirstFileNameTransactedW(pathLp, 0, out length, builder, transaction.SafeHandle))
          {
             var lastError = Marshal.GetLastWin32Error();
 
-            if (handle.IsInvalid)
+            if (!NativeMethods.IsValidHandle(safeHandle, false))
             {
-               handle.Close();
-
                switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
@@ -136,7 +132,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             do
             {
-               while (!NativeMethods.FindNextFileName(handle, out length, builder))
+               while (!NativeMethods.FindNextFileNameW(safeHandle, out length, builder))
                {
                   lastError = Marshal.GetLastWin32Error();
 

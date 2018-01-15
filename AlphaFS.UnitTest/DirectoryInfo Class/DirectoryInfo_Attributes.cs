@@ -60,24 +60,24 @@ namespace AlphaFS.UnitTest
 
 
             dirInfo.Attributes |= System.IO.FileAttributes.ReadOnly;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.ReadOnly) != 0, "The directory is not ReadOnly, but is expected to be.");
+            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.ReadOnly) != 0, "The directory is not ReadOnly, but is expected to.");
 
             dirInfo.Attributes &= ~System.IO.FileAttributes.ReadOnly;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.ReadOnly) == 0, "The directory is ReadOnly, but is expected not to be.");
+            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.ReadOnly) == 0, "The directory is ReadOnly, but is expected not to.");
 
 
             dirInfo.Attributes |= System.IO.FileAttributes.Hidden;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.Hidden) != 0, "The directory is not Hidden, but is expected to be.");
+            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.Hidden) != 0, "The directory is not Hidden, but is expected to.");
 
             dirInfo.Attributes &= ~System.IO.FileAttributes.Hidden;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.Hidden) == 0, "The directory is Hidden, but is expected not to be.");
+            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.Hidden) == 0, "The directory is Hidden, but is expected not to.");
 
 
             dirInfo.Attributes |= System.IO.FileAttributes.System;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.System) != 0, "The directory is not System, but is expected to be.");
+            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.System) != 0, "The directory is not System, but is expected to.");
 
             dirInfo.Attributes &= ~System.IO.FileAttributes.System;
-            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.System) == 0, "The directory is System, but is expected not to be.");
+            Assert.IsTrue((dirInfo.Attributes & System.IO.FileAttributes.System) == 0, "The directory is System, but is expected not to.");
          }
 
          Console.WriteLine();

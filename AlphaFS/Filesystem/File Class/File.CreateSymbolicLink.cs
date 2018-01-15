@@ -260,11 +260,9 @@ namespace Alphaleonis.Win32.Filesystem
          var success = null == transaction
 
             // CreateSymbolicLink() / CreateSymbolicLinkTransacted()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2014-02-14: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
             // 2015-07-17: This function does not support long paths.
-            // 2017-05-30: MSDN confirms LongPath usage: Starting with Windows 10, version 1607
+            // 2017-05-30: CreateSymbolicLink() MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
             ? NativeMethods.CreateSymbolicLink(symlinkFileName, targetFileName, targetType)
             : NativeMethods.CreateSymbolicLinkTransacted(symlinkFileName, targetFileName, targetType, transaction.SafeHandle);

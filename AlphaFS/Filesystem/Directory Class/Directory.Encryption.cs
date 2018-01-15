@@ -269,8 +269,6 @@ namespace Alphaleonis.Win32.Filesystem
          var pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // EncryptionDisable()
-         // In the ANSI version of this function, the name is limited to 248 characters.
-         // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage and no Unicode version of this function exists.
 
          var success = NativeMethods.EncryptionDisable(pathLp, !enable);

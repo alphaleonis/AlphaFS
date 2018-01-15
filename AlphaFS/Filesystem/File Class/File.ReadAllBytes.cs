@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                int n = fs.Read(buffer, offset, count);
                if (n == 0)
-                  throw new IOException("Unexpected end of file found");
+                  throw new IOException("UNEXPECTED end of file found");
                offset += n;
                count -= n;
             }

@@ -185,20 +185,17 @@ namespace Alphaleonis.Win32.Filesystem
             actualLength = getShort
 
                // GetShortPathName()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2014-01-29: MSDN confirms LongPath usage.
+
+               // GetLongPathName()
                // 2014-01-29: MSDN confirms LongPath usage.
 
                ? NativeMethods.GetShortPathName(pathLp, buffer, (uint) buffer.Capacity)
                : transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
-                  // GetLongPathName()
-                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-                  // 2014-01-29: MSDN confirms LongPath usage.
-
                   ? NativeMethods.GetLongPathName(pathLp, buffer, (uint) buffer.Capacity)
                   : NativeMethods.GetLongPathNameTransacted(pathLp, buffer, (uint) buffer.Capacity, transaction.SafeHandle);
+
 
             var lastError = Marshal.GetLastWin32Error();
 

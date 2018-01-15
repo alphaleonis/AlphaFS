@@ -62,7 +62,6 @@ namespace AlphaFS.UnitTest
 
             Assert.AreEqual(defaultStreamsDirectory, currentNumberofStreams, "Total amount of default streams do not match.");
             Assert.AreEqual(currentNumberofStreams, Alphaleonis.Win32.Filesystem.Directory.EnumerateAlternateDataStreams(tempPath).Count(), "Total amount of Directory.EnumerateAlternateDataStreams() streams do not match.");
-            Assert.AreEqual(currentNumberofStreams, di.EnumerateAlternateDataStreams().Count(), "Total amount of DirectoryInfo() streams do not match.");
 
 
             // Create alternate data streams.
@@ -99,7 +98,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             Assert.IsTrue(false);
          }
          finally
