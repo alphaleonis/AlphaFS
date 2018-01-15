@@ -27,24 +27,23 @@ namespace AlphaFS.UnitTest
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_EnumerateDrives()
+      public void AlphaFS_Host_EnumerateDrives_Network_Success()
       {
-         Console.WriteLine("Network.Host.EnumerateDrives()");
+         UnitTestConstants.PrintUnitTestHeader(true);
+         Console.WriteLine();
+
 
          var host = UnitTestConstants.LocalHost;
          
+         Console.WriteLine("Enumerating drives from host: [{0}]\n", host);
 
-         Console.WriteLine("\nEnumerating drives from host: [{0}]\n", host);
-         var cnt = 0;
-         UnitTestConstants.StopWatcher(true);
+         var driveCount = 0;
 
          foreach (var drive in Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true))
-            Console.WriteLine("\t#{0:000}\tDrive: [{1}]", ++cnt, drive);
+            Console.WriteLine("\t#{0:000}\tDrive: [{1}]", ++driveCount, drive);
 
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+         Assert.IsTrue(driveCount > 0, "Nothing is enumerated, but it is expected.");
       }
    }
 }

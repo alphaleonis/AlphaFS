@@ -24,6 +24,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #376: `Path.LocalToUnc(path, true)` does not return UNC path in long path form.  (Thx damiarnold) 
 - Issue #379: `Path.LocalToUnc()` isn't handling trailing directory separators for mapped drives.  (Thx damiarnold)
 - Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
+- Issue #386: `Network.Host.EnumerateDrives()` returns invalid data.
 
 ### New Features
 

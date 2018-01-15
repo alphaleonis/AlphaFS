@@ -29,9 +29,11 @@ namespace AlphaFS.UnitTest
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_EnumerateDfsLinks()
+      public void AlphaFS_Host_EnumerateDfsLinks_Network_Success()
       {
-         Console.WriteLine("Network.Host.EnumerateDfsLinks()");
+         UnitTestConstants.PrintUnitTestHeader(true);
+         Console.WriteLine();
+
 
          var cnt = 0;
          var noDomainConnection = true;
@@ -52,11 +54,11 @@ namespace AlphaFS.UnitTest
                }
                catch (NetworkInformationException ex)
                {
-                  Console.WriteLine("\n\tNetworkInformationException #1: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("NetworkInformationException #1: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
                catch (Exception ex)
                {
-                  Console.WriteLine("\n\tCaught (UNEXPECTED #1) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\nCaught (UNEXPECTED #1) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
                }
 
                Console.WriteLine();
@@ -64,14 +66,13 @@ namespace AlphaFS.UnitTest
          }
          catch (NetworkInformationException ex)
          {
-            Console.WriteLine("\n\tNetworkInformationException #2: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("NetworkInformationException #2: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught (UNEXPECTED #2) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (UNEXPECTED #2) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         Console.WriteLine("\n\n{0}", UnitTestConstants.Reporter(true));
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");

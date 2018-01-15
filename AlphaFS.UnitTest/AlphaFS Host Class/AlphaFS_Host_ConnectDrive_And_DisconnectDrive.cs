@@ -28,21 +28,23 @@ namespace AlphaFS.UnitTest
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_ConnectDrive()
+      public void AlphaFS_Host_ConnectDrive_And_DisconnectDrive_Network_Success()
       {
-         Console.WriteLine("Network.Host.ConnectDrive()");
+         UnitTestConstants.PrintUnitTestHeader(true);
+         Console.WriteLine();
+
 
          #region Connect drive to share
 
          var drive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter(), Alphaleonis.Win32.Filesystem.Path.VolumeSeparatorChar, Alphaleonis.Win32.Filesystem.Path.DirectorySeparatorChar);
          var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder);
          bool connectOk;
-         Console.WriteLine("\nConnect using a designated drive: [{0}]", drive);
+         Console.WriteLine("Connect using a designated drive: [{0}]", drive);
          try
          {
-            UnitTestConstants.StopWatcher(true);
             Alphaleonis.Win32.Network.Host.ConnectDrive(drive, share);
-            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]\n\n{2}\n", drive, share, UnitTestConstants.Reporter(true));
+
+            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]", drive, share);
 
             connectOk = true;
 
@@ -70,9 +72,12 @@ namespace AlphaFS.UnitTest
          {
             try
             {
-               UnitTestConstants.StopWatcher(true);
                Alphaleonis.Win32.Network.Host.DisconnectDrive(drive);
-               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n{2}\n", drive, share, UnitTestConstants.Reporter(true));
+
+               Console.WriteLine();
+               Console.WriteLine();
+               Console.WriteLine("DisconnectDrive(): [{0}] from: [{1}]", drive, share);
+               Console.WriteLine();
 
                disconnectOk = true;
 
@@ -80,9 +85,9 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                disconnectOk = false;
-               Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("Caught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
-               Console.WriteLine("\nFailed DisconnectDrive(): [{0}] from: [{1}]", drive, share);
+               Console.WriteLine("Failed DisconnectDrive(): [{0}] from: [{1}]", drive, share);
             }
          }
 
@@ -99,9 +104,8 @@ namespace AlphaFS.UnitTest
          drive = null;
          try
          {
-            UnitTestConstants.StopWatcher(true);
             drive = Alphaleonis.Win32.Network.Host.ConnectDrive(null, share);
-            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]\n\n{2}\n", drive, share, UnitTestConstants.Reporter(true));
+            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]", drive, share);
 
             connectOk = true;
 
@@ -129,9 +133,8 @@ namespace AlphaFS.UnitTest
          {
             try
             {
-               UnitTestConstants.StopWatcher(true);
                Alphaleonis.Win32.Network.Host.DisconnectDrive(drive);
-               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n{2}\n", drive, share, UnitTestConstants.Reporter(true));
+               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]", drive, share);
 
                disconnectOk = true;
 

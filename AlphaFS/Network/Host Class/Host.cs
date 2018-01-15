@@ -65,12 +65,12 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // GetUncName
 
+
       #region Internal Methods
 
-      private delegate uint EnumerateNetworkObjectDelegate(
-         FunctionData functionData, out SafeGlobalMemoryBufferHandle netApiBuffer, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
-         [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalEntries,
-         [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
+      private delegate uint EnumerateNetworkObjectDelegate(FunctionData functionData, out SafeGlobalMemoryBufferHandle netApiBuffer, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
+         [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalEntries, [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
+
 
       /// <summary>Structure is used to pass additional data to the Win32 function.</summary>
       private struct FunctionData
@@ -80,10 +80,10 @@ namespace Alphaleonis.Win32.Network
          public string ExtraData2;
       }
 
+
       [SecurityCritical]
       private static IEnumerable<TStruct> EnumerateNetworkObjectCore<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException)
       {
-         Type objectType;
          int objectSize;
          bool isString;
 
@@ -91,13 +91,12 @@ namespace Alphaleonis.Win32.Network
          {
             // Logical Drives
             case 1:
-               objectType = typeof(IntPtr);
                isString = true;
-               objectSize = Marshal.SizeOf(objectType) + UnicodeEncoding.CharSize;
+               objectSize = 3 * UnicodeEncoding.CharSize;
                break;
 
             default:
-               objectType = typeof(TNative);
+               var objectType = typeof(TNative);
                isString = objectType == typeof(string);
                objectSize = isString ? 0 : Marshal.SizeOf(objectType);
                break;
@@ -122,9 +121,8 @@ namespace Alphaleonis.Win32.Network
                      if (entriesRead > 0)
                      {
                         for (int i = 0, itemOffset = 0; i < entriesRead; i++, itemOffset += objectSize)
-                           yield return (TStruct) (isString
-                              ? buffer.PtrToStringUni(itemOffset, 2)
-                              : (object) createTStruct(buffer.PtrToStructure<TNative>(itemOffset), buffer));
+
+                           yield return (TStruct) (isString ? buffer.PtrToStringUni(itemOffset, 2) : (object) createTStruct(buffer.PtrToStructure<TNative>(itemOffset), buffer));
                      }
                      break;
 
@@ -142,6 +140,7 @@ namespace Alphaleonis.Win32.Network
          if (lastError != Win32Errors.NO_ERROR && !continueOnException)
             throw new NetworkInformationException((int) lastError);
       }
+
 
       /// <summary>This method uses <see cref="NativeMethods.REMOTE_NAME_INFO"/> level to retrieve full REMOTE_NAME_INFO structure.</summary>
       /// <returns>A <see cref="NativeMethods.REMOTE_NAME_INFO"/> structure.</returns>

@@ -27,13 +27,19 @@ namespace AlphaFS.UnitTest
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_DriveConnection()
+      public void AlphaFS_Host_DriveConnection_Network_Success()
       {
+         UnitTestConstants.PrintUnitTestHeader(true);
+         Console.WriteLine();
+
+
          var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder);
 
          using (var connection = new Alphaleonis.Win32.Network.DriveConnection(share))
          {
-            Console.WriteLine("\nUsing DriveConnection(): [{0}] to: [{1}]", connection.LocalName, share);
+            Console.WriteLine("Using DriveConnection(): [{0}] to: [{1}]", connection.LocalName, share);
+
+            UnitTestConstants.Dump(connection, -9);
 
             Assert.AreEqual(share, connection.Share);
          }

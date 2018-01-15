@@ -28,11 +28,13 @@ namespace AlphaFS.UnitTest
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_EnumerateDomainDfsRoot()
+      public void AlphaFS_Host_EnumerateDomainDfsRoot_Network_Success()
       {
-         Console.WriteLine("Network.Host.EnumerateDomainDfsRoot()");
+         UnitTestConstants.PrintUnitTestHeader(true);
+         Console.WriteLine();
 
-         Console.Write("\nEnumerating DFS Root from user domain: [{0}]\n", Alphaleonis.Win32.Network.NativeMethods.ComputerDomain);
+
+         Console.Write("Enumerating DFS Root from user domain: [{0}]\n", Alphaleonis.Win32.Network.NativeMethods.ComputerDomain);
          var cnt = 0;
          var noDomainConnection = true;
          UnitTestConstants.StopWatcher(true);
@@ -46,14 +48,13 @@ namespace AlphaFS.UnitTest
          }
          catch (NetworkInformationException ex)
          {
-            Console.WriteLine("\n\tNetworkInformationException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("NetworkInformationException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          catch (Exception ex)
          {
             Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         Console.WriteLine("\n\n{0}", UnitTestConstants.Reporter(true));
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");

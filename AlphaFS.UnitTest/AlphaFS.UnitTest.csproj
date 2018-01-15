@@ -224,8 +224,8 @@
     <Compile Include="AlphaFS Host Class\AlphaFS_Host_EnumerateDomainDfsRoot.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host_EnumerateDfsRoot.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host_EnumerateDfsLinks.cs" />
-    <Compile Include="AlphaFS Host Class\AlphaFS_Host_ConnectTo.cs" />
-    <Compile Include="AlphaFS Host Class\AlphaFS_Host_ConnectDrive.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host_ConnectTo_And_DisconnectFrom.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host_ConnectDrive_And_DisconnectDrive.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host_EnumerateDrives.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host_GetHostShareFromPath.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host_DriveConnection.cs" />

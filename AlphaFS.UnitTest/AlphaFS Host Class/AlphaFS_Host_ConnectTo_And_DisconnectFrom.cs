@@ -27,9 +27,11 @@ namespace AlphaFS.UnitTest
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_ConnectTo()
+      public void AlphaFS_Host_ConnectTo_And_DisconnectFrom_Network_Success()
       {
-         Console.WriteLine("Network.Host.ConnectTo()");
+         UnitTestConstants.PrintUnitTestHeader(true);
+         Console.WriteLine();
+
 
          #region Connect to computer
 
@@ -37,9 +39,8 @@ namespace AlphaFS.UnitTest
          var share = Alphaleonis.Win32.Network.Host.GetUncName();
          try
          {
-            UnitTestConstants.StopWatcher(true);
             Alphaleonis.Win32.Network.Host.ConnectTo(share);
-            Console.WriteLine("\nConnectTo(): [{0}]\n\n{1}\n", share, UnitTestConstants.Reporter(true));
+            Console.WriteLine("ConnectTo(): [{0}]", share);
 
             connectOk = true;
 
@@ -66,9 +67,8 @@ namespace AlphaFS.UnitTest
          {
             try
             {
-               UnitTestConstants.StopWatcher(true);
                Alphaleonis.Win32.Network.Host.DisconnectFrom(share);
-               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n{1}\n", share, UnitTestConstants.Reporter(true));
+               Console.WriteLine("\nDisconnectFrom(): [{0}]", share);
 
                disconnectOk = true;
 
@@ -93,9 +93,8 @@ namespace AlphaFS.UnitTest
          share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder);
          try
          {
-            UnitTestConstants.StopWatcher(true);
             Alphaleonis.Win32.Network.Host.ConnectTo(share);
-            Console.WriteLine("\nConnectTo(): [{0}]\n\n{1}\n", share, UnitTestConstants.Reporter(true));
+            Console.WriteLine("\nConnectTo(): [{0}]", share);
 
             connectOk = true;
 
@@ -122,9 +121,8 @@ namespace AlphaFS.UnitTest
          {
             try
             {
-               UnitTestConstants.StopWatcher(true);
                Alphaleonis.Win32.Network.Host.DisconnectFrom(share);
-               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n{1}\n", share, UnitTestConstants.Reporter(true));
+               Console.WriteLine("\nDisconnectFrom(): [{0}]", share);
 
                disconnectOk = true;
 

@@ -27,14 +27,17 @@ namespace AlphaFS.UnitTest
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_GetUncName()
+      public void AlphaFS_Host_GetUncName_Network_Success()
       {
-         Console.WriteLine("Network.Host.GetUncName()");
+         UnitTestConstants.PrintUnitTestHeader(true);
+         Console.WriteLine();
+
 
          var hostUncName = Alphaleonis.Win32.Network.Host.GetUncName();
-         Console.WriteLine("\nHost.GetUncName(): [{0}]", hostUncName);
+         Console.WriteLine("Host.GetUncName(): [{0}]", hostUncName);
 
-         Assert.IsTrue(hostUncName.Contains(@"\"));
+
+         Assert.IsTrue(hostUncName.StartsWith(@"\\"));
 
          Assert.AreEqual(Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName, hostUncName);
       }

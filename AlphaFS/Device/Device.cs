@@ -261,7 +261,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Build a Device Interface Detail Data structure.
          var didd = new NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA
          {
-            cbSize = IntPtr.Size == 4 ? (uint)(Marshal.SystemDefaultCharSize + 4) : 8
+            cbSize = (uint) (IntPtr.Size == 4 ? 6 : 8)
          };
 
          // Get device interace details.

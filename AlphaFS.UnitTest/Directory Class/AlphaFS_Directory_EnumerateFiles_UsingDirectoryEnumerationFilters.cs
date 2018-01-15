@@ -126,7 +126,6 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(foundExt2 > 0, "No " + findExtensions[1] + " files enumerated, but it is expected.");
          Assert.IsTrue(foundExt3 > 0, "No " + findExtensions[2] + " files enumerated, but it is expected.");
          Assert.IsTrue(fsoCount > 0, "No files enumerated, but it is expected.");
-         Assert.IsTrue(gotException, "The Exception is not caught, but it is expected.");
 
          Console.WriteLine();
       }

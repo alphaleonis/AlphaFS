@@ -28,9 +28,11 @@ namespace AlphaFS.UnitTest
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_EnumerateDfsRoot()
+      public void AlphaFS_Host_EnumerateDfsRoot_Network_Success()
       {
-         Console.WriteLine("Network.Host.EnumerateDfsRoot()");
+         UnitTestConstants.PrintUnitTestHeader(true);
+         Console.WriteLine();
+
 
          var cnt = 0;
          var noDomainConnection = true;
@@ -61,7 +63,7 @@ namespace AlphaFS.UnitTest
                }
                catch (NetworkInformationException ex)
                {
-                  Console.WriteLine("\n\tNetworkInformationException #1: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("NetworkInformationException #1: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
                catch (Exception ex)
                {
@@ -76,17 +78,14 @@ namespace AlphaFS.UnitTest
          }
          catch (NetworkInformationException ex)
          {
-            Console.WriteLine("\n\tNetworkInformationException #2: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("NetworkInformationException #2: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught (UNEXPECTED #2) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("Caught (UNEXPECTED #2) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-
-         Console.WriteLine("\n\n{0}", UnitTestConstants.Reporter(true));
-
-
+         
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
          else if (cnt == 0)

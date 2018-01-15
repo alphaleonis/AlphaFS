@@ -28,9 +28,11 @@ namespace AlphaFS.UnitTest
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_GetHostShareFromPath()
+      public void AlphaFS_Host_GetHostShareFromPath_Network_Success()
       {
-         Console.WriteLine("Network.Host.GetHostShareFromPath\n");
+         UnitTestConstants.PrintUnitTestHeader(true);
+         Console.WriteLine();
+
 
          var folderWithspaces = @"\Folder with spaces";
 

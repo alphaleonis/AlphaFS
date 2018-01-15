@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDrivesCore(string host, bool continueOnException)
       {
-         return EnumerateNetworkObjectCore(new FunctionData { EnumType = 1 }, (string structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectCore(new FunctionData {EnumType = 1}, (string structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             structure,
 
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
+               var stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetServerDiskEnum(stripUnc, 0, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resume);
 
