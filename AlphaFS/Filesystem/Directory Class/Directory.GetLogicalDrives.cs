@@ -30,8 +30,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region .NET
 
-      /// <summary>Retrieves the names of the logical drives on this computer in the form "&lt;drive letter&gt;:\".</summary>
-      /// <returns>An array of type <see cref="String"/> that represents the logical drives on a computer.</returns>
+      /// <summary>Retrieves the names of the logical drives on the Computer in the form "&lt;drive letter&gt;:\".</summary>
+      /// <returns>An array of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
       [SecurityCritical]
       public static string[] GetLogicalDrives()
       {
@@ -41,8 +41,8 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
       
 
-      /// <summary>[AlphaFS] Retrieves the names of the logical drives on this computer in the form "&lt;drive letter&gt;:\".</summary>
-      /// <returns>An array of type <see cref="String"/> that represents the logical drives on a computer.</returns>
+      /// <summary>[AlphaFS] Retrieves the names of the logical drives on the Computer in the form "C:\".</summary>
+      /// <returns>An array of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
       [SecurityCritical]
@@ -52,8 +52,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on a computer with the ready status.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
+      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer with the ready status.</summary>
+      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
       [SecurityCritical]
       public static IEnumerable<DriveInfo> EnumerateLogicalDrives()
       {
@@ -61,8 +61,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on a computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
+      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer.</summary>
+      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
       [SecurityCritical]
@@ -74,8 +74,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>Enumerates the drive names of all logical drives on a computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
+      /// <summary>Enumerates the drive names of all logical drives on the Computer.</summary>
+      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
       [SecurityCritical]

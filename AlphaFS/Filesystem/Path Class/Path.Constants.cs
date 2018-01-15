@@ -29,38 +29,41 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>AltDirectorySeparatorChar = '/' Provides a platform-specific alternate character used to separate directory levels in a path string that reflects a hierarchical file system organization.</summary>
       public static readonly char AltDirectorySeparatorChar = System.IO.Path.AltDirectorySeparatorChar;
 
-      /// <summary>DirectorySeparatorChar = '\' Provides a platform-specific character used to separate directory levels in a path string that reflects a hierarchical file system organization.</summary>
-      public static readonly char DirectorySeparatorChar = System.IO.Path.DirectorySeparatorChar;
-
-      /// <summary>PathSeparator = ';' A platform-specific separator character used to separate path strings in environment variables.</summary>
-      public static readonly char PathSeparator = System.IO.Path.PathSeparator;
-
-      /// <summary>VolumeSeparatorChar = ':' Provides a platform-specific Volume Separator character.</summary>
-      public static readonly char VolumeSeparatorChar = System.IO.Path.VolumeSeparatorChar;
-
       /// <summary>[AlphaFS] AltDirectorySeparatorChar = "/" Provides a platform-specific alternate string used to separate directory levels in a path string that reflects a hierarchical file system organization.</summary>
       public static readonly string AltDirectorySeparator = AltDirectorySeparatorChar.ToString(CultureInfo.InvariantCulture);
 
-      /// <summary>[AlphaFS] CurrentDirectoryPrefix = '.' Provides a current directory character.</summary>
-      public const char CurrentDirectoryPrefixChar = '.';
 
-      /// <summary>[AlphaFS] CurrentDirectoryPrefix = "." Provides a current directory string.</summary>
-      public static readonly string CurrentDirectoryPrefix = CurrentDirectoryPrefixChar.ToString(CultureInfo.InvariantCulture);
+      /// <summary>DirectorySeparatorChar = '\' Provides a platform-specific character used to separate directory levels in a path string that reflects a hierarchical file system organization.</summary>
+      public static readonly char DirectorySeparatorChar = System.IO.Path.DirectorySeparatorChar;
 
       /// <summary>[AlphaFS] DirectorySeparator = "\" Provides a platform-specific string used to separate directory levels in a path string that reflects a hierarchical file system organization.</summary>
       public static readonly string DirectorySeparator = DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture);
 
-      /// <summary>[AlphaFS] ExtensionSeparatorChar = '.' Provides an Extension Separator character.</summary>
-      public const char ExtensionSeparatorChar = '.';
 
-      /// <summary>[AlphaFS] ParentDirectoryPrefix = ".." Provides a parent directory string.</summary>
-      public const string ParentDirectoryPrefix = "..";
+      /// <summary>[AlphaFS] NetworkDriveSeparator = '$' Provides a platform-specific network drive separator character.</summary>
+      public const char NetworkDriveSeparatorChar = '$';
+
+      /// <summary>[AlphaFS] NetworkDriveSeparator = "$" Provides a platform-specific network drive separator string.</summary>
+      public static readonly string NetworkDriveSeparator = NetworkDriveSeparatorChar.ToString(CultureInfo.InvariantCulture);
+
+
+      /// <summary>PathSeparator = ';' A platform-specific separator character used to separate path strings in environment variables.</summary>
+      public static readonly char PathSeparator = System.IO.Path.PathSeparator;
+
+
+      /// <summary>VolumeSeparatorChar = ':' Provides a platform-specific Volume Separator character.</summary>
+      public static readonly char VolumeSeparatorChar = System.IO.Path.VolumeSeparatorChar;
+
+      /// <summary>[AlphaFS] VolumeSeparator = ":" Provides a platform-specific Volume Separator string.</summary>
+      public static readonly string VolumeSeparator = VolumeSeparatorChar.ToString(CultureInfo.InvariantCulture);
+
 
       /// <summary>[AlphaFS] StreamSeparator = ':' Provides a platform-specific Stream-name character.</summary>
       public static readonly char StreamSeparatorChar = System.IO.Path.VolumeSeparatorChar;
 
-      /// <summary>[AlphaFS] StreamSeparator = ':' Provides a platform-specific Stream-name character.</summary>
+      /// <summary>[AlphaFS] StreamSeparator = ':' Provides a platform-specific Stream-name string.</summary>
       public static readonly string StreamSeparator = StreamSeparatorChar.ToString(CultureInfo.InvariantCulture);
+
 
       /// <summary>[AlphaFS] StreamDataLabel = ':$DATA' Provides a platform-specific Stream :$DATA label.</summary>
       public const string StreamDataLabel = ":$DATA";
@@ -68,11 +71,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] StringTerminatorChar = '\0' String Terminator Suffix.</summary>
       public const char StringTerminatorChar = '\0';
 
+
       /// <summary>[AlphaFS] Characters to trim from the SearchPattern.</summary>
       internal static readonly char[] TrimEndChars = { (char) 0x9, (char) 0xA, (char) 0xB, (char) 0xC, (char) 0xD, (char) 0x20, (char) 0x85, (char) 0xA0 };
+      
 
-      /// <summary>[AlphaFS] VolumeSeparatorChar = ':' Provides a platform-specific Volume Separator character.</summary>
-      public static readonly string VolumeSeparator = VolumeSeparatorChar.ToString(CultureInfo.InvariantCulture);
+      /// <summary>[AlphaFS] CurrentDirectoryPrefix = '.' Provides a current directory character.</summary>
+      public const char CurrentDirectoryPrefixChar = '.';
+
+      /// <summary>[AlphaFS] CurrentDirectoryPrefix = "." Provides a current directory string.</summary>
+      public static readonly string CurrentDirectoryPrefix = CurrentDirectoryPrefixChar.ToString(CultureInfo.InvariantCulture);
+
+
+      /// <summary>[AlphaFS] ExtensionSeparatorChar = '.' Provides an Extension Separator character.</summary>
+      public const char ExtensionSeparatorChar = '.';
+
+      /// <summary>[AlphaFS] ParentDirectoryPrefix = ".." Provides a parent directory string.</summary>
+      public const string ParentDirectoryPrefix = "..";
+      
 
       /// <summary>[AlphaFS] WildcardStarMatchAll = "*" Provides a match-all-items string.</summary>
       public const string WildcardStarMatchAll = "*";

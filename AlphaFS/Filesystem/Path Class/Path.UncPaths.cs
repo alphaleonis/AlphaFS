@@ -252,7 +252,7 @@ namespace Alphaleonis.Win32.Filesystem
             var localDrive = returnUncPath.Split(VolumeSeparatorChar);
 
             // Return: "\\localhost\C$\Windows"
-            returnUncPath = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}${3}", Host.GetUncName(), DirectorySeparator, localDrive[0], localDrive[1]);
+            returnUncPath = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}", Host.GetUncName(), DirectorySeparator, localDrive[0], NetworkDriveSeparator, localDrive[1]);
          }
 
 

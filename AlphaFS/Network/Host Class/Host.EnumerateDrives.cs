@@ -22,6 +22,8 @@
 using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security;
 
@@ -33,10 +35,11 @@ namespace Alphaleonis.Win32.Network
       /// <returns><see cref="IEnumerable{String}"/> drives from the local host.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateDrives()
+      public static IEnumerable<DriveInfo> EnumerateDrives()
       {
-         return EnumerateDrivesCore(null, false);
+         return EnumerateDrives(Environment.MachineName, false);
       }
+
 
       /// <summary>Enumerates local drives from the specified host.</summary>
       /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
@@ -47,9 +50,13 @@ namespace Alphaleonis.Win32.Network
       ///   <para>such as unavailable resources.</para>
       /// </param>
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateDrives(string host, bool continueOnException)
+      public static IEnumerable<DriveInfo> EnumerateDrives(string host, bool continueOnException)
       {
-         return EnumerateDrivesCore(host, continueOnException);
+         return EnumerateDrivesCore(host, continueOnException)
+
+            .Select(drive => string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}", Path.UncPrefix, host,
+
+               Path.DirectorySeparator, drive[0], Path.NetworkDriveSeparator)) .Select(uncDrive => new DriveInfo(uncDrive));
       }
 
 

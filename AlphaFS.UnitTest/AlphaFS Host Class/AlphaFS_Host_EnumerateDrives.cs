@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
@@ -35,15 +36,26 @@ namespace AlphaFS.UnitTest
 
          var host = UnitTestConstants.LocalHost;
          
-         Console.WriteLine("Enumerating drives from host: [{0}]\n", host);
-
-         var driveCount = 0;
-
-         foreach (var drive in Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true))
-            Console.WriteLine("\t#{0:000}\tDrive: [{1}]", ++driveCount, drive);
+         Console.WriteLine("Enumerating drives from host: [{0}]", host);
 
 
-         Assert.IsTrue(driveCount > 0, "Nothing is enumerated, but it is expected.");
+         var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true).ToList();
+
+         foreach (var driveInfo in drives)
+         {
+            UnitTestConstants.Dump(driveInfo, -21);
+            UnitTestConstants.Dump(driveInfo.DiskSpaceInfo, -26);
+            UnitTestConstants.Dump(driveInfo.VolumeInfo, -26);
+
+
+            Assert.IsNull(driveInfo.DosDeviceName);
+            Assert.IsNull(driveInfo.VolumeInfo.Guid);
+
+            Console.WriteLine();
+         }
+
+
+         Assert.IsTrue(drives.Count > 0, "Nothing is enumerated, but it is expected.");
       }
    }
 }

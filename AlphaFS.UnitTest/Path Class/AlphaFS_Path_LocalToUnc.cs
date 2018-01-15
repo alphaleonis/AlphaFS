@@ -76,7 +76,7 @@ namespace AlphaFS.UnitTest
          var sysDrive = UnitTestConstants.SysDrive;
          var sysRoot = UnitTestConstants.SysRoot;
          var backslash = Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
-         var hostName = Environment.MachineName + backslash + sysDrive.Replace(":", "$");
+         var hostName = Environment.MachineName + backslash + sysDrive[0] + Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator;
          var uncPrefix = Alphaleonis.Win32.Filesystem.Path.UncPrefix;
          var uncLongPrefix = Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix;
          
@@ -137,9 +137,9 @@ namespace AlphaFS.UnitTest
          var backslash = Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
          var hostName = Alphaleonis.Win32.Network.Host.GetUncName() + backslash;
          var localFolder = UnitTestConstants.SysRoot32 + backslash;
-         var netFolder = localFolder.Replace(":", "$");
+         var netFolder = localFolder.Replace(":", Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator);
 
-
+            
          string[] localToUncPaths =
          {
             localFolder,
@@ -176,8 +176,8 @@ namespace AlphaFS.UnitTest
          var backslash = Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
          var hostName = Alphaleonis.Win32.Network.Host.GetUncName() + backslash;
          var localTempFolder = UnitTestConstants.TempFolder;
-         var netTempFolder = localTempFolder.Replace(":", "$");
-
+         var netTempFolder = localTempFolder.Replace(":", Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator);
+            
 
          string[] localToUncPaths =
          {
@@ -217,9 +217,9 @@ namespace AlphaFS.UnitTest
          var backslash = Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
          var hostName = Alphaleonis.Win32.Network.Host.GetUncName() + backslash;
          var localTempFolder = UnitTestConstants.TempFolder;
-         var netTempFolder = localTempFolder.Replace(":", "$");
+         var netTempFolder = localTempFolder.Replace(":", Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator);
 
-
+            
          string[] localToUncPaths =
          {
             localTempFolder,
@@ -258,11 +258,11 @@ namespace AlphaFS.UnitTest
          var backslash = Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
          var hostName = Alphaleonis.Win32.Network.Host.GetUncName() + backslash;
          var localTempFolder = UnitTestConstants.TempFolder;
-         var netTempFolder = localTempFolder.Replace(":", "$");
+         var netTempFolder = localTempFolder.Replace(":", Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator);
          var subFolderName = MethodBase.GetCurrentMethod().Name;
          var subFolderPath = hostName + netTempFolder + backslash + subFolderName;
 
-
+            
          string[] localToUncPaths =
          {
             localTempFolder,

@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -40,9 +41,17 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_DriveInfo_GetDrives_LocalAndNetwork_Success()
+      public void AlphaFS_DriveInfo_GetDrives_Local_Success()
       {
-         DriveInfo_InitializeInstance_GetDrives(false);
+         DriveInfo_GetDrives();
+      }
+
+
+
+      [TestMethod]
+      public void AlphaFS_DriveInfo_EnumerateDrives_Network_Success()
+      {
+         DriveInfo_EnumerateDrives();
       }
 
 
@@ -54,17 +63,17 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
 
 
-         var tempPath = UnitTestConstants.SysDrive[0].ToString();
+         var drive = UnitTestConstants.SysDrive[0].ToString();
 
          if (isNetwork)
             // Only using a drive letter results in a wrong UNC path.
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.SysDrive);
+            drive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.SysDrive);
 
 
-         Console.WriteLine("Input Drive Path: [{0}]", tempPath);
+         Console.WriteLine("Input Drive Path: [{0}]", drive);
 
 
-         var actual = new Alphaleonis.Win32.Filesystem.DriveInfo(tempPath);
+         var actual = new Alphaleonis.Win32.Filesystem.DriveInfo(drive);
 
          Assert.IsTrue(actual.IsReady);
          Assert.IsTrue(actual.IsVolume);
@@ -81,7 +90,7 @@ namespace AlphaFS.UnitTest
          {
             // Even 1 byte more or less results in failure, so do these tests asap.
             
-            var expected = new System.IO.DriveInfo(tempPath);
+            var expected = new System.IO.DriveInfo(drive);
             
 
             Assert.AreEqual(expected.AvailableFreeSpace, actual.AvailableFreeSpace, "AvailableFreeSpace AlphaFS != System.IO");
@@ -97,7 +106,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(expected.VolumeLabel, actual.VolumeLabel, "VolumeLabel AlphaFS != System.IO");
 
 
-            UnitTestConstants.Dump(expected, -21);
+            UnitTestConstants.Dump(expected, -18);
             Console.WriteLine();
          }
 
@@ -110,24 +119,43 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void DriveInfo_InitializeInstance_GetDrives(bool isNetwork)
+      private void DriveInfo_GetDrives()
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-
-         var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives();
+         UnitTestConstants.PrintUnitTestHeader(false);
+      
+         
+         var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToList();
 
          foreach (var drive in drives)
-         {
             UnitTestConstants.Dump(drive, -21);
-            Console.WriteLine();
-         }
 
 
-         Assert.IsTrue(drives.Length > 0);
+         Assert.IsTrue(drives.Count > 0);
 
          Assert.AreEqual(drives[0].Name[0], UnitTestConstants.SysDrive[0]);
       }
+
+
+      private void DriveInfo_EnumerateDrives()
+      {
+         UnitTestConstants.PrintUnitTestHeader(true);
+
+
+         var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives().ToList();
+
+         foreach (var drive in drives)
+            UnitTestConstants.Dump(drive, -21);
+
+
+         Assert.IsTrue(drives.Count > 0);
+
+
+         // \\localhost\C$
+         
+         var host = Alphaleonis.Win32.Network.Host.GetUncName() + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator +
+                    UnitTestConstants.SysDrive[0] + Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
+
+         Assert.AreEqual(drives[0].Name, host);
+      }
    }
 }
-

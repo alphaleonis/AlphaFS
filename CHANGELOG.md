@@ -66,20 +66,16 @@ Version vNext  (xxxx-xx-xx)
 - Issue #377: Rename enum member: `OperatingSystem.EnumOsName.WindowsServer` to: `OperatingSystem.EnumOsName.WindowsServer2016`
 - Issue #378: `DiskSpaceInfo` should respect `CultureInfo.CurrentCulture` for number formatting.
 - Issue #387: Replace `handle.IsInvalid` checks with a call to method `NativeMethods.IsValidHandle()`.
+- Issue #388: Change method `Network.Host.EnumerateDrives()` return type from `string` to `DriveInfo`.
 
 ### Breaking Changes
 
-- Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
-   Currently non-breaking, the old methods are still there.
-
+- Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`. Currently non-breaking, the old methods are still there.
 - Issue #340: `DirectoryReadOnlyException` inherits from `System.IO.IOException`, wrong?
-
-- Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
-   Current code to retrieve a directory using `File.GetFileSystemEntryInfo` will now fail.
-   Use Directory.GetFileSystemEntryInfo instead.
-
+- Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`. Current code to retrieve a directory using `File.GetFileSystemEntryInfo` will now fail. Use `Directory.GetFileSystemEntryInfo` instead.
 - Issue #377: Rename enum member: `OperatingSystem.EnumOsName.WindowsServer` to: `OperatingSystem.EnumOsName.WindowsServer2016`
 - Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
+- Issue #388: Change method `Network.Host.EnumerateDrives()` return type from `string` to `DriveInfo`.
 
 
 Version 2.1.3 (2017-06-05)

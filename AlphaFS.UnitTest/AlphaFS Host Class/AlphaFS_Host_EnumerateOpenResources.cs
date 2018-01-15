@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Host_EnumerateOpenResources_Network_Success()
       {
          var host = "localhost"; //UnitTestConstants.LocalHost;
-         var share = UnitTestConstants.SysDrive.Replace(":", "$"); // C: -> C$
+         var share = UnitTestConstants.SysDrive[0] + Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator;
 
          // Create an active connection to the "remote" host.
          var currentDir = System.IO.Directory.GetCurrentDirectory();

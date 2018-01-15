@@ -79,10 +79,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\tHost : [{0}]", hostAndShare[0]);
          Console.WriteLine("\tShare: [{0}]", hostAndShare[1]);
 
-         Assert.IsTrue(hostAndShare[1].EndsWith("$"));
+         Assert.IsTrue(hostAndShare[1].EndsWith(Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator));
          Assert.AreEqual(Environment.MachineName, hostAndShare[0].ToUpperInvariant());
 
-
+         
          Console.WriteLine();
 
 
