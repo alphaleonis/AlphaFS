@@ -20,33 +20,36 @@
  */
 
 using System.Linq;
-using System.Security;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace AlphaFS.UnitTest
 {
-   partial class Directory
+   public partial class DriveInfoTest
    {
-      #region .NET
+      // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      /// <summary>Retrieves the names of the logical drives on the Computer in the form "&lt;drive letter&gt;:\".</summary>
-      /// <returns>An array of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
-      [SecurityCritical]
-      public static string[] GetLogicalDrives()
-      {
-         return EnumerateLogicalDrivesCore(false, false).Select(drive => drive.Name).ToArray();
-      }
-
-      #endregion // .NET
       
-
-      /// <summary>[AlphaFS] Retrieves the names of the logical drives on the Computer in the form "C:\".</summary>
-      /// <returns>An array of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
-      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
-      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      [SecurityCritical]
-      public static string[] GetLogicalDrives(bool fromEnvironment, bool isReady)
+      [TestMethod]
+      public void AlphaFS_DriveInfo_EnumerateDrives_Network_Success()
       {
-         return EnumerateLogicalDrivesCore(fromEnvironment, isReady).Select(drive => drive.Name).ToArray();
+         UnitTestConstants.PrintUnitTestHeader(true);
+
+
+         var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives().ToList();
+
+         foreach (var drive in drives)
+            UnitTestConstants.Dump(drive, -21);
+
+
+         Assert.IsTrue(drives.Count > 0);
+
+
+         // \\localhost\C$
+         
+         var host = Alphaleonis.Win32.Network.Host.GetUncName() + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator +
+                    UnitTestConstants.SysDrive[0] + Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
+
+         Assert.AreEqual(drives[0].Name, host);
       }
    }
 }

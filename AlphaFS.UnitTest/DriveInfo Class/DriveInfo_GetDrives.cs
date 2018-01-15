@@ -19,34 +19,32 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Linq;
-using System.Security;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace AlphaFS.UnitTest
 {
-   partial class Directory
+   public partial class DriveInfoTest
    {
-      #region .NET
+      // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      /// <summary>Retrieves the names of the logical drives on the Computer in the form "&lt;drive letter&gt;:\".</summary>
-      /// <returns>An array of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
-      [SecurityCritical]
-      public static string[] GetLogicalDrives()
-      {
-         return EnumerateLogicalDrivesCore(false, false).Select(drive => drive.Name).ToArray();
-      }
-
-      #endregion // .NET
       
-
-      /// <summary>[AlphaFS] Retrieves the names of the logical drives on the Computer in the form "C:\".</summary>
-      /// <returns>An array of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
-      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
-      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      [SecurityCritical]
-      public static string[] GetLogicalDrives(bool fromEnvironment, bool isReady)
+      [TestMethod]
+      public void DriveInfo_GetDrives_Local_Success()
       {
-         return EnumerateLogicalDrivesCore(fromEnvironment, isReady).Select(drive => drive.Name).ToArray();
+         UnitTestConstants.PrintUnitTestHeader(false);
+      
+         
+         var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToList();
+
+         foreach (var drive in drives)
+            UnitTestConstants.Dump(drive, -21);
+
+
+         Assert.IsTrue(drives.Count > 0);
+
+         Assert.AreEqual(drives[0].Name[0], UnitTestConstants.SysDrive[0]);
       }
    }
 }
