@@ -386,7 +386,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (var privilegeEnabler = (fileSystemRights & (FileSystemRights)SecurityInformation.UnprotectedSacl) != 0 || (fileSystemRights & (FileSystemRights)SecurityInformation.UnprotectedDacl) != 0 ? new PrivilegeEnabler(Privilege.Security) : null)
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
          {
-            var handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
+            var safeHandle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
              // CreateFile() / CreateFileTransacted()
              // 2013-01-13: MSDN confirms LongPath usage.
@@ -397,23 +397,17 @@ namespace Alphaleonis.Win32.Filesystem
 
             var lastError = Marshal.GetLastWin32Error();
 
-            if (handle.IsInvalid)
-            {
-               handle.Close();
-               handle = null;
+            NativeMethods.IsValidHandle(safeHandle, lastError, pathLp, !continueOnException);
 
-               if (!continueOnException)
-                  NativeError.ThrowException(lastError, pathLp);
-            }
 
-            else if (isAppend)
+            if (isAppend)
             {
-               var stream = new FileStream(handle, FileAccess.Write, NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
+               var stream = new FileStream(safeHandle, FileAccess.Write, NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
                stream.Seek(0, SeekOrigin.End);
             }
 
 
-            return handle;
+            return safeHandle;
          }
       }
 
