@@ -162,7 +162,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-   
+
       #region Transactional
 
       /// <summary>Creates or overwrites a file in the specified path.</summary>
@@ -369,56 +369,51 @@ namespace Alphaleonis.Win32.Filesystem
 
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
-         PrivilegeEnabler privilegeEnabler = null;
-
-
-         var isAppend = fileMode == FileMode.Append;
-
 
          // CreateFileXxx() does not support FileMode.Append mode.
+         var isAppend = fileMode == FileMode.Append;
          if (isAppend)
          {
             fileMode = FileMode.OpenOrCreate;
-            fileSystemRights &= FileSystemRights.AppendData; // Add right.
+            fileSystemRights |= FileSystemRights.AppendData;
          }
 
 
-         if (fileSecurity != null)
-            fileSystemRights |= (FileSystemRights) 0x1000000; // Set right.
-
-         // AccessSystemSecurity = 0x1000000    AccessSystemAcl access type.
-         // MaximumAllowed       = 0x2000000    MaximumAllowed  access type.
-
-         if ((fileSystemRights & (FileSystemRights) 0x1000000) != 0 ||
-             (fileSystemRights & (FileSystemRights) 0x2000000) != 0)
-            privilegeEnabler = new PrivilegeEnabler(Privilege.Security);
+         if (null != fileSecurity)
+            fileSystemRights |= (FileSystemRights)SecurityInformation.UnprotectedSacl;
 
 
-         using (privilegeEnabler)
+         using (var privilegeEnabler = (fileSystemRights & (FileSystemRights)SecurityInformation.UnprotectedSacl) != 0 || (fileSystemRights & (FileSystemRights)SecurityInformation.UnprotectedDacl) != 0 ? new PrivilegeEnabler(Privilege.Security) : null)
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
          {
-            var safeHandle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
+            var handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
-               // CreateFile() / CreateFileTransacted()
-               // 2013-01-13: MSDN confirms LongPath usage.
+             // CreateFile() / CreateFileTransacted()
+             // 2013-01-13: MSDN confirms LongPath usage.
 
-               ? NativeMethods.CreateFile(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero)
-               : NativeMethods.CreateFileTransacted(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero, transaction.SafeHandle, IntPtr.Zero, IntPtr.Zero);
+             ? NativeMethods.CreateFile(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero)
+             : NativeMethods.CreateFileTransacted(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero, transaction.SafeHandle, IntPtr.Zero, IntPtr.Zero);
 
 
             var lastError = Marshal.GetLastWin32Error();
 
-            NativeMethods.IsValidHandle(safeHandle, lastError, pathLp, !continueOnException);
-
-
-            if (isAppend)
+            if (handle.IsInvalid)
             {
-               var stream = new FileStream(safeHandle, FileAccess.Write, NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
+               handle.Close();
+               handle = null;
+
+               if (!continueOnException)
+                  NativeError.ThrowException(lastError, pathLp);
+            }
+
+            else if (isAppend)
+            {
+               var stream = new FileStream(handle, FileAccess.Write, NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
                stream.Seek(0, SeekOrigin.End);
             }
 
 
-            return safeHandle;
+            return handle;
          }
       }
 

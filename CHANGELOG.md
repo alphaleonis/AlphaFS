@@ -48,6 +48,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #360: Add overloaded `Directory.EnumerateDirectories` methods that support `DirectoryEnumerationFilters`.  (Thx SignFinder)
 - Issue #370: Relative path from a full path  (Thx QbProg)
 - Issue #373: Improve method `Directory.CreateDirectory` to allow creating a folder consisting only of spaces.
+- Issue #385: Correct applied fileSystemRights operator in method `File.Create()`.
 
 ### Improvements
 
