@@ -56,8 +56,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region Methods
 
       /// <summary>Enumerates all available devices on the local host.</summary>
-      /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
-      /// <returns><see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> from the local host.</returns>
+      /// <param name="deviceGuid">One of the <see cref="Filesystem.DeviceGuid"/> devices.</param>
+      /// <returns><see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="Filesystem.DeviceGuid"/> from the local host.</returns>
       [SecurityCritical]
       public IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {

@@ -49,7 +49,26 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateDirectoryCore(null, path, null, null, false, PathFormat.RelativePath);
       }
 
+
+      /// <summary>Creates all the directories in the specified path, unless the already exist, applying the specified Windows security.</summary>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="directorySecurity">The access control to apply to the directory.</param>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity)
+      {
+         return CreateDirectoryCore(null, path, null, directorySecurity, false, PathFormat.RelativePath);
+      }
+
       #endregion // .NET
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -67,7 +86,6 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(null, path, null, null, false, pathFormat);
       }
-
 
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
@@ -104,25 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(null, path, null, null, compress, pathFormat);
       }
-
-
-
-      /// <summary>Creates all the directories in the specified path, unless the already exist, applying the specified Windows security.</summary>
-      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">The directory to create.</param>
-      /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-      [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity)
-      {
-         return CreateDirectoryCore(null, path, null, directorySecurity, false, PathFormat.RelativePath);
-      }
+      
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -143,7 +143,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <exception cref="ArgumentException"/>
@@ -161,6 +160,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(null, path, null, directorySecurity, compress, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -182,7 +182,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <exception cref="ArgumentException"/>
@@ -199,6 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(null, path, templatePath, null, false, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -219,7 +219,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <exception cref="ArgumentException"/>
@@ -237,6 +236,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(null, path, templatePath, null, compress, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -258,7 +258,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <exception cref="ArgumentException"/>
@@ -276,6 +275,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(null, path, templatePath, directorySecurity, false, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -297,7 +297,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <exception cref="ArgumentException"/>
@@ -316,6 +315,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(null, path, templatePath, directorySecurity, compress, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -337,9 +337,10 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateDirectoryCore(null, path, templatePath, directorySecurity, compress, pathFormat);
       }
 
+
       #region Transactional
 
-      /// <summary>Creates all directories and subdirectories in the specified path unless they already exist.</summary>
+      /// <summary>[AlphaFS] Creates all directories and subdirectories in the specified path unless they already exist.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -354,6 +355,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(transaction, path, null, null, false, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -372,8 +374,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(transaction, path, null, null, false, pathFormat);
       }
-
-
+      
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -392,6 +393,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(transaction, path, null, null, compress, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -413,8 +415,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
-      /// <summary>Creates all the directories in the specified path, unless the already exist, applying the specified Windows security.</summary>
+      /// <summary>[AlphaFS] Creates all the directories in the specified path, unless the already exist, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -431,6 +432,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(transaction, path, null, directorySecurity, false, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -450,8 +452,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(transaction, path, null, directorySecurity, false, pathFormat);
       }
-
-
+      
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -472,6 +473,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateDirectoryCore(transaction, path, null, directorySecurity, compress, PathFormat.RelativePath);
       }
 
+
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <exception cref="ArgumentException"/>
@@ -491,8 +493,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(transaction, path, null, directorySecurity, compress, pathFormat);
       }
-
-
+      
 
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -530,8 +531,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(transaction, path, templatePath, null, false, pathFormat);
       }
-
-
+      
 
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -551,6 +551,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(transaction, path, templatePath, null, compress, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -572,8 +573,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateDirectoryCore(transaction, path, templatePath, null, compress, pathFormat);
       }
 
-
-
+      
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <exception cref="ArgumentException"/>
@@ -592,6 +592,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(transaction, path, templatePath, directorySecurity, false, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -612,8 +613,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(transaction, path, templatePath, directorySecurity, false, pathFormat);
       }
-
-
+      
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -634,6 +634,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryCore(transaction, path, templatePath, directorySecurity, compress, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -658,6 +659,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Transactional
       
+
       #region Internal Methods
 
       /// <summary>Creates a new directory with the attributes of a specified template directory (if one is specified). 

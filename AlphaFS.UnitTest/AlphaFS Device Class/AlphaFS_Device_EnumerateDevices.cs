@@ -21,6 +21,9 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
@@ -45,16 +48,34 @@ namespace AlphaFS.UnitTest
          var tempPath = UnitTestConstants.LocalHost;
          var classCnt = 0;
 
-         foreach (var guid in Alphaleonis.Utils.EnumMemberToList<Alphaleonis.Win32.Filesystem.DeviceGuid>())
+         foreach (var deviceClass in EnumMemberToList<Alphaleonis.Win32.Filesystem.DeviceGuid>())
          {
-            Console.WriteLine("\n#{0:000}\tClass: [{1}]", ++classCnt, guid);
+            Console.WriteLine("\n#{0:000}\tClass: [{1}]", ++classCnt, deviceClass);
 
-            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(tempPath, guid))
+            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(tempPath, deviceClass))
                UnitTestConstants.Dump(device, -24);
          }
 
          if (classCnt == 0)
             Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+      }
+
+
+      private static IEnumerable<T> EnumMemberToList<T>()
+      {
+         var enumType = typeof(T);
+
+         // Can't use generic type constraints on value types, so have to do check like this.
+         if (enumType.BaseType != typeof(Enum))
+            throw new ArgumentException("T must be of type System.Enum", "T");
+
+
+         var enumValArray = Enum.GetValues(enumType).Cast<T>().OrderBy(e => e.ToString()).ToList();
+         var enumValList = new List<T>(enumValArray.Count);
+
+         enumValList.AddRange(enumValArray.Select(val => (T) Enum.Parse(enumType, val.ToString())));
+
+         return enumValList;
       }
    }
 }

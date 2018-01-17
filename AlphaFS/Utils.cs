@@ -20,45 +20,27 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 
 namespace Alphaleonis
 {
    internal static class Utils
    {
-      [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
-      public static IEnumerable<T> EnumMemberToList<T>()
-      {
-         var enumType = typeof(T);
-
-         // Can't use generic type constraints on value types, so have to do check like this.
-         if (enumType.BaseType != typeof(Enum))
-            throw new ArgumentException("T must be of type System.Enum", "T");
-
-         //Array enumValArray = Enum.GetValues(enumType);
-         //List<T> enumValList = new List<T>(enumValArray.Length);
-         var enumValArray = Enum.GetValues(enumType).Cast<T>().OrderBy(e => e.ToString());
-         var enumValList = new List<T>(enumValArray.Count());
-
-         enumValList.AddRange(enumValArray.Select(val => (T)Enum.Parse(enumType, val.ToString())));
-
-         return enumValList;
-      }
-
-
       /// <summary>Gets an attribute on an enum field value.</summary>
       /// <returns>The description belonging to the enum option, as a string</returns>
       /// <param name="enumValue">One of the <see cref="Alphaleonis.Win32.Filesystem.DeviceGuid"/> enum types.</param>
       [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       public static string GetEnumDescription(Enum enumValue)
       {
-         var fi = enumValue.GetType().GetField(enumValue.ToString());
-         var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
-         return attributes.Length > 0 ? attributes[0].Description : enumValue.ToString();
+         var enumValueString = enumValue.ToString();
+
+         var fi = enumValue.GetType().GetField(enumValueString);
+
+         var attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+         return attributes.Length > 0 ? attributes[0].Description : enumValueString;
       }
 
 

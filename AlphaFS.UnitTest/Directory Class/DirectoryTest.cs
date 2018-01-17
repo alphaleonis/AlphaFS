@@ -792,7 +792,7 @@ namespace AlphaFS.UnitTest
       private void DumpGetProperties(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         var path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
+         var path = isLocal ? UnitTestConstants.SysRoot32: Path.LocalToUnc(UnitTestConstants.SysRoot32);
 
          Console.WriteLine("\n\tAggregated properties of file system objects from Directory: [{0}]\n", path);
 
