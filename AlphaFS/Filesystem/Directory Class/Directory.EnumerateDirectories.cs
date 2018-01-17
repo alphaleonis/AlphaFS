@@ -128,6 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, null, null, null, pathFormat);
@@ -154,6 +155,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, SearchOption searchOption, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, searchOption, null, null, pathFormat);
@@ -211,6 +213,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, DirectoryEnumerationOptions options)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, null, options, null, PathFormat.RelativePath);
@@ -234,6 +237,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, null, options, null, pathFormat);
@@ -291,6 +295,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, DirectoryEnumerationFilters filters)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, null, null, filters, PathFormat.RelativePath);
@@ -314,6 +319,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, null, null, filters, pathFormat);
@@ -374,6 +380,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, null, options, filters, PathFormat.RelativePath);
@@ -398,6 +405,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, null, options, filters, pathFormat);
@@ -439,6 +447,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, null, null, null, PathFormat.RelativePath);
@@ -465,6 +474,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   should include only the current directory or should include all subdirectories.
       /// </param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, searchOption, null, null, PathFormat.RelativePath);
@@ -506,6 +516,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, null, null, null, pathFormat);
@@ -533,6 +544,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, searchOption, null, null, pathFormat);
@@ -593,6 +605,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, null, options, null, PathFormat.RelativePath);
@@ -617,6 +630,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, null, options, null, pathFormat);
@@ -677,6 +691,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationFilters filters)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, null, null, filters, PathFormat.RelativePath);
@@ -701,6 +716,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, null, null, filters, pathFormat);
@@ -764,6 +780,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, null, options, filters, PathFormat.RelativePath);
@@ -789,6 +806,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
          return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, null, options, filters, pathFormat);

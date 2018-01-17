@@ -77,6 +77,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #377: Rename enum member: `OperatingSystem.EnumOsName.WindowsServer` to: `OperatingSystem.EnumOsName.WindowsServer2016`
 - Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
 - Issue #388: Change method `Network.Host.EnumerateDrives()` return type from `string` to `DriveInfo`.
+- Issue #391: Mark AlphaFS enumerating methods that use both `searchPattern` and `DirectoryEnumerationFilters` as obsolete.
 
 
 Version 2.1.3 (2017-06-05)
