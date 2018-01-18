@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -84,6 +84,8 @@ namespace AlphaFS.UnitTest
 
       private void File_GetProcessForFileLock(bool isNetwork)
       {
+         var currentProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
+
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
          var tempPath = System.IO.Path.GetTempPath();
@@ -114,11 +116,7 @@ namespace AlphaFS.UnitTest
                   using (process)
                   {
                      UnitTestConstants.Dump(process, -26);
-
-
-                     // The name(s) of the Visual Studio unit test process.
-                     Assert.IsTrue(process.ProcessName.StartsWith("QTAgent", StringComparison.OrdinalIgnoreCase) ||
-                                   process.ProcessName.StartsWith("vstest.executionengine", StringComparison.OrdinalIgnoreCase));
+                     Assert.IsTrue(process.Id == currentProcessId, "File was locked by a process other than the current process.");
                   }
             }
          }
