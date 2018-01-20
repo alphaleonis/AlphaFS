@@ -23,8 +23,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
+   /// <summary>This is a test class for DriveInfo and is intended to contain all DirectoryInfo Unit Tests.</summary>
    [TestClass]
-   public partial class AlphaFS_JunctionsSymbolicLinksTest
+   public partial class DirectoryInfoTest
    {
    }
 }

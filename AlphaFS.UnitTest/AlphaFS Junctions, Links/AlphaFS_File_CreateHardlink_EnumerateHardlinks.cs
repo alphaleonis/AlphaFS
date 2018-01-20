@@ -26,7 +26,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_JunctionsSymbolicLinksTest
+   public partial class AlphaFS_JunctionsLinksTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

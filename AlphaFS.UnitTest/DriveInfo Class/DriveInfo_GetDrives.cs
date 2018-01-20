@@ -39,7 +39,15 @@ namespace AlphaFS.UnitTest
          var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToList();
 
          foreach (var drive in drives)
+         {
             UnitTestConstants.Dump(drive, -21);
+
+            if (null != drive.DiskSpaceInfo)
+               UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
+
+
+            Console.WriteLine();
+         }
 
 
          Assert.IsTrue(drives.Count > 0);

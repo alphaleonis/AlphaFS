@@ -212,13 +212,13 @@ namespace AlphaFS.UnitTest
             var volumeNameNone = Path.GetFinalPathNameByHandle(handle, FinalPathFormats.VolumeNameNone);
 
             // These three output the same.
-            gotFileNameNormalized = !string.IsNullOrWhiteSpace(fileNameNormalized) && longTempStream.Equals(fileNameNormalized);
-            gotFileNameOpened = !string.IsNullOrWhiteSpace(fileNameOpened) && longTempStream.Equals(fileNameOpened);
-            gotVolumeNameDos = !string.IsNullOrWhiteSpace(volumeNameDos) && longTempStream.Equals(volumeNameDos);
+            gotFileNameNormalized = !Utils.IsNullOrWhiteSpace(fileNameNormalized) && longTempStream.Equals(fileNameNormalized);
+            gotFileNameOpened = !Utils.IsNullOrWhiteSpace(fileNameOpened) && longTempStream.Equals(fileNameOpened);
+            gotVolumeNameDos = !Utils.IsNullOrWhiteSpace(volumeNameDos) && longTempStream.Equals(volumeNameDos);
 
-            gotVolumeNameGuid = !string.IsNullOrWhiteSpace(volumeNameGuid) && volumeNameGuid.StartsWith(Path.VolumePrefix) && volumeNameGuid.EndsWith(volumeNameNone);
-            gotVolumeNameNt = !string.IsNullOrWhiteSpace(volumeNameNt) && volumeNameNt.StartsWith(Path.DevicePrefix);
-            gotVolumeNameNone = !string.IsNullOrWhiteSpace(volumeNameNone) && tempFile.EndsWith(volumeNameNone);
+            gotVolumeNameGuid = !Utils.IsNullOrWhiteSpace(volumeNameGuid) && volumeNameGuid.StartsWith(Path.VolumePrefix) && volumeNameGuid.EndsWith(volumeNameNone);
+            gotVolumeNameNt = !Utils.IsNullOrWhiteSpace(volumeNameNt) && volumeNameNt.StartsWith(Path.DevicePrefix);
+            gotVolumeNameNone = !Utils.IsNullOrWhiteSpace(volumeNameNone) && tempFile.EndsWith(volumeNameNone);
 
             Console.WriteLine("\nInput Path: [{0}]", tempFile);
             Console.WriteLine("\n\tFilestream.Name  : [{0}]", stream.Name);
@@ -438,7 +438,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Combine
-      
+
       #region GetFileName
 
       [TestMethod]
@@ -623,7 +623,7 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetPathRoot
 
-      
+
 
 
       #endregion // .NET
@@ -755,7 +755,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-               
+
                errorCnt++;
             }
             Console.WriteLine("\t   AlphaFS   : [{0}]", actual ?? "null");
@@ -799,8 +799,8 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tMapped drive: [{0}]\tGetMappedConnectionName(): [{1}]", drive, gmCn);
             Console.WriteLine("\tMapped drive: [{0}]\tGetMappedUncName()       : [{1}]", drive, gmUn);
 
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(gmCn));
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(gmUn));
+            Assert.IsTrue(!Utils.IsNullOrWhiteSpace(gmCn));
+            Assert.IsTrue(!Utils.IsNullOrWhiteSpace(gmUn));
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
@@ -949,7 +949,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // IsUncPath
-      
+
 
       #region RemoveTrailingDirectorySeparator
 

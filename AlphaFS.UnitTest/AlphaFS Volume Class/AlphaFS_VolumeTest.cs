@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Alphaleonis;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using Path = Alphaleonis.Win32.Filesystem.Path;
@@ -398,7 +399,7 @@ namespace AlphaFS.UnitTest
          {
             foreach (var dosDev in Volume.QueryDosDevice(existingDriveLetter))
             {
-               var hasLogicalDrive = !string.IsNullOrWhiteSpace(dosDev);
+               var hasLogicalDrive = !Utils.IsNullOrWhiteSpace(dosDev);
 
                Console.WriteLine("\t\t#{0:000}\tLogical Drive [{1}] MS-Dos Name: [{2}]", ++cnt, existingDriveLetter, dosDev);
 
@@ -508,9 +509,9 @@ namespace AlphaFS.UnitTest
                // Logical Drives --> Volumes --> Volume Mount Points.
                var uniqueVolName = Volume.GetUniqueVolumeNameForPath(drive);
 
-               if (!string.IsNullOrWhiteSpace(uniqueVolName) && !uniqueVolName.Equals(drive, StringComparison.OrdinalIgnoreCase))
+               if (!Utils.IsNullOrWhiteSpace(uniqueVolName) && !uniqueVolName.Equals(drive, StringComparison.OrdinalIgnoreCase))
                {
-                  foreach (var mountPoint in Volume.EnumerateVolumeMountPoints(uniqueVolName).Where(mp => !string.IsNullOrWhiteSpace(mp)))
+                  foreach (var mountPoint in Volume.EnumerateVolumeMountPoints(uniqueVolName).Where(mp => !Utils.IsNullOrWhiteSpace(mp)))
                   {
                      string guid = null;
                      try { guid = Volume.GetVolumeGuid(Path.Combine(drive, mountPoint)); }
@@ -568,7 +569,7 @@ namespace AlphaFS.UnitTest
             foreach (var displayName in Volume.EnumerateVolumePathNames(volume))
             {
                Console.WriteLine("\t\tEnumerateVolumePathNames(): [{0}]", displayName);
-               Assert.IsTrue(!string.IsNullOrWhiteSpace(displayName));
+               Assert.IsTrue(!Utils.IsNullOrWhiteSpace(displayName));
             }
 
             Console.WriteLine();

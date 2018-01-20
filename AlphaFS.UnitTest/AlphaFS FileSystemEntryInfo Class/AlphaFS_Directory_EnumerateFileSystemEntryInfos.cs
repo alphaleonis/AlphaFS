@@ -100,7 +100,7 @@ namespace AlphaFS.UnitTest
 
             for (var i = 0; i < maxFolder / 2; i++)
             {
-               var spaceFolder = folder + @"\" + new string(' ', i + 1);
+               var spaceFolder = folder + @"\" + new string(' ', i + 1) + @"\" + "no_void";
 
                Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(spaceFolder, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
             }

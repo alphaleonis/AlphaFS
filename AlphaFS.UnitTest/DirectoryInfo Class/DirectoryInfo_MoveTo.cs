@@ -26,10 +26,10 @@ using Microsoft.Win32;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for FileInfo and is intended to contain all FileInfo UnitTests.</summary>
    public partial class DirectoryInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void DirectoryInfo_MoveTo_CatchArgumentException_UNCPathNotAllowed_DelayUntilRebootFlagCombinedWithCopyAllowedFlag_Network_Success()

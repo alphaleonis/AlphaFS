@@ -19,51 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.IO;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DriveInfoTest
+   /// <summary>This is a test class for DriveInfo and is intended to contain all FileInfo Unit Tests.</summary>
+   [TestClass]
+   public partial class FileInfoTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_DriveInfo_EnumerateDrives_Network_Success()
-      {
-         UnitTestConstants.PrintUnitTestHeader(true);
-
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-
-         var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives().ToList();
-
-         foreach (var drive in drives)
-         {
-            UnitTestConstants.Dump(drive, -21);
-
-            if (null != drive.DiskSpaceInfo && drive.DriveType != DriveType.NoRootDirectory)
-               UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
-
-
-            Console.WriteLine();
-         }
-
-
-         Assert.IsTrue(drives.Count > 0);
-
-
-         // \\localhost\C$
-
-         var host = Alphaleonis.Win32.Network.Host.GetUncName() + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator +
-                    UnitTestConstants.SysDrive[0] + Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
-
-         Assert.AreEqual(drives[0].Name, host);
-      }
    }
 }

@@ -25,11 +25,10 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for FileInfo and is intended to contain all FileInfo UnitTests.</summary>
-   [TestClass]
    public partial class FileInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void AlphaFS_FileInfo_InitializeInstance_ExistingFile_LocalAndNetwork_Success()

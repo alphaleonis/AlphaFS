@@ -25,10 +25,10 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for DirectoryInfo and is intended to contain all DirectoryInfo UnitTests.</summary>
    public partial class DirectoryInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void DirectoryInfo_CatchPathTooLongException_FolderNameGreaterThan255Characters_LocalAndNetwork_Success()

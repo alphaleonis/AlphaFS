@@ -26,6 +26,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
+using Alphaleonis;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
@@ -663,9 +664,9 @@ namespace AlphaFS.UnitTest
 
                // DriveInfo()
                Assert.IsTrue(actual.DiskSpaceInfo.ClusterSize > 0 &&
-                             !string.IsNullOrWhiteSpace(actual.DiskSpaceInfo.TotalSizeUnitSize) &&
-                             !string.IsNullOrWhiteSpace(actual.DiskSpaceInfo.UsedSpaceUnitSize) &&
-                             !string.IsNullOrWhiteSpace(actual.DiskSpaceInfo.AvailableFreeSpaceUnitSize));
+                             !Utils.IsNullOrWhiteSpace(actual.DiskSpaceInfo.TotalSizeUnitSize) &&
+                             !Utils.IsNullOrWhiteSpace(actual.DiskSpaceInfo.UsedSpaceUnitSize) &&
+                             !Utils.IsNullOrWhiteSpace(actual.DiskSpaceInfo.AvailableFreeSpaceUnitSize));
             }
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
@@ -792,7 +793,7 @@ namespace AlphaFS.UnitTest
       private void DumpGetProperties(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         var path = isLocal ? UnitTestConstants.SysRoot32: Path.LocalToUnc(UnitTestConstants.SysRoot32);
+         var path = isLocal ? UnitTestConstants.SysRoot32 : Path.LocalToUnc(UnitTestConstants.SysRoot32);
 
          Console.WriteLine("\n\tAggregated properties of file system objects from Directory: [{0}]\n", path);
 
