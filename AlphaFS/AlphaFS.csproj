@@ -196,6 +196,29 @@
     <Compile Include="AssemblyVersionInfo.cs">
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
+    <Compile Include="Device\Volume\Volume.DeleteDosDevice.cs" />
+    <Compile Include="Device\Volume\Volume.QueryDosDevice.cs" />
+    <Compile Include="Device\Volume\Volume.GetDriveFormat.cs" />
+    <Compile Include="Device\Volume\Volume.GetDriveNameForNtDeviceName.cs" />
+    <Compile Include="Device\Volume\Volume.DriveType.cs" />
+    <Compile Include="Device\Volume\Volume.DiskFreeSpace.cs" />
+    <Compile Include="Device\Volume\Volume.IsReady.cs" />
+    <Compile Include="Device\Volume\Volume.GetUniqueVolumeNameForPath.cs" />
+    <Compile Include="Device\Volume\Volume.GetVolumeDeviceName.cs" />
+    <Compile Include="Device\Volume\Volume.GetVolumeDisplayName.cs" />
+    <Compile Include="Device\Volume\Volume.GetVolumeGuid.cs" />
+    <Compile Include="Device\Volume\Volume.GetVolumeGuidForNtDeviceName.cs" />
+    <Compile Include="Device\Volume\Volume.GetVolumeInfo.cs" />
+    <Compile Include="Device\Volume\Volume.GetVolumePathName.cs" />
+    <Compile Include="Device\Volume\Volume.IsSameVolume.cs" />
+    <Compile Include="Device\Volume\Volume.IsVolume.cs" />
+    <Compile Include="Device\Volume\Volume.VolumeLabel.cs" />
+    <Compile Include="Device\Volume\Volume.SetVolumeMountPoint.cs" />
+    <Compile Include="Device\Volume\Volume.EnumerateVolumePathNames.cs" />
+    <Compile Include="Device\Volume\Volume.EnumerateVolumeMountPoints.cs" />
+    <Compile Include="Device\Volume\Volume.DeleteVolumeMountPoint.cs" />
+    <Compile Include="Device\Volume\Volume.DefineDosDevice.cs" />
+    <Compile Include="Device\Volume\Volume.EnumerateVolumes.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateLogicalDrives.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
@@ -526,8 +549,8 @@
     <Compile Include="Filesystem\Exceptions\TransactionAlreadyAbortedException.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionAlreadyCommittedException.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionException.cs" />
-    <Compile Include="Device\Volume.cs" />
-    <Compile Include="Device\VolumeInfo.cs" />
+    <Compile Include="Device\Volume\Volume.cs" />
+    <Compile Include="Device\Volume\VolumeInfo.cs" />
     <Compile Include="Security\Structures\Luid.cs" />
     <Compile Include="Security\SecurityAttributes.cs" />
     <Compile Include="Security\Structures\TokenPrivileges.cs" />
@@ -561,7 +584,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
