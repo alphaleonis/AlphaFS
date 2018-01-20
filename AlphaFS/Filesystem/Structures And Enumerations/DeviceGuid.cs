@@ -148,12 +148,11 @@ namespace Alphaleonis.Win32.Filesystem
       #region Storage Devices
 
       /// <summary>The GUID_DEVINTERFACE_CDCHANGER device interface class is defined for CD-ROM changer devices.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cdrom")]
-      [Description("53F56312-B6BF-11D0-94F2-00A0C91EFB8B")] CdromChanger,
+      [Description("53F56312-B6BF-11D0-94F2-00A0C91EFB8B")] CDChanger,
 
       /// <summary>The GUID_DEVINTERFACE_CDROM device interface class is defined for CD-ROM storage devices.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cdrom")]
-      [Description("53F56308-B6BF-11D0-94F2-00A0C91EFB8B")] Cdrom,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "rom")]
+      [Description("53F56308-B6BF-11D0-94F2-00A0C91EFB8B")] CDRom,
 
       /// <summary>The GUID_DEVINTERFACE_DISK device interface class is defined for hard disk storage devices.</summary>
       [Description("53F56307-B6BF-11D0-94F2-00A0C91EFB8B")] Disk,

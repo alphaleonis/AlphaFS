@@ -20,46 +20,20 @@
  */
 
 using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Filesystem
 {
-   public partial class DriveInfoTest
+   internal static partial class NativeMethods
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-      
-      [TestMethod]
-      public void DriveInfo_GetDrives_Local_Success()
+      [Flags]
+      internal enum ATA_FLAGS : ushort
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-      
-         
-         var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToList();
-
-         foreach (var drive in drives)
-         {
-            UnitTestConstants.Dump(drive, -21);
-
-
-            if (null != drive.PhysicalDriveInfo)
-               UnitTestConstants.Dump(drive.PhysicalDriveInfo, -23, true);
-
-            if (null != drive.DiskSpaceInfo)
-               UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
-
-            if (null != drive.DiskSpaceInfo)
-               UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
-
-
-            Console.WriteLine();
-         }
-
-
-         Assert.IsTrue(drives.Count > 0);
-
-         Assert.AreEqual(drives[0].Name[0], UnitTestConstants.SysDrive[0]);
+         ATA_FLAGS_DRDY_REQUIRED = 1,
+         ATA_FLAGS_DATA_IN = 2,
+         ATA_FLAGS_DATA_OUT = 4,
+         ATA_FLAGS_48BIT_COMMAND = 8,
+         ATA_FLAGS_USE_DMA = 16,
+         ATA_FLAGS_NO_MULTIPLE = 32
       }
    }
 }

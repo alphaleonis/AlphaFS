@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_BAD_ENVIRONMENT = 10;
       //public const uint ERROR_BAD_FORMAT = 11;
       //public const uint ERROR_INVALID_ACCESS = 12;
-      //public const uint ERROR_INVALID_DATA = 13;
+      public const uint ERROR_INVALID_DATA = 13;
       //public const uint ERROR_OUTOFMEMORY = 14;
 
       /// <summary>(15) The system cannot find the drive specified.</summary>

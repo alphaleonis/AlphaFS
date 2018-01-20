@@ -196,6 +196,11 @@
     <Compile Include="AssemblyVersionInfo.cs">
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
+    <Compile Include="Device\Device.Compression.cs" />
+    <Compile Include="Device\Device.JunctionsLinks.cs" />
+    <Compile Include="Device\Device.DeviceEnumeration.cs" />
+    <Compile Include="Device\Device.PhysicalDrive.cs" />
+    <Compile Include="Device\PhysicalDriveInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateLogicalDrives.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
@@ -273,6 +278,18 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateSubdirectory.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Create.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateAlternateDataStreams.cs" />
+    <Compile Include="Filesystem\Native Other\DISK_EXTENT.cs" />
+    <Compile Include="Filesystem\Native Other\IoMethod.cs" />
+    <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_NUMBER.cs" />
+    <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_TYPE.cs" />
+    <Compile Include="Filesystem\Native Other\IoControlCode.cs" />
+    <Compile Include="Filesystem\Native Other\VOLUME_DISK_EXTENTS.cs" />
+    <Compile Include="Filesystem\Native Other\ATA_PASS_THROUGH_EX.cs" />
+    <Compile Include="Filesystem\Native Other\STORAGE_BUS_TYPE.cs" />
+    <Compile Include="Filesystem\Native Other\ATAIdentifyDeviceQuery.cs" />
+    <Compile Include="Filesystem\Native Other\STORAGE_PROPERTY_QUERY.cs" />
+    <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_DESCRIPTOR.cs" />
+    <Compile Include="Filesystem\Native Other\ATA_FLAGS.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetRelativePath.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\DirectoryEnumerationFilters.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\EncryptedFileRawMode.cs" />
@@ -440,6 +457,8 @@
     <Compile Include="Filesystem\Native Other\WIN32_FILE_ATTRIBUTE_DATA.cs" />
     <Compile Include="Filesystem\Native Other\WIN32_FIND_DATA.cs" />
     <Compile Include="Filesystem\Native Other\WIN32_STREAM_ID.cs" />
+    <Compile Include="Filesystem\Structures And Enumerations\StorageBusType.cs" />
+    <Compile Include="Filesystem\Structures And Enumerations\StorageDeviceType.cs" />
     <Compile Include="Network\DfsInfo.cs" />
     <Compile Include="Network\DfsStorageInfo.cs" />
     <Compile Include="Network\Enumerations\DfsPropertyFlags.cs" />
@@ -561,7 +580,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

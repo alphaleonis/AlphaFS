@@ -20,46 +20,22 @@
  */
 
 using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Runtime.InteropServices;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Filesystem
 {
-   public partial class DriveInfoTest
+   internal static partial class NativeMethods
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-      
-      [TestMethod]
-      public void DriveInfo_GetDrives_Local_Success()
+      /// <summary>Represents a physical location on a disk. It is the output buffer for the <see cref="IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS"/> control code.</summary>
+      /// <remarks>MSDN: http://msdn.microsoft.com/en-us/library/aa365727%28VS.85%29.aspx </remarks>
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      internal struct VOLUME_DISK_EXTENTS
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-      
-         
-         var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToList();
+         /// <summary>The number of disks in the volume (a volume can span multiple disks).</summary>
+         public uint NumberOfDiskExtents;
 
-         foreach (var drive in drives)
-         {
-            UnitTestConstants.Dump(drive, -21);
-
-
-            if (null != drive.PhysicalDriveInfo)
-               UnitTestConstants.Dump(drive.PhysicalDriveInfo, -23, true);
-
-            if (null != drive.DiskSpaceInfo)
-               UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
-
-            if (null != drive.DiskSpaceInfo)
-               UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
-
-
-            Console.WriteLine();
-         }
-
-
-         Assert.IsTrue(drives.Count > 0);
-
-         Assert.AreEqual(drives[0].Name[0], UnitTestConstants.SysDrive[0]);
+         /// <summary>An array of <see cref="DISK_EXTENT"/> structures.</summary>
+         [MarshalAs(UnmanagedType.ByValArray)] public DISK_EXTENT[] Extents;
       }
    }
 }
