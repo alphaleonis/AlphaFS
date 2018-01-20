@@ -115,6 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="throwException"><see langword="true"/> will throw an <exception cref="Resources.Handle_Is_Invalid_Win32Error"/>, <see langword="false"/> will not raise this exception..</param>
       /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
       /// <exception cref="ArgumentException"/>
+      /// <exception cref="Exception"/>
       internal static bool IsValidHandle(SafeHandle handle, int lastError, string path, bool throwException = true)
       {
          if (null == handle || handle.IsClosed || handle.IsInvalid)

@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Equals <see cref="FileAttributes.Archive"/>32</remarks>
       Archive = FileAttributes.Archive,
 
-      /// <summary>The file should be archived. Applications use this attribute to mark files for backup or removal.</summary>
+      /// <summary>Reserved for future use.</summary>
       /// <remarks>Equals <see cref="FileAttributes.Device"/>64</remarks>
       Device = FileAttributes.Device,
 

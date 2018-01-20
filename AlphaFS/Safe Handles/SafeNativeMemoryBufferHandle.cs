@@ -34,27 +34,29 @@ namespace Alphaleonis.Win32
 
       #endregion
 
+
       #region Constructors
 
       protected SafeNativeMemoryBufferHandle(bool ownsHandle) : base(ownsHandle)
       {
       }
 
+
       /// <summary>Initializes a new instance of the <see cref="SafeNativeMemoryBufferHandle"/> specifying the allocated capacity of the memory block.</summary>
       /// <param name="capacity">The capacity.</param>
-      protected SafeNativeMemoryBufferHandle(int capacity)
-         : this(true)
+      protected SafeNativeMemoryBufferHandle(int capacity) : this(true)
       {
          m_capacity = capacity;
       }
 
-      protected SafeNativeMemoryBufferHandle(IntPtr memory, int capacity)
-         : this(capacity)
+
+      protected SafeNativeMemoryBufferHandle(IntPtr memory, int capacity) : this(capacity)
       {
          SetHandle(memory);
       }
 
       #endregion
+
 
       #region Properties
 
@@ -67,6 +69,7 @@ namespace Alphaleonis.Win32
       }
 
       #endregion
+
 
       #region Public Methods
 
@@ -302,6 +305,7 @@ namespace Alphaleonis.Win32
          Marshal.StructureToPtr(structure, handle, deleteOld);
       }
 
+
       /// <summary>Marshals data from an unmanaged block of memory to a newly allocated managed object of the specified type.</summary>
       /// <returns>A managed object containing the data pointed to by the ptr parameter.</returns>
       public T PtrToStructure<T>(int offset)
@@ -309,11 +313,12 @@ namespace Alphaleonis.Win32
          return (T) Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof (T));
       }
 
-      /// <summary>Allocates a managed System.String and copies a specified number of characters from an unmanaged Unicode string into it.</summary>
+
+      /// <summary>Allocates a managed System.String and copies a specified number of characters from an unmanaged ANSI string into it.</summary>
       /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
-      public string PtrToStringUni(int offset, int length)
+      public string PtrToStringAnsi(int offset)
       {
-         return Marshal.PtrToStringUni(new IntPtr(handle.ToInt64() + offset), length);
+         return Marshal.PtrToStringAnsi(new IntPtr(handle.ToInt64() + offset));
       }
 
       /// <summary>Allocates a managed System.String and copies all characters up to the first null character from an unmanaged Unicode string into it.</summary>
@@ -323,6 +328,14 @@ namespace Alphaleonis.Win32
          return Marshal.PtrToStringUni(handle);
       }
 
+
+      /// <summary>Allocates a managed System.String and copies a specified number of characters from an unmanaged Unicode string into it.</summary>
+      /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
+      public string PtrToStringUni(int offset, int length)
+      {
+         return Marshal.PtrToStringUni(new IntPtr(handle.ToInt64() + offset), length);
+      }
+      
       #endregion // Public Methods
    }
 }

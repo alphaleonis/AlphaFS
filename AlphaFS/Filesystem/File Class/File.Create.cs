@@ -285,6 +285,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
+      /// <exception cref="Exception"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file or directory to create.</param>
       /// <param name="attributes">One of the <see cref="ExtendedFileAttributes"/> values that describes how to create or overwrite the file or directory.</param>
@@ -303,7 +304,9 @@ namespace Alphaleonis.Win32.Filesystem
       internal static SafeFileHandle CreateFileCore(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, bool continueOnException, PathFormat pathFormat)
       {
          if (checkPath && pathFormat == PathFormat.RelativePath)
+
             Path.CheckSupportedPathFormat(path, true, true);
+
 
          // When isFile == null, we're working with a device.
          // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),
