@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get
          {
-            return string.Format(_cultureInfo, "{0:0.00}%", PercentCalculate(TotalNumberOfBytes - (TotalNumberOfBytes - TotalNumberOfFreeBytes), 0, TotalNumberOfBytes));
+            return PercentCalculate(TotalNumberOfBytes - (TotalNumberOfBytes - TotalNumberOfFreeBytes), 0, TotalNumberOfBytes).ToString("0.##", _cultureInfo) + "%";
          }
       }
 
@@ -132,7 +132,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get
          {
-            return string.Format(_cultureInfo, "{0:0.00}%", PercentCalculate(TotalNumberOfBytes - FreeBytesAvailable, 0, TotalNumberOfBytes));
+            return PercentCalculate(TotalNumberOfBytes - FreeBytesAvailable, 0, TotalNumberOfBytes).ToString("0.##", _cultureInfo) + "%";
          }
       }
 

@@ -68,6 +68,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #378: `DiskSpaceInfo` should respect `CultureInfo.CurrentCulture` for number formatting.
 - Issue #387: Replace `handle.IsInvalid` checks with a call to method `NativeMethods.IsValidHandle()`.
 - Issue #388: Change method `Network.Host.EnumerateDrives()` return type from `string` to `DriveInfo`.
+- Issue #394: Improve percentage output of properties `DiskSpaceInfo`- `AvailableFreeSpacePercent` and `UsedSpacePercent`
 
 ### Breaking Changes
 
