@@ -19,30 +19,27 @@
  *  THE SOFTWARE. 
  */
 
-using System.Collections.Generic;
-using System.Security;
+using System;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   internal static partial class NativeMethods
    {
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer with the ready status.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives()
+      /// <summary>Define values for <c>DeviceIoControl</c> method (if buffered, direct, etc...)</summary>
+      [Flags]
+      internal enum IoMethod : uint
       {
-         return DriveInfo.EnumerateLogicalDrivesCore(false, true);
-      }
+         /// <summary>Buffered</summary>
+         Buffered = 0,
 
+         /// <summary>InDirect</summary>
+         InDirect = 1,
 
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
-      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
-      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives(bool fromEnvironment, bool isReady)
-      {
-         return DriveInfo.EnumerateLogicalDrivesCore(fromEnvironment, isReady);
+         /// <summary>OutDirect</summary>
+         OutDirect = 2,
+
+         /// <summary>Neither</summary>
+         Neither = 3
       }
    }
 }

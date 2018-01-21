@@ -19,30 +19,26 @@
  *  THE SOFTWARE. 
  */
 
-using System.Collections.Generic;
+using System.IO;
 using System.Security;
+using System.Security.AccessControl;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   /// <summary>Provides static methods to retrieve device resource information from a local or remote host.</summary>
+   public static partial class Device
    {
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer with the ready status.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
+      /// <summary>[AlphaFS] Sets the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
+      /// <param name="compress"><see langword="true"/> = compress, <see langword="false"/> = decompress</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives()
+      internal static void ToggleCompressionCore(KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {
-         return DriveInfo.EnumerateLogicalDrivesCore(false, true);
-      }
+         using (var safeHandle = File.CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, false, pathFormat))
 
-
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
-      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
-      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives(bool fromEnvironment, bool isReady)
-      {
-         return DriveInfo.EnumerateLogicalDrivesCore(fromEnvironment, isReady);
+         using (InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.FSCTL_SET_COMPRESSION, compress ? 1 : 0, path)) {}
       }
    }
 }

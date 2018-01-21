@@ -23,12 +23,10 @@ using Alphaleonis.Win32.Network;
 using System;
 using System.Collections.Generic;
 using System.Security;
-using System.Security.Permissions;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides access to information of a device, on a local or remote host.</summary>
-   [SecurityPermission(SecurityAction.InheritanceDemand, UnmanagedCode = true)]
    [SerializableAttribute]
    [SecurityCritical]
    public sealed class DeviceInfo
@@ -74,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Represents the name of the device setup class that a device instance belongs to.</summary>
-      public string Class { get; internal set; }
+      public string DeviceClass { get; internal set; }
 
 
       /// <summary>Represents the <see cref="Guid"/> of the device setup class that a device instance belongs to.</summary>

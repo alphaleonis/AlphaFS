@@ -20,28 +20,46 @@
  */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace AlphaFS.UnitTest
 {
-   public static partial class Volume
+   public partial class DriveInfoTest
    {
-      /// <summary>[AlphaFS] 
-      ///   Tranlates DosDevicePath to a Volume GUID. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\
-      ///   filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".
-      /// </summary>
-      /// <param name="dosDevice">A DosDevicePath, for example: \Device\HarddiskVolumeX\path\filename.ext.</param>
-      /// <returns>A translated dos path.</returns>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Nt")]
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
-      public static string GetVolumeGuidForNtDeviceName(string dosDevice)
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+      
+      [TestMethod]
+      public void DriveInfo_GetDrives_Local_Success()
       {
-         return (from drive in DriveInfo.EnumerateLogicalDrivesCore(false, false)
+         UnitTestConstants.PrintUnitTestHeader(false);
+      
+         
+         var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToList();
 
-            where drive.DosDeviceName.Equals(dosDevice, StringComparison.OrdinalIgnoreCase)
+         foreach (var drive in drives)
+         {
+            UnitTestConstants.Dump(drive, -21);
 
-            select drive.VolumeInfo.Guid).FirstOrDefault();
+
+            if (null != drive.PhysicalDriveInfo)
+               UnitTestConstants.Dump(drive.PhysicalDriveInfo, -23, true);
+
+            if (null != drive.DiskSpaceInfo)
+               UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
+
+            if (null != drive.DiskSpaceInfo)
+               UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
+
+
+            Console.WriteLine();
+         }
+
+
+         Assert.IsTrue(drives.Count > 0);
+
+         Assert.AreEqual(drives[0].Name[0], UnitTestConstants.SysDrive[0]);
       }
    }
 }

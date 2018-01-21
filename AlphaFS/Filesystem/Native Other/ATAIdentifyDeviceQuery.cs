@@ -19,30 +19,19 @@
  *  THE SOFTWARE. 
  */
 
-using System.Collections.Generic;
-using System.Security;
+using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   internal static partial class NativeMethods
    {
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer with the ready status.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives()
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      internal struct ATAIdentifyDeviceQuery
       {
-         return DriveInfo.EnumerateLogicalDrivesCore(false, true);
-      }
+         public ATA_PASS_THROUGH_EX header;
 
-
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
-      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
-      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives(bool fromEnvironment, bool isReady)
-      {
-         return DriveInfo.EnumerateLogicalDrivesCore(fromEnvironment, isReady);
+         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
+         public ushort[] data;
       }
    }
 }

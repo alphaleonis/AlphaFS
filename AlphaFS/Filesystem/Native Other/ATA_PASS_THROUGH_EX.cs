@@ -19,30 +19,32 @@
  *  THE SOFTWARE. 
  */
 
-using System.Collections.Generic;
-using System.Security;
+using System;
+using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   internal static partial class NativeMethods
    {
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer with the ready status.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives()
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      internal struct ATA_PASS_THROUGH_EX
       {
-         return DriveInfo.EnumerateLogicalDrivesCore(false, true);
-      }
+         public ushort Length;
+         public ATA_FLAGS AtaFlags;
+         public byte PathId;
+         public byte TargetId;
+         public byte Lun;
+         public byte ReservedAsUchar;
+         public uint DataTransferLength;
+         public uint TimeOutValue;
+         public uint ReservedAsUlong;
+         public IntPtr DataBufferOffset;
 
+         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
+         public byte[] PreviousTaskFile;
 
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
-      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
-      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives(bool fromEnvironment, bool isReady)
-      {
-         return DriveInfo.EnumerateLogicalDrivesCore(fromEnvironment, isReady);
+         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
+         public byte[] CurrentTaskFile;
       }
    }
 }

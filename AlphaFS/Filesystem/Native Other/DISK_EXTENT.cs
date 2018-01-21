@@ -19,30 +19,25 @@
  *  THE SOFTWARE. 
  */
 
-using System.Collections.Generic;
-using System.Security;
+using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   internal static partial class NativeMethods
    {
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer with the ready status.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives()
+      /// <summary>Represents a disk extent.</summary>
+      /// <remarks>MSDN: http://msdn.microsoft.com/en-us/library/aa363968(v=vs.85).aspx </remarks>
+      [StructLayout(LayoutKind.Sequential)]
+      internal struct DISK_EXTENT
       {
-         return DriveInfo.EnumerateLogicalDrivesCore(false, true);
-      }
+         /// <summary>The number of the disk that contains this extent. This is the same number that is used to construct the name of the disk, for example, the X in "\\?\PhysicalDriveX" or "\\?\HarddiskX".</summary>
+         public int DiskNumber;
 
+         /// <summary>The offset from the beginning of the disk to the extent, in bytes.</summary>
+         public long StartingOffset;
 
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
-      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
-      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives(bool fromEnvironment, bool isReady)
-      {
-         return DriveInfo.EnumerateLogicalDrivesCore(fromEnvironment, isReady);
+         /// <summary>The number of bytes in this extent.</summary>
+         public long ExtentLength;
       }
    }
 }

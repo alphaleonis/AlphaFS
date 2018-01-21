@@ -19,30 +19,23 @@
  *  THE SOFTWARE. 
  */
 
-using System.Collections.Generic;
-using System.Security;
+using System;
+using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   internal static partial class NativeMethods
    {
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer with the ready status.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives()
+      /// <summary>Represents a physical location on a disk. It is the output buffer for the <see cref="IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS"/> control code.</summary>
+      /// <remarks>MSDN: http://msdn.microsoft.com/en-us/library/aa365727%28VS.85%29.aspx </remarks>
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      internal struct VOLUME_DISK_EXTENTS
       {
-         return DriveInfo.EnumerateLogicalDrivesCore(false, true);
-      }
+         /// <summary>The number of disks in the volume (a volume can span multiple disks).</summary>
+         public uint NumberOfDiskExtents;
 
-
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
-      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
-      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateLogicalDrives(bool fromEnvironment, bool isReady)
-      {
-         return DriveInfo.EnumerateLogicalDrivesCore(fromEnvironment, isReady);
+         /// <summary>An array of <see cref="DISK_EXTENT"/> structures.</summary>
+         [MarshalAs(UnmanagedType.ByValArray)] public DISK_EXTENT[] Extents;
       }
    }
 }
