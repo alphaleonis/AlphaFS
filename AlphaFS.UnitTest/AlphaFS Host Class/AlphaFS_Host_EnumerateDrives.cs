@@ -33,9 +33,13 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(true);
          Console.WriteLine();
 
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
+
 
          var host = UnitTestConstants.LocalHost;
-         
+
          Console.WriteLine("Enumerating drives from host: [{0}]", host);
 
 
@@ -56,6 +60,15 @@ namespace AlphaFS.UnitTest
 
 
          Assert.IsTrue(drives.Count > 0, "Nothing is enumerated, but it is expected.");
+
+
+         // \\localhost\C$
+
+         host = Alphaleonis.Win32.Network.Host.GetUncName() + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator +
+                UnitTestConstants.SysDrive[0] + Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator +
+                Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
+
+         Assert.AreEqual(drives[0].Name, host);
       }
    }
 }
