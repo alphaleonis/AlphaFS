@@ -197,6 +197,8 @@
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
     <Compile Include="Device\Device.Compression.cs" />
+    <Compile Include="Device\DriveInfo\DriveInfo.GetDeviceInfo.cs" />
+    <Compile Include="Device\DriveInfo\DriveInfo.EnumerateLogicalDrives.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.GetFreeDriveLetter.cs" />
     <Compile Include="Device\Junctions, Links\Device.DeleteDirectoryJunction.cs" />
     <Compile Include="Device\Junctions, Links\Device.CreateDirectoryJunction.cs" />
@@ -608,7 +610,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

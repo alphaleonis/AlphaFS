@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Returns the product- and/or model ID, or bus type of the physical drive.</summary>
+      /// <summary>Returns the product ID of the physical drive.</summary>
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
@@ -64,9 +64,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Indicates the partition number of the device is returned in this member, if the device can be partitioned. Otherwise, -1 is returned.</summary>
       public int PartitionNumber { get; internal set; }
-
-      ///// <summary>Interface type by WMI (Win32_DiskDrive).</summary>
-      //public string InterfaceType { get; internal set; }
 
 
       /// <summary>Indicates if the physical drive supports multiple outstanding commands (SCSI tagged queuing or equivalent). When false the physical drive does not support SCSI-tagged queuing or the equivalent.</summary>
