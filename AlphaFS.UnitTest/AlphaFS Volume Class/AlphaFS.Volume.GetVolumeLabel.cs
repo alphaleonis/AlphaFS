@@ -105,6 +105,8 @@ namespace AlphaFS.UnitTest
 
                looped = true;
             }
+
+            Console.WriteLine();
          }
 
 

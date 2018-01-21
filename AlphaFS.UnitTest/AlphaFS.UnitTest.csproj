@@ -204,7 +204,6 @@
     <Compile Include="DirectoryInfo Class\DirectoryInfo_Refresh.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfoTest.cs" />
     <Compile Include="DriveInfo Class\DriveInfo_GetDrives.cs" />
-    <Compile Include="DriveInfo Class\AlphaFS_DriveInfo_EnumerateDrives.cs" />
     <Compile Include="DriveInfo Class\DriveInfo_InitializeInstance.cs" />
     <Compile Include="DriveInfo Class\DriveInfoTest.cs" />
     <Compile Include="File Class\AlphaFS_File_GetHash.cs" />
