@@ -44,6 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(rootPathName))
             throw new ArgumentNullException("rootPathName");
 
+
          SetVolumeLabel(rootPathName, null);
       }
 
@@ -69,8 +70,12 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(volumeName))
             throw new ArgumentNullException("volumeName");
 
-         if (!NativeMethods.SetVolumeLabel(null, volumeName))
-            Marshal.ThrowExceptionForHR(Marshal.GetHRForLastWin32Error());
+
+         var success = NativeMethods.SetVolumeLabel(null, volumeName);
+
+         var lastError = Marshal.GetLastWin32Error();
+         if (!success)
+            NativeError.ThrowException(lastError, volumeName);
       }
 
 
