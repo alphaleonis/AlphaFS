@@ -197,9 +197,14 @@
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
     <Compile Include="Device\Device.Compression.cs" />
-    <Compile Include="Device\Device.JunctionsLinks.cs" />
+    <Compile Include="Device\DriveInfo\DriveInfo.GetFreeDriveLetter.cs" />
+    <Compile Include="Device\Junctions, Links\Device.DeleteDirectoryJunction.cs" />
+    <Compile Include="Device\Junctions, Links\Device.CreateDirectoryJunction.cs" />
+    <Compile Include="Device\Junctions, Links\Device.GetLinkTarget.cs" />
     <Compile Include="Device\Device.DeviceEnumeration.cs" />
-    <Compile Include="Device\Device.PhysicalDrive.cs" />
+    <Compile Include="Device\DriveInfo\DriveInfo.GetPhysicalDriveInfo.cs" />
+    <Compile Include="Device\DriveInfo\DriveInfo.GetPhysicalDriveNumber.cs" />
+    <Compile Include="Device\DriveInfo\DriveInfo.EnumeratePhysicalDrives.cs" />
     <Compile Include="Device\PhysicalDriveInfo.cs" />
     <Compile Include="Device\Volume\Volume.DeleteDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.QueryDosDevice.cs" />
@@ -346,7 +351,7 @@
     <Compile Include="Filesystem\File Class\File.Create.cs" />
     <Compile Include="Device\DeviceInfo.cs" />
     <Compile Include="Device\DiskSpaceInfo.cs" />
-    <Compile Include="Device\DriveInfo.cs" />
+    <Compile Include="Device\DriveInfo\DriveInfo.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\CopyMoveProgressResult.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\DirectoryEnumerationOptions.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\DeviceGuid.cs" />
@@ -603,7 +608,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

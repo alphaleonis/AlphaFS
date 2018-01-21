@@ -19,29 +19,37 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.Win32.SafeHandles;
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public static partial class Volume
+   /// <summary>Provides static methods to retrieve device resource information from a local or remote host.</summary>
+   public static partial class Device
    {
-      /// <summary>[AlphaFS] 
-      ///   Tranlates DosDevicePath to a Volume GUID. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\
-      ///   filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".
-      /// </summary>
-      /// <param name="dosDevice">A DosDevicePath, for example: \Device\HarddiskVolumeX\path\filename.ext.</param>
-      /// <returns>A translated dos path.</returns>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Nt")]
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
-      public static string GetVolumeGuidForNtDeviceName(string dosDevice)
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
+      internal static void DeleteDirectoryJunction(SafeFileHandle safeHandle)
       {
-         return (from drive in DriveInfo.EnumerateLogicalDrivesCore(false, false)
+         var reparseDataBuffer = new NativeMethods.REPARSE_DATA_BUFFER
+         {
+            ReparseTag = ReparsePointTag.MountPoint,
+            ReparseDataLength = 0,
+            PathBuffer = new byte[NativeMethods.MAXIMUM_REPARSE_DATA_BUFFER_SIZE - 16] // 16368
+         };
 
-            where drive.DosDeviceName.Equals(dosDevice, StringComparison.OrdinalIgnoreCase)
 
-            select drive.VolumeInfo.Guid).FirstOrDefault();
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(reparseDataBuffer)))
+         {
+            safeBuffer.StructureToPtr(reparseDataBuffer, false);
+
+            uint bytesReturned;
+            var success = NativeMethods.DeviceIoControl2(safeHandle, NativeMethods.IoControlCode.FSCTL_DELETE_REPARSE_POINT, safeBuffer, NativeMethods.REPARSE_DATA_BUFFER_HEADER_SIZE, IntPtr.Zero, 0, out bytesReturned, IntPtr.Zero);
+
+            var lastError = Marshal.GetLastWin32Error();
+            if (!success)
+               NativeError.ThrowException(lastError);
+         }
       }
    }
 }

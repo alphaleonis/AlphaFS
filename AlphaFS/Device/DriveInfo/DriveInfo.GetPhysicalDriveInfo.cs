@@ -22,85 +22,37 @@
 using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides static methods to retrieve device resource information from a local or remote host.</summary>
-   public static partial class Device
+   public sealed partial class DriveInfo
    {
-      /// <summary>[AlphaFS] Gets the physical drive number that is related to the logical drive.</summary>
-      /// <param name="driveLetter">The drive letter, such as C, D.</param>
-      /// <returns>The physical drive number that is related to the logical drive or -1 when the logical drive is mapped network drive or CDRom.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="Exception"/>
-      [SecurityCritical]
-      public static int GetPhysicalDriveNumber(char driveLetter)
-      {
-         return GetPhysicalDriveInfoCore(driveLetter).DeviceNumber;
-      }
-
-
       /// <summary>[AlphaFS] Gets the hardware information such as the serial number, Vendor ID, Product ID.</summary>
-      /// <param name="driveLetter">The drive letter, such as C, D.</param>
+      /// <returns>A <see cref="PhysicalDriveInfo"/> instance that represents the physical drives on the Computer.</returns>      
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
+      /// <param name="driveLetter">The drive letter, such as C, D.</param>
       [SecurityCritical]
       public static PhysicalDriveInfo GetPhysicalDriveInfo(char driveLetter)
       {
          return GetPhysicalDriveInfoCore(driveLetter);
       }
 
-      
 
-
-      #region Core Methods
-
-      /// <summary>Gets the physical drive number that is related to the logical drive.</summary>
-      /// <returns>The physical drive number that is related to the logical drive or -1 when the logical drive is mapped network drive or CDRom.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="Exception"/>
-      [SecurityCritical]
-      internal static NativeMethods.STORAGE_DEVICE_NUMBER? GetPhysicalDriveNumberCore(char driveLetter)
-      {
-         // dwDesiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
-         // without accessing that file or device, even if GENERIC_READ access would have been denied.
-         // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
-         const int dwDesiredAccess = 0;
-
-         // Requires elevation.
-         //const FileSystemRights dwDesiredAccess = FileSystemRights.Read | FileSystemRights.Write;
-
-         //const bool elevatedAccess = (dwDesiredAccess & FileSystemRights.Read) != 0 && (dwDesiredAccess & FileSystemRights.Write) != 0;
-
-
-         var physicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", Path.LogicalDrivePrefix, driveLetter.ToString(CultureInfo.InvariantCulture), Path.VolumeSeparator);
-
-
-         using (var safeHandle = File.CreateFileCore(null, physicalDrive, ExtendedFileAttributes.Normal, null, FileMode.Open, dwDesiredAccess, FileShare.ReadWrite, false, false, PathFormat.LongFullPath))
-         {
-            using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, physicalDrive))
-
-               return safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0);
-         }
-      }
 
 
       /// <summary>Gets the hardware information such as the serial number, Vendor ID, Product ID.</summary>
-      /// <param name="driveLetter">The drive letter, such as C, D.</param>
+      /// <returns>A <see cref="PhysicalDriveInfo"/> instance that represents the physical drives on the Computer.</returns>      
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
+      /// <param name="driveLetter">The drive letter, such as C, D.</param>
       [SecurityCritical]
       internal static PhysicalDriveInfo GetPhysicalDriveInfoCore(char driveLetter)
       {
@@ -133,9 +85,9 @@ namespace Alphaleonis.Win32.Filesystem
          const bool elevatedAccess = (dwDesiredAccess & FileSystemRights.Read) != 0 && (dwDesiredAccess & FileSystemRights.Write) != 0;
 
 
-         using (var safeHandle = File.CreateFileCore(null, physicalDrive, ExtendedFileAttributes.Normal, null, FileMode.Open, (FileSystemRights) dwDesiredAccess, FileShare.ReadWrite, false, false, PathFormat.LongFullPath))
+         using (var safeHandle = File.CreateFileCore(null, physicalDrive, ExtendedFileAttributes.Normal, null, FileMode.Open, dwDesiredAccess, FileShare.ReadWrite, false, false, PathFormat.LongFullPath))
          {
-            var allPhysicalDrives = EnumerateDevicesCore(null, null, DeviceGuid.Disk, false).ToList();
+            //var allPhysicalDrives = EnumerateDevicesCore(null, null, DeviceGuid.Disk, false).ToList();
 
 
             uint bytesReturned;
@@ -147,28 +99,28 @@ namespace Alphaleonis.Win32.Filesystem
             };
 
 
-            using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, physicalDrive, NativeMethods.DefaultFileBufferSize / 4))
+            using (var safeBuffer = Device.InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, physicalDrive, NativeMethods.DefaultFileBufferSize / 4))
             {
                var storageDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>(0);
 
 
-               info.BusType = (StorageBusType) storageDescriptor.BusType;
+               info.BusType = (StorageBusType)storageDescriptor.BusType;
 
                info.IsRemovable = storageDescriptor.RemovableMedia;
 
                info.SupportsCommandQueueing = storageDescriptor.CommandQueueing;
 
 
-               info.VendorID = safeBuffer.PtrToStringAnsi((int) storageDescriptor.VendorIdOffset).Trim();
-               
-               info.Name = safeBuffer.PtrToStringAnsi((int) storageDescriptor.ProductIdOffset).Trim();
+               info.VendorID = safeBuffer.PtrToStringAnsi((int)storageDescriptor.VendorIdOffset).Trim();
 
-               info.ProductRevision = safeBuffer.PtrToStringAnsi((int) storageDescriptor.ProductRevisionOffset).Trim();
+               info.Name = safeBuffer.PtrToStringAnsi((int)storageDescriptor.ProductIdOffset).Trim();
+
+               info.ProductRevision = safeBuffer.PtrToStringAnsi((int)storageDescriptor.ProductRevisionOffset).Trim();
 
 
                long serial;
 
-               if (long.TryParse(safeBuffer.PtrToStringAnsi((int) storageDescriptor.SerialNumberOffset).Trim(), out serial))
+               if (long.TryParse(safeBuffer.PtrToStringAnsi((int)storageDescriptor.SerialNumberOffset).Trim(), out serial))
                   info.SerialNumber = serial;
             }
 
@@ -177,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                long diskSize;
 
-               var success = NativeMethods.DeviceIoControl5(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, IntPtr.Zero, 0, out diskSize, (uint) Marshal.SizeOf(typeof(long)), out bytesReturned, IntPtr.Zero);
+               var success = NativeMethods.DeviceIoControl5(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, IntPtr.Zero, 0, out diskSize, (uint)Marshal.SizeOf(typeof(long)), out bytesReturned, IntPtr.Zero);
 
                var lastError = Marshal.GetLastWin32Error();
                if (!success)
@@ -190,7 +142,5 @@ namespace Alphaleonis.Win32.Filesystem
 
          return info;
       }
-
-      #endregion // Core Methods
    }
 }

@@ -139,7 +139,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      private static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string path, int size = -1)
+      internal static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string path, int size = -1)
       {
          NativeMethods.IsValidHandle(safeHandle);
 
@@ -168,7 +168,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Invokes InvokeIoControl with the specified input and specified size.</summary>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      private static SafeGlobalMemoryBufferHandle InvokeDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, T anyObject, string path, int size = -1)
+      internal static SafeGlobalMemoryBufferHandle InvokeDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, T anyObject, string path, int size = -1)
       {
          NativeMethods.IsValidHandle(safeHandle);
 

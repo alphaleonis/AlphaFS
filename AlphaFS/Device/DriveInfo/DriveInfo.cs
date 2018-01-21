@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// </remarks>
    [Serializable]
    [SecurityCritical]
-   public sealed class DriveInfo
+   public sealed partial class DriveInfo
    {
       #region Private Fields
 
@@ -289,7 +289,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
       {
-         return Directory.EnumerateLogicalDrivesCore(false, false).ToArray();
+         return EnumerateLogicalDrivesCore(false, false).ToArray();
       }
 
 
@@ -304,50 +304,6 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
 
-      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer.</summary>
-      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
-      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      /// <returns>
-      ///   An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents
-      ///   the logical drives on the Computer.
-      /// </returns>      
-      [SecurityCritical]
-      public static IEnumerable<DriveInfo> EnumerateDrives(bool fromEnvironment, bool isReady)
-      {
-         return Directory.EnumerateLogicalDrivesCore(fromEnvironment, isReady);
-      }
-
-
-      /// <summary>[AlphaFS] Gets the first available drive letter on the local system.</summary>
-      /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
-      /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
-      public static char GetFreeDriveLetter()
-      {
-         return GetFreeDriveLetter(false);
-      }
-
-
-      /// <summary>[AlphaFS] Gets an available drive letter on the local system.</summary>
-      /// <param name="getLastAvailable">When <see langword="true"/> get the last available drive letter. When <see langword="false"/> gets the first available drive letter.</param>
-      /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
-      /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
-      /// <exception cref="ArgumentOutOfRangeException">No drive letters available.</exception>
-      [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-      public static char GetFreeDriveLetter(bool getLastAvailable)
-      {
-         var freeDriveLetters = "CDEFGHIJKLMNOPQRSTUVWXYZ".Except(Directory.EnumerateLogicalDrivesCore(false, false).Select(d => d.Name[0]));
-
-         try
-         {
-            return getLastAvailable ? freeDriveLetters.Last() : freeDriveLetters.First();
-         }
-         catch
-         {
-            throw new ArgumentOutOfRangeException(Resources.No_Drive_Letters_Available);
-         }
-      }
-
-
       /// <summary>[AlphaFS] Refreshes the state of the object.</summary>
       public void Refresh()
       {
@@ -358,11 +314,9 @@ namespace Alphaleonis.Win32.Filesystem
          _dsi.Refresh();
       }
       
-      #endregion // Methods
-
-
-      #region Private Methods
-
+      
+      
+      
       /// <summary>Retrieves information about the file system and volume associated with the specified root file or directorystream.</summary>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -395,11 +349,11 @@ namespace Alphaleonis.Win32.Filesystem
 
                      case 2:
                         // VolumeLabel
-                        return null == _volumeInfo ? string.Empty : _volumeInfo.Name ?? string.Empty;
+                        return null == _volumeInfo ? String.Empty : _volumeInfo.Name ?? String.Empty;
 
                      case 3:
                         // DriveType
-                        return null == _volumeInfo ? (object) string.Empty : _volumeInfo.DriveType;
+                        return null == _volumeInfo ? (object) String.Empty : _volumeInfo.DriveType;
                   }
 
                   break;
@@ -456,7 +410,7 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      return IsUnc
                         ? null
-                        : (_physicalDriveInfo ?? (_physicalDriveInfo = Device.GetPhysicalDriveInfoCore(_name[0])));
+                        : (_physicalDriveInfo ?? (_physicalDriveInfo = GetPhysicalDriveInfoCore(_name[0])));
                   }
 
                   return null;
@@ -468,9 +422,93 @@ namespace Alphaleonis.Win32.Filesystem
          //{
          //}
 
-         return type == 0 && mode > 0 ? string.Empty : null;
+         return type == 0 && mode > 0 ? String.Empty : null;
       }
 
-      #endregion // Private
+
+      /// <summary>Enumerates the drive names of all logical drives on the Computer.</summary>
+      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
+      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
+      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
+      [SecurityCritical]
+      internal static IEnumerable<DriveInfo> EnumerateLogicalDrivesCore(bool fromEnvironment, bool isReady)
+      {
+         // Get from Environment.
+
+         if (fromEnvironment)
+         {
+            var drivesEnv = isReady
+               ? Environment.GetLogicalDrives().Where(ld => File.ExistsCore(null, true, ld, PathFormat.FullPath))
+               : Environment.GetLogicalDrives().Select(ld => ld);
+
+            foreach (var drive in drivesEnv)
+            {
+               // Optionally check Drive .IsReady.
+               if (isReady)
+               {
+                  if (File.ExistsCore(null, true, drive, PathFormat.FullPath))
+                     yield return new DriveInfo(drive);
+               }
+
+               else
+                  yield return new DriveInfo(drive);
+            }
+
+            yield break;
+         }
+
+
+         // Get through NativeMethod.
+
+         var lastError = NativeMethods.GetLogicalDrives();
+
+         // MSDN: GetLogicalDrives(): If the function fails, the return value is zero.
+         if (lastError == Win32Errors.ERROR_SUCCESS)
+            NativeError.ThrowException(lastError);
+
+
+         var drives = lastError;
+         var count = 0;
+         while (drives != 0)
+         {
+            if ((drives & 1) != 0)
+               ++count;
+
+            drives >>= 1;
+         }
+
+         var result = new string[count];
+         char[] root = { 'A', Path.VolumeSeparatorChar };
+
+         drives = lastError;
+         count = 0;
+
+         while (drives != 0)
+         {
+            if ((drives & 1) != 0)
+            {
+               var drive = new string(root);
+
+               if (isReady)
+               {
+                  // Optionally check Drive .IsReady property.
+                  if (File.ExistsCore(null, true, drive, PathFormat.FullPath))
+                     yield return new DriveInfo(drive);
+               }
+               else
+               {
+                  // Ready or not.
+                  yield return new DriveInfo(drive);
+               }
+
+               result[count++] = drive;
+            }
+
+            drives >>= 1;
+            root[0]++;
+         }
+      }
+
+      #endregion // Methods
    }
 }
