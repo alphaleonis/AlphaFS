@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Network
             // Logical Drives
             case 1:
                isString = true;
-               objectSize = 6; // Should always be 6.
+               objectSize = IntPtr.Size == 4 ? IntPtr.Size + UnicodeEncoding.CharSize : 8;
                break;
 
             default:
