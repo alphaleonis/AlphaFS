@@ -51,7 +51,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.Dump(deviceInfo, -24);
 
          Assert.AreEqual(deviceInfo.HostName, UnitTestConstants.LocalHost);
-         Assert.AreEqual(deviceInfo.DeviceClass, null);
+         Assert.AreEqual(deviceInfo.Class, null);
          Assert.AreEqual(deviceInfo.ClassGuid, new Guid());
 
          

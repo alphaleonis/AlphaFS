@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetLogicalDrives()
       {
-         return DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(drive => drive.Name).ToArray();
+         return EnumerateLogicalDrivesCore(false, false).Select(drive => drive.Name).ToArray();
       }
 
       #endregion // .NET
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetLogicalDrives(bool fromEnvironment, bool isReady)
       {
-         return DriveInfo.EnumerateLogicalDrivesCore(fromEnvironment, isReady).Select(drive => drive.Name).ToArray();
+         return EnumerateLogicalDrivesCore(fromEnvironment, isReady).Select(drive => drive.Name).ToArray();
       }
    }
 }

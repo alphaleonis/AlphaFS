@@ -61,10 +61,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(actual.IsVolume);
 
          if (isNetwork)
-         {
             Assert.IsTrue(actual.IsUnc);
-            Assert.IsNull(actual.PhysicalDriveInfo);
-         }
          else
             Assert.IsFalse(actual.IsUnc);
 
@@ -97,17 +94,8 @@ namespace AlphaFS.UnitTest
 
 
          UnitTestConstants.Dump(actual, -21);
-
-
-         if (null != actual.PhysicalDriveInfo)
-            UnitTestConstants.Dump(actual.PhysicalDriveInfo, -23, true);
-
-         if (null != actual.DiskSpaceInfo)
-            UnitTestConstants.Dump(actual.DiskSpaceInfo, -26, true);
-
-         if (null != actual.VolumeInfo)
-            UnitTestConstants.Dump(actual.VolumeInfo, -26, true);
-
+         UnitTestConstants.Dump(actual.DiskSpaceInfo, -26);
+         UnitTestConstants.Dump(actual.VolumeInfo, -26);
 
          Console.WriteLine();
       }

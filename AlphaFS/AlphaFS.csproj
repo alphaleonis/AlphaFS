@@ -196,18 +196,6 @@
     <Compile Include="AssemblyVersionInfo.cs">
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
-    <Compile Include="Device\Device.Compression.cs" />
-    <Compile Include="Device\DriveInfo\DriveInfo.GetDeviceInfo.cs" />
-    <Compile Include="Device\DriveInfo\DriveInfo.EnumerateLogicalDrives.cs" />
-    <Compile Include="Device\DriveInfo\DriveInfo.GetFreeDriveLetter.cs" />
-    <Compile Include="Device\Junctions, Links\Device.DeleteDirectoryJunction.cs" />
-    <Compile Include="Device\Junctions, Links\Device.CreateDirectoryJunction.cs" />
-    <Compile Include="Device\Junctions, Links\Device.GetLinkTarget.cs" />
-    <Compile Include="Device\Device.DeviceEnumeration.cs" />
-    <Compile Include="Device\DriveInfo\DriveInfo.GetPhysicalDriveInfo.cs" />
-    <Compile Include="Device\DriveInfo\DriveInfo.GetPhysicalDriveNumber.cs" />
-    <Compile Include="Device\DriveInfo\DriveInfo.EnumeratePhysicalDrives.cs" />
-    <Compile Include="Device\PhysicalDriveInfo.cs" />
     <Compile Include="Device\Volume\Volume.DeleteDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.QueryDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.GetDriveFormat.cs" />
@@ -308,18 +296,6 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateSubdirectory.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Create.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateAlternateDataStreams.cs" />
-    <Compile Include="Filesystem\Native Other\DISK_EXTENT.cs" />
-    <Compile Include="Filesystem\Native Other\IoMethod.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_NUMBER.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_TYPE.cs" />
-    <Compile Include="Filesystem\Native Other\IoControlCode.cs" />
-    <Compile Include="Filesystem\Native Other\VOLUME_DISK_EXTENTS.cs" />
-    <Compile Include="Filesystem\Native Other\ATA_PASS_THROUGH_EX.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_BUS_TYPE.cs" />
-    <Compile Include="Filesystem\Native Other\ATAIdentifyDeviceQuery.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_PROPERTY_QUERY.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_DESCRIPTOR.cs" />
-    <Compile Include="Filesystem\Native Other\ATA_FLAGS.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetRelativePath.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\DirectoryEnumerationFilters.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\EncryptedFileRawMode.cs" />
@@ -353,7 +329,7 @@
     <Compile Include="Filesystem\File Class\File.Create.cs" />
     <Compile Include="Device\DeviceInfo.cs" />
     <Compile Include="Device\DiskSpaceInfo.cs" />
-    <Compile Include="Device\DriveInfo\DriveInfo.cs" />
+    <Compile Include="Device\DriveInfo.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\CopyMoveProgressResult.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\DirectoryEnumerationOptions.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\DeviceGuid.cs" />
@@ -487,8 +463,6 @@
     <Compile Include="Filesystem\Native Other\WIN32_FILE_ATTRIBUTE_DATA.cs" />
     <Compile Include="Filesystem\Native Other\WIN32_FIND_DATA.cs" />
     <Compile Include="Filesystem\Native Other\WIN32_STREAM_ID.cs" />
-    <Compile Include="Filesystem\Structures And Enumerations\StorageBusType.cs" />
-    <Compile Include="Filesystem\Structures And Enumerations\StorageDeviceType.cs" />
     <Compile Include="Network\DfsInfo.cs" />
     <Compile Include="Network\DfsStorageInfo.cs" />
     <Compile Include="Network\Enumerations\DfsPropertyFlags.cs" />

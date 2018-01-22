@@ -36,24 +36,18 @@ namespace Alphaleonis.Win32.Filesystem
    /// </remarks>
    [Serializable]
    [SecurityCritical]
-   public sealed partial class DriveInfo
+   public sealed class DriveInfo
    {
-      #region Private Fields
-
       [NonSerialized] private readonly VolumeInfo _volumeInfo;
       [NonSerialized] private readonly DiskSpaceInfo _dsi;
-      [NonSerialized] private PhysicalDriveInfo _physicalDriveInfo;
       [NonSerialized] private bool _initDsie;
-      [NonSerialized] private readonly string _name;
+      [NonSerialized] private DriveType? _driveType;
       [NonSerialized] private string _dosDeviceName;
       [NonSerialized] private DirectoryInfo _rootDirectory;
-      
-      #endregion // Private Fields
+      [NonSerialized] private readonly string _name;
 
 
       #region Constructors
-
-      #region .NET
 
       /// <summary>Provides access to information on the specified drive.</summary>
       /// <exception cref="ArgumentNullException"/>
@@ -79,27 +73,17 @@ namespace Alphaleonis.Win32.Filesystem
 
          _name = Path.AddTrailingDirectorySeparator(driveName, false);
 
-
-         // Initiate VolumeInfo lazyload instance.
+         // Initiate VolumeInfo() lazyload instance.
          _volumeInfo = new VolumeInfo(_name, false, true);
 
-
-         // Initiate DiskSpaceInfo lazyload instance.
+         // Initiate DiskSpaceInfo() lazyload instance.
          _dsi = new DiskSpaceInfo(_name, null, false, true);
-
-
-         // Initiate PhysicalDriveInfo lazyload instance.
-         _physicalDriveInfo = null;
       }
-
-      #endregion // .NET
 
       #endregion // Constructors
 
 
       #region Properties
-
-      #region .NET
 
       /// <summary>Indicates the amount of available free space on a drive.</summary>
       /// <returns>The amount of free space available on the drive, in bytes.</returns>
@@ -109,11 +93,9 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             GetDeviceInfo(3, 0);
-
             return null == _dsi ? 0 : _dsi.FreeBytesAvailable;
          }
       }
-      
 
       /// <summary>Gets the name of the file system, such as NTFS or FAT32.</summary>
       /// <remarks>Use DriveFormat to determine what formatting a drive uses.</remarks>
@@ -131,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public DriveType DriveType
       {
-         get { return (DriveType) GetDeviceInfo(0, 3); }
+         get { return (DriveType) GetDeviceInfo(2, 0); }
       }
 
 
@@ -148,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public bool IsReady
       {
-         get { return File.ExistsCore(null, true, _name, PathFormat.LongFullPath); }
+         get { return File.ExistsCore(null, true, Name, PathFormat.LongFullPath); }
       }
 
 
@@ -165,9 +147,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A DirectoryInfo object that contains the root directory of the drive.</returns>
       public DirectoryInfo RootDirectory
       {
-         get { return (DirectoryInfo) GetDeviceInfo(2, 0); }
+         get { return (DirectoryInfo) GetDeviceInfo(2, 1); }
       }
-
 
       /// <summary>Gets the total amount of free space available on a drive.</summary>
       /// <returns>The total free space available on a drive, in bytes.</returns>
@@ -177,7 +158,6 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             GetDeviceInfo(3, 0);
-
             return null == _dsi ? 0 : _dsi.TotalNumberOfFreeBytes;
          }
       }
@@ -191,7 +171,6 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             GetDeviceInfo(3, 0);
-
             return null == _dsi ? 0 : _dsi.TotalNumberOfBytes;
          }
       }
@@ -206,12 +185,8 @@ namespace Alphaleonis.Win32.Filesystem
       public string VolumeLabel
       {
          get { return (string) GetDeviceInfo(0, 2); }
-
-         set { Volume.SetVolumeLabel(_name, value); }
+         set { Volume.SetVolumeLabel(Name, value); }
       }
-
-      #endregion // .NET
-
 
       /// <summary>[AlphaFS] Returns the <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> instance.</summary>
       public DiskSpaceInfo DiskSpaceInfo
@@ -219,7 +194,6 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             GetDeviceInfo(3, 0);
-
             return _dsi;
          }
       }
@@ -235,10 +209,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Indicates if this drive is a SUBST.EXE / DefineDosDevice drive mapping.</summary>
       public bool IsDosDeviceSubstitute
       {
-         get
-         {
-            return !Utils.IsNullOrWhiteSpace(DosDeviceName) && DosDeviceName.StartsWith(Path.NonInterpretedPathPrefix, StringComparison.OrdinalIgnoreCase);
-         }
+         get { return !Utils.IsNullOrWhiteSpace(DosDeviceName) && DosDeviceName.StartsWith(Path.NonInterpretedPathPrefix, StringComparison.OrdinalIgnoreCase); }
       }
 
 
@@ -248,9 +219,9 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             return !IsDosDeviceSubstitute && DriveType == DriveType.Network ||
-
+               
                    // Handle Host devices with file systems: FAT/FAT32, UDF (CDRom), ...
-                   _name.StartsWith(Path.UncPrefix, StringComparison.Ordinal) && DriveType == DriveType.NoRootDirectory && DriveFormat.Equals(DriveType.Unknown.ToString(), StringComparison.OrdinalIgnoreCase);
+                   Name.StartsWith(Path.UncPrefix, StringComparison.Ordinal) && DriveType == DriveType.NoRootDirectory && DriveFormat.Equals(DriveType.Unknown.ToString(), StringComparison.OrdinalIgnoreCase);
          }
       }
 
@@ -262,20 +233,13 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Contains information about the physical drive.</summary>
-      /// <returns>A <see cref="PhysicalDriveInfo"/> object that contains information of the physical drive.</returns>
-      public PhysicalDriveInfo PhysicalDriveInfo
-      {
-         get { return (PhysicalDriveInfo) GetDeviceInfo(4, 0); }
-      }
-
-
-      /// <summary>[AlphaFS] Contains information about a file system volume.</summary>
-      /// <returns>A <see cref="VolumeInfo"/> object that contains file system volume information of the drive.</returns>
+      /// <summary>[AlphaFS] Contains information about a file-system volume.</summary>
+      /// <returns>A VolumeInfo object that contains file-system volume information of the drive.</returns>
       public VolumeInfo VolumeInfo
       {
          get { return (VolumeInfo) GetDeviceInfo(0, 0); }
       }
+
 
       #endregion // Properties
 
@@ -289,7 +253,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
       {
-         return EnumerateLogicalDrivesCore(false, false).ToArray();
+         return Directory.EnumerateLogicalDrivesCore(false, false).ToArray();
       }
 
 
@@ -304,16 +268,147 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
 
-      /// <summary>[AlphaFS] Refreshes the state of the object.</summary>
-      public void Refresh()
+      /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer.</summary>
+      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
+      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
+      /// <returns>
+      ///   An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents
+      ///   the logical drives on the Computer.
+      /// </returns>      
+      [SecurityCritical]
+      public static IEnumerable<DriveInfo> EnumerateDrives(bool fromEnvironment, bool isReady)
       {
-         _physicalDriveInfo = null;
+         return Directory.EnumerateLogicalDrivesCore(fromEnvironment, isReady);
+      }
 
-         _volumeInfo.Refresh();
 
-         _dsi.Refresh();
+      /// <summary>[AlphaFS] Gets the first available drive letter on the local system.</summary>
+      /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
+      /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
+      public static char GetFreeDriveLetter()
+      {
+         return GetFreeDriveLetter(false);
+      }
+
+
+      /// <summary>Gets an available drive letter on the local system.</summary>
+      /// <param name="getLastAvailable">When <see langword="true"/> get the last available drive letter. When <see langword="false"/> gets the first available drive letter.</param>
+      /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
+      /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
+      /// <exception cref="ArgumentOutOfRangeException">No drive letters available.</exception>
+      [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+      public static char GetFreeDriveLetter(bool getLastAvailable)
+      {
+         var freeDriveLetters = "CDEFGHIJKLMNOPQRSTUVWXYZ".Except(Directory.EnumerateLogicalDrivesCore(false, false).Select(d => d.Name[0]));
+
+         try
+         {
+            return getLastAvailable ? freeDriveLetters.Last() : freeDriveLetters.First();
+         }
+         catch
+         {
+            throw new ArgumentOutOfRangeException(Resources.No_Drive_Letters_Available);
+         }
       }
 
       #endregion // Methods
+
+
+      #region Private Methods
+
+      /// <summary>Retrieves information about the file system and volume associated with the specified root file or directorystream.</summary>
+      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+      [SecurityCritical]
+      private object GetDeviceInfo(int type, int mode)
+      {
+         try
+         {
+            switch (type)
+            {
+               #region Volume
+
+               // VolumeInfo properties.
+               case 0:
+                  if (Utils.IsNullOrWhiteSpace(_volumeInfo.FullPath))
+                     _volumeInfo.Refresh();
+
+                  switch (mode)
+                  {
+                     case 0:
+                        // IsVolume, VolumeInfo
+                        return _volumeInfo;
+
+                     case 1:
+                        // DriveFormat
+                        return null == _volumeInfo ? DriveType.Unknown.ToString() : _volumeInfo.FileSystemName ?? DriveType.Unknown.ToString();
+
+                     case 2:
+                        // VolumeLabel
+                        return null == _volumeInfo ? string.Empty : _volumeInfo.Name ?? string.Empty;
+                  }
+
+                  break;
+
+
+               // Volume related.
+               case 1:
+                  switch (mode)
+                  {
+                     case 0:
+                        // DosDeviceName
+                        return _dosDeviceName ?? (_dosDeviceName = Volume.QueryDosDevice(Name).FirstOrDefault());
+                  }
+
+                  break;
+
+               #endregion // Volume
+
+
+               #region Drive
+
+               // Drive related.
+               case 2:
+                  switch (mode)
+                  {
+                     case 0:
+                        // DriveType
+                        return _driveType ?? (_driveType = Volume.GetDriveType(Name));
+
+                     case 1:
+                        // RootDirectory
+                        return _rootDirectory ?? (_rootDirectory = new DirectoryInfo(null, Name, PathFormat.RelativePath));
+                  }
+
+                  break;
+
+               // DiskSpaceInfo related.
+               case 3:
+                  switch (mode)
+                  {
+                     case 0:
+                        // AvailableFreeSpace, TotalFreeSpace, TotalSize, DiskSpaceInfo
+                        if (!_initDsie)
+                        {
+                           _dsi.Refresh();
+                           _initDsie = true;
+                        }
+
+                        break;
+                  }
+
+                  break;
+
+               #endregion // Drive
+            }
+         }
+         catch
+         {
+         }
+
+         return type == 0 && mode > 0 ? string.Empty : null;
+      }
+      
+      #endregion // Private
    }
 }

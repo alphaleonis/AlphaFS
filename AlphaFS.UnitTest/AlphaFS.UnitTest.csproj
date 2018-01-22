@@ -203,10 +203,9 @@
     <Compile Include="DirectoryInfo Class\DirectoryInfo_Attributes.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo_Refresh.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfoTest.cs" />
-    <Compile Include="DriveInfo Class\DriveInfo.EnumeratePhysicalDrives.cs" />
-    <Compile Include="DriveInfo Class\DriveInfo.GetDrives.cs" />
-    <Compile Include="DriveInfo Class\DriveInfo.InitializeInstance.cs" />
-    <Compile Include="DriveInfo Class\DriveInfo.Test.cs" />
+    <Compile Include="DriveInfo Class\DriveInfo_GetDrives.cs" />
+    <Compile Include="DriveInfo Class\DriveInfo_InitializeInstance.cs" />
+    <Compile Include="DriveInfo Class\DriveInfoTest.cs" />
     <Compile Include="File Class\AlphaFS_File_GetHash.cs" />
     <Compile Include="File Class\File_CreateText.cs" />
     <Compile Include="File Class\File_OpenWrite.cs" />

@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
       public static string GetVolumeGuidForNtDeviceName(string dosDevice)
       {
-         return (from drive in DriveInfo.EnumerateLogicalDrivesCore(false, false)
+         return (from drive in Directory.EnumerateLogicalDrivesCore(false, false)
 
             where drive.DosDeviceName.Equals(dosDevice, StringComparison.OrdinalIgnoreCase)
 
