@@ -92,29 +92,42 @@ namespace Alphaleonis.Win32.Filesystem
          {
             IsDirectory = true;
 
-            // Need files or folders to enumerate.
+            Recursive = (options & DirectoryEnumerationOptions.Recursive) != 0 || null != RecursionFilter;
+
+            SkipReparsePoints = (options & DirectoryEnumerationOptions.SkipReparsePoints) != 0;
+
+
+            // Need folders or files to enumerate.
             if ((options & DirectoryEnumerationOptions.FilesAndFolders) == 0)
                options |= DirectoryEnumerationOptions.FilesAndFolders;
 
 
-            FileSystemObjectType = (options & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.FilesAndFolders
-               ? (bool?) null
-               : (options & DirectoryEnumerationOptions.Folders) != 0;
-
-
-            Recursive = (options & DirectoryEnumerationOptions.Recursive) != 0 || null != RecursionFilter;
-
-            SkipReparsePoints = (options & DirectoryEnumerationOptions.SkipReparsePoints) != 0;
+            //FileSystemObjectType = (options & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.FilesAndFolders
+            //   ? (bool?) null
+            //   : (options & DirectoryEnumerationOptions.Folders) != 0;
          }
 
          else
          {
-            if ((options & DirectoryEnumerationOptions.Folders) == 0)
-               options &= ~DirectoryEnumerationOptions.Folders;
+            options &= ~DirectoryEnumerationOptions.Folders; // Remove enumeration of folders.
+            options |= DirectoryEnumerationOptions.Files;    // Add enumeration of files.
 
-            if ((options & DirectoryEnumerationOptions.Files) == 0)
-               options |= DirectoryEnumerationOptions.Files;
+
+            //if ((options & DirectoryEnumerationOptions.Folders) == 0)
+            //   options &= ~DirectoryEnumerationOptions.Folders;
+
+            //if ((options & DirectoryEnumerationOptions.Files) == 0)
+            //   options |= DirectoryEnumerationOptions.Files;
          }
+
+
+         FileSystemObjectType = (options & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.FilesAndFolders
+            
+            // Folders and files (null).
+            ? (bool?) null
+
+            // Only folders (true) or only files (false).
+            : (options & DirectoryEnumerationOptions.Folders) != 0;
       }
 
 
@@ -126,18 +139,49 @@ namespace Alphaleonis.Win32.Filesystem
          var handle = FileSystemInfo.FindFirstFileCore(Transaction, pathLp, FindExInfoLevel, searchOption, LargeCache, out lastError, out win32FindData);
 
 
-         if (!suppressException)
-            if (!ContinueOnException)
+         if (!suppressException && !ContinueOnException)
+         {
+            if (null == handle)
             {
-               if (null == handle)
-                  ThrowPossibleException((uint) lastError, pathLp);
+               switch ((uint) lastError)
+               {
+                  case Win32Errors.ERROR_FILE_NOT_FOUND:
+                  case Win32Errors.ERROR_PATH_NOT_FOUND:
+                  case Win32Errors.ERROR_NOT_READY: // Floppy device or network drive not ready.
 
-               // When the handle is null and we are still here, it means the ErrorHandler is active,
-               // preventing the Exception from being thrown.
+                     var drive = Directory.GetDirectoryRootCore(Transaction, pathLp, PathFormat.LongFullPath);
 
-               if (null != handle)
-                  VerifyInstanceType(win32FindData);
+
+                     // Check for network drive letter: "\\localhost\J$\NonExisting Folder"  -->  "\\localhost\J$"
+
+                     var isDrive = Path.IsUncPathCore(pathLp, false, false) && drive.EndsWith(Path.NetworkDriveSeparator, StringComparison.Ordinal);
+
+
+                     // Check for logical drive letter: "J:\NonExisting Folder"  -->  "J:"
+
+                     if (!isDrive)
+                        isDrive = char.IsLetter(drive[0]) && drive[1] == Path.VolumeSeparatorChar;
+
+
+                     lastError = isDrive ? (int) Win32Errors.ERROR_NOT_READY : lastError;
+
+                     pathLp = drive;
+
+                     break;
+               }
+               
+
+
+               ThrowPossibleException((uint) lastError, pathLp);
+
             }
+
+            // When the handle is null and we are still here, it means the ErrorHandler is active,
+            // preventing the Exception from being thrown.
+
+            if (null != handle)
+               VerifyInstanceType(win32FindData);
+         }
 
 
          return handle;
@@ -162,25 +206,32 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Return object instance FullPath property as string, optionally in long path format.
+
          return AsString
             ? null == Filter || Filter(fsei)
                ? (T) (object) (AsLongPath ? fullPathLp : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None, false))
                : (T) (object) null
 
+
             // Make sure the requested file system object type is returned.
             // null = Return files and directories.
             // true = Return only directories.
             // false = Return only files.
+
             : null != Filter && !Filter(fsei)
                ? (T) (object) null
 
                // Return object instance of type FileSystemInfo.
+
                : AsFileSystemInfo
                   ? (T) (object) (fsei.IsDirectory
+
                      ? (FileSystemInfo) new DirectoryInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei}
+
                      : new FileInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei})
 
                   // Return object instance of type FileSystemEntryInfo.
+
                   : (T) (object) fsei;
       }
 
@@ -289,8 +340,7 @@ namespace Alphaleonis.Win32.Filesystem
                      var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
 
                      // Skip entries "." and ".."
-                     if (isFolder && (fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.Ordinal) ||
-                                      fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.Ordinal)))
+                     if (isFolder && (fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.Ordinal) || fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.Ordinal)))
                         continue;
 
 
@@ -298,18 +348,19 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                      // If recursion is requested, add it to the queue for later traversal.
+
                      if (isFolder && Recursive)
                      {
                         // Is there anything we can take from res?
                         var fsei = null != res
                            ? AsString
-                              ? new FileSystemEntryInfo(win32FindData) {FullPath = (string) (object) res}
-                              : AsFileSystemInfo
-                                 ? ((DirectoryInfo) (object) res).EntryInfo
-                                 : (FileSystemEntryInfo) (object) res
 
+                              ? new FileSystemEntryInfo(win32FindData) {FullPath = (string) (object) res}
+
+                              : AsFileSystemInfo ? ((DirectoryInfo) (object) res).EntryInfo : (FileSystemEntryInfo) (object) res
 
                            // No, create new instance.
+
                            : new FileSystemEntryInfo(win32FindData) {FullPath = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp) + fileName};
 
 

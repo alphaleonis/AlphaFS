@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -65,14 +65,6 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Directory_Copy_CatchArgumentException_PathStartsWithColon_Local_Success()
       {
          Directory_Copy_CatchArgumentException_PathStartsWithColon(false);
-      }
-
-
-      [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetwork_Success()
-      {
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
       }
 
 
@@ -337,42 +329,6 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-         Console.WriteLine();
-      }
-
-
-      private void Directory_Copy_CatchDirectoryNotFoundException_NonExistingDriveLetter(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var folder = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExisting Source Folder";
-            if (isNetwork)
-               folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
-
-            Console.WriteLine("\nSrc Directory Path: [{0}]", folder);
-            Console.WriteLine("Dst Directory Path: [{0}]", rootDir.Directory.FullName);
-
-            var gotException = false;
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(folder, rootDir.Directory.FullName);
-            }
-            catch (Exception ex)
-            {
-               var exName = ex.GetType().Name;
-               gotException = exName.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
-            }
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-         }
 
          Console.WriteLine();
       }
