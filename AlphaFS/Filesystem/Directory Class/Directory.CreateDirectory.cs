@@ -748,13 +748,24 @@ namespace Alphaleonis.Win32.Filesystem
                            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, null, folderLp);
                         break;
 
+
                      case Win32Errors.ERROR_BAD_NET_NAME:
                         NativeError.ThrowException(lastError, path);
                         break;
 
+
                      case Win32Errors.ERROR_DIRECTORY:
                         // MSDN: .NET 3.5+: NotSupportedException: path contains a colon character (:) that is not part of a drive label ("C:\").
                         throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, Resources.Unsupported_Path_Format, path));
+
+
+                     case Win32Errors.ERROR_ACCESS_DENIED:
+                        // Report the parent folder, the inaccessible folder.
+                        var parent = GetParent(folderLp);
+
+                        NativeError.ThrowException(lastError, null != parent ? parent.FullName : folderLp);
+                        break;
+
 
                      default:
                         NativeError.ThrowException(lastError, folderLp);

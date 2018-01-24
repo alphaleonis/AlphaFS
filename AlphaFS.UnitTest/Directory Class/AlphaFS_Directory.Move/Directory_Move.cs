@@ -92,12 +92,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      [TestMethod]
-      public void Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetwork_Success()
-      {
-         Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
-         Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
-      }
+      
 
 
       [TestMethod]

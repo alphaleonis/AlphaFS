@@ -165,7 +165,6 @@ namespace Alphaleonis.Win32.Filesystem
                
 
                ThrowPossibleException((uint) lastError, pathLp);
-
             }
 
             // When the handle is null and we are still here, it means the ErrorHandler is active,

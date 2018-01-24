@@ -25,6 +25,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #379: `Path.LocalToUnc()` isn't handling trailing directory separators for mapped drives.  (Thx damiarnold)
 - Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
 - Issue #386: `Network.Host.EnumerateDrives()` returns invalid data.
+- Issue #400: `Directory.CopyDeleteCore` creates destination folder when source folder does not exist.
 
 ### New Features
 
@@ -69,6 +70,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #387: Replace `handle.IsInvalid` checks with a call to method `NativeMethods.IsValidHandle()`.
 - Issue #388: Change method `Network.Host.EnumerateDrives()` return type from `string` to `DriveInfo`.
 - Issue #394: Improve percentage output of properties `DiskSpaceInfo`- `AvailableFreeSpacePercent` and `UsedSpacePercent`
+- Issue #401: CreateDirectory ERROR_ACCESS_DENIED reports parent folder.
 
 ### Breaking Changes
 

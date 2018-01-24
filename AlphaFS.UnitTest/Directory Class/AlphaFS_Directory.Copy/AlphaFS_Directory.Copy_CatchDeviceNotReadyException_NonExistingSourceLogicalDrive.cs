@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -31,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
       {
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(false);
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(true);
+         Directory_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
+         Directory_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(true);
       }
 
 
-      private void Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
+      private void Directory_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -47,13 +46,10 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+         var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
 
-
-         var srcFolder = System.IO.Path.Combine(tempPath, "NonExisting Source Folder");
-         var dstFolder = System.IO.Path.Combine(tempPath, "NonExisting Destination Folder");
+         var srcFolder = nonExistingDriveLetter + @":\NonExisting Source Folder";
+         var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination Folder";
 
          if (isNetwork)
          {
@@ -73,8 +69,8 @@ namespace AlphaFS.UnitTest
          {
             var exType = ex.GetType();
 
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
-
+            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
+                              
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 

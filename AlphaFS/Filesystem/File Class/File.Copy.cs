@@ -733,7 +733,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="copyMoveResult"></param>
+      /// <param name="copyMoveResult">A <see cref="CopyMoveResult"/> instance containing Copy or Move action progress.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="isFolder">Specifies that <paramref name="sourcePath"/> and <paramref name="destinationPath"/> is either a file or directory.</param>
       /// <param name="sourcePath">The source directory path plus file name.</param>
@@ -763,10 +763,10 @@ namespace Alphaleonis.Win32.Filesystem
          
 
          ValidateAndUpdatePathsAndOptions(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
-
+         
 
          var isMove = !isCopy;
-         var isSingleFileCopyMoveAction = null == copyMoveResult && !isFolder;
+         var isSingleFileAction = null == copyMoveResult && !isFolder;
 
          preserveDates = preserveDates && isCopy && !isFolder;
 
@@ -777,17 +777,20 @@ namespace Alphaleonis.Win32.Filesystem
 
          var raiseException = null == progressHandler;
 
+
          // Setup callback function for progress notifications.
+
          var routine = !raiseException
-            ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, hSourceFile, hDestinationFile, lpData) =>
-                  progressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, userProgressData)
+
+            ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, streamNumber, callbackReason, sourceFile, destinationFile, data) =>
+
+                  progressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, streamNumber, callbackReason, userProgressData)
+
             : (NativeMethods.NativeCopyMoveProgressRoutine) null;
 
          #endregion // Setup
 
 
-         // If the move happened on the same drive, we have no knowledge of the number of files/folders.
-         // However, we do know that the one file was moved successfully.
          var cmr = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, isCopy, isFolder, preserveDates, emulateMove);
 
 
@@ -795,63 +798,49 @@ namespace Alphaleonis.Win32.Filesystem
 
          cmr.ErrorCode = 0;
 
-         var success = null == transaction || !NativeMethods.IsAtLeastWindowsVista
 
-            ? isMove
-               // MoveFileWithProgress() / MoveFileTransacted()
-               // 2013-04-15: MSDN confirms LongPath usage.
+         int lastError;
 
-               // CopyFileEx() / CopyFileTransacted()
-               // 2013-04-15: MSDN confirms LongPath usage.
-
-
-               // Note: MoveFileXxx fails if one of the paths is a UNC path, even though both paths refer to the same volume.
-               // For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
-
-               // MoveFileXxx fails if it cannot access the registry. The function stores the locations of the files to be renamed at restart in the following registry value:
-               //
-               //    HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\PendingFileRenameOperations
-               //
-               // This registry value is of type REG_MULTI_SZ. Each rename operation stores one of the following NULL-terminated strings, depending on whether the rename is a delete or not:
-               //
-               //    szDstFile\0\0              : indicates that the file szDstFile is to be deleted on reboot.
-               //    szSrcFile\0szDstFile\0     : indicates that szSrcFile is to be renamed szDstFile on reboot.
-
-
-               ? NativeMethods.MoveFileWithProgress(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
-               : NativeMethods.CopyFileEx(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
-
-            : isMove
-               ? NativeMethods.MoveFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
-               : NativeMethods.CopyFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle);
-
-
-         var lastError = (uint) Marshal.GetLastWin32Error();
-
-
-         if (!success)
+         if (CopyMoveNative(transaction, isMove, sourcePathLp, destinationPathLp, routine, copyOptions, moveOptions, out cancel, out lastError))
          {
-            cmr.ErrorCode = (int) lastError;
+            cmr.TotalFiles++;
 
 
-            if (lastError == Win32Errors.ERROR_REQUEST_ABORTED)
+            //// Reset file system object attributes to ReadOnly.
+            //if (HasReplaceExisting(moveOptions))
+            //   SetAttributesCore(isFolder, transaction, destinationPathLp, FileAttributes.ReadOnly, PathFormat.LongFullPath);
+
+
+            // We take an extra hit by getting the file size for a single file Copy or Move action.
+
+            if (isSingleFileAction)
+               cmr.TotalBytes = GetSizeCore(transaction, null, destinationPathLp, PathFormat.LongFullPath);
+            
+
+            if (preserveDates)
+               CopyTimestampsCore(transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
+         }
+
+         else
+         {
+            // MSDN: If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
+            // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
+            // In this case, the partially copied destination file is deleted.
+            //
+            // If lpProgressRoutine returns PROGRESS_STOP due to the user stopping the operation,
+            // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
+            // In this case, the partially copied destination file is left intact.
+
+            var isCanceled = lastError == Win32Errors.ERROR_REQUEST_ABORTED;
+
+            cmr.ErrorCode = lastError;
+
+            cmr.IsCanceled = isCanceled;
+
+
+            if (!isCanceled || raiseException)
             {
-               // MSDN:
-               //
-               // If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
-               // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
-               // In this case, the partially copied destination file is deleted.
-               //
-               // If lpProgressRoutine returns PROGRESS_STOP due to the user stopping the operation,
-               // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
-               // In this case, the partially copied destination file is left intact.
-
-               cmr.IsCanceled = true;
-            }
-
-            else if (raiseException)
-            {
-               switch (lastError)
+               switch ((uint) lastError)
                {
                   // File.Copy()
                   // File.Move()
@@ -864,7 +853,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // MSDN: .NET 3.5+: FileNotFoundException: sourcePath was not found. 
                   case Win32Errors.ERROR_FILE_NOT_FOUND:
                      if (isFolder)
-                        lastError = Win32Errors.ERROR_PATH_NOT_FOUND;
+                        lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
 
                      NativeError.ThrowException(lastError, sourcePathLp);
                      break;
@@ -874,6 +863,8 @@ namespace Alphaleonis.Win32.Filesystem
                   // Directory.Copy()
                   case Win32Errors.ERROR_ALREADY_EXISTS:
                   case Win32Errors.ERROR_FILE_EXISTS:
+                     lastError = (int) Win32Errors.ERROR_ALREADY_EXISTS;
+
                      NativeError.ThrowException(lastError, null, destinationPathLp);
                      break;
 
@@ -885,7 +876,7 @@ namespace Alphaleonis.Win32.Filesystem
                      var destIsFolder = IsDirectory(attrs.dwFileAttributes);
 
                      // Check for FSO type depends on isFolder.
-                     var destExists = ExistsCore(transaction, isFolder, destinationPathLp, pathFormat);
+                     var destExists = ExistsCore(transaction, isFolder, destinationPathLp, PathFormat.LongFullPath);
 
 
                      // For a number of error codes (sharing violation, path not found, etc)
@@ -906,7 +897,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // Ensure that the source file or folder exists.
                         // Directory.Move()
                         // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive). 
-                        if (!ExistsCore(transaction, isFolder, sourcePathLp, pathFormat))
+                        if (!ExistsCore(transaction, isFolder, sourcePathLp, PathFormat.LongFullPath))
                            NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourcePathLp);
                      }
 
@@ -916,7 +907,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                      if (!isFolder)
                      {
-                        using (var safeHandle = CreateFileCore(transaction, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, false, pathFormat))
+                        using (var safeHandle = CreateFileCore(transaction, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, false, PathFormat.LongFullPath))
                            if (null != safeHandle)
                               fileNameLp = sourcePathLp;
                      }
@@ -942,7 +933,7 @@ namespace Alphaleonis.Win32.Filesystem
                               if (CanOverwrite(moveOptions))
                               {
                                  // Reset file system object attributes.
-                                 SetAttributesCore(transaction, isFolder, destinationPathLp, FileAttributes.Normal, pathFormat);
+                                 SetAttributesCore(transaction, isFolder, destinationPathLp, FileAttributes.Normal, PathFormat.LongFullPath);
 
                                  goto startCopyMove;
                               }
@@ -976,30 +967,52 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         if (success && !isFolder)
-         {
-            //// Reset file system object attributes to ReadOnly.
-            //if (HasReplaceExisting(moveOptions))
-            //   SetAttributesCore(isFolder, transaction, destinationPathLp, FileAttributes.ReadOnly, PathFormat.LongFullPath);
-
-
-            // We take an extra hit by getting the file size for a single file Copy or Move action.
-
-            if (isSingleFileCopyMoveAction)
-               cmr.TotalBytes = GetSizeCore(transaction, null, destinationPathLp, pathFormat);
-
-
-            if (preserveDates)
-               CopyTimestampsCore(transaction, sourcePathLp, destinationPathLp, false, pathFormat);
-
-
-            cmr.TotalFiles++;
-
-            cmr.ActionFinish = DateTime.Now;
-         }
+         cmr.ActionFinish = DateTime.Now;
 
 
          return cmr;
+      }
+
+
+      private static bool CopyMoveNative(KernelTransaction transaction, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine, CopyOptions? copyOptions, MoveOptions? moveOptions, out bool cancel, out int lastError)
+      {
+         cancel = false;
+
+         var success = null == transaction || !NativeMethods.IsAtLeastWindowsVista
+
+            ? isMove
+               // MoveFileWithProgress() / MoveFileTransacted()
+               // 2013-04-15: MSDN confirms LongPath usage.
+
+               // CopyFileEx() / CopyFileTransacted()
+               // 2013-04-15: MSDN confirms LongPath usage.
+
+
+               // Note: MoveFileXxx fails if one of the paths is a UNC path, even though both paths refer to the same volume.
+               // For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
+
+               // MoveFileXxx fails if it cannot access the registry. The function stores the locations of the files to be renamed at restart in the following registry value:
+               //
+               //    HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\PendingFileRenameOperations
+               //
+               // This registry value is of type REG_MULTI_SZ. Each rename operation stores one of the following NULL-terminated strings, depending on whether the rename is a delete or not:
+               //
+               //    szDstFile\0\0              : indicates that the file szDstFile is to be deleted on reboot.
+               //    szSrcFile\0szDstFile\0     : indicates that szSrcFile is to be renamed szDstFile on reboot.
+
+
+               ? NativeMethods.MoveFileWithProgress(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
+               : NativeMethods.CopyFileEx(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
+
+            : isMove
+               ? NativeMethods.MoveFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
+               : NativeMethods.CopyFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle);
+
+
+         lastError = Marshal.GetLastWin32Error();
+
+
+         return success;
       }
 
 

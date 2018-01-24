@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Copy_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
       {
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(false);
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(true);
+         Directory_Copy_CatchNotSupportedException_PathContainsColon(false);
+         Directory_Copy_CatchNotSupportedException_PathContainsColon(true);
       }
 
 
-      private void Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
+      private void Directory_Copy_CatchNotSupportedException_PathContainsColon(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -47,33 +47,21 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+         var colonText = @"\My:FilePath";
+         var folderSrc = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.SysDrive + @"\dev\test") + colonText;
 
-
-         var srcFolder = System.IO.Path.Combine(tempPath, "NonExisting Source Folder");
-         var dstFolder = System.IO.Path.Combine(tempPath, "NonExisting Destination Folder");
-
-         if (isNetwork)
-         {
-            srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
-            dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
-         }
-
-
-         Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
+         Console.WriteLine("Src Directory Path: [{0}]", folderSrc);
 
 
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder);
+            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
             var exType = ex.GetType();
 
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
+            gotException = exType == typeof(NotSupportedException);
 
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
@@ -81,7 +69,7 @@ namespace AlphaFS.UnitTest
 
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
-         Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The directory exists, but is expected not to.");
+         Assert.IsFalse(System.IO.Directory.Exists("does_not_matter_for_this_test"), "The directory exists, but is expected not to.");
 
 
          Console.WriteLine();
