@@ -145,32 +145,24 @@ namespace Alphaleonis.Win32.Filesystem
             {
                switch ((uint) lastError)
                {
-                  case Win32Errors.ERROR_FILE_NOT_FOUND:
-                  case Win32Errors.ERROR_PATH_NOT_FOUND:
-                  case Win32Errors.ERROR_NOT_READY: // Floppy device or network drive not ready.
+                  case Win32Errors.ERROR_FILE_NOT_FOUND: // FileNotFoundException.
+                  case Win32Errors.ERROR_PATH_NOT_FOUND: // DirectoryNotFoundException.
+                  case Win32Errors.ERROR_NOT_READY: // DeviceNotReadyException: Floppy device or network drive not ready.
 
                      var drive = Directory.GetDirectoryRootCore(Transaction, pathLp, PathFormat.LongFullPath);
 
+                     var driveExists = lastError != Win32Errors.ERROR_NOT_READY && File.ExistsCore(Transaction, IsDirectory, drive, PathFormat.LongFullPath);
 
-                     // Check for network drive letter: "\\localhost\J$\NonExisting Folder"  -->  "\\localhost\J$"
-
-                     var isDrive = Path.IsUncPathCore(pathLp, false, false) && drive.EndsWith(Path.NetworkDriveSeparator, StringComparison.Ordinal);
-
-
-                     // Check for logical drive letter: "J:\NonExisting Folder"  -->  "J:"
-
-                     if (!isDrive)
-                        isDrive = char.IsLetter(drive[0]) && drive[1] == Path.VolumeSeparatorChar;
+                     pathLp = !driveExists
+                        ? Path.GetRegularPathCore(drive, GetFullPathOptions.None, false)
+                        : Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false).TrimEnd(Path.DirectorySeparatorChar, Path.WildcardStarMatchAllChar);
 
 
-                     lastError = isDrive ? (int) Win32Errors.ERROR_NOT_READY : lastError;
-
-                     pathLp = drive;
+                     lastError = !driveExists ? (int) Win32Errors.ERROR_NOT_READY : lastError;
 
                      break;
                }
                
-
 
                ThrowPossibleException((uint) lastError, pathLp);
 

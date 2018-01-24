@@ -1094,11 +1094,21 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void ValidateAndUpdatePathsAndOptions(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, PathFormat pathFormat,
          out string sourcePathLp, out string destinationPathLp, out bool isCopy, out bool emulateMove, out bool delayUntilReboot, out bool deleteOnStartup)
       {
+         if (pathFormat != PathFormat.LongFullPath)
+         {
+            if (Utils.IsNullOrWhiteSpace(sourcePath))
+               throw new ArgumentNullException("sourcePath");
+
+            if (Utils.IsNullOrWhiteSpace(destinationPath))
+               throw new ArgumentNullException("destinationPath");
+         }
+
+
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
          // Do not use StringComparison.OrdinalIgnoreCase to allow renaming a folder with different casing.
-         if (!Utils.IsNullOrWhiteSpace(sourcePath) && sourcePath.Equals(destinationPath))
+         if (sourcePath.Equals(destinationPath, StringComparison.OrdinalIgnoreCase))
             NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPath);
-
+         
 
          sourcePathLp = sourcePath;
          destinationPathLp = destinationPath;

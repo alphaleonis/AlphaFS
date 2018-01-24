@@ -357,7 +357,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
@@ -382,7 +382,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
@@ -522,7 +522,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {

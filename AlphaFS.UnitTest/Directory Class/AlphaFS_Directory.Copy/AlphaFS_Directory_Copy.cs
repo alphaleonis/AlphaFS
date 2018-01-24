@@ -68,12 +68,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
-      {
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory(false);
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory(true);
-      }
+      
 
 
       [TestMethod]
@@ -268,7 +263,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
@@ -293,7 +288,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
@@ -320,7 +315,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
@@ -334,39 +329,8 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_Copy_CatchDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var folderSrc = System.IO.Path.Combine(rootDir.Directory.FullName, "Source");
-            var folderDst = System.IO.Path.Combine(rootDir.Directory.FullName, "Destination");
-            Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc);
-            Console.WriteLine("Dst Directory Path: [{0}]", folderDst);
-
-
-            var gotException = false;
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, folderDst);
-            }
-            catch (Exception ex)
-            {
-               var exName = ex.GetType().Name;
-               gotException = exName.Equals("DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
-            }
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-         }
-
-         Console.WriteLine();
-      }
+      
 
 
       private void Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny(bool isNetwork)
