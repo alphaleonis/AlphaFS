@@ -19,14 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32
 {
@@ -34,7 +33,7 @@ namespace Alphaleonis.Win32
    {
       public static void ThrowException(int errorCode)
       {
-         ThrowException((uint) errorCode, null, null);
+         ThrowException((uint)errorCode, null, null);
       }
 
       public static void ThrowException(uint errorCode)
@@ -45,7 +44,7 @@ namespace Alphaleonis.Win32
 
       public static void ThrowException(int errorCode, string readPath)
       {
-         ThrowException((uint) errorCode, readPath, null);
+         ThrowException((uint)errorCode, readPath, null);
       }
 
       public static void ThrowException(uint errorCode, string readPath)
@@ -56,13 +55,20 @@ namespace Alphaleonis.Win32
 
       public static void ThrowException(int errorCode, string readPath, string writePath)
       {
-         ThrowException((uint) errorCode, readPath, writePath);
+         ThrowException((uint)errorCode, readPath, writePath);
       }
 
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       public static void ThrowException(uint errorCode, string readPath, string writePath)
       {
-         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message.Trim().TrimEnd('.').Trim());
+         if (null != readPath)
+            readPath = Path.GetRegularPathCore(readPath, GetFullPathOptions.None, true);
+
+         if (null != writePath)
+            writePath = Path.GetRegularPathCore(writePath, GetFullPathOptions.None, true);
+
+
+         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int)errorCode).Message.Trim().TrimEnd('.').Trim());
 
          if (!Utils.IsNullOrWhiteSpace(readPath) && !Utils.IsNullOrWhiteSpace(writePath))
             errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Read: [{1}] | Write: [{2}]", errorMessage, readPath, writePath);
@@ -78,31 +84,39 @@ namespace Alphaleonis.Win32
          switch (errorCode)
          {
             case Win32Errors.ERROR_INVALID_DRIVE:
-               throw new DriveNotFoundException(errorMessage);
+               throw new System.IO.DriveNotFoundException(errorMessage);
+
 
             case Win32Errors.ERROR_OPERATION_ABORTED:
                throw new OperationCanceledException(errorMessage);
 
+
             case Win32Errors.ERROR_FILE_NOT_FOUND:
-               throw new FileNotFoundException(errorMessage);
+               throw new System.IO.FileNotFoundException(errorMessage);
+
 
             case Win32Errors.ERROR_PATH_NOT_FOUND:
-               throw new DirectoryNotFoundException(errorMessage);
+               throw new System.IO.DirectoryNotFoundException(errorMessage);
+
 
             case Win32Errors.ERROR_BAD_RECOVERY_POLICY:
                throw new PolicyException(errorMessage);
+
 
             case Win32Errors.ERROR_FILE_READ_ONLY:
             case Win32Errors.ERROR_ACCESS_DENIED:
             case Win32Errors.ERROR_NETWORK_ACCESS_DENIED:
                throw new UnauthorizedAccessException(errorMessage);
 
+
             case Win32Errors.ERROR_ALREADY_EXISTS:
             case Win32Errors.ERROR_FILE_EXISTS:
-               throw new AlreadyExistsException(errorMessage, false);
+               throw new AlreadyExistsException(readPath ?? writePath, true);
+
 
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
                throw new DirectoryNotEmptyException(errorMessage);
+
 
             case Win32Errors.ERROR_NOT_READY:
                throw new DeviceNotReadyException(errorMessage);
@@ -161,7 +175,7 @@ namespace Alphaleonis.Win32
 
             default:
                // We don't have a specific exception to generate for this error.               
-               throw new IOException(errorMessage, Win32Errors.GetHrFromWin32Error(errorCode));
+               throw new System.IO.IOException(errorMessage, Win32Errors.GetHrFromWin32Error(errorCode));
          }
       }
    }
