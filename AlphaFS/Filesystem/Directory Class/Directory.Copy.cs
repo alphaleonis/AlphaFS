@@ -687,7 +687,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="copyMoveResult"></param>
+      /// <param name="copyMoveResult">A <see cref="CopyMoveResult"/> instance containing Copy or Move action progress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       internal static CopyMoveResult CopyMoveCore(KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult, PathFormat pathFormat)
@@ -735,7 +735,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
             else
-               cmr = CopyDeleteCore(cmr, transaction, sourcePathLp, destinationPathLp, preserveDates, emulateMove, copyOptions, progressHandler, userProgressData);
+               cmr = CopyDeleteCore(transaction, sourcePathLp, destinationPathLp, preserveDates, emulateMove, copyOptions, progressHandler, userProgressData, cmr);
          }
 
          // Move
@@ -760,27 +760,27 @@ namespace Alphaleonis.Win32.Filesystem
             // If the move happened on the same drive, we have no knowledge of the number of files/folders.
             // However, we do know that the one folder was moved successfully.
 
-            if (cmr.ErrorCode == Win32Errors.NO_ERROR)
-               cmr.TotalFolders = 1;
+            cmr.TotalFolders = cmr.ErrorCode == Win32Errors.NO_ERROR ? 1 : 0;
          }
 
 
          cmr.ActionFinish = DateTime.Now;
 
+
          return cmr;
       }
 
 
-      private static CopyMoveResult CopyDeleteCore(CopyMoveResult cmr, KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove, CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      private static CopyMoveResult CopyDeleteCore(KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove, CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult)
       {
+         var cmr = copyMoveResult ?? new CopyMoveResult(sourcePathLp, destinationPathLp, true, true, preserveDates, emulateMove);
+
+
          const int items = 1000;
          var dirs = new Queue<string>(items);
 
          dirs.Enqueue(sourcePathLp);
          
-
-         CreateDirectoryCore(transaction, destinationPathLp, null, null, false, PathFormat.LongFullPath);
-
 
          while (dirs.Count > 0)
          {
@@ -789,7 +789,9 @@ namespace Alphaleonis.Win32.Filesystem
             // TODO 2018-01-09: Not 100% yet with local + UNC paths.
             var dstLp = srcLp.Replace(sourcePathLp, destinationPathLp);
 
+
             // Traverse the source folder, processing files and folders.
+
             foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, srcLp, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath))
             {
                var fseiSourcePath = fseiSource.LongFullPath;
@@ -842,8 +844,11 @@ namespace Alphaleonis.Win32.Filesystem
                // TODO 2018-01-09: Not 100% yet with local + UNC paths.
                var dstLp = sourcePathLp.Replace(sourcePathLp, destinationPathLp);
 
+
                // Traverse the source folder, processing subfolders.
+
                foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, transaction, sourcePathLp, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath))
+
                   File.CopyTimestampsCore(transaction, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
             }
 

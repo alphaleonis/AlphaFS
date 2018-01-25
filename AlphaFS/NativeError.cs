@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -112,7 +112,6 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_ALREADY_EXISTS:
             case Win32Errors.ERROR_FILE_EXISTS:
                throw new AlreadyExistsException(readPath ?? writePath, true);
-
 
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
                throw new DirectoryNotEmptyException(errorMessage);

@@ -68,14 +68,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Logical Drive
 
-         // Check for Logical Drives: C:, D:, ...
          else
-         {
-            // Don't use char.IsLetter() here as that can be misleading.
-            // The only valid drive letters are: a-z and A-Z.
-            var c = volumeName[0];
-            doQueryDos = volumeName[1] == Path.VolumeSeparatorChar && (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z');
-         }
+            doQueryDos = Path.IsLogicalDriveCore(volumeName, PathFormat.LongFullPath);
 
 
          if (doQueryDos)

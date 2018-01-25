@@ -152,11 +152,8 @@ namespace Alphaleonis.Win32.Filesystem
          if (path.StartsWith(UncPrefix, StringComparison.Ordinal))
             return LongPathUncPrefix + path.Substring(UncPrefix.Length);
 
-
-         // Don't use char.IsLetter() here as that can be misleading; The only valid drive letters are: A-Z.
-         var c = path.ToUpperInvariant()[0];
-
-         return IsPathRooted(path, false) && c >= 'A' && c <= 'Z' ? LongPathPrefix + path : path;
+         
+         return IsPathRooted(path, false) && IsLogicalDriveCore(path, PathFormat.LongFullPath) ? LongPathPrefix + path : path;
       }
 
 

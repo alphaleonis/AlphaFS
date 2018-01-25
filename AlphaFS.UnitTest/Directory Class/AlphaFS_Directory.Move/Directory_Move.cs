@@ -92,12 +92,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      [TestMethod]
-      public void Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetwork_Success()
-      {
-         Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
-         Directory_Move_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
-      }
+      
 
 
       [TestMethod]
@@ -357,7 +352,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
@@ -382,7 +377,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
@@ -522,7 +517,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, string.Empty);
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
