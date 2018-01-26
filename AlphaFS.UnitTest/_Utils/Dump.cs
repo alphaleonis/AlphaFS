@@ -20,8 +20,12 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using Alphaleonis.Win32.Filesystem;
 
 namespace AlphaFS.UnitTest
 {
@@ -31,7 +35,7 @@ namespace AlphaFS.UnitTest
       public static bool Dump(object obj, int width = -35, bool indent = false)
       {
          var cnt = 0;
-         const string nulll = "\t\tnull";
+         const string nulll = "\t\tNULL";
          var template = "\t{0}#{1:000}\t{2, " + width + "} = [{3}]";
 
          if (obj == null)
@@ -45,11 +49,36 @@ namespace AlphaFS.UnitTest
          var loopOk = false;
          foreach (var descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
          {
-            string propValue;
+            string propValue = null;
             try
             {
                var value = descriptor.GetValue(obj);
-               propValue = null == value ? "NULL" : value.ToString();
+
+               if (null != value)
+               {
+                  var propObjType = value.GetType();
+
+                  if (propObjType.IsAssignableToAnyOf(typeof(Stopwatch)))
+                  {
+                     var propObj = value as Stopwatch;
+                     if (null != propObj)
+                        propValue = propObj.Elapsed.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
+                  }
+
+                  //else if (propObjType.IsAssignableToAnyOf(typeof(List<>)))
+                  //{
+                  //}
+
+                  //else if (propObjType == typeof(List<>))
+                  //{
+                  //   var propObj = value as List<string>;
+                  //   if (null != propObj)
+                  //      propValue = propObj.Count.ToString(CultureInfo.InvariantCulture);
+                  //}
+
+                  else
+                     propValue = value.ToString();
+               }
 
                loopOk = true;
             }
@@ -59,10 +88,39 @@ namespace AlphaFS.UnitTest
                propValue = ex.Message.Replace(Environment.NewLine, "  ");
             }
 
+
+            if (null == propValue)
+               propValue = "NULL";
+
             Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
          }
 
          return loopOk;
+      }
+
+
+
+      public static bool IsAssignableToAnyOf(this Type typeOperand, IEnumerable<Type> types)
+      {
+         return types.Any(type => type.IsAssignableFrom(typeOperand));
+      }
+
+
+      public static bool IsAssignableToAnyOf(this Type typeOperand, params Type[] types)
+      {
+         return IsAssignableToAnyOf(typeOperand, types.AsEnumerable());
+      }
+
+
+      public static bool IsAssignableToAnyOf<T1, T2, T3>(this Type typeOperand)
+      {
+         return typeOperand.IsAssignableToAnyOf(typeof(T1), typeof(T2), typeof(T3));
+      }
+
+
+      public static bool IsAssignableToAnyOf<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>(this Type typeOperand)
+      {
+         return typeOperand.IsAssignableToAnyOf(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9), typeof(T10), typeof(T11), typeof(T12), typeof(T13), typeof(T14), typeof(T15), typeof(T16), typeof(T17), typeof(T18), typeof(T19), typeof(T20));
       }
    }
 }

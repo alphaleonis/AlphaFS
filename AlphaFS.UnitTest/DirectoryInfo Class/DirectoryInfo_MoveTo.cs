@@ -54,6 +54,8 @@ namespace AlphaFS.UnitTest
       private void DirectoryInfo_MoveTo_DelayUntilReboot(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
+
 
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
@@ -66,24 +68,30 @@ namespace AlphaFS.UnitTest
             var folderSrc = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(folder, "Source-" + UnitTestConstants.GetRandomFileName()));
             var pendingEntry = folderSrc.FullName;
 
-            Console.WriteLine("\nSrc Directory Path: [{0}]", pendingEntry);
+            Console.WriteLine("Src Directory Path: [{0}]", pendingEntry);
 
             UnitTestConstants.CreateDirectoriesAndFiles(pendingEntry, new Random().Next(5, 15), false, false, true);
 
 
             var gotException = false;
+            
 
-            // Trigger DelayUntilReboot.
             try
             {
+               // Trigger DelayUntilReboot.
+
                folderSrc.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot);
             }
             catch (Exception ex)
             {
-               var exName = ex.GetType().Name;
-               gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\tCaught EXPECTED Exception: [{0}] Message: [{1}]", exName, ex.Message);
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(ArgumentException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
+
+
 
 
             if (isNetwork)
@@ -92,10 +100,11 @@ namespace AlphaFS.UnitTest
             else
             {
                // Verify DelayUntilReboot in registry.
+
                var pendingList = (string[]) Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager", "PendingFileRenameOperations", null);
 
 
-               Assert.IsNotNull(pendingList, "The PendingFileRenameOperations is null, which is not expected.");
+               Assert.IsNotNull(pendingList, "The PendingFileRenameOperations is null, but is not expected to.");
 
 
                var found = false;
@@ -115,7 +124,7 @@ namespace AlphaFS.UnitTest
                }
 
 
-               Assert.IsTrue(found, "No pending entry found in registry, which is not expected.");
+               Assert.IsTrue(found, "Registry does not contain pending entry, but is expected to.");
             }
          }
 

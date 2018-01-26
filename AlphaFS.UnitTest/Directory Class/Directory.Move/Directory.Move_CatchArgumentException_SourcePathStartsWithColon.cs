@@ -24,20 +24,19 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_DirectoryCopyTest
+   public partial class DirectoryMoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
+      public void Directory_Move_CatchArgumentException_SourcePathStartsWithColon_Local_Success()
       {
-         Directory_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
-         Directory_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(true);
+         Directory_Move_CatchArgumentException_SourcePathStartsWithColon(false);
       }
 
 
-      private void Directory_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(bool isNetwork)
+      private void Directory_Move_CatchArgumentException_SourcePathStartsWithColon(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -46,37 +45,27 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
-
-         var srcFolder = nonExistingDriveLetter + @":\NonExisting Source Folder";
-         var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination Folder";
-
-         if (isNetwork)
-         {
-            srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
-            dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
-         }
-         
+         var srcFolder = @":AAAAAAAAAA";
          Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
-
-
+         
+         
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder);
+            Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
             var exType = ex.GetType();
 
-            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
-                              
+            gotException = exType == typeof(ArgumentException);
+
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 
 
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
-         Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The directory exists, but is expected not to.");
+         Assert.IsFalse(System.IO.Directory.Exists("does_not_matter_for_this_test"), "The directory exists, but is expected not to.");
 
 
          Console.WriteLine();

@@ -136,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
          int lastError;
          var searchOption = null != FileSystemObjectType && (bool) FileSystemObjectType ? NativeMethods.FINDEX_SEARCH_OPS.SearchLimitToDirectories : NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch;
 
-         var handle = FileSystemInfo.FindFirstFileCore(Transaction, pathLp, FindExInfoLevel, searchOption, LargeCache, out lastError, out win32FindData);
+         var handle = FileSystemInfo.FindFirstFileNative(Transaction, pathLp, FindExInfoLevel, searchOption, LargeCache, out lastError, out win32FindData);
 
 
          if (!suppressException && !ContinueOnException)
@@ -147,24 +147,21 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   case Win32Errors.ERROR_FILE_NOT_FOUND: // FileNotFoundException.
                   case Win32Errors.ERROR_PATH_NOT_FOUND: // DirectoryNotFoundException.
-                  case Win32Errors.ERROR_NOT_READY: // DeviceNotReadyException: Floppy device or network drive not ready.
+                  case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
 
-                     var drive = Directory.GetDirectoryRootCore(Transaction, pathLp, PathFormat.LongFullPath);
+                     string drive;
 
-                     var driveExists = lastError != Win32Errors.ERROR_NOT_READY && File.ExistsCore(Transaction, IsDirectory, drive, PathFormat.LongFullPath);
+                     var driveExists = File.ExistsDrive(Transaction, pathLp, out drive, false);
 
-                     pathLp = !driveExists
-                        ? Path.GetRegularPathCore(drive, GetFullPathOptions.None, false)
-                        : Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false).TrimEnd(Path.DirectorySeparatorChar, Path.WildcardStarMatchAllChar);
+                     lastError = (int) (!driveExists ? Win32Errors.ERROR_NOT_READY : IsDirectory ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
 
-
-                     lastError = !driveExists ? (int) Win32Errors.ERROR_NOT_READY : lastError;
+                     NativeError.ThrowException(lastError, null, pathLp);
 
                      break;
                }
-               
 
-               ThrowPossibleException((uint) lastError, pathLp);
+
+               ThrowPossibleException((uint)lastError, pathLp);
             }
 
             // When the handle is null and we are still here, it means the ErrorHandler is active,
@@ -234,6 +231,7 @@ namespace Alphaleonis.Win32.Filesystem
             case Win32Errors.ERROR_NO_MORE_FILES:
                lastError = Win32Errors.NO_ERROR;
                break;
+
 
             case Win32Errors.ERROR_FILE_NOT_FOUND:
             case Win32Errors.ERROR_PATH_NOT_FOUND:
@@ -350,6 +348,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                               : AsFileSystemInfo ? ((DirectoryInfo) (object) res).EntryInfo : (FileSystemEntryInfo) (object) res
 
+                           
                            // No, create new instance.
 
                            : new FileSystemEntryInfo(win32FindData) {FullPath = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp) + fileName};
@@ -390,12 +389,17 @@ namespace Alphaleonis.Win32.Filesystem
          {
             NativeMethods.WIN32_FIND_DATA win32FindData;
 
+            
+            // Not explicitly set to be a folder.
+
             if (!IsDirectory)
             {
-               // Not explicitly set to be a folder.
                using (var handle = FindFirstFile(InputPath, out win32FindData))
+
                   return null == handle
+
                      ? (T) (object) null
+
                      : NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, win32FindData, null, InputPath);
 
             }

@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourcePath, string destinationPath)
       {
-         CopyMoveCore(null, null, false, sourcePath, destinationPath, CopyOptions.FailIfExists, null, false, null, null, PathFormat.RelativePath);
+         CopyMoveCore(null, false, sourcePath, destinationPath, CopyOptions.FailIfExists, null, false, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourcePath, string destinationPath, bool overwrite)
       {
-         CopyMoveCore(null, null, false, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, PathFormat.RelativePath);
+         CopyMoveCore(null, false, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, null, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, CopyOptions.FailIfExists, null, false, null, null, pathFormat);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, CopyOptions.FailIfExists, null, false, null, null, null, pathFormat);
       }
 
 
@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, bool overwrite, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, pathFormat);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, null, pathFormat);
       }
 
 
@@ -155,7 +155,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, CopyOptions.FailIfExists, null, false, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, CopyOptions.FailIfExists, null, false, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -181,7 +181,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, CopyOptions.FailIfExists, null, false, null, null, pathFormat);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, CopyOptions.FailIfExists, null, false, null, null, null, pathFormat);
       }
 
 
@@ -207,7 +207,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -234,7 +234,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, pathFormat);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, null, pathFormat);
       }
 
 
@@ -262,7 +262,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, copyOptions, null, false, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, copyOptions, null, false, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -289,7 +289,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, copyOptions, null, false, null, null, pathFormat);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, copyOptions, null, false, null, null, null, pathFormat);
       }
 
 
@@ -316,7 +316,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, copyOptions, null, preserveDates, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, copyOptions, null, preserveDates, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -344,7 +344,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, copyOptions, null, preserveDates, null, null, pathFormat);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, copyOptions, null, preserveDates, null, null, null, pathFormat);
       }
       
 
@@ -373,7 +373,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, copyOptions, null, false, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, copyOptions, null, false, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
 
@@ -403,7 +403,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, copyOptions, null, false, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, copyOptions, null, false, progressHandler, userProgressData, null, pathFormat);
       }
 
 
@@ -433,7 +433,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
 
@@ -464,7 +464,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, null, pathFormat);
       }
 
 
@@ -493,7 +493,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, copyOptions, null, false, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, copyOptions, null, false, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -521,7 +521,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, copyOptions, null, false, null, null, pathFormat);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, copyOptions, null, false, null, null, null, pathFormat);
       }
 
 
@@ -549,7 +549,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, copyOptions, null, preserveDates, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, copyOptions, null, preserveDates, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -578,7 +578,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, copyOptions, null, preserveDates, null, null, pathFormat);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, copyOptions, null, preserveDates, null, null, null, pathFormat);
       }
       
 
@@ -608,7 +608,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, copyOptions, null, false, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, copyOptions, null, false, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
 
@@ -639,7 +639,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, copyOptions, null, false, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, copyOptions, null, false, progressHandler, userProgressData, null, pathFormat);
       }
 
 
@@ -670,7 +670,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
 
@@ -702,7 +702,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, null, pathFormat);
       }
 
 
@@ -733,7 +733,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="copyMoveResult">A <see cref="CopyMoveResult"/> instance containing Copy or Move action progress.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="isFolder">Specifies that <paramref name="sourcePath"/> and <paramref name="destinationPath"/> is either a file or directory.</param>
       /// <param name="sourcePath">The source directory path plus file name.</param>
@@ -743,10 +742,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise. This parameter is ignored for move operations.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="copyMoveResult">A <see cref="CopyMoveResult"/> instance containing Copy or Move action progress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(CopyMoveResult copyMoveResult, KernelTransaction transaction, bool isFolder, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      internal static CopyMoveResult CopyMoveCore(KernelTransaction transaction, bool isFolder, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult, PathFormat pathFormat)
       {
          #region Setup
 
@@ -765,12 +765,6 @@ namespace Alphaleonis.Win32.Filesystem
          ValidateAndUpdatePathsAndOptions(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
          
 
-         var isMove = !isCopy;
-         var isSingleFileAction = null == copyMoveResult && !isFolder;
-
-         preserveDates = preserveDates && isCopy && !isFolder;
-
-
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
          // Otherwise, the copy/move operation will continue to completion.
          bool cancel;
@@ -788,22 +782,29 @@ namespace Alphaleonis.Win32.Filesystem
 
             : (NativeMethods.NativeCopyMoveProgressRoutine) null;
 
-         #endregion // Setup
-
 
          var cmr = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, isCopy, isFolder, preserveDates, emulateMove);
+
+         var isMove = !isCopy;
+         var isSingleFileAction = null == copyMoveResult && !isFolder;
+
+         preserveDates = preserveDates && isCopy && !isFolder;
+
+
+         #endregion // Setup
 
 
       startCopyMove:
 
          cmr.ErrorCode = 0;
 
-
          int lastError;
+
 
          if (CopyMoveNative(transaction, isMove, sourcePathLp, destinationPathLp, routine, copyOptions, moveOptions, out cancel, out lastError))
          {
-            cmr.TotalFiles++;
+            if (!isFolder)
+               cmr.TotalFiles++;
 
 
             //// Reset file system object attributes to ReadOnly.
@@ -811,10 +812,9 @@ namespace Alphaleonis.Win32.Filesystem
             //   SetAttributesCore(isFolder, transaction, destinationPathLp, FileAttributes.ReadOnly, PathFormat.LongFullPath);
 
 
-            // We take an extra hit by getting the file size for a single file Copy or Move action.
-
             if (isSingleFileAction)
-               cmr.TotalBytes = GetSizeCore(transaction, null, destinationPathLp, PathFormat.LongFullPath);
+               // We take an extra hit by getting the file size for a single file Copy or Move action.
+               cmr.TotalBytes = GetSizeCore(transaction, null, sourcePathLp, PathFormat.LongFullPath);
             
 
             if (preserveDates)
@@ -840,184 +840,24 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (!isCanceled || raiseException)
             {
-               switch ((uint) lastError)
-               {
-                  // File.Copy()
-                  // File.Move()
-                  // Directory.Move()
-                  // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified in sourcePath or destinationPath is invalid (for example, it is on an unmapped drive).
-                  case Win32Errors.ERROR_PATH_NOT_FOUND:
+               if (RestartCopyMoveOrThrowException(lastError, isFolder, isMove, transaction, sourcePathLp, destinationPathLp, moveOptions))
 
-                  // File.Copy()
-                  // File.Move()
-                  // MSDN: .NET 3.5+: FileNotFoundException: sourcePath was not found. 
-                  case Win32Errors.ERROR_FILE_NOT_FOUND:
-                     if (isFolder)
-                        lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+                  // The folder/file read-only was removed, so restart the Copy or Move action.
 
-                     NativeError.ThrowException(lastError, sourcePathLp);
-                     break;
-
-
-                  // File.Copy()
-                  // Directory.Copy()
-                  case Win32Errors.ERROR_ALREADY_EXISTS:
-                  case Win32Errors.ERROR_FILE_EXISTS:
-                     lastError = (int) Win32Errors.ERROR_ALREADY_EXISTS;
-
-                     NativeError.ThrowException(lastError, null, destinationPathLp);
-                     break;
-
-
-                  default:
-                     var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-                     FillAttributeInfoCore(transaction, destinationPathLp, ref attrs, false, false);
-
-                     var destIsFolder = IsDirectory(attrs.dwFileAttributes);
-
-                     // Check for FSO type depends on isFolder.
-                     var destExists = ExistsCore(transaction, isFolder, destinationPathLp, PathFormat.LongFullPath);
-
-
-                     // For a number of error codes (sharing violation, path not found, etc)
-                     // we don't know if the problem was with the source or destination file.
-
-                     // Check if destination directory already exists.
-                     // Directory.Move()
-                     // MSDN: .NET 3.5+: IOException: destDirName already exists.
-                     
-                     if (destIsFolder && destExists)
-                        NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destinationPathLp);
-
-
-
-
-                     if (isMove)
-                     {
-                        // Ensure that the source file or folder exists.
-                        // Directory.Move()
-                        // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive). 
-                        if (!ExistsCore(transaction, isFolder, sourcePathLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourcePathLp);
-                     }
-
-
-                     // Try reading the source file.
-                     var fileNameLp = destinationPathLp;
-
-                     if (!isFolder)
-                     {
-                        using (var safeHandle = CreateFileCore(transaction, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, false, PathFormat.LongFullPath))
-                           if (null != safeHandle)
-                              fileNameLp = sourcePathLp;
-                     }
-
-
-                     if (lastError == Win32Errors.ERROR_ACCESS_DENIED)
-                     {
-                        // File.Copy()
-                        // File.Move()
-                        // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
-                        
-
-                        // Directory exists with the same name as the file.
-                        if (destExists && !isFolder && destIsFolder)
-                           NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
-
-
-                        if (isMove)
-                        {
-                           if (IsReadOnlyOrHidden(attrs.dwFileAttributes))
-                           {
-                              // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
-                              if (CanOverwrite(moveOptions))
-                              {
-                                 // Reset file system object attributes.
-                                 SetAttributesCore(transaction, isFolder, destinationPathLp, FileAttributes.Normal, PathFormat.LongFullPath);
-
-                                 goto startCopyMove;
-                              }
-
-
-                              // MSDN: .NET 3.5+: UnauthorizedAccessException: destinationPath is read-only.
-                              // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
-                              // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                              throw new FileReadOnlyException(destinationPathLp);
-                           }
-
-
-                           // 2017-06-12: Not necessary anymore because we reset the file attributes to Normal.
-
-                           //// MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
-                           //// and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                           //if (IsHidden(attrs.dwFileAttributes))
-                           //   NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.File_Is_Hidden, destinationPathLp));
-                        }
-                     }
-
-
-                     // MSDN: .NET 3.5+: An I/O error has occurred. 
-                     // File.Copy(): IOException: destinationPath exists and overwrite is false.
-                     // File.Move(): The destination file already exists or sourcePath was not found.
-                     NativeError.ThrowException(lastError, null, fileNameLp);
-
-                     break;
-               }
+                  goto startCopyMove;
             }
          }
 
 
-         cmr.ActionFinish = DateTime.Now;
+         cmr.Duration.Stop();
 
 
          return cmr;
       }
+      
 
-
-      private static bool CopyMoveNative(KernelTransaction transaction, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine, CopyOptions? copyOptions, MoveOptions? moveOptions, out bool cancel, out int lastError)
-      {
-         cancel = false;
-
-         var success = null == transaction || !NativeMethods.IsAtLeastWindowsVista
-
-            ? isMove
-               // MoveFileWithProgress() / MoveFileTransacted()
-               // 2013-04-15: MSDN confirms LongPath usage.
-
-               // CopyFileEx() / CopyFileTransacted()
-               // 2013-04-15: MSDN confirms LongPath usage.
-
-
-               // Note: MoveFileXxx fails if one of the paths is a UNC path, even though both paths refer to the same volume.
-               // For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
-
-               // MoveFileXxx fails if it cannot access the registry. The function stores the locations of the files to be renamed at restart in the following registry value:
-               //
-               //    HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\PendingFileRenameOperations
-               //
-               // This registry value is of type REG_MULTI_SZ. Each rename operation stores one of the following NULL-terminated strings, depending on whether the rename is a delete or not:
-               //
-               //    szDstFile\0\0              : indicates that the file szDstFile is to be deleted on reboot.
-               //    szSrcFile\0szDstFile\0     : indicates that szSrcFile is to be renamed szDstFile on reboot.
-
-
-               ? NativeMethods.MoveFileWithProgress(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
-               : NativeMethods.CopyFileEx(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
-
-            : isMove
-               ? NativeMethods.MoveFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
-               : NativeMethods.CopyFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle);
-
-
-         lastError = Marshal.GetLastWin32Error();
-
-
-         return success;
-      }
-
-
-
-
+      
+      
       /// <summary>Checks if the <see cref="MoveOptions.CopyAllowed"/> flag is specified.</summary>
       internal static bool AllowEmulate(MoveOptions? moveOptions)
       {
@@ -1104,22 +944,205 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      internal static void ValidateAndUpdatePathsAndOptions(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, PathFormat pathFormat,
-         out string sourcePathLp, out string destinationPathLp, out bool isCopy, out bool emulateMove, out bool delayUntilReboot, out bool deleteOnStartup)
-      {
-         if (pathFormat != PathFormat.LongFullPath)
-         {
-            if (Utils.IsNullOrWhiteSpace(sourcePath))
-               throw new ArgumentNullException("sourcePath");
 
-            if (Utils.IsNullOrWhiteSpace(destinationPath))
-               throw new ArgumentNullException("destinationPath");
+
+      private static bool CopyMoveNative(KernelTransaction transaction, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine, CopyOptions? copyOptions, MoveOptions? moveOptions, out bool cancel, out int lastError)
+      {
+         cancel = false;
+
+         var success = null == transaction || !NativeMethods.IsAtLeastWindowsVista
+
+            ? isMove
+               // MoveFileWithProgress() / MoveFileTransacted()
+               // 2013-04-15: MSDN confirms LongPath usage.
+
+               // CopyFileEx() / CopyFileTransacted()
+               // 2013-04-15: MSDN confirms LongPath usage.
+
+
+               // Note: MoveFileXxx fails if one of the paths is a UNC path, even though both paths refer to the same volume.
+               // For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
+
+               // MoveFileXxx fails if it cannot access the registry. The function stores the locations of the files to be renamed at restart in the following registry value:
+               //
+               //    HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\PendingFileRenameOperations
+               //
+               // This registry value is of type REG_MULTI_SZ. Each rename operation stores one of the following NULL-terminated strings, depending on whether the rename is a delete or not:
+               //
+               //    szDstFile\0\0              : indicates that the file szDstFile is to be deleted on reboot.
+               //    szSrcFile\0szDstFile\0     : indicates that szSrcFile is to be renamed szDstFile on reboot.
+
+
+               ? NativeMethods.MoveFileWithProgress(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions)moveOptions)
+               : NativeMethods.CopyFileEx(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions)copyOptions)
+
+            : isMove
+               ? NativeMethods.MoveFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions)moveOptions, transaction.SafeHandle)
+               : NativeMethods.CopyFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions)copyOptions, transaction.SafeHandle);
+
+
+         lastError = Marshal.GetLastWin32Error();
+
+
+         return success;
+      }
+
+
+      private static bool RestartCopyMoveOrThrowException(int lastError, bool isFolder, bool isMove, KernelTransaction transaction, string sourcePathLp, string destinationPathLp, MoveOptions? moveOptions)
+      {
+         var restart = false;
+
+
+         switch ((uint) lastError)
+         {
+            // File.Copy()
+            // File.Move()
+            // MSDN: .NET 3.5+: FileNotFoundException: sourcePath was not found. 
+            case Win32Errors.ERROR_FILE_NOT_FOUND: // On files.
+
+
+            // File.Copy()
+            // File.Move()
+            // Directory.Move()
+            // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified in sourcePath or destinationPath is invalid (for example, it is on an unmapped drive).
+            case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
+
+
+            case Win32Errors.ERROR_NOT_READY: // DeviceNotReadyException: Floppy device or network drive not ready.
+
+               string drive;
+
+               var driveExists = ExistsDrive(transaction, destinationPathLp, out drive, false);
+
+               lastError = (int) (!driveExists ? Win32Errors.ERROR_NOT_READY : isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
+
+               NativeError.ThrowException(lastError, null, destinationPathLp);
+
+               break;
+
+
+
+
+            // File.Copy()
+            // Directory.Copy()
+            case Win32Errors.ERROR_ALREADY_EXISTS: // On folders.
+            case Win32Errors.ERROR_FILE_EXISTS:    // On files.
+               lastError = (int) (isFolder ? Win32Errors.ERROR_ALREADY_EXISTS : Win32Errors.ERROR_FILE_EXISTS);
+
+               NativeError.ThrowException(lastError, null, destinationPathLp);
+               break;
+
+
+            default:
+               var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+               FillAttributeInfoCore(transaction, destinationPathLp, ref attrs, false, false);
+
+               var destIsFolder = IsDirectory(attrs.dwFileAttributes);
+
+               // Check for FSO type depends on isFolder.
+               var destExists = ExistsCore(transaction, isFolder, destinationPathLp, PathFormat.LongFullPath);
+
+
+               // For a number of error codes (sharing violation, path not found, etc)
+               // we don't know if the problem was with the source or destination file.
+
+               // Check if destination directory already exists.
+               // Directory.Move()
+               // MSDN: .NET 3.5+: IOException: destDirName already exists.
+
+               if (destIsFolder && destExists)
+                  NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destinationPathLp);
+
+
+
+
+               if (isMove)
+               {
+                  // Ensure that the source file or folder exists.
+                  // Directory.Move()
+                  // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive). 
+
+                  if (!ExistsCore(transaction, isFolder, sourcePathLp, PathFormat.LongFullPath))
+
+                     NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourcePathLp);
+               }
+
+
+               // Try reading the source file.
+               var fileNameLp = destinationPathLp;
+
+               if (!isFolder)
+               {
+                  using (var safeHandle = CreateFileCore(transaction, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, false, PathFormat.LongFullPath))
+                     if (null != safeHandle)
+                        fileNameLp = sourcePathLp;
+               }
+
+
+               if (lastError == Win32Errors.ERROR_ACCESS_DENIED)
+               {
+                  // File.Copy()
+                  // File.Move()
+                  // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
+
+
+                  // Directory exists with the same name as the file.
+                  if (destExists && !isFolder && destIsFolder)
+                     NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
+
+
+                  if (isMove)
+                  {
+                     if (IsReadOnlyOrHidden(attrs.dwFileAttributes))
+                     {
+                        // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
+                        if (CanOverwrite(moveOptions))
+                        {
+                           // Reset file system object attributes.
+                           SetAttributesCore(transaction, isFolder, destinationPathLp, FileAttributes.Normal, PathFormat.LongFullPath);
+
+                           restart = true;
+                           break;
+                        }
+
+
+                        // MSDN: .NET 3.5+: UnauthorizedAccessException: destinationPath is read-only.
+                        // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
+                        // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
+                        throw new FileReadOnlyException(destinationPathLp);
+                     }
+
+
+                     // 2017-06-12: Not necessary anymore because we reset the file attributes to Normal.
+
+                     //// MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
+                     //// and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
+                     //if (IsHidden(attrs.dwFileAttributes))
+                     //   NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.File_Is_Hidden, destinationPathLp));
+                  }
+               }
+
+
+               // MSDN: .NET 3.5+: An I/O error has occurred. 
+               // File.Copy(): IOException: destinationPath exists and overwrite is false.
+               // File.Move(): The destination file already exists or sourcePath was not found.
+               NativeError.ThrowException(lastError, null, fileNameLp);
+
+               break;
          }
 
 
+         return restart;
+      }
+
+
+      internal static void ValidateAndUpdatePathsAndOptions(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, PathFormat pathFormat,
+         out string sourcePathLp, out string destinationPathLp, out bool isCopy, out bool emulateMove, out bool delayUntilReboot, out bool deleteOnStartup)
+      {
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
          // Do not use StringComparison.OrdinalIgnoreCase to allow renaming a folder with different casing.
-         if (sourcePath.Equals(destinationPath, StringComparison.OrdinalIgnoreCase))
+
+         if (null != sourcePath && sourcePath.Equals(destinationPath, StringComparison.Ordinal))
             NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPath);
          
 
@@ -1139,6 +1162,21 @@ namespace Alphaleonis.Win32.Filesystem
          
          if (pathFormat != PathFormat.LongFullPath)
          {
+            if (pathFormat != PathFormat.LongFullPath)
+            {
+               if (Utils.IsNullOrWhiteSpace(sourcePath))
+                  throw new ArgumentNullException("sourcePath");
+
+               
+               // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
+
+               if (!delayUntilReboot && Utils.IsNullOrWhiteSpace(destinationPath))
+                  throw new ArgumentNullException("destinationPath");
+            }
+
+            
+
+
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
             // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
 

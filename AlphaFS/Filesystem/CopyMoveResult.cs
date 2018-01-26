@@ -21,6 +21,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -45,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          IsCopy = true;
 
-         ActionStart = ActionFinish = DateTime.Now;
+         Duration = Stopwatch.StartNew();
       }
 
 
@@ -73,16 +74,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Properties
 
-      /// <summary>Indicates when the Copy or Move action started, in UTC format.</summary>
-      public DateTime ActionStart { get; set; }
+      ///// <summary>Indicates when the Copy or Move action started, in UTC format.</summary>
+      //public DateTime ActionStart { get; set; }
 
 
-      /// <summary>Indicates when the Copy or Move action finished, in UTC format.</summary>
-      public DateTime ActionFinish { get; set; }
+      ///// <summary>Indicates when the Copy or Move action finished, in UTC format.</summary>
+      //public DateTime ActionFinish { get; set; }
+
+
+      ///// <summary>Indicates the duration of the Copy or Move action.</summary>
+      //public TimeSpan Duration { get { return ActionFinish.Subtract(ActionStart); } }
 
 
       /// <summary>Indicates the duration of the Copy or Move action.</summary>
-      public TimeSpan Duration { get { return ActionFinish.Subtract(ActionStart); } }
+      public Stopwatch Duration { get; private set; }
 
 
       /// <summary>Indicates the destination file or directory.</summary>

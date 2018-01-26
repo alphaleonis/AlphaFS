@@ -25,59 +25,65 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class DirectoryMoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive_LocalAndNetwork_Success()
+      public void Directory_Move_CatchIOException_SameSourceAndDestination_LocalAndNetwork_Success()
       {
-         Directory_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive(false);
-         Directory_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive(true);
+         Directory_Move_CatchIOException_SameSourceAndDestination(false);
+         Directory_Move_CatchIOException_SameSourceAndDestination(true);
       }
 
 
-      private void Directory_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive(bool isNetwork)
+      private void Directory_Move_CatchIOException_SameSourceAndDestination(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
-
-         var folderDst = nonExistingDriveLetter + @":\NonExisting Destination Folder";
-
-         if (isNetwork)
-            folderDst = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folderDst);
-
-         Console.WriteLine("Dst Directory Path: [{0}]", folderDst);
-
-
-         var gotException = false;
-         try
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            Alphaleonis.Win32.Filesystem.Directory.Move("does_not_matter_for_this_test", folderDst, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
+            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
+            var folderDst = folderSrc;
+
+
+            Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
+
+
+            var gotException = false;
+            try
+            {
+               System.IO.Directory.Move(folderSrc.FullName, folderDst.FullName);
+            }
+            catch (Exception ex)
+            {
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+            }
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
-         catch (Exception ex)
-         {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-         }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
 
          Console.WriteLine();
       }
+
+
+      
+
+
+      
+
+
+      
+
+
+      
    }
 }

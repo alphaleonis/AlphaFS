@@ -25,77 +25,80 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_DirectoryCopyTest
+   public partial class DirectoryMoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_LocalAndNetwork_Success()
+      public void Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete_LocalAndNetwork_Success()
       {
-         Directory_Copy(false);
-         Directory_Copy(true);
+         Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete(false);
+         Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete(true);
       }
 
 
-      private void Directory_Copy(bool isNetwork)
+      private void Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
 
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var rootDir = new TemporaryDirectory(UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
-            var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination Folder"));
-            
-            Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
+            var random = UnitTestConstants.GetRandomFileName();
+            var srcFolderName = System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder.") + random;
+            var destFolderName = System.IO.Path.Combine(rootDir.Directory.FullName, "Destination Folder.") + random;
+
+
+            var folderSrc = isNetwork
+               ? System.IO.Directory.CreateDirectory(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolderName))
+               : System.IO.Directory.CreateDirectory(System.IO.Path.Combine(srcFolderName));
+
+            var folderDst = !isNetwork
+               ? new System.IO.DirectoryInfo(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(destFolderName))
+               : new System.IO.DirectoryInfo(destFolderName);
+
+
+            Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
 
             UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), false, false, true);
-            
+
 
             var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
 
             var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderSrc.FullName, dirEnumOptions);
-
             var sourceTotal = props["Total"];
             var sourceTotalFiles = props["File"];
             var sourceTotalSize = props["Size"];
-            
+
             Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
 
 
 
-            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.CopyOptions.FailIfExists);
+            var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
 
-            UnitTestConstants.Dump(copyResult, -16);
-
+            UnitTestConstants.Dump(moveResult, -16);
 
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
-            Assert.AreNotEqual(null, copyResult);
 
 
-            // Test against copyResult results.
+            // Test against moveResult results.
 
-            Assert.AreEqual(sourceTotal, copyResult.TotalFolders + copyResult.TotalFiles, "The number of total file system objects do not match.");
-            Assert.AreEqual(sourceTotalFiles, copyResult.TotalFiles, "The number of total files do not match.");
-            Assert.AreEqual(sourceTotalSize, copyResult.TotalBytes, "The total file size does not match.");
-            Assert.IsTrue(copyResult.IsCopy);
-            Assert.IsFalse(copyResult.IsMove);
-            Assert.IsTrue(copyResult.IsDirectory);
-            Assert.IsFalse(copyResult.IsFile);
+            var isMove = moveResult.IsMove;
 
-            Assert.IsTrue(System.IO.Directory.Exists(folderSrc.FullName), "The original directory does not exist, but is expected to.");
+            Assert.AreEqual(sourceTotal, moveResult.TotalFolders + moveResult.TotalFiles, "The number of total file system objects do not match.");
+            Assert.AreEqual(sourceTotalFiles, moveResult.TotalFiles, "The number of total files do not match.");
+            Assert.AreEqual(sourceTotalSize, moveResult.TotalBytes, "The total file size does not match.");
+            Assert.IsFalse(isMove, "The action was expected to be a Copy, not a Move.");
+            Assert.IsTrue(moveResult.EmulatedMove, "The action was expected to be emulated (Copy + Delete).");
+
+            Assert.IsFalse(System.IO.Directory.Exists(folderSrc.FullName), "The original folder exists, but is expected not to.");
          }
 
 

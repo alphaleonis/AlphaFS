@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -46,12 +45,13 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var folderSrc = @":AAAAAAAAAA";
-         Console.WriteLine("Src Directory Path: [{0}]", folderSrc);
+         var srcFolder = @":AAAAAAAAAA";
+         Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
+
 
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, "does_not_matter_for_this_test");
+            Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {

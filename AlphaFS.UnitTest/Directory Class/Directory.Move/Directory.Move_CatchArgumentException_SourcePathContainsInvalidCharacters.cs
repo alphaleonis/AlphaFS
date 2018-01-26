@@ -21,47 +21,44 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_DirectoryCopyTest
+   public partial class DirectoryMoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
+      public void Directory_Move_CatchArgumentException_SourcePathContainsInvalidCharacters_Local_Success()
       {
-         Directory_Copy_CatchNotSupportedException_PathContainsColon(false);
-         Directory_Copy_CatchNotSupportedException_PathContainsColon(true);
+         Directory_Move_CatchArgumentException_SourcePathContainsInvalidCharacters();
       }
 
 
-      private void Directory_Copy_CatchNotSupportedException_PathContainsColon(bool isNetwork)
+      private void Directory_Move_CatchArgumentException_SourcePathContainsInvalidCharacters()
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         UnitTestConstants.PrintUnitTestHeader(false);
          Console.WriteLine();
 
 
          var gotException = false;
 
 
-         var colonText = @"\My:FilePath";
-         var folderSrc = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.SysDrive + @"\dev\test") + colonText;
+         var srcFolder = UnitTestConstants.TempFolder + @"\ThisIs<My>Folder";
 
-         Console.WriteLine("Src Directory Path: [{0}]", folderSrc);
+         Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
 
-
+         
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, "does_not_matter_for_this_test");
+            Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
             var exType = ex.GetType();
 
-            gotException = exType == typeof(NotSupportedException);
+            gotException = exType == typeof(ArgumentException);
 
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }

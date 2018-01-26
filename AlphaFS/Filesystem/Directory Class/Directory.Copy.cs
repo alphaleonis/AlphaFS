@@ -663,7 +663,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>Copy/move a Non-/Transacted file or directory including its children to a new location,
+      /// <summary>[AlphaFS] Copy/move a Non-/Transacted file or directory including its children to a new location,
       ///   <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,
       ///   and the possibility of notifying the application of its progress through a callback function.
       /// <remarks>
@@ -707,6 +707,15 @@ namespace Alphaleonis.Win32.Filesystem
          File.ValidateAndUpdatePathsAndOptions(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
 
 
+         string drive;
+
+         File.ExistsDrive(transaction, sourcePathLp, out drive, true);
+
+         // // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
+         if (null != destinationPathLp)
+            File.ExistsDrive(transaction, destinationPathLp, out drive, true);
+
+
          // Process Move action options, possible fallback to Copy action.
          if (!isCopy && !deleteOnStartup)
             ValidateAndUpdateCopyMoveAction(sourcePathLp, destinationPathLp, copyOptions, moveOptions, out copyOptions, out moveOptions, out isCopy, out emulateMove);
@@ -715,7 +724,7 @@ namespace Alphaleonis.Win32.Filesystem
          pathFormat = PathFormat.LongFullPath;
 
          var cmr = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, isCopy, true, preserveDates, emulateMove);
-
+         
 
          if (isCopy)
          {
@@ -754,7 +763,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Moves a file or directory, including its children.
             // Copies an existing directory, including its children to a new directory.
 
-            cmr = File.CopyMoveCore(cmr, transaction, true, sourcePathLp, destinationPathLp, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, pathFormat);
+            cmr = File.CopyMoveCore(transaction, true, sourcePathLp, destinationPathLp, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, cmr, pathFormat);
 
 
             // If the move happened on the same drive, we have no knowledge of the number of files/folders.
@@ -764,7 +773,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         cmr.ActionFinish = DateTime.Now;
+         cmr.Duration.Stop();
 
 
          return cmr;
@@ -813,7 +822,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   // File count is done in File.CopyMoveCore method.
 
-                  cmr = File.CopyMoveCore(cmr, transaction, false, fseiSourcePath, fseiDestinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, PathFormat.LongFullPath);
+                  cmr = File.CopyMoveCore(transaction, false, fseiSourcePath, fseiDestinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, cmr, PathFormat.LongFullPath);
 
                   if (cmr.IsCanceled)
                   {
@@ -850,6 +859,8 @@ namespace Alphaleonis.Win32.Filesystem
                foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, transaction, sourcePathLp, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath))
 
                   File.CopyTimestampsCore(transaction, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
+
+               // TODO: When enabled on Computer, FindFirstFile will change the last accessed time.
             }
 
 

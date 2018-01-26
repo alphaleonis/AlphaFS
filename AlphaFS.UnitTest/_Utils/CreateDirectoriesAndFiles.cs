@@ -50,7 +50,7 @@ namespace AlphaFS.UnitTest
 
                System.IO.File.WriteAllText(filePath, TextGoodbyeWorld);
 
-               switch (new Random().Next(0, 2))
+               switch (new Random(max).Next(0, 2))
                {
                   case 1:
                      if (readOnly)

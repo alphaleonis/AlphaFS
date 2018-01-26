@@ -21,65 +21,56 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_DirectoryCopyTest
+   public partial class DirectoryMoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory_LocalAndNetwork_Success()
+      public void Directory_Move_Rename_LocalAndNetwork_Success()
       {
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(false);
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(true);
+         Directory_Move_Rename(false);
+         Directory_Move_Rename(true);
       }
 
 
-      private void Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
+      private void Directory_Move_Rename(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
 
 
-         var gotException = false;
-
-
-         var tempPath = System.IO.Path.GetTempPath();
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         var srcFolder = System.IO.Path.Combine(tempPath, "NonExisting Source Folder");
-         var dstFolder = System.IO.Path.Combine(tempPath, "NonExisting Destination Folder");
-
-         if (isNetwork)
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
-            dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
+            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
+            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination Folder"));
+
+            Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("\n\tRename folder: [{0}] to: [{1}]", folderSrc.Name, folderDst.Name);
+
+
+            Assert.IsTrue(folderSrc.Exists, "The source folder does not exist which was not expected.");
+            Assert.IsFalse(folderDst.Exists, "The destination folder exists which was not expected.");
+
+            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName);
+
+            folderSrc.Refresh();
+            folderDst.Refresh();
+
+
+            Assert.IsFalse(folderSrc.Exists, "The source folder exists which was not expected.");
+
+            Assert.IsTrue(folderDst.Exists, "The destination folder does not exists which was not expected.");
          }
-         
-         Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
-
-
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder);
-         }
-         catch (Exception ex)
-         {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-         }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-         Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The directory exists, but is expected not to.");
 
 
          Console.WriteLine();

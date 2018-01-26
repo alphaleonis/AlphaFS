@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32
    {
       public static void ThrowException(int errorCode)
       {
-         ThrowException((uint)errorCode, null, null);
+         ThrowException((uint) errorCode, null, null);
       }
 
       public static void ThrowException(uint errorCode)
@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32
 
       public static void ThrowException(int errorCode, string readPath)
       {
-         ThrowException((uint)errorCode, readPath, null);
+         ThrowException((uint) errorCode, readPath, null);
       }
 
       public static void ThrowException(uint errorCode, string readPath)
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32
 
       public static void ThrowException(int errorCode, string readPath, string writePath)
       {
-         ThrowException((uint)errorCode, readPath, writePath);
+         ThrowException((uint) errorCode, readPath, writePath);
       }
 
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32
             writePath = Path.GetRegularPathCore(writePath, GetFullPathOptions.None, true);
 
 
-         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int)errorCode).Message.Trim().TrimEnd('.').Trim());
+         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message.Trim().TrimEnd('.').Trim());
 
          if (!Utils.IsNullOrWhiteSpace(readPath) && !Utils.IsNullOrWhiteSpace(writePath))
             errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Read: [{1}] | Write: [{2}]", errorMessage, readPath, writePath);
@@ -112,6 +112,7 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_ALREADY_EXISTS:
             case Win32Errors.ERROR_FILE_EXISTS:
                throw new AlreadyExistsException(readPath ?? writePath, true);
+
 
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
                throw new DirectoryNotEmptyException(errorMessage);

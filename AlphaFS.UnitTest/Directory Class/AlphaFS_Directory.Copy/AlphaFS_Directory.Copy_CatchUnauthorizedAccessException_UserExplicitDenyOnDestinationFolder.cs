@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder_LocalAndNetwork_Success()
       {
-         Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny(false);
-         Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny(true);
+         Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(false);
+         Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(true);
       }
       
 
-      private void Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDeny(bool isNetwork)
+      private void Directory_Copy_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -54,10 +54,14 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
+            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Destination Folder"));
+            var dstFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Destination Folder"));
 
-            Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
-            
+            Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
+
+            UnitTestConstants.CreateDirectoriesAndFiles(srcFolder.FullName, new Random().Next(5, 15), false, false, true);
+
 
             var user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
 
@@ -69,18 +73,15 @@ namespace AlphaFS.UnitTest
                System.Security.AccessControl.AccessControlType.Deny);
 
 
-            var dirInfo = System.IO.Directory.CreateDirectory(folderSrc.FullName);
-
-
             // Set DENY for current user.
-            var dirSecurity = dirInfo.GetAccessControl();
+            var dirSecurity = dstFolder.GetAccessControl();
             dirSecurity.AddAccessRule(rule);
-            dirInfo.SetAccessControl(dirSecurity);
+            dstFolder.SetAccessControl(dirSecurity);
 
 
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(UnitTestConstants.SysRoot, dirInfo.FullName);
+               Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName);
             }
             catch (Exception ex)
             {
@@ -93,15 +94,13 @@ namespace AlphaFS.UnitTest
             finally
             {
                // Remove DENY for current user.
-               dirSecurity = dirInfo.GetAccessControl();
+               dirSecurity = dstFolder.GetAccessControl();
                dirSecurity.RemoveAccessRule(rule);
-               dirInfo.SetAccessControl(dirSecurity);
+               dstFolder.SetAccessControl(dirSecurity);
             }
 
 
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-            
-            Assert.IsTrue(System.IO.Directory.Exists(dirInfo.FullName), "The directory does not exist, but is expected to.");
          }
 
 

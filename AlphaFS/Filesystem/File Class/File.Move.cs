@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath)
       {
-         CopyMoveCore(null, null, false, sourcePath, destinationPath, null, MoveOptions.CopyAllowed, false, null, null, PathFormat.RelativePath);
+         CopyMoveCore(null, false, sourcePath, destinationPath, null, MoveOptions.CopyAllowed, false, null, null, null, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, null, MoveOptions.CopyAllowed, false, null, null, pathFormat);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, null, MoveOptions.CopyAllowed, false, null, null, null, pathFormat);
       }
 
 
@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, null, MoveOptions.CopyAllowed, false, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, null, MoveOptions.CopyAllowed, false, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -134,7 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, null, MoveOptions.CopyAllowed, false, null, null, pathFormat);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, null, MoveOptions.CopyAllowed, false, null, null, null, pathFormat);
       }
 
 
@@ -163,7 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, null, moveOptions, false, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, null, moveOptions, false, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -191,7 +191,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, null, moveOptions, false, null, null, pathFormat);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, null, moveOptions, false, null, null, null, pathFormat);
       }
 
 
@@ -220,7 +220,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, null, moveOptions, false, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, null, moveOptions, false, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
 
@@ -251,7 +251,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, null, false, sourcePath, destinationPath, null, moveOptions, false, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(null, false, sourcePath, destinationPath, null, moveOptions, false, progressHandler, userProgressData, null, pathFormat);
       }
       
 
@@ -281,7 +281,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, null, moveOptions, false, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, null, moveOptions, false, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -310,7 +310,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, null, moveOptions, false, null, null, pathFormat);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, null, moveOptions, false, null, null, null, pathFormat);
       }
 
 
@@ -340,7 +340,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, null, moveOptions, false, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, null, moveOptions, false, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
 
 
@@ -371,7 +371,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, transaction, false, sourcePath, destinationPath, null, moveOptions, false, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(transaction, false, sourcePath, destinationPath, null, moveOptions, false, progressHandler, userProgressData, null, pathFormat);
       }
    }
 }

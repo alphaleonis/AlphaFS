@@ -45,14 +45,14 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var tempPath = System.IO.Path.GetTempPath() + @"ThisIs<My>Folder";
+         var srcFolder = System.IO.Path.GetTempPath() + @"ThisIs<My>Folder";
 
-         Console.WriteLine("Src Directory Path: [{0}]", tempPath);
+         Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
 
 
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(tempPath, "does_not_matter_for_this_test");
+            Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
