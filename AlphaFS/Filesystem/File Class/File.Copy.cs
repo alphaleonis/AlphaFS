@@ -814,7 +814,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (isSingleFileAction)
                // We take an extra hit by getting the file size for a single file Copy or Move action.
-               cmr.TotalBytes = GetSizeCore(transaction, null, sourcePathLp, PathFormat.LongFullPath);
+               cmr.TotalBytes = GetSizeCore(transaction, null, destinationPathLp, PathFormat.LongFullPath);
             
 
             if (preserveDates)
@@ -973,12 +973,12 @@ namespace Alphaleonis.Win32.Filesystem
                //    szSrcFile\0szDstFile\0     : indicates that szSrcFile is to be renamed szDstFile on reboot.
 
 
-               ? NativeMethods.MoveFileWithProgress(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions)moveOptions)
-               : NativeMethods.CopyFileEx(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions)copyOptions)
+               ? NativeMethods.MoveFileWithProgress(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
+               : NativeMethods.CopyFileEx(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
 
             : isMove
-               ? NativeMethods.MoveFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions)moveOptions, transaction.SafeHandle)
-               : NativeMethods.CopyFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions)copyOptions, transaction.SafeHandle);
+               ? NativeMethods.MoveFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
+               : NativeMethods.CopyFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle);
 
 
          lastError = Marshal.GetLastWin32Error();
@@ -998,38 +998,26 @@ namespace Alphaleonis.Win32.Filesystem
             // File.Copy()
             // File.Move()
             // MSDN: .NET 3.5+: FileNotFoundException: sourcePath was not found. 
-            case Win32Errors.ERROR_FILE_NOT_FOUND: // On files.
-
-
+            //
             // File.Copy()
             // File.Move()
             // Directory.Move()
             // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified in sourcePath or destinationPath is invalid (for example, it is on an unmapped drive).
+            case Win32Errors.ERROR_FILE_NOT_FOUND: // On files.
             case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
-
-
             case Win32Errors.ERROR_NOT_READY: // DeviceNotReadyException: Floppy device or network drive not ready.
 
-               string drive;
-
-               var driveExists = ExistsDrive(transaction, sourcePathLp, out drive, false);
-
-               lastError = (int) (!driveExists ? Win32Errors.ERROR_NOT_READY : isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
-
-               NativeError.ThrowException(lastError, null, sourcePathLp);
-
+               Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, isFolder, lastError, true, true);
                break;
-
-
-
-
+               
+               
             // File.Copy()
             // Directory.Copy()
             case Win32Errors.ERROR_ALREADY_EXISTS: // On folders.
             case Win32Errors.ERROR_FILE_EXISTS:    // On files.
                lastError = (int) (isFolder ? Win32Errors.ERROR_ALREADY_EXISTS : Win32Errors.ERROR_FILE_EXISTS);
 
-               NativeError.ThrowException(lastError, null, destinationPathLp);
+               NativeError.ThrowException(lastError, null, Path.GetCleanExceptionPath(destinationPathLp));
                break;
 
 
@@ -1051,7 +1039,7 @@ namespace Alphaleonis.Win32.Filesystem
                // MSDN: .NET 3.5+: IOException: destDirName already exists.
 
                if (destIsFolder && destExists)
-                  NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destinationPathLp);
+                  NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, Path.GetCleanExceptionPath(destinationPathLp));
 
 
 
@@ -1064,7 +1052,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   if (!ExistsCore(transaction, isFolder, sourcePathLp, PathFormat.LongFullPath))
 
-                     NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourcePathLp);
+                     NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, Path.GetCleanExceptionPath(sourcePathLp));
                }
 
 
@@ -1088,7 +1076,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   // Directory exists with the same name as the file.
                   if (destExists && !isFolder && destIsFolder)
-                     NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
+                     NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, Path.GetCleanExceptionPath(destinationPathLp)));
 
 
                   if (isMove)
@@ -1109,7 +1097,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // MSDN: .NET 3.5+: UnauthorizedAccessException: destinationPath is read-only.
                         // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                         // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                        throw new FileReadOnlyException(destinationPathLp);
+                        throw new FileReadOnlyException(Path.GetCleanExceptionPath(destinationPathLp));
                      }
 
 
@@ -1126,7 +1114,7 @@ namespace Alphaleonis.Win32.Filesystem
                // MSDN: .NET 3.5+: An I/O error has occurred. 
                // File.Copy(): IOException: destinationPath exists and overwrite is false.
                // File.Move(): The destination file already exists or sourcePath was not found.
-               NativeError.ThrowException(lastError, null, fileNameLp);
+               NativeError.ThrowException(lastError, null, Path.GetCleanExceptionPath(fileNameLp));
 
                break;
          }
@@ -1143,7 +1131,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Do not use StringComparison.OrdinalIgnoreCase to allow renaming a folder with different casing.
 
          if (null != sourcePath && sourcePath.Equals(destinationPath, StringComparison.Ordinal))
-            NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPath);
+            NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, Path.GetCleanExceptionPath(destinationPath));
          
 
          sourcePathLp = sourcePath;

@@ -162,8 +162,14 @@ namespace AlphaFS.UnitTest
       private void Directory_CountFileSystemObjects_FilesOnly_Recursive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
 
-         var tempPath = System.IO.Path.GetTempPath();
+
+         const int expectedFso = 10;
+         long fsoCount;
+
+
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -171,18 +177,21 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-            const int expectedFso = 10;
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
+            
+
             UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false, false, false);
 
 
-            var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
+            fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
 
             Console.WriteLine("\tTotal file system objects = [{0}]", fsoCount);
-
-            Assert.AreEqual(expectedFso, fsoCount, string.Format(CultureInfo.InvariantCulture, "The number of file system objects: {0} is not equal than expected: {1}", expectedFso, fsoCount));
          }
+
+
+         Assert.AreEqual(expectedFso, fsoCount, string.Format(CultureInfo.InvariantCulture, "The number of file system objects are not equal, but are expected to."));
+
 
          Console.WriteLine();
       }

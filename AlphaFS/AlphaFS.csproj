@@ -219,7 +219,7 @@
     <Compile Include="Device\Volume\Volume.DeleteVolumeMountPoint.cs" />
     <Compile Include="Device\Volume\Volume.DefineDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.EnumerateVolumes.cs" />
-    <Compile Include="Filesystem\File Class\File.ExistsDrive.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.ExistsDrive.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateLogicalDrives.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
@@ -586,7 +586,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

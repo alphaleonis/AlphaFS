@@ -54,18 +54,18 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
-            var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Destination Folder"));
+            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+            var dstFfolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Destination Folder"));
 
-            Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
+            Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", dstFfolder.FullName);
             
-            UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), false, false, true);
+            UnitTestConstants.CreateDirectoriesAndFiles(srcFolder.FullName, 1, false, false, true);
 
 
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName);
+               Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFfolder.FullName);
             }
             catch (Exception ex)
             {

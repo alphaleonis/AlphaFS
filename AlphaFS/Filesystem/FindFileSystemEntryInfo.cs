@@ -149,14 +149,7 @@ namespace Alphaleonis.Win32.Filesystem
                   case Win32Errors.ERROR_PATH_NOT_FOUND: // DirectoryNotFoundException.
                   case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
 
-                     string drive;
-
-                     var driveExists = File.ExistsDrive(Transaction, pathLp, out drive, false);
-
-                     lastError = (int) (!driveExists ? Win32Errors.ERROR_NOT_READY : IsDirectory ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
-
-                     NativeError.ThrowException(lastError, null, !driveExists ? drive : pathLp);
-
+                     Directory.ExistsDriveOrFolderOrFile(Transaction, pathLp, IsDirectory, lastError, true, true);
                      break;
                }
 
@@ -238,7 +231,7 @@ namespace Alphaleonis.Win32.Filesystem
                // MSDN: .NET 3.5+: DirectoryNotFoundException: Path is invalid, such as referring to an unmapped drive.
                // Directory.Delete()
 
-               lastError = IsDirectory ? (int)Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND;
+               lastError = IsDirectory ? (int) Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND;
                break;
 
 
@@ -261,7 +254,8 @@ namespace Alphaleonis.Win32.Filesystem
          if (lastError != Win32Errors.NO_ERROR)
          {
             if (null == ErrorHandler || !ErrorHandler((int) lastError, new Win32Exception((int) lastError).Message, pathLp.TrimEnd(Path.WildcardStarMatchAllChar)))
-               NativeError.ThrowException(lastError, pathLp);
+
+               NativeError.ThrowException(lastError, Path.GetCleanExceptionPath(pathLp));
          }
       }
 
@@ -273,11 +267,11 @@ namespace Alphaleonis.Win32.Filesystem
          if (IsDirectory)
          {
             if (!isFolder)
-               throw new DirectoryNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_PATH_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, InputPath)));
+               throw new DirectoryNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_PATH_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_Directory_Is_A_File, Path.GetCleanExceptionPath(InputPath))));
          }
 
          else if (isFolder)
-            throw new FileNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, InputPath)));
+            throw new FileNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, Path.GetCleanExceptionPath(InputPath))));
       }
 
 
@@ -425,14 +419,7 @@ namespace Alphaleonis.Win32.Filesystem
                            case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
                            case Win32Errors.ERROR_BAD_NET_NAME:
 
-                              string drive;
-
-                              var driveExists = File.ExistsDrive(Transaction, InputPath, out drive, false);
-
-                              lastError = (int) (!driveExists ? Win32Errors.ERROR_NOT_READY : IsDirectory ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
-
-                              NativeError.ThrowException(lastError, null, !driveExists ? drive : InputPath);
-
+                              Directory.ExistsDriveOrFolderOrFile(Transaction, InputPath, IsDirectory, lastError, true, true);
                               break;
                         }
 

@@ -705,17 +705,23 @@ namespace Alphaleonis.Win32.Filesystem
          
 
          File.ValidateAndUpdatePathsAndOptions(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
+         
 
 
-         string drive;
 
-         File.ExistsDrive(transaction, sourcePathLp, out drive, true);
+         // Check for local or network drives, such as: "C:" or "\\server\c$".
 
-         // // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
-         if (null != destinationPathLp)
-            File.ExistsDrive(transaction, destinationPathLp, out drive, true);
+         ExistsDriveOrFolderOrFile(transaction, sourcePathLp, true, (int) Win32Errors.NO_ERROR, true, false);
+         
 
+         //// File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
 
+         if (!delayUntilReboot)
+            ExistsDriveOrFolderOrFile(transaction, destinationPathLp, true, (int) Win32Errors.NO_ERROR, true, false);
+
+         
+         
+         
          // Process Move action options, possible fallback to Copy action.
          if (!isCopy && !deleteOnStartup)
             ValidateAndUpdateCopyMoveAction(sourcePathLp, destinationPathLp, copyOptions, moveOptions, out copyOptions, out moveOptions, out isCopy, out emulateMove);
@@ -897,7 +903,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
             if (!isMove)
-               NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, sourcePathLp, destinationPathLp);
+               NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, sourcePathLp, Path.GetCleanExceptionPath(destinationPathLp));
          }
 
 

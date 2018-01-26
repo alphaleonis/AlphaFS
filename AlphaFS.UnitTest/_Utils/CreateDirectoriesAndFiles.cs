@@ -44,7 +44,7 @@ namespace AlphaFS.UnitTest
 
 
             // Every other folder is empty.
-            if (i % 2 != 0)
+            if (i % 2 == 0)
             {
                CreateFile(dir);
 
