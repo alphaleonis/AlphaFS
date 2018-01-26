@@ -31,17 +31,20 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_Rename_DifferentCasingDirectory_LocalAndNetwork_Success()
+      public void Directory_Move_CatchIOException_SameSourceAndDestination_LocalAndNetwork_Success()
       {
-         Directory_Move_Rename_DifferentCasingDirectory(false);
-         Directory_Move_Rename_DifferentCasingDirectory(true);
+         Directory_Move_CatchIOException_SameSourceAndDestination(false);
+         Directory_Move_CatchIOException_SameSourceAndDestination(true);
       }
 
 
-      private void Directory_Move_Rename_DifferentCasingDirectory(bool isNetwork)
+      private void Directory_Move_CatchIOException_SameSourceAndDestination(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
+
+
+         var gotException = false;
 
 
          var tempPath = UnitTestConstants.TempFolder;
@@ -51,27 +54,30 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
-
-            var upperCaseFolderName = System.IO.Path.GetFileName(folderSrc.FullName).ToUpperInvariant();
-
-            var destFolder = System.IO.Path.Combine(folderSrc.Parent.FullName, upperCaseFolderName);
-
-            Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
-
-            Console.WriteLine("\n\tRename folder: [{0}] to: [{1}]", folderSrc.Name, upperCaseFolderName);
+            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+            var dstFolder = srcFolder;
 
 
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, destFolder);
+            Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
 
+            
+            try
+            {
+               System.IO.Directory.Move(srcFolder.FullName, dstFolder.FullName);
+            }
+            catch (Exception ex)
+            {
+               var exType = ex.GetType();
 
-            var upperDirInfo = new System.IO.DirectoryInfo(destFolder);
+               gotException = exType == typeof(System.IO.IOException);
 
-            UnitTestConstants.Dump(upperDirInfo, -17);
-
-
-            Assert.AreEqual(upperCaseFolderName, upperDirInfo.Name, "The source folder name is not uppercase, but is expected to.");
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            }
          }
+
+
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 
          Console.WriteLine();

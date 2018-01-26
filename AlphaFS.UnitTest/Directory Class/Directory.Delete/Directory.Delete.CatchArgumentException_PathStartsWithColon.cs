@@ -24,19 +24,19 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_MoveTest
+   public partial class Directory_DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Move_CatchArgumentException_SourcePathContainsInvalidCharacters_Local_Success()
+      public void Directory_Delete_CatchArgumentException_PathStartsWithColon_Local_Success()
       {
-         Directory_Move_CatchArgumentException_SourcePathContainsInvalidCharacters();
+         Directory_Delete_CatchArgumentException_PathStartsWithColon(false);
       }
 
 
-      private void Directory_Move_CatchArgumentException_SourcePathContainsInvalidCharacters()
+      private void Directory_Delete_CatchArgumentException_PathStartsWithColon(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(false);
          Console.WriteLine();
@@ -45,14 +45,14 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var srcFolder = UnitTestConstants.TempFolder + @"\ThisIs<My>Folder";
+         var folder = @":AAAAAAAAAA";
 
-         Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
+         Console.WriteLine("Input Directory Path: [{0}]", folder);
 
-         
+
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, "does_not_matter_for_this_test");
+            Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
          }
          catch (Exception ex)
          {
@@ -65,8 +65,6 @@ namespace AlphaFS.UnitTest
 
 
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-         Assert.IsFalse(System.IO.Directory.Exists("does_not_matter_for_this_test"), "The directory exists, but is expected not to.");
 
 
          Console.WriteLine();

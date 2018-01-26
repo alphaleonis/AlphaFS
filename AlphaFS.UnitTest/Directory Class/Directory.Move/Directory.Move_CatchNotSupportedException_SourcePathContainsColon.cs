@@ -21,11 +21,10 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DirectoryMoveTest
+   public partial class Directory_MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -48,7 +47,7 @@ namespace AlphaFS.UnitTest
 
 
          var colonText = @"\My:FilePath";
-         var srcFolder = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.SysDrive + @"\dev\test") + colonText;
+         var srcFolder = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder + @"\dev\test") + colonText;
 
          Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
 

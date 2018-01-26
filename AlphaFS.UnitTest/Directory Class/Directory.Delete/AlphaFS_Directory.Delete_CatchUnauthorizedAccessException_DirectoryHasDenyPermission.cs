@@ -25,65 +25,68 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DirectoryMoveTest
+   public partial class Directory_DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Move_CatchIOException_SameSourceAndDestination_LocalAndNetwork_Success()
+      public void Directory_Delete_CatchUnauthorizedAccessException_DirectoryHasDenyPermission_LocalAndNetwork_Success()
       {
-         Directory_Move_CatchIOException_SameSourceAndDestination(false);
-         Directory_Move_CatchIOException_SameSourceAndDestination(true);
+         Directory_Delete_CatchUnauthorizedAccessException_DirectoryHasDenyPermission(false);
+         Directory_Delete_CatchUnauthorizedAccessException_DirectoryHasDenyPermission(true);
       }
 
 
-      private void Directory_Move_CatchIOException_SameSourceAndDestination(bool isNetwork)
+      private void Directory_Delete_CatchUnauthorizedAccessException_DirectoryHasDenyPermission(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
 
-         var tempPath = System.IO.Path.GetTempPath();
+
+         var gotException = false;
+
+
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
-            var folderDst = folderSrc;
+            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
+
+            // Set DENY permission for current user.
+            UnitTestConstants.FolderDenyPermission(true, folder.FullName);
 
 
-            Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
-
-
-            var gotException = false;
             try
             {
-               System.IO.Directory.Move(folderSrc.FullName, folderDst.FullName);
+               Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName);
+
             }
             catch (Exception ex)
             {
-               var exName = ex.GetType().Name;
-               gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(UnauthorizedAccessException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+            finally
+            {
+               // Remove DENY permission for current user.
+               UnitTestConstants.FolderDenyPermission(false, folder.FullName);
+            }
          }
+
+
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
 
          Console.WriteLine();
       }
-
-
-      
-
-
-      
-
-
-      
-
-
-      
    }
 }

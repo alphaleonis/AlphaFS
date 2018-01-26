@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_DirectoryCopyTest
+   public partial class AlphaFS_Directory_CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

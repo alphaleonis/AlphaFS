@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DirectoryMoveTest
+   public partial class Directory_MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -44,9 +44,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
 
 
-         var gotException = false; ;
+         var gotException = false;
+         string exMessage = null;
 
-         
+
          using (var rootDir = new TemporaryDirectory(UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
             var srcFolder = System.IO.Path.Combine(rootDir.Directory.FullName, "NonExisting Source Folder");
@@ -69,16 +70,20 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                var exType = ex.GetType();
+               exMessage = ex.Message;
 
                gotException = exType == typeof(System.IO.DirectoryNotFoundException);
 
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, exMessage);
             }
 
 
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
-            Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The directory exists, but is expected not to.");
+
+            Assert.IsNotNull(exMessage);
+            
+            Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
          }
          
 

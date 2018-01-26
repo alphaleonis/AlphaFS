@@ -26,27 +26,27 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The operation could not be completed because the file is read-only.</summary>
+   /// <summary>[AlphaFS] The operation could not be completed because the file is read-only.</summary>
    [Serializable]
    public class FileReadOnlyException : UnauthorizedAccessException
    {
       private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int) Win32Errors.ERROR_FILE_READ_ONLY).Message.Trim().TrimEnd('.').Trim());
 
 
-      /// <summary>Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       public FileReadOnlyException() : base(string.Format(CultureInfo.InvariantCulture, "{0}.", ErrorText))
       {
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="path">The path to the file.</param>
       public FileReadOnlyException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path))
       {
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="path">The path to the file.</param>
       /// <param name="innerException">The inner exception.</param>
       public FileReadOnlyException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), innerException)
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
       protected FileReadOnlyException(SerializationInfo info, StreamingContext context) : base(info, context)

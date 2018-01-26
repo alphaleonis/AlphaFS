@@ -21,57 +21,45 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
+using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_MoveTest
+   partial class DirectoryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Move_Rename_DifferentCasingDirectory_LocalAndNetwork_Success()
+      public void Directory_EnumerateDirectories_LocalAndNetwork_Success()
       {
-         Directory_Move_Rename_DifferentCasingDirectory(false);
-         Directory_Move_Rename_DifferentCasingDirectory(true);
+         Directory_EnumerateDirectories(false);
+         Directory_EnumerateDirectories(true);
       }
 
 
-      private void Directory_Move_Rename_DifferentCasingDirectory(bool isNetwork)
+      private void Directory_EnumerateDirectories(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
 
 
-         var tempPath = UnitTestConstants.TempFolder;
+         var inputPath = UnitTestConstants.SysRoot;
          if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+            inputPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(inputPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
-
-            var upperCaseFolderName = System.IO.Path.GetFileName(folderSrc.FullName).ToUpperInvariant();
-
-            var destFolder = System.IO.Path.Combine(folderSrc.Parent.FullName, upperCaseFolderName);
-
-            Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
-
-            Console.WriteLine("\n\tRename folder: [{0}] to: [{1}]", folderSrc.Name, upperCaseFolderName);
+         Console.WriteLine("Input Directory Path: [{0}]\n", inputPath);
 
 
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, destFolder);
+         var systemIOCount = System.IO.Directory.EnumerateDirectories(inputPath).Count();
+         var alphaFSCount = Alphaleonis.Win32.Filesystem.Directory.EnumerateDirectories(inputPath).Count();
+         
+         Console.WriteLine("\tSystem.IO directories enumerated: {0:N0}", systemIOCount);
+         Console.WriteLine("\tAlphaFS directories enumerated  : {0:N0}", alphaFSCount);
 
 
-            var upperDirInfo = new System.IO.DirectoryInfo(destFolder);
-
-            UnitTestConstants.Dump(upperDirInfo, -17);
-
-
-            Assert.AreEqual(upperCaseFolderName, upperDirInfo.Name, "The source folder name is not uppercase, but is expected to.");
-         }
+         Assert.AreEqual(systemIOCount, alphaFSCount, "No directories enumerated, but it is expected.");
 
 
          Console.WriteLine();

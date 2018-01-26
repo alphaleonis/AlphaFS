@@ -25,53 +25,63 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_MoveTest
+   public partial class Directory_DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Move_Rename_DifferentCasingDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_CatchDirectoryReadOnlyException_DirectoryIsReadOnly_LocalAndNetwork_Success()
       {
-         Directory_Move_Rename_DifferentCasingDirectory(false);
-         Directory_Move_Rename_DifferentCasingDirectory(true);
+         Directory_Delete_CatchDirectoryReadOnlyException_DirectoryIsReadOnly(false);
+         Directory_Delete_CatchDirectoryReadOnlyException_DirectoryIsReadOnly(true);
       }
 
 
-      private void Directory_Move_Rename_DifferentCasingDirectory(bool isNetwork)
+      private void Directory_Delete_CatchDirectoryReadOnlyException_DirectoryIsReadOnly(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
 
 
+         var gotException = false;
+
+
          var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
+         
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
 
-            var upperCaseFolderName = System.IO.Path.GetFileName(folderSrc.FullName).ToUpperInvariant();
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
-            var destFolder = System.IO.Path.Combine(folderSrc.Parent.FullName, upperCaseFolderName);
-
-            Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
-
-            Console.WriteLine("\n\tRename folder: [{0}] to: [{1}]", folderSrc.Name, upperCaseFolderName);
+            System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.ReadOnly);
 
 
-            Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, destFolder);
+            try
+            {
+               Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName);
 
+            }
+            catch (Exception ex)
+            {
+               var exType = ex.GetType();
 
-            var upperDirInfo = new System.IO.DirectoryInfo(destFolder);
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DirectoryReadOnlyException);
 
-            UnitTestConstants.Dump(upperDirInfo, -17);
-
-
-            Assert.AreEqual(upperCaseFolderName, upperDirInfo.Name, "The source folder name is not uppercase, but is expected to.");
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            }
+            finally
+            { 
+               System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.Normal);
+            }
          }
+
+
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 
          Console.WriteLine();

@@ -24,24 +24,24 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The function attempted to use a name that is reserved for use by another transaction.</summary>
-   [SerializableAttribute]
+   /// <summary>[AlphaFS] The function attempted to use a name that is reserved for use by another transaction.</summary>
+   [Serializable]
    public class TransactionalConflictException : TransactionException
    {
-      /// <summary>Initializes a new instance of the <see cref="TransactionalConflictException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionalConflictException"/> class.</summary>
       public TransactionalConflictException()
       {
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="TransactionalConflictException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionalConflictException"/> class.</summary>
       /// <param name="message">The message.</param>
       public TransactionalConflictException(string message) : base(message)
       {
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="TransactionalConflictException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionalConflictException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
       public TransactionalConflictException(string message, Exception innerException) : base(message, innerException)
@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="TransactionalConflictException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionalConflictException"/> class.</summary>
       /// <param name="info">The info.</param>
       /// <param name="context">The context.</param>
       protected TransactionalConflictException(SerializationInfo info, StreamingContext context) : base(info, context)

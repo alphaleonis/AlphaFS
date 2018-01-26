@@ -155,13 +155,13 @@ namespace Alphaleonis.Win32.Filesystem
 
                      lastError = (int) (!driveExists ? Win32Errors.ERROR_NOT_READY : IsDirectory ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
 
-                     NativeError.ThrowException(lastError, null, pathLp);
+                     NativeError.ThrowException(lastError, null, !driveExists ? drive : pathLp);
 
                      break;
                }
 
 
-               ThrowPossibleException((uint)lastError, pathLp);
+               ThrowPossibleException((uint) lastError, pathLp);
             }
 
             // When the handle is null and we are still here, it means the ErrorHandler is active,
@@ -417,7 +417,27 @@ namespace Alphaleonis.Win32.Filesystem
                   if (lastError != Win32Errors.NO_ERROR)
                   {
                      if (!ContinueOnException)
+                     {
+                        switch ((uint) lastError)
+                        {
+                           case Win32Errors.ERROR_FILE_NOT_FOUND: // FileNotFoundException.
+                           case Win32Errors.ERROR_PATH_NOT_FOUND: // DirectoryNotFoundException.
+                           case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
+                           case Win32Errors.ERROR_BAD_NET_NAME:
+
+                              string drive;
+
+                              var driveExists = File.ExistsDrive(Transaction, InputPath, out drive, false);
+
+                              lastError = (int) (!driveExists ? Win32Errors.ERROR_NOT_READY : IsDirectory ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
+
+                              NativeError.ThrowException(lastError, null, !driveExists ? drive : InputPath);
+
+                              break;
+                        }
+
                         ThrowPossibleException((uint) lastError, InputPath);
+                     }
 
                      return (T) (object) null;
                   }

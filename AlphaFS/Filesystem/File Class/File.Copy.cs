@@ -1012,11 +1012,11 @@ namespace Alphaleonis.Win32.Filesystem
 
                string drive;
 
-               var driveExists = ExistsDrive(transaction, destinationPathLp, out drive, false);
+               var driveExists = ExistsDrive(transaction, sourcePathLp, out drive, false);
 
                lastError = (int) (!driveExists ? Win32Errors.ERROR_NOT_READY : isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
 
-               NativeError.ThrowException(lastError, null, destinationPathLp);
+               NativeError.ThrowException(lastError, null, sourcePathLp);
 
                break;
 

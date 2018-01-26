@@ -27,7 +27,7 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The operation could not be completed because the directory was not empty.</summary>
+   /// <summary>[AlphaFS] The operation could not be completed because the directory is not empty.</summary>
    [Serializable]
    public class DirectoryNotEmptyException : System.IO.IOException
    {
@@ -35,20 +35,20 @@ namespace Alphaleonis.Win32.Filesystem
       private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_DIR_NOT_EMPTY, new Win32Exception((int) Win32Errors.ERROR_DIR_NOT_EMPTY).Message.Trim().TrimEnd('.').Trim());
 
 
-      /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
       public DirectoryNotEmptyException() : base(string.Format(CultureInfo.InvariantCulture, "{0}.", ErrorText), ErrorCode)
       {
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
       /// <param name="message">The message.</param>
       public DirectoryNotEmptyException(string message) : base(message, ErrorCode)
       {
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
       /// <param name="path">The path to the directory.</param>
       /// <param name="isPath">Always set to true when using this constructor.</param>
       [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "isPath")]
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
       /// <param name="path">The path to the file.</param>
       /// <param name="innerException">The inner exception.</param>
       public DirectoryNotEmptyException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), innerException)
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
       protected DirectoryNotEmptyException(SerializationInfo info, StreamingContext context) : base(info, context)

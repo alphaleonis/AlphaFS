@@ -25,7 +25,7 @@ namespace AlphaFS.UnitTest
 {
    /// <summary>This is a test class for Directory.Move and is intended to contain all Directory.Move Unit Tests.</summary>
    [TestClass]
-   public partial class DirectoryMoveTest
+   public partial class Directory_MoveTest
    {
    }
 }
