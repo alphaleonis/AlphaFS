@@ -122,7 +122,7 @@ namespace AlphaFS.UnitTest
             var folder = rootDir.Directory.FullName;
 
             // Directory depth level.
-            var level = new Random().Next(10, 1000);
+            var level = new Random().Next(10, 500);
 
 #if NET35
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
@@ -143,7 +143,7 @@ namespace AlphaFS.UnitTest
 
             Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(root);
 
-            Console.WriteLine("\tCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level, root.Length);
+            Console.WriteLine("\tCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level.ToString(), root.Length.ToString());
             Console.WriteLine();
 
             Console.WriteLine("\t{0}", root);

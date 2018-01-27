@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Threading;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -69,5 +70,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets or sets the filter that returns <see langword="true"/> if the input error should not be thrown.</summary>
       /// <value>The delegate to a filtering method.</value>
       public ErrorHandler ErrorFilter { get; set; }
+
+
+      /// <summary>Gets or sets the cancellation token to abort the enumeration.</summary>
+      /// <value>A <see cref="CancellationToken"/> instance.</value>
+      public CancellationToken CancellationToken { get; set; }
    }
 }

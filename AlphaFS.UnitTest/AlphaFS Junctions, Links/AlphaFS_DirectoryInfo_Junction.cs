@@ -38,7 +38,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
          {
             var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
-            var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
+            var junction = System.IO.Path.Combine(toDelete.FullName, "MyJunctionPoint");
             var target = rootDir.Directory.CreateSubdirectory("JunctionTarget");
 
             Console.WriteLine("\nInput Directory JunctionPoint  Path: [{0}]", junction);

@@ -33,15 +33,6 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Checks the specified <paramref name="path"/> for local or network drives, such as: "C:" and "\\server\c$".</summary>
-      private static void ExistsDrive(string path, bool throwIfNotExists)
-      {
-         ExistsDriveOrFolderOrFile(null, path, false, (int) Win32Errors.NO_ERROR, throwIfNotExists, false);
-      }
-
-
-
-
-      /// <summary>[AlphaFS] Checks the specified <paramref name="path"/> for local or network drives, such as: "C:" and "\\server\c$".</summary>
       internal static bool ExistsDriveOrFolderOrFile(KernelTransaction transaction, string path, bool isFolder, int lastError, bool throwIfDriveNotExists, bool throwIfFolderOrFileNotExists)
       {
          if (Utils.IsNullOrWhiteSpace(path))

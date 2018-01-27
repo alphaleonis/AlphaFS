@@ -22,41 +22,53 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   partial class AlphaFS_FileSystemEntryInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
-      public void AlphaFS_Directory_EnumerateDirectories_ContinueOnAccessDeniedExceptionUsingErrorFilter_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingErrorFilter_LocalAndNetwork_Success()
       {
-         Directory_EnumerateDirectories_ContinueOnAccessDeniedExceptionUsingErrorFilter(false);
-         Directory_EnumerateDirectories_ContinueOnAccessDeniedExceptionUsingErrorFilter(true);
+         Directory_EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingErrorFilter(false);
+         Directory_EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingErrorFilter(true);
       }
+      
 
-
-
-
-      private void Directory_EnumerateDirectories_ContinueOnAccessDeniedExceptionUsingErrorFilter(bool isNetwork)
+      private void Directory_EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingErrorFilter(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
+
+
+         var gotException = false;
+
 
          var inputPath = System.IO.Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)).FullName;
          if (isNetwork)
             inputPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(inputPath);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", inputPath);
+         Console.WriteLine("Input Directory Path: [{0}]", inputPath);
+         Console.WriteLine();
 
-            
-         var gotException = false;
+
+         var exceptionCatch = 10;
          var exceptionCount = 0;
 
-         var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
+
+         // Used to abort the enumeration.
+         var cancelSource = new CancellationTokenSource();
+         
 
          var filters = new Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
          {
+            CancellationToken = cancelSource.Token,
+
+
             ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
             {
                gotException = errorCode == Alphaleonis.Win32.Win32Errors.ERROR_ACCESS_DENIED;
@@ -67,6 +79,10 @@ namespace AlphaFS.UnitTest
 
                   // Report Exception.
                   Console.WriteLine("\t#{0:N0}\t({1}) {2}: [{3}]", exceptionCount, errorCode, errorMessage, pathProcessed);
+
+
+                  if (exceptionCount == exceptionCatch)
+                     cancelSource.Cancel();
                }
 
 
@@ -76,14 +92,19 @@ namespace AlphaFS.UnitTest
          };
 
 
-         var count = Alphaleonis.Win32.Filesystem.Directory.EnumerateDirectories(inputPath, dirEnumOptions, filters).Count();
+         var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
+
+         var count = Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<string>(inputPath, dirEnumOptions, filters).Count();
 
 
          Console.WriteLine("\n\tFile system objects counted: {0:N0}", count);
 
 
-         Assert.IsTrue(count > 0, "No directories enumerated, but it is expected.");
+         Assert.IsTrue(count > 0, "No file system entries enumerated, but it is expected.");
          Assert.IsTrue(gotException, "The Exception is not caught, but it is expected.");
+
+         Assert.AreEqual(exceptionCatch, exceptionCount, "The number of caught Exceptions does not match, but it is expected.");
+
 
          Console.WriteLine();
       }

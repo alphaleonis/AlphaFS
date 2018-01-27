@@ -55,11 +55,11 @@ namespace AlphaFS.UnitTest
          var systemIOCount = System.IO.Directory.EnumerateFileSystemEntries(inputPath).Count();
          var alphaFSCount = Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntries(inputPath).Count();
 
-         Console.WriteLine("\tSystem.IO filesystem entries enumerated: {0:N0}", systemIOCount);
-         Console.WriteLine("\tAlphaFS filesystem entries enumerated  : {0:N0}", alphaFSCount);
+         Console.WriteLine("\tSystem.IO file system entries enumerated: {0:N0}", systemIOCount);
+         Console.WriteLine("\tAlphaFS file system entries enumerated  : {0:N0}", alphaFSCount);
 
 
-         Assert.AreEqual(systemIOCount, alphaFSCount, "No filesystem entries enumerated, but it is expected.");
+         Assert.AreEqual(systemIOCount, alphaFSCount, "No file system entries enumerated, but it is expected.");
 
 
          Console.WriteLine();

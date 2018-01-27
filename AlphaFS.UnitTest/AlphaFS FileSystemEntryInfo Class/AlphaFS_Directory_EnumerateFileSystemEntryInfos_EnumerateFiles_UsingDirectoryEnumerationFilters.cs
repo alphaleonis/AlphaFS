@@ -21,29 +21,33 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using Alphaleonis.Win32;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   partial class AlphaFS_FileSystemEntryInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
-      public void AlphaFS_Directory_EnumerateFiles_UsingDirectoryEnumerationFilters_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters_LocalAndNetwork_Success()
       {
-         Directory_EnumerateFiles_UsingDirectoryEnumerationFilters(false);
-         Directory_EnumerateFiles_UsingDirectoryEnumerationFilters(true);
+         Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters(false);
+         Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters(true);
       }
+      
 
-
-
-
-      private void Directory_EnumerateFiles_UsingDirectoryEnumerationFilters(bool isNetwork)
+      private void Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
+
+
+         bool gotException;
+
 
          var inputPath = UnitTestConstants.SysRoot;
          if (isNetwork)
@@ -55,23 +59,33 @@ namespace AlphaFS.UnitTest
 
 
          var findExtensions = new[] {".txt", ".ini", ".exe"};
-         var skipFolders = new[] { "assembly", "SysWOW64", "WinSxS" };
+         var skipFolders = new[] {"assembly", "WinSxS"};
+         //var skipFolders = new[] {"assembly", "System32", "SysWOW64", "WinSxS"};
 
          Console.WriteLine("Extensions to search for: {0}", string.Join(" | ", findExtensions));
-         Console.WriteLine("Directories to skip     : {0}\\{1}, {0}\\{2}, {0}\\{3}", inputPath, skipFolders[0], skipFolders[1], skipFolders[2]);
+         Console.WriteLine("Directories to skip     : {0}\\{1}, {0}\\{2}", inputPath, skipFolders[0], skipFolders[1]);
+         Console.WriteLine();
          Console.WriteLine();
 
 
-         var gotException = false;
          var exceptionCount = 0;
-         var foundCount = 0;
          var foundExt1 = 0;
          var foundExt2 = 0;
          var foundExt3 = 0;
+         var foundExt1Done = false;
+         var foundExt2Done = false;
+         var foundExt3Done = false;
+
+
+         // Used to abort the enumeration.
+         var cancelSource = new CancellationTokenSource();
 
 
          var filters = new Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
          {
+            CancellationToken = cancelSource.Token,
+
+
             InclusionFilter = fsei =>
             {
                var extension = System.IO.Path.GetExtension(fsei.FileName);
@@ -79,17 +93,33 @@ namespace AlphaFS.UnitTest
                var gotMatch = findExtensions.Any(found => found.Equals(extension, StringComparison.OrdinalIgnoreCase));
                if (gotMatch)
                {
-                  if (extension == findExtensions[0])
+                  if (!foundExt1Done && extension == findExtensions[0])
+                  {
                      foundExt1++;
+                     foundExt1Done = foundExt1 == 3;
+                     Console.WriteLine("\t#{0:N0}\t\t[{1}]", foundExt1, fsei.FullPath);
+                  }
 
-                  if (extension == findExtensions[1])
+                  if (!foundExt2Done && extension == findExtensions[1])
+                  {
                      foundExt2++;
+                     foundExt2Done = foundExt2 == 3;
+                     Console.WriteLine("\t#{0:N0}\t\t[{1}]", foundExt2, fsei.FullPath);
+                  }
 
-                  if (extension == findExtensions[2])
+                  if (!foundExt3Done && extension == findExtensions[2])
+                  {
                      foundExt3++;
+                     foundExt3Done = foundExt3 == 3;
+                     Console.WriteLine("\t#{0:N0}\t\t[{1}]", foundExt3, fsei.FullPath);
+                  }
+               }
 
 
-                  Console.WriteLine("\t#{0:N0}\t\t[{1}]", ++foundCount, fsei.FullPath);
+               if (foundExt1Done && foundExt2Done && foundExt3Done)
+               {
+                  cancelSource.Cancel();
+                  return false;
                }
 
                return gotMatch;
@@ -98,6 +128,7 @@ namespace AlphaFS.UnitTest
 
             RecursionFilter = fsei =>
             {
+               // Return true to continue.
                return !skipFolders.Any(found => found.Equals(fsei.FileName, StringComparison.OrdinalIgnoreCase));
             },
 
@@ -109,16 +140,17 @@ namespace AlphaFS.UnitTest
                if (gotException)
                   Console.WriteLine("\t#{0:N0}\t\t({1}) {2}: [{3}]", ++exceptionCount, errorCode, errorMessage, pathProcessed);
 
+               // Return true to continue.
                return gotException;
             }
          };
 
 
-         var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
+         var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
 
-         var fsoCount = Alphaleonis.Win32.Filesystem.Directory.EnumerateFiles(inputPath, dirEnumOptions, filters).Count();
-
-
+         var fsoCount = Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<string>(inputPath, dirEnumOptions, filters).Count();
+         
+         
          Console.WriteLine("\n\tFile system objects counted: {0:N0}", fsoCount);
 
 
@@ -126,6 +158,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(foundExt2 > 0, "No " + findExtensions[1] + " files enumerated, but it is expected.");
          Assert.IsTrue(foundExt3 > 0, "No " + findExtensions[2] + " files enumerated, but it is expected.");
          Assert.IsTrue(fsoCount > 0, "No files enumerated, but it is expected.");
+
 
          Console.WriteLine();
       }
