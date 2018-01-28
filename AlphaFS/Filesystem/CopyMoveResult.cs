@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="emulatedMove">When <see langword="true"/> indicates the Move action used a fallback of Copy + Delete actions.</param>
       public CopyMoveResult(string source, string destination, bool isCopy, bool isDirectory, bool preserveDates, bool emulatedMove) : this(source, destination)
       {
-         EmulatedMove = emulatedMove;
+         IsEmulatedMove = emulatedMove;
 
          IsCopy = isCopy;
          IsDirectory = isDirectory;
@@ -92,11 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Indicates the destination file or directory.</summary>
       public string Destination { get; private set; }
-
-
-      /// <summary>Indicates the Move action used a fallback of Copy + Delete actions.</summary>
-      public bool EmulatedMove { get; private set; }
-
+      
 
       /// <summary>The error code encountered during the Copy or Move action.</summary>
       /// <value>0 (zero) indicates success.</value>
@@ -122,6 +118,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets a value indicating whether this instance represents a directory.</summary>
       /// <value><see langword="true"/> if this instance represents a directory; otherwise, <see langword="false"/>.</value>
       public bool IsDirectory { get; private set; }
+
+
+      /// <summary>Indicates the Move action used a fallback of Copy + Delete actions.</summary>
+      public bool IsEmulatedMove { get; private set; }
 
 
       /// <summary>Gets a value indicating whether this instance represents a file.</summary>

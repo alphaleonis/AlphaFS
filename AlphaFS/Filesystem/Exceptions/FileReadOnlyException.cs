@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="path">The path to the file.</param>
-      public FileReadOnlyException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path))
+      public FileReadOnlyException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, Path.GetCleanExceptionPath(path)))
       {
       }
 
@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="path">The path to the file.</param>
       /// <param name="innerException">The inner exception.</param>
-      public FileReadOnlyException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), innerException)
+      public FileReadOnlyException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, Path.GetCleanExceptionPath(path)), innerException)
       {
       }
 

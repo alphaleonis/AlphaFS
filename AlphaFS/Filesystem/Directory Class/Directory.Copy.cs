@@ -789,10 +789,9 @@ namespace Alphaleonis.Win32.Filesystem
       private static CopyMoveResult CopyDeleteCore(KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove, CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult)
       {
          var cmr = copyMoveResult ?? new CopyMoveResult(sourcePathLp, destinationPathLp, true, true, preserveDates, emulateMove);
+         
 
-
-         const int items = 1000;
-         var dirs = new Queue<string>(items);
+         var dirs = new Queue<string>(NativeMethods.DefaultFileBufferSize);
 
          dirs.Enqueue(sourcePathLp);
          
@@ -903,7 +902,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
             if (!isMove)
-               NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, sourcePathLp, Path.GetCleanExceptionPath(destinationPathLp));
+               NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, sourcePathLp, destinationPathLp);
          }
 
 

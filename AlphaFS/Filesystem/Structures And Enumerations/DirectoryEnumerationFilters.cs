@@ -72,8 +72,10 @@ namespace Alphaleonis.Win32.Filesystem
       public ErrorHandler ErrorFilter { get; set; }
 
 
+#if !NET35
       /// <summary>Gets or sets the cancellation token to abort the enumeration.</summary>
       /// <value>A <see cref="CancellationToken"/> instance.</value>
       public CancellationToken CancellationToken { get; set; }
+#endif
    }
 }

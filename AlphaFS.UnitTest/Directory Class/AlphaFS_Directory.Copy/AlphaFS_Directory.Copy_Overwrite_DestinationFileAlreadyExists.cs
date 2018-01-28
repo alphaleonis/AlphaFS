@@ -65,6 +65,7 @@ namespace AlphaFS.UnitTest
             Console.Write("1st Copy action.");
             Console.WriteLine();
 
+
             Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
 
 
@@ -75,7 +76,10 @@ namespace AlphaFS.UnitTest
                Console.Write("2nd Copy action.");
                Console.WriteLine();
 
+
                Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
+
+
             }
             catch (Exception ex)
             {
@@ -109,6 +113,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine();
             Console.Write("2nd Copy overwrite action.");
             Console.WriteLine();
+
 
             var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.CopyOptions.None);
 

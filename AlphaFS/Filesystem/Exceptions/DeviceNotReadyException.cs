@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file system object.</param>
       /// <param name="isPath">Always set to true when using this constructor.</param>
       [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "isPath")]
-      public DeviceNotReadyException(string path, bool isPath) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), ErrorCode)
+      public DeviceNotReadyException(string path, bool isPath) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, Path.GetCleanExceptionPath(path)), ErrorCode)
       {
       }
 
@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DeviceNotReadyException"/> class.</summary>
       /// <param name="path">The path to the device.</param>
       /// <param name="innerException">The inner exception.</param>
-      public DeviceNotReadyException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), innerException)
+      public DeviceNotReadyException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, Path.GetCleanExceptionPath(path)), innerException)
       {
       }
 

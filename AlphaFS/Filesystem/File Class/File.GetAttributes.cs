@@ -132,16 +132,20 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (null == handle)
                {
-                  if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND ||
-                      lastError == Win32Errors.ERROR_PATH_NOT_FOUND ||
-                      lastError == Win32Errors.ERROR_NOT_READY) // Floppy device not ready.
+                  switch ((uint) lastError)
                   {
-                     if (!returnErrorOnNotFound)
-                     {
-                        // Return default value for backward compatibility
-                        lastError = (int) Win32Errors.ERROR_SUCCESS;
-                        win32AttrData.dwFileAttributes = NativeMethods.InvalidFileAttributes;
-                     }
+                     case Win32Errors.ERROR_FILE_NOT_FOUND: // On files.
+                     case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
+                     case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
+
+                        if (!returnErrorOnNotFound)
+                        {
+                           // Return default value for backward compatibility
+                           lastError = (int) Win32Errors.ERROR_SUCCESS;
+                           win32AttrData.dwFileAttributes = NativeMethods.InvalidFileAttributes;
+                        }
+
+                        break;
                   }
 
                   return lastError;
@@ -168,13 +172,16 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   lastError = Marshal.GetLastWin32Error();
 
-                  if (lastError != Win32Errors.ERROR_FILE_NOT_FOUND &&
-                      lastError != Win32Errors.ERROR_PATH_NOT_FOUND &&
-                      lastError != Win32Errors.ERROR_NOT_READY) // Floppy device not ready.
+                  switch ((uint)lastError)
                   {
-                     // In case someone latched onto the file. Take the perf hit only for failure.
-                     return FillAttributeInfoCore(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);
+                     case Win32Errors.ERROR_FILE_NOT_FOUND: // On files.
+                     case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
+                     case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
+
+                        // In case someone latched onto the file. Take the perf hit only for failure.
+                        return FillAttributeInfoCore(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);
                   }
+
 
                   if (!returnErrorOnNotFound)
                   {

@@ -148,6 +148,7 @@
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_ByHandleFileInfoTest.cs" />
     <Compile Include="AlphaFS Crc Class\AlphaFS_CrcTest.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_DeviceTest.cs" />
+    <Compile Include="AlphaFS Encryption\AlphaFS_EncryptionTest.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_Directory_GetFileIdInfo.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_File_GetFileIdInfo.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_Directory_GetFileInfo.cs" />
@@ -200,7 +201,7 @@
     <Compile Include="Directory Class\Directory.EnumerateDirectories.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move.Test.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Overwrite_DestinationDirectoryAlreadyExists.cs" />
-    <Compile Include="Directory Class\Directory.Move\Directory.Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationDestinationFolder.cs" />
+    <Compile Include="Directory Class\Directory.Move\Directory.Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_CatchAlreadyExistsException_DestinationDirectoryAlreadyExists.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_CatchArgumentException_SourcePathContainsInvalidCharacters.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_CatchArgumentException_SourcePathStartsWithColon.cs" />
@@ -212,15 +213,15 @@
     <Compile Include="Directory Class\Directory.Move\Directory.Move_CatchDirectoryNotFoundException_NonExistingSourceDirectory.cs" />
     <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Compress_Decompress.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory_Encryption.cs" />
-    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters.cs" />
+    <Compile Include="AlphaFS Encryption\AlphaFS_Directory_Encryption.cs" />
+    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_IsEmpty.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory_EnumerateFileSystemEntryInfos.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory_CreateSymbolicLink_And_GetLinkTargetInfo.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory_Junction.cs" />
     <Compile Include="Directory Class\Directory_CurrentDirectory.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_DeleteEmptySubdirectories.cs" />
-    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory_EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingErrorFilter.cs" />
+    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingDirectoryEnumerationErrorFilter.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_DirectoryInfo_Junction.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory_Move_CatchIOException_SameSourceAndDestination.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_CountFileSystemObjects.cs" />
@@ -230,7 +231,7 @@
     <Compile Include="AlphaFS Alternate Data Streams\AlphaFS_Directory_EnumerateAlternateDataStreams.cs" />
     <Compile Include="Directory Class\Directory_Exists.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_CatchNotSupportedException_PathContainsColon.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory_ExportImportEncryptedDirectoryRaw.cs" />
+    <Compile Include="AlphaFS Encryption\AlphaFS_Directory_ExportImportEncryptedDirectoryRaw.cs" />
     <Compile Include="Directory Class\Directory_GetAccessControl.cs" />
     <Compile Include="Directory Class\Directory_SetTimestamps.cs" />
     <Compile Include="Directory Class\Directory_GetTimestamps.cs" />
@@ -243,7 +244,7 @@
     <Compile Include="DriveInfo Class\DriveInfo_GetDrives.cs" />
     <Compile Include="DriveInfo Class\DriveInfo_InitializeInstance.cs" />
     <Compile Include="DriveInfo Class\DriveInfoTest.cs" />
-    <Compile Include="File Class\AlphaFS_File_GetHash.cs" />
+    <Compile Include="AlphaFS Encryption\AlphaFS_File_GetHash.cs" />
     <Compile Include="File Class\File.Copy\File_CopyTest.cs" />
     <Compile Include="File Class\File_CreateText.cs" />
     <Compile Include="File Class\File_OpenWrite.cs" />
@@ -264,7 +265,7 @@
     <Compile Include="File Class\File_Create.cs" />
     <Compile Include="File Class\File_GetTimestamps.cs" />
     <Compile Include="File Class\File_Open.cs" />
-    <Compile Include="File Class\AlphaFS_File_ExportImportEncryptedFileRaw.cs" />
+    <Compile Include="AlphaFS Encryption\AlphaFS_File_ExportImportEncryptedFileRaw.cs" />
     <Compile Include="File Class\File_Exists.cs" />
     <Compile Include="File Class\File_SetAccessControl.cs" />
     <Compile Include="File Class\File_GetAccessControl.cs" />

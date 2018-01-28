@@ -126,7 +126,7 @@ namespace AlphaFS.UnitTest
 
 #if NET35
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-            //folder += UnitTestConstants.EMspace;
+            folder += UnitTestConstants.EMspace;
 #endif
 
             Console.WriteLine("\tInput Directory Path: [{0}]", folder);

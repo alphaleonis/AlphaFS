@@ -62,10 +62,10 @@ namespace Alphaleonis.Win32
       public static void ThrowException(uint errorCode, string readPath, string writePath)
       {
          if (null != readPath)
-            readPath = Path.GetRegularPathCore(readPath, GetFullPathOptions.None, true);
+            readPath = Path.GetCleanExceptionPath(readPath);
 
          if (null != writePath)
-            writePath = Path.GetRegularPathCore(writePath, GetFullPathOptions.None, true);
+            writePath = Path.GetCleanExceptionPath(writePath);
 
 
          var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message.Trim().TrimEnd('.').Trim());

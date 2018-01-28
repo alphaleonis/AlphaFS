@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class AlphaFS_EncryptionTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationDestinationFolder_LocalAndNetwork_Success()
+      public void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder_LocalAndNetwork_Success()
       {
          Directory_Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(false);
          Directory_Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(true);

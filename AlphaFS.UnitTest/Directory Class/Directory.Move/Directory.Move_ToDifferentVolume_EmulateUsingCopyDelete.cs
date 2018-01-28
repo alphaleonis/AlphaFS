@@ -96,7 +96,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(sourceTotalFiles, moveResult.TotalFiles, "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, moveResult.TotalBytes, "The total file size does not match.");
             Assert.IsFalse(isMove, "The action was expected to be a Copy, not a Move.");
-            Assert.IsTrue(moveResult.EmulatedMove, "The action was expected to be emulated (Copy + Delete).");
+            Assert.IsTrue(moveResult.IsEmulatedMove, "The action was expected to be emulated (Copy + Delete).");
 
             Assert.IsFalse(System.IO.Directory.Exists(folderSrc.FullName), "The original folder exists, but is expected not to.");
          }

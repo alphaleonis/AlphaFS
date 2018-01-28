@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_DirectoryInfo_InitializeInstance_ExistingDirectory_LocalAndNetwork_Success()
+      public void DirectoryInfo_InitializeInstance_ExistingDirectory_LocalAndNetwork_Success()
       {
          DirectoryInfo_InitializeInstance_ExistingDirectory(false);
          DirectoryInfo_InitializeInstance_ExistingDirectory(true);
@@ -40,7 +40,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_DirectoryInfo_InitializeInstance_NonExistingDirectory_LocalAndNetwork_Success()
+      public void DirectoryInfo_InitializeInstance_NonExistingDirectory_LocalAndNetwork_Success()
       {
          DirectoryInfo_InitializeInstance_NonExistingDirectory(false);
          DirectoryInfo_InitializeInstance_NonExistingDirectory(true);
