@@ -30,26 +30,24 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateDrives_Network_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(true);
-         Console.WriteLine();
-
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
 
 
-
+         UnitTestConstants.PrintUnitTestHeader(true);
+         
          var host = UnitTestConstants.LocalHost;
-
-         Console.WriteLine("Enumerating drives from host: [{0}]", host);
-
 
          var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true).ToList();
 
          foreach (var driveInfo in drives)
          {
+            Console.WriteLine("\nHost Local Drive: [{0}]", driveInfo.Name);
+
+
             UnitTestConstants.Dump(driveInfo, -21);
-            UnitTestConstants.Dump(driveInfo.DiskSpaceInfo, -26);
-            UnitTestConstants.Dump(driveInfo.VolumeInfo, -26);
+            UnitTestConstants.Dump(driveInfo.DiskSpaceInfo, -26, true);
+            UnitTestConstants.Dump(driveInfo.VolumeInfo, -26, true);
 
 
             Assert.IsNull(driveInfo.DosDeviceName);

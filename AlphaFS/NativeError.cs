@@ -62,13 +62,13 @@ namespace Alphaleonis.Win32
       public static void ThrowException(uint errorCode, string readPath, string writePath)
       {
          if (null != readPath)
-            readPath = Path.GetRegularPathCore(readPath, GetFullPathOptions.None, true);
+            readPath = Path.GetCleanExceptionPath(readPath);
 
          if (null != writePath)
-            writePath = Path.GetRegularPathCore(writePath, GetFullPathOptions.None, true);
+            writePath = Path.GetCleanExceptionPath(writePath);
 
-
-         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int)errorCode).Message.Trim().TrimEnd('.').Trim());
+         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message.Trim().TrimEnd('.').Trim());
+        
 
          if (!Utils.IsNullOrWhiteSpace(readPath) && !Utils.IsNullOrWhiteSpace(writePath))
             errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Read: [{1}] | Write: [{2}]", errorMessage, readPath, writePath);
@@ -112,6 +112,7 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_ALREADY_EXISTS:
             case Win32Errors.ERROR_FILE_EXISTS:
                throw new AlreadyExistsException(readPath ?? writePath, true);
+
 
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
                throw new DirectoryNotEmptyException(errorMessage);

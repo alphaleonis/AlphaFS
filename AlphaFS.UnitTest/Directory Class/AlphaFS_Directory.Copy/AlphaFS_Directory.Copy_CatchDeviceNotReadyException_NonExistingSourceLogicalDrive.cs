@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_DirectoryCopyTest
+   public partial class AlphaFS_Directory_CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -49,7 +49,7 @@ namespace AlphaFS.UnitTest
          var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
 
          var srcFolder = nonExistingDriveLetter + @":\NonExisting Source Folder";
-         var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination Folder";
+         var dstFolder = UnitTestConstants.SysDrive + @"\NonExisting Destination Folder";
 
          if (isNetwork)
          {
@@ -57,8 +57,8 @@ namespace AlphaFS.UnitTest
             dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
          }
 
-
          Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
+         Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
 
 
          try

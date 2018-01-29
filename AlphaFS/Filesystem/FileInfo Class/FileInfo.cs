@@ -192,19 +192,19 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName);
+               NativeError.ThrowException(DataInitialised, FullName);
 
 
             var attrs = Win32AttributeData.dwFileAttributes;
 
             // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
-            if (attrs.Equals(NativeMethods.InvalidFileAttributes))
-               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, LongFullName);
+            if (!File.HasValidAttributes(attrs))
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, FullName);
 
 
             // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
             if (File.IsDirectory(attrs))
-               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, LongFullName));
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, FullName));
 
 
             return Win32AttributeData.FileSize;

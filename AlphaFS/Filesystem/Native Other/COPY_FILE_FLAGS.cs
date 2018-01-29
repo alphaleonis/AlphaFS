@@ -19,8 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods

@@ -219,10 +219,12 @@
     <Compile Include="Device\Volume\Volume.DeleteVolumeMountPoint.cs" />
     <Compile Include="Device\Volume\Volume.DefineDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.EnumerateVolumes.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.ExistsDrive.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateLogicalDrives.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfo.cs" />
+    <Compile Include="Filesystem\File Class\File.FileAttributeLogic.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.GetFileId.cs" />
     <Compile Include="Filesystem\Link Stream\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\Link Stream\BackupStreamInfo.cs" />
@@ -351,7 +353,7 @@
     <Compile Include="Device\Device.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.cs" />
-    <Compile Include="Filesystem\File Class\File.cs" />
+    <Compile Include="Filesystem\File Class\File.ThrowIOExceptionIfFsoExist.cs" />
     <Compile Include="Filesystem\Link Stream\BackupFileStream.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\FileEncryptionStatus.cs" />
     <Compile Include="Filesystem\ByHandleFileInfo.cs" />

@@ -93,7 +93,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var drive in drives)
          {
-            Console.WriteLine("\nInput Directory Path: [{0}]", drive.Name);
+            Console.WriteLine("\nInput Logical Drive: [{0}]", drive.Name);
 
             try
             { 

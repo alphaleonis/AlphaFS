@@ -43,9 +43,20 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nOperatingSystem.IsAtLeast()\n");
 
-         Console.WriteLine("\tOS Earlier           : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Earlier));
-         Console.WriteLine("\tWindows 2000         : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Windows2000));
-         Console.WriteLine("\tWindows XP           : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.WindowsXP));
+
+         var isTrue = Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Earlier);
+         Console.WriteLine("\tOS Earlier           : [{0}]", isTrue);
+         Assert.IsTrue(isTrue);
+
+         isTrue = Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Windows2000);
+         Console.WriteLine("\tWindows 2000         : [{0}]", isTrue);
+         Assert.IsTrue(isTrue);
+
+         isTrue = Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.WindowsXP);
+         Console.WriteLine("\tWindows XP           : [{0}]", isTrue);
+         Assert.IsTrue(isTrue);
+
+
          Console.WriteLine("\tWindows Vista        : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.WindowsVista));
          Console.WriteLine("\tWindows 7            : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Windows7));
          Console.WriteLine("\tWindows 8            : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Windows8));
@@ -59,11 +70,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\tWindows Server 2012R2: [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.WindowsServer2012R2));
          Console.WriteLine("\tWindows Server 2016  : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.WindowsServer2016));
 
-         Console.WriteLine("\tOS Later             : [{0}]", Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Later));
 
-
-         // TODO 2018-01-09: Create tests.
-         Assert.Inconclusive("TODO: Create tests.");
+         var isFalse = Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Later);
+         Console.WriteLine("\tOS Later             : [{0}]", isFalse);
+         Assert.IsFalse(isFalse);
       }
    }
 }

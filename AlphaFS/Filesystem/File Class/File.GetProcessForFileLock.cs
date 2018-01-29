@@ -23,10 +23,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {

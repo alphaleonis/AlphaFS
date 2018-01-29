@@ -27,7 +27,7 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The exception that is thrown when an attempt to create a file or directory that already exists was made.
+   /// <summary>[AlphaFS] The exception that is thrown when an attempt to create a file or directory that already exists was made.
    /// <para>&#160;</para>
    /// <para>Both <see cref="Win32Errors.ERROR_ALREADY_EXISTS"/> and <see cref="Win32Errors.ERROR_FILE_EXISTS"/> can cause this Exception.</para>
    /// </summary>
@@ -38,13 +38,13 @@ namespace Alphaleonis.Win32.Filesystem
       private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_ALREADY_EXISTS, new Win32Exception((int) Win32Errors.ERROR_ALREADY_EXISTS).Message.Trim().TrimEnd('.').Trim());
 
 
-      /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
       public AlreadyExistsException() : base(string.Format(CultureInfo.InvariantCulture, "{0}.", ErrorText), ErrorCode)
       {
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="AlreadyExistsException"/> class.
       /// <para>&#160;</para>
       /// <para>Both <see cref="Win32Errors.ERROR_ALREADY_EXISTS"/> and <see cref="Win32Errors.ERROR_FILE_EXISTS"/> can cause this Exception.</para>
       /// </summary>
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
       /// <param name="path">The path to the file system object.</param>
       /// <param name="isPath">Always set to true when using this constructor.</param>
       [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "isPath")]
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
       /// <param name="path">The path to the file system object.</param>
       /// <param name="innerException">The inner exception.</param>
       public AlreadyExistsException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), innerException)
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
       protected AlreadyExistsException(SerializationInfo info, StreamingContext context) : base(info, context)

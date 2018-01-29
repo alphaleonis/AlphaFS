@@ -152,8 +152,6 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void DeleteFileCore(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         #region Setup
-
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);
 
@@ -161,7 +159,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          // If the path points to a symbolic link, the symbolic link is deleted, not the target.
 
-         #endregion // Setup
 
       startDeleteFile:
 

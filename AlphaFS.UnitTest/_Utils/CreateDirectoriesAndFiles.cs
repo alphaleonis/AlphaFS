@@ -44,13 +44,13 @@ namespace AlphaFS.UnitTest
 
 
             // Every other folder is empty.
-            if (i % 2 != 0)
+            if (i % 2 == 0)
             {
                CreateFile(dir);
 
                System.IO.File.WriteAllText(filePath, TextGoodbyeWorld);
 
-               switch (new Random().Next(0, 2))
+               switch (new Random(max).Next(0, 2))
                {
                   case 1:
                      if (readOnly)

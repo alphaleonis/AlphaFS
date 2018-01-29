@@ -119,7 +119,13 @@ namespace Alphaleonis.Win32.Filesystem
          return !Utils.IsNullOrWhiteSpace(path) && path.StartsWith(LongPathPrefix, StringComparison.Ordinal);
       }
 
-      
+
+
+
+      internal static string GetCleanExceptionPath(string path)
+      {
+         return GetRegularPathCore(path, GetFullPathOptions.None, true) .TrimEnd(DirectorySeparatorChar, WildcardStarMatchAllChar);
+      }
 
 
       /// <summary>Makes an extended long path from the specified <paramref name="path"/> by prefixing <see cref="LongPathPrefix"/>.</summary>
