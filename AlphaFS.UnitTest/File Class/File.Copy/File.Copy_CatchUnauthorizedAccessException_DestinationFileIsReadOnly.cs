@@ -19,52 +19,64 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   public partial class File_CopyTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
+      public void File_Copy_CatchUnauthorizedAccessException_DestinationFileIsReadOnly_LocalAndNetwork_Success()
       {
-         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(false);
-         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(true);
+         File_Copy_CatchUnauthorizedAccessException_DestinationFileIsReadOnly(false);
+         File_Copy_CatchUnauthorizedAccessException_DestinationFileIsReadOnly(true);
       }
 
 
-      private void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
+      private void File_Copy_CatchUnauthorizedAccessException_DestinationFileIsReadOnly(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
 
 
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder + @"\Non Existing Directory";
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
+         var gotException = false;
 
 
-         try
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            Alphaleonis.Win32.Filesystem.Directory.Delete(tempPath);
-         }
-         catch (Exception ex)
-         {
-            var exType = ex.GetType();
+            var srcFile = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
+            var dstFile = rootDir.RandomFileFullPath;
 
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
+            Console.WriteLine("Src File Path: [{0}]", srcFile);
 
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+
+            System.IO.File.Copy(srcFile.FullName, dstFile);
+            System.IO.File.SetAttributes(dstFile, System.IO.FileAttributes.ReadOnly);
+
+
+            try
+            {
+               Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile, true);
+            }
+            catch (Exception ex)
+            {
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(UnauthorizedAccessException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            }
+            finally
+            {
+               System.IO.File.SetAttributes(dstFile, System.IO.FileAttributes.Normal);
+            }
          }
 
 

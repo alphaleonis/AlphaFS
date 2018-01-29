@@ -19,25 +19,22 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   public partial class File_CopyTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
+      public void File_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
       {
-         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(false);
-         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(true);
+         File_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
+         File_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(true);
       }
 
 
-      private void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
+      private void File_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -46,29 +43,37 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var tempPath = UnitTestConstants.TempFolder + @"\Non Existing Directory";
+         var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
+
+         var srcFolder = nonExistingDriveLetter + @":\NonExisting Source File";
+         var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination File";
+
          if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+         {
+            srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
+            dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
+         }
 
-
-         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
+         Console.WriteLine("Src File Path: [{0}]", srcFolder);
 
 
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Delete(tempPath);
+            Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, dstFolder);
          }
          catch (Exception ex)
          {
             var exType = ex.GetType();
 
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
+            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
 
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 
 
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+         Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The file exists, but is expected not to.");
 
 
          Console.WriteLine();

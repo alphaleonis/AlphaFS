@@ -26,10 +26,19 @@ namespace Alphaleonis.Win32.Filesystem
    partial class Directory
    {
       /// <summary>[AlphaFS] Checks the specified <paramref name="path"/> for local or network drives, such as: "C:" and "\\server\c$".</summary>
-      public static bool ExistsDrive(string path)
+      public static bool ExistsDrive(string path, bool throwIfDriveNotExists)
       {
-         return ExistsDriveOrFolderOrFile(null, path, false, (int) Win32Errors.NO_ERROR, false, false);
+         return ExistsDriveOrFolderOrFile(null, path, false, (int) Win32Errors.NO_ERROR, throwIfDriveNotExists, false);
       }
+
+
+      /// <summary>[AlphaFS] Checks the specified <paramref name="path"/> for local or network drives, such as: "C:" and "\\server\c$".</summary>
+      public static bool ExistsDrive(KernelTransaction transaction, string path, bool throwIfDriveNotExists)
+      {
+         return ExistsDriveOrFolderOrFile(transaction, path, false, (int) Win32Errors.NO_ERROR, throwIfDriveNotExists, false);
+      }
+
+
 
 
       /// <summary>[AlphaFS] Checks the specified <paramref name="path"/> for local or network drives, such as: "C:" and "\\server\c$".</summary>
@@ -54,11 +63,20 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (throwIfFolderOrFileNotExists)
          {
-            if (isFolder && lastError == Win32Errors.ERROR_PATH_NOT_FOUND)
-               throw new DirectoryNotFoundException(regularPath);
+            if (lastError != Win32Errors.NO_ERROR)
+            {
+               if (lastError == Win32Errors.ERROR_PATH_NOT_FOUND)
+                  throw new DirectoryNotFoundException(regularPath);
 
-            if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND)
-               throw new DirectoryNotFoundException(regularPath);
+
+               if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND)
+               {
+                  if (isFolder)
+                     throw new DirectoryNotFoundException(regularPath);
+
+                  throw new FileNotFoundException(regularPath);
+               }
+            }
          }
 
 

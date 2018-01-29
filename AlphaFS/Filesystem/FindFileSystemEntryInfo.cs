@@ -302,7 +302,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private T NewFileSystemEntryType<T>(bool isFolder, FileSystemEntryInfo fsei, NativeMethods.WIN32_FIND_DATA win32FindData, string fileName, string pathLp)
+      private T NewFileSystemEntryType<T>(bool isFolder, FileSystemEntryInfo fsei, string fileName, string pathLp, NativeMethods.WIN32_FIND_DATA win32FindData)
       {
          // Determine yield, e.g. don't return files when only folders are requested and vice versa.
          if (null != FileSystemObjectType && (!(bool) FileSystemObjectType || !isFolder) && (!(bool) !FileSystemObjectType || isFolder))
@@ -474,7 +474,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                      var fsei = NewFilesystemEntry(pathLp, fileName, win32FindData);
 
-                     var res = NewFileSystemEntryType<T>(isFolder, fsei, win32FindData, fileName, pathLp);
+                     var res = NewFileSystemEntryType<T>(isFolder, fsei, fileName, pathLp, win32FindData);
 
 
                      // If recursion is requested, add it to the queue for later traversal.
@@ -535,7 +535,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                      ? (T) (object) null
 
-                     : NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, null, win32FindData, null, InputPath);
+                     : NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, null, null, InputPath, win32FindData);
 
             }
             
@@ -588,7 +588,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
 
-            return NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, null, win32FindData, null, InputPath);
+            return NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, null, null, InputPath, win32FindData);
          }
       }
 

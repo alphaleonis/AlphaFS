@@ -21,54 +21,59 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   public partial class File_CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
+      public void File_Copy_LocalAndNetwork_Success()
       {
-         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(false);
-         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(true);
+         File_Copy(false);
+         File_Copy(true);
       }
 
 
-      private void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
+      private void File_Copy(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
 
 
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder + @"\Non Existing Directory";
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
-
-
-         try
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            Alphaleonis.Win32.Filesystem.Directory.Delete(tempPath);
+            // Min: 1 bytes, Max: 10485760 = 10 MB.
+            var fileLength = new Random().Next(1, 10485760);
+            var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName, fileLength);
+            var fileCopy = rootDir.RandomFileFullPath;
+
+            Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
+            Console.WriteLine("Dst File Path: [{0}]", fileCopy);
+            
+            Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The file does not exists, but is expected to.");
+
+
+            Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy);
+            
+
+            Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
+            
+
+            var fileLen = new System.IO.FileInfo(fileCopy).Length;
+            
+            Assert.AreEqual(fileLength, fileLen, "The file copy is: {0} bytes, but is expected to be: {1} bytes.", fileLen, fileLength);
+            
+            Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The original file does not exist, but is expected to.");
          }
-         catch (Exception ex)
-         {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-         }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 
          Console.WriteLine();

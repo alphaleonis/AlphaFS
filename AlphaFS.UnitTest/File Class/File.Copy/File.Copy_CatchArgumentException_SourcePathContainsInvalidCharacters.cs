@@ -19,56 +19,52 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   public partial class File_CopyTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
+      public void File_Copy_CatchArgumentException_SourcePathContainsInvalidCharacters_LocalAndNetwork_Success()
       {
-         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(false);
-         Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(true);
+         File_Copy_CatchArgumentException_SourcePathContainsInvalidCharacters();
       }
 
 
-      private void Directory_Delete_CatchDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
+      private void File_Copy_CatchArgumentException_SourcePathContainsInvalidCharacters()
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         UnitTestConstants.PrintUnitTestHeader(false);
          Console.WriteLine();
 
 
          var gotException = false;
 
 
-         var tempPath = UnitTestConstants.TempFolder + @"\Non Existing Directory";
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+         var srcFile = UnitTestConstants.TempFolder + @"\ThisIs<My>File";
 
-
-         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
+         Console.WriteLine("Src File Path: [{0}]", srcFile);
 
 
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Delete(tempPath);
+            Alphaleonis.Win32.Filesystem.File.Copy(srcFile, "does_not_matter_for_this_test");
          }
          catch (Exception ex)
          {
             var exType = ex.GetType();
 
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
+            gotException = exType == typeof(ArgumentException);
 
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 
 
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+         Assert.IsFalse(System.IO.File.Exists("does_not_matter_for_this_test"), "The file exists, but is expected not to.");
 
 
          Console.WriteLine();

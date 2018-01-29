@@ -769,7 +769,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Moves a file or directory, including its children.
             // Copies an existing directory, including its children to a new directory.
 
-            cmr = File.CopyMoveCore(transaction, true, sourcePathLp, destinationPathLp, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, cmr, pathFormat);
+            cmr = File.CopyMoveCore(transaction, true, true, sourcePathLp, destinationPathLp, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, cmr, pathFormat);
 
 
             // If the move happened on the same drive, we have no knowledge of the number of files/folders.
@@ -827,7 +827,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   // File count is done in File.CopyMoveCore method.
 
-                  cmr = File.CopyMoveCore(transaction, false, fseiSourcePath, fseiDestinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, cmr, PathFormat.LongFullPath);
+                  cmr = File.CopyMoveCore(transaction, true, false, fseiSourcePath, fseiDestinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, cmr, PathFormat.LongFullPath);
 
                   if (cmr.IsCanceled)
                   {
