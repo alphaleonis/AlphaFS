@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32
    {
       public static void ThrowException(int errorCode)
       {
-         ThrowException((uint) errorCode, null, null);
+         ThrowException((uint)errorCode, null, null);
       }
 
       public static void ThrowException(uint errorCode)
@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32
 
       public static void ThrowException(int errorCode, string readPath)
       {
-         ThrowException((uint) errorCode, readPath, null);
+         ThrowException((uint)errorCode, readPath, null);
       }
 
       public static void ThrowException(uint errorCode, string readPath)
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32
 
       public static void ThrowException(int errorCode, string readPath, string writePath)
       {
-         ThrowException((uint) errorCode, readPath, writePath);
+         ThrowException((uint)errorCode, readPath, writePath);
       }
 
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
@@ -67,8 +67,8 @@ namespace Alphaleonis.Win32
          if (null != writePath)
             writePath = Path.GetCleanExceptionPath(writePath);
 
-
          var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message.Trim().TrimEnd('.').Trim());
+        
 
          if (!Utils.IsNullOrWhiteSpace(readPath) && !Utils.IsNullOrWhiteSpace(writePath))
             errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Read: [{1}] | Write: [{2}]", errorMessage, readPath, writePath);
