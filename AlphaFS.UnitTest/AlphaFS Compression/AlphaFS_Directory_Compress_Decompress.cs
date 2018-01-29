@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -25,9 +25,10 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   partial class AlphaFS_CompressionTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void AlphaFS_Directory_Compress_And_Decompress_LocalAndNetwork_Success()
