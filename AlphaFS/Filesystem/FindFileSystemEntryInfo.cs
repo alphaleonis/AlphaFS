@@ -143,22 +143,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets or sets the ability to return the object as a <see cref="FileSystemInfo"/> instance.</summary>
       /// <value><see langword="true"/> returns the object as a <see cref="FileSystemInfo"/> instance.</value>
-      public bool AsFileSystemInfo { get; }
+      public bool AsFileSystemInfo { get; private set; }
 
 
       /// <summary>Gets or sets the ability to return the full path in long full path format.</summary>
       /// <value><see langword="true"/> returns the full path in long full path format, <see langword="false"/> returns the full path in regular path format.</value>
-      public bool AsLongPath { get; }
+      public bool AsLongPath { get; private set; }
 
 
       /// <summary>Gets or sets the ability to return the object instance as a <see cref="string"/>.</summary>
       /// <value><see langword="true"/> returns the full path of the object as a <see cref="string"/></value>
-      public bool AsString { get; }
+      public bool AsString { get; private set; }
 
 
       /// <summary>Gets or sets the ability to skip on access errors.</summary>
       /// <value><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as ACLs protected directories or non-accessible reparse points.</value>
-      public bool ContinueOnException { get; }
+      public bool ContinueOnException { get; private set; }
 
 
       /// <summary>Gets the file system object type.</summary>
@@ -167,42 +167,42 @@ namespace Alphaleonis.Win32.Filesystem
       /// <see langword="true"/> = Return only directories.
       /// <see langword="false"/> = Return only files.
       /// </value>
-      public bool? FileSystemObjectType { get; }
+      public bool? FileSystemObjectType { get; private set; }
 
 
       /// <summary>Gets or sets if the path is an absolute or relative path.</summary>
       /// <value>Gets a value indicating whether the specified path string contains absolute or relative path information.</value>
-      public bool IsRelativePath { get; }
+      public bool IsRelativePath { get; private set; }
 
 
       /// <summary>Gets or sets the initial path to the folder.</summary>
       /// <value>The initial path to the file or folder in long path format.</value>
-      public string OriginalInputPath { get; }
+      public string OriginalInputPath { get; private set; }
 
 
       /// <summary>Gets or sets the path to the folder.</summary>
       /// <value>The path to the file or folder in long path format.</value>
-      public string InputPath { get; }
+      public string InputPath { get; private set; }
 
 
       /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FINDEX_INFO_LEVELS"/> to use.</summary>
       /// <value><see langword="true"/> indicates a folder object, <see langword="false"/> indicates a file object.</value>
-      public bool IsDirectory { get; }
+      public bool IsDirectory { get; private set; }
 
 
       /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.</summary>
       /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
-      public NativeMethods.FIND_FIRST_EX_FLAGS LargeCache { get; }
+      public NativeMethods.FIND_FIRST_EX_FLAGS LargeCache { get; private set; }
 
 
       /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.</summary>
       /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
-      public NativeMethods.FINDEX_INFO_LEVELS FindExInfoLevel { get; }
+      public NativeMethods.FINDEX_INFO_LEVELS FindExInfoLevel { get; private set; }
 
 
       /// <summary>Specifies whether the search should include only the current directory or should include all subdirectories.</summary>
       /// <value><see langword="true"/> to include all subdirectories.</value>
-      public bool Recursive { get; }
+      public bool Recursive { get; private set; }
 
 
       /// <summary>Search for file system object-name using a pattern.</summary>
@@ -214,7 +214,10 @@ namespace Alphaleonis.Win32.Filesystem
 
          internal set
          {
-            _searchPattern = value ?? throw new ArgumentNullException("SearchPattern");
+            if (null == value)
+               throw new ArgumentNullException("SearchPattern");
+
+            _searchPattern = value;
 
             _nameFilter = _searchPattern == Path.WildcardStarMatchAll || WildcardMatchAll.IsMatch(_searchPattern)
                ? null
@@ -224,33 +227,33 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary><see langword="true"/> skips ReparsePoints, <see langword="false"/> will follow ReparsePoints.</summary>
-      public bool SkipReparsePoints { get; }
+      public bool SkipReparsePoints { get; private set; }
 
 
       /// <summary>Get or sets the KernelTransaction instance.</summary>
       /// <value>The transaction.</value>
-      public KernelTransaction Transaction { get; }
+      public KernelTransaction Transaction { get; private set; }
 
 
       /// <summary>Gets or sets the custom filter.</summary>
       /// <value>The method determining if the object should be excluded from the output or not.</value>
-      public Predicate<FileSystemEntryInfo> Filter { get; }
+      public Predicate<FileSystemEntryInfo> Filter { get; private set; }
 
 
       /// <summary>Gets or sets the custom filter.</summary>
       /// <value>The method determining if the directory should be recursively traversed or not.</value>
-      public Predicate<FileSystemEntryInfo> RecursionFilter { get; }
+      public Predicate<FileSystemEntryInfo> RecursionFilter { get; private set; }
 
 
       /// <summary>Gets or sets the handler of errors that may occur.</summary>
       /// <value>The error handler method.</value>
-      public ErrorHandler ErrorHandler { get; }
+      public ErrorHandler ErrorHandler { get; private set; }
 
 
 #if !NET35
       /// <summary>Gets or sets the cancellation token to abort the enumeration.</summary>
       /// <value>A <see cref="CancellationToken"/> instance.</value>
-      private CancellationToken CancellationToken { get; }
+      private CancellationToken CancellationToken { get; set; }
 #endif
 
 #endregion // Properties
