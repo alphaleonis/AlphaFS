@@ -25,30 +25,16 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class FileTest
+   public partial class File_DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void File_Delete_LocalAndNetwork_Success()
       {
          File_Delete(false);
          File_Delete(true);
-      }
-
-
-      [TestMethod]
-      public void File_Delete_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetwork_Success()
-      {
-         File_Delete_CatchArgumentException_PathContainsInvalidCharacters(false);
-         File_Delete_CatchArgumentException_PathContainsInvalidCharacters(true);
-      }
-
-
-      [TestMethod]
-      public void File_Delete_CatchArgumentException_PathStartsWithColon_Local_Success()
-      {
-         File_Delete_CatchArgumentException_PathStartsWithColon(false);
       }
 
 
@@ -69,18 +55,10 @@ namespace AlphaFS.UnitTest
       
 
       [TestMethod]
-      public void File_Delete_CatchFileReadOnlyException_ReadOnlyFile_LocalAndNetwork_Success()
+      public void AlphaFS_File_Delete_CatchFileReadOnlyException_ReadOnlyFile_LocalAndNetwork_Success()
       {
          File_Delete_CatchFileReadOnlyException_ReadOnlyFile(false);
          File_Delete_CatchFileReadOnlyException_ReadOnlyFile(true);
-      }
-
-
-      [TestMethod]
-      public void File_Delete_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
-      {
-         File_Delete_CatchNotSupportedException_PathContainsColon(false);
-         File_Delete_CatchNotSupportedException_PathContainsColon(true);
       }
 
 
@@ -113,83 +91,6 @@ namespace AlphaFS.UnitTest
 
             Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file.FullName), "The file exists, but is expected not to.");
          }
-
-         Console.WriteLine();
-      }
-
-
-      private void File_Delete_CatchArgumentException_PathContainsInvalidCharacters(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var file = System.IO.Path.GetTempPath() + @"ThisIs<My>File";
-         Console.WriteLine("\nInput File Path: [{0}]", file);
-
-
-         var gotException = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.File.Delete(file);
-         }
-         catch (Exception ex)
-         {
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
-         }
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-         Console.WriteLine();
-      }
-
-
-      private void File_Delete_CatchArgumentException_PathStartsWithColon(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var folder = @":AAAAAAAAAA";
-         Console.WriteLine("\nInput File Path: [{0}]", folder);
-
-
-         var gotException = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.File.Delete(folder);
-         }
-         catch (Exception ex)
-         {
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
-         }
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-         Console.WriteLine();
-      }
-
-
-      private void File_Delete_CatchNotSupportedException_PathContainsColon(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var colonText = @"\My:FilePath";
-         var folder = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder + @"\dev\test") + colonText;
-
-         Console.WriteLine("\nInput File Path: [{0}]", folder);
-
-
-         var gotException = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.File.Delete(folder);
-         }
-         catch (Exception ex)
-         {
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
-         }
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
       }

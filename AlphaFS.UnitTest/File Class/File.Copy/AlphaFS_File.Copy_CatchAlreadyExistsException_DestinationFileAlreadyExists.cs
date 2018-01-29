@@ -25,17 +25,17 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_MoveTest
+   public partial class File_CopyTest
    {
       [TestMethod]
-      public void File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
+      public void AlphaFS_File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
-         File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
-         File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(true);
+         File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
+         File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(true);
       }
 
 
-      private void File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
+      private void File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -63,7 +63,7 @@ namespace AlphaFS.UnitTest
 
             try
             {
-               Alphaleonis.Win32.Filesystem.File.Move(srcFile.FullName, dstFile);
+               Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile);
             }
             catch (Exception ex)
             {

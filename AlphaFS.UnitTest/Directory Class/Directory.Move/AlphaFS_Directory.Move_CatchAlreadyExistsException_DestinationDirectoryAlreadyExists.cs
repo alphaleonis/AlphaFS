@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_CatchAlreadyExistsException_DestinationDirectoryAlreadyExists_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Move_CatchAlreadyExistsException_DestinationDirectoryAlreadyExists_LocalAndNetwork_Success()
       {
          Directory_Move_CatchAlreadyExistsException_DestinationDirectoryAlreadyExists(false);
          Directory_Move_CatchAlreadyExistsException_DestinationDirectoryAlreadyExists(true);

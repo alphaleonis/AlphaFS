@@ -25,9 +25,10 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class Directory_CreateDirectoryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void Directory_CreateDirectory_And_Delete_LocalAndNetwork_Success()
@@ -38,7 +39,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_FolderWithSpaceAsName_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_CreateDirectory_FolderWithSpaceAsName_LocalAndNetwork_Success()
       {
          Directory_CreateDirectory_FolderWithSpaceAsName(false);
          Directory_CreateDirectory_FolderWithSpaceAsName(true);
@@ -66,25 +67,10 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
       {
          Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory(false);
          Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory(true);
-      }
-
-
-      [TestMethod]
-      public void Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters_LocalAndNetwork_Success()
-      {
-         Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters(false);
-         Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters(true);
-      }
-
-
-      [TestMethod]
-      public void Directory_CreateDirectory_CatchArgumentException_PathStartsWithColon_Local_Success()
-      {
-         Directory_CreateDirectory_CatchArgumentException_PathStartsWithColon(false);
       }
 
 
@@ -94,16 +80,6 @@ namespace AlphaFS.UnitTest
          Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
          Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
       }
-
-
-      [TestMethod]
-      public void Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
-      {
-         Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(false);
-         Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(true);
-      }
-
-
 
 
       private void Directory_CreateDirectory_And_Delete(bool isNetwork)
@@ -339,60 +315,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-         var folder = tempPath + @"\Folder<>";
-         Console.WriteLine("\nInput Directory Path: [{0}]", folder);
-
-
-         var gotException = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder);
-         }
-         catch (Exception ex)
-         {
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
-         }
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-         Console.WriteLine();
-      }
-
-
-      private void Directory_CreateDirectory_CatchArgumentException_PathStartsWithColon(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var folder = @":AAAAAAAAAA";
-         Console.WriteLine("\nInput Directory Path: [{0}]", folder);
-
-
-         var gotException = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder);
-         }
-         catch (Exception ex)
-         {
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
-         }
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-         Console.WriteLine();
-      }
-
-
       private void Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -416,33 +338,6 @@ namespace AlphaFS.UnitTest
 
             var exName = ex.GetType().Name;
             gotException = exName.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
-         }
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-         Console.WriteLine();
-      }
-
-
-      private void Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var colonText = ":aaa.txt";
-         var folder = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder + @"\dev\test\") + colonText;
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", folder);
-
-
-         var gotException = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder);
-         }
-         catch (Exception ex)
-         {
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
          }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");

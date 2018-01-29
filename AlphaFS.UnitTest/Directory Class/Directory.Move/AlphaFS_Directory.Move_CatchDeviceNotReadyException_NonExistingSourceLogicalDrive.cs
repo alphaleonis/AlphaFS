@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -31,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Move_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
       {
          Directory_Move_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
          Directory_Move_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(true);

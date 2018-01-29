@@ -27,7 +27,7 @@ namespace AlphaFS.UnitTest
    public partial class File_MoveTest
    {
       [TestMethod]
-      public void File_Move_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
+      public void AlphaFS_File_Move_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
       {
          File_Move_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
          File_Move_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(true);

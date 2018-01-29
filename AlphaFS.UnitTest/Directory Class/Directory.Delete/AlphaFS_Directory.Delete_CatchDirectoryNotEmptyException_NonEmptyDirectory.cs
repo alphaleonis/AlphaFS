@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetwork_Success()
+      public void Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetwork_Success()
       {
          Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory(false);
          Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory(true);

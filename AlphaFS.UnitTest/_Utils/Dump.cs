@@ -25,7 +25,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using Alphaleonis.Win32.Filesystem;
 
 namespace AlphaFS.UnitTest
 {

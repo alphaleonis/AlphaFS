@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
       
       [TestMethod]
-      public void AlphaFS_Directory_Delete_CatchDeviceNotReadyException_NonExistingLogicalDrive_LocalAndNetwork_Success()
+      public void Directory_Delete_CatchDeviceNotReadyException_NonExistingLogicalDrive_LocalAndNetwork_Success()
       {
          Directory_Delete_CatchDeviceNotReadyException_NonExistingLogicalDrive(false);
          Directory_Delete_CatchDeviceNotReadyException_NonExistingLogicalDrive(true);

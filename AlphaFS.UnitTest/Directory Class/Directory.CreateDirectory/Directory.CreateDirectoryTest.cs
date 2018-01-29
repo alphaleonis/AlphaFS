@@ -19,24 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-namespace Alphaleonis.Win32.Filesystem
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace AlphaFS.UnitTest
 {
-   /// <summary>Information about the target of a symbolic link or mount point.</summary>
-   public class LinkTargetInfo
+   /// <summary>This is a test class for Directory.CreateDirectory/Directory.Delete and is intended to contain all Directory.CreateDirectory/Directory.Delete Unit Tests.</summary>
+   [TestClass]
+   public partial class Directory_CreateDirectoryTest
    {
-      internal LinkTargetInfo(string substituteName, string printName)
-      {
-         SubstituteName = substituteName;
-
-         PrintName = Path.RemoveTrailingDirectorySeparator(printName ?? Path.GetRegularPathCore(substituteName, GetFullPathOptions.None, false));
-      }
-
-      
-      /// <summary>The print name.</summary>
-      public string PrintName { get; private set; }
-
-
-      /// <summary>The substitute name.</summary>
-      public string SubstituteName { get; private set; }
    }
 }
