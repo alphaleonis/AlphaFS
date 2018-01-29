@@ -64,27 +64,28 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          Transaction = transaction;
-         
+
          OriginalInputPath = path;
 
          InputPath = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
-         
+
          IsRelativePath = !Path.IsPathRooted(OriginalInputPath, false);
 
          SearchPattern = searchPattern.TrimEnd(Path.TrimEndChars); // .NET behaviour.
 
          FileSystemObjectType = null;
-         
+
          ContinueOnException = (options & DirectoryEnumerationOptions.ContinueOnException) != 0;
-         
+
          AsLongPath = (options & DirectoryEnumerationOptions.AsLongPath) != 0;
-         
+
          AsString = typeOfT == typeof(string);
          AsFileSystemInfo = !AsString && (typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo));
 
          LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 ? NativeMethods.UseLargeCache : NativeMethods.FIND_FIRST_EX_FLAGS.NONE;
 
-         FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) != 0 ? NativeMethods.FindexInfoLevel : NativeMethods.FINDEX_INFO_LEVELS.Standard;
+         // Only FileSystemEntryInfo makes use of (8.3) AlternateFileName.
+         FindExInfoLevel = AsString || AsFileSystemInfo || (options & DirectoryEnumerationOptions.BasicSearch) != 0 ? NativeMethods.FindexInfoLevel : NativeMethods.FINDEX_INFO_LEVELS.Standard;
 
 
          if (null != customFilters)
@@ -123,12 +124,12 @@ namespace Alphaleonis.Win32.Filesystem
          else
          {
             options &= ~DirectoryEnumerationOptions.Folders; // Remove enumeration of folders.
-            options |= DirectoryEnumerationOptions.Files;    // Add enumeration of files.
+            options |= DirectoryEnumerationOptions.Files; // Add enumeration of files.
          }
 
 
          FileSystemObjectType = (options & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.FilesAndFolders
-            
+
             // Folders and files (null).
             ? (bool?) null
 
@@ -136,10 +137,10 @@ namespace Alphaleonis.Win32.Filesystem
             : (options & DirectoryEnumerationOptions.Folders) != 0;
       }
 
-#endregion // Constructor
+      #endregion // Constructor
 
 
-#region Properties
+      #region Properties
 
       /// <summary>Gets or sets the ability to return the object as a <see cref="FileSystemInfo"/> instance.</summary>
       /// <value><see langword="true"/> returns the object as a <see cref="FileSystemInfo"/> instance.</value>
@@ -256,10 +257,10 @@ namespace Alphaleonis.Win32.Filesystem
       private CancellationToken CancellationToken { get; set; }
 #endif
 
-#endregion // Properties
+      #endregion // Properties
 
 
-#region Methods
+      #region Methods
 
       private SafeFindFileHandle FindFirstFile(string pathLp, out NativeMethods.WIN32_FIND_DATA win32FindData, bool suppressException = false)
       {
@@ -350,7 +351,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   : (T) (object) fsei;
       }
-      
+
 
       private void ThrowPossibleException(uint lastError, string pathLp)
       {
@@ -416,7 +417,7 @@ namespace Alphaleonis.Win32.Filesystem
          else if (isFolder)
             throw new FileNotFoundException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, regularPath)));
       }
-      
+
 
       /// <summary>Gets an enumerator that returns all of the file system objects that match both the wildcards that are in any of the directories to be searched and the custom predicate.</summary>
       /// <returns>An <see cref="IEnumerable{T}" /> instance: FileSystemEntryInfo, DirectoryInfo, FileInfo or string (full path).</returns>
@@ -440,9 +441,9 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (
 #if !NET35
-                   !CancellationToken.IsCancellationRequested &&
+               !CancellationToken.IsCancellationRequested &&
 #endif
-                   dirs.Count > 0
+               dirs.Count > 0
             )
             {
                // Removes the object at the beginning of your Queue.
@@ -469,7 +470,7 @@ namespace Alphaleonis.Win32.Filesystem
                      var fileName = win32FindData.cFileName;
 
                      var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
-                     
+
                      // Skip entries "." and ".."
                      if (isFolder && (fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.Ordinal) || fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.Ordinal)))
                         continue;
@@ -504,7 +505,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   if (!ContinueOnException
 #if !NET35
-                       && !CancellationToken.IsCancellationRequested
+                      && !CancellationToken.IsCancellationRequested
 #endif
                   )
 
@@ -527,7 +528,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             NativeMethods.WIN32_FIND_DATA win32FindData;
 
-            
+
             // Not explicitly set to be a folder.
 
             if (!IsDirectory)
@@ -541,14 +542,14 @@ namespace Alphaleonis.Win32.Filesystem
                      : NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, null, null, InputPath, win32FindData);
 
             }
-            
+
 
             using (var handle = FindFirstFile(InputPath, out win32FindData, true))
             {
                if (null == handle)
                {
                   // InputPath might be a logical drive such as: "C:\", "D:\".
-                  
+
                   var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
 
                   var lastError = File.FillAttributeInfoCore(Transaction, Path.GetRegularPathCore(InputPath, GetFullPathOptions.None, false), ref attrs, false, true);
@@ -595,6 +596,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-#endregion // Methods
+      #endregion // Methods
    }
 }

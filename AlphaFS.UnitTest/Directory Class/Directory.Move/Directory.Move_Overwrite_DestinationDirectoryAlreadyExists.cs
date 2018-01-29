@@ -57,7 +57,8 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
             
-            UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), false, false, true);
+
+            UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, 1, false, false, true);
 
 
             Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
@@ -79,9 +80,9 @@ namespace AlphaFS.UnitTest
 
 
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
-            Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
-            Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
-            Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
+            Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects does not match, but is expected to.");
+            Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files does not match, but is expected to.");
+            Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match, but is expected to.");
          }
 
 

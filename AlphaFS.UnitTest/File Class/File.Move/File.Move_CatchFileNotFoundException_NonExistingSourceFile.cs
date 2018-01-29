@@ -24,47 +24,52 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   public partial class File_MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Delete_CatchArgumentException_PathStartsWithColon_Local_Success()
+      public void File_Move_CatchFileNotFoundException_NonExistingSourceFile_LocalAndNetwork_Success()
       {
-         Directory_Delete_CatchArgumentException_PathStartsWithColon(false);
+         File_Move_CatchFileNotFoundException_NonExistingSourceFile(false);
+         File_Move_CatchFileNotFoundException_NonExistingSourceFile(true);
       }
 
 
-      private void Directory_Delete_CatchArgumentException_PathStartsWithColon(bool isNetwork)
+      private void File_Move_CatchFileNotFoundException_NonExistingSourceFile(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
 
 
          var gotException = false;
 
 
-         var folder = @":AAAAAAAAAA";
+         var srcFile = UnitTestConstants.SysDrive + @"\NonExisting Source File";
+         var dstFile = UnitTestConstants.SysDrive + @"\NonExisting Destination File";
 
-         Console.WriteLine("Input Directory Path: [{0}]", folder);
+         Console.WriteLine("Src File Path: [{0}]", srcFile);
+         Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
-
+         
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+            Alphaleonis.Win32.Filesystem.File.Move(srcFile, dstFile);
          }
          catch (Exception ex)
          {
             var exType = ex.GetType();
 
-            gotException = exType == typeof(ArgumentException);
+            gotException = exType == typeof(System.IO.FileNotFoundException);
 
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 
 
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+         Assert.IsFalse(System.IO.Directory.Exists(dstFile), "The file exists, but is expected not to.");
 
 
          Console.WriteLine();

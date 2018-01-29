@@ -70,7 +70,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("Src Directory Path: [{0}]", pendingEntry);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(pendingEntry, new Random().Next(5, 15), false, false, true);
+            UnitTestConstants.CreateDirectoriesAndFiles(pendingEntry, 1, false, false, true);
 
 
             var gotException = false;

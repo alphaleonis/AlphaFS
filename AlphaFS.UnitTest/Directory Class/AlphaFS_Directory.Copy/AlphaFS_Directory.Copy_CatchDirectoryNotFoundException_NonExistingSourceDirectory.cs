@@ -47,21 +47,17 @@ namespace AlphaFS.UnitTest
          string exMessage = null;
 
 
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         var srcFolder = System.IO.Path.Combine(tempPath, "NonExisting Source Folder");
-         var dstFolder = System.IO.Path.Combine(tempPath, "NonExisting Destination Folder");
+         var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source Folder";
+         var dstFolder = UnitTestConstants.SysDrive + @"\NonExisting Destination Folder";
 
          if (isNetwork)
          {
             srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
             dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
          }
-         
+
          Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
+         Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
 
 
          try

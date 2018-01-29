@@ -19,53 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_CopyTest
+   /// <summary>This is a test class for File.Move and is intended to contain all File.Move Unit Tests.</summary>
+   [TestClass]
+   public partial class File_MoveTest
    {
-      [TestMethod]
-      public void File_Copy_CatchArgumentException_SourcePathStartsWithColon_Local_Success()
-      {
-         File_Copy_CatchArgumentException_SourcePathStartsWithColon();
-      }
-
-
-      private void File_Copy_CatchArgumentException_SourcePathStartsWithColon()
-      {
-         UnitTestConstants.PrintUnitTestHeader(false);
-         Console.WriteLine();
-
-
-         var gotException = false;
-
-
-         var srcFolder = @":AAAAAAAAAA";
-         Console.WriteLine("Src File Path: [{0}]", srcFolder);
-
-
-         try
-         {
-            Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, "does_not_matter_for_this_test");
-         }
-         catch (Exception ex)
-         {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(ArgumentException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-         }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-         Assert.IsFalse(System.IO.File.Exists("does_not_matter_for_this_test"), "The file exists, but is expected not to.");
-
-
-         Console.WriteLine();
-      }
    }
 }

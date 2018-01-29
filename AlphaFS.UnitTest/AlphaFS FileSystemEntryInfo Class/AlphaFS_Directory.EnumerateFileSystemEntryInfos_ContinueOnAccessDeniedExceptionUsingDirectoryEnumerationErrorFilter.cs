@@ -58,7 +58,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
 
 
-         TestDirectoryEnumerationFilters(inputPath);
+         Test_ContinueOnAccessDeniedExceptionUsingErrorFilter(inputPath);
 
 
          Console.WriteLine();
@@ -67,7 +67,7 @@ namespace AlphaFS.UnitTest
 
 
 
-      private void TestDirectoryEnumerationFilters(string inputPath)
+      private void Test_ContinueOnAccessDeniedExceptionUsingErrorFilter(string inputPath)
       {
          var gotException = false;
          const int exceptionCatch = 10;
@@ -149,12 +149,13 @@ namespace AlphaFS.UnitTest
          
          const Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
 
-         var count = Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<string>(inputPath, dirEnumOptions, filters).Count();
-
-         Console.WriteLine("\n\tFile system objects counted: {0:N0}", count);
+         var fsoCount = Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<string>(inputPath, dirEnumOptions, filters).Count();
 
 
-         Assert.IsTrue(count > 0, "No file system entries enumerated, but it is expected.");
+         Console.WriteLine("\n\tFile system objects counted: {0:N0}", fsoCount);
+
+
+         Assert.IsTrue(fsoCount > 0, "No file system entries enumerated, but it is expected.");
 
          Assert.IsTrue(gotException, "The Exception is not caught, but it is expected.");
 

@@ -19,49 +19,46 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   public partial class PathTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
-
       [TestMethod]
-      public void Directory_Delete_CatchNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
+      public void AlphaFS_Path_CheckSupportedPathFormat_CatchArgumentException_PathStartsWithColon_Local_Success()
       {
-         Directory_Delete_CatchNotSupportedException_PathContainsColon(false);
-         Directory_Delete_CatchNotSupportedException_PathContainsColon(true);
+         Path_CheckSupportedPathFormat_CatchArgumentException_PathStartsWithColon();
       }
-      
 
-      private void Directory_Delete_CatchNotSupportedException_PathContainsColon(bool isNetwork)
+
+      private void Path_CheckSupportedPathFormat_CatchArgumentException_PathStartsWithColon()
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         UnitTestConstants.PrintUnitTestHeader(false);
          Console.WriteLine();
 
 
          var gotException = false;
 
 
-         var colonText = @"\My:DirectoryPath";
-         var folder = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder + @"\dev\test") + colonText;
+         const string invalidPath = @":AAAAAAAAAA";
 
-         Console.WriteLine("Input Directory Path: [{0}]", folder);
+         Console.WriteLine("Invalid Path: [{0}]", invalidPath);
 
 
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+            Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(invalidPath, true, true);
          }
          catch (Exception ex)
          {
             var exType = ex.GetType();
 
-            gotException = exType == typeof(NotSupportedException);
+            gotException = exType == typeof(ArgumentException);
 
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }

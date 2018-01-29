@@ -769,12 +769,10 @@ namespace Alphaleonis.Win32.Filesystem
          if (!driveChecked)
          {
             // Check for local or network drives, such as: "C:" or "\\server\c$".
-
             Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, isFolder, (int) Win32Errors.NO_ERROR, true, false);
 
 
             // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
-
             if (!delayUntilReboot)
                Directory.ExistsDriveOrFolderOrFile(transaction, destinationPathLp, isFolder, (int) Win32Errors.NO_ERROR, true, false);
          }
@@ -870,97 +868,7 @@ namespace Alphaleonis.Win32.Filesystem
          return cmr;
       }
       
-
       
-      
-      /// <summary>Checks if the <see cref="MoveOptions.CopyAllowed"/> flag is specified.</summary>
-      internal static bool AllowEmulate(MoveOptions? moveOptions)
-      {
-         return IsNotNull(moveOptions) && (moveOptions & MoveOptions.CopyAllowed) != 0;
-      }
-
-
-      /// <summary>Checks if the <see cref="MoveOptions.ReplaceExisting"/> flag is specified.</summary>
-      internal static bool CanOverwrite(MoveOptions? moveOptions)
-      {
-         return IsNotNull(moveOptions) && (moveOptions & MoveOptions.ReplaceExisting) != 0;
-      }
-
-
-      /// <summary>Checks if the <see cref="CopyOptions.CopySymbolicLink"/> flag is specified.</summary>
-      internal static bool HasCopySymbolicLink(CopyOptions? copyOptions)
-      {
-         return IsNotNull(copyOptions) && (copyOptions & CopyOptions.CopySymbolicLink) != 0;
-      }
-
-
-      /// <summary>Checks if the <see cref="MoveOptions.DelayUntilReboot"/> flag is specified.</summary>
-      private static bool HasDelayUntilReboot(MoveOptions? moveOptions)
-      {
-         return IsNotNull(moveOptions) && (moveOptions & MoveOptions.DelayUntilReboot) != 0;
-      }
-
-
-      /// <summary>Checks that the <see cref="FileAttributes"/> instance is valid.</summary>
-      internal static bool HasValidAttributes(FileAttributes fileAttributes)
-      {
-         return IsNotNull(fileAttributes) && !fileAttributes.Equals(NativeMethods.InvalidFileAttributes);
-      }
-
-
-      /// <summary>Determine the Copy or Move action.</summary>
-      /// <exception cref="NotSupportedException"/>
-      private static bool IsCopyAction(CopyOptions? copyOptions, MoveOptions? moveOptions)
-      {
-         // Determine Copy or Move action.
-
-         var isMove = IsNotNull(moveOptions) && Equals(null, copyOptions);
-         var isCopy = !isMove && IsNotNull(copyOptions);
-
-         if (isCopy.Equals(isMove))
-            throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
-
-         return isCopy;
-      }
-
-
-      /// <summary>Checks that the file system object is a directory.</summary>
-      internal static bool IsDirectory(FileAttributes fileAttributes)
-      {
-         return HasValidAttributes(fileAttributes) && (fileAttributes & FileAttributes.Directory) != 0;
-      }
-
-
-      /// <summary>Checks that the file system object is a hidden.</summary>
-      internal static bool IsHidden(FileAttributes fileAttributes)
-      {
-         return HasValidAttributes(fileAttributes) && (fileAttributes & FileAttributes.Hidden) != 0;
-      }
-
-
-      /// <summary>Checks that the object is not null.</summary>
-      private static bool IsNotNull<T>(T obj)
-      {
-         return !Equals(null, obj);
-      }
-
-
-      /// <summary>Checks that the file system object is a read-only.</summary>
-      internal static bool IsReadOnly(FileAttributes fileAttributes)
-      {
-         return HasValidAttributes(fileAttributes) && (fileAttributes & FileAttributes.ReadOnly) != 0;
-      }
-
-
-      /// <summary>Checks that the file system object is a read-only or hidden.</summary>
-      private static bool IsReadOnlyOrHidden(FileAttributes fileAttributes)
-      {
-         return IsReadOnly(fileAttributes) || IsHidden(fileAttributes);
-      }
-
-
-
-
       private static bool CopyMoveNative(KernelTransaction transaction, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine, CopyOptions? copyOptions, MoveOptions? moveOptions, out bool cancel, out int lastError)
       {
          cancel = false;
@@ -1114,14 +1022,6 @@ namespace Alphaleonis.Win32.Filesystem
                         // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
                         throw new FileReadOnlyException(destinationPathLp);
                      }
-
-
-                     // 2017-06-12: Not necessary anymore because we reset the file attributes to Normal.
-
-                     //// MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
-                     //// and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                     //if (IsHidden(attrs.dwFileAttributes))
-                     //   NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.File_Is_Hidden, destinationPathLp));
                   }
                }
 
@@ -1163,19 +1063,16 @@ namespace Alphaleonis.Win32.Filesystem
          deleteOnStartup = delayUntilReboot && null == destinationPath;
 
          
-         if (pathFormat != PathFormat.LongFullPath)
+         if (pathFormat == PathFormat.RelativePath)
          {
-            if (pathFormat != PathFormat.LongFullPath)
-            {
-               if (Utils.IsNullOrWhiteSpace(sourcePath))
-                  throw new ArgumentNullException("sourcePath");
+            if (Utils.IsNullOrWhiteSpace(sourcePath))
+               throw new ArgumentNullException("sourcePath");
 
                
-               // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
+            // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
 
-               if (!delayUntilReboot && Utils.IsNullOrWhiteSpace(destinationPath))
-                  throw new ArgumentNullException("destinationPath");
-            }
+            if (!delayUntilReboot && Utils.IsNullOrWhiteSpace(destinationPath))
+               throw new ArgumentNullException("destinationPath");
 
             
 

@@ -48,43 +48,40 @@ namespace AlphaFS.UnitTest
          string exMessage = null;
 
 
-         using (var rootDir = new TemporaryDirectory(UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source Folder";
+         var dstFolder = UnitTestConstants.SysDrive + @"\NonExisting Destination Folder";
+
+         if (isNetwork)
          {
-            var srcFolder = System.IO.Path.Combine(rootDir.Directory.FullName, "NonExisting Source Folder");
-            var dstFolder = System.IO.Path.Combine(rootDir.Directory.FullName, "NonExisting Destination Folder");
-
-            if (isNetwork)
-            {
-               srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
-               dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
-            }
-            
-            Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
-            Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
-
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, dstFolder);
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
-               exMessage = ex.Message;
-
-               gotException = exType == typeof(System.IO.DirectoryNotFoundException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, exMessage);
-            }
-
-
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-
-            Assert.IsNotNull(exMessage);
-            
-            Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
+            srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
+            dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
          }
+
+         Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
+         Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
+
+
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, dstFolder);
+         }
+         catch (Exception ex)
+         {
+            var exType = ex.GetType();
+            exMessage = ex.Message;
+
+            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, exMessage);
+         }
+
+
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+
+         Assert.IsNotNull(exMessage);
+            
+         Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
          
 
          Console.WriteLine();

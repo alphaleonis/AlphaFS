@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
          var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
 
          var srcFolder = nonExistingDriveLetter + @":\NonExisting Source File";
-         var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination File";
+         var dstFolder = UnitTestConstants.SysDrive + @"\NonExisting Destination File";
 
          if (isNetwork)
          {
@@ -55,6 +55,7 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("Src File Path: [{0}]", srcFolder);
+         Console.WriteLine("Dst File Path: [{0}]", dstFolder);
 
 
          try

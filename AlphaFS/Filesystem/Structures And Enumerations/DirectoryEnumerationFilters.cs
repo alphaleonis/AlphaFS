@@ -24,22 +24,16 @@ using System.Threading;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>
-   /// Represents the method that will handle an error raised during retrieving file system entries.
-   /// </summary>
+   /// <summary>[AlphaFS] Represents the method that will handle an error raised during retrieving file system entries.</summary>
+   /// <returns><see langword="true"/>, if the error has been fully handled and the caller may proceed, 
    /// <param name="errorCode">The error code.</param>
    /// <param name="errorMessage">The error message.</param>
    /// <param name="pathProcessed">The faulty path being processed.</param>
-   /// <returns><see langword="true"/>, if the error has been fully handled and the caller may proceed, 
    /// <see langword="false"/> otherwise, in which case the caller will throw the corresponding exception.</returns>   
    public delegate bool ErrorHandler(int errorCode, string errorMessage, string pathProcessed);
 
 
-   /// <summary>
-   /// [AlphaFS] Specifies a set of custom filters to be used with enumeration methods of <see cref="Directory"/>, 
-   /// e.g., <see cref="Directory.EnumerateDirectories(string)"/>, <see cref="Directory.EnumerateFiles(string)"/>,
-   /// or <see cref="Directory.EnumerateFileSystemEntries(string)"/>.
-   /// </summary>
+   /// <summary>[AlphaFS] Specifies a set of custom filters to be used with enumeration methods of <see cref="Directory"/>, e.g., <see cref="Directory.EnumerateDirectories(string)"/>, <see cref="Directory.EnumerateFiles(string)"/>, or <see cref="Directory.EnumerateFileSystemEntries(string)"/>.</summary>
    /// <remarks>
    /// <see cref="DirectoryEnumerationFilters"/> allows scenarios in which files/directories being 
    /// enumerated by the methods of <see cref="Directory"/> class are accepted only if 

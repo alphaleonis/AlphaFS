@@ -55,6 +55,7 @@ namespace AlphaFS.UnitTest
             var dstFile = rootDir.RandomFileFullPath;
 
             Console.WriteLine("Src File Path: [{0}]", srcFile);
+            Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 
             System.IO.File.Copy(srcFile.FullName, dstFile);

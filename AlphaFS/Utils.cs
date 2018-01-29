@@ -44,6 +44,13 @@ namespace Alphaleonis
       }
 
 
+      /// <summary>Checks that the object is not null.</summary>
+      public static bool IsNotNull<T>(T obj)
+      {
+         return !Equals(null, obj);
+      }
+
+
       /// <summary>Indicates whether a specified string is null, empty, or consists only of white-space characters.</summary>
       /// <returns><see langword="true"/> if the <paramref name="value"/> parameter is null or <see cref="string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
       /// <param name="value">The string to test.</param>

@@ -42,10 +42,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
-
-
-         var gotException = false;
-
+         
 
          var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
@@ -64,47 +61,12 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, 1, false, false, true);
 
 
-            Console.WriteLine();
-            Console.Write("1st Copy action.");
-            Console.WriteLine();
-
-
             Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
 
 
-            try
-            {
-               Console.WriteLine();
-               Console.Write("2nd Copy action.");
-               Console.WriteLine();
-
-
-               Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
-
-
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-            }
-
-
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-            Assert.IsTrue(System.IO.Directory.Exists(folderDst.FullName), "The directory does not exist, but is expected to.");
-
-
-
-
-            // Overwrite using CopyOptions.None
             var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
 
             var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderSrc.FullName, dirEnumOptions);
-
             var sourceTotal = props["Total"];
             var sourceTotalFiles = props["File"];
             var sourceTotalSize = props["Size"];
@@ -112,28 +74,48 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
 
-            Console.WriteLine();
-            Console.Write("2nd Copy overwrite action.");
-            Console.WriteLine();
 
+
+            var gotException = false;
+
+            try
+            {
+               Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
+            }
+            catch (Exception ex)
+            {
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
+
+               //Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            }
+
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+            Assert.IsTrue(System.IO.Directory.Exists(folderDst.FullName), "The directory does not exist, but is expected to.");
+            
+
+            
+
+            // Overwrite using CopyOptions.None
 
             var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.CopyOptions.None);
 
 
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
-            Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
-            Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
-            Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
-            Assert.AreNotEqual(null, copyResult);
+            Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects does not match, but is expected to.");
+            Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files does not match, but is expected to.");
+            Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match, but is expected to.");
 
 
             // Test against copyResult results.
 
-            UnitTestConstants.Dump(copyResult, -16);
-
-            Assert.AreEqual(sourceTotal, copyResult.TotalFolders + copyResult.TotalFiles, "The number of total file system objects do not match.");
-            Assert.AreEqual(sourceTotalFiles, copyResult.TotalFiles, "The number of total files do not match.");
-            Assert.AreEqual(sourceTotalSize, copyResult.TotalBytes, "The total file size does not match.");
+            Assert.IsNotNull(copyResult);
+            Assert.AreEqual(sourceTotal, copyResult.TotalFolders + copyResult.TotalFiles, "The number of total file system objects does not match, but is expected to.");
+            Assert.AreEqual(sourceTotalFiles, copyResult.TotalFiles, "The number of total files does not match, but is expected to.");
+            Assert.AreEqual(sourceTotalSize, copyResult.TotalBytes, "The total file size does not match, but is expected to.");
          }
 
 

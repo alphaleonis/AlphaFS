@@ -707,19 +707,13 @@ namespace Alphaleonis.Win32.Filesystem
          File.ValidateAndUpdatePathsAndOptions(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
          
 
-
-
          // Check for local or network drives, such as: "C:" or "\\server\c$".
-
          ExistsDriveOrFolderOrFile(transaction, sourcePathLp, true, (int) Win32Errors.NO_ERROR, true, false);
          
 
-         //// File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
-
+         // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
          if (!delayUntilReboot)
             ExistsDriveOrFolderOrFile(transaction, destinationPathLp, true, (int) Win32Errors.NO_ERROR, true, false);
-
-         
          
          
          // Process Move action options, possible fallback to Copy action.

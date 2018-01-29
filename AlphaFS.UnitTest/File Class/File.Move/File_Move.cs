@@ -19,65 +19,63 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_CopyTest
+   public partial class File_MoveTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
+
       [TestMethod]
-      public void File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
+      public void File_Move_Overwrite_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
-         File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
-         File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(true);
+         File_Move_Overwrite_DestinationFileAlreadyExists(false);
+         File_Move_Overwrite_DestinationFileAlreadyExists(true);
       }
 
 
-      private void File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
+      private void File_Move_Overwrite_DestinationFileAlreadyExists(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var srcFile = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
+            var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
+            var fileCopy = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nSource File Path: [{0}]", fileSource);
 
-            var dstFile = srcFile + "-Existing File";
-
-            Console.WriteLine("Src File Path: [{0}]", srcFile);
-            Console.WriteLine("Dst File Path: [{0}]", dstFile);
-
-            System.IO.File.Copy(srcFile.FullName, dstFile);
+            // Copy it.
+            System.IO.File.Copy(fileSource.FullName, fileCopy);
 
 
+            var gotException = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile);
+               Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy);
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
+               Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
 
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("AlreadyExistsException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
 
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               Assert.IsFalse(System.IO.File.Exists(fileSource.FullName), "The file does exists, but is expected not to.");
+               Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
             }
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
 
          Console.WriteLine();
       }

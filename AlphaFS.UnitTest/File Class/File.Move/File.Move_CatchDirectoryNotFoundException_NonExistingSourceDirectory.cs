@@ -24,48 +24,63 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_MoveTest
+   public partial class File_MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Move_CatchArgumentException_SourcePathStartsWithColon_Local_Success()
+      public void File_Move_CatchDirectoryNotFoundException_NonExistingSourceDirectory_LocalAndNetwork_Success()
       {
-         Directory_Move_CatchArgumentException_SourcePathStartsWithColon(false);
+         File_Move_CatchDirectoryNotFoundException_NonExistingSourceDirectory(false);
+         File_Move_CatchDirectoryNotFoundException_NonExistingSourceDirectory(true);
       }
 
 
-      private void Directory_Move_CatchArgumentException_SourcePathStartsWithColon(bool isNetwork)
+      private void File_Move_CatchDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
 
 
          var gotException = false;
+         string exMessage = null;
 
 
-         var srcFolder = @":AAAAAAAAAA";
-         Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
+         var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source Folder\NonExisting Source File";
+         var dstFolder = UnitTestConstants.SysDrive + @"\NonExisting Destination Folder\NonExisting Destination File";
+
+         if (isNetwork)
+         {
+            srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
+            dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
+         }
          
-         
+         Console.WriteLine("Src File Path: [{0}]", srcFolder);
+         Console.WriteLine("Dst File Path: [{0}]", dstFolder);
+
+
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, "does_not_matter_for_this_test");
+            Alphaleonis.Win32.Filesystem.File.Move(srcFolder, dstFolder);
          }
          catch (Exception ex)
          {
             var exType = ex.GetType();
+            exMessage = ex.Message;
 
-            gotException = exType == typeof(ArgumentException);
+            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
 
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, exMessage);
          }
 
 
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
-         Assert.IsFalse(System.IO.Directory.Exists("does_not_matter_for_this_test"), "The directory exists, but is expected not to.");
+
+         Assert.IsNotNull(exMessage);
+
+         Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
 
 
          Console.WriteLine();

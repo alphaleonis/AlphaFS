@@ -46,13 +46,14 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var srcFile = UnitTestConstants.TempFolder + @"\NonExisting Source File";
-         var dstFile = UnitTestConstants.TempFolder + @"\NonExisting Destination File";
+         var srcFile = UnitTestConstants.SysDrive + @"\NonExisting Source File";
+         var dstFile = UnitTestConstants.SysDrive + @"\NonExisting Destination File";
 
          Console.WriteLine("Src File Path: [{0}]", srcFile);
+         Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 
-         
+
          try
          {
             Alphaleonis.Win32.Filesystem.File.Copy(srcFile, dstFile);
