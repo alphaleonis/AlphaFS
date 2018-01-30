@@ -22,19 +22,18 @@
 using Alphaleonis.Win32.Network;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Security;
-using System.Security.Permissions;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides access to information of a device, on a local or remote host.</summary>
-   [SecurityPermission(SecurityAction.InheritanceDemand, UnmanagedCode = true)]
    [SerializableAttribute]
    [SecurityCritical]
    public sealed class DeviceInfo
    {
       #region Constructors
-      
+
       /// <summary>Initializes a DeviceInfo class.</summary>
       [SecurityCritical]
       public DeviceInfo()
@@ -63,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return Device.EnumerateDevicesCore(null, HostName, deviceGuid);
       }
-      
+
       #endregion // Methods
 
 
@@ -74,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Represents the name of the device setup class that a device instance belongs to.</summary>
-      public string Class { get; internal set; }
+      public string DeviceClass { get; internal set; }
 
 
       /// <summary>Represents the <see cref="Guid"/> of the device setup class that a device instance belongs to.</summary>
@@ -91,6 +90,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The device interface path.</summary>
       public string DevicePath { get; internal set; }
+
+
+      ///// <summary>Represents the device type of a device instance.</summary>
+      //public string DeviceType { get; internal set; }
 
 
       /// <summary>Represents the registry entry name of the driver key for a device instance.</summary>
@@ -113,8 +116,9 @@ namespace Alphaleonis.Win32.Filesystem
       public string HostName { get; internal set; }
 
 
-      /// <summary>Gets the instance Id of the device.</summary>
-      public string InstanceId { get; internal set; }
+      /// <summary>Gets the instance ID of the device.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
+      public string InstanceID { get; internal set; }
 
 
       /// <summary>Represents the bus-specific physical location of a device instance.</summary>
@@ -129,7 +133,7 @@ namespace Alphaleonis.Win32.Filesystem
       public string Manufacturer { get; internal set; }
 
 
-      /// <summary>Encapsulates the physical device location information provided by a device's firmware to Windows.</summary>
+      /// <summary>Encapsulates the physical device location (PDO) information provided by a device's firmware to Windows.</summary>
       public string PhysicalDeviceObjectName { get; internal set; }
 
 

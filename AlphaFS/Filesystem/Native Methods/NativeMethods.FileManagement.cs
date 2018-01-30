@@ -734,7 +734,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool UnmapViewOfFile(SafeLocalMemoryBufferHandle lpBaseAddress);
 
-      
+
       /// <summary>Enumerates the first stream with a ::$DATA stream type in the specified file or directory.</summary>
       /// <returns>
       /// If the function succeeds, the return value is a search handle that can be used in subsequent calls to the <see cref="FindNextStreamW"/> function.
@@ -872,7 +872,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("rstrtmgr.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.I4)]
       internal static extern int RmStartSession([MarshalAs(UnmanagedType.U4)] out uint pSessionHandle, [MarshalAs(UnmanagedType.I4)] int dwSessionFlags, [MarshalAs(UnmanagedType.LPWStr)] string strSessionKey);
-      
+
       #endregion // Restart Manager
    }
 }

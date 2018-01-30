@@ -33,26 +33,26 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An enumerable collection of <see cref="string"/> containing the path names for the specified volume.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
-      /// <param name="volumeGuid">A volume <see cref="Guid"/> path: \\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\.</param>
+      /// <param name="volumeGuid">A volume <see cref="Guid"/> path: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</param>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumePathNames(string volumeGuid)
       {
          if (Utils.IsNullOrWhiteSpace(volumeGuid))
             throw new ArgumentNullException("volumeGuid");
 
+
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(Resources.Not_A_Valid_Guid, "volumeGuid");
 
 
-         var volName = Path.AddTrailingDirectorySeparator(volumeGuid, false);
+         var requiredLength = 50;
+         var buffer = new StringBuilder(requiredLength);
 
-
-         uint requiredLength = 10;
-         var cBuffer = new char[requiredLength];
+         volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);
 
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-            while (!NativeMethods.GetVolumePathNamesForVolumeName(volName, cBuffer, (uint)cBuffer.Length, out requiredLength))
+            while (!NativeMethods.GetVolumePathNamesForVolumeName(volumeGuid, buffer, (uint)buffer.Capacity, out requiredLength))
             {
                var lastError = Marshal.GetLastWin32Error();
 
@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   case Win32Errors.ERROR_MORE_DATA:
                   case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
-                     cBuffer = new char[requiredLength];
+                     buffer = new StringBuilder(requiredLength);
                      break;
 
                   default:
@@ -69,21 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
             }
 
-
-         var buffer = new StringBuilder(cBuffer.Length);
-         foreach (var c in cBuffer)
-         {
-            if (c != Path.StringTerminatorChar)
-               buffer.Append(c);
-            else
-            {
-               if (buffer.Length > 0)
-               {
-                  yield return buffer.ToString();
-                  buffer.Length = 0;
-               }
-            }
-         }
+         yield return buffer.ToString();
       }
    }
 }

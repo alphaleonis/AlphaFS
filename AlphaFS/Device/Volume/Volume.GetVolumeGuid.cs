@@ -29,66 +29,67 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Volume
    {
-      /// <summary>[AlphaFS] 
-      ///   Retrieves a volume <see cref="Guid"/> path for the volume that is associated with the specified volume mount point (drive letter,
-      ///   volume GUID path, or mounted folder).
-      /// </summary>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="volumeMountPoint">
-      ///   The path of a mounted folder (for example, "Y:\MountX\") or a drive letter (for example, "X:\").
-      /// </param>
+      /// <summary>[AlphaFS] Retrieves a volume <see cref="Guid"/> path for the volume that is associated with the specified volume mount point (drive letter, volume GUID path, or mounted folder).</summary>
       /// <returns>The unique volume name of the form: "\\?\Volume{GUID}\".</returns>
-      [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
+      /// <remarks>SMB does not support volume management functions.</remarks>
+      /// <remarks>Mount points aren't supported by ReFS volumes.</remarks>
+      /// <exception cref="ArgumentNullException"/>
+      /// <param name="volumeMountPoint">The path of a mounted folder (for example, "Y:\MountX\") or a drive letter (for example, "X:\").</param>
+      [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification =
+         "Marshal.GetLastWin32Error() is manipulated.")]
       [SecurityCritical]
       public static string GetVolumeGuid(string volumeMountPoint)
       {
          if (Utils.IsNullOrWhiteSpace(volumeMountPoint))
             throw new ArgumentNullException("volumeMountPoint");
 
+
          // The string must end with a trailing backslash ('\').
+
          volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+
 
          var volumeGuid = new StringBuilder(100);
          var uniqueName = new StringBuilder(100);
+         bool success = false;
+         int lastError = 0;
 
-         try
+
+         using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
-            using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-            {
-               // GetVolumeNameForVolumeMountPoint()
-               // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+            // NTFS Curiosities (part 2): Volumes, volume names and mount points: Are volume names really unique?
+            // https://blogs.msdn.microsoft.com/adioltean/2005/04/17/ntfs-curiosities-part-2-volumes-volume-names-and-mount-points/
+            //
+            // Interesting read why one would call GetVolumeNameForVolumeMountPoint() twice:
+            //
+            // Bottom line is: if you have disk/volume migrations, then you can expect multiple volume names for the same volume.
+            // But whatever it happens, there is always a unique volume name for the current boot session. You can obtain this unique name by calling
+            // GetVolumeNameForVolumeMountPoint once on your root, get the volume name, and then call GetVolumeNameForVolumeMountPoint again.
+            // This will always return the unique volume name.
 
-               return NativeMethods.GetVolumeNameForVolumeMountPoint(volumeMountPoint, volumeGuid, (uint)volumeGuid.Capacity)
 
-                  // The string must end with a trailing backslash.
-                  ? NativeMethods.GetVolumeNameForVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeGuid.ToString(), false), uniqueName, (uint)uniqueName.Capacity)
-                     ? uniqueName.ToString()
-                     : null
+            // GetVolumeNameForVolumeMountPoint()
+            // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-                  : null;
-            }
-         }
-         finally
-         {
-            var lastError = (uint)Marshal.GetLastWin32Error();
+            success = NativeMethods.GetVolumeNameForVolumeMountPoint(volumeMountPoint, volumeGuid, (uint)volumeGuid.Capacity);
 
-            switch (lastError)
-            {
-               case Win32Errors.ERROR_INVALID_NAME:
-                  NativeError.ThrowException(lastError, volumeMountPoint);
-                  break;
+            lastError = Marshal.GetLastWin32Error();
 
-               case Win32Errors.ERROR_MORE_DATA:
-                  // (1) When GetVolumeNameForVolumeMountPoint() succeeds, lastError is set to Win32Errors.ERROR_MORE_DATA.
-                  break;
+            if (!success)
+               NativeError.ThrowException(lastError, volumeMountPoint);
 
-               default:
-                  // (2) When volumeMountPoint is a network drive mapping or UNC path, lastError is set to Win32Errors.ERROR_INVALID_PARAMETER.
 
-                  // Throw IOException.
-                  NativeError.ThrowException(lastError, volumeMountPoint);
-                  break;
-            }
+            // The string must end with a trailing backslash.
+
+            success = NativeMethods.GetVolumeNameForVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeGuid.ToString(), false), uniqueName, (uint)uniqueName.Capacity);
+
+            lastError = Marshal.GetLastWin32Error();
+
+            if (!success)
+               NativeError.ThrowException(lastError, volumeMountPoint);
+
+
+            return success ? uniqueName.ToString() : null;
          }
       }
    }

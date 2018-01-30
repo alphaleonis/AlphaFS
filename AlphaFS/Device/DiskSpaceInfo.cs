@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
          DriveName = Path.AddTrailingDirectorySeparator(drivePath, false);
       }
 
-      
+
       /// <summary>Initializes a DiskSpaceInfo instance.</summary>
       /// <param name="drivePath">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share</param>
       /// <param name="spaceInfoType"><see langword="null"/> gets both size- and disk cluster information. <see langword="true"/> Get only disk cluster information, <see langword="false"/> Get only size information.</param>
@@ -79,8 +79,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          else
          {
-            _initGetSpaceInfo = (bool) !spaceInfoType;
-            _initGetClusterInfo = (bool) spaceInfoType;
+            _initGetSpaceInfo = (bool)!spaceInfoType;
+            _initGetClusterInfo = (bool)spaceInfoType;
          }
 
          _continueOnAccessError = continueOnException;

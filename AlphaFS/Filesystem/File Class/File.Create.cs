@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options)
       {
-         return CreateFileStreamCore(null, path, (ExtendedFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
+         return CreateFileStreamCore(null, path, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
       }
 
 
@@ -262,7 +262,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            safeHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, true, false, pathFormat);
+            safeHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights)access, share, true, false, pathFormat);
 
             return new FileStream(safeHandle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
          }
@@ -326,10 +326,10 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (null != fileSecurity)
-            fileSystemRights |= (FileSystemRights) SecurityInformation.UnprotectedSacl;
+            fileSystemRights |= (FileSystemRights)SecurityInformation.UnprotectedSacl;
 
 
-         using ((fileSystemRights & (FileSystemRights) SecurityInformation.UnprotectedSacl) != 0 || (fileSystemRights & (FileSystemRights) SecurityInformation.UnprotectedDacl) != 0 ? new PrivilegeEnabler(Privilege.Security) : null)
+         using ((fileSystemRights & (FileSystemRights)SecurityInformation.UnprotectedSacl) != 0 || (fileSystemRights & (FileSystemRights)SecurityInformation.UnprotectedDacl) != 0 ? new PrivilegeEnabler(Privilege.Security) : null)
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
          {
             var safeHandle = transaction == null || !NativeMethods.IsAtLeastWindowsVista

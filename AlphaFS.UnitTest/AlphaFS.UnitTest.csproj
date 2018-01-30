@@ -149,6 +149,7 @@
     <Compile Include="AlphaFS Compression\AlphaFS CompressionTest.cs" />
     <Compile Include="AlphaFS Crc Class\AlphaFS_CrcTest.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_DeviceTest.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumeratePhysicalDrives.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_EncryptionTest.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_Directory_GetFileIdInfo.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_File_GetFileIdInfo.cs" />
@@ -162,9 +163,9 @@
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory_GetFileSystemEntryInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_FileSystemEntryInfoTest.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File_GetFileSystemEntryInfo.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS_Device_EnumerateDevices.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_InitializeInstance.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS_DeviceInfo_InitializeInstance.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS_DeviceInfo.InitializeInstance.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory_CopySymbolicLink.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File_CopySymbolicLink.cs" />

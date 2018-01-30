@@ -42,12 +42,24 @@ namespace AlphaFS.UnitTest
       public const string EMspace = "\u3000";
 #endif
 
+      /// <summary>The Computer name.</summary>
       public static readonly string LocalHost = Environment.MachineName;
+
+      /// <summary>The User temp directory. For example "C:\Users\john\AppData\Local\Temp".</summary>
       public static readonly string TempFolder = Environment.GetEnvironmentVariable("Temp");
+
+      /// <summary>The Computer system drive. For example "C:".</summary>
       public static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
+
+      /// <summary>The Computer Windows directory. For example "C:\Windows".</summary>
       public static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
+
+      /// <summary>The Computer System32 directory. For example "C:\Windows\System32".</summary>
       public static readonly string SysRoot32 = System.IO.Path.Combine(SysRoot, "System32");
+
+      /// <summary>The User's app data directory. For example "C:\Users\john\AppData\Roaming".</summary>
       public static readonly string AppData = Environment.GetEnvironmentVariable("AppData");
+
       public static readonly string NotepadExe = System.IO.Path.Combine(SysRoot32, "notepad.exe");
 
       public const string TextTrue = "IsTrue";

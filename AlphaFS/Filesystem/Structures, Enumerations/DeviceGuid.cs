@@ -132,7 +132,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The GUID_DEVINTERFACE_COMPORT device interface class is defined for COM ports.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "ComPort")]
-      [Description("86E0D1E0-8089-11D0-9CE4-08003E301F73")] ComPort,
+      [Description("86E0D1E0-8089-11D0-9CE4-08003E301F73")]
+      ComPort,
 
       /// <summary>The GUID_DEVINTERFACE_PARALLEL device interface class is defined for parallel ports that support an IEEE 1284-compatible hardware interface.</summary>
       [Description("97F76EF0-F883-11D0-AF1F-0000F800845C")] Parallel,
@@ -148,12 +149,12 @@ namespace Alphaleonis.Win32.Filesystem
       #region Storage Devices
 
       /// <summary>The GUID_DEVINTERFACE_CDCHANGER device interface class is defined for CD-ROM changer devices.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cdrom")]
-      [Description("53F56312-B6BF-11D0-94F2-00A0C91EFB8B")] CdromChanger,
+      [Description("53F56312-B6BF-11D0-94F2-00A0C91EFB8B")] CDChanger,
 
       /// <summary>The GUID_DEVINTERFACE_CDROM device interface class is defined for CD-ROM storage devices.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cdrom")]
-      [Description("53F56308-B6BF-11D0-94F2-00A0C91EFB8B")] Cdrom,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "rom")]
+      [Description("53F56308-B6BF-11D0-94F2-00A0C91EFB8B")]
+      CDRom,
 
       /// <summary>The GUID_DEVINTERFACE_DISK device interface class is defined for hard disk storage devices.</summary>
       [Description("53F56307-B6BF-11D0-94F2-00A0C91EFB8B")] Disk,
@@ -185,15 +186,18 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The GUID_DEVINTERFACE_USB_DEVICE device interface class is defined for USB devices that are attached to a USB hub.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Usb")]
-      [Description("A5DCBF10-6530-11D2-901F-00C04FB951ED")] UsbDevice,
+      [Description("A5DCBF10-6530-11D2-901F-00C04FB951ED")]
+      UsbDevice,
 
       /// <summary>The GUID_DEVINTERFACE_USB_HOST_CONTROLLER device interface class is defined for USB host controller devices.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Usb")]
-      [Description("3ABF6F2D-71C4-462A-8A92-1E6861E6AF27")] UsbHostController,
+      [Description("3ABF6F2D-71C4-462A-8A92-1E6861E6AF27")]
+      UsbHostController,
 
       /// <summary>The GUID_DEVINTERFACE_USB_HUB device interface class is defined for USB hub devices.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Usb")]
-      [Description("F18A0E88-C30C-11D0-8815-00A0C906BED8")] UsbHub
+      [Description("F18A0E88-C30C-11D0-8815-00A0C906BED8")]
+      UsbHub
 
       #endregion // USB Devices
    }

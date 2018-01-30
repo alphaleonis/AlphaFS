@@ -61,6 +61,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Argument must be a drive letter from a-z..
+        /// </summary>
+        internal static string Argument_must_be_a_drive_letter_from_a_z {
+            get {
+                return ResourceManager.GetString("Argument_must_be_a_drive_letter_from_a_z", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buffer is not large enough for the requested operation..
         /// </summary>
         internal static string Buffer_Not_Large_Enough {

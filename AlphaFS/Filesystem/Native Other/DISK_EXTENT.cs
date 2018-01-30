@@ -19,43 +19,25 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using System.Runtime.InteropServices;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Filesystem
 {
-   public partial class AlphaFS_DeviceTest
+   internal static partial class NativeMethods
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_DeviceInfo_InitializeInstance_Local_Success()
+      /// <summary>Represents a disk extent.</summary>
+      /// <remarks>MSDN: http://msdn.microsoft.com/en-us/library/aa363968(v=vs.85).aspx </remarks>
+      [StructLayout(LayoutKind.Sequential)]
+      internal struct DISK_EXTENT
       {
-         Console.WriteLine("\nMSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.");
-         Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
+         /// <summary>The number of the disk that contains this extent. This is the same number that is used to construct the name of the disk, for example, the X in "\\?\PhysicalDriveX" or "\\?\HarddiskX".</summary>
+         public int DiskNumber;
 
-         DeviceInfo_InitializeInstance(false);
-         //DeviceInfo_InitializeInstance(true);
-      }
+         /// <summary>The offset from the beginning of the disk to the extent, in bytes.</summary>
+         public long StartingOffset;
 
-
-
-
-      private void DeviceInfo_InitializeInstance(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var deviceInfo = new Alphaleonis.Win32.Filesystem.DeviceInfo(isNetwork ? UnitTestConstants.LocalHost : string.Empty);
-
-         UnitTestConstants.Dump(deviceInfo, -24);
-
-         Assert.AreEqual(deviceInfo.HostName, UnitTestConstants.LocalHost);
-         Assert.AreEqual(deviceInfo.Class, null);
-         Assert.AreEqual(deviceInfo.ClassGuid, new Guid());
-
-         
-         Console.WriteLine();
+         /// <summary>The number of bytes in this extent.</summary>
+         public long ExtentLength;
       }
    }
 }
