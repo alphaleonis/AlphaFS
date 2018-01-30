@@ -38,9 +38,9 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Fields
 
-      private static readonly Regex WildcardMatchAll = new Regex(@"^(\*)+(\.\*+)+$", RegexOptions.IgnoreCase | RegexOptions.Compiled); // special case to recognize *.* or *.** etc
-      private Regex _nameFilter;
-      private string _searchPattern = Path.WildcardStarMatchAll;
+      [NonSerialized] private static readonly Regex WildcardMatchAll = new Regex(@"^(\*)+(\.\*+)+$", RegexOptions.IgnoreCase | RegexOptions.Compiled); // special case to recognize *.* or *.** etc
+      [NonSerialized] private Regex _nameFilter;
+      [NonSerialized] private string _searchPattern = Path.WildcardStarMatchAll;
 
       #endregion // Fields
 
@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (null != customFilters)
          {
-            Filter = customFilters.InclusionFilter;
+            InclusionFilter = customFilters.InclusionFilter;
 
             RecursionFilter = customFilters.RecursionFilter;
 
@@ -236,12 +236,12 @@ namespace Alphaleonis.Win32.Filesystem
       public KernelTransaction Transaction { get; private set; }
 
 
-      /// <summary>Gets or sets the custom filter.</summary>
-      /// <value>The method determining if the object should be excluded from the output or not.</value>
-      public Predicate<FileSystemEntryInfo> Filter { get; private set; }
+      /// <summary>Gets or sets the custom enumeration in/exclusion filter.</summary>
+      /// <value>The method determining if the object should be in/excluded from the output or not.</value>
+      public Predicate<FileSystemEntryInfo> InclusionFilter { get; private set; }
 
 
-      /// <summary>Gets or sets the custom filter.</summary>
+      /// <summary>Gets or sets the custom enumeration recursion filter.</summary>
       /// <value>The method determining if the directory should be recursively traversed or not.</value>
       public Predicate<FileSystemEntryInfo> RecursionFilter { get; private set; }
 
@@ -325,7 +325,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Return object instance FullPath property as string, optionally in long path format.
 
          return AsString
-            ? null == Filter || Filter(fsei)
+            ? null == InclusionFilter || InclusionFilter(fsei)
                ? (T) (object) (AsLongPath ? fsei.LongFullPath : fsei.FullPath)
                : (T) (object) null
 
@@ -335,7 +335,7 @@ namespace Alphaleonis.Win32.Filesystem
             // true = Return only directories.
             // false = Return only files.
 
-            : null != Filter && !Filter(fsei)
+            : null != InclusionFilter && !InclusionFilter(fsei)
                ? (T) (object) null
 
                // Return object instance of type FileSystemInfo.

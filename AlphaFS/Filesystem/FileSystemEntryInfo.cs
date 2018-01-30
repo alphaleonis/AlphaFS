@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// <summary>Represents information about a file system entry.
    /// <para>This class cannot be inherited.</para>
    /// </summary>
-   [SerializableAttribute]
+   [Serializable]
    [SecurityCritical]
    public sealed class FileSystemEntryInfo
    {
@@ -81,7 +81,14 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>The instance  file name.</summary>
+      /// <summary>The instance file extension.</summary>
+      public string Extension
+      {
+         get { return Path.GetExtension(Win32FindData.cFileName, false); }
+      }
+
+
+      /// <summary>The instance file name.</summary>
       public string FileName
       {
          get { return Win32FindData.cFileName; }
