@@ -34,15 +34,21 @@ namespace AlphaFS.UnitTest
       public void DriveInfo_GetDrives_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-      
-         
+
+
+         var driveCount = 0;
          var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToList();
 
          foreach (var drive in drives)
          {
-            Console.WriteLine("\nLogical Drive: [{0}]", drive.Name);
-
+            Console.WriteLine();
+            Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++driveCount, drive.Name);
+            
             UnitTestConstants.Dump(drive, -21);
+
+
+            if (null != drive.PhysicalDriveInfo)
+               UnitTestConstants.Dump(drive.PhysicalDriveInfo, -23, true);
 
 
             if (null != drive.DiskSpaceInfo)

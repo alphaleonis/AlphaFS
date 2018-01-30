@@ -34,9 +34,7 @@ namespace AlphaFS.UnitTest
       {
          DeviceInfo_InitializeInstance(false);
       }
-
-
-
+      
 
       private void DeviceInfo_InitializeInstance(bool isNetwork)
       {

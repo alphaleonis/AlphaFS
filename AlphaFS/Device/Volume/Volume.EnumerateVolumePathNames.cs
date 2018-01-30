@@ -60,6 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   case Win32Errors.ERROR_MORE_DATA:
                   case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
+                     requiredLength *= 2;
                      buffer = new StringBuilder(requiredLength);
                      break;
 

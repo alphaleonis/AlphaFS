@@ -30,16 +30,14 @@ namespace Alphaleonis.Win32.Filesystem
    partial class File
    {
 
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <returns></returns>
+      /// <summary>Opens a physical device, such as: "\\.\PhysicalDrive0" for access.</summary>
+      /// <returns>A <see cref="SafeFileHandle"/> instance.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="path"></param>
-      /// <param name="fileSystemRights"></param>
+      /// <param name="path">The path to the physical device, such as: "\\.\PhysicalDrive0".</param>
+      /// <param name="fileSystemRights">If no elevated access is needed to access the physical device, specify 0 for this parameter.</param>
       [SecurityCritical]
       public static SafeFileHandle OpenPhysicalDrive(string path, FileSystemRights fileSystemRights)
       {

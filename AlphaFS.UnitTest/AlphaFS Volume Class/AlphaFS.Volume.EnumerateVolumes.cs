@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Volume_EnumerateVolumes_Local_Success()
+      public void AlphaFS_Volume_EnumerateVolumes_And_EnumerateVolumePathNames_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -39,25 +40,45 @@ namespace AlphaFS.UnitTest
 
 
          var volumeCount = 0;
+         var volumes = Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumes().ToList();
 
-         foreach (var volume in Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumes())
+         foreach (var volume in volumes)
          {
             Console.WriteLine("#{0:000}\tVolume: [{1}]", ++volumeCount, volume);
             Console.WriteLine();
-            
 
-            foreach (var displayName in Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumePathNames(volume))
+
+            Assert.IsTrue(volumes.Any(vol => vol.StartsWith(Alphaleonis.Win32.Filesystem.Path.VolumePrefix + "{") &&
+
+                                             vol.EndsWith("}" + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator)), "Volume path name is not valid, but it is expected.");
+
+
+
+
+            var pathNames = Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumePathNames(volume).ToList();
+
+            foreach (var displayName in pathNames)
             {
-               Console.WriteLine("\t\tVolume points to logcal drive: [{0}]", displayName);
+               Console.WriteLine("\t\tEnumerateVolumePathNames: Volume points to logcal drive: [{0}]", displayName);
                Console.WriteLine();
+
+
+               // Volumes don't always have drive letters.
+
+               if (!string.IsNullOrWhiteSpace(displayName))
+                  Assert.IsTrue(char.IsLetter(displayName[0]) && displayName.EndsWith(Alphaleonis.Win32.Filesystem.Path.VolumeSeparator + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator));
             }
 
 
             Console.WriteLine();
+
+
+            if (pathNames.Count == 0)
+               Assert.Inconclusive("Nothing is enumerated, but it is expected.");
          }
 
 
-         if (volumeCount == 0)
+         if (volumes.Count == 0)
             Assert.Inconclusive("Nothing is enumerated, but it is expected.");
       }
    }

@@ -37,12 +37,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="driveLetter">The drive letter, such as C, D.</param>
+      /// <param name="driveLetter">The drive letter, such as 'C', 'D'.</param>
       [SecurityCritical]
       public static PhysicalDriveInfo GetPhysicalDriveInfo(char driveLetter)
       {
          return GetPhysicalDriveInfoCore(driveLetter, null);
       }
+
+
 
 
       /// <summary>Gets the hardware information such as the serial number, Vendor ID, Product ID.</summary>
@@ -51,8 +53,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="driveLetter"></param>
-      /// <param name="deviceInfo"></param>
+      /// <param name="driveLetter">The drive letter, such as 'C', 'D'.</param>
+      /// <param name="deviceInfo">a <see cref="DeviceInfo"/> instance.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is disposed.")]
       [SecurityCritical]
       internal static PhysicalDriveInfo GetPhysicalDriveInfoCore(char? driveLetter, DeviceInfo deviceInfo)
@@ -73,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (driveLetter.HasValue)
-            driveNumber = GetPhysicalDriveNumberCore((char)driveLetter);
+            driveNumber = GetPhysicalDriveNumberCore((char) driveLetter);
 
          else if (null != deviceInfo)
          {
@@ -84,12 +86,17 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (!driveNumber.HasValue)
+         {
+            if (null != safeHandle)
+               safeHandle.Dispose();
+
             return null;
+         }
 
 
          var deviceNumber = driveNumber.Value;
-         var physicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, deviceNumber.DeviceNumber.ToString(CultureInfo.InvariantCulture));
-         var exceptionPath = string.Format(CultureInfo.InvariantCulture, "Device number: {0}. Drive: {1}", deviceNumber.DeviceNumber.ToString(CultureInfo.InvariantCulture), physicalDrive);
+         var diskNumber = deviceNumber.DeviceNumber.ToString(CultureInfo.InvariantCulture);
+         var physicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, diskNumber);
 
          var info = new PhysicalDriveInfo
          {
@@ -120,7 +127,7 @@ namespace Alphaleonis.Win32.Filesystem
             var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
             {
                PropertyId = 0, // StorageDeviceProperty, from STORAGE_PROPERTY_ID enum.
-               QueryType = 0, // PropertyStandardQuery, from STORAGE_QUERY_TYPE enum
+               QueryType = 0   // PropertyStandardQuery, from STORAGE_QUERY_TYPE enum
             };
 
 
@@ -129,23 +136,23 @@ namespace Alphaleonis.Win32.Filesystem
                var storageDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>(0);
 
 
-               info.BusType = (StorageBusType)storageDescriptor.BusType;
+               info.BusType = (StorageBusType) storageDescriptor.BusType;
 
                info.IsRemovable = storageDescriptor.RemovableMedia;
 
                info.SupportsCommandQueueing = storageDescriptor.CommandQueueing;
 
 
-               info.VendorID = safeBuffer.PtrToStringAnsi((int)storageDescriptor.VendorIdOffset).Trim();
+               info.VendorID = safeBuffer.PtrToStringAnsi((int) storageDescriptor.VendorIdOffset).Trim();
 
-               info.ProductRevision = safeBuffer.PtrToStringAnsi((int)storageDescriptor.ProductRevisionOffset).Trim();
+               info.ProductRevision = safeBuffer.PtrToStringAnsi((int) storageDescriptor.ProductRevisionOffset).Trim();
 
 
                // "FriendlyName" usually contains the name as shown in Windows Explorer, so let's use that.
 
                info.Name = null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.FriendlyName)
                   ? deviceInfo.FriendlyName
-                  : safeBuffer.PtrToStringAnsi((int)storageDescriptor.ProductIdOffset).Trim();
+                  : safeBuffer.PtrToStringAnsi((int) storageDescriptor.ProductIdOffset).Trim();
 
 
                //info.InstanceID = null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.InstanceID)
@@ -155,7 +162,8 @@ namespace Alphaleonis.Win32.Filesystem
 
                long serial;
 
-               if (long.TryParse(safeBuffer.PtrToStringAnsi((int)storageDescriptor.SerialNumberOffset).Trim(), out serial))
+               if (long.TryParse(safeBuffer.PtrToStringAnsi((int) storageDescriptor.SerialNumberOffset).Trim(), out serial))
+
                   info.SerialNumber = serial;
             }
 
@@ -164,11 +172,12 @@ namespace Alphaleonis.Win32.Filesystem
             {
                long diskSize;
 
-               var success = NativeMethods.DeviceIoControl5(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, IntPtr.Zero, 0, out diskSize, (uint)Marshal.SizeOf(typeof(long)), out bytesReturned, IntPtr.Zero);
+               var success = NativeMethods.DeviceIoControl5(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, IntPtr.Zero, 0, out diskSize, (uint) Marshal.SizeOf(typeof(long)), out bytesReturned, IntPtr.Zero);
 
                var lastError = Marshal.GetLastWin32Error();
                if (!success)
-                  NativeError.ThrowException(lastError, exceptionPath);
+                  NativeError.ThrowException(lastError, string.Format(CultureInfo.InvariantCulture, "Drive: {0}", physicalDrive));
+
 
                info.TotalSize = diskSize;
             }

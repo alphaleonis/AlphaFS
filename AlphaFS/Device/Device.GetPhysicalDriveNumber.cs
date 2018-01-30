@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="driveLetter">The logical drive letter, such as C, D.</param>
+      /// <param name="driveLetter">The logical drive letter, such as 'C', 'D'.</param>
       [SecurityCritical]
       public static int GetPhysicalDriveNumber(char driveLetter)
       {
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="driveLetter">The logical drive letter, such as C, D.</param>
+      /// <param name="driveLetter">The logical drive letter, such as 'C', 'D'.</param>
       [SecurityCritical]
       internal static NativeMethods.STORAGE_DEVICE_NUMBER? GetPhysicalDriveNumberCore(char driveLetter)
       {

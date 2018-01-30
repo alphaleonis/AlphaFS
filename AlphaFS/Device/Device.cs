@@ -24,7 +24,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Threading;
 using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -33,10 +32,10 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Device
    {
       /// <summary>MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384</summary>
-      internal const int MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384;
+      private const int MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384;
 
       /// <summary>REPARSE_DATA_BUFFER_HEADER_SIZE = 8</summary>
-      internal const int REPARSE_DATA_BUFFER_HEADER_SIZE = 8;
+      private const int REPARSE_DATA_BUFFER_HEADER_SIZE = 8;
 
 
       /// <summary>Builds a Device Interface Detail Data structure.</summary>
@@ -46,11 +45,11 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var didd = new NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA
          {
-            cbSize = (uint)(IntPtr.Size == 4 ? 6 : 8)
+            cbSize = (uint) (IntPtr.Size == 4 ? 6 : 8)
          };
 
 
-         var success = NativeMethods.SetupDiGetDeviceInterfaceDetail(safeHandle, ref interfaceData, ref didd, (uint)Marshal.SizeOf(didd), IntPtr.Zero, ref infoData);
+         var success = NativeMethods.SetupDiGetDeviceInterfaceDetail(safeHandle, ref interfaceData, ref didd, (uint) Marshal.SizeOf(didd), IntPtr.Zero, ref infoData);
 
          var lastError = Marshal.GetLastWin32Error();
          if (!success)
@@ -77,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             uint regDataType;
 
-            var success = NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref infoData, property, out regDataType, safeBuffer, (uint)safeBuffer.Capacity, IntPtr.Zero);
+            var success = NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref infoData, property, out regDataType, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
 
@@ -114,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize);
 
-            var success = NativeMethods.DeviceIoControl(safeHandle, controlCode, IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoControl(safeHandle, controlCode, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
 
@@ -142,7 +141,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize);
 
-            var success = NativeMethods.DeviceIoControl(safeHandle, controlCode, IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoControl(safeHandle, controlCode, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
 
@@ -162,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
             safeBuffer.Close();
 
 
-         switch ((uint)lastError)
+         switch ((uint) lastError)
          {
             case Win32Errors.ERROR_MORE_DATA:
             case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
@@ -196,7 +195,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize);
 
-            var success = NativeMethods.DeviceIoControlAnyObject(safeHandle, controlCode, anyObject, (uint)bufferSize, safeBuffer, (uint)safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoControlAnyObject(safeHandle, controlCode, anyObject, (uint) bufferSize, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
 

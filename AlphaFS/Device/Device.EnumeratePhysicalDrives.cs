@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrives()
       {
-         foreach (var deviceInfo in EnumerateDevicesCore(null, null, DeviceGuid.Disk, false))
+         foreach (var deviceInfo in EnumerateDevicesCore(null, DeviceGuid.Disk, false))
          {
             yield return GetPhysicalDriveInfoCore(null, deviceInfo);
          }
