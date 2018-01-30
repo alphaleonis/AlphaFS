@@ -148,6 +148,8 @@
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_ByHandleFileInfoTest.cs" />
     <Compile Include="AlphaFS Compression\AlphaFS CompressionTest.cs" />
     <Compile Include="AlphaFS Crc Class\AlphaFS_CrcTest.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumeratePhysicalDrivesFromLogicalDrives.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumeratePhysicalDrivesFromVolumes.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_DeviceTest.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumeratePhysicalDrives.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_EncryptionTest.cs" />

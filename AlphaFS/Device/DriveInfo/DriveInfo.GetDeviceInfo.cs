@@ -119,7 +119,7 @@ namespace Alphaleonis.Win32.Filesystem
             case 4:
                if (mode == 0)
                {
-                  return IsUnc ? null : (_physicalDriveInfo ?? (_physicalDriveInfo = Device.GetPhysicalDriveInfoCore(_name[0], null)));
+                  return IsUnc ? null : (_physicalDriveInfo ?? (_physicalDriveInfo = Device.GetPhysicalDriveInfoCore(_name, null)));
                }
 
                return null;

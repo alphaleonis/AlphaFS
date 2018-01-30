@@ -111,7 +111,7 @@ namespace AlphaFS.UnitTest
 
             foreach (var dosDev in Volume.QueryDosDevice(tempPath))
             {
-               Console.WriteLine("#{0:000}\tInput Path                 : [{1}]", ++cnt, dosDev);
+               Console.WriteLine("#{0:000}\tInput Path                : [{1}]", ++cnt, dosDev);
 
                var result = Volume.GetDriveNameForNtDeviceName(dosDev);
                Console.WriteLine("\tGetDriveNameForNtDeviceName() : [{0}]", result ?? "null");
@@ -140,7 +140,7 @@ namespace AlphaFS.UnitTest
          {
             var tempPath = isLocal ? drive : Path.LocalToUnc(drive);
 
-            Console.WriteLine("#{0:000}\tInput Path               : [{1}]", ++cnt, tempPath);
+            Console.WriteLine("#{0:000}\tInput Path              : [{1}]", ++cnt, tempPath);
 
             var result = Volume.GetUniqueVolumeNameForPath(tempPath);
             Console.WriteLine("\tGetUniqueVolumeNameForPath(): [{0}]", result ?? "null");

@@ -19,39 +19,20 @@
  *  THE SOFTWARE. 
  */
 
-using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Security;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Filesystem
 {
-   public partial class AlphaFS_DeviceTest
+   public static partial class Device
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_Device_EnumeratePhysicalDrives_Local_Success()
+      /// <summary>[AlphaFS] Enumerates the drive names of all physical drives on the Computer.</summary>
+      /// <returns>An IEnumerable of type <see cref="PhysicalDriveInfo"/> that represents the physical drives on the Computer.</returns>      
+      [SecurityCritical]
+      public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrivesFromLogicalDrives()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-
-         var driveCount = 0;
-         var drives = Alphaleonis.Win32.Filesystem.Device.EnumeratePhysicalDrives().ToList();
-
-         foreach (var drive in drives)
-         {
-            Console.WriteLine();
-            Console.WriteLine("#{0:000}\tPhysical Drive: [{1}]", ++driveCount, drive.Name);
-
-            UnitTestConstants.Dump(drive, -23);
-
-
-            Console.WriteLine();
-         }
-
-
-         Assert.IsTrue(drives.Count > 0);
+         return DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(drive => GetPhysicalDriveInfoCore(drive.Name, null));
       }
    }
 }

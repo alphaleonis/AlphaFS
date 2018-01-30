@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Use DriveFormat to determine what formatting a drive uses.</remarks>
       public string DriveFormat
       {
-         get { return (string)GetDeviceInfo(0, 1); }
+         get { return (string) GetDeviceInfo(0, 1); }
       }
 
 
@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public DriveType DriveType
       {
-         get { return (DriveType)GetDeviceInfo(0, 3); }
+         get { return (DriveType) GetDeviceInfo(0, 3); }
       }
 
 
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A DirectoryInfo object that contains the root directory of the drive.</returns>
       public DirectoryInfo RootDirectory
       {
-         get { return (DirectoryInfo)GetDeviceInfo(2, 0); }
+         get { return (DirectoryInfo) GetDeviceInfo(2, 0); }
       }
 
 
@@ -204,7 +204,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public string VolumeLabel
       {
-         get { return (string)GetDeviceInfo(0, 2); }
+         get { return (string) GetDeviceInfo(0, 2); }
 
          set { Volume.SetVolumeLabel(_name, value); }
       }
@@ -227,7 +227,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] The MS-DOS device name.</summary>
       public string DosDeviceName
       {
-         get { return (string)GetDeviceInfo(1, 0); }
+         get { return (string) GetDeviceInfo(1, 0); }
       }
 
 
@@ -265,7 +265,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="PhysicalDriveInfo"/> object that contains information of the physical drive.</returns>
       public PhysicalDriveInfo PhysicalDriveInfo
       {
-         get { return (PhysicalDriveInfo)GetDeviceInfo(4, 0); }
+         get { return (PhysicalDriveInfo) GetDeviceInfo(4, 0); }
       }
 
 
@@ -273,7 +273,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="VolumeInfo"/> object that contains file system volume information of the drive.</returns>
       public VolumeInfo VolumeInfo
       {
-         get { return (VolumeInfo)GetDeviceInfo(0, 0); }
+         get { return (VolumeInfo) GetDeviceInfo(0, 0); }
       }
 
       #endregion // Properties
@@ -284,11 +284,11 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Retrieves the drive names of all logical drives on the Computer.</summary>
-      /// <returns>An array of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
+      /// <returns>An array of type <see cref="DriveInfo"/> that represents the logical drives on the Computer.</returns>
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
       {
-         return EnumerateLogicalDrivesCore(false, false).ToArray();
+         return EnumerateLogicalDrivesCore(false, false).OrderBy(drive => drive.Name).ToArray();
       }
 
 

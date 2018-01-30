@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          var result = new string[count];
-         char[] root = { 'A', Path.VolumeSeparatorChar };
+         char[] root = {'A', Path.VolumeSeparatorChar};
 
          drives = lastError;
          count = 0;

@@ -31,18 +31,18 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_EnumeratePhysicalDrives_Local_Success()
+      public void AlphaFS_Device_EnumeratePhysicalDrivesFromVolumes_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var driveCount = 0;
-         var drives = Alphaleonis.Win32.Filesystem.Device.EnumeratePhysicalDrives().ToList();
+         var volumeCount = 0;
+         var volumes = Alphaleonis.Win32.Filesystem.Device.EnumeratePhysicalDrivesFromVolumes().ToList();
 
-         foreach (var drive in drives)
+         foreach (var drive in volumes)
          {
             Console.WriteLine();
-            Console.WriteLine("#{0:000}\tPhysical Drive: [{1}]", ++driveCount, drive.Name);
+            Console.WriteLine("#{0:000}\tVolume: [{1}]", ++volumeCount, drive.Name);
 
             UnitTestConstants.Dump(drive, -23);
 
@@ -51,7 +51,7 @@ namespace AlphaFS.UnitTest
          }
 
 
-         Assert.IsTrue(drives.Count > 0);
+         Assert.IsTrue(volumes.Count > 0);
       }
    }
 }

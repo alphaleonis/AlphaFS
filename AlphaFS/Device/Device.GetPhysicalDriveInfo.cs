@@ -37,11 +37,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="driveLetter">The drive letter, such as 'C', 'D'.</param>
+      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z'. A null value is not valid.</param>
       [SecurityCritical]
-      public static PhysicalDriveInfo GetPhysicalDriveInfo(char driveLetter)
+      public static PhysicalDriveInfo GetPhysicalDriveInfo(string driveName)
       {
-         return GetPhysicalDriveInfoCore(driveLetter, null);
+         return GetPhysicalDriveInfoCore(driveName, null);
       }
 
 
@@ -53,16 +53,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="driveLetter">The drive letter, such as 'C', 'D'.</param>
+      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z'. A null value is not valid.</param>
       /// <param name="deviceInfo">a <see cref="DeviceInfo"/> instance.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is disposed.")]
       [SecurityCritical]
-      internal static PhysicalDriveInfo GetPhysicalDriveInfoCore(char? driveLetter, DeviceInfo deviceInfo)
+      internal static PhysicalDriveInfo GetPhysicalDriveInfoCore(string driveName, DeviceInfo deviceInfo)
       {
          // FileSystemRights desiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
          // without accessing that file or device, even if GENERIC_READ access would have been denied.
          // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
-         //const int dwDesiredAccess = 0;
+         //const int desiredAccess = 0;
 
          // Requires elevation for: TotalNumberOfBytes
          const FileSystemRights desiredAccess = FileSystemRights.Read | FileSystemRights.Write;
@@ -70,45 +70,60 @@ namespace Alphaleonis.Win32.Filesystem
          const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
 
 
-         var device = driveLetter.HasValue
+         var hasDeviceInfo = null != deviceInfo;
+         if (!hasDeviceInfo)
+         {
+            if (Utils.IsNullOrWhiteSpace(driveName))
+               throw new ArgumentNullException("driveName");
 
-            ? string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", Path.LogicalDrivePrefix, driveLetter.ToString(), Path.VolumeSeparator)
+            driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
 
-            : null != deviceInfo ? deviceInfo.DevicePath : null;
+            if (!Path.IsLogicalDriveCore(driveName, PathFormat.LongFullPath))
+               throw new ArgumentException(Resources.Argument_must_be_a_drive_letter_from_a_z, "driveName");
+
+            driveName = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.LogicalDrivePrefix, driveName);
+         }
 
 
-         if (null == device)
+         var pathToDevice = Path.RemoveTrailingDirectorySeparator(hasDeviceInfo ? deviceInfo.DevicePath : driveName);
+
+         if (Utils.IsNullOrWhiteSpace(pathToDevice))
             return null;
 
 
          SafeFileHandle safeHandle;
-         NativeMethods.STORAGE_DEVICE_NUMBER? driveNumber;
-
-         using (safeHandle = File.OpenPhysicalDrive(device, desiredAccess))
-            driveNumber = GetStorageDeviceDriveNumber(safeHandle, device);
+         NativeMethods.STORAGE_DEVICE_NUMBER? storageDevice;
 
 
-         var deviceNumber = driveNumber.Value;
-         var diskNumber = deviceNumber.DeviceNumber;
+         // No elevation needed.
+
+         using (safeHandle = File.OpenPhysicalDrive(pathToDevice, 0))
+
+            storageDevice = GetStorageDeviceDriveNumber(safeHandle, pathToDevice);
+
+
+         var device = storageDevice.Value;
+         var diskNumber = device.DeviceNumber;
+         
          var physicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, diskNumber.ToString(CultureInfo.InvariantCulture));
-
+         
          var info = new PhysicalDriveInfo
          {
             DeviceNumber = diskNumber,
-            PartitionNumber = deviceNumber.PartitionNumber
+            PartitionNumber = device.PartitionNumber
          };
 
 
 
-         try
-         {
-            GetVolumeDiskExtents(physicalDrive, desiredAccess);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine(ex.Message);
-         }
-         
+         //try
+         //{
+         //   GetVolumeDiskExtents(physicalDrive, desiredAccess);
+         //}
+         //catch (Exception ex)
+         //{
+         //   Console.WriteLine(ex.Message);
+         //}
+
 
          using (safeHandle = File.OpenPhysicalDrive(physicalDrive, desiredAccess))
          {
