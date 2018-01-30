@@ -22,6 +22,7 @@
 using System;
 using System.Globalization;
 using System.Security;
+using System.Security.AccessControl;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -55,27 +56,29 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static NativeMethods.STORAGE_DEVICE_NUMBER? GetPhysicalDriveNumberCore(char driveLetter)
       {
-         if (!char.IsLetter(driveLetter))
+         var drive = driveLetter.ToString(CultureInfo.InvariantCulture) + Path.VolumeSeparator;
+         
+         if (!Path.IsLogicalDriveCore(drive, PathFormat.LongFullPath))
             throw new ArgumentException(Resources.Argument_must_be_a_drive_letter_from_a_z, "driveLetter");
 
 
          // FileSystemRights desiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
          // without accessing that file or device, even if GENERIC_READ access would have been denied.
          // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
-         const int dwDesiredAccess = 0;
+         const int desiredAccess = 0;
 
          // Requires elevation.
-         //const FileSystemRights dwDesiredAccess = FileSystemRights.Read | FileSystemRights.Write;
+         //const FileSystemRights desiredAccess = FileSystemRights.Read | FileSystemRights.Write;
 
-         //const bool elevatedAccess = (dwDesiredAccess & FileSystemRights.Read) != 0 && (dwDesiredAccess & FileSystemRights.Write) != 0;
-
-
-         var physicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", Path.LogicalDrivePrefix, driveLetter.ToString(), Path.VolumeSeparator);
+         //const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (dwDesiredAccess & FileSystemRights.Write) != 0;
 
 
-         using (var safeHandle = File.OpenPhysicalDrive(physicalDrive, dwDesiredAccess))
+         var logicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.LogicalDrivePrefix, drive);
 
-            return GetStorageDeviceDriveNumber(safeHandle, physicalDrive);
+
+         using (var safeHandle = File.OpenPhysicalDrive(logicalDrive, desiredAccess))
+
+            return GetStorageDeviceDriveNumber(safeHandle, logicalDrive);
       }
    }
 }

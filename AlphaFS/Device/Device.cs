@@ -58,16 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          return didd;
       }
-
-
-      [SecurityCritical]
-      private static NativeMethods.STORAGE_DEVICE_NUMBER GetStorageDeviceDriveNumber(SafeFileHandle safeHandle, string path)
-      {
-         using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, path))
-
-            return safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0);
-      }
-
+      
 
       [SecurityCritical]
       private static string GetDeviceRegistryProperty(SafeHandle safeHandle, NativeMethods.SP_DEVINFO_DATA infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum property)
@@ -100,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      internal static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string path, int size = -1)
+      private static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string pathForException, int size = -1)
       {
          NativeMethods.IsValidHandle(safeHandle);
 
@@ -121,14 +112,14 @@ namespace Alphaleonis.Win32.Filesystem
                return safeBuffer;
 
 
-            bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, path);
+            bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, pathForException);
          }
       }
 
 
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      internal static SafeGlobalMemoryBufferHandle GetDeviceIoData3<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string path, int size = -1)
+      private static SafeGlobalMemoryBufferHandle GetDeviceIoData3<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string pathForException, int size = -1)
       {
          NativeMethods.IsValidHandle(safeHandle);
 
@@ -149,13 +140,13 @@ namespace Alphaleonis.Win32.Filesystem
                return safeBuffer;
 
 
-            bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, path);
+            bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, pathForException);
          }
       }
 
 
       [SecurityCritical]
-      private static int GetDoubledBufferSizeOrThrowException(int lastError, SafeHandle safeBuffer, int bufferSize, string path)
+      private static int GetDoubledBufferSizeOrThrowException(int lastError, SafeHandle safeBuffer, int bufferSize, string pathForException)
       {
          if (null != safeBuffer && !safeBuffer.IsClosed)
             safeBuffer.Close();
@@ -165,12 +156,12 @@ namespace Alphaleonis.Win32.Filesystem
          {
             case Win32Errors.ERROR_MORE_DATA:
             case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
-               bufferSize = 2 * bufferSize;
+               bufferSize *= 2;
                break;
 
 
             default:
-               NativeMethods.IsValidHandle(safeBuffer, lastError, string.Format(CultureInfo.InvariantCulture, "Buffer size: {0}. Path: {1}", bufferSize.ToString(CultureInfo.InvariantCulture), path));
+               NativeMethods.IsValidHandle(safeBuffer, lastError, string.Format(CultureInfo.InvariantCulture, "Buffer size: {0}. Path: {1}", bufferSize.ToString(CultureInfo.InvariantCulture), pathForException));
                break;
          }
 
@@ -179,10 +170,19 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      [SecurityCritical]
+      private static NativeMethods.STORAGE_DEVICE_NUMBER GetStorageDeviceDriveNumber(SafeFileHandle safeHandle, string pathForException)
+      {
+         using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, pathForException))
+
+            return safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0);
+      }
+
+
       /// <summary>Invokes InvokeIoControl with the specified input and specified size.</summary>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      internal static SafeGlobalMemoryBufferHandle InvokeDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, T anyObject, string path, int size = -1)
+      private static SafeGlobalMemoryBufferHandle InvokeDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, T anyObject, string pathForException, int size = -1)
       {
          NativeMethods.IsValidHandle(safeHandle);
 
@@ -204,7 +204,7 @@ namespace Alphaleonis.Win32.Filesystem
                return safeBuffer;
 
 
-            bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, path);
+            bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, pathForException);
          }
       }
 

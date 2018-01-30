@@ -41,6 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
       public PhysicalDriveInfo()
       {
+         PartitionNumber = -1;
          SerialNumber = -1;
          TotalSize = -1;
       }
@@ -96,19 +97,19 @@ namespace Alphaleonis.Win32.Filesystem
       public long TotalSize { get; internal set; }
 
 
-      /// <summary>The Vendor ID of the physical drive.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
-      public string VendorID
-      {
-         get { return !Utils.IsNullOrWhiteSpace(_vendorID) ? _vendorID : string.Empty; }
+      ///// <summary>The Vendor ID of the physical drive.</summary>
+      //[SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
+      //public string VendorID
+      //{
+      //   get { return !Utils.IsNullOrWhiteSpace(_vendorID) ? _vendorID : string.Empty; }
 
-         internal set
-         {
-            // SanDisk X400 M.2 2280 256GB reports VendorID as: "("
+      //   internal set
+      //   {
+      //      // SanDisk X400 M.2 2280 256GB reports VendorID as: "("
 
-            _vendorID = null != value && value.Length > 1 ? value : string.Empty;
-         }
-      }
+      //      _vendorID = null != value && value.Length > 1 ? value : string.Empty;
+      //   }
+      //}
 
 
       /// <summary>The Volumes located on the physical drive.</summary>

@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>Gets the hardware information such as the serial number, Vendor ID, Product ID.</summary>
+      /// <summary>[AlphaFS] Gets the hardware information such as the serial number, Vendor ID, Product ID.</summary>
       /// <returns>A <see cref="PhysicalDriveInfo"/> instance that represents the physical drive on the Computer.</returns>      
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -70,37 +70,31 @@ namespace Alphaleonis.Win32.Filesystem
          const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
 
 
-         SafeFileHandle safeHandle = null;
-         NativeMethods.STORAGE_DEVICE_NUMBER? driveNumber = null;
+         var device = driveLetter.HasValue
+
+            ? string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", Path.LogicalDrivePrefix, driveLetter.ToString(), Path.VolumeSeparator)
+
+            : null != deviceInfo ? deviceInfo.DevicePath : null;
 
 
-         if (driveLetter.HasValue)
-            driveNumber = GetPhysicalDriveNumberCore((char) driveLetter);
-
-         else if (null != deviceInfo)
-         {
-            safeHandle = File.OpenPhysicalDrive(deviceInfo.DevicePath, desiredAccess);
-
-            driveNumber = GetStorageDeviceDriveNumber(safeHandle, deviceInfo.DevicePath);
-         }
-
-
-         if (!driveNumber.HasValue)
-         {
-            if (null != safeHandle)
-               safeHandle.Dispose();
-
+         if (null == device)
             return null;
-         }
+
+
+         SafeFileHandle safeHandle;
+         NativeMethods.STORAGE_DEVICE_NUMBER? driveNumber;
+
+         using (safeHandle = File.OpenPhysicalDrive(device, desiredAccess))
+            driveNumber = GetStorageDeviceDriveNumber(safeHandle, device);
 
 
          var deviceNumber = driveNumber.Value;
-         var diskNumber = deviceNumber.DeviceNumber.ToString(CultureInfo.InvariantCulture);
-         var physicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, diskNumber);
+         var diskNumber = deviceNumber.DeviceNumber;
+         var physicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, diskNumber.ToString(CultureInfo.InvariantCulture));
 
          var info = new PhysicalDriveInfo
          {
-            DeviceNumber = deviceNumber.DeviceNumber,
+            DeviceNumber = diskNumber,
             PartitionNumber = deviceNumber.PartitionNumber
          };
 
@@ -114,13 +108,9 @@ namespace Alphaleonis.Win32.Filesystem
          {
             Console.WriteLine(ex.Message);
          }
+         
 
-
-         if (null == safeHandle)
-            safeHandle = File.OpenPhysicalDrive(physicalDrive, desiredAccess);
-
-
-         using (safeHandle)
+         using (safeHandle = File.OpenPhysicalDrive(physicalDrive, desiredAccess))
          {
             uint bytesReturned;
 
@@ -143,12 +133,12 @@ namespace Alphaleonis.Win32.Filesystem
                info.SupportsCommandQueueing = storageDescriptor.CommandQueueing;
 
 
-               info.VendorID = safeBuffer.PtrToStringAnsi((int) storageDescriptor.VendorIdOffset).Trim();
+               //info.VendorID = safeBuffer.PtrToStringAnsi((int) storageDescriptor.VendorIdOffset).Trim();
 
                info.ProductRevision = safeBuffer.PtrToStringAnsi((int) storageDescriptor.ProductRevisionOffset).Trim();
 
 
-               // "FriendlyName" usually contains the name as shown in Windows Explorer, so let's use that.
+               // "FriendlyName" usually contains a more complete name, as shown in Windows Explorer.
 
                info.Name = null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.FriendlyName)
                   ? deviceInfo.FriendlyName
@@ -160,6 +150,7 @@ namespace Alphaleonis.Win32.Filesystem
                //   : string.Empty;
 
 
+               // Retrieve the device's hardware serial number.
                long serial;
 
                if (long.TryParse(safeBuffer.PtrToStringAnsi((int) storageDescriptor.SerialNumberOffset).Trim(), out serial))
@@ -184,7 +175,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         // "FriendlyName" usually contains the name as shown in Windows Explorer, so let's use that.
+         // "FriendlyName" usually contains a more complete name, as shown in Windows Explorer.
 
          if (null == deviceInfo)
             SetDeviceFriendlyName(info);

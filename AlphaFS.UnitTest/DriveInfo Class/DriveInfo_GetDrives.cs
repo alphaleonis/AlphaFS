@@ -47,12 +47,16 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(drive, -21);
 
 
-            if (null != drive.PhysicalDriveInfo)
-               UnitTestConstants.Dump(drive.PhysicalDriveInfo, -23, true);
-
-
             if (null != drive.DiskSpaceInfo)
                UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
+
+
+            if (null != drive.PhysicalDriveInfo)
+               UnitTestConstants.Dump(drive.PhysicalDriveInfo, -23, true);
+            
+
+            if (null != drive.VolumeInfo)
+               UnitTestConstants.Dump(drive.VolumeInfo, -26, true);
 
 
             Console.WriteLine();

@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var structure = GetVolumeDiskExtentsCore(physicalDrive, desiredAccess);
 
-         Console.WriteLine("{0}: DiskNumber {1} ExtentLength {2} StartingOffset {3}", physicalDrive, structure.Extents[0].DiskNumber, structure.Extents[0].ExtentLength, structure.Extents[0].StartingOffset);
+         //Console.WriteLine("{0}: NumberOfDiskExtents: {1}", physicalDrive, structure.NumberOfDiskExtents);
       }
 
 

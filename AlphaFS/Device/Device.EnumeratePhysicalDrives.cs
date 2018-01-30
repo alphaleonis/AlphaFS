@@ -20,6 +20,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -31,10 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrives()
       {
-         foreach (var deviceInfo in EnumerateDevicesCore(null, DeviceGuid.Disk, false))
-         {
-            yield return GetPhysicalDriveInfoCore(null, deviceInfo);
-         }
+         return EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo)).OrderBy(disk => disk.DeviceNumber).ThenBy(disk => disk.PartitionNumber);
       }
    }
 }
