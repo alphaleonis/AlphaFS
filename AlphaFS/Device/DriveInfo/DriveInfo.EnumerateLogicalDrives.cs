@@ -29,11 +29,11 @@ namespace Alphaleonis.Win32.Filesystem
    public sealed partial class DriveInfo
    {
       /// <summary>Enumerates the drive names of all logical drives on the Computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="DriveInfo"/> that represents the logical drives on the Computer.</returns>
+      /// <returns>An IEnumerable of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
       [SecurityCritical]
-      internal static IEnumerable<DriveInfo> EnumerateLogicalDrivesCore(bool fromEnvironment, bool isReady)
+      internal static IEnumerable<string> EnumerateLogicalDrivesCore(bool fromEnvironment, bool isReady)
       {
          // Get from Environment.
 
@@ -49,11 +49,11 @@ namespace Alphaleonis.Win32.Filesystem
                if (isReady)
                {
                   if (File.ExistsCore(null, true, drive, PathFormat.FullPath))
-                     yield return new DriveInfo(drive);
+                     yield return drive;
                }
 
                else
-                  yield return new DriveInfo(drive);
+                  yield return drive;
             }
 
             yield break;
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          var result = new string[count];
-         char[] root = {'A', Path.VolumeSeparatorChar};
+         char[] root = { 'A', Path.VolumeSeparatorChar };
 
          drives = lastError;
          count = 0;
@@ -95,12 +95,12 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   // Optionally check Drive .IsReady property.
                   if (File.ExistsCore(null, true, drive, PathFormat.FullPath))
-                     yield return new DriveInfo(drive);
+                     yield return drive;
                }
                else
                {
                   // Ready or not.
-                  yield return new DriveInfo(drive);
+                  yield return drive;
                }
 
                result[count++] = drive;

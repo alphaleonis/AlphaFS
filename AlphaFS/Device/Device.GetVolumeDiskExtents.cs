@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Security;
 using System.Security.AccessControl;
 using Microsoft.Win32.SafeHandles;
@@ -66,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static NativeMethods.VOLUME_DISK_EXTENTS GetVolumeDiskExtentsCore(string physicalDrive, FileSystemRights desiredAccess)
       {
-         using (var safeHandle = File.OpenPhysicalDrive(physicalDrive, desiredAccess))
+         using (var safeHandle = OpenPhysicalDrive(physicalDrive, desiredAccess))
 
          using (var safeBuffer = GetDeviceIoData3<NativeMethods.VOLUME_DISK_EXTENTS>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, physicalDrive, 32))
          {

@@ -87,8 +87,8 @@ namespace Alphaleonis.Win32.Filesystem
          _dsi = new DiskSpaceInfo(_name, null, false, true);
 
 
-         // Initiate PhysicalDriveInfo lazyload instance.
-         _physicalDriveInfo = null;
+         //// Initiate PhysicalDriveInfo lazyload instance.
+         //_physicalDriveInfo = null;
       }
 
       #endregion // .NET
@@ -261,12 +261,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Contains information about the physical drive.</summary>
-      /// <returns>A <see cref="PhysicalDriveInfo"/> object that contains information of the physical drive.</returns>
-      public PhysicalDriveInfo PhysicalDriveInfo
-      {
-         get { return (PhysicalDriveInfo) GetDeviceInfo(4, 0); }
-      }
+      ///// <summary>[AlphaFS] Contains information about the physical drive.</summary>
+      ///// <returns>A <see cref="PhysicalDriveInfo"/> object that contains information of the physical drive.</returns>
+      //public PhysicalDriveInfo PhysicalDriveInfo
+      //{
+      //   get { return (PhysicalDriveInfo) GetDeviceInfo(4, 0); }
+      //}
 
 
       /// <summary>[AlphaFS] Contains information about a file system volume.</summary>
@@ -288,7 +288,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
       {
-         return EnumerateLogicalDrivesCore(false, false).OrderBy(drive => drive.Name).ToArray();
+         return EnumerateLogicalDrivesCore(false, false).OrderBy(driveName => driveName).Select(driveName => new DriveInfo(driveName)).ToArray();
       }
 
 
@@ -306,7 +306,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Refreshes the state of the object.</summary>
       public void Refresh()
       {
-         _physicalDriveInfo = null;
+         //_physicalDriveInfo = null;
 
          _volumeInfo.Refresh();
 

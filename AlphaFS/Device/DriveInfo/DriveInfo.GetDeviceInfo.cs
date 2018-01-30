@@ -115,16 +115,16 @@ namespace Alphaleonis.Win32.Filesystem
 
             #region Physical Drive
 
-            // Physical Drive related.
-            case 4:
-               if (mode == 0)
-               {
-                  return IsUnc ? null : (_physicalDriveInfo ?? (_physicalDriveInfo = Device.GetPhysicalDriveInfoCore(_name, null)));
-               }
+            //// Physical Drive related.
+            //case 4:
+            //   if (mode == 0)
+            //   {
+            //      return IsUnc ? null : (_physicalDriveInfo ?? (_physicalDriveInfo = Device.GetPhysicalDriveInfoCore(_name, null)));
+            //   }
 
-               return null;
+            //   return null;
 
-               #endregion // Physical Drive
+            #endregion // Physical Drive
          }
          //}
          //catch

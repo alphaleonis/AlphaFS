@@ -108,8 +108,14 @@ namespace Alphaleonis.Win32.Filesystem
 
             var lastError = Marshal.GetLastWin32Error();
 
+
             if (success)
                return safeBuffer;
+
+            
+            // Dynamic disk.
+            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+               return null;
 
 
             bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, pathForException);
@@ -136,8 +142,14 @@ namespace Alphaleonis.Win32.Filesystem
 
             var lastError = Marshal.GetLastWin32Error();
 
+
             if (success)
                return safeBuffer;
+
+
+            // Dynamic disk.
+            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+               return null;
 
 
             bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, pathForException);
@@ -171,11 +183,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       [SecurityCritical]
-      private static NativeMethods.STORAGE_DEVICE_NUMBER GetStorageDeviceDriveNumber(SafeFileHandle safeHandle, string pathForException)
+      private static NativeMethods.STORAGE_DEVICE_NUMBER? GetStorageDeviceDriveNumber(SafeFileHandle safeHandle, string pathForException)
       {
          using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, pathForException))
 
-            return safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0);
+            return null != safeBuffer ? safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0) : (NativeMethods.STORAGE_DEVICE_NUMBER?) null;
       }
 
 
@@ -198,7 +210,7 @@ namespace Alphaleonis.Win32.Filesystem
             var success = NativeMethods.DeviceIoControlAnyObject(safeHandle, controlCode, anyObject, (uint) bufferSize, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
-
+            
 
             if (success)
                return safeBuffer;

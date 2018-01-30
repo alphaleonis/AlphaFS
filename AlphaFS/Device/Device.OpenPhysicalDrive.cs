@@ -27,7 +27,7 @@ using System.Security.AccessControl;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class File
+   public static partial class Device
    {
 
       /// <summary>Opens a physical device, such as: "\\.\PhysicalDrive0" for access.</summary>
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static SafeFileHandle OpenPhysicalDrive(string path, FileSystemRights fileSystemRights)
       {
-         return CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, FileMode.Open, fileSystemRights, FileShare.ReadWrite, false, false, PathFormat.LongFullPath);
+         return File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, FileMode.Open, fileSystemRights, FileShare.ReadWrite, false, false, PathFormat.LongFullPath);
       }
    }
 }

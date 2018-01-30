@@ -32,7 +32,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrives()
       {
-         return EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo)).OrderBy(disk => disk.DeviceNumber);
+         return EnumerateDevicesCore(null, DeviceGuid.Disk, false)
+
+            .Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo))
+
+            .Where(physicalDrive => null != physicalDrive)
+
+            .OrderBy(disk => disk.DeviceNumber).ThenBy(disk => disk.PartitionNumber);
       }
    }
 }

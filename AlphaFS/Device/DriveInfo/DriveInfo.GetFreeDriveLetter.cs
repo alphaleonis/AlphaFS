@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       public static char GetFreeDriveLetter(bool getLastAvailable)
       {
-         var freeDriveLetters = "CDEFGHIJKLMNOPQRSTUVWXYZ".Except(EnumerateLogicalDrivesCore(false, false).Select(d => d.Name[0]));
+         var freeDriveLetters = "CDEFGHIJKLMNOPQRSTUVWXYZ".Except(EnumerateLogicalDrivesCore(false, false).OrderBy(driveName => driveName).Select(driveName => driveName[0]));
 
          try
          {

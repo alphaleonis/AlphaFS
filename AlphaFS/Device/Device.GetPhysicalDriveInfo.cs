@@ -31,13 +31,16 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-      /// <summary>[AlphaFS] Gets the hardware information such as the serial number, Vendor ID, Product ID.</summary>
-      /// <returns>A <see cref="PhysicalDriveInfo"/> instance that represents the physical drive on the Computer.</returns>      
+      /// <summary>[AlphaFS] Gets the hardware information such as the serial number and Product ID.</summary>
+      /// <returns>A <see cref="PhysicalDriveInfo"/> instance that represents the physical drive on the Computer or <c>null</c> on error.</returns>      
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z'. A null value is not valid.</param>
+      /// <param name="driveName">
+      ///   A valid drive path or drive letter suc as: "C:", "D:\".
+      ///   A <see cref="DeviceInfo.DevicePath"/> string is also valid when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>.
+      /// </param>
       [SecurityCritical]
       public static PhysicalDriveInfo GetPhysicalDriveInfo(string driveName)
       {
@@ -45,16 +48,18 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
-
-      /// <summary>[AlphaFS] Gets the hardware information such as the serial number, Vendor ID, Product ID.</summary>
-      /// <returns>A <see cref="PhysicalDriveInfo"/> instance that represents the physical drive on the Computer.</returns>      
+      /// <summary>[AlphaFS] Gets the hardware information such as the serial number and Product ID.</summary>
+      /// <returns>A <see cref="PhysicalDriveInfo"/> instance that represents the physical drive on the Computer or <c>null</c> on error.</returns>      
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z'. A null value is not valid.</param>
+      /// <param name="driveName">
+      ///   A valid drive path or drive letter suc as: "C:", "D:\".
+      ///   A <see cref="DeviceInfo.DevicePath"/> string is also valid when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>.
+      /// </param>
       /// <param name="deviceInfo">a <see cref="DeviceInfo"/> instance.</param>
+      ///<remarks>Use either <paramref name="driveName"/> or <paramref name="deviceInfo"/>, not both.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is disposed.")]
       [SecurityCritical]
       internal static PhysicalDriveInfo GetPhysicalDriveInfoCore(string driveName, DeviceInfo deviceInfo)
@@ -70,22 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
          const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
 
 
-         var hasDeviceInfo = null != deviceInfo;
-         if (!hasDeviceInfo)
-         {
-            if (Utils.IsNullOrWhiteSpace(driveName))
-               throw new ArgumentNullException("driveName");
-
-            driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
-
-            if (!Path.IsLogicalDriveCore(driveName, PathFormat.LongFullPath))
-               throw new ArgumentException(Resources.Argument_must_be_a_drive_letter_from_a_z, "driveName");
-
-            driveName = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.LogicalDrivePrefix, driveName);
-         }
-
-
-         var pathToDevice = Path.RemoveTrailingDirectorySeparator(hasDeviceInfo ? deviceInfo.DevicePath : driveName);
+         var pathToDevice = ValidateAndGetPathToDevice(driveName, deviceInfo);
 
          if (Utils.IsNullOrWhiteSpace(pathToDevice))
             return null;
@@ -97,9 +87,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          // No elevation needed.
 
-         using (safeHandle = File.OpenPhysicalDrive(pathToDevice, 0))
-
+         using (safeHandle = OpenPhysicalDrive(pathToDevice, 0))
+         {
             storageDevice = GetStorageDeviceDriveNumber(safeHandle, pathToDevice);
+
+            if (null == storageDevice)
+               return null;
+         }
 
 
          var device = storageDevice.Value;
@@ -125,7 +119,7 @@ namespace Alphaleonis.Win32.Filesystem
          //}
 
 
-         using (safeHandle = File.OpenPhysicalDrive(physicalDrive, desiredAccess))
+         using (safeHandle = OpenPhysicalDrive(physicalDrive, desiredAccess))
          {
             uint bytesReturned;
 
@@ -146,14 +140,11 @@ namespace Alphaleonis.Win32.Filesystem
                info.IsRemovable = storageDescriptor.RemovableMedia;
 
                info.SupportsCommandQueueing = storageDescriptor.CommandQueueing;
-
-
-               //info.VendorID = safeBuffer.PtrToStringAnsi((int) storageDescriptor.VendorIdOffset).Trim();
-
+               
                info.ProductRevision = safeBuffer.PtrToStringAnsi((int) storageDescriptor.ProductRevisionOffset).Trim();
 
 
-               // "FriendlyName" usually contains a more complete name, as shown in Windows Explorer.
+               // "FriendlyName" usually contains a more complete name, as seen in Windows Explorer.
 
                info.Name = null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.FriendlyName)
                   ? deviceInfo.FriendlyName
@@ -166,10 +157,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                // Retrieve the device's hardware serial number.
+
                long serial;
-
                if (long.TryParse(safeBuffer.PtrToStringAnsi((int) storageDescriptor.SerialNumberOffset).Trim(), out serial))
-
                   info.SerialNumber = serial;
             }
 
@@ -190,13 +180,34 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         // "FriendlyName" usually contains a more complete name, as shown in Windows Explorer.
+         // "FriendlyName" usually contains a more complete name, as seen in Windows Explorer.
 
          if (null == deviceInfo)
             SetDeviceFriendlyName(info);
 
 
          return info;
+      }
+
+
+      private static string ValidateAndGetPathToDevice(string driveName, DeviceInfo deviceInfo)
+      {
+         var hasDeviceInfo = null != deviceInfo;
+         if (!hasDeviceInfo)
+         {
+            if (Utils.IsNullOrWhiteSpace(driveName))
+               throw new ArgumentNullException("driveName");
+
+            driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
+
+            if (!Path.IsLogicalDriveCore(driveName, PathFormat.LongFullPath))
+               throw new ArgumentException(Resources.Argument_must_be_a_drive_letter_from_a_z, "driveName");
+
+            driveName = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.LogicalDrivePrefix, driveName);
+         }
+
+
+         return Path.RemoveTrailingDirectorySeparator(hasDeviceInfo ? deviceInfo.DevicePath : driveName);
       }
 
 
