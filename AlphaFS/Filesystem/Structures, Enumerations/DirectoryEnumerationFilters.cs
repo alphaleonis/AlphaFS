@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// </remarks>
    public class DirectoryEnumerationFilters
    {
-      /// <summary>Gets or sets the filter that returns <see langword="true"/> if the input file system entry should be present in the enumeration.</summary>
+      /// <summary>Gets or sets the filter that returns <see langword="true"/> if the input file system entry should be included in the enumeration.</summary>
       /// <value>The delegate to a filtering method.</value>      
       public Predicate<FileSystemEntryInfo> InclusionFilter { get; set; }
 

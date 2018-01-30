@@ -123,33 +123,33 @@ namespace AlphaFS.UnitTest
             },
 
 
-            // Filter to apply to file system entries enumeration.
+            Filter to in-/exclude file system entries during the enumeration.
             InclusionFilter = fsei =>
             {
                if (abortEnumeration)
                   return false;
 
 
-               var extension = System.IO.Path.GetExtension(fsei.FileName);
+               var fileExtension = fsei.Extension;
 
-               var gotMatch = findExtensions.Any(found => found.Equals(extension, StringComparison.OrdinalIgnoreCase));
+               var gotMatch = findExtensions.Any(found => found.Equals(fileExtension, StringComparison.OrdinalIgnoreCase));
                if (gotMatch)
                {
-                  if (!foundExt1Done && extension == findExtensions[0])
+                  if (!foundExt1Done && fileExtension == findExtensions[0])
                   {
                      foundExt1++;
                      foundExt1Done = foundExt1 == 3;
                      Console.WriteLine("\t#{0:N0}\t\t[{1}]", foundExt1, fsei.FullPath);
                   }
 
-                  else if (!foundExt2Done && extension == findExtensions[1])
+                  else if (!foundExt2Done && fileExtension == findExtensions[1])
                   {
                      foundExt2++;
                      foundExt2Done = foundExt2 == 3;
                      Console.WriteLine("\t#{0:N0}\t\t[{1}]", foundExt2, fsei.FullPath);
                   }
 
-                  else if (!foundExt3Done && extension == findExtensions[2])
+                  else if (!foundExt3Done && fileExtension == findExtensions[2])
                   {
                      foundExt3++;
                      foundExt3Done = foundExt3 == 3;
@@ -158,13 +158,9 @@ namespace AlphaFS.UnitTest
                }
 
 
+               // Abort the enumeration.
                if (foundExt1Done && foundExt2Done && foundExt3Done)
-               {
-                  gotMatch = false;
-
-                  // Abort the enumeration.
                   abortEnumeration = true;
-               }
 
 
                return gotMatch;
@@ -189,41 +185,41 @@ namespace AlphaFS.UnitTest
 
 
             // Filter to process Exception handling.
-            ErrorFilter = delegate (int errorCode, string errorMessage, string pathProcessed)
+            ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
             {
                gotException = errorCode == Alphaleonis.Win32.Win32Errors.ERROR_ACCESS_DENIED;
 
                Console.WriteLine("\t#{0:N0}\t\t({1}) {2}: [{3}]", ++exceptionCount, errorCode, errorMessage, pathProcessed);
 
-               
+
                // Return true to continue, false to throw the Exception.
                return gotException;
             },
 
-            
-            // Filter to apply to file system entries enumeration.
+
+            // Filter to in-/exclude file system entries during the enumeration.
             InclusionFilter = fsei =>
             {
-               var extension = System.IO.Path.GetExtension(fsei.FileName);
+               var fileExtension = fsei.Extension;
 
-               var gotMatch = findExtensions.Any(found => found.Equals(extension, StringComparison.OrdinalIgnoreCase));
+               var gotMatch = findExtensions.Any(found => found.Equals(fileExtension, StringComparison.OrdinalIgnoreCase));
                if (gotMatch)
                {
-                  if (!foundExt1Done && extension == findExtensions[0])
+                  if (!foundExt1Done && fileExtension == findExtensions[0])
                   {
                      foundExt1++;
                      foundExt1Done = foundExt1 == 3;
                      Console.WriteLine("\t#{0:N0}\t\t[{1}]", foundExt1, fsei.FullPath);
                   }
 
-                  else if (!foundExt2Done && extension == findExtensions[1])
+                  else if (!foundExt2Done && fileExtension == findExtensions[1])
                   {
                      foundExt2++;
                      foundExt2Done = foundExt2 == 3;
                      Console.WriteLine("\t#{0:N0}\t\t[{1}]", foundExt2, fsei.FullPath);
                   }
 
-                  else if (!foundExt3Done && extension == findExtensions[2])
+                  else if (!foundExt3Done && fileExtension == findExtensions[2])
                   {
                      foundExt3++;
                      foundExt3Done = foundExt3 == 3;
@@ -232,13 +228,9 @@ namespace AlphaFS.UnitTest
                }
 
 
+               // Abort the enumeration.
                if (foundExt1Done && foundExt2Done && foundExt3Done)
-               {
-                  gotMatch = false;
-
-                  // Abort the enumeration.
                   cancelSource.Cancel();
-               }
 
 
                return gotMatch;
