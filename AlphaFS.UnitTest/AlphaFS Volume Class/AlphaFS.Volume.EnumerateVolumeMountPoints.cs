@@ -44,7 +44,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Logical Drives\n");
 
          // Get Logical Drives from UnitTestConstants.Local Host, .IsReady Drives only.
-         foreach (var drive in Alphaleonis.Win32.Filesystem.Directory.GetLogicalDrives(false, true))
+         foreach (var drive in Alphaleonis.Win32.Filesystem.Directory.GetLogicalDrives())
          {
             try
             {

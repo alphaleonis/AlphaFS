@@ -171,6 +171,7 @@
     <Compile Include="AlphaFS Host Class\AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory_CopySymbolicLink.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File_CopySymbolicLink.cs" />
+    <Compile Include="AlphaFS Timestamps\AlphaFS_TimestampsTest.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.QueryDosDevice.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.EnumerateVolumeMountPoints.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.SetVolumeLabel.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete.CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete.CatchDirectoryNotFoundException_NonExistingDirectory.cs" />
     <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory.cs" />
+    <Compile Include="Directory Class\Directory.GetLogicalDrives.cs" />
     <Compile Include="Directory Class\Directory.GetFiles.cs" />
     <Compile Include="Directory Class\Directory.GetFileSystemEntries.cs" />
     <Compile Include="Directory Class\Directory.GetDirectories.cs" />
@@ -215,12 +217,12 @@
     <Compile Include="AlphaFS Compression\AlphaFS_Directory_Compress_Decompress.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_Directory_Encryption.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory_IsEmpty.cs" />
+    <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.IsEmpty.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory_EnumerateFileSystemEntryInfos.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory_CreateSymbolicLink_And_GetLinkTargetInfo.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory_Junction.cs" />
     <Compile Include="Directory Class\Directory_CurrentDirectory.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory_DeleteEmptySubdirectories.cs" />
+    <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.DeleteEmptySubdirectories.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingDirectoryEnumerationErrorFilter.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_DirectoryInfo_Junction.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory_Move_CatchIOException_SameSourceAndDestination.cs" />
@@ -231,8 +233,8 @@
     <Compile Include="Directory Class\Directory_Exists.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_Directory_ExportImportEncryptedDirectoryRaw.cs" />
     <Compile Include="Directory Class\Directory_GetAccessControl.cs" />
-    <Compile Include="Directory Class\Directory_SetTimestamps.cs" />
-    <Compile Include="Directory Class\Directory_GetTimestamps.cs" />
+    <Compile Include="AlphaFS Timestamps\Directory_SetTimestamps.cs" />
+    <Compile Include="AlphaFS Timestamps\Directory_GetTimestamps.cs" />
     <Compile Include="Directory Class\Directory_SetAccessControl.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo_FolderName255Characters.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo_MoveTo.cs" />
@@ -267,7 +269,7 @@
     <Compile Include="File Class\File.Move\File_Move.cs" />
     <Compile Include="File Class\File.Copy\File.CopyTest.cs" />
     <Compile Include="File Class\File.Delete\File_Delete.cs" />
-    <Compile Include="File Class\File_SetTimestamps.cs" />
+    <Compile Include="AlphaFS Timestamps\File_SetTimestamps.cs" />
     <Compile Include="File Class\AlphaFS_File_IsLocked.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File_CreateSymbolicLinkAndGetLinkTargetInfo.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File_CreateHardlink_EnumerateHardlinks.cs" />
@@ -276,7 +278,7 @@
     <Compile Include="File Class\AlphaFS_File_GetSize.cs" />
     <Compile Include="AlphaFS Alternate Data Streams\AlphaFS_File_EnumerateAlternateDataStreams.cs" />
     <Compile Include="File Class\File_Create.cs" />
-    <Compile Include="File Class\File_GetTimestamps.cs" />
+    <Compile Include="AlphaFS Timestamps\File_GetTimestamps.cs" />
     <Compile Include="File Class\File_Open.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_File_ExportImportEncryptedFileRaw.cs" />
     <Compile Include="File Class\File_Exists.cs" />

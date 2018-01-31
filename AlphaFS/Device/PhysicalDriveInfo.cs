@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -34,17 +33,50 @@ namespace Alphaleonis.Win32.Filesystem
    public sealed class PhysicalDriveInfo
    {
       [NonSerialized] private string _productID;
-      [NonSerialized] private string _vendorID;
+      //[NonSerialized] private string _vendorID;
+      [NonSerialized] private readonly CultureInfo _cultureInfo;
       [NonSerialized] private IEnumerable<string> _volumes;
 
+
+      #region Constructors
 
       /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
       public PhysicalDriveInfo()
       {
+         _cultureInfo = CultureInfo.CurrentCulture;
+
+
          PartitionNumber = -1;
          SerialNumber = -1;
          TotalSize = -1;
       }
+
+
+      /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
+      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z'.</param>
+      /// <Remark>This is a Lazyloading object; call <see cref="Refresh()"/> to populate all properties first before accessing.</Remark>
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
+      [SecurityCritical]
+      public PhysicalDriveInfo(string driveName) : this()
+      {
+         if (Utils.IsNullOrWhiteSpace(driveName))
+            throw new ArgumentNullException("driveName");
+
+
+         driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
+
+         if (Utils.IsNullOrWhiteSpace(driveName))
+            throw new ArgumentException(Resources.InvalidDriveLetterArgument, "driveName");
+
+
+         // MSDN:
+         // If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").
+         // Furthermore, a drive specification must have a trailing backslash (for example, "C:\").
+         // The calling application must have FILE_LIST_DIRECTORY access rights for this directory.
+         DriveName = Path.AddTrailingDirectorySeparator(driveName, false);
+      }
+
+      #endregion // Constructors
 
 
       /// <summary>Returns the product ID of the physical drive.</summary>
@@ -61,6 +93,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The index number of the physical drive.</summary>
       public int DeviceNumber { get; internal set; }
+
+
+      /// <summary>Gets the name of a drive.</summary>
+      /// <remarks>This property is the name assigned to the drive, such as: "C:\" or "D:\".</remarks>
+      public string DriveName { get; internal set; }
 
 
       /// <summary>Indicates the partition number of the device is returned in this member, if the device can be partitioned. Otherwise, -1 is returned.</summary>
@@ -95,6 +132,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The total size of the physical drive. If the session is not elevated, this member is -1.</summary>
       public long TotalSize { get; internal set; }
+
+
+      /// <summary>The total number of bytes on a disk that are available to the user who is associated with the calling thread, formatted as a unit size.</summary>
+      public string TotalSizeUnitSize
+      {
+         get { return Utils.UnitSizeToText(TotalSize, _cultureInfo); }
+      }
 
 
       ///// <summary>The Vendor ID of the physical drive.</summary>

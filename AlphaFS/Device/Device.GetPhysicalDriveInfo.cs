@@ -103,6 +103,8 @@ namespace Alphaleonis.Win32.Filesystem
          
          var info = new PhysicalDriveInfo
          {
+            DriveName = !Utils.IsNullOrWhiteSpace(driveName) ? Path.AddTrailingDirectorySeparator(driveName, false) : null,
+
             DeviceNumber = diskNumber,
             PartitionNumber = device.PartitionNumber
          };

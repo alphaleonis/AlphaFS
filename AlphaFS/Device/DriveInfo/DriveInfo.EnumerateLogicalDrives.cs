@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -40,20 +41,20 @@ namespace Alphaleonis.Win32.Filesystem
          if (fromEnvironment)
          {
             var drivesEnv = isReady
-               ? Environment.GetLogicalDrives().Where(ld => File.ExistsCore(null, true, ld, PathFormat.FullPath))
-               : Environment.GetLogicalDrives().Select(ld => ld);
+               ? Environment.GetLogicalDrives().Where(logicalDrive => File.ExistsCore(null, true, logicalDrive, PathFormat.LongFullPath))
+               : Environment.GetLogicalDrives().Select(logicalDrive => logicalDrive);
 
             foreach (var drive in drivesEnv)
             {
                // Optionally check Drive .IsReady.
                if (isReady)
                {
-                  if (File.ExistsCore(null, true, drive, PathFormat.FullPath))
-                     yield return drive;
+                  if (File.ExistsCore(null, true, drive, PathFormat.LongFullPath))
+                     yield return Path.AddTrailingDirectorySeparator(drive, false);
                }
 
                else
-                  yield return drive;
+                  yield return Path.AddTrailingDirectorySeparator(drive, false);
             }
 
             yield break;
@@ -61,15 +62,16 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Get through NativeMethod.
+         var allDrives = NativeMethods.GetLogicalDrives();
 
-         var lastError = NativeMethods.GetLogicalDrives();
+         var lastError = Marshal.GetLastWin32Error();
 
          // MSDN: GetLogicalDrives(): If the function fails, the return value is zero.
-         if (lastError == Win32Errors.ERROR_SUCCESS)
+         if (allDrives == Win32Errors.ERROR_SUCCESS)
             NativeError.ThrowException(lastError);
 
 
-         var drives = lastError;
+         var drives = allDrives;
          var count = 0;
          while (drives != 0)
          {
@@ -80,9 +82,9 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          var result = new string[count];
-         char[] root = { 'A', Path.VolumeSeparatorChar };
+         char[] root = {'A', Path.VolumeSeparatorChar};
 
-         drives = lastError;
+         drives = allDrives;
          count = 0;
 
          while (drives != 0)
@@ -94,14 +96,15 @@ namespace Alphaleonis.Win32.Filesystem
                if (isReady)
                {
                   // Optionally check Drive .IsReady property.
-                  if (File.ExistsCore(null, true, drive, PathFormat.FullPath))
-                     yield return drive;
+
+                  if (File.ExistsCore(null, true, drive, PathFormat.LongFullPath))
+
+                     yield return Path.AddTrailingDirectorySeparator(drive, false);
                }
+
+               // Ready or not.
                else
-               {
-                  // Ready or not.
-                  yield return drive;
-               }
+                  yield return Path.AddTrailingDirectorySeparator(drive, false);
 
                result[count++] = drive;
             }

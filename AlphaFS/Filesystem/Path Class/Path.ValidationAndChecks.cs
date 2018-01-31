@@ -221,12 +221,14 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(dosDevice))
             return string.Empty;
 
-         foreach (var drive in Directory.EnumerateLogicalDrivesCore(false, false).Select(drv => drv.Name))
+         foreach (var drive in DriveInfo.EnumerateLogicalDrivesCore(false, false))
          {
             try
             {
                var path = RemoveTrailingDirectorySeparator(drive);
+
                foreach (var devNt in Volume.QueryDosDevice(path).Where(dosDevice.StartsWith))
+
                   return dosDevice.Replace(devNt, deviceReplacement ?? path);
             }
             catch

@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class Directory_DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -51,8 +51,10 @@ namespace AlphaFS.UnitTest
       private void Directory_IsEmpty(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
 
-         var tempPath = System.IO.Path.GetTempPath();
+
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -60,11 +62,13 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Empty Folder"));
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
-            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.IsEmpty(folder.FullName), "It is expected that the folder is empty.");
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.IsEmpty(folder.FullName), "The directory is not empty, but it is expected.");
          }
+
 
          Console.WriteLine();
       }
@@ -73,8 +77,10 @@ namespace AlphaFS.UnitTest
       private void Directory_IsEmpty_ContainsAFile_IsFalse(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
 
-         var tempPath = System.IO.Path.GetTempPath();
+
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -82,7 +88,8 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Empty Folder"));
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
+            
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
             // Create file and test again.

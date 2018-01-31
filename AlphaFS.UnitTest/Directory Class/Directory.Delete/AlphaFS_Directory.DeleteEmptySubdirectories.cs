@@ -25,9 +25,10 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class Directory_DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void AlphaFS_Directory_DeleteEmptySubdirectories_LocalAndNetwork_Success()
@@ -49,6 +50,8 @@ namespace AlphaFS.UnitTest
       private void Directory_DeleteEmptySubdirectories(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
+
 
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
@@ -58,7 +61,8 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
             const int maxDepth = 10;

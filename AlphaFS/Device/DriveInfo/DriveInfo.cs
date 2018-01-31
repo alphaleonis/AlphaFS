@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       [NonSerialized] private readonly VolumeInfo _volumeInfo;
       [NonSerialized] private readonly DiskSpaceInfo _dsi;
-      [NonSerialized] private PhysicalDriveInfo _physicalDriveInfo;
+      //[NonSerialized] private PhysicalDriveInfo _physicalDriveInfo;
       [NonSerialized] private bool _initDsie;
       [NonSerialized] private readonly string _name;
       [NonSerialized] private string _dosDeviceName;
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Gets the name of the file system, such as NTFS or FAT32.</summary>
+      /// <summary>Gets the name of the file system, such as: "NTFS" or "FAT32".</summary>
       /// <remarks>Use DriveFormat to determine what formatting a drive uses.</remarks>
       public string DriveFormat
       {
@@ -153,7 +153,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the name of the drive.</summary>
       /// <returns>The name of the drive.</returns>
-      /// <remarks>This property is the name assigned to the drive, such as C:\ or E:\</remarks>
+      /// <remarks>This property is the name assigned to the drive, such as: "C:\" or "D:\".</remarks>
       public string Name
       {
          get { return _name; }
@@ -283,7 +283,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Retrieves the drive names of all logical drives on the Computer.</summary>
+      /// <summary>Retrieves the names of the logical drives on the Computer in the form "drive letter:\".</summary>
       /// <returns>An array of type <see cref="DriveInfo"/> that represents the logical drives on the Computer.</returns>
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
@@ -301,6 +301,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
+
+
+      /// <summary>[AlphaFS] Retrieves the names of the logical drives on the Computer in the form "drive letter:\".</summary>
+      /// <returns>An array of type <see cref="DriveInfo"/> that represents the logical drives on the Computer.</returns>
+      [SecurityCritical]
+      public static DriveInfo[] GetDrives(bool fromEnvironment, bool isReady)
+      {
+         return EnumerateLogicalDrivesCore(fromEnvironment, isReady).OrderBy(driveName => driveName).Select(driveName => new DriveInfo(driveName)).ToArray();
+      }
 
 
       /// <summary>[AlphaFS] Refreshes the state of the object.</summary>

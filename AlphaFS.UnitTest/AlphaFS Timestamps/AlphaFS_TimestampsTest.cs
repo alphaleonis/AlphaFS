@@ -19,26 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace AlphaFS.UnitTest
 {
-   public static partial class Volume
+   /// <summary>This is a test class for Timestamps and is intended to contain all Timestamps Unit Tests.</summary>
+   [TestClass]
+   public partial class AlphaFS_TimestampsTest
    {
-      /// <summary>[AlphaFS] Gets the drive letter from an MS-DOS device name. For example: "\Device\HarddiskVolume2" returns "C:\".</summary>
-      /// <param name="deviceName">An MS-DOS device name.</param>
-      /// <returns>The drive letter from an MS-DOS device name.</returns>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Nt")]
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
-      public static string GetDriveNameForNtDeviceName(string deviceName)
-      {
-         return (from drive in DriveInfo.EnumerateLogicalDrivesCore(false, false).OrderBy(driveName => driveName).Select(driveName => new DriveInfo(driveName))
-
-            where drive.DosDeviceName.Equals(deviceName, StringComparison.OrdinalIgnoreCase)
-
-            select drive.Name).FirstOrDefault();
-      }
    }
 }

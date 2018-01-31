@@ -26,10 +26,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class AlphaFS_TimestampsTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+      
       [TestMethod]
       public void Directory_GetXxxTimeXxx_LocalAndNetwork_Success()
       {

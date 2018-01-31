@@ -35,44 +35,53 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    public sealed class DiskSpaceInfo
    {
+      #region Private Fields
+
       [NonSerialized] private readonly bool _initGetClusterInfo = true;
       [NonSerialized] private readonly bool _initGetSpaceInfo = true;
-      [NonSerialized] private readonly CultureInfo _cultureInfo = CultureInfo.CurrentCulture;
+      [NonSerialized] private readonly CultureInfo _cultureInfo;
       [NonSerialized] private readonly bool _continueOnAccessError;
 
+      #endregion // Private Fields
+
+
+      #region Constructors
 
       /// <summary>Initializes a DiskSpaceInfo instance.</summary>
-      /// <param name="drivePath">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share</param>
+      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share</param>
       /// <Remark>This is a Lazyloading object; call <see cref="Refresh()"/> to populate all properties first before accessing.</Remark>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]
-      public DiskSpaceInfo(string drivePath)
+      public DiskSpaceInfo(string driveName)
       {
-         if (Utils.IsNullOrWhiteSpace(drivePath))
-            throw new ArgumentNullException("drivePath");
+         if (Utils.IsNullOrWhiteSpace(driveName))
+            throw new ArgumentNullException("driveName");
 
 
-         drivePath = drivePath.Length == 1 ? drivePath + Path.VolumeSeparatorChar : Path.GetPathRoot(drivePath, false);
+         driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
 
-         if (Utils.IsNullOrWhiteSpace(drivePath))
+         if (Utils.IsNullOrWhiteSpace(driveName))
             throw new ArgumentException(Resources.InvalidDriveLetterArgument, "drivePath");
+
+
+         _cultureInfo = CultureInfo.CurrentCulture;
 
 
          // MSDN:
          // If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").
          // Furthermore, a drive specification must have a trailing backslash (for example, "C:\").
          // The calling application must have FILE_LIST_DIRECTORY access rights for this directory.
-         DriveName = Path.AddTrailingDirectorySeparator(drivePath, false);
+         DriveName = Path.AddTrailingDirectorySeparator(driveName, false);
       }
 
 
       /// <summary>Initializes a DiskSpaceInfo instance.</summary>
-      /// <param name="drivePath">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share</param>
+      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share</param>
       /// <param name="spaceInfoType"><see langword="null"/> gets both size- and disk cluster information. <see langword="true"/> Get only disk cluster information, <see langword="false"/> Get only size information.</param>
       /// <param name="refresh">Refreshes the state of the object.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      public DiskSpaceInfo(string drivePath, bool? spaceInfoType, bool refresh, bool continueOnException) : this(drivePath)
+      public DiskSpaceInfo(string driveName, bool? spaceInfoType, bool refresh, bool continueOnException) : this(driveName)
       {
          if (spaceInfoType == null)
             _initGetSpaceInfo = _initGetClusterInfo = true;
@@ -88,6 +97,8 @@ namespace Alphaleonis.Win32.Filesystem
          if (refresh)
             Refresh();
       }
+
+      #endregion // Constructors
 
 
       /// <summary>Indicates the amount of available free space on a drive, formatted as percentage.</summary>
@@ -115,8 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets the name of a drive.</summary>
-      /// <returns>The name of the drive.</returns>
-      /// <remarks>This property is the name assigned to the drive, such as C:\ or E:\</remarks>
+      /// <remarks>This property is the name assigned to the drive, such as: "C:\" or "D:\".</remarks>
       public string DriveName { get; private set; }
 
 

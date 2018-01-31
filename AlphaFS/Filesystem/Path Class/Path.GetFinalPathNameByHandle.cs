@@ -157,7 +157,11 @@ namespace Alphaleonis.Win32.Filesystem
                   var file = GetFileName(dosPath, true);
 
                   if (!Utils.IsNullOrWhiteSpace(file))
-                     foreach (var drive in Directory.EnumerateLogicalDrivesCore(false, false).Select(drv => drv.Name).Where(drv => driveLetter.Equals(RemoveTrailingDirectorySeparator(drv), StringComparison.OrdinalIgnoreCase)))
+
+                     foreach (var drive in DriveInfo.EnumerateLogicalDrivesCore(false, false)
+
+                        .Where(drv => driveLetter.Equals(RemoveTrailingDirectorySeparator(drv), StringComparison.OrdinalIgnoreCase)))
+
                         return CombineCore(false, Volume.GetUniqueVolumeNameForPath(drive), GetSuffixedDirectoryNameWithoutRootCore(null, dosPath), file);
                }
 

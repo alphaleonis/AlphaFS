@@ -45,8 +45,7 @@ namespace AlphaFS.UnitTest
 
          var cnt = 0;
 
-         // Get Logical Drives from Environment.
-         foreach (var drv in Directory.GetLogicalDrives(false, true))
+         foreach (var drv in Directory.GetLogicalDrives())
          {
             UnitTestConstants.StopWatcher(true);
 
