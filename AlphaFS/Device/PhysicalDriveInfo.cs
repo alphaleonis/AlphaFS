@@ -32,7 +32,6 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    public sealed class PhysicalDriveInfo
    {
-      [NonSerialized] private string _productID;
       //[NonSerialized] private string _vendorID;
       [NonSerialized] private readonly CultureInfo _cultureInfo;
       [NonSerialized] private IEnumerable<string> _volumes;
@@ -52,38 +51,38 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z'.</param>
-      /// <Remark>This is a Lazyloading object; call <see cref="Refresh()"/> to populate all properties first before accessing.</Remark>
-      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
-      [SecurityCritical]
-      public PhysicalDriveInfo(string driveName) : this()
-      {
-         if (Utils.IsNullOrWhiteSpace(driveName))
-            throw new ArgumentNullException("driveName");
+      ///// <summary>Initializes a PhysicalDriveInfo instance.</summary>
+      ///// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z'.</param>
+      ///// <Remark>This is a Lazyloading object; call <see cref="Refresh()"/> to populate all properties first before accessing.</Remark>
+      //[SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
+      //[SecurityCritical]
+      //public PhysicalDriveInfo(string driveName) : this()
+      //{
+      //   if (Utils.IsNullOrWhiteSpace(driveName))
+      //      throw new ArgumentNullException("driveName");
 
 
-         driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
+      //   driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
 
-         if (Utils.IsNullOrWhiteSpace(driveName))
-            throw new ArgumentException(Resources.InvalidDriveLetterArgument, "driveName");
+      //   if (Utils.IsNullOrWhiteSpace(driveName))
+      //      throw new ArgumentException(Resources.InvalidDriveLetterArgument, "driveName");
 
 
-         // MSDN:
-         // If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").
-         // Furthermore, a drive specification must have a trailing backslash (for example, "C:\").
-         // The calling application must have FILE_LIST_DIRECTORY access rights for this directory.
-         DriveName = Path.AddTrailingDirectorySeparator(driveName, false);
-      }
+      //   // MSDN:
+      //   // If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").
+      //   // Furthermore, a drive specification must have a trailing backslash (for example, "C:\").
+      //   // The calling application must have FILE_LIST_DIRECTORY access rights for this directory.
+      //   DevicePath = Path.AddTrailingDirectorySeparator(driveName, false);
+      //}
 
       #endregion // Constructors
 
 
-      /// <summary>Returns the product ID of the physical drive.</summary>
+      /// <summary>Returns the "FriendlyName" of the physical drive.</summary>
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         return !Utils.IsNullOrWhiteSpace(Name) ? Name : BusType.ToString();
+         return Name;
       }
 
 
@@ -95,9 +94,13 @@ namespace Alphaleonis.Win32.Filesystem
       public int DeviceNumber { get; internal set; }
 
 
-      /// <summary>Gets the name of a drive.</summary>
-      /// <remarks>This property is the name assigned to the drive, such as: "C:\" or "D:\".</remarks>
-      public string DriveName { get; internal set; }
+      /// <summary>The path to the device.</summary>
+      /// <returns>A string that represents the path to the device.
+      ///   A drive path such as: "C:", "D:\",
+      ///   a volume <see cref="Guid"/> path such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\"
+      ///   or a <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
+      /// </returns>
+      public string DevicePath { get; internal set; }
 
 
       /// <summary>Indicates the partition number of the device is returned in this member, if the device can be partitioned. Otherwise, -1 is returned.</summary>
@@ -106,20 +109,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Indicates if the physical drive supports multiple outstanding commands (SCSI tagged queuing or equivalent). When false the physical drive does not support SCSI-tagged queuing or the equivalent.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Queueing")]
-      public bool SupportsCommandQueueing { get; internal set; }
+      public bool CommandQueueing { get; internal set; }
 
 
       /// <summary>Indicates if the physical drive is removable. When true the physical drive's media (if any) is removable. If the device has no media, this member should be ignored. When false the physical drive's media is not removable.</summary>
-      public bool IsRemovable { get; internal set; }
+      public bool RemovableMedia { get; internal set; }
 
 
-      /// <summary>Returns the product ID or, when not available, the direct disk access (RAW I/O) path of the physical drive.</summary>
-      public string Name
-      {
-         get { return !Utils.IsNullOrWhiteSpace(_productID) ? _productID : Path.PhysicalDrivePrefix + DeviceNumber.ToString(CultureInfo.InvariantCulture); }
-
-         internal set { _productID = value; }
-      }
+      /// <summary>Returns the "FriendlyName" of the physical drive.</summary>
+      public string Name { get; internal set; }
 
 
       /// <summary>The product revision of the physical drive.</summary>

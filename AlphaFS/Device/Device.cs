@@ -183,7 +183,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       [SecurityCritical]
-      private static NativeMethods.STORAGE_DEVICE_NUMBER? GetStorageDeviceDriveNumber(SafeFileHandle safeHandle, string pathForException)
+      private static NativeMethods.STORAGE_DEVICE_NUMBER? GetStorageDeviceNumberData(SafeFileHandle safeHandle, string pathForException)
       {
          using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, pathForException))
 

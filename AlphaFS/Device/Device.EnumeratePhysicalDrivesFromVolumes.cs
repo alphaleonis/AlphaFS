@@ -27,14 +27,20 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-      /// <summary>[AlphaFS] Enumerates the drive names of all physical drives on the Computer.</summary>
+      /// <summary>[AlphaFS] Enumerates the volumes and associated physical drives on the Computer.</summary>
       /// <returns>An IEnumerable of type <see cref="PhysicalDriveInfo"/> that represents the physical drives on the Computer.</returns>      
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrivesFromVolumes()
       {
-         return EnumerateDevicesCore(null, DeviceGuid.Volume, false)
+         // Retrieves more volumes.
+         return Volume.EnumerateVolumes()
 
-            .Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo))
+            .Select(volume => GetPhysicalDriveInfoCore(volume, null))
+
+
+         //return EnumerateDevicesCore(null, DeviceGuid.Volume, false)
+
+         //   .Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo))
 
             .Where(physicalDrive => null != physicalDrive)
 

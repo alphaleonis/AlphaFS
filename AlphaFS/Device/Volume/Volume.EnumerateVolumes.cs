@@ -31,14 +31,13 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="string"/> volumes on the computer.</summary>
       /// <returns>An enumerable collection of <see cref="string"/> volume names on the computer.</returns>
-      [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumes()
       {
          var buffer = new StringBuilder(50);
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (var handle = NativeMethods.FindFirstVolume(buffer, (uint)buffer.Capacity))
+         using (var handle = NativeMethods.FindFirstVolume(buffer, (uint) buffer.Capacity))
          {
             var lastError = Marshal.GetLastWin32Error();
 
@@ -50,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
             yield return buffer.ToString();
 
 
-            while (NativeMethods.FindNextVolume(handle, buffer, (uint)buffer.Capacity))
+            while (NativeMethods.FindNextVolume(handle, buffer, (uint) buffer.Capacity))
             {
                lastError = Marshal.GetLastWin32Error();
 

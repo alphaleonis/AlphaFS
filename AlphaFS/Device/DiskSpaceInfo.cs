@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
          driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
 
          if (Utils.IsNullOrWhiteSpace(driveName))
-            throw new ArgumentException(Resources.InvalidDriveLetterArgument, "drivePath");
+            throw new ArgumentException(Resources.InvalidDriveLetterArgument, "driveName");
 
 
          _cultureInfo = CultureInfo.CurrentCulture;

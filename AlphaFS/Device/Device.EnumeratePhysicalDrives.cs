@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-      /// <summary>[AlphaFS] Enumerates the drive names of all physical drives on the Computer.</summary>
+      /// <summary>[AlphaFS] Enumerates the physical drives on the Computer.</summary>
       /// <returns>An IEnumerable of type <see cref="PhysicalDriveInfo"/> that represents the physical drives on the Computer.</returns>      
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrives()
@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             .Where(physicalDrive => null != physicalDrive)
 
-            .OrderBy(disk => disk.DeviceNumber).ThenBy(disk => disk.PartitionNumber);
+            .OrderBy(disk => disk.DeviceNumber);
       }
    }
 }

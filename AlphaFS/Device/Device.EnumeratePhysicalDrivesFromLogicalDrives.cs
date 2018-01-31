@@ -27,18 +27,34 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-      /// <summary>[AlphaFS] Enumerates the drive names of all physical drives on the Computer.</summary>
+      /// <summary>[AlphaFS] Enumerates the logical drives and associated physical drives on the Computer.</summary>
       /// <returns>An IEnumerable of type <see cref="PhysicalDriveInfo"/> that represents the physical drives on the Computer.</returns>      
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrivesFromLogicalDrives()
       {
-         return DriveInfo.EnumerateLogicalDrivesCore(false, false).OrderBy(driveName => driveName)
+         var allPhysicalDrives = EnumeratePhysicalDrives().ToList();
+
+
+         foreach (var drive in DriveInfo.EnumerateLogicalDrivesCore(false, false)
+            
+            .OrderBy(driveName => driveName)
 
             .Select(driveName => GetPhysicalDriveInfoCore(driveName, null))
 
-            .Where(physicalDrive => null != physicalDrive)
+            .Where(pDrive => null != pDrive))
+         {
+            foreach (var physicalDrive in allPhysicalDrives)
+            {
+               if (drive.DeviceNumber == physicalDrive.DeviceNumber)
+               {
+                  drive.Name = physicalDrive.Name;
 
-            .OrderBy(disk => disk.DeviceNumber).ThenBy(disk => disk.PartitionNumber);
+                  yield return drive;
+
+                  break;
+               }
+            }
+         }
       }
    }
 }

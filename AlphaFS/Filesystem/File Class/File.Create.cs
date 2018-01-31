@@ -268,8 +268,8 @@ namespace Alphaleonis.Win32.Filesystem
          }
          catch
          {
-            if (null != safeHandle)
-               safeHandle.Dispose();
+            if (null != safeHandle && !safeHandle.IsClosed)
+               safeHandle.Close();
 
             throw;
          }
@@ -308,9 +308,7 @@ namespace Alphaleonis.Win32.Filesystem
             Path.CheckSupportedPathFormat(path, true, true);
 
 
-         // When isFile == null, we're working with a device.
-         // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),
-         // the path string should be the following form: "\\.\X:"
+         // When opening a VOLUME or removable media drive the path string should be the following form: "\\.\C:"
          // Do not use a trailing backslash (\), which indicates the root.
 
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);

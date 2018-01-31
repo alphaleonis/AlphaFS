@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -259,7 +259,7 @@
   <data name="No_Drive_Letters_Available" xml:space="preserve">
     <value>No drive letters available.</value>
   </data>
-  <data name="Argument_must_be_a_drive_letter_from_a_z" xml:space="preserve">
-    <value>Argument must be a drive letter from a-z.</value>
+  <data name="Argument_must_be_DriveLetter_or_VolumeGuid_or_DevicePath" xml:space="preserve">
+    <value>Argument must be a drive letter from a-z, volume GUID or a device path.</value>
   </data>
 </root>

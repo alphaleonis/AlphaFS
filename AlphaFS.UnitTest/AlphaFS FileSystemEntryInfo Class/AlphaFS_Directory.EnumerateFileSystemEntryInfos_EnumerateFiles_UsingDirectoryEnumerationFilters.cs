@@ -123,7 +123,7 @@ namespace AlphaFS.UnitTest
             },
 
 
-            Filter to in-/exclude file system entries during the enumeration.
+            // Filter to in-/exclude file system entries during the enumeration.
             InclusionFilter = fsei =>
             {
                if (abortEnumeration)

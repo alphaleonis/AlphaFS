@@ -23,7 +23,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The storage device type.</summary>
+   /// <summary>The type of device. Values from 0 through 32,767 are reserved for use by Microsoft. Values from 32,768 through 65,535 are reserved for use by other vendors.
+   /// The following values are defined by Microsoft.</summary>
    [SuppressMessage("Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "Enum values should not be combinable.")]
    public enum StorageDeviceType
    {
@@ -34,10 +35,12 @@ namespace Alphaleonis.Win32.Filesystem
       Beep = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_BEEP,
 
       /// <summary>FILE_DEVICE_CD_ROM parameter.</summary>
-      CDRom = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CD_ROM,
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CDROM")]
+      CDROM = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CD_ROM,
 
       /// <summary>FILE_DEVICE_CD_ROM_FILE_SYSTEM parameter.</summary>
-      CDRomFileSystem = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CD_ROM_FILE_SYSTEM,
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CDROM")]
+      CDROMFileSystem = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CD_ROM_FILE_SYSTEM,
 
       /// <summary>FILE_DEVICE_CONTROLLER parameter.</summary>
       Controller = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CONTROLLER,

@@ -50,6 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (isReady)
                {
                   if (File.ExistsCore(null, true, drive, PathFormat.LongFullPath))
+
                      yield return Path.AddTrailingDirectorySeparator(drive, false);
                }
 
