@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
 
 
          var driveCount = 0;
-         var drives = Alphaleonis.Win32.Filesystem.Device.EnumeratePhysicalDrivesFromLogicalDrives().ToList();
+         var drives = Alphaleonis.Win32.Filesystem.Device.EnumeratePhysicalDrivesFromLogicalDrives().ToArray();
 
          foreach (var drive in drives)
          {
@@ -51,7 +51,7 @@ namespace AlphaFS.UnitTest
          }
 
 
-         Assert.IsTrue(drives.Count > 0);
+         Assert.IsTrue(drives.Length > 0);
       }
    }
 }

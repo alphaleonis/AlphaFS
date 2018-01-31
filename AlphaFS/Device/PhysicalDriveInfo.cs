@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       public string DevicePath { get; internal set; }
 
-
+      
       /// <summary>Indicates the partition number of the device is returned in this member, if the device can be partitioned. Otherwise, -1 is returned.</summary>
       public int PartitionNumber { get; internal set; }
 
