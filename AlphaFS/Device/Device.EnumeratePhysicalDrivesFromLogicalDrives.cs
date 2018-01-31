@@ -32,28 +32,40 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrivesFromLogicalDrives()
       {
-         var allPhysicalDrives = EnumeratePhysicalDrives().ToList();
+         var physicalDrives = EnumeratePhysicalDrives().ToArray();
 
 
-         foreach (var drive in DriveInfo.EnumerateLogicalDrivesCore(false, false)
-            
-            .OrderBy(driveName => driveName)
-
-            .Select(driveName => GetPhysicalDriveInfoCore(driveName, null))
-
-            .Where(pDrive => null != pDrive))
+         foreach (var drive in DriveInfo.EnumerateLogicalDrivesCore(false, false).OrderBy(driveName => driveName))
          {
-            foreach (var physicalDrive in allPhysicalDrives)
-            {
-               if (drive.DeviceNumber == physicalDrive.DeviceNumber)
-               {
-                  drive.Name = physicalDrive.Name;
+            var pDriveInfo = GetPhysicalDriveInfoCore(drive, null, false);
 
-                  yield return drive;
+            if (null == pDriveInfo)
+               continue;
+
+
+            foreach (var physicalDrive in physicalDrives)
+
+               if (pDriveInfo.DeviceNumber == physicalDrive.DeviceNumber)
+               {
+                  pDriveInfo.BusType = physicalDrive.BusType;
+
+                  pDriveInfo.CommandQueueing = physicalDrive.CommandQueueing;
+
+                  pDriveInfo.Name = physicalDrive.Name;
+
+                  pDriveInfo.ProductRevision = physicalDrive.ProductRevision;
+
+                  pDriveInfo.RemovableMedia = physicalDrive.RemovableMedia;
+
+                  pDriveInfo.SerialNumber = physicalDrive.SerialNumber;
+
+                  pDriveInfo.TotalSize = physicalDrive.TotalSize;
+
+
+                  yield return pDriveInfo;
 
                   break;
                }
-            }
          }
       }
    }
