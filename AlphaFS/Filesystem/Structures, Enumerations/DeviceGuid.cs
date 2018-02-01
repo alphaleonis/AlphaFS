@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The GUID_DEVINTERFACE_CDROM device interface class is defined for CD-ROM storage devices.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "rom")]
       [Description("53F56308-B6BF-11D0-94F2-00A0C91EFB8B")]
-      CDRom,
+      CDROM,
 
       /// <summary>The GUID_DEVINTERFACE_DISK device interface class is defined for hard disk storage devices.</summary>
       [Description("53F56307-B6BF-11D0-94F2-00A0C91EFB8B")] Disk,

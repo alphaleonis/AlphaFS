@@ -201,7 +201,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DFS")]
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "FILE")]
       [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      FILE_DEVICE_DFSFileSystem = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DFS_FILE_SYSTEM,
+      DFSFileSystem = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DFS_FILE_SYSTEM,
 
       /// <summary>FILE_DEVICE_DFS_VOLUME parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DFS")]

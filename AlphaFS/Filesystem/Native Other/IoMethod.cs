@@ -25,8 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Define values for <c>DeviceIoControl</c> method (if buffered, direct, etc...)</summary>
-      [Flags]
+      /// <summary>Define values for <c>DeviceIoControl</c>.</summary>
       internal enum IoMethod : uint
       {
          /// <summary>Buffered</summary>
@@ -41,5 +40,14 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>Neither</summary>
          Neither = 3
       }
+
+
+      ///// <summary>Define values for <c>DeviceIoControl</c> access</summary>
+      //internal enum IoctlAccess : uint
+      //{
+      //   Any = 0,
+      //   Read = 1,
+      //   Write = 2
+      //}
    }
 }
