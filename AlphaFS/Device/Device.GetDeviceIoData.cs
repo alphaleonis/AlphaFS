@@ -20,44 +20,45 @@
  */
 
 using System;
-using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>[AlphaFS] Provides static methods to retrieve device resource information from a local or remote host.</summary>
    public static partial class Device
    {
-      /// <summary>MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384</summary>
-      private const int MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384;
-
-      /// <summary>REPARSE_DATA_BUFFER_HEADER_SIZE = 8</summary>
-      private const int REPARSE_DATA_BUFFER_HEADER_SIZE = 8;
-
-
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      internal static int GetDoubledBufferSizeOrThrowException(int lastError, SafeHandle safeBuffer, int bufferSize, string pathForException)
+      private static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string pathForException, int size = -1)
       {
-         if (null != safeBuffer && !safeBuffer.IsClosed)
-            safeBuffer.Close();
+         NativeMethods.IsValidHandle(safeHandle);
 
+         //var nativeOverlapped = new NativeOverlapped();
+         var bufferSize = size > -1 ? size : Marshal.SizeOf(typeof(T));
 
-         switch ((uint) lastError)
+         while (true)
          {
-            case Win32Errors.ERROR_MORE_DATA:
-            case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
-               bufferSize *= 2;
-               break;
+            uint bytesReturned;
+            var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize);
+
+            var success = NativeMethods.DeviceIoControl(safeHandle, controlCode, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+
+            var lastError = Marshal.GetLastWin32Error();
 
 
-            default:
-               NativeMethods.IsValidHandle(safeBuffer, lastError, string.Format(CultureInfo.InvariantCulture, "Buffer size: {0}. Path: {1}", bufferSize.ToString(CultureInfo.InvariantCulture), pathForException));
-               break;
+            if (success)
+               return safeBuffer;
+
+
+            // CDROM drive without a CD.
+            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+               return null;
+
+
+            bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, pathForException);
          }
-
-
-         return bufferSize;
       }
    }
 }

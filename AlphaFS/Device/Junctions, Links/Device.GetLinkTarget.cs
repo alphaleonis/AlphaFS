@@ -28,7 +28,6 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides static methods to retrieve device resource information from a local or remote host.</summary>
    public static partial class Device
    {
       /// <summary>[AlphaFS] Get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
@@ -94,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
          while (true)
          {
             uint bytesReturned;
-            var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.FSCTL_GET_REPARSE_POINT, IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.FSCTL_GET_REPARSE_POINT, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
             if (!success)

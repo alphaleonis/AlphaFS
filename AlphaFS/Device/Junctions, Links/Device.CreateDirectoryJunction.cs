@@ -26,7 +26,6 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides static methods to retrieve device resource information from a local or remote host.</summary>
    public static partial class Device
    {
       /// <summary>[AlphaFS] Creates an NTFS directory junction (similar to CMD command: "MKLINK /J").</summary>
@@ -69,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
             safeBuffer.StructureToPtr(reparseDataBuffer, false);
 
             uint bytesReturned;
-            var success = NativeMethods.DeviceIoControl2(safeHandle, NativeMethods.IoControlCode.FSCTL_SET_REPARSE_POINT, safeBuffer, (uint)(targetDirBytes.Length + 20), IntPtr.Zero, 0, out bytesReturned, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoJunctions(safeHandle, NativeMethods.IoControlCode.FSCTL_SET_REPARSE_POINT, safeBuffer, (uint)(targetDirBytes.Length + 20), IntPtr.Zero, 0, out bytesReturned, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
             if (!success)

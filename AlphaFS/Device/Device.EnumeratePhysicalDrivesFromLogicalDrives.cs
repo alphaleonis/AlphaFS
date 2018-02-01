@@ -20,8 +20,8 @@
  */
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Sockets;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -44,44 +44,29 @@ namespace Alphaleonis.Win32.Filesystem
                continue;
 
 
-            foreach (var physicalDrive in physicalDrives)
+            foreach (var physicalDrive in physicalDrives.Where(pd => pd.DeviceNumber == pDriveInfo.DeviceNumber))
+            {
+               physicalDrive.CopyTo(pDriveInfo);
 
-               if (pDriveInfo.DeviceNumber == physicalDrive.DeviceNumber)
+
+               // Get the first entry that starts with a logical drive path, such as: "C:", "D:".
+
+               if (Path.IsLogicalDriveCore(drive, PathFormat.LongFullPath))
                {
-                  // Get the first entry that starts with a drive name, such as: "C:", "D:".
-                  if (Path.IsLogicalDriveCore(drive, PathFormat.LongFullPath))
-                  {
-                     pDriveInfo.DriveInfo = new DriveInfo(drive);
+                  pDriveInfo.DriveInfo = new DriveInfo(drive);
 
 
-                     var guid = Volume.GetVolumeGuid(drive);
+                  var guid = Volume.GetVolumeGuid(drive);
 
-                     if (!Utils.IsNullOrWhiteSpace(guid))
-                        pDriveInfo.VolumeGuids = new[] {guid};
-                  }
-
-
-                  pDriveInfo.BusType = physicalDrive.BusType;
-
-                  pDriveInfo.CommandQueueing = physicalDrive.CommandQueueing;
-
-                  pDriveInfo.DevicePath = physicalDrive.DevicePath;
-
-                  pDriveInfo.Name = physicalDrive.Name;
-
-                  pDriveInfo.ProductRevision = physicalDrive.ProductRevision;
-
-                  pDriveInfo.RemovableMedia = physicalDrive.RemovableMedia;
-
-                  pDriveInfo.SerialNumber = physicalDrive.SerialNumber;
-
-                  pDriveInfo.TotalSize = physicalDrive.TotalSize;
-
-
-                  yield return pDriveInfo;
-
-                  break;
+                  if (!Utils.IsNullOrWhiteSpace(guid))
+                     pDriveInfo.VolumeGuids = new[] {guid};
                }
+
+
+               yield return pDriveInfo;
+
+               break;
+            }
          }
       }
    }

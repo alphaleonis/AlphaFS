@@ -19,69 +19,45 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Security;
 using System.Security.AccessControl;
-using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="physicalDrive"></param>
-      /// <param name="desiredAccess"></param>
-      /// <returns></returns>
       [SecurityCritical]
-      public static void GetVolumeDiskExtents(string physicalDrive, FileSystemRights desiredAccess)
+      public static void GetVolumeDiskExtents(string logicalDrive)
       {
-         var structure = GetVolumeDiskExtentsCore(physicalDrive, desiredAccess);
+         // FileSystemRights desiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
+         // without accessing that file or device, even if GENERIC_READ access would have been denied.
+         // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
+         //const int desiredAccess = 0;
 
-         //Console.WriteLine("{0}: NumberOfDiskExtents: {1}", physicalDrive, structure.NumberOfDiskExtents);
-      }
+         // Requires elevation.
+         const FileSystemRights desiredAccess = FileSystemRights.Read | FileSystemRights.Write;
 
-
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="safeHandle"></param>
-      /// <param name="physicalDrive"></param>
-      /// <param name="desiredAccess"></param>
-      /// <returns></returns>
-      [SecurityCritical]
-      public static void GetVolumeDiskExtents(SafeFileHandle safeHandle, string physicalDrive, FileSystemRights desiredAccess)
-      {
-
-      }
+         //const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="physicalDrive"></param>
-      /// <param name="desiredAccess"></param>
-      /// <returns></returns>
-      [SecurityCritical]
-      private static NativeMethods.VOLUME_DISK_EXTENTS GetVolumeDiskExtentsCore(string physicalDrive, FileSystemRights desiredAccess)
-      {
-         using (var safeHandle = OpenPhysicalDrive(physicalDrive, desiredAccess))
 
-         using (var safeBuffer = GetDeviceIoData3<NativeMethods.VOLUME_DISK_EXTENTS>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, physicalDrive, 32))
+         //var volumeDiskExtents = new NativeMethods.VOLUME_DISK_EXTENTS();
+
+         logicalDrive = @"\\.\C:";
+         using (var safeHandle = OpenPhysicalDrive(logicalDrive, desiredAccess))
+
+         using (var safeBuffer = GetDeviceIoData<NativeMethods.VOLUME_DISK_EXTENTS>(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, logicalDrive))
          {
-            var offset = 0;
+            if (null != safeBuffer)
+            {
+               var structure = safeBuffer.PtrToStructure<NativeMethods.VOLUME_DISK_EXTENTS>(0);
 
-            var structure = safeBuffer.PtrToStructure<NativeMethods.VOLUME_DISK_EXTENTS>(0);
-
-            safeBuffer.PtrToStructure<NativeMethods.VOLUME_DISK_EXTENTS>(0);
-
-            //for (var i = 0; i < structure.NumberOfDiskExtents; i += offset)
-            //{
-            //   structure.Extents[i] = new NativeMethods.DISK_EXTENT[structure.NumberOfDiskExtents];
-            //}
-
-
-            return structure;
+               for (var i = 0; i < structure.NumberOfDiskExtents; ++i)
+               {
+                  var pDiskExtent = structure.Extents[i];
+               }
+            }
          }
       }
    }

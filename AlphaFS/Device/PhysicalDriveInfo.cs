@@ -20,10 +20,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
+using System.Linq;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -33,21 +31,12 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    public sealed class PhysicalDriveInfo
    {
-      //[NonSerialized] private string _vendorID;
-      [NonSerialized] private readonly CultureInfo _cultureInfo;
-      //[NonSerialized] private IEnumerable<string> _volumes;
-
-
       #region Constructors
 
       /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
       public PhysicalDriveInfo()
       {
-         _cultureInfo = CultureInfo.CurrentCulture;
-
-
          PartitionNumber = -1;
-         SerialNumber = -1;
          TotalSize = -1;
       }
 
@@ -124,12 +113,15 @@ namespace Alphaleonis.Win32.Filesystem
       public int PartitionNumber { get; internal set; }
 
 
+      /// <summary>The Partitions located on the physical drive.</summary>
+      public string[] Partitions { get; set; }
+
       /// <summary>The product revision of the physical drive.</summary>
       public string ProductRevision { get; internal set; }
 
 
       /// <summary>Gets the serial number of the physical drive. If the physical drive has no serial number, this member is -1.</summary>
-      public long SerialNumber { get; internal set; }
+      public string SerialNumber { get; internal set; }
 
 
       /// <summary>The total size of the physical drive. If the session is not elevated, this member is -1.</summary>
@@ -139,26 +131,31 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The total number of bytes on a disk that are available to the user who is associated with the calling thread, formatted as a unit size.</summary>
       public string TotalSizeUnitSize
       {
-         get { return Utils.UnitSizeToText(TotalSize, _cultureInfo); }
+         get { return Utils.UnitSizeToText(TotalSize); }
       }
-
-
-      ///// <summary>The Vendor ID of the physical drive.</summary>
-      //[SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
-      //public string VendorID
-      //{
-      //   get { return !Utils.IsNullOrWhiteSpace(_vendorID) ? _vendorID : string.Empty; }
-
-      //   internal set
-      //   {
-      //      // SanDisk X400 M.2 2280 256GB reports VendorID as: "("
-
-      //      _vendorID = null != value && value.Length > 1 ? value : string.Empty;
-      //   }
-      //}
 
 
       /// <summary>The Volumes located on the physical drive.</summary>
       public string[] VolumeGuids { get; set; }
+
+
+
+
+      internal void CopyTo<T>(T destination)
+      {
+         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead).ToArray();
+         var dstProps = typeof(T).GetProperties().Where(x => x.CanWrite).ToArray();
+
+         foreach (var sourceProp in srcProps)
+         {
+            if (dstProps.Any(x => x.Name.Equals(sourceProp.Name)))
+            {
+               var p = dstProps.First(x => x.Name.Equals(sourceProp.Name));
+
+               if (p.CanWrite)
+                  p.SetValue(destination, sourceProp.GetValue(this, null), null);
+            }
+         }
+      }
    }
 }

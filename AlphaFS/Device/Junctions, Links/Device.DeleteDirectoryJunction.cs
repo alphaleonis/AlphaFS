@@ -25,7 +25,6 @@ using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides static methods to retrieve device resource information from a local or remote host.</summary>
    public static partial class Device
    {
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
@@ -44,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
             safeBuffer.StructureToPtr(reparseDataBuffer, false);
 
             uint bytesReturned;
-            var success = NativeMethods.DeviceIoControl2(safeHandle, NativeMethods.IoControlCode.FSCTL_DELETE_REPARSE_POINT, safeBuffer, REPARSE_DATA_BUFFER_HEADER_SIZE, IntPtr.Zero, 0, out bytesReturned, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoJunctions(safeHandle, NativeMethods.IoControlCode.FSCTL_DELETE_REPARSE_POINT, safeBuffer, REPARSE_DATA_BUFFER_HEADER_SIZE, IntPtr.Zero, 0, out bytesReturned, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
             if (!success)

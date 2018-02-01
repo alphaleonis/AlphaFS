@@ -41,7 +41,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       [NonSerialized] private readonly VolumeInfo _volumeInfo;
       [NonSerialized] private readonly DiskSpaceInfo _dsi;
-      //[NonSerialized] private PhysicalDriveInfo _physicalDriveInfo;
       [NonSerialized] private bool _initDsie;
       [NonSerialized] private readonly string _name;
       [NonSerialized] private string _dosDeviceName;
@@ -85,10 +84,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Initiate DiskSpaceInfo lazyload instance.
          _dsi = new DiskSpaceInfo(_name, null, false, true);
-
-
-         //// Initiate PhysicalDriveInfo lazyload instance.
-         //_physicalDriveInfo = null;
       }
 
       #endregion // .NET
@@ -260,15 +255,7 @@ namespace Alphaleonis.Win32.Filesystem
          get { return null != GetDeviceInfo(0, 0); }
       }
 
-
-      ///// <summary>[AlphaFS] Contains information about the physical drive.</summary>
-      ///// <returns>A <see cref="PhysicalDriveInfo"/> object that contains information of the physical drive.</returns>
-      //public PhysicalDriveInfo PhysicalDriveInfo
-      //{
-      //   get { return (PhysicalDriveInfo) GetDeviceInfo(4, 0); }
-      //}
-
-
+      
       /// <summary>[AlphaFS] Contains information about a file system volume.</summary>
       /// <returns>A <see cref="VolumeInfo"/> object that contains file system volume information of the drive.</returns>
       public VolumeInfo VolumeInfo
@@ -315,8 +302,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Refreshes the state of the object.</summary>
       public void Refresh()
       {
-         //_physicalDriveInfo = null;
-
          _volumeInfo.Refresh();
 
          _dsi.Refresh();

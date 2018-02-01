@@ -58,46 +58,30 @@ namespace Alphaleonis.Win32.Filesystem
                continue;
 
 
-            foreach (var physicalDrive in physicalDrives)
+            foreach (var physicalDrive in physicalDrives.Where(pd => pd.DeviceNumber == pDriveInfo.DeviceNumber))
+            {
+               physicalDrive.CopyTo(pDriveInfo);
 
-               if (pDriveInfo.DeviceNumber == physicalDrive.DeviceNumber)
+
+               foreach (var drive in Volume.EnumerateVolumePathNames(volume))
                {
-                  foreach (var drive in Volume.EnumerateVolumePathNames(volume))
+                  // Get the first entry that starts with a logical drive path, such as: "C:", "D:".
+
+                  if (!Utils.IsNullOrWhiteSpace(drive) && Path.IsLogicalDriveCore(drive, PathFormat.LongFullPath))
                   {
-                     // Get the first entry that starts with a drive name, such as: "C:", "D:".
-                     if (!Utils.IsNullOrWhiteSpace(drive) && Path.IsLogicalDriveCore(drive, PathFormat.LongFullPath))
-                     {
-                        pDriveInfo.DriveInfo = new DriveInfo(drive);
-                        
-                        break;
-                     }
+                     pDriveInfo.DriveInfo = new DriveInfo(drive);
+
+                     break;
                   }
-
-
-                  pDriveInfo.VolumeGuids = new[] {volume};
-
-
-                  pDriveInfo.BusType = physicalDrive.BusType;
-
-                  pDriveInfo.CommandQueueing = physicalDrive.CommandQueueing;
-
-                  pDriveInfo.DevicePath = physicalDrive.DevicePath;
-
-                  pDriveInfo.Name = physicalDrive.Name;
-
-                  pDriveInfo.ProductRevision = physicalDrive.ProductRevision;
-
-                  pDriveInfo.RemovableMedia = physicalDrive.RemovableMedia;
-
-                  pDriveInfo.SerialNumber = physicalDrive.SerialNumber;
-
-                  pDriveInfo.TotalSize = physicalDrive.TotalSize;
-
-
-                  allDrives.Add(pDriveInfo);
-
-                  break;
                }
+
+
+               pDriveInfo.VolumeGuids = new[] {volume};
+
+               allDrives.Add(pDriveInfo);
+
+               break;
+            }
          }
 
 

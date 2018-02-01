@@ -22,7 +22,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
@@ -100,23 +99,79 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (getStorageData)
          {
-            GetStorageData(physicalDrive, physicalDriveInfo);
+            SetStorageData(physicalDrive, physicalDriveInfo);
 
-            //physicalDriveInfo.Volumes = Volume.EnumerateVolumes().Select(volume => new VolumeInfo(volume)).ToArray();
+            GetVolumeDiskExtents(physicalDrive);
          }
-
+         
 
          return physicalDriveInfo;
+      }
+      
+
+      private static void SetStorageData(string physicalDrive, PhysicalDriveInfo physicalDriveInfo)
+      {
+         // FileSystemRights desiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
+         // without accessing that file or device, even if GENERIC_READ access would have been denied.
+         // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
+         //const int desiredAccess = 0;
+
+         // Requires elevation for.
+         const FileSystemRights desiredAccess = FileSystemRights.Read | FileSystemRights.Write;
+
+         //const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
 
          
-         //try
-         //{
-         //   GetVolumeDiskExtents(physicalDrive, desiredAccess);
-         //}
-         //catch (Exception ex)
-         //{
-         //   Console.WriteLine(ex.Message);
-         //}
+         using (var safeHandle = OpenPhysicalDrive(physicalDrive, desiredAccess))
+         {
+            var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
+            {
+               PropertyId = 0, // StorageDeviceProperty, from STORAGE_PROPERTY_ID enum.
+               QueryType = 0   // PropertyStandardQuery, from STORAGE_QUERY_TYPE enum
+            };
+
+
+            using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, physicalDrive, NativeMethods.DefaultFileBufferSize / 4))
+            {
+               var storageDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>(0);
+               
+
+               physicalDriveInfo.BusType = (StorageBusType) storageDescriptor.BusType;
+
+               physicalDriveInfo.CommandQueueing = storageDescriptor.CommandQueueing;
+
+               physicalDriveInfo.ProductRevision = safeBuffer.PtrToStringAnsi((int) storageDescriptor.ProductRevisionOffset).Trim();
+
+               physicalDriveInfo.RemovableMedia = storageDescriptor.RemovableMedia;
+
+
+               if (Utils.IsNullOrWhiteSpace(physicalDriveInfo.Name))
+
+                  physicalDriveInfo.Name = safeBuffer.PtrToStringAnsi((int) storageDescriptor.ProductIdOffset).Trim();
+
+
+               // Get the device hardware serial number.
+
+               physicalDriveInfo.SerialNumber = safeBuffer.PtrToStringAnsi((int) storageDescriptor.SerialNumberOffset).Trim();
+            }
+
+            
+            // Get the device size.
+
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(long))))
+            {
+               uint bytesReturned;
+               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+
+               var lastError = Marshal.GetLastWin32Error();
+
+               if (!success)
+                  NativeError.ThrowException(lastError, string.Format(CultureInfo.InvariantCulture, "Drive: {0}", physicalDrive));
+
+
+               physicalDriveInfo.TotalSize = safeBuffer.ReadInt64();
+            }
+         }
       }
 
 
@@ -131,81 +186,11 @@ namespace Alphaleonis.Win32.Filesystem
          // No elevation needed.
 
          using (var safeHandle = OpenPhysicalDrive(pathToDevice, 0))
+         using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, pathToDevice))
 
-            return GetStorageDeviceNumberData(safeHandle, pathToDevice);
+            return null != safeBuffer ? safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0) : (NativeMethods.STORAGE_DEVICE_NUMBER?) null;
       }
 
-
-      private static void GetStorageData(string physicalDrive, PhysicalDriveInfo physicalDriveInfo)
-      {
-         // FileSystemRights desiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
-         // without accessing that file or device, even if GENERIC_READ access would have been denied.
-         // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
-         //const int desiredAccess = 0;
-
-         // Requires elevation for: TotalNumberOfBytes
-         const FileSystemRights desiredAccess = FileSystemRights.Read | FileSystemRights.Write;
-
-         //const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
-
-         
-         using (var safeHandle = OpenPhysicalDrive(physicalDrive, desiredAccess))
-         {
-            uint bytesReturned;
-
-            var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
-            {
-               PropertyId = 0, // StorageDeviceProperty, from STORAGE_PROPERTY_ID enum.
-               QueryType = 0   // PropertyStandardQuery, from STORAGE_QUERY_TYPE enum
-            };
-
-
-            using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, physicalDrive, NativeMethods.DefaultFileBufferSize / 4))
-            {
-               var storageDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>(0);
-
-
-               physicalDriveInfo.BusType = (StorageBusType) storageDescriptor.BusType;
-
-               physicalDriveInfo.CommandQueueing = storageDescriptor.CommandQueueing;
-
-               physicalDriveInfo.ProductRevision = safeBuffer.PtrToStringAnsi((int) storageDescriptor.ProductRevisionOffset).Trim();
-
-               physicalDriveInfo.RemovableMedia = storageDescriptor.RemovableMedia;
-
-
-               if (Utils.IsNullOrWhiteSpace(physicalDriveInfo.Name))
-
-                  physicalDriveInfo.Name = safeBuffer.PtrToStringAnsi((int) storageDescriptor.ProductIdOffset).Trim();
-               
-               
-               // Retrieve the device's hardware serial number.
-
-               long serial;
-
-               if (long.TryParse(safeBuffer.PtrToStringAnsi((int) storageDescriptor.SerialNumberOffset).Trim(), out serial))
-
-                  physicalDriveInfo.SerialNumber = serial;
-            }
-
-
-            
-            
-            // Get disk size.
-
-            long diskSize;
-
-            var success = NativeMethods.DeviceIoControl5(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, IntPtr.Zero, 0, out diskSize, (uint) Marshal.SizeOf(typeof(long)), out bytesReturned, IntPtr.Zero);
-
-            var lastError = Marshal.GetLastWin32Error();
-            if (!success)
-               NativeError.ThrowException(lastError, string.Format(CultureInfo.InvariantCulture, "Drive: {0}", physicalDrive));
-
-
-            physicalDriveInfo.TotalSize = diskSize;
-         }
-      }
-      
 
       private static string ValidateAndGetPathToDevice(string devicePath)
       {

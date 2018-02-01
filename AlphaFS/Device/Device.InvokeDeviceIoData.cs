@@ -20,44 +20,42 @@
  */
 
 using System;
-using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>[AlphaFS] Provides static methods to retrieve device resource information from a local or remote host.</summary>
    public static partial class Device
    {
-      /// <summary>MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384</summary>
-      private const int MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384;
-
-      /// <summary>REPARSE_DATA_BUFFER_HEADER_SIZE = 8</summary>
-      private const int REPARSE_DATA_BUFFER_HEADER_SIZE = 8;
-
-
+      /// <summary>Invokes InvokeIoControl with the specified input and specified size.</summary>
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      internal static int GetDoubledBufferSizeOrThrowException(int lastError, SafeHandle safeBuffer, int bufferSize, string pathForException)
+      private static SafeGlobalMemoryBufferHandle InvokeDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, T anyObject, string pathForException, int size = -1)
       {
-         if (null != safeBuffer && !safeBuffer.IsClosed)
-            safeBuffer.Close();
+         NativeMethods.IsValidHandle(safeHandle);
 
 
-         switch ((uint) lastError)
+         var bufferSize = size > -1 ? size : Marshal.SizeOf(anyObject);
+
+         while (true)
          {
-            case Win32Errors.ERROR_MORE_DATA:
-            case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
-               bufferSize *= 2;
-               break;
+            uint bytesReturned;
+
+            var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize);
+
+            var success = NativeMethods.DeviceIoControlAnyObjectGetSet(safeHandle, controlCode, anyObject, (uint) bufferSize, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+
+            var lastError = Marshal.GetLastWin32Error();
+            
+
+            if (success)
+               return safeBuffer;
 
 
-            default:
-               NativeMethods.IsValidHandle(safeBuffer, lastError, string.Format(CultureInfo.InvariantCulture, "Buffer size: {0}. Path: {1}", bufferSize.ToString(CultureInfo.InvariantCulture), pathForException));
-               break;
+            bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, pathForException);
          }
-
-
-         return bufferSize;
       }
    }
 }

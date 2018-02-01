@@ -38,6 +38,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          /// <summary>Retrieves the physical location of a specified volume on one or more disks.</summary>
+         //IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS = (STORAGE_DEVICE_TYPE.FILE_DEVICE_VOLUME << 16) | (0 << 2) | IoMethod.Buffered | (0 << 14),
+
          IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS = (STORAGE_DEVICE_TYPE.FILE_DEVICE_VOLUME << 16) | (0 << 2) | IoMethod.Buffered | (0 << 14),
 
 
