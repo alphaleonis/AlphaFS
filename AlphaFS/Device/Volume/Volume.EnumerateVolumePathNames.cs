@@ -52,11 +52,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-            while (!NativeMethods.GetVolumePathNamesForVolumeName(volumeGuid, buffer, (uint)buffer.Capacity, out requiredLength))
+            while (!NativeMethods.GetVolumePathNamesForVolumeName(volumeGuid, buffer, (uint) buffer.Capacity, out requiredLength))
             {
                var lastError = Marshal.GetLastWin32Error();
 
-               switch ((uint)lastError)
+               switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
                   case Win32Errors.ERROR_INSUFFICIENT_BUFFER:

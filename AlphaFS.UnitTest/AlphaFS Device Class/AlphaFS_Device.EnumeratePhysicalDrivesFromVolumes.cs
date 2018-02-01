@@ -42,7 +42,7 @@ namespace AlphaFS.UnitTest
          foreach (var drive in volumes)
          {
             Console.WriteLine();
-            Console.WriteLine("#{0:000}\tVolume: [{1}]", ++volumeCount, drive.DevicePath);
+            Console.WriteLine("#{0:000}\tVolume: [{1}]", ++volumeCount, drive.VolumeGuids[0]);
 
             UnitTestConstants.Dump(drive, -17);
 

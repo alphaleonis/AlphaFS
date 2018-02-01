@@ -20,6 +20,7 @@
  */
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security;
 
@@ -32,19 +33,75 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrivesFromVolumes()
       {
-         // Retrieves more volumes.
-         return Volume.EnumerateVolumes()
+         var physicalDrives = EnumeratePhysicalDrives().ToArray();
 
-            .Select(volume => GetPhysicalDriveInfoCore(volume, null))
+         var volumes = Volume.EnumerateVolumes();
+
+         //var volumes = EnumerateDevicesCore(null, DeviceGuid.Volume, false)
+
+         //   .Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo, false))
+
+         //   .Where(physicalDrive => null != physicalDrive)
+
+         //   .OrderBy(disk => disk.DeviceNumber).ThenBy(disk => disk.PartitionNumber).ToArray();
 
 
-         //return EnumerateDevicesCore(null, DeviceGuid.Volume, false)
 
-         //   .Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo))
+         var allDrives = new Collection<PhysicalDriveInfo>();
 
-            .Where(physicalDrive => null != physicalDrive)
 
-            .OrderBy(disk => disk.DeviceNumber).ThenBy(disk => disk.PartitionNumber);
+         foreach (var volume in volumes)
+         {
+            var pDriveInfo = GetPhysicalDriveInfoCore(volume, null, false);
+
+            if (null == pDriveInfo)
+               continue;
+
+
+            foreach (var physicalDrive in physicalDrives)
+
+               if (pDriveInfo.DeviceNumber == physicalDrive.DeviceNumber)
+               {
+                  foreach (var drive in Volume.EnumerateVolumePathNames(volume))
+                  {
+                     // Get the first entry that starts with a drive name, such as: "C:", "D:".
+                     if (!Utils.IsNullOrWhiteSpace(drive) && Path.IsLogicalDriveCore(drive, PathFormat.LongFullPath))
+                     {
+                        pDriveInfo.DriveInfo = new DriveInfo(drive);
+                        
+                        break;
+                     }
+                  }
+
+
+                  pDriveInfo.VolumeGuids = new[] {volume};
+
+
+                  pDriveInfo.BusType = physicalDrive.BusType;
+
+                  pDriveInfo.CommandQueueing = physicalDrive.CommandQueueing;
+
+                  pDriveInfo.DevicePath = physicalDrive.DevicePath;
+
+                  pDriveInfo.Name = physicalDrive.Name;
+
+                  pDriveInfo.ProductRevision = physicalDrive.ProductRevision;
+
+                  pDriveInfo.RemovableMedia = physicalDrive.RemovableMedia;
+
+                  pDriveInfo.SerialNumber = physicalDrive.SerialNumber;
+
+                  pDriveInfo.TotalSize = physicalDrive.TotalSize;
+
+
+                  allDrives.Add(pDriveInfo);
+
+                  break;
+               }
+         }
+
+
+         return allDrives.OrderBy(pDriveInfo => pDriveInfo.DeviceNumber).ThenBy(pDriveInfo => pDriveInfo.PartitionNumber);
       }
    }
 }

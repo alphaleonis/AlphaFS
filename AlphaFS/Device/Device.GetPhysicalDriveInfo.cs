@@ -22,6 +22,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
@@ -62,11 +63,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
       /// </param>
       /// <param name="deviceInfo">a <see cref="DeviceInfo"/> instance.</param>
-      /// <param name="getAllData"></param>
+      /// <param name="getStorageData"></param>
       /// <remarks>Use either <paramref name="devicePath"/> or <paramref name="deviceInfo"/>, not both.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is disposed.")]
       [SecurityCritical]
-      internal static PhysicalDriveInfo GetPhysicalDriveInfoCore(string devicePath, DeviceInfo deviceInfo, bool getAllData = true)
+      internal static PhysicalDriveInfo GetPhysicalDriveInfoCore(string devicePath, DeviceInfo deviceInfo, bool getStorageData = true)
       {
          var isDeviceInfo = null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.DevicePath);
 
@@ -97,8 +98,12 @@ namespace Alphaleonis.Win32.Filesystem
          var physicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, diskNumber.ToString(CultureInfo.InvariantCulture));
 
 
-         if (getAllData)
-            GetStorageDeviceInfo(physicalDrive, physicalDriveInfo);
+         if (getStorageData)
+         {
+            GetStorageData(physicalDrive, physicalDriveInfo);
+
+            //physicalDriveInfo.Volumes = Volume.EnumerateVolumes().Select(volume => new VolumeInfo(volume)).ToArray();
+         }
 
 
          return physicalDriveInfo;
@@ -131,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private static void GetStorageDeviceInfo(string physicalDrive, PhysicalDriveInfo physicalDriveInfo)
+      private static void GetStorageData(string physicalDrive, PhysicalDriveInfo physicalDriveInfo)
       {
          // FileSystemRights desiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
          // without accessing that file or device, even if GENERIC_READ access would have been denied.

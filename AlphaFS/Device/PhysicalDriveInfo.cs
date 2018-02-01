@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security;
@@ -34,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       //[NonSerialized] private string _vendorID;
       [NonSerialized] private readonly CultureInfo _cultureInfo;
-      [NonSerialized] private IEnumerable<string> _volumes;
+      //[NonSerialized] private IEnumerable<string> _volumes;
 
 
       #region Constructors
@@ -102,9 +103,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       public string DevicePath { get; internal set; }
 
-      
-      /// <summary>Indicates the partition number of the device is returned in this member, if the device can be partitioned. Otherwise, -1 is returned.</summary>
-      public int PartitionNumber { get; internal set; }
+
+      public DriveInfo DriveInfo { get; internal set; }
 
 
       /// <summary>Indicates if the physical drive supports multiple outstanding commands (SCSI tagged queuing or equivalent). When false the physical drive does not support SCSI-tagged queuing or the equivalent.</summary>
@@ -118,6 +118,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns the "FriendlyName" of the physical drive.</summary>
       public string Name { get; internal set; }
+
+
+      /// <summary>Indicates the partition number of the device is returned in this member, if the device can be partitioned. Otherwise, -1 is returned.</summary>
+      public int PartitionNumber { get; internal set; }
 
 
       /// <summary>The product revision of the physical drive.</summary>
@@ -155,9 +159,6 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>The Volumes located on the physical drive.</summary>
-      public IEnumerable<string> Volumes
-      {
-         get { return _volumes ?? (_volumes = Volume.EnumerateVolumes()); }
-      }
+      public string[] VolumeGuids { get; set; }
    }
 }

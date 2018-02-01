@@ -20,6 +20,7 @@
  */
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security;
 
@@ -33,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrivesFromLogicalDrives()
       {
          var physicalDrives = EnumeratePhysicalDrives().ToArray();
-
+         
 
          foreach (var drive in DriveInfo.EnumerateLogicalDrivesCore(false, false).OrderBy(driveName => driveName))
          {
@@ -47,9 +48,24 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (pDriveInfo.DeviceNumber == physicalDrive.DeviceNumber)
                {
+                  // Get the first entry that starts with a drive name, such as: "C:", "D:".
+                  if (Path.IsLogicalDriveCore(drive, PathFormat.LongFullPath))
+                  {
+                     pDriveInfo.DriveInfo = new DriveInfo(drive);
+
+
+                     var guid = Volume.GetVolumeGuid(drive);
+
+                     if (!Utils.IsNullOrWhiteSpace(guid))
+                        pDriveInfo.VolumeGuids = new[] {guid};
+                  }
+
+
                   pDriveInfo.BusType = physicalDrive.BusType;
 
                   pDriveInfo.CommandQueueing = physicalDrive.CommandQueueing;
+
+                  pDriveInfo.DevicePath = physicalDrive.DevicePath;
 
                   pDriveInfo.Name = physicalDrive.Name;
 

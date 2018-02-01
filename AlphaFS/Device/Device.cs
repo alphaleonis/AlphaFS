@@ -158,7 +158,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       [SecurityCritical]
-      private static int GetDoubledBufferSizeOrThrowException(int lastError, SafeHandle safeBuffer, int bufferSize, string pathForException)
+      internal static int GetDoubledBufferSizeOrThrowException(int lastError, SafeHandle safeBuffer, int bufferSize, string pathForException)
       {
          if (null != safeBuffer && !safeBuffer.IsClosed)
             safeBuffer.Close();
