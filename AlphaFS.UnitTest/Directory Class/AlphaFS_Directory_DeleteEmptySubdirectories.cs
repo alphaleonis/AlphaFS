@@ -66,7 +66,7 @@ namespace AlphaFS.UnitTest
             const int emptyDirectories = maxDepth * maxDepth / 2;                   // 50 empty directories.
             const int remainingDirectories = totalDirectories - emptyDirectories;   // 60 remaining directories.
 
-            const string searchPattern = Alphaleonis.Win32.Filesystem.Path.WildcardStarMatchAll;
+            var searchPattern = Alphaleonis.Win32.Filesystem.Path.WildcardStarMatchAll;
             const Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions enumOptionsFolder = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Folders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.ContinueOnException;
             const Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions enumOptionsFile = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.ContinueOnException;
 
