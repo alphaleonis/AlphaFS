@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -26,6 +27,9 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
+      /// <summary>[AlphaFS] Characters to trim from the SearchPattern.</summary>
+      internal static readonly char[] TrimEndChars = {(char) 0x9, (char) 0xA, (char) 0xB, (char) 0xC, (char) 0xD, (char) 0x20, (char) 0x85, (char) 0xA0};
+
       /// <summary>AltDirectorySeparatorChar = '/' Provides a platform-specific alternate character used to separate directory levels in a path string that reflects a hierarchical file system organization.</summary>
       public static readonly char AltDirectorySeparatorChar = System.IO.Path.AltDirectorySeparatorChar;
 
@@ -59,69 +63,59 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] StreamSeparator = ':' Provides a platform-specific Stream-name character.</summary>
-      public static readonly char StreamSeparatorChar = System.IO.Path.VolumeSeparatorChar;
+      public static readonly char StreamSeparatorChar = ':';
 
       /// <summary>[AlphaFS] StreamSeparator = ':' Provides a platform-specific Stream-name string.</summary>
       public static readonly string StreamSeparator = StreamSeparatorChar.ToString(CultureInfo.InvariantCulture);
 
 
       /// <summary>[AlphaFS] StreamDataLabel = ':$DATA' Provides a platform-specific Stream :$DATA label.</summary>
-      public const string StreamDataLabel = ":$DATA";
+      public static readonly string StreamDataLabel = StreamSeparator + "$DATA";
 
       /// <summary>[AlphaFS] StringTerminatorChar = '\0' String Terminator Suffix.</summary>
       public const char StringTerminatorChar = '\0';
-
-
-      /// <summary>[AlphaFS] Characters to trim from the SearchPattern.</summary>
-      internal static readonly char[] TrimEndChars = { (char) 0x9, (char) 0xA, (char) 0xB, (char) 0xC, (char) 0xD, (char) 0x20, (char) 0x85, (char) 0xA0 };
       
-
+      
       /// <summary>[AlphaFS] CurrentDirectoryPrefix = '.' Provides a current directory character.</summary>
       public const char CurrentDirectoryPrefixChar = '.';
 
       /// <summary>[AlphaFS] CurrentDirectoryPrefix = "." Provides a current directory string.</summary>
       public static readonly string CurrentDirectoryPrefix = CurrentDirectoryPrefixChar.ToString(CultureInfo.InvariantCulture);
-
-
+      
       /// <summary>[AlphaFS] ExtensionSeparatorChar = '.' Provides an Extension Separator character.</summary>
       public const char ExtensionSeparatorChar = '.';
 
       /// <summary>[AlphaFS] ParentDirectoryPrefix = ".." Provides a parent directory string.</summary>
       public const string ParentDirectoryPrefix = "..";
       
-
-      /// <summary>[AlphaFS] WildcardStarMatchAll = "*" Provides a match-all-items string.</summary>
-      public const string WildcardStarMatchAll = "*";
-
       /// <summary>[AlphaFS] WildcardStarMatchAll = '*' Provides a match-all-items character.</summary>
       public const char WildcardStarMatchAllChar = '*';
-
-      /// <summary>[AlphaFS] WildcardQuestion = "?" Provides a replace-item string.</summary>
-      public const string WildcardQuestion = "?";
-
+      
+      /// <summary>[AlphaFS] WildcardStarMatchAll = "*" Provides a match-all-items string.</summary>
+      public static readonly string WildcardStarMatchAll = WildcardStarMatchAllChar.ToString(CultureInfo.InvariantCulture);
+      
       /// <summary>[AlphaFS] WildcardQuestion = '?' Provides a replace-item string.</summary>
       public const char WildcardQuestionChar = '?';
 
-      /// <summary>[AlphaFS] UncPrefix = "\\" Provides standard Windows Path UNC prefix.</summary>
-      public static readonly string UncPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{0}", DirectorySeparatorChar);
+      /// <summary>[AlphaFS] WildcardQuestion = "?" Provides a replace-item string.</summary>
+      public static readonly string WildcardQuestion = WildcardQuestionChar.ToString(CultureInfo.InvariantCulture);
 
-      /// <summary>[AlphaFS] LongPathPrefix = "\\?\" Provides standard Windows Long Path prefix.</summary>
-      public static readonly string LongPathPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", UncPrefix, WildcardQuestion, DirectorySeparatorChar);
 
-      /// <summary>[AlphaFS] LongPathUncPrefix = "\\?\UNC\" Provides standard Windows Long Path UNC prefix.</summary>
-      public static readonly string LongPathUncPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", LongPathPrefix, "UNC", DirectorySeparatorChar);
+      /// <summary>[AlphaFS] Win32 File Namespace. The "\\?\" prefix to a path string tells the Windows APIs to disable all string parsing and to send the string that follows it straight to the file system.</summary>
+      public static readonly string LongPathPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{0}{1}{0}", DirectorySeparatorChar, WildcardQuestion);
 
-      /// <summary>[AlphaFS] GlobalRootPrefix = "\\?\GLOBALROOT\" Provides standard Windows Volume prefix.</summary>
-      public static readonly string GlobalRootPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", LongPathPrefix, "GLOBALROOT", DirectorySeparatorChar);
-
-      /// <summary>[AlphaFS] LogicalDrivePrefix = "\\.\" Provides standard logical drive prefix.</summary>
+      /// <summary>[AlphaFS] Win32 Device Namespace. The "\\.\"prefix is how to access physical disks and volumes, without going through the file system, if the API supports this type of access.</summary>
       public static readonly string LogicalDrivePrefix = string.Format(CultureInfo.InvariantCulture, "{0}{0}.{0}", DirectorySeparatorChar);
 
       /// <summary>[AlphaFS] PhysicalDrivePrefix = "\\.\PhysicalDrive" Provides standard physical drive prefix.</summary>
       public static readonly string PhysicalDrivePrefix = string.Format(CultureInfo.InvariantCulture, "{0}PhysicalDrive", LogicalDrivePrefix);
 
+
+      /// <summary>[AlphaFS] GlobalRootPrefix = "\\?\GLOBALROOT\" Provides standard Windows Volume prefix.</summary>
+      public static readonly string GlobalRootPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", LongPathPrefix, "GlobalRoot", DirectorySeparatorChar);
+
       /// <summary>[AlphaFS] NonInterpretedPathPrefix = "\??\" Provides a non-interpreted path prefix.</summary>
-      public static readonly string NonInterpretedPathPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{0}", DirectorySeparatorChar, WildcardQuestion, WildcardQuestion);
+      public static readonly string NonInterpretedPathPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{1}{0}", DirectorySeparatorChar, WildcardQuestion);
 
       /// <summary>[AlphaFS] VolumePrefix = "\\?\Volume" Provides standard Windows Volume prefix.</summary>
       public static readonly string VolumePrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}", LongPathPrefix, "Volume");
@@ -131,13 +125,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] DosDeviceLanmanPrefix = "\Device\LanmanRedirector\" Provides a MS-Dos Lanman Redirector Path UNC prefix to a network share.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lanman")]
+      [Obsolete("Unused")]
       public static readonly string DosDeviceLanmanPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", DevicePrefix, "LanmanRedirector", DirectorySeparatorChar);
 
       /// <summary>[AlphaFS] DosDeviceMupPrefix = "\Device\Mup\" Provides a MS-Dos Mup Redirector Path UNC prefix to a network share.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mup")]
+      [Obsolete("Unused")]
       public static readonly string DosDeviceMupPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", DevicePrefix, "Mup", DirectorySeparatorChar);
+
+
+      /// <summary>[AlphaFS] UncPrefix = "\\" Provides standard Windows Path UNC prefix.</summary>
+      public static readonly string UncPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{0}", DirectorySeparatorChar);
 
       /// <summary>[AlphaFS] DosDeviceUncPrefix = "\??\UNC\" Provides a SUBST.EXE Path UNC prefix to a network share.</summary>
       public static readonly string DosDeviceUncPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", NonInterpretedPathPrefix, "UNC", DirectorySeparatorChar);
+
+      /// <summary>[AlphaFS] LongPathUncPrefix = "\\?\UNC\" Provides standard Windows Long Path UNC prefix.</summary>
+      public static readonly string LongPathUncPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", LongPathPrefix, "UNC", DirectorySeparatorChar);
    }
 }
