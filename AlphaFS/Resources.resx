@@ -260,6 +260,6 @@
     <value>No drive letters available.</value>
   </data>
   <data name="Argument_must_be_DriveLetter_or_VolumeGuid_or_DevicePath" xml:space="preserve">
-    <value>Argument must be a drive letter from a-z, volume GUID or a device path.</value>
+    <value>Argument must be a drive letter from a-z, a volume GUID or device path.</value>
   </data>
 </root>

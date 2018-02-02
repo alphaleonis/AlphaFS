@@ -58,9 +58,9 @@ namespace Alphaleonis.Win32.Filesystem
                continue;
 
 
-            foreach (var physicalDrive in physicalDrives.Where(pd => pd.DeviceNumber == pDriveInfo.DeviceNumber))
+            foreach (var pDrive in physicalDrives.Where(pDrive => pDrive.DeviceNumber == pDriveInfo.DeviceNumber))
             {
-               physicalDrive.CopyTo(pDriveInfo);
+               pDrive.CopyTo(pDriveInfo);
 
 
                foreach (var drive in Volume.EnumerateVolumePathNames(volume))

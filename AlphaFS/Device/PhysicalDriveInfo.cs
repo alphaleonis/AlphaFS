@@ -143,18 +143,21 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal void CopyTo<T>(T destination)
       {
-         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead).ToArray();
-         var dstProps = typeof(T).GetProperties().Where(x => x.CanWrite).ToArray();
+         // Properties listed here should not be overwritten by the physical drive template.
 
-         foreach (var sourceProp in srcProps)
+         var excludedProps = new[] {"PartitionNumber"};
+
+
+         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite && !excludedProps.Any(prop => prop.Equals(x.Name))).ToArray();
+
+         var dstProps = srcProps.Where(x => x.CanWrite).ToArray();
+
+
+         foreach (var srcProp in srcProps)
          {
-            if (dstProps.Any(x => x.Name.Equals(sourceProp.Name)))
-            {
-               var p = dstProps.First(x => x.Name.Equals(sourceProp.Name));
+            var dstProp = dstProps.First(x => x.Name.Equals(srcProp.Name));
 
-               if (p.CanWrite)
-                  p.SetValue(destination, sourceProp.GetValue(this, null), null);
-            }
+            dstProp.SetValue(destination, srcProp.GetValue(this, null), null);
          }
       }
    }

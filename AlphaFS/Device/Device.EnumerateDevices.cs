@@ -261,7 +261,11 @@ namespace Alphaleonis.Win32.Filesystem
       {
          deviceInfo.DeviceClass = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.Class);
 
+
          deviceInfo.FriendlyName = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.FriendlyName);
+
+         if (Utils.IsNullOrWhiteSpace(deviceInfo.FriendlyName))
+            deviceInfo.FriendlyName = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.DeviceDescription);
       }
 
 

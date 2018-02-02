@@ -34,9 +34,11 @@ namespace Alphaleonis.Win32.Filesystem
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrivesFromLogicalDrives()
       {
          var physicalDrives = EnumeratePhysicalDrives().ToArray();
-         
 
-         foreach (var drive in DriveInfo.EnumerateLogicalDrivesCore(false, false).OrderBy(driveName => driveName))
+         var logicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).OrderBy(driveName => driveName).ToArray();
+
+
+         foreach (var drive in logicalDrives)
          {
             var pDriveInfo = GetPhysicalDriveInfoCore(drive, null, false);
 
@@ -44,9 +46,9 @@ namespace Alphaleonis.Win32.Filesystem
                continue;
 
 
-            foreach (var physicalDrive in physicalDrives.Where(pd => pd.DeviceNumber == pDriveInfo.DeviceNumber))
+            foreach (var pDrive in physicalDrives.Where(pDrive => pDrive.DeviceNumber == pDriveInfo.DeviceNumber))
             {
-               physicalDrive.CopyTo(pDriveInfo);
+               pDrive.CopyTo(pDriveInfo);
 
 
                // Get the first entry that starts with a logical drive path, such as: "C:", "D:".

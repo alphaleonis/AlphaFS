@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Argument must be a drive letter from a-z, volume GUID or a device path..
+        ///   Looks up a localized string similar to Argument must be a drive letter from a-z, a volume GUID or device path..
         /// </summary>
         internal static string Argument_must_be_DriveLetter_or_VolumeGuid_or_DevicePath {
             get {

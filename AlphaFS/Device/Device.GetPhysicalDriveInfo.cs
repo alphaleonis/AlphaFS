@@ -48,8 +48,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      
-      
+
+
       ///  <summary>[AlphaFS] Gets the physical drive information such as the serial number and Product ID.</summary>
       ///  <returns>A <see cref="PhysicalDriveInfo"/> instance that represents the physical drive on the Computer or <c>null</c> on error.</returns>      
       ///  <exception cref="ArgumentException"/>
@@ -74,7 +74,8 @@ namespace Alphaleonis.Win32.Filesystem
             devicePath = deviceInfo.DevicePath;
 
 
-         var storageDevice = GetStorageDevice(devicePath);
+         string logicalDrive;
+         var storageDevice = GetStorageDevice(devicePath, out logicalDrive);
 
          if (null == storageDevice)
             return null;
@@ -94,20 +95,21 @@ namespace Alphaleonis.Win32.Filesystem
          };
 
 
-         var physicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, diskNumber.ToString(CultureInfo.InvariantCulture));
-
-
          if (getStorageData)
          {
-            SetStorageData(physicalDrive, physicalDriveInfo);
+            var physicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, diskNumber.ToString(CultureInfo.InvariantCulture));
 
-            GetVolumeDiskExtents(physicalDrive);
+            SetStorageData(physicalDrive, physicalDriveInfo);
          }
-         
+
+
+         if (null != logicalDrive)
+            GetVolumeDiskExtents(logicalDrive);
+
 
          return physicalDriveInfo;
       }
-      
+
 
       private static void SetStorageData(string physicalDrive, PhysicalDriveInfo physicalDriveInfo)
       {
@@ -121,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          //const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
 
-         
+
          using (var safeHandle = OpenPhysicalDrive(physicalDrive, desiredAccess))
          {
             var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
@@ -134,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
             using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, physicalDrive, NativeMethods.DefaultFileBufferSize / 4))
             {
                var storageDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>(0);
-               
+
 
                physicalDriveInfo.BusType = (StorageBusType) storageDescriptor.BusType;
 
@@ -155,7 +157,7 @@ namespace Alphaleonis.Win32.Filesystem
                physicalDriveInfo.SerialNumber = safeBuffer.PtrToStringAnsi((int) storageDescriptor.SerialNumberOffset).Trim();
             }
 
-            
+
             // Get the device size.
 
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(long))))
@@ -175,9 +177,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private static NativeMethods.STORAGE_DEVICE_NUMBER? GetStorageDevice(string devicePath)
+      private static NativeMethods.STORAGE_DEVICE_NUMBER? GetStorageDevice(string devicePath, out string logicalDrive)
       {
-         var pathToDevice = ValidateAndGetPathToDevice(devicePath);
+         logicalDrive = null;
+
+         var pathToDevice = ValidateAndGetPathToDevice(devicePath, out logicalDrive);
 
          if (Utils.IsNullOrWhiteSpace(pathToDevice))
             return null;
@@ -186,13 +190,14 @@ namespace Alphaleonis.Win32.Filesystem
          // No elevation needed.
 
          using (var safeHandle = OpenPhysicalDrive(pathToDevice, 0))
+
          using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, pathToDevice))
 
-            return null != safeBuffer ? safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0) : (NativeMethods.STORAGE_DEVICE_NUMBER?) null;
+            return null != safeBuffer ? safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0) : (NativeMethods.STORAGE_DEVICE_NUMBER?)null;
       }
 
 
-      private static string ValidateAndGetPathToDevice(string devicePath)
+      private static string ValidateAndGetPathToDevice(string devicePath, out string logicalDrive)
       {
          if (Utils.IsNullOrWhiteSpace(devicePath))
             throw new ArgumentNullException("devicePath");
@@ -214,10 +219,12 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentException(Resources.Argument_must_be_DriveLetter_or_VolumeGuid_or_DevicePath, "devicePath");
 
 
-         devicePath = string.Format(CultureInfo.InvariantCulture, "{0}{1}", isDrive ? Path.LogicalDrivePrefix : string.Empty, devicePath);
+         devicePath = string.Format(CultureInfo.InvariantCulture, "{0}{1}", isDrive ? Path.LogicalDrivePrefix : string.Empty, Path.RemoveTrailingDirectorySeparator(devicePath));
+
+         logicalDrive = isDrive ? devicePath : null;
 
 
-         return Path.RemoveTrailingDirectorySeparator(devicePath);
+         return devicePath;
       }
    }
 }

@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Security;
 using System.Security.AccessControl;
 
@@ -44,7 +43,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          //var volumeDiskExtents = new NativeMethods.VOLUME_DISK_EXTENTS();
 
-         logicalDrive = @"\\.\C:";
          using (var safeHandle = OpenPhysicalDrive(logicalDrive, desiredAccess))
 
          using (var safeBuffer = GetDeviceIoData<NativeMethods.VOLUME_DISK_EXTENTS>(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, logicalDrive))

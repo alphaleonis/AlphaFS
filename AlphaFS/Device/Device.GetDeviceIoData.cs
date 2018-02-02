@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             // CDROM drive without a CD.
-            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+            if (lastError == Win32Errors.ERROR_NOT_SUPPORTED)
                return null;
 
 
