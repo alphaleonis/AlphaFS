@@ -182,10 +182,19 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get
          {
-            return _guid ?? (_guid = !Utils.IsNullOrWhiteSpace(FullPath) ? Volume.GetVolumeGuid(FullPath) : null);
-         }
+            if (null == _guid)
+            {
+               try
+               {
+                  _guid = !Utils.IsNullOrWhiteSpace(FullPath) ? Volume.GetVolumeGuid(FullPath) : null;
+               }
+               catch
+               {
+               }
+            }
 
-         private set { _guid = value; }
+            return _guid;
+         }
       }
 
 
@@ -352,27 +361,29 @@ namespace Alphaleonis.Win32.Filesystem
                   : NativeMethods.GetVolumeInformation(Path.AddTrailingDirectorySeparator(Name, false), volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity);
 
 
-               lastError = (uint)Marshal.GetLastWin32Error();
+               lastError = (uint) Marshal.GetLastWin32Error();
 
-               if (!success)
-                  switch (lastError)
-                  {
-                     case Win32Errors.ERROR_NOT_READY:
-                        if (!_continueOnAccessError)
-                           throw new DeviceNotReadyException(Name, true);
-                        break;
+               if (success)
+                  break;
 
-                     case Win32Errors.ERROR_MORE_DATA:
-                        //This code should never execute.
-                        volumeNameBuffer.Capacity *= 2;
-                        fileSystemNameBuffer.Capacity *= 2;
-                        break;
+               switch (lastError)
+               {
+                  case Win32Errors.ERROR_NOT_READY:
+                     if (!_continueOnAccessError)
+                        throw new DeviceNotReadyException(Name, true);
+                     break;
 
-                     default:
-                        if (!_continueOnAccessError)
-                           NativeError.ThrowException(lastError, Name);
-                        break;
-                  }
+                  case Win32Errors.ERROR_MORE_DATA:
+                     //This code should never execute.
+                     volumeNameBuffer.Capacity *= 2;
+                     fileSystemNameBuffer.Capacity *= 2;
+                     break;
+
+                  default:
+                     if (!_continueOnAccessError)
+                        NativeError.ThrowException(lastError, Name);
+                     break;
+               }
 
             } while (lastError == Win32Errors.ERROR_MORE_DATA);
          }
