@@ -99,33 +99,6 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(volumePathName.EndsWith(Path.DirectorySeparator));
       }
 
-      private void DumpGetDriveNameForNtDeviceName(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
-         var cnt = 0;
-
-         // Get Logical Drives from UnitTestConstants.Local Host.
-         foreach (var drive in Directory.GetLogicalDrives())
-         {
-            var tempPath = isLocal ? drive : Path.LocalToUnc(drive);
-
-            foreach (var dosDev in Volume.QueryDosDevice(tempPath))
-            {
-               Console.WriteLine("#{0:000}\tInput Path                 : [{1}]", ++cnt, dosDev);
-
-               var result = Volume.GetDriveNameForNtDeviceName(dosDev);
-               Console.WriteLine("\tGetDriveNameForNtDeviceName() : [{0}]", result ?? "null");
-               Assert.AreEqual(drive, result);
-
-               result = Volume.GetVolumeGuidForNtDeviceName(dosDev);
-               Console.WriteLine("\tGetVolumeGuidForNtDeviceName(): [{0}]\n", result ?? "null");
-            }
-         }
-         Console.WriteLine("\t{0}\n", UnitTestConstants.Reporter(true));
-
-         if (isLocal && cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
-      }
 
       private void DumpGetUniqueVolumeNameForPath(bool isLocal)
       {
@@ -189,22 +162,11 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetDriveNameForNtDeviceName()
-      {
-         Console.WriteLine("Volume.GetDriveNameForNtDeviceName()");
-
-         DumpGetDriveNameForNtDeviceName(true);
-         DumpGetDriveNameForNtDeviceName(false);
-      }
-
-
-      [TestMethod]
-      public void AlphaFS_Volume_GetUniqueVolumeNameForPath()
+      public void AlphaFS_Volume_GetUniqueVolumeNameForPath_Local_Success()
       {
          Console.WriteLine("Volume.GetUniqueVolumeNameForPath()");
 
          DumpGetUniqueVolumeNameForPath(true);
-         DumpGetUniqueVolumeNameForPath(false);
       }
 
 

@@ -30,30 +30,40 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetVolumeLabel_LogicalDrives_Local_Success()
+      public void AlphaFS_Volume_GetDriveNameForNtDeviceName_And_GetVolumeGuidForNtDeviceName_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
          var logicalDriveCount = 0;
 
-         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
+         foreach (var driveName in System.IO.Directory.GetLogicalDrives())
          {
-            // CD/DVD.
-            if (!driveInfo.IsReady)
-               continue;
+            var dosDeviceName = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(driveName);
+
+            var deviceGuid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(driveName);
 
 
-            var volumeLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(driveInfo.Name);
-
-            Console.WriteLine("\n\t#{0:000}\tLogical Drive: [{1}]\t\tLabel: [{2}]", ++logicalDriveCount, driveInfo.Name, driveInfo.VolumeLabel);
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++logicalDriveCount, dosDeviceName);
 
 
-            Assert.AreEqual(driveInfo.VolumeLabel, volumeLabel, "The volume labels do not match, but it is expected.");
+            var driveNameResult = Alphaleonis.Win32.Filesystem.Volume.GetDriveNameForNtDeviceName(dosDeviceName);
+
+            Console.WriteLine("\n\tGetDriveNameForNtDeviceName() : [{0}]", driveNameResult ?? "null");
+
+            Assert.AreEqual(driveName, driveNameResult);
+
+
+            var driveGuidResult = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuidForNtDeviceName(dosDeviceName);
+
+            Console.WriteLine("\n\tGetVolumeGuidForNtDeviceName(): [{0}]\n", driveGuidResult ?? "null");
+
+            Assert.AreEqual(deviceGuid, driveGuidResult);
          }
 
 
-         Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
+         if (logicalDriveCount == 0)
+            Assert.Inconclusive("No logical drices enumerated, but it is expected.");
       }
    }
 }

@@ -26,6 +26,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
 - Issue #386: `Network.Host.EnumerateDrives()` returns invalid data.
 - Issue #400: `Directory.CopyDeleteCore` creates destination folder when source folder does not exist.
+- Issue #412: Method `Volume.GetVolumeDeviceName` returns wrong result.
 
 ### New Features
 

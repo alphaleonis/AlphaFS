@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       public static readonly string PhysicalDrivePrefix = string.Format(CultureInfo.InvariantCulture, "{0}PhysicalDrive", LogicalDrivePrefix);
 
 
-      /// <summary>[AlphaFS] GlobalRootPrefix = "\\?\GLOBALROOT\" Provides standard Windows Volume prefix.</summary>
+      /// <summary>[AlphaFS] GlobalRootPrefix = "\\?\GlobalRoot\" Provides standard Windows Volume prefix.</summary>
       public static readonly string GlobalRootPrefix = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", LongPathPrefix, "GlobalRoot", DirectorySeparatorChar);
 
       /// <summary>[AlphaFS] NonInterpretedPathPrefix = "\??\" Provides a non-interpreted path prefix.</summary>

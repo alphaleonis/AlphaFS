@@ -21,39 +21,43 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_VolumeTest
+   partial class DirectoryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetVolumeLabel_LogicalDrives_Local_Success()
+      public void Directory_GetLogicalDrives_Local_Success()
+      {
+         Directory_GetLogicalDrives();
+      }
+
+
+      private void Directory_GetLogicalDrives()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var logicalDriveCount = 0;
+         var drivesSystemIO = System.IO.Directory.GetLogicalDrives().OrderBy(driveName => driveName).ToArray();
 
-         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
+         var drivesAlphaFS = Alphaleonis.Win32.Filesystem.Directory.GetLogicalDrives().OrderBy(driveName => driveName).ToArray();
+
+
+         Assert.AreEqual(drivesSystemIO.Length, drivesAlphaFS.Length, "The number of logical drives does not match, but is expected to.");
+
+         
+         var drivesCount = 0;
+         
+         foreach (var driveName in drivesAlphaFS)
          {
-            // CD/DVD.
-            if (!driveInfo.IsReady)
-               continue;
+            Console.WriteLine("\n\t#{0:000}\tLogical Drive: [{1}]", drivesCount, driveName);
 
-
-            var volumeLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(driveInfo.Name);
-
-            Console.WriteLine("\n\t#{0:000}\tLogical Drive: [{1}]\t\tLabel: [{2}]", ++logicalDriveCount, driveInfo.Name, driveInfo.VolumeLabel);
-
-
-            Assert.AreEqual(driveInfo.VolumeLabel, volumeLabel, "The volume labels do not match, but it is expected.");
+            Assert.AreEqual(drivesSystemIO[drivesCount++], driveName, "The logical drive drive name does not match, but is expected to.");
          }
-
-
-         Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
       }
    }
 }

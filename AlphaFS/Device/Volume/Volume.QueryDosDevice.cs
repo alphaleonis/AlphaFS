@@ -21,6 +21,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -30,79 +32,86 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Volume
    {
-      /// <summary>[AlphaFS] Retrieves a list of all existing MS-DOS device names.</summary>
-      /// <returns>An <see cref="IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>
+      /// <summary>[AlphaFS] Retrieves a sorted list of all existing MS-DOS device names.</summary>
+      /// <returns>An <see cref="IEnumerable{String}"/> sorted list of all existing MS-DOS device names.</returns>
       [SecurityCritical]
       public static IEnumerable<string> QueryAllDosDevices()
       {
-         return QueryDosDevice(null, null);
+         return QueryDosDeviceCore(null, true);
       }
 
 
-      /// <summary>[AlphaFS] Retrieves a list of all existing MS-DOS device names.</summary>
-      /// <param name="deviceName">
-      ///   (Optional, default: <see langword="null"/>) An MS-DOS device name string specifying the target of the query. This parameter can be
-      ///   "sort". In that case a sorted list of all existing MS-DOS device names is returned. This parameter can be <see langword="null"/>.
-      ///   In that case, the <see cref="QueryDosDevice"/> function will store a list of all existing MS-DOS device names into the buffer.
-      /// </param>
-      /// <returns>An <see cref="IEnumerable{String}"/> with or more existing MS-DOS device names.</returns>
+      /// <summary>[AlphaFS] Retrieves the current mapping for a particular MS-DOS device name.</summary>
+      /// <returns>The current mapping for a particular MS-DOS device name.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <param name="deviceName">An MS-DOS device name string specifying the target of the query, such as: "C:", "D:" or "\\?\Volume{GUID}".</param>
       [SecurityCritical]
-      public static IEnumerable<string> QueryAllDosDevices(string deviceName)
+      public static string QueryDosDevice(string deviceName)
       {
-         return QueryDosDevice(null, deviceName);
+         if (Utils.IsNullOrWhiteSpace(deviceName))
+            throw new ArgumentNullException("deviceName");
+
+
+         var devName = QueryDosDeviceCore(deviceName, false).ToArray()[0];
+
+         return !Utils.IsNullOrWhiteSpace(devName) ? devName : null;
       }
 
 
-      /// <summary>[AlphaFS] 
-      ///   Retrieves information about MS-DOS device names. The function can obtain the current mapping for a particular MS-DOS device name.
-      ///   The function can also obtain a list of all existing MS-DOS device names.
-      /// </summary>
-      /// <param name="deviceName">
-      ///   An MS-DOS device name string, or part of, specifying the target of the query. This parameter can be <see langword="null"/>. In that
-      ///   case, the QueryDosDevice function will store a list of all existing MS-DOS device names into the buffer.
-      /// </param>
-      /// <param name="options">
-      ///   (Optional, default: <see langword="false"/>) If options[0] = <see langword="true"/> a sorted list will be returned.
-      /// </param>
-      /// <returns>An <see cref="IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>
+
+
+      /// <summary>[AlphaFS] Retrieves the current mapping for a particular MS-DOS device name. The function can also obtain a list of all existing MS-DOS device names.</summary>
+      /// <returns>An <see cref="IEnumerable{String}"/> sorted list of all existing MS-DOS device names or the .</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <param name="deviceName">An MS-DOS device name string specifying the target of the query, such as: "C:", "D:" or "\\?\Volume{GUID}".</param>
+      /// <param name="sort"><see langword="true"/> to sort the list with MS-DOS device names.</param>
       [SecurityCritical]
-      public static IEnumerable<string> QueryDosDevice(string deviceName, params string[] options)
+      internal static IEnumerable<string> QueryDosDeviceCore(string deviceName, bool sort)
       {
-         // deviceName is allowed to be null.
+         // deviceName is allowed to be null: Retrieve a list of all existing MS-DOS device names.
          // The deviceName cannot have a trailing backslash.
-         deviceName = Path.RemoveTrailingDirectorySeparator(deviceName);
 
-         var searchFilter = deviceName != null;
-
-         // Only process options if a device is supplied.
-         if (searchFilter)
+         if (!Utils.IsNullOrWhiteSpace(deviceName))
          {
-            // Check that at least one "options[]" has something to say. If so, rebuild them.
-            options = options != null && options.Any() ? new[] { deviceName, options[0] } : new[] { deviceName, string.Empty };
+            if (deviceName.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+               yield return deviceName.Substring(Path.GlobalRootPrefix.Length);
 
-            deviceName = null;
+               yield break;
+            }
+
+            
+            if (deviceName.StartsWith(Path.VolumePrefix, StringComparison.OrdinalIgnoreCase))
+
+               deviceName = deviceName.Substring(Path.LongPathPrefix.Length);
+
+
+            deviceName = Path.RemoveTrailingDirectorySeparator(deviceName);
          }
 
-         // Choose sorted output.
-         var doSort = options != null && options.Any(s => s != null && s.Equals("sort", StringComparison.OrdinalIgnoreCase));
 
-         // Start with a larger buffer when using a searchFilter.
-         var bufferSize = (uint)(searchFilter || doSort || null == options ? 8 * NativeMethods.DefaultFileBufferSize : 256);
-         uint bufferResult = 0;
+
+
+         uint returnedBufferSize = 0;
+
+         var bufferSize = (uint) (sort ? NativeMethods.DefaultFileBufferSize : 64);
+
+         var sortedList = new List<string>(sort ? 256 : 0);
+
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-            while (bufferResult == 0)
+            while (returnedBufferSize == 0)
             {
                var cBuffer = new char[bufferSize];
 
-               // QueryDosDevice()
-               // 2014-01-29: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+               returnedBufferSize = NativeMethods.QueryDosDevice(deviceName, cBuffer, bufferSize);
 
-               bufferResult = NativeMethods.QueryDosDevice(deviceName, cBuffer, bufferSize);
                var lastError = Marshal.GetLastWin32Error();
 
-               if (bufferResult == 0)
-                  switch ((uint)lastError)
+               if (returnedBufferSize == 0)
+                  switch ((uint) lastError)
                   {
                      case Win32Errors.ERROR_MORE_DATA:
                      case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
@@ -114,29 +123,43 @@ namespace Alphaleonis.Win32.Filesystem
                         break;
                   }
 
-               var dosDev = new List<string>();
-               var buffer = new StringBuilder();
 
-               for (var i = 0; i < bufferResult; i++)
+               var buffer = new StringBuilder((int) returnedBufferSize);
+
+
+               for (var i = 0; i < returnedBufferSize; i++)
                {
                   if (cBuffer[i] != Path.StringTerminatorChar)
+
                      buffer.Append(cBuffer[i]);
+
 
                   else if (buffer.Length > 0)
                   {
-                     dosDev.Add(buffer.ToString());
+                     var assembledPath = buffer.ToString();
+
+                     assembledPath = !Utils.IsNullOrWhiteSpace(assembledPath) ? assembledPath : null;
+
+
+                     if (sort)
+                        sortedList.Add(assembledPath);
+
+                     else
+                        yield return assembledPath;
+
+
                      buffer.Length = 0;
                   }
                }
-
-               // Choose the yield back query; filtered or list.
-               var selectQuery = searchFilter
-                  ? dosDev.Where(dev => options != null && dev.StartsWith(options[0], StringComparison.OrdinalIgnoreCase))
-                  : dosDev;
-
-               foreach (var dev in doSort ? selectQuery.OrderBy(n => n) : selectQuery)
-                  yield return dev;
             }
+
+
+         if (sort)
+         {
+            foreach (var devName in sortedList.OrderBy(devName => devName))
+
+               yield return devName;
+         }
       }
    }
 }

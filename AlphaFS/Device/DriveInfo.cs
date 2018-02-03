@@ -357,7 +357,7 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      case 0:
                         // DosDeviceName
-                        return _dosDeviceName ?? (_dosDeviceName = Volume.QueryDosDevice(Name).FirstOrDefault());
+                        return _dosDeviceName ?? (_dosDeviceName = Volume.GetVolumeDeviceName(Name));
                   }
 
                   break;

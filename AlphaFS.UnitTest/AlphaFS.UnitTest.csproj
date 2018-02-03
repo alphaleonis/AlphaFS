@@ -168,6 +168,8 @@
     <Compile Include="AlphaFS Host Class\AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory_CopySymbolicLink.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File_CopySymbolicLink.cs" />
+    <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetDriveNameForNtDeviceName.cs" />
+    <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetVolumeDeviceName.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.QueryDosDevice.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.EnumerateVolumeMountPoints.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.SetVolumeLabel.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete.CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete.CatchDirectoryNotFoundException_NonExistingDirectory.cs" />
     <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory.cs" />
+    <Compile Include="Directory Class\Directory.GetLogicalDrives.cs" />
     <Compile Include="Directory Class\Directory.GetFiles.cs" />
     <Compile Include="Directory Class\Directory.GetFileSystemEntries.cs" />
     <Compile Include="Directory Class\Directory.GetDirectories.cs" />

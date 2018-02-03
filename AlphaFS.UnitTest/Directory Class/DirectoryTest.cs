@@ -166,35 +166,7 @@ namespace AlphaFS.UnitTest
 
 
 
-      private void DumpGetDrives(bool enumerate)
-      {
-         Console.WriteLine("\nIf you are missing drives, please see this topic: https://alphafs.codeplex.com/discussions/397693 \n");
-
-         var cnt = 0;
-         UnitTestConstants.StopWatcher(true);
-         foreach (var actual in enumerate ? Directory.EnumerateLogicalDrives(false, false) : DriveInfo.GetDrives())
-         {
-            Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++cnt, actual.Name);
-
-            if (actual.IsReady && actual.DriveType == DriveType.Fixed)
-            {
-               // GetFreeSpaceEx()
-               Assert.IsTrue(actual.AvailableFreeSpace > 0 && actual.TotalSize > 0 && actual.TotalFreeSpace > 0);
-
-               // GetFreeSpace()
-               Assert.IsTrue(actual.DiskSpaceInfo.SectorsPerCluster > 0 && actual.DiskSpaceInfo.BytesPerSector > 0 && actual.DiskSpaceInfo.TotalNumberOfClusters > 0);
-
-               // DriveInfo()
-               Assert.IsTrue(actual.DiskSpaceInfo.ClusterSize > 0 &&
-                             !Utils.IsNullOrWhiteSpace(actual.DiskSpaceInfo.TotalSizeUnitSize) &&
-                             !Utils.IsNullOrWhiteSpace(actual.DiskSpaceInfo.UsedSpaceUnitSize) &&
-                             !Utils.IsNullOrWhiteSpace(actual.DiskSpaceInfo.AvailableFreeSpaceUnitSize));
-            }
-         }
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
-      }
-
-
+      
       private void DumpGetProperties(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
@@ -343,13 +315,7 @@ namespace AlphaFS.UnitTest
          }
       }
 
-      [TestMethod]
-      public void Directory_GetLogicalDrives()
-      {
-         Console.WriteLine("Directory.GetLogicalDrives()");
-
-         DumpGetDrives(false);
-      }
+      
 
       [TestMethod]
       public void Directory_GetParent()
