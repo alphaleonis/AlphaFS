@@ -59,7 +59,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -88,7 +88,7 @@ namespace AlphaFS.UnitTest
 
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -129,7 +129,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -139,7 +139,7 @@ namespace AlphaFS.UnitTest
             var file = rootDir.RandomFileFullPath;
             var fi = new System.IO.FileInfo(file);
 
-            Console.WriteLine("\nInput File Path: [{0}]]\n", file);
+            Console.WriteLine("\nInput File Path: [{0}]]", file);
 
 
             using (fi.CreateText()) { }

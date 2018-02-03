@@ -44,8 +44,10 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         var tempFolder = Path.GetTempPath();
+         UnitTestConstants.PrintUnitTestHeader(!isLocal);
+
+
+         var tempFolder = UnitTestConstants.TempFolder;
          var tempPath = Path.Combine(tempFolder, "File.Delete-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -111,7 +113,9 @@ namespace AlphaFS.UnitTest
 
       private void DumpGetSetAttributes(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         UnitTestConstants.PrintUnitTestHeader(!isLocal);
+
+
          var tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
          var tempPath = isLocal ? tmp : Path.LocalToUnc(tmp);
          var sys32 = isLocal ? UnitTestConstants.SysRoot32 : Path.LocalToUnc(UnitTestConstants.SysRoot32);
@@ -138,7 +142,6 @@ namespace AlphaFS.UnitTest
 
          var allOk = true;
          var cnt = 0;
-         UnitTestConstants.StopWatcher(true);
          foreach (var file in Directory.EnumerateFiles(tempPath))
          {
             try
@@ -162,7 +165,6 @@ namespace AlphaFS.UnitTest
             }
          }
          Console.WriteLine();
-         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(allOk);
 
 
@@ -171,7 +173,6 @@ namespace AlphaFS.UnitTest
 
          allOk = true;
          cnt = 0;
-         UnitTestConstants.StopWatcher(true);
          foreach (var file in Directory.EnumerateFiles(tempPath))
          {
             try
@@ -195,7 +196,6 @@ namespace AlphaFS.UnitTest
             }
          }
          Console.WriteLine();
-         Console.WriteLine(UnitTestConstants.Reporter());
 
 
          Directory.Delete(tempPath, true, true);
@@ -210,7 +210,9 @@ namespace AlphaFS.UnitTest
 
       private void DumpReadAllLines(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         UnitTestConstants.PrintUnitTestHeader(!isLocal);
+
+
          var tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
          var tempPath = isLocal ? tmp : Path.LocalToUnc(tmp);
 
@@ -245,7 +247,9 @@ namespace AlphaFS.UnitTest
 
       private void DumpReadWriteAllBytes(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         UnitTestConstants.PrintUnitTestHeader(!isLocal);
+
+
          var tempPath = Path.GetTempPath("File.ReadWriteAllBytes()-" + Path.GetRandomFileName());
          if (!isLocal) { tempPath = Path.LocalToUnc(tempPath); }
 

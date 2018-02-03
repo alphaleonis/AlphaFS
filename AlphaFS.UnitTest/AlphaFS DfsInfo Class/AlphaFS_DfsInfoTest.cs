@@ -37,7 +37,6 @@ namespace AlphaFS.UnitTest
          var cnt = 0;
          var noDomainConnection = true;
 
-         UnitTestConstants.StopWatcher(true);
          try
          {
             foreach (var dfsNamespace in Host.EnumerateDomainDfsRoot())
@@ -69,7 +68,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t(1) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
-            Console.Write("\n{0}", UnitTestConstants.Reporter());
+            Console.WriteLine();
 
             if (cnt == 0)
                Assert.Inconclusive("Nothing is enumerated, but it is expected.");
@@ -83,7 +82,8 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\t(2) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         Console.WriteLine("\n\n\t{0}", UnitTestConstants.Reporter(true));
+         Console.WriteLine();
+         Console.WriteLine();
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");

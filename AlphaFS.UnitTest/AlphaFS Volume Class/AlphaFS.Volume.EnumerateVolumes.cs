@@ -40,7 +40,9 @@ namespace AlphaFS.UnitTest
 
 
          var volumeCount = 0;
-         var volumes = Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumes().ToList();
+         var pathNamesCount = 0;
+
+         var volumes = Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumes().ToArray();
 
          foreach (var volume in volumes)
          {
@@ -51,11 +53,9 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(volumes.Any(vol => vol.StartsWith(Alphaleonis.Win32.Filesystem.Path.VolumePrefix + "{") &&
 
                                              vol.EndsWith("}" + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator)), "Volume path name is not valid, but it is expected.");
+            
 
-
-
-
-            var pathNames = Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumePathNames(volume).ToList();
+            var pathNames = Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumePathNames(volume).ToArray();
 
             foreach (var displayName in pathNames)
             {
@@ -67,19 +67,22 @@ namespace AlphaFS.UnitTest
 
                if (!string.IsNullOrWhiteSpace(displayName))
                   Assert.IsTrue(char.IsLetter(displayName[0]) && displayName.EndsWith(Alphaleonis.Win32.Filesystem.Path.VolumeSeparator + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator));
+
+
+               pathNamesCount++;
             }
 
 
             Console.WriteLine();
 
 
-            if (pathNames.Count == 0)
-               Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+            if (pathNamesCount == 0)
+               Assert.Inconclusive("No path names enumerated, but it is expected.");
          }
 
 
-         if (volumes.Count == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+         if (volumeCount == 0)
+            Assert.Inconclusive("No volumes enumerated, but it is expected.");
       }
    }
 }

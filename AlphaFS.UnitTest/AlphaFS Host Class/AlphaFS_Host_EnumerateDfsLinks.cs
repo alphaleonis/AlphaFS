@@ -37,7 +37,6 @@ namespace AlphaFS.UnitTest
 
          var cnt = 0;
          var noDomainConnection = true;
-         UnitTestConstants.StopWatcher(true);
          try
          {
             foreach (var dfsNamespace in Alphaleonis.Win32.Network.Host.EnumerateDomainDfsRoot())

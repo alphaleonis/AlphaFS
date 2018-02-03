@@ -19,48 +19,16 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_Shell32Test
+   /// <summary>Containts static variables, used by unit tests.</summary>
+   public static partial class UnitTestConstants
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_Shell32Info_InitializeInstance_LocalAndNetwork_Success()
+      public static void PrintUnitTestHeader(bool isNetwork)
       {
-         Shell32Info_InitializeInstance(false);
-         Shell32Info_InitializeInstance(true);
-      }
-
-
-
-
-      private void Shell32Info_InitializeInstance(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var file = rootDir.RandomFileFullPath;
-
-            var shell32Info = new Alphaleonis.Win32.Filesystem.Shell32Info(file);
-            
-            Assert.IsTrue(shell32Info != null);
-
-            UnitTestConstants.Dump(shell32Info, -15);
-         }
-
-         Console.WriteLine();
+         Console.WriteLine("\n=== TEST {0} ===", isNetwork ? "NETWORK" : "LOCAL");
       }
    }
 }

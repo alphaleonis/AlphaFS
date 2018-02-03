@@ -44,7 +44,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
-         var tempPath = System.IO.Path.GetTempPath();
+         var tempPath = UnitTestConstants.TempFolder;
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
@@ -67,7 +67,7 @@ namespace AlphaFS.UnitTest
 
             for (var i = 0; i < numCreate; i++)
             {
-               var newfile = System.IO.Path.Combine(hardlinkFolder, i + "-Hardlink-" + UnitTestConstants.GetRandomFileName() + ".txt");
+               var newfile = System.IO.Path.Combine(hardlinkFolder, i + "-Hardlink-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters() + ".txt");
 
                Alphaleonis.Win32.Filesystem.File.CreateHardlink(newfile, file);
 
@@ -84,7 +84,6 @@ namespace AlphaFS.UnitTest
 
             using (var stream = System.IO.File.OpenRead(file))
             {
-               UnitTestConstants.StopWatcher(true);
                var bhfi = Alphaleonis.Win32.Filesystem.File.GetFileInfoByHandle(stream.SafeFileHandle);
 
                Assert.AreEqual(numCreate + 1, bhfi.NumberOfLinks);

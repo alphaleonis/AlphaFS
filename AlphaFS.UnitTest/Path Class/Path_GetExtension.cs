@@ -42,7 +42,6 @@ namespace AlphaFS.UnitTest
          var errorCnt = 0;
          var skipAssert = false;
 
-         UnitTestConstants.StopWatcher(true);
          foreach (var path in UnitTestConstants.InputPaths)
          {
             string expected = null;
@@ -80,7 +79,7 @@ namespace AlphaFS.UnitTest
             }
             Console.WriteLine("\t   AlphaFS   : [{0}]", actual ?? "null");
          }
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
+         Console.WriteLine();
 
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }

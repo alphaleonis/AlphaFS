@@ -40,7 +40,9 @@ namespace AlphaFS.UnitTest
    {
       private void DumpEnableDisableEncryption(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         UnitTestConstants.PrintUnitTestHeader(!isLocal);
+
+
          var tempPath = Path.Combine(Path.GetTempPath(), "Directory.EnableDisableEncryption()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -59,9 +61,7 @@ namespace AlphaFS.UnitTest
          var action = false;
          try
          {
-            UnitTestConstants.StopWatcher(true);
             Directory.EnableEncryption(tempPath);
-            report = UnitTestConstants.Reporter(true);
             action = true;
          }
          catch (Exception ex)
@@ -90,9 +90,7 @@ namespace AlphaFS.UnitTest
          action = false;
          try
          {
-            UnitTestConstants.StopWatcher(true);
             Directory.DisableEncryption(tempPath);
-            report = UnitTestConstants.Reporter(true);
             action = true;
          }
          catch (Exception ex)
@@ -126,7 +124,9 @@ namespace AlphaFS.UnitTest
 
       private void DumpEnumerateFileIdBothDirectoryInfo(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         UnitTestConstants.PrintUnitTestHeader(!isLocal);
+
+
          var tempPath = UnitTestConstants.SysRoot;
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -141,7 +141,6 @@ namespace AlphaFS.UnitTest
          long numDirectories = 0;
          long numFiles = 0;
 
-         UnitTestConstants.StopWatcher(true);
          foreach (var fibdi in Directory.EnumerateFileIdBothDirectoryInfo(tempPath))
          {
             if ((fibdi.FileAttributes & FileAttributes.Directory) != 0)
@@ -151,9 +150,8 @@ namespace AlphaFS.UnitTest
 
             foundFse = UnitTestConstants.Dump(fibdi, -22);
          }
-         var report = UnitTestConstants.Reporter();
 
-         Console.WriteLine("\n\tEnumerated: Directories = [{0}] Files = [{1}]\t{2}", numDirectories, numFiles, report);
+         Console.WriteLine("\n\tEnumerated: Directories = [{0}] Files = [{1}]", numDirectories, numFiles);
 
          if (!foundFse)
             Assert.Inconclusive("Nothing is enumerated, but it is expected.");
@@ -168,14 +166,14 @@ namespace AlphaFS.UnitTest
 
       private void DumpGetProperties(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         UnitTestConstants.PrintUnitTestHeader(!isLocal);
+
+
          var path = isLocal ? UnitTestConstants.SysRoot32 : Path.LocalToUnc(UnitTestConstants.SysRoot32);
 
          Console.WriteLine("\n\tAggregated properties of file system objects from Directory: [{0}]\n", path);
 
-         UnitTestConstants.StopWatcher(true);
          var props = Directory.GetProperties(path, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         var report = UnitTestConstants.Reporter();
 
          var total = props["Total"];
          var file = props["File"];
@@ -185,7 +183,7 @@ namespace AlphaFS.UnitTest
          foreach (var key in props.Keys)
             Console.WriteLine("\t\t#{0:000}\t{1, -17} = [{2}]", ++cnt, key, props[key]);
 
-         Console.WriteLine("\n\t{0}", report);
+         Console.WriteLine();
 
          if (cnt == 0)
             Assert.Inconclusive("Nothing is enumerated, but it is expected.");
@@ -231,7 +229,6 @@ namespace AlphaFS.UnitTest
 
          #endregion // ArgumentException
 
-         UnitTestConstants.StopWatcher(true);
          foreach (var path in UnitTestConstants.InputPaths)
          {
             string expected = null;
@@ -270,7 +267,7 @@ namespace AlphaFS.UnitTest
             }
             Console.WriteLine("\t   AlphaFS   : [{0}]", actual ?? "null");
          }
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
+         Console.WriteLine();
 
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
@@ -318,7 +315,6 @@ namespace AlphaFS.UnitTest
          var pathCnt = 0;
          var errorCnt = 0;
 
-         UnitTestConstants.StopWatcher(true);
          foreach (var path in UnitTestConstants.InputPaths)
          {
             string expected = null;
@@ -359,7 +355,7 @@ namespace AlphaFS.UnitTest
             }
             Console.WriteLine("\t   AlphaFS   : [{0}]", actual ?? "null");
          }
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
+         Console.WriteLine();
 
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
@@ -405,7 +401,6 @@ namespace AlphaFS.UnitTest
          var searchOption = SearchOption.TopDirectoryOnly;
 
          var cnt = 0;
-         UnitTestConstants.StopWatcher(true);
          foreach (var dir in Directory.EnumerateDirectories(UnitTestConstants.SysRoot, searchPattern, searchOption))
          {
             try
@@ -422,7 +417,7 @@ namespace AlphaFS.UnitTest
                Console.Write("\t#{0:000}\tCaught {1} for directory: [{2}]\t[{3}]\n", cnt, ex.GetType().FullName, dir, ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
-         Console.Write("\n{0}", UnitTestConstants.Reporter());
+         Console.WriteLine();
       }
 
       #endregion // AlphaFS

@@ -33,11 +33,11 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Volume_EnumerateVolumeMountPoints_Local_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-         Console.WriteLine();
-
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
+
+         UnitTestConstants.PrintUnitTestHeader(false);
+         Console.WriteLine();
 
 
          var cnt = 0;

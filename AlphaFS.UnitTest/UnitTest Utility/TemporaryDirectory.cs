@@ -36,7 +36,7 @@ namespace AlphaFS.UnitTest
 
          do
          {
-            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, prefix + "." + UnitTestConstants.GetRandomFileName().Substring(0, 6)));
+            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, prefix + "." + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters().Substring(0, 6)));
 
          } while (Directory.Exists);
 
@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
       public string RandomDirectoryFullPath
       {
-         get { return System.IO.Path.Combine(Directory.FullName, "Directory-" + UnitTestConstants.GetRandomFileName()); }
+         get { return System.IO.Path.Combine(Directory.FullName, "Directory-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()); }
       }
 
       public string RandomFileFullPath
@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
 
       public string RandomFileFullPathNoExtension
       {
-         get { return System.IO.Path.Combine(Directory.FullName, "File-" + UnitTestConstants.GetRandomFileName()); }
+         get { return System.IO.Path.Combine(Directory.FullName, "File-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()); }
       }
       
       #region Disposable Members

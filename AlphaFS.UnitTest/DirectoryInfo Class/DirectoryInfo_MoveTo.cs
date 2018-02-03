@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
 
 
-         var tempPath = System.IO.Path.GetTempPath();
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -65,7 +65,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.Directory.FullName;
-            var folderSrc = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(folder, "Source-" + UnitTestConstants.GetRandomFileName()));
+            var folderSrc = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(folder, "Source-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()));
             var pendingEntry = folderSrc.FullName;
 
             Console.WriteLine("Src Directory Path: [{0}]", pendingEntry);

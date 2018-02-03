@@ -58,7 +58,7 @@ namespace AlphaFS.UnitTest
 
          UnitTestConstants.PrintUnitTestHeader(!isLocal);
 
-         var tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Directory.GetDirectories_With_SearchPattern()-" + UnitTestConstants.GetRandomFileName());
+         var tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Directory.GetDirectories_With_SearchPattern()-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters());
          if (!isLocal) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);

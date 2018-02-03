@@ -40,44 +40,57 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_GetXxxTimeXxx_NonExistingFile_Success()
+      public void File_GetXxxTimeXxx_NonExistingFile_Local_Success()
       {
-         const string Path = @"z:\nonExistingPath\nonExistingFile.txt";
-         Assert.IsFalse(System.IO.File.Exists(Path));
+         File_GetXxxTimeXxx_NonExistingFile();
+      }
+
+
+
+
+      private void File_GetXxxTimeXxx_NonExistingFile()
+      {
+         UnitTestConstants.PrintUnitTestHeader(false);
+
+         var path = @"Z:\NonExistingPath\NonExistingFile.txt";
+
+         Console.WriteLine("\nInput NonExisting File Path: [{0}]", path);
+
+
+         Assert.IsFalse(System.IO.File.Exists(path));
+
 
          var newDateTime = new DateTime(1601, 1, 1);
          var newDateTimeLocaltime = new DateTime(1601, 1, 1).ToLocalTime();
 
 
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetCreationTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetCreationTime(Path));
+         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetCreationTime(path));
+         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetCreationTime(path));
          
-         Assert.AreEqual(newDateTime, System.IO.File.GetCreationTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(Path));
+         Assert.AreEqual(newDateTime, System.IO.File.GetCreationTimeUtc(path));
+         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(path));
 
 
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetLastAccessTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(Path));
+         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetLastAccessTime(path));
+         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(path));
 
-         Assert.AreEqual(newDateTime, System.IO.File.GetLastAccessTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(Path));
+         Assert.AreEqual(newDateTime, System.IO.File.GetLastAccessTimeUtc(path));
+         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(path));
 
 
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetLastWriteTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(Path));
+         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetLastWriteTime(path));
+         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(path));
 
-         Assert.AreEqual(newDateTime, System.IO.File.GetLastWriteTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(Path));
+         Assert.AreEqual(newDateTime, System.IO.File.GetLastWriteTimeUtc(path));
+         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(path));
       }
-
-
       
 
       private void File_GetXxxTimeXxx(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 

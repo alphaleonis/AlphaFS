@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var random = UnitTestConstants.GetRandomFileName();
+            var random = UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
             var srcFolderName = System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder.") + random;
             var destFolderName = System.IO.Path.Combine(rootDir.Directory.FullName, "Destination Folder.") + random;
 

@@ -19,25 +19,19 @@
  *  THE SOFTWARE. 
  */
 
-using System;
+using System.Linq;
+using System.Text;
 
 namespace AlphaFS.UnitTest
 {
+   /// <summary>Containts static variables, used by unit tests.</summary>
    public static partial class UnitTestConstants
    {
-      public static System.IO.FileInfo CreateFile(string rootFolder, int fileLength = 0)
+      public static byte[] StringToByteArray(string str, params Encoding[] encoding)
       {
-         var file = System.IO.Path.Combine(rootFolder, GetRandomFileName());
+         var encode = encoding != null && encoding.Any() ? encoding[0] : new UTF8Encoding(true, true);
 
-         using (var fs = System.IO.File.Create(file))
-         {
-            if (fileLength <= 0)
-               fileLength = new Random().Next(0, 10485760);
-
-            fs.SetLength(fileLength);
-         }
-
-         return new System.IO.FileInfo(file);
+         return encode.GetBytes(str);
       }
    }
 }

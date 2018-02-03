@@ -33,6 +33,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Device_EnumerateLogicalDrives_Local_Success()
       {
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+         
          UnitTestConstants.PrintUnitTestHeader(false);
 
 

@@ -34,7 +34,9 @@ namespace AlphaFS.UnitTest
    {
       private void DumpGetAssociation(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         UnitTestConstants.PrintUnitTestHeader(!isLocal);
+
+
          var path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
@@ -59,16 +61,14 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\t\tGetFileOpenWithAppName(): [{0}]", openWithApp);
             Console.WriteLine("\t\tGetFileVerbCommand()    : [{0}]", verbCommand);
 
-            UnitTestConstants.StopWatcher(true);
             var shell32Info = Shell32.GetShell32Info(file);
-            var report = UnitTestConstants.Reporter(true);
 
             var cmd = "print";
             verbCommand = shell32Info.GetVerbCommand(cmd);
             Console.WriteLine("\n\t\tShell32Info.GetVerbCommand(\"{0}\"): [{1}]", cmd, verbCommand);
 
             UnitTestConstants.Dump(shell32Info, -15);
-            Console.WriteLine("\n\t{0}\n\n", report);
+            Console.WriteLine("\n\n\n");
          }
          Console.WriteLine("\n");
          Assert.IsTrue(cnt > 0, "No entries enumerated.");
@@ -158,7 +158,6 @@ namespace AlphaFS.UnitTest
          DumpPathFileExists(Path.Combine(UnitTestConstants.SysRoot, "BlaBlaBla"), false);
 
          var cnt = 0;
-         UnitTestConstants.StopWatcher(true);
          foreach (var file in Directory.EnumerateFiles(UnitTestConstants.SysRoot))
          {
             var fileExists = Shell32.PathFileExists(file);
@@ -166,7 +165,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\t#{0:000}\tShell32.PathFileExists() == [{1}]: {2}\t\t[{3}]", ++cnt, UnitTestConstants.TextTrue, fileExists, file);
             Assert.IsTrue(fileExists);
          }
-         Console.WriteLine("\n\t{0}\n", UnitTestConstants.Reporter(true));
+         Console.WriteLine("\n\n");
       }
 
 

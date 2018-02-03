@@ -36,7 +36,6 @@ namespace AlphaFS.UnitTest
 
          var cnt = 0;
          var noDomainConnection = true;
-         UnitTestConstants.StopWatcher(true);
 
          // Drill down to get servers from the first namespace retrieved.
 
@@ -71,7 +70,7 @@ namespace AlphaFS.UnitTest
                }
             }
 
-            Console.Write("\n{0}", UnitTestConstants.Reporter(true));
+            Console.WriteLine();
 
             if (cnt == 0)
                Assert.Inconclusive("Nothing is enumerated, but it is expected.");
