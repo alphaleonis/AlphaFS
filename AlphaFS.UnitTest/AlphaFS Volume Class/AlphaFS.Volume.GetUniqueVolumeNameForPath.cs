@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,59 +31,47 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetVolumeDeviceName_FromLogicalDriveAndVolumeGuid_Local_Success()
+      public void AlphaFS_Volume_GetUniqueVolumeNameForPath_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         // GetVolumeDeviceName
+         var logicalDriveCount = 0;
 
-         var inputPath =  UnitTestConstants.SysDrive;
+         foreach (var driveName in System.IO.Directory.GetLogicalDrives())
+         {
+            var deviceGuid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(driveName);
 
-         Console.WriteLine("\nInput Logical Drive Path: [{0}]", inputPath);
-         
-
-         var deviceNameFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(inputPath);
-
-         Console.WriteLine("\n\tDevice Name: [{0}]", deviceNameFromLogicalDrive);
-         
-         Assert.IsNotNull(deviceNameFromLogicalDrive);
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++logicalDriveCount, driveName);
 
 
+            var volumeNameResult = Alphaleonis.Win32.Filesystem.Volume.GetUniqueVolumeNameForPath(driveName);
+
+            Console.WriteLine("\n\tGetUniqueVolumeNameForPath: [{0}]", volumeNameResult ?? "null");
 
 
-         // GetVolumeGuid
+            // Typically, only one mount point exists so the Volume GUIDs will match.
 
-         inputPath = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(inputPath);
-
-         Console.WriteLine("\nInput Volume GUID Path: [{0}]", inputPath);
+            Assert.AreEqual(deviceGuid, volumeNameResult);
 
 
-         var guid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(inputPath);
+            var pathNames = Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumePathNames(volumeNameResult).ToArray();
 
-         Assert.IsNotNull(guid);
-
-
-         var deviceNameFromGuid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(guid);
-
-         Console.WriteLine("\n\tDevice Name: [{0}]", deviceNameFromGuid);
-
-         Assert.IsNotNull(deviceNameFromGuid);
+            foreach (var displayName in pathNames)
+            {
+               Console.WriteLine("\n\t(Input Volume GUID Path) EnumerateVolumePathNames: Volume points to logcal drive: [{0}]\n", displayName);
 
 
+               // Volumes don't always have drive letters.
 
-         
-         Assert.IsNotNull(deviceNameFromLogicalDrive);
-
-         
-         var deviceNamePrefix = Alphaleonis.Win32.Filesystem.Path.DevicePrefix + "HarddiskVolume";
-
-         Assert.IsTrue(deviceNameFromLogicalDrive.StartsWith(deviceNamePrefix));
-
-         Assert.IsTrue(deviceNameFromGuid.StartsWith(deviceNamePrefix));
+               if (!string.IsNullOrWhiteSpace(displayName))
+                  Assert.AreEqual(driveName, displayName);
+            }
+         }
 
 
-         Assert.AreEqual(deviceNameFromLogicalDrive, deviceNameFromGuid);
+         if (logicalDriveCount == 0)
+            Assert.Inconclusive("No logical drives enumerated, but it is expected.");
       }
    }
 }

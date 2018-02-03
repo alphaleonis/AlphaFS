@@ -19,8 +19,8 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,34 +30,94 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetVolumeInfo_GlobalRootPath_Success()
+      public void AlphaFS_Volume_GetVolumeInfo_LocalAndNetwork_Success()
       {
-         // From an elevated prompt, type: vssadmin list shadows
-         // and pick any Shadow Copy Volume: \\?\GLOBALROOT\Device\HarddiskVolume...
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
 
-         var globalRootPath = @"\\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1";
-
-         try
-         {
-            var volume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(globalRootPath);
-            Console.WriteLine("Volume full path: " + volume.FullPath);
-
-            Assert.AreEqual(globalRootPath + @"\", volume.FullPath);
-         }
-         catch (Exception)
-         {
-            Assert.Inconclusive("Volume not found: " + globalRootPath);
-         }
+         Volume_GetVolumeInfo_FromLogicalDrive(false);
+         Volume_GetVolumeInfo_FromLogicalDrive(true);
       }
 
 
-      [TestMethod]
-      public void AlphaFS_Volume_GetVolumeInfo_SystemDrivePath_Success()
+      private void Volume_GetVolumeInfo_FromLogicalDrive(bool isNetwork)
       {
-         var volume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(UnitTestConstants.SysDrive);
-         Console.WriteLine("Volume full path: " + volume.FullPath);
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         Assert.AreEqual(UnitTestConstants.SysDrive + @"\", volume.FullPath);
+
+         var logicalDriveCount = 0;
+
+         foreach (var logicalDrive in System.IO.DriveInfo.GetDrives())
+         {
+            var driveName = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(logicalDrive.Name) : logicalDrive.Name;
+
+            Console.WriteLine("\n#{0:000}\tInput Logical Drive Path: [{1}]", logicalDriveCount, driveName);
+
+            if (logicalDrive.DriveType == System.IO.DriveType.CDRom)
+            {
+               Console.WriteLine();
+               continue;
+            }
+            
+
+            if (isNetwork)
+            {
+               var driveInfo2 = new Alphaleonis.Win32.Filesystem.DriveInfo(driveName);
+
+               
+               // GetVolumeInfo fails when DriveType is not of type Network.
+
+               if (driveInfo2.DriveType != System.IO.DriveType.Network)
+                  continue;
+
+
+               var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(driveName);
+
+               UnitTestConstants.Dump(volInfo, -26);
+
+
+               Assert.AreEqual(driveInfo2.VolumeLabel, volInfo.Name);
+               Assert.AreEqual(driveInfo2.DriveFormat, volInfo.FileSystemName);
+               Assert.AreEqual(driveInfo2.Name, volInfo.FullPath);
+
+               Assert.IsNull(volInfo.Guid);
+
+
+               logicalDriveCount++;
+            }
+
+            else
+            {
+               var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(driveName);
+
+               UnitTestConstants.Dump(volInfo, -26);
+
+
+               // System.IO.DriveInfo does not support UNC paths.
+
+               var driveInfo2 = new System.IO.DriveInfo(driveName);
+
+               Assert.AreEqual(driveInfo2.VolumeLabel, volInfo.Name);
+               Assert.AreEqual(driveInfo2.DriveFormat, volInfo.FileSystemName);
+               Assert.AreEqual(driveInfo2.Name, volInfo.FullPath);
+
+               Assert.IsNotNull(volInfo.Guid);
+
+               Assert.IsTrue(volInfo.Guid.StartsWith(Alphaleonis.Win32.Filesystem.Path.VolumePrefix));
+
+
+               logicalDriveCount++;
+            }
+
+
+            Console.WriteLine();
+         }
+
+
+         Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
+
+
+         Console.WriteLine();
       }
    }
 }

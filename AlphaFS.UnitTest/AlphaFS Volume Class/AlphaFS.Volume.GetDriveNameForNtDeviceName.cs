@@ -47,11 +47,15 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++logicalDriveCount, dosDeviceName);
 
 
+
+
             var driveNameResult = Alphaleonis.Win32.Filesystem.Volume.GetDriveNameForNtDeviceName(dosDeviceName);
 
             Console.WriteLine("\n\tGetDriveNameForNtDeviceName() : [{0}]", driveNameResult ?? "null");
 
             Assert.AreEqual(driveName, driveNameResult);
+
+
 
 
             var driveGuidResult = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuidForNtDeviceName(dosDeviceName);
@@ -63,7 +67,7 @@ namespace AlphaFS.UnitTest
 
 
          if (logicalDriveCount == 0)
-            Assert.Inconclusive("No logical drices enumerated, but it is expected.");
+            Assert.Inconclusive("No logical drives enumerated, but it is expected.");
       }
    }
 }

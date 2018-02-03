@@ -40,6 +40,9 @@ namespace AlphaFS.UnitTest
             Assert.Inconclusive();
 
 
+         var TempFolder = UnitTestConstants.TempFolder;
+
+
          #region Regular Drive Mapping
 
          var drive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter(), Alphaleonis.Win32.Filesystem.Path.VolumeSeparatorChar, Alphaleonis.Win32.Filesystem.Path.DirectorySeparatorChar);

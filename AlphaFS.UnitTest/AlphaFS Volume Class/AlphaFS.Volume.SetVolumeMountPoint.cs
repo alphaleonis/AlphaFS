@@ -40,20 +40,24 @@ namespace AlphaFS.UnitTest
 
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         var tempPath = System.IO.Path.GetTempPath();
 
+         var tempPath = UnitTestConstants.TempFolder;
+         
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var dirInfo = System.IO.Directory.CreateDirectory(rootDir.RandomDirectoryFullPath);
+
             Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
 
 
-            var guid = Alphaleonis.Win32.Filesystem.Volume.GetUniqueVolumeNameForPath(UnitTestConstants.SysDrive);
+            var guid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(UnitTestConstants.SysDrive);
 
 
 
+            Console.WriteLine("\nCreate mount point.");
 
             Alphaleonis.Win32.Filesystem.Volume.SetVolumeMountPoint(dirInfo.FullName, guid);
+
 
             Assert.IsTrue(Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumeMountPoints(guid).Any(mountPoint => dirInfo.FullName.EndsWith(mountPoint.TrimEnd('\\'))));
 
@@ -61,13 +65,17 @@ namespace AlphaFS.UnitTest
 
 
             var lvi = Alphaleonis.Win32.Filesystem.Directory.GetLinkTargetInfo(dirInfo.FullName);
+
             UnitTestConstants.Dump(lvi, -14);
 
             Assert.IsTrue(lvi.SubstituteName.StartsWith(Alphaleonis.Win32.Filesystem.Path.NonInterpretedPathPrefix));
+
             Assert.IsTrue(lvi.SubstituteName.EndsWith(guid.Replace(Alphaleonis.Win32.Filesystem.Path.LongPathPrefix, string.Empty)));
 
 
 
+
+            Console.WriteLine("\nRemove mount point.");
 
             Alphaleonis.Win32.Filesystem.Volume.DeleteVolumeMountPoint(dirInfo.FullName);
 

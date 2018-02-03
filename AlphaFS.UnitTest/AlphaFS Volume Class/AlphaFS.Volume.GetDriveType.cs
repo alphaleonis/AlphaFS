@@ -30,28 +30,53 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetVolumeLabel_Local_Success()
+      public void AlphaFS_Volume_GetDriveType_LocalAndNetwork_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
+         Volume_GetDriveType(false);
+         Volume_GetDriveType(true);
+      }
+
+
+      private void Volume_GetDriveType(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
 
          var logicalDriveCount = 0;
 
          foreach (var logicalDrive in System.IO.DriveInfo.GetDrives())
          {
-            Console.Write("\n#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, logicalDrive.Name);
+            var driveName = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(logicalDrive.Name) : logicalDrive.Name;
+
+            Console.Write("\n#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveName);
+
+            if (logicalDrive.DriveType == System.IO.DriveType.CDRom)
+            {
+               Console.WriteLine();
+               continue;
+            }
 
 
-            var volumeLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(logicalDrive.Name);
+            var driveType = Alphaleonis.Win32.Filesystem.Volume.GetDriveType(driveName);
 
-            Console.WriteLine("\t\tLabel: [{2}]", ++logicalDriveCount, logicalDrive.Name, logicalDrive.VolumeLabel);
+            Console.WriteLine("\t\tDrive Type: [{0}]", driveType);
 
 
-            Assert.AreEqual(logicalDrive.VolumeLabel, volumeLabel, "The volume labels do not match, but it is expected.");
+            if (isNetwork)
+            {
+               // Some USB drives do not report drive type.
+            }
+
+            else
+               Assert.AreEqual(logicalDrive.DriveType, driveType);
+
          }
 
 
          Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
+
+
+         Console.WriteLine();
       }
    }
 }
