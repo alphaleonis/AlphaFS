@@ -19,8 +19,8 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,52 +30,54 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_VolumeInfo_InitializeInstance_LocalAndNetwork_Success()
+      public void AlphaFS_Volume_GetDriveFormat_LocalAndNetwork_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-         VolumeInfo_InitializeInstance(false);
-         VolumeInfo_InitializeInstance(true);
+         Volume_GetDriveFormat(false);
+         Volume_GetDriveFormat(true);
       }
 
 
-      private void VolumeInfo_InitializeInstance(bool isNetwork)
+      private void Volume_GetDriveFormat(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = UnitTestConstants.SysDrive;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
+         var logicalDriveCount = 0;
 
-         var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(tempPath);
-         UnitTestConstants.Dump(volInfo, -26);
-
-
-         if (isNetwork)
+         foreach (var logicalDrive in System.IO.DriveInfo.GetDrives())
          {
-            var driveInfo = new Alphaleonis.Win32.Filesystem.DriveInfo(tempPath);
+            var driveName = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(logicalDrive.Name) : logicalDrive.Name;
 
-            Assert.AreEqual(driveInfo.VolumeLabel, volInfo.Name);
-            Assert.AreEqual(driveInfo.DriveFormat, volInfo.FileSystemName);
-            Assert.AreEqual(driveInfo.Name, volInfo.FullPath);
+            Console.Write("\n#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveName);
 
-            Assert.IsNull(volInfo.Guid);
+            if (logicalDrive.DriveType == System.IO.DriveType.CDRom)
+            {
+               Console.WriteLine();
+               continue;
+            }
+
+
+            var driveFormat = Alphaleonis.Win32.Filesystem.Volume.GetDriveFormat(driveName);
+
+            Console.WriteLine("\t\tDrive Format: [{0}]", driveFormat);
+
+
+            if (isNetwork)
+            {
+               // Some USB drives do not report drive format.
+
+               if (null != driveFormat)
+                  Assert.AreEqual(logicalDrive.DriveFormat, driveFormat);
+            }
+
+            else
+               Assert.AreEqual(logicalDrive.DriveFormat, driveFormat);
+
          }
 
-         else
-         {
-            // System.IO.DriveInfo does not support UNC paths.
 
-            var driveInfo = new System.IO.DriveInfo(tempPath);
+         Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
 
-            Assert.AreEqual(driveInfo.VolumeLabel, volInfo.Name);
-            Assert.AreEqual(driveInfo.DriveFormat, volInfo.FileSystemName);
-            Assert.AreEqual(driveInfo.Name, volInfo.FullPath);
-
-            Assert.IsNotNull(volInfo.Guid);
-         }
 
          Console.WriteLine();
       }

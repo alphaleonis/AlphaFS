@@ -30,41 +30,53 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetDriveNameForNtDeviceName_And_GetVolumeGuidForNtDeviceName_Local_Success()
+      public void AlphaFS_Volume_GetDriveType_LocalAndNetwork_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
+         Volume_GetDriveType(false);
+         Volume_GetDriveType(true);
+      }
+
+
+      private void Volume_GetDriveType(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
 
          var logicalDriveCount = 0;
 
-         foreach (var driveName in System.IO.Directory.GetLogicalDrives())
+         foreach (var logicalDrive in System.IO.DriveInfo.GetDrives())
          {
-            var dosDeviceName = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(driveName);
+            var driveName = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(logicalDrive.Name) : logicalDrive.Name;
 
-            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++logicalDriveCount, dosDeviceName);
+            Console.Write("\n#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveName);
 
-
-
-
-            var driveNameResult = Alphaleonis.Win32.Filesystem.Volume.GetDriveNameForNtDeviceName(dosDeviceName);
-
-            Console.WriteLine("\n\tGetDriveNameForNtDeviceName: [{0}]", driveNameResult ?? "null");
-
-            Assert.AreEqual(driveName, driveNameResult);
+            if (logicalDrive.DriveType == System.IO.DriveType.CDRom)
+            {
+               Console.WriteLine();
+               continue;
+            }
 
 
+            var driveType = Alphaleonis.Win32.Filesystem.Volume.GetDriveType(driveName);
+
+            Console.WriteLine("\t\tDrive Type: [{0}]", driveType);
 
 
-            var driveGuidResult = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuidForNtDeviceName(dosDeviceName);
+            if (isNetwork)
+            {
+               // Some USB drives do not report drive type.
+            }
 
-            Console.WriteLine("\n\t(Input Path) GetVolumeGuidForNtDeviceName: [{0}]\n", driveGuidResult ?? "null");
+            else
+               Assert.AreEqual(logicalDrive.DriveType, driveType);
 
-            Assert.AreEqual(Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(driveName), driveGuidResult);
          }
 
 
-         if (logicalDriveCount == 0)
-            Assert.Inconclusive("No logical drives enumerated, but it is expected.");
+         Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
+
+
+         Console.WriteLine();
       }
    }
 }

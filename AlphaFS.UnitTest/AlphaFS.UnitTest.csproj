@@ -173,15 +173,17 @@
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File_CopySymbolicLink.cs" />
     <Compile Include="AlphaFS Timestamps\AlphaFS_TimestampsTest.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetUniqueVolumeNameForPath.cs" />
+    <Compile Include="AlphaFS Volume Class\AlphaFS.VolumeTest.cs" />
+    <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetDriveType.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetDriveNameForNtDeviceName.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetVolumeDeviceName.cs" />
+    <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetXxx.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.QueryDosDevice.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.EnumerateVolumeMountPoints.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.SetVolumeLabel.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.IsSameVolume.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetVolumeLabel.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.DefineDosDevice.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS.VolumeTest.cs" />
+    <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetDriveFormat.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.EnumerateVolumes.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive.cs" />
@@ -333,10 +335,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_Utils\CreateDirectoriesAndFiles.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.SetVolumeMountPoint.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetVolumeInfo.cs" />
     <Compile Include="_Utils\UnitTestConstants.cs" />
     <Compile Include="_Utils\TemporaryDirectory.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS.VolumeInfo.InitializeInstance.cs" />
+    <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetVolumeInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\AlphaFS.snk">

@@ -71,7 +71,7 @@ namespace AlphaFS.UnitTest
 
 
          if (logicalDriveCount == 0)
-            Assert.Inconclusive("No logical drices enumerated, but it is expected.");
+            Assert.Inconclusive("No logical drives enumerated, but it is expected.");
       }
    }
 }
