@@ -39,6 +39,10 @@ namespace AlphaFS.UnitTest
 
          foreach (var logicalDrive in System.IO.DriveInfo.GetDrives())
          {
+            if (!logicalDrive.IsReady)
+               continue;
+
+
             Console.Write("\n#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, logicalDrive.Name);
 
 
