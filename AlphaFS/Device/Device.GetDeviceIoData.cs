@@ -52,8 +52,10 @@ namespace Alphaleonis.Win32.Filesystem
                return safeBuffer;
 
 
-            // CDROM drive without a CD.
-            if (lastError == Win32Errors.ERROR_NOT_SUPPORTED)
+            // ERROR_INVALID_FUNCTION: Dynamic disk.
+            // ERROR_NOT_SUPPORTED   : CD/DVD without medium.
+
+            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION || lastError == Win32Errors.ERROR_NOT_SUPPORTED)
                return null;
 
 
