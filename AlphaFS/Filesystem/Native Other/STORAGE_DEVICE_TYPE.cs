@@ -255,13 +255,8 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>FILE_DEVICE_SYSENV parameter.</summary>
          FILE_DEVICE_SYSENV = 82,
 
-
-         /// <summary>[AlphaFS] FILE_DEVICE_MASS_STORAGE parameter.</summary>
-         FILE_DEVICE_VOLUME = 86,
-
-
-         /// <summary>[AlphaFS] FILE_DEVICE_MASS_STORAGE parameter.</summary>
-         IOCTL_STORAGE_QUERY_PROPERTY = 86,
+         /// <summary>FILE_DEVICE_MASS_STORAGE parameter.</summary>
+         FILE_DEVICE_VOLUME = 86
       }
    }
 }

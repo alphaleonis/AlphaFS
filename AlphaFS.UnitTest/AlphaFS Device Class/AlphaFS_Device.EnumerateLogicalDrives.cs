@@ -31,24 +31,24 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_EnumeratePhysicalDrivesFromLogicalDrives_Local_Success()
+      public void AlphaFS_Device_EnumerateLogicalDrives_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
          var driveCount = 0;
-         var drives = Alphaleonis.Win32.Filesystem.Device.EnumeratePhysicalDrivesFromLogicalDrives().ToArray();
+         var drives = Alphaleonis.Win32.Filesystem.Device.EnumerateLogicalDrives().ToArray();
 
          foreach (var drive in drives)
+         foreach (var driveInfo in drive.DriveInfo)
          {
             Console.WriteLine();
-            Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++driveCount, drive.DriveInfo.Name);
+            Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++driveCount, driveInfo.Name);
 
             UnitTestConstants.Dump(drive, -17);
-
-
-            Console.WriteLine();
          }
+
+         Console.WriteLine();
 
 
          Assert.IsTrue(drives.Length > 0);

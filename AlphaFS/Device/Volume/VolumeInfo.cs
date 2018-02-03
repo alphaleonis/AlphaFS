@@ -38,6 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       [NonSerialized] private readonly bool _continueOnAccessError;
       [NonSerialized] private readonly SafeFileHandle _volumeHandle;
+      [NonSerialized] private string _guid;
       [NonSerialized] private NativeMethods.VOLUME_INFO_FLAGS _volumeInfoAttributes;
 
       #endregion // Private Fields
@@ -48,32 +49,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a VolumeInfo instance.</summary>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
-      /// <param name="volumeName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share.</param>
+      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share.</param>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]
-      public VolumeInfo(string volumeName)
+      public VolumeInfo(string driveName)
       {
-         if (Utils.IsNullOrWhiteSpace(volumeName))
-            throw new ArgumentNullException("volumeName");
+         if (Utils.IsNullOrWhiteSpace(driveName))
+            throw new ArgumentNullException("driveName");
 
 
-         if (!volumeName.StartsWith(Path.LongPathPrefix, StringComparison.Ordinal))
-            volumeName = Path.IsUncPathCore(volumeName, false, false) ? Path.GetLongPathCore(volumeName, GetFullPathOptions.None) : Path.LongPathPrefix + volumeName;
+         if (!driveName.StartsWith(Path.LongPathPrefix, StringComparison.Ordinal))
+            driveName = Path.IsUncPathCore(driveName, false, false) ? Path.GetLongPathCore(driveName, GetFullPathOptions.None) : Path.LongPathPrefix + driveName;
 
          else
          {
-            volumeName = volumeName.Length == 1 ? volumeName + Path.VolumeSeparatorChar : Path.GetPathRoot(volumeName, false);
+            driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
 
-            if (!volumeName.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
-               volumeName = Path.GetPathRoot(volumeName, false);
+            if (!driveName.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+               driveName = Path.GetPathRoot(driveName, false);
          }
 
 
-         if (Utils.IsNullOrWhiteSpace(volumeName))
-            throw new ArgumentException(Resources.InvalidDriveLetterArgument, "volumeName");
+         if (Utils.IsNullOrWhiteSpace(driveName))
+            throw new ArgumentException(Resources.InvalidDriveLetterArgument, "driveName");
 
 
-         Name = Path.AddTrailingDirectorySeparator(volumeName, false);
+         Name = Path.AddTrailingDirectorySeparator(driveName, false);
 
          _volumeHandle = null;
       }
@@ -176,14 +177,15 @@ namespace Alphaleonis.Win32.Filesystem
       public string FullPath { get; private set; }
 
 
-      private string _guid;
       /// <summary>The volume GUID.</summary>
       public string Guid
       {
          get
          {
-            return _guid ?? (_guid = !Utils.IsNullOrWhiteSpace(FullPath) ? Volume.GetUniqueVolumeNameForPath(FullPath) : null);
+            return _guid ?? (_guid = !Utils.IsNullOrWhiteSpace(FullPath) ? Volume.GetVolumeGuid(FullPath) : null);
          }
+
+         private set { _guid = value; }
       }
 
 
@@ -344,52 +346,49 @@ namespace Alphaleonis.Win32.Filesystem
             {
                var success = null != _volumeHandle && NativeMethods.IsAtLeastWindowsVista
 
-                  // GetVolumeInformationByHandle() / GetVolumeInformation()
-                  // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-
-                  ? NativeMethods.GetVolumeInformationByHandle(_volumeHandle, volumeNameBuffer, (uint)volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint)fileSystemNameBuffer.Capacity)
+                  ? NativeMethods.GetVolumeInformationByHandle(_volumeHandle, volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity)
 
                   // A trailing backslash is required.
-                  : NativeMethods.GetVolumeInformation(Path.AddTrailingDirectorySeparator(Name, false), volumeNameBuffer, (uint)volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint)fileSystemNameBuffer.Capacity);
+                  : NativeMethods.GetVolumeInformation(Path.AddTrailingDirectorySeparator(Name, false), volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity);
 
 
                lastError = (uint)Marshal.GetLastWin32Error();
-               if (success)
-                  break;
 
+               if (!success)
+                  switch (lastError)
+                  {
+                     case Win32Errors.ERROR_NOT_READY:
+                        if (!_continueOnAccessError)
+                           throw new DeviceNotReadyException(Name, true);
+                        break;
 
-               switch (lastError)
-               {
-                  case Win32Errors.ERROR_NOT_READY:
-                     if (!_continueOnAccessError)
-                        throw new DeviceNotReadyException(Name, true);
-                     break;
+                     case Win32Errors.ERROR_MORE_DATA:
+                        //This code should never execute.
+                        volumeNameBuffer.Capacity *= 2;
+                        fileSystemNameBuffer.Capacity *= 2;
+                        break;
 
-                  case Win32Errors.ERROR_MORE_DATA:
-                     // With a large enough buffer this code never executes.
-                     volumeNameBuffer.Capacity = volumeNameBuffer.Capacity * 2;
-                     fileSystemNameBuffer.Capacity = fileSystemNameBuffer.Capacity * 2;
-                     break;
-
-                  default:
-                     if (!_continueOnAccessError)
-                        NativeError.ThrowException(lastError, Name);
-                     break;
-               }
+                     default:
+                        if (!_continueOnAccessError)
+                           NativeError.ThrowException(lastError, Name);
+                        break;
+                  }
 
             } while (lastError == Win32Errors.ERROR_MORE_DATA);
          }
 
 
          FullPath = Path.GetRegularPathCore(Name, GetFullPathOptions.None, false);
+
          Name = volumeNameBuffer.ToString();
+         
+         MaximumComponentLength = maximumComponentLength;
+
+         SerialNumber = serialNumber;
 
          FileSystemName = fileSystemNameBuffer.ToString();
          FileSystemName = !Utils.IsNullOrWhiteSpace(FileSystemName) ? FileSystemName : null;
-
-         MaximumComponentLength = maximumComponentLength;
-         SerialNumber = serialNumber;
-
+         
          DriveType = Volume.GetDriveType(FullPath);
       }
 

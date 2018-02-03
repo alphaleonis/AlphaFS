@@ -31,13 +31,13 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_EnumeratePhysicalDrivesFromVolumes_Local_Success()
+      public void AlphaFS_Device_EnumerateVolumes_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
          var volumeCount = 0;
-         var volumes = Alphaleonis.Win32.Filesystem.Device.EnumeratePhysicalDrivesFromVolumes().ToArray();
+         var volumes = Alphaleonis.Win32.Filesystem.Device.EnumerateVolumes().ToArray();
 
          foreach (var drive in volumes)
          {

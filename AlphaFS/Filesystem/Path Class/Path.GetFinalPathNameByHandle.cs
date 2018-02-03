@@ -162,7 +162,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                         .Where(drv => driveLetter.Equals(RemoveTrailingDirectorySeparator(drv), StringComparison.OrdinalIgnoreCase)))
 
-                        return CombineCore(false, Volume.GetUniqueVolumeNameForPath(drive), GetSuffixedDirectoryNameWithoutRootCore(null, dosPath), file);
+                        return CombineCore(false, Volume.GetVolumeGuid(drive), GetSuffixedDirectoryNameWithoutRootCore(null, dosPath), file);
                }
 
                break;

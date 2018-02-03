@@ -20,6 +20,8 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security;
@@ -93,7 +95,8 @@ namespace Alphaleonis.Win32.Filesystem
       public string DevicePath { get; internal set; }
 
 
-      public DriveInfo DriveInfo { get; internal set; }
+      /// <summary>The logical drives that are located on the physical drive.</summary>
+      public Collection<DriveInfo> DriveInfo { get; internal set; }
 
 
       /// <summary>Indicates if the physical drive supports multiple outstanding commands (SCSI tagged queuing or equivalent). When false the physical drive does not support SCSI-tagged queuing or the equivalent.</summary>
@@ -135,30 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>The Volumes located on the physical drive.</summary>
+      /// <summary>The volumes that are located on the physical drive.</summary>
       public string[] VolumeGuids { get; set; }
-
-
-
-
-      internal void CopyTo<T>(T destination)
-      {
-         // Properties listed here should not be overwritten by the physical drive template.
-
-         var excludedProps = new[] {"PartitionNumber"};
-
-
-         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite && !excludedProps.Any(prop => prop.Equals(x.Name))).ToArray();
-
-         var dstProps = srcProps.Where(x => x.CanWrite).ToArray();
-
-
-         foreach (var srcProp in srcProps)
-         {
-            var dstProp = dstProps.First(x => x.Name.Equals(srcProp.Name));
-
-            dstProp.SetValue(destination, srcProp.GetValue(this, null), null);
-         }
-      }
    }
 }

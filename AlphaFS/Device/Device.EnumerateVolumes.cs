@@ -31,26 +31,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Enumerates the volumes and associated physical drives on the Computer.</summary>
       /// <returns>An IEnumerable of type <see cref="PhysicalDriveInfo"/> that represents the physical drives on the Computer.</returns>      
       [SecurityCritical]
-      public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrivesFromVolumes()
+      public static IEnumerable<PhysicalDriveInfo> EnumerateVolumes()
       {
-         var physicalDrives = EnumeratePhysicalDrives().ToArray();
+         var physicalDrives = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo)).Where(physicalDrive => null != physicalDrive).OrderBy(disk => disk.DeviceNumber).ToArray();
 
-         var volumes = Volume.EnumerateVolumes();
-
-         //var volumes = EnumerateDevicesCore(null, DeviceGuid.Volume, false)
-
-         //   .Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo, false))
-
-         //   .Where(physicalDrive => null != physicalDrive)
-
-         //   .OrderBy(disk => disk.DeviceNumber).ThenBy(disk => disk.PartitionNumber).ToArray();
+         var volumeGuids = Volume.EnumerateVolumes().ToArray();
 
 
+         var populatedPhysicalDrives = new Collection<PhysicalDriveInfo>();
 
-         var allDrives = new Collection<PhysicalDriveInfo>();
 
-
-         foreach (var volume in volumes)
+         foreach (var volume in volumeGuids)
          {
             var pDriveInfo = GetPhysicalDriveInfoCore(volume, null, false);
 
@@ -60,32 +51,28 @@ namespace Alphaleonis.Win32.Filesystem
 
             foreach (var pDrive in physicalDrives.Where(pDrive => pDrive.DeviceNumber == pDriveInfo.DeviceNumber))
             {
-               pDrive.CopyTo(pDriveInfo);
+               CopyTo(pDrive, pDriveInfo);
 
 
-               foreach (var drive in Volume.EnumerateVolumePathNames(volume))
+               foreach (var lDrive in Volume.EnumerateVolumePathNames(volume).Where(drive => !Utils.IsNullOrWhiteSpace(drive) && Path.IsLogicalDriveCore(drive, PathFormat.LongFullPath)))
                {
-                  // Get the first entry that starts with a logical drive path, such as: "C:", "D:".
+                  if (null == pDriveInfo.DriveInfo)
+                     pDriveInfo.DriveInfo = new Collection<DriveInfo>();
 
-                  if (!Utils.IsNullOrWhiteSpace(drive) && Path.IsLogicalDriveCore(drive, PathFormat.LongFullPath))
-                  {
-                     pDriveInfo.DriveInfo = new DriveInfo(drive);
-
-                     break;
-                  }
+                  pDriveInfo.DriveInfo.Add(new DriveInfo(lDrive));
                }
 
 
                pDriveInfo.VolumeGuids = new[] {volume};
 
-               allDrives.Add(pDriveInfo);
+               populatedPhysicalDrives.Add(pDriveInfo);
 
                break;
             }
          }
 
 
-         return allDrives.OrderBy(pDriveInfo => pDriveInfo.DeviceNumber).ThenBy(pDriveInfo => pDriveInfo.PartitionNumber);
+         return populatedPhysicalDrives.OrderBy(pDriveInfo => pDriveInfo.DeviceNumber).ThenBy(pDriveInfo => pDriveInfo.PartitionNumber);
       }
    }
 }

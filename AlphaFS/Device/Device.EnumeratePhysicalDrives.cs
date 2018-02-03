@@ -20,6 +20,7 @@
  */
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security;
 
@@ -32,13 +33,65 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrives()
       {
-         return EnumerateDevicesCore(null, DeviceGuid.Disk, false)
+         var physicalDrives = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo)).Where(physicalDrive => null != physicalDrive).OrderBy(physicalDrive => physicalDrive.DeviceNumber).ToArray();
 
-            .Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo))
+         //var volumes = Volume.EnumerateVolumes().Select(volume => GetPhysicalDriveInfoCore(volume, null, false)).Where(physicalDrive => null != physicalDrive).OrderBy(physicalDrive => physicalDrive.DeviceNumber).ThenBy(physicalDrive => physicalDrive.PartitionNumber).ToArray();
 
-            .Where(physicalDrive => null != physicalDrive)
+         //var logicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(driveName => GetPhysicalDriveInfoCore(driveName, null, false)).Where(physicalDrive => null != physicalDrive).OrderBy(physicalDrive => physicalDrive.DeviceNumber).ThenBy(physicalDrive => physicalDrive.PartitionNumber).ToArray();
 
-            .OrderBy(disk => disk.DeviceNumber);
+
+         //var populatedPhysicalDrives = new Collection<PhysicalDriveInfo>();
+
+
+         //foreach (var volume in volumes)
+         //{
+         //   foreach (var pDrive in physicalDrives.Where(pDrive => pDrive.DeviceNumber == volume.DeviceNumber))
+         //   {
+         //      CopyTo(pDrive, volume);
+
+
+         //      foreach (var lDrive in Volume.EnumerateVolumePathNames(volume.DevicePath).Where(drive => !Utils.IsNullOrWhiteSpace(drive) && Path.IsLogicalDriveCore(drive, PathFormat.LongFullPath)))
+         //      {
+         //         if (null == volume.DriveInfo)
+         //            volume.DriveInfo = new Collection<DriveInfo>();
+
+         //         volume.DriveInfo.Add(new DriveInfo(lDrive));
+         //      }
+
+
+         //      volume.VolumeGuids = new[] {volume.DevicePath};
+
+         //      populatedPhysicalDrives.Add(volume);
+
+         //      break;
+         //   }
+         //}
+
+
+         //return populatedPhysicalDrives.OrderBy(pDriveInfo => pDriveInfo.DeviceNumber).ThenBy(pDriveInfo => pDriveInfo.PartitionNumber);
+
+         return physicalDrives.OrderBy(pDriveInfo => pDriveInfo.DeviceNumber).ThenBy(pDriveInfo => pDriveInfo.PartitionNumber);
+      }
+
+
+      private static void CopyTo<T>(T source, T destination)
+      {
+         // Properties listed here should not be overwritten by the physical drive template.
+
+         var excludedProps = new[] {"PartitionNumber"};
+
+
+         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite && !excludedProps.Any(prop => prop.Equals(x.Name))).ToArray();
+
+         var dstProps = srcProps.ToArray();
+
+
+         foreach (var srcProp in srcProps)
+         {
+            var dstProp = dstProps.First(x => x.Name.Equals(srcProp.Name));
+
+            dstProp.SetValue(destination, srcProp.GetValue(source, null), null);
+         }
       }
    }
 }

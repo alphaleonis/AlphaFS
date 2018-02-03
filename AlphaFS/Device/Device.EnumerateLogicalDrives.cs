@@ -20,8 +20,8 @@
  */
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Sockets;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -31,8 +31,25 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Enumerates the logical drives and associated physical drives on the Computer.</summary>
       /// <returns>An IEnumerable of type <see cref="PhysicalDriveInfo"/> that represents the physical drives on the Computer.</returns>      
       [SecurityCritical]
-      public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrivesFromLogicalDrives()
+      public static IEnumerable<PhysicalDriveInfo> EnumerateLogicalDrives()
       {
+         //var pDrives = new Collection<PhysicalDriveInfo>();
+
+         //var logicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).OrderBy(driveName => driveName).ToArray();
+
+
+         //foreach (var pDrive in EnumeratePhysicalDrives().Where(drive => null != drive.DriveInfo))
+         //{
+         //   foreach (var driveInfo in pDrive.DriveInfo)
+         //   {
+         //      pDrives.Add(pDrive);
+         //   }
+         //}
+
+
+         //return pDrives;
+
+
          var physicalDrives = EnumeratePhysicalDrives().ToArray();
 
          var logicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).OrderBy(driveName => driveName).ToArray();
@@ -48,14 +65,18 @@ namespace Alphaleonis.Win32.Filesystem
 
             foreach (var pDrive in physicalDrives.Where(pDrive => pDrive.DeviceNumber == pDriveInfo.DeviceNumber))
             {
-               pDrive.CopyTo(pDriveInfo);
+               CopyTo(pDrive, pDriveInfo);
 
 
                // Get the first entry that starts with a logical drive path, such as: "C:", "D:".
 
                if (Path.IsLogicalDriveCore(drive, PathFormat.LongFullPath))
                {
-                  pDriveInfo.DriveInfo = new DriveInfo(drive);
+                  if (null == pDriveInfo.DriveInfo)
+                     pDriveInfo.DriveInfo= new Collection<DriveInfo>();
+
+
+                  pDriveInfo.DriveInfo.Add(new DriveInfo(drive));
 
 
                   var guid = Volume.GetVolumeGuid(drive);

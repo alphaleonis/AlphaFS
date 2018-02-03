@@ -45,14 +45,14 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentException(Resources.Not_A_Valid_Guid, "volumeGuid");
 
 
-         var requiredLength = 50;
-         var buffer = new StringBuilder(requiredLength);
+         uint bufferSize = 50;
+         var buffer = new char[bufferSize];
 
          volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);
 
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-            while (!NativeMethods.GetVolumePathNamesForVolumeName(volumeGuid, buffer, (uint) buffer.Capacity, out requiredLength))
+            while (!NativeMethods.GetVolumePathNamesForVolumeName(volumeGuid, buffer, (uint) buffer.Length, out bufferSize))
             {
                var lastError = Marshal.GetLastWin32Error();
 
@@ -60,8 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   case Win32Errors.ERROR_MORE_DATA:
                   case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
-                     requiredLength *= 2;
-                     buffer = new StringBuilder(requiredLength);
+                     buffer = new char[bufferSize];
                      break;
 
                   default:
@@ -70,7 +69,25 @@ namespace Alphaleonis.Win32.Filesystem
                }
             }
 
-         yield return buffer.ToString();
+
+         var pathNameBuffer = new StringBuilder(buffer.Length);
+
+         foreach (var c in buffer)
+         {
+            if (c != Path.StringTerminatorChar)
+
+               pathNameBuffer.Append(c);
+
+            else
+            {
+               if (pathNameBuffer.Length > 0)
+               {
+                  yield return pathNameBuffer.ToString();
+
+                  pathNameBuffer.Length = 0;
+               }
+            }
+         }
       }
    }
 }

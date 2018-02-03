@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
-      [TestMethod]
+      //[TestMethod]
       public void AlphaFS_Volume_SetVolumeLabel_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
