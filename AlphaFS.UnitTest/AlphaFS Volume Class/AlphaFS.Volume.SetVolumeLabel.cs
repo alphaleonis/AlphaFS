@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -29,97 +30,79 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
-      //[TestMethod]
+      [TestMethod]
       public void AlphaFS_Volume_SetVolumeLabel_Local_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-         Console.WriteLine();
-
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
 
+         UnitTestConstants.PrintUnitTestHeader(false);
+         Console.WriteLine();
 
-         const string newLabel = "ÂĽpĥæƑŞ ŠëtVőlümèĻāßƩl() Ťest";
-         const string template = "\nSystem Drive: [{0}]\tCurrent Label: [{1}]";
+
          var drive = UnitTestConstants.SysDrive;
 
+         const string newLabel = "ÂĽpĥæƑŞ ŠëtVőlümèĻāßƩl Ťest";
 
-         #region Get Label
+         const string template = "System Drive: [{0}]\tCurrent Label: [{1}]";
 
-         var originalLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(drive);
+
+
+
+         // Get label.
+
+         var originalLabel = new System.IO.DriveInfo(drive).VolumeLabel;
+
          Console.WriteLine(template, drive, originalLabel);
 
-         Assert.IsTrue(originalLabel.Equals(Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(drive)));
-
-         #endregion // Get Label
+         Assert.AreEqual(originalLabel, Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(drive));
 
 
-         #region Set Label
+         
+         
+         // Set label.
 
-         var isLabelSet = false;
+         Console.WriteLine("\nSet label.");
+
+         Alphaleonis.Win32.Filesystem.Volume.SetVolumeLabel(drive, newLabel);
+
+         Console.WriteLine(template, drive, newLabel);
+
+         Assert.AreEqual(newLabel, new System.IO.DriveInfo(drive).VolumeLabel);
+
+         Assert.AreEqual(newLabel, Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(drive));
+
+
+
+
+         // Remove label.
+
+         Console.WriteLine("\nRemove label.");
+
+         Alphaleonis.Win32.Filesystem.Volume.DeleteVolumeLabel(drive);
+
          var currentLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(drive);
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Volume.SetVolumeLabel(drive, newLabel);
-            isLabelSet = true;
 
-            Console.WriteLine(template, drive, newLabel);
-            Console.WriteLine("Set label.");
-            Assert.IsTrue(!currentLabel.Equals(newLabel));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Assert.IsTrue(isLabelSet);
+         Console.WriteLine(template, drive, currentLabel);
 
-         #endregion // Set Label
+         Assert.AreEqual(new System.IO.DriveInfo(drive).VolumeLabel, Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(drive));
 
 
-         #region Remove Label
-
-         var isLabelRemoved = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Volume.DeleteVolumeLabel(drive);
-            isLabelRemoved = true;
-
-            currentLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(drive);
-
-            Console.WriteLine(template, drive, currentLabel);
-            Console.WriteLine("Removed label.");
-            Assert.IsTrue(currentLabel.Equals(string.Empty));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Assert.IsTrue(isLabelRemoved);
-
-         #endregion // Remove Label
 
 
-         #region Restore Label
+         // Restore label.
 
-         isLabelSet = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Volume.SetVolumeLabel(drive, originalLabel);
-            isLabelSet = true;
+         Console.WriteLine("\nRestore label.");
 
-            currentLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(drive);
+         Alphaleonis.Win32.Filesystem.Volume.SetVolumeLabel(drive, originalLabel);
 
-            Console.WriteLine(template, drive, currentLabel);
-            Console.WriteLine("Restored label.");
-            Assert.IsTrue(currentLabel.Equals(originalLabel));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Assert.IsTrue(isLabelSet);
+         currentLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(drive);
 
-         #endregion // Restore Label
+         Console.WriteLine(template, drive, currentLabel);
+
+         Assert.AreEqual(currentLabel, new System.IO.DriveInfo(drive).VolumeLabel);
+
+         Assert.AreEqual(currentLabel, Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(drive));
       }
    }
 }
