@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,51 +31,33 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_GetLogicalDrives_LocalAndNetwork_Success()
+      public void Directory_GetLogicalDrives_Local_Success()
       {
-         Directory_GetLogicalDrives(false);
-         Directory_GetLogicalDrives(true);
+         Directory_GetLogicalDrives();
       }
 
 
-      private void Directory_GetLogicalDrives(bool isNetwork)
+      private void Directory_GetLogicalDrives()
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
+         UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         foreach (var drive in Alphaleonis.Win32.Filesystem.Directory.GetLogicalDrives())
+         var drivesSystemIO = System.IO.Directory.GetLogicalDrives().OrderBy(driveName => driveName).ToArray();
+
+         var drivesAlphaFS = Alphaleonis.Win32.Filesystem.Directory.GetLogicalDrives().OrderBy(driveName => driveName).ToArray();
+
+
+         Assert.AreEqual(drivesSystemIO.Length, drivesAlphaFS.Length, "The number of logical drives does not match, but is expected to.");
+
+         
+         var drivesCount = 0;
+         
+         foreach (var driveName in drivesAlphaFS)
          {
-            var inputPath = drive;
-            if (isNetwork)
-               inputPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(inputPath);
+            Console.WriteLine("\n\t#{0:000}\tLogical Drive: [{1}]", drivesCount, driveName);
 
-
-            Console.WriteLine("Input Directory Path: [{0}]\n", inputPath);
-
-
-            try
-            {
-               var systemIOCount = System.IO.Directory.GetDirectories(inputPath).Length;
-               var alphaFSCount = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(inputPath).Length;
-
-               Console.WriteLine("\tSystem.IO directories get: {0:N0}", systemIOCount);
-               Console.WriteLine("\tAlphaFS directories get  : {0:N0}", alphaFSCount);
-
-
-               Assert.AreEqual(systemIOCount, alphaFSCount, "No directories get, but it is expected.");
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
-
-               var gotException = exType == typeof(System.IO.IOException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-            }
+            Assert.AreEqual(drivesSystemIO[drivesCount++], driveName, "The logical drive drive name does not match, but is expected to.");
          }
-
-         Console.WriteLine();
       }
    }
 }

@@ -68,8 +68,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <param name="handle">Then handle to a <see cref="SafeFileHandle"/> instance.</param>
       /// <param name="finalPath">The final path, formatted as <see cref="FinalPathFormats"/></param>
-      [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Filesystem.NativeMethods.GetMappedFileName(System.IntPtr,Alphaleonis.Win32.SafeGlobalMemoryBufferHandle,System.Text.StringBuilder,System.UInt32)")]
-      [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Filesystem.NativeMethods.GetMappedFileName(System.IntPtr,Alphaleonis.Win32.Security.SafeLocalMemoryBufferHandle,System.Text.StringBuilder,System.UInt32)")]
       [SecurityCritical]
       internal static string GetFinalPathNameByHandleCore(SafeFileHandle handle, FinalPathFormats finalPath)
       {
@@ -171,6 +169,36 @@ namespace Alphaleonis.Win32.Filesystem
 
          // To: "\\?\C:\path\filename.ext"
          return !Utils.IsNullOrWhiteSpace(dosDevice) ? LongPathPrefix + DosDeviceToDosPath(dosDevice, null) : string.Empty;
+      }
+
+
+      /// <summary>Tranlates DosDevicePath, Volume GUID. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".</summary>
+      /// <returns>A translated dos path.</returns>
+      /// <param name="dosDevice">A DosDevicePath, for example: \Device\HarddiskVolumeX\path\filename.ext.</param>
+      /// <param name="deviceReplacement">Alternate path/device text, usually <c>string.Empty</c> or <see langword="null"/>.</param>
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+      [SecurityCritical]
+      private static string DosDeviceToDosPath(string dosDevice, string deviceReplacement)
+      {
+         if (Utils.IsNullOrWhiteSpace(dosDevice))
+            return string.Empty;
+
+
+         foreach (var drive in DriveInfo.EnumerateLogicalDrivesCore(false, false))
+         {
+            try
+            {
+               var path = RemoveTrailingDirectorySeparator(drive);
+
+               foreach (var devNt in Volume.QueryAllDosDevices().Where(device => device.StartsWith(path, StringComparison.OrdinalIgnoreCase)).ToArray())
+
+                  return dosDevice.Replace(devNt, deviceReplacement ?? path);
+            }
+            catch
+            {
+            }
+         }
+         return string.Empty;
       }
    }
 }

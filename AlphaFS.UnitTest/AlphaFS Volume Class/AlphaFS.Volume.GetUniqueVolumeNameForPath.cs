@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,30 +31,47 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetVolumeLabel_LogicalDrives_Local_Success()
+      public void AlphaFS_Volume_GetUniqueVolumeNameForPath_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
          var logicalDriveCount = 0;
 
-         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
+         foreach (var driveName in System.IO.Directory.GetLogicalDrives())
          {
-            // CD/DVD.
-            if (!driveInfo.IsReady)
-               continue;
+            var deviceGuid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(driveName);
+
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++logicalDriveCount, driveName);
 
 
-            var volumeLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(driveInfo.Name);
+            var volumeNameResult = Alphaleonis.Win32.Filesystem.Volume.GetUniqueVolumeNameForPath(driveName);
 
-            Console.WriteLine("\n\t#{0:000}\tLogical Drive: [{1}]\t\tLabel: [{2}]", ++logicalDriveCount, driveInfo.Name, driveInfo.VolumeLabel);
+            Console.WriteLine("\n\tGetUniqueVolumeNameForPath: [{0}]", volumeNameResult ?? "null");
 
 
-            Assert.AreEqual(driveInfo.VolumeLabel, volumeLabel, "The volume labels do not match, but it is expected.");
+            // Typically, only one mount point exists so the Volume GUIDs will match.
+
+            Assert.AreEqual(deviceGuid, volumeNameResult);
+
+
+            var pathNames = Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumePathNames(volumeNameResult).ToArray();
+
+            foreach (var displayName in pathNames)
+            {
+               Console.WriteLine("\n\t(Input Volume GUID Path) EnumerateVolumePathNames: Volume points to logcal drive: [{0}]\n", displayName);
+
+
+               // Volumes don't always have drive letters.
+
+               if (!string.IsNullOrWhiteSpace(displayName))
+                  Assert.AreEqual(driveName, displayName);
+            }
          }
 
 
-         Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
+         if (logicalDriveCount == 0)
+            Assert.Inconclusive("No logical drices enumerated, but it is expected.");
       }
    }
 }

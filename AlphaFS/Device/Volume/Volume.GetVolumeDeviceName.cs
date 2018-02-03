@@ -20,8 +20,7 @@
  */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -29,66 +28,15 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Volume
    {
       /// <summary>[AlphaFS] Retrieves the Win32 Device name from the Volume name.</summary>
+      /// <returns>The Win32 Device name from the Volume name, for example: "\Device\HarddiskVolume2",  or <see langword="null"/> on error or if unavailable.</returns>
+      /// <remarks>This is the same method as <see cref="Volume.QueryDosDevice"/>.</remarks>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="FileNotFoundException"/>
       /// <param name="volumeName">Name of the Volume.</param>
-      /// <returns>
-      ///   The Win32 Device name from the Volume name (for example: "\Device\HarddiskVolume2"), or <see langword="null"/> on error or if
-      ///   unavailable.
-      /// </returns>
-      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       public static string GetVolumeDeviceName(string volumeName)
       {
-         if (Utils.IsNullOrWhiteSpace(volumeName))
-            throw new ArgumentNullException("volumeName");
-
-
-         bool doQueryDos;
-         volumeName = Path.RemoveTrailingDirectorySeparator(volumeName);
-
-
-         // GlobalRoot
-
-         if (volumeName.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
-            return volumeName.Substring(Path.GlobalRootPrefix.Length);
-
-
-
-
-         // Volume
-
-         if (volumeName.StartsWith(Path.VolumePrefix, StringComparison.OrdinalIgnoreCase))
-         {
-            // Isolate the DOS Device from the Volume name, in the format: Volume{GUID}
-            volumeName = volumeName.Substring(Path.LongPathPrefix.Length);
-
-            doQueryDos = true;
-         }
-
-
-         // Logical Drive
-
-         // Check for Logical Drives: C:, D:, ...
-         else
-            doQueryDos = Path.IsLogicalDriveCore(volumeName, PathFormat.LongFullPath);
-
-
-         if (doQueryDos)
-         {
-            try
-            {
-               // Get the real Device underneath.
-
-               var dev = QueryDosDevice(volumeName).FirstOrDefault();
-
-               return !Utils.IsNullOrWhiteSpace(dev) ? dev : null;
-            }
-            catch
-            {
-            }
-         }
-
-         return null;
+         return QueryDosDevice(volumeName);
       }
    }
 }

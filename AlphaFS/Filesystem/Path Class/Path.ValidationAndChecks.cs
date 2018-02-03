@@ -209,34 +209,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
       }
-
-      /// <summary>Tranlates DosDevicePath, Volume GUID. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".</summary>
-      /// <returns>A translated dos path.</returns>
-      /// <param name="dosDevice">A DosDevicePath, for example: \Device\HarddiskVolumeX\path\filename.ext.</param>
-      /// <param name="deviceReplacement">Alternate path/device text, usually <c>string.Empty</c> or <see langword="null"/>.</param>
-      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-      [SecurityCritical]
-      private static string DosDeviceToDosPath(string dosDevice, string deviceReplacement)
-      {
-         if (Utils.IsNullOrWhiteSpace(dosDevice))
-            return string.Empty;
-
-         foreach (var drive in DriveInfo.EnumerateLogicalDrivesCore(false, false))
-         {
-            try
-            {
-               var path = RemoveTrailingDirectorySeparator(drive);
-
-               foreach (var devNt in Volume.QueryDosDevice(path).Where(dosDevice.StartsWith))
-
-                  return dosDevice.Replace(devNt, deviceReplacement ?? path);
-            }
-            catch
-            {
-            }
-         }
-         return string.Empty;
-      }
+      
 
       [SecurityCritical]
       internal static int GetRootLength(string path, bool checkInvalidPathChars)

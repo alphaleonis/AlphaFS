@@ -58,7 +58,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
             
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, 1, false, false, true);
+            UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(1, 3), false, false, true);
 
 
             Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);

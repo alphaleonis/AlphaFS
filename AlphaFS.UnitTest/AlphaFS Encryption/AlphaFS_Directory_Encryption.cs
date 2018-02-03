@@ -62,7 +62,7 @@ namespace AlphaFS.UnitTest
             var folder = rootDir.RandomDirectoryFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, 1, false, false, false);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, new Random().Next(1, 3), false, false, false);
 
 
 
@@ -122,7 +122,7 @@ namespace AlphaFS.UnitTest
             var folder = rootDir.RandomDirectoryFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, 1, false, false, false);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, new Random().Next(1, 3), false, false, false);
 
             
             

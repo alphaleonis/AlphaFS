@@ -37,9 +37,9 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Private Fields
 
+      [NonSerialized] private CultureInfo _cultureInfo;
       [NonSerialized] private readonly bool _initGetClusterInfo = true;
       [NonSerialized] private readonly bool _initGetSpaceInfo = true;
-      [NonSerialized] private readonly CultureInfo _cultureInfo;
       [NonSerialized] private readonly bool _continueOnAccessError;
 
       #endregion // Private Fields
@@ -190,6 +190,9 @@ namespace Alphaleonis.Win32.Filesystem
       public void Refresh()
       {
          Reset();
+
+         _cultureInfo = CultureInfo.CurrentCulture;
+
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {

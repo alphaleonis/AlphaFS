@@ -131,7 +131,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput Path: [{0}]", tempPath);
 
          // Create some folders and files.
-         UnitTestConstants.CreateDirectoriesAndFiles(tempPath, 1, false, false, true);
+         UnitTestConstants.CreateDirectoriesAndFiles(tempPath, new Random().Next(1, 3), false, false, true);
 
          var apply = FileAttributes.Hidden | FileAttributes.Archive | FileAttributes.System | FileAttributes.ReadOnly;
          Console.WriteLine("\nSetAttributes(): [{0}]", apply);

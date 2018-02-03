@@ -234,7 +234,10 @@ namespace Alphaleonis.Win32
 
       //public const uint ERROR_BAD_THREADID_ADDR = 159;
       //public const uint ERROR_BAD_ARGUMENTS = 160;
-      //public const uint ERROR_BAD_PATHNAME = 161;
+
+      /// <summary>(161) The specified path is invalid.</summary>
+      public const uint ERROR_BAD_PATHNAME = 161;
+
       //public const uint ERROR_SIGNAL_PENDING = 162;
       //public const uint ERROR_MAX_THRDS_REACHED = 164;
       //public const uint ERROR_LOCK_FAILED = 167;

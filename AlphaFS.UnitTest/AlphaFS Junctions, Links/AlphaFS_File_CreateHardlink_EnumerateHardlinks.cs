@@ -60,7 +60,7 @@ namespace AlphaFS.UnitTest
 
 
             // Create a random number of hardlinks to the original file.
-            var numCreate = new Random().Next(1, 20);
+            var numCreate = new Random().Next(1, 5);
             var hardlinks = new List<string>();
 
             Console.WriteLine("Created {0} hardlinks:", numCreate + 1);

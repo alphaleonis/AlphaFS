@@ -30,30 +30,59 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetVolumeLabel_LogicalDrives_Local_Success()
+      public void AlphaFS_Volume_GetVolumeDeviceName_FromLogicalDriveAndVolumeGuid_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var logicalDriveCount = 0;
+         // GetVolumeDeviceName
 
-         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
-         {
-            // CD/DVD.
-            if (!driveInfo.IsReady)
-               continue;
+         var inputPath =  UnitTestConstants.SysDrive;
 
+         Console.WriteLine("\nInput Logical Drive Path: [{0}]", inputPath);
+         
 
-            var volumeLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(driveInfo.Name);
+         var deviceNameFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(inputPath);
 
-            Console.WriteLine("\n\t#{0:000}\tLogical Drive: [{1}]\t\tLabel: [{2}]", ++logicalDriveCount, driveInfo.Name, driveInfo.VolumeLabel);
-
-
-            Assert.AreEqual(driveInfo.VolumeLabel, volumeLabel, "The volume labels do not match, but it is expected.");
-         }
+         Console.WriteLine("\n\tDevice Name: [{0}]", deviceNameFromLogicalDrive);
+         
+         Assert.IsNotNull(deviceNameFromLogicalDrive);
 
 
-         Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
+
+
+         // GetVolumeGuid
+
+         inputPath = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(inputPath);
+
+         Console.WriteLine("\nInput Volume GUID Path: [{0}]", inputPath);
+
+
+         var guid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(inputPath);
+
+         Assert.IsNotNull(guid);
+
+
+         var deviceNameFromGuid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(guid);
+
+         Console.WriteLine("\n\tDevice Name: [{0}]", deviceNameFromGuid);
+
+         Assert.IsNotNull(deviceNameFromGuid);
+
+
+
+         
+         Assert.IsNotNull(deviceNameFromLogicalDrive);
+
+         
+         var deviceNamePrefix = Alphaleonis.Win32.Filesystem.Path.DevicePrefix + "HarddiskVolume";
+
+         Assert.IsTrue(deviceNameFromLogicalDrive.StartsWith(deviceNamePrefix));
+
+         Assert.IsTrue(deviceNameFromGuid.StartsWith(deviceNamePrefix));
+
+
+         Assert.AreEqual(deviceNameFromLogicalDrive, deviceNameFromGuid);
       }
    }
 }

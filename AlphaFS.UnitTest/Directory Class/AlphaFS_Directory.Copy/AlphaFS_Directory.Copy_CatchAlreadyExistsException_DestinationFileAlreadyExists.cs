@@ -61,7 +61,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
 
 
-            UnitTestConstants.CreateDirectoriesAndFiles(srcFolder.FullName, 1, false, false, true);
+            UnitTestConstants.CreateDirectoriesAndFiles(srcFolder.FullName, new Random().Next(1, 3), false, false, true);
 
 
             // 1st Copy action.
