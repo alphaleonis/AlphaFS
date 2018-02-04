@@ -87,7 +87,11 @@ namespace Alphaleonis
 
          var sizeFormats = new[] {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
          var formatLength = sizeFormats.Length;
+
          var bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
+
+         if (bytes < 0)
+            bytes = 0;
 
          var index = 0;
          while (index < formatLength && bytes > kb)
