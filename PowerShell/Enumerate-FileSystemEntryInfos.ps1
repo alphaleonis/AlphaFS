@@ -18,8 +18,8 @@
  #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  #  THE SOFTWARE.
  #>
- 
- 
+
+
  [CmdletBinding()]
  Param(
     [String]$Path = '.',
@@ -46,7 +46,7 @@ Function Invoke-GenericMethod {
         [Object[]]$MethodParameters
     )
 
-    
+
     [Collections.ArrayList]$Private:parameterTypes = @{}
 
     ForEach ($Private:paramType In $MethodParameters) { [Void]$parameterTypes.Add($paramType.GetType()) }
@@ -74,13 +74,13 @@ Function Invoke-GenericMethod {
         [String]$errorMessage,
         [String]$pathProcessed
     )
-    
-    
+
+
     Process {
         [Int]$Private:ERROR_ACCESS_DENIED = 5
         [Bool]$Private:gotException = $False
 
-        
+
         $gotException = $errorCode -eq $ERROR_ACCESS_DENIED
 
         Write-Warning -Message ('[{0:000}] Error: ({1}) "{2}"  Path: [{3}]' -f ++$Script:ErrorCount, $errorCode, $errorMessage, $pathProcessed)
@@ -88,9 +88,9 @@ Function Invoke-GenericMethod {
 
         If ($MaxErrorCount -eq $ErrorCount) {
             Write-Warning -Message 'Maximum Error count reached. Aborting enumeration.'
-            
+
             $cancelSource.Cancel()
-            
+
             $gotException = $False
         }
 
@@ -107,7 +107,7 @@ Function Invoke-GenericMethod {
     .SYNOPSIS
         Filter to in-/exclude file system entries during the enumeration.
 
-    
+
     .NOTE
         The InclusionFilter provides better filter criteria than the -Filter argument.
 #>
@@ -117,7 +117,7 @@ Function Invoke-GenericMethod {
         [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo]$fsei
     )
 
-    
+
     Process {
         ++$Script:FsoCount
 
@@ -139,16 +139,21 @@ Function Invoke-GenericMethod {
             }
         }
 
-        
-        # Write-Progress WILL slow things down CONSIDERABLY; Disable when there is no need for progress report.
-        If ($ShowProgress) { Write-Progress -Activity $fsei.FullPath -Status ('Processed: [{0:N0}] Found: [{1:N0}] Errors: [{2:N0}]' -f $FsoCount, $FoundFsoCount, $ErrorCount) }
 
-        
+        [String]$Private:status = ('Processed: [{0:N0}] Found: [{1:N0}] Errors: [{2:N0}]' -f $FsoCount, $FoundFsoCount, $ErrorCount)
+
+        # Write-Progress WILL slow things down CONSIDERABLY; Disable when there is no need for progress report.
+        If ($ShowProgress) { Write-Progress -Activity $fsei.FullPath -Status $status }
+
+        # A nice alternative.
+        Else { $Host.UI.RawUI.WindowTitle = $status }
+
+
         If ($MaxFsoFoundCount -eq $FoundFsoCount) {
             Write-Warning -Message 'Maximum file system entries found. Aborting enumeration.'
-            
+
             $cancelSource.Cancel()
-            
+
             $gotMatch = $False
         }
 
@@ -166,17 +171,17 @@ Function Enumerate-FileSystemEntryInfos {
         AlphaFS v2.2 EnumerateFileSystemEntryInfos
 
         A powerful folder/file enumerator which can report and recover from access denied exceptions and supports custom filtering.
-    
-    
+
+
     .EXAMPLE
         PS C:\> .\Enumerate-FileSystemEntryInfos.ps1 -Recurse -Path $ENV:windir
 
-    
+
     .NOTES
         Backup privileges are enables when run elevated.
         This allows for browsing folders which are normally inaccessible.
 
-    
+
     .OUTPUTS
         An [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo] instance. For example:
 
@@ -212,91 +217,93 @@ Function Enumerate-FileSystemEntryInfos {
         ReparsePointTag     = [None]
 #>
 
-	[CmdletBinding()]
-	Param(
-		[String]$Path = '.',
-		[String]$Filter = '*',
-		[Switch]$Recurse,
+    [CmdletBinding()]
+    Param(
+        [String]$Path = '.',
+        [String]$Filter = '*',
+        [Switch]$Recurse,
         [Switch]$ShowProgress,
-		[Switch]$ContinueOnException,
-		[Switch]$Directory,
-		[Switch]$File
-	)
+        [Switch]$ContinueOnException,
+        [Switch]$Directory,
+        [Switch]$File
+    )
 
 
-	Begin {
+    Begin {
         $Error.Clear()
 
 
         # Demo counters for the DirectoryEnumerationFilters; Enumeration will abort when either condition is met.
         [Long]$Script:MaxErrorCount    = 10 #-1
         [Long]$Script:MaxFsoFoundCount = 10 #-1
-        
-        
+
+
         # SkipReparsePoints = Skip reparse points by default.
-		# LargeCache        = Uses a larger buffer for directory queries, which can increase performance of the find operation.
-		# BasicSearch       = The function does not query the short file name, improving overall enumeration speed.
+        # LargeCache        = Uses a larger buffer for directory queries, which can increase performance of the find operation.
+        # BasicSearch       = The function does not query the short file name, improving overall enumeration speed.
 
-		$Private:enumOptions = [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]
-		[Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$Private:dirEnumOptions = $enumOptions::SkipReparsePoints -bor $enumOptions::LargeCache -bor $enumOptions::BasicSearch
-
-
-		If ($ContinueOnException.IsPresent) { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::ContinueOnException }
-		If ($Recurse.IsPresent)             { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::Recursive }
-
-		If (-not $Directory.IsPresent -and -not $File.IsPresent) { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::FilesAndFolders }
-
-		If ($Directory.IsPresent) { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::Folders }
-		If ($File.IsPresent)      { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::Files   }
+        $Private:enumOptions = [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]
+        [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$Private:dirEnumOptions = $enumOptions::SkipReparsePoints -bor $enumOptions::LargeCache -bor $enumOptions::BasicSearch
 
 
-		[Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters]$Private:dirEnumFilters = New-Object -TypeName Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
+        If ($ContinueOnException.IsPresent) { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::ContinueOnException }
+        If ($Recurse.IsPresent)             { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::Recursive }
 
-		
+        If (-not $Directory.IsPresent -and -not $File.IsPresent) { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::FilesAndFolders }
+
+        If ($Directory.IsPresent) { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::Folders }
+        If ($File.IsPresent)      { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::Files   }
+
+
+        [Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters]$Private:dirEnumFilters = New-Object -TypeName Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
+
+
         # Counters to keep track of stuff.
         [Long]$Script:FsoCount      = 0
         [Long]$Script:FoundFsoCount = 0
         [Long]$Script:ErrorCount    = 0
 
-        
+
         # Used to abort the enumeration.
         [System.Threading.CancellationTokenSource]$Script:cancelSource = [System.Threading.CancellationTokenSource]::new()
         $dirEnumFilters.CancellationToken = $cancelSource.Token
 
 
         # The callback error handler.
-		$dirEnumFilters.ErrorFilter = $ErrorFilter
+        $dirEnumFilters.ErrorFilter = $ErrorFilter
 
-        
+
         # The callback file/folder handler.
         $dirEnumFilters.InclusionFilter = $InclusionFilter
-        
+
 
         # Enables backup privileges when run elevated; This allows for browsing folders which are normally inaccessible.
         $Private:privilegeEnabler = New-Object Alphaleonis.Win32.Security.PrivilegeEnabler([Alphaleonis.Win32.Security.Privilege]::Backup)
 
 
-
+        [String]$Private:startupTitle = $Host.UI.RawUI.WindowTitle
 
         [Bool]$ShowProgress = $ShowProgress.IsPresent
         If ($ShowProgress) { Write-Progress -Activity $Path -Status 'Processing items...' }
 
 
         $Private:stopwatch = [system.diagnostics.stopwatch]::StartNew()
-	}
+    }
 
 
 	Process {
         Try {
             Invoke-GenericMethod `
-			    -Instance            ([Alphaleonis.Win32.Filesystem.Directory]) `
-			    -MethodName          EnumerateFileSystemEntryInfos `
-			    -TypeParameters      Alphaleonis.Win32.Filesystem.FileSystemEntryInfo `
-			    -MethodParameters    $Path, $Filter, $dirEnumOptions, $dirEnumFilters, ([Alphaleonis.Win32.Filesystem.PathFormat]::RelativePath)
+                -Instance           ([Alphaleonis.Win32.Filesystem.Directory]) `
+                -MethodName         EnumerateFileSystemEntryInfos `
+                -TypeParameters     Alphaleonis.Win32.Filesystem.FileSystemEntryInfo `
+                -MethodParameters   $Path, $Filter, $dirEnumOptions, $dirEnumFilters, ([Alphaleonis.Win32.Filesystem.PathFormat]::RelativePath)
         }
 
-        # Place disposing here to ensure it is always executed.
         Finally {
+            $Host.UI.RawUI.WindowTitle = $startupTitle
+
+            # Place disposing here to ensure it is always executed.
             If ($Null -ne $privilegeEnabler) { $privilegeEnabler.Dispose() }
             If ($Null -ne $cancelSource)     { $cancelSource.Dispose()     }
         }
@@ -304,7 +311,7 @@ Function Enumerate-FileSystemEntryInfos {
 
 
     End {
-        [String]$Private:foundFsoText = $(If ($Null -ne $dirEnumFilters.InclusionFilter) { ('Found: [{0}]' -f $FoundFsoCount) } Else { '' })
+        [String]$Private:foundFsoText = $(If ($Null -ne $dirEnumFilters.InclusionFilter) { ('Found: [{0:N0}]' -f $FoundFsoCount) } Else { '' })
 
         [Console]::ForegroundColor = [ConsoleColor]::Green
         [Console]::WriteLine(('Duration: [{0}]  Processed: [{1:N0}] {2} Errors: [{3:N0}]' -f [Timespan]::FromMilliseconds($stopwatch.Elapsed.TotalMilliseconds), $FsoCount, $foundFsoText, $ErrorCount))
