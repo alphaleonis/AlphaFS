@@ -329,35 +329,22 @@ namespace Alphaleonis.Win32.Security
       /// <exception cref="NullReferenceException"/>
       public override bool Equals(object obj)
       {
+         if (null == obj || GetType() != obj.GetType())
+            return false;
+
          var other = obj as Privilege;
 
          return null != other && _name.Equals(other._name, StringComparison.OrdinalIgnoreCase) &&
                 (null == _systemName && null == other._systemName || null != _systemName &&
                  _systemName.Equals(other._systemName, StringComparison.OrdinalIgnoreCase));
       }
-
-
-      // A random prime number will be picked and added to the HashCode, each time an instance is created.
-      [NonSerialized] private static readonly int[] Primes = {17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919};
-      [NonSerialized] private readonly int RandomPrime = new Random().Next(0, 19);
-
-
+      
+      
       /// <summary>Serves as a hash function for a particular type.</summary>
       /// <returns>A hash code for the current Object.</returns>
       public override int GetHashCode()
       {
-         unchecked
-         {
-            var hash = Primes[RandomPrime];
-
-            if (!Utils.IsNullOrWhiteSpace(_name))
-               hash = hash * Primes[1] + _name.GetHashCode();
-
-            if (!Utils.IsNullOrWhiteSpace(_systemName))
-               hash = hash * Primes[1] + _systemName.GetHashCode();
-
-            return hash;
-         }
+         return null != _name ? _name.GetHashCode() : 0;
       }
 
 

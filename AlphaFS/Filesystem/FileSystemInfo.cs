@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName);
+               NativeError.ThrowException(DataInitialised, FullPath);
 
             return Win32AttributeData.dwFileAttributes;
          }

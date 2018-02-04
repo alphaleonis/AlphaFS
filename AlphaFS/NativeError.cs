@@ -33,9 +33,10 @@ namespace Alphaleonis.Win32
    {
       public static void ThrowException(int errorCode)
       {
-         ThrowException((uint)errorCode, null, null);
+         ThrowException((uint) errorCode, null, null);
       }
 
+      
       public static void ThrowException(uint errorCode)
       {
          ThrowException(errorCode, null, null);
@@ -44,8 +45,9 @@ namespace Alphaleonis.Win32
 
       public static void ThrowException(int errorCode, string readPath)
       {
-         ThrowException((uint)errorCode, readPath, null);
+         ThrowException((uint) errorCode, readPath, null);
       }
+
 
       public static void ThrowException(uint errorCode, string readPath)
       {
@@ -55,8 +57,9 @@ namespace Alphaleonis.Win32
 
       public static void ThrowException(int errorCode, string readPath, string writePath)
       {
-         ThrowException((uint)errorCode, readPath, writePath);
+         ThrowException((uint) errorCode, readPath, writePath);
       }
+
 
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       public static void ThrowException(uint errorCode, string readPath, string writePath)
@@ -120,17 +123,6 @@ namespace Alphaleonis.Win32
 
             case Win32Errors.ERROR_NOT_READY:
                throw new DeviceNotReadyException(errorMessage);
-
-
-            //#region Reparse Point
-
-            //case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
-            //   throw new NotAReparsePointException(errorMessage, (int) errorCode);
-
-            //case Win32Errors.ERROR_INVALID_REPARSE_DATA:
-            //   throw new UnrecognizedReparsePointException(errorMessage, (int) errorCode);
-
-            //#endregion Reparse Point
 
 
             case Win32Errors.ERROR_NOT_SAME_DEVICE:
