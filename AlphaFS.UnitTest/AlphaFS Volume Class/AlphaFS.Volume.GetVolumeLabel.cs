@@ -37,17 +37,21 @@ namespace AlphaFS.UnitTest
 
          var logicalDriveCount = 0;
 
-         foreach (var logicalDrive in System.IO.DriveInfo.GetDrives())
+         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
-            Console.Write("\n#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, logicalDrive.Name);
+            if (!driveInfo.IsReady)
+               continue;
 
 
-            var volumeLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(logicalDrive.Name);
-
-            Console.WriteLine("\t\tLabel: [{2}]", ++logicalDriveCount, logicalDrive.Name, logicalDrive.VolumeLabel);
+            Console.Write("\n#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveInfo.Name);
 
 
-            Assert.AreEqual(logicalDrive.VolumeLabel, volumeLabel, "The volume labels do not match, but it is expected.");
+            var volumeLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(driveInfo.Name);
+
+            Console.WriteLine("\t\tLabel: [{0}]", driveInfo.VolumeLabel);
+
+
+            Assert.AreEqual(driveInfo.VolumeLabel, volumeLabel, "The volume labels do not match, but it is expected.");
          }
 
 
