@@ -20,43 +20,23 @@
  */
 
 using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Alphaleonis.Win32.Network;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Network
 {
-   public partial class AlphaFS_HostTest
+   /// <summary>Specifies what types of networks are enumerated.</summary>
+   [Flags]
+   public enum NetworkConnectivityLevels
    {
-      [TestMethod]
-      public void AlphaFS_Host_EnumerateNetworks_Local_Success()
-      {
-         UnitTestConstants.PrintUnitTestHeader(false);
+      /// <summary>Unknown.</summary>
+      None = 0,
 
+      /// <summary>Returns connected networks.</summary>
+      Connected = 1,
 
-         var networkCount = 0;
+      /// <summary>Returns disconnected networks.</summary>
+      Disconnected = 2,
 
-         foreach (var network in Host.EnumerateNetworks().OrderBy(network => network.Name))
-         {
-            Console.WriteLine("\n#{0:000}\tNetwork: [{1}]", ++networkCount, network.Name);
-
-
-            UnitTestConstants.Dump(network, -21);
-
-
-            if (null != network.Connections)
-            {
-               foreach (var connection in network.Connections)
-                  UnitTestConstants.Dump(connection, -21, true);
-            }
-
-
-            Console.WriteLine();
-         }
-
-
-         if (networkCount == 0)
-            Assert.Inconclusive("No networks enumerated, but it is expected.");
-      }
+      /// <summary>Returns connected and disconnected networks.</summary>
+      All = Connected | Disconnected
    }
 }

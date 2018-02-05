@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Network
       // Do not change the order of these interface members.
 
 
-      /// <summary>Returns the associated network for the connection.</summary>
+      /// <summary>The GetNetwork method returns the network associated with the connection.</summary>
       /// <returns>Returns S_OK if the method succeeds.</returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Network
       INetwork GetNetwork();
 
 
-      /// <summary>Specifies if the network has any network connectivity.</summary>
+      /// <summary>The IsConnected property specifies if the associated network connection has network connectivity.</summary>
       /// <returns>If TRUE, this network connection has connectivity; if FALSE, it does not.</returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      /// <summary>Specifies if the network has Internet connectivity.</summary>
+      /// <summary>The IsConnectedToInternet property specifies if the associated network connection has internet connectivity.</summary>
       /// <returns>If TRUE, this network connection has connectivity to the Internet; if FALSE, it does not.</returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      /// <summary>Returns the connectivity state of the network.</summary>
+      /// <summary>The GetConnectivity method returns the connectivity state of the network connection.</summary>
       /// <returns>Returns S_OK if the method succeeds.</returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Network
       ConnectivityStates GetConnectivity();
 
 
-      /// <summary>Returns the Connection ID associated with this network connection.</summary>
+      /// <summary>The GetConnectionId method returns the Connection ID associated with this network connection.</summary>
       /// <returns>Returns S_OK if the method succeeds.</returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Network
       Guid GetConnectionId();
 
 
-      /// <summary>Returns the ID of the network adapter used by this connection. There may multiple connections using the same adapter ID.</summary>
+      /// <summary>The GetAdapterId method returns the ID of the network adapter used by this connection. </summary>
       /// <returns>Returns S_OK if the method succeeds.</returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Network
       Guid GetAdapterId();
 
 
-      /// <summary>Returns the type of network connection.</summary>
+      /// <summary>The GetDomainType method returns the domain type of the network connection.</summary>
       /// <returns>Returns S_OK if the method succeeds.</returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>

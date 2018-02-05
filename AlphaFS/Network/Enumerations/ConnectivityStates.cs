@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -31,27 +32,35 @@ namespace Alphaleonis.Win32.Network
       None = 0,
 
       /// <summary>There is connectivity to a network, but the service cannot detect any IPv4 Network Traffic.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pv")]
       IPv4NoTraffic = 1,
 
       /// <summary>There is connectivity to a network, but the service cannot detect any IPv6 Network Traffic.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pv")]
       IPv6NoTraffic = 2,
 
       /// <summary>There is connectivity to the local subnet using the IPv4 protocol.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pv")]
       IPv4Subnet = 16,
 
       /// <summary>There is connectivity to a routed network using the IPv4 protocol.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pv")]
       IPv4LocalNetwork = 32,
 
       /// <summary>There is connectivity to the Internet using the IPv4 protocol.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pv")]
       IPv4Internet = 64,
 
       /// <summary>There is connectivity to the local subnet using the IPv6 protocol.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pv")]
       IPv6Subnet = 256,
 
       /// <summary>There is connectivity to a local network using the IPv6 protocol.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pv")]
       IPv6LocalNetwork = 512,
 
       /// <summary>There is connectivity to the Internet using the IPv6 protocol.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pv")]
       IPv6Internet = 1024
    }
 }

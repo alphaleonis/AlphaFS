@@ -19,51 +19,51 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
    partial class Host
    {
-      /// <summary>Enumerates drives from the local host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> drives from the local host.</returns>
-      /// <exception cref="NetworkInformationException"/>
+      /// <summary>[AlphaFS] Returns an enumerable collection of networks available on the local host.</summary>
+      /// <returns>An <see cref="IEnumerable{NetworkInfo}"/> collection of connected and disconnected networks on the local host.</returns>
       [SecurityCritical]
-      public static IEnumerable<Network> EnumerateNetworks()
+      public static IEnumerable<NetworkInfo> EnumerateNetworks()
       {
-         return EnumerateNetworksCore(NetworkConnectivityLevels.All);
+         return EnumerateNetworksCore(null, NetworkConnectivityLevels.All);
       }
 
 
-      /// <summary>Enumerates drives from the local host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> drives from the local host.</returns>
-      /// <exception cref="NetworkInformationException"/>
+      /// <summary>[AlphaFS] Returns an enumerable collection of networks available on the local host.</summary>
+      /// <returns>An <see cref="IEnumerable{NetworkInfo}"/> collection of networks on the local host, as specified by <paramref name="networkConnectivityLevels"/>.</returns>
+      /// <param name="networkConnectivityLevels">The <see cref="NetworkConnectivityLevels"/> that specify the connectivity level of the returned <see cref="NetworkInfo"/> instances.</param>
       [SecurityCritical]
-      public static IEnumerable<Network> EnumerateNetworks(NetworkConnectivityLevels networkConnectivityLevels)
+      public static IEnumerable<NetworkInfo> EnumerateNetworks(NetworkConnectivityLevels networkConnectivityLevels)
       {
-         return EnumerateNetworksCore(networkConnectivityLevels);
+         return EnumerateNetworksCore(null, networkConnectivityLevels);
       }
 
 
-      /// <summary>Enumerates local drives from the specified host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NetworkInformationException"/>
-      /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
-      /// <param name="continueOnException">
-      ///   <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
-      ///   <para>such as unavailable resources.</para>
-      /// </param>
-      [SecurityCritical]
-      private static IEnumerable<Network> EnumerateNetworksCore(NetworkConnectivityLevels networkConnectivityLevels)
-      {
-         foreach (var network in NetworkListManager.GetNetworks(networkConnectivityLevels))
 
-            yield return network;
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of networks available on the local host.</summary>
+      /// <returns>An <see cref="IEnumerable{NetworkInfo}"/> collection of networks on the local host, as specified by <paramref name="networkConnectivityLevels"/>.</returns>
+      /// <param name="networkID">The <see cref="Guid"/> that defines a network.</param>
+      /// <param name="networkConnectivityLevels">The <see cref="NetworkConnectivityLevels"/> that specify the connectivity level of the returned <see cref="NetworkInfo"/> instances.</param>
+      [SecurityCritical]
+      internal static IEnumerable<NetworkInfo> EnumerateNetworksCore(Guid? networkID, NetworkConnectivityLevels networkConnectivityLevels)
+      {
+         if (null != networkID)
+            yield return new NetworkInfo(Manager.GetNetwork((Guid) networkID));
+
+         else
+         {
+            foreach (INetwork network in Manager.GetNetworks(networkConnectivityLevels))
+
+               yield return new NetworkInfo(network);
+         }
       }
    }
 }

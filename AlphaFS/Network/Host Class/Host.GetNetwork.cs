@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,40 +19,25 @@
  *  THE SOFTWARE. 
  */
 
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   /// <summary>An enumerable collection of <see cref="Network"/> objects.</summary>
-   public class NetworkCollection : IEnumerable<Network>
+   partial class Host
    {
-      private readonly IEnumerable _networkEnumerable;
-
-
-      internal NetworkCollection(IEnumerable networkEnumerable)
+      /// <summary>[AlphaFS] Rretrieves a network based on a supplied network ID from the local host.</summary>
+      /// <returns>A <see cref="NetworkInfo"/> instance from the local host, as specified by <paramref name="networkID"/>.</returns>
+      /// <param name="networkID">The <see cref="Guid"/> that defines a network.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
+      [SecurityCritical]
+      public static NetworkInfo GetNetwork(Guid networkID)
       {
-         _networkEnumerable = networkEnumerable;
-      }
+         var network = EnumerateNetworksCore(networkID, NetworkConnectivityLevels.None);
 
-
-      /// <summary>Returns the strongly typed enumerator for this collection.</summary>
-      /// <returns>An <see cref="System.Collections.Generic.IEnumerator{T}"/>  object.</returns>
-      public IEnumerator<Network> GetEnumerator()
-      {
-         foreach (INetwork network in _networkEnumerable)
-
-            yield return new Network(network);
-      }
-
-
-      /// <summary>Returns the enumerator for this collection.</summary>
-      ///<returns>An <see cref="System.Collections.IEnumerator"/> object.</returns> 
-      IEnumerator IEnumerable.GetEnumerator()
-      {
-         foreach (INetwork network in _networkEnumerable)
-
-            yield return new Network(network);
+         return null != network ? network.ToArray()[0] : null;
       }
    }
 }

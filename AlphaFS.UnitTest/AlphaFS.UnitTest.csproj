@@ -165,6 +165,7 @@
     <Compile Include="AlphaFS Device Class\AlphaFS_Device_EnumerateDevices.cs" />
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_InitializeInstance.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_DeviceInfo_InitializeInstance.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateNetworkConnections.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateNetworks.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory_CopySymbolicLink.cs" />

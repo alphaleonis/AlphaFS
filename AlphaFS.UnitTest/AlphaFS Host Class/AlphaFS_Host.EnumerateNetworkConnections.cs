@@ -29,34 +29,29 @@ namespace AlphaFS.UnitTest
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_EnumerateNetworks_Local_Success()
+      public void AlphaFS_Host_EnumerateNetworkConnections_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var networkCount = 0;
+         var networkConnectionCount = 0;
 
-         foreach (var network in Host.EnumerateNetworks().OrderBy(network => network.Name))
+         foreach (var networkConnection in Host.EnumerateNetworkConnections().OrderBy(networkConnection => networkConnection.NetworkInfo.Name))
          {
-            Console.WriteLine("\n#{0:000}\tNetwork: [{1}]", ++networkCount, network.Name);
+            Console.WriteLine("\n#{0:000}\tNetwork: [{1}]", ++networkConnectionCount, networkConnection.NetworkInfo.Name);
 
 
-            UnitTestConstants.Dump(network, -21);
+            UnitTestConstants.Dump(networkConnection, -21);
 
-
-            if (null != network.Connections)
-            {
-               foreach (var connection in network.Connections)
-                  UnitTestConstants.Dump(connection, -21, true);
-            }
+            UnitTestConstants.Dump(networkConnection.NetworkInfo, -21, true);
 
 
             Console.WriteLine();
          }
 
 
-         if (networkCount == 0)
-            Assert.Inconclusive("No networks enumerated, but it is expected.");
+         if (networkConnectionCount == 0)
+            Assert.Inconclusive("No network connections enumerated, but it is expected.");
       }
    }
 }

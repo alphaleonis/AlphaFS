@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -26,17 +26,23 @@ using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Network
 {
-   /// <summary>The NetworkListManagerClass class provides a set of methods to perform network list read-only management functions.</summary>
-   [ComImport, ClassInterface((short) 0), Guid("DCB00C01-570F-4A9B-8D69-199FDBA5723B")]
-   [ComSourceInterfaces("Microsoft.Windows.NetworkList.Internal.INetworkEvents\0Microsoft.Windows.NetworkList.Internal.INetworkConnectionEvents\0Microsoft.Windows.NetworkList.Internal.INetworkListManagerEvents\0"), TypeLibType(2)]
-   internal class NetworkListManagerClass : INetworkListManager
+   /// <summary>The INetworkListManager interface provides a set of methods to perform network list management functions.</summary>
+   [ComImport, Guid("DCB00000-570F-4A9B-8D69-199FDBA5723B"), TypeLibType(0x1040)]
+   internal interface INetworkListManager
    {
-      /// <summary>Returns the connectivity state of all the networks on a machine.</summary>
-      /// <returns>Returns S_OK if the method succeeds.</returns>
+      // Do not change the order of these interface members.
+
+
+      /// <summary>Retrieves networks based on the supplied Network IDs.</summary>
+      /// <returns>Returns S_OK if the method succeeds. Otherwise, the method returns one of the following values:
+      /// E_POINTER: The pointer passed is NULL.
+      /// E_UNEXPECTED: The specified GUID is invalid.
+      /// </returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime), DispId(7)]
-      public extern ConnectivityStates GetConnectivity();
+      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+      [return: MarshalAs(UnmanagedType.Interface)]
+      IEnumerable GetNetworks([In] NetworkConnectivityLevels flags);
 
 
       /// <summary>Retrieves a network based on a supplied Network ID.</summary>
@@ -46,9 +52,18 @@ namespace Alphaleonis.Win32.Network
       /// </returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime), DispId(2)]
+      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
       [return: MarshalAs(UnmanagedType.Interface)]
-      public extern INetwork GetNetwork([In] Guid gdNetworkId);
+      INetwork GetNetwork([In] Guid gdNetworkId);
+
+
+      /// <summary>Gets an enumerator that contains a complete list of the network connections that have been made.</summary>
+      /// <returns>Returns S_OK if the method succeeds. Otherwise, the method returns one of the following values: E_POINTER: The pointer passed is NULL.</returns>
+      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+      [return: MarshalAs(UnmanagedType.Interface)]
+      IEnumerable GetNetworkConnections();
 
 
       /// <summary>Retrieves a network based on a supplied Network Connection ID.</summary>
@@ -59,32 +74,11 @@ namespace Alphaleonis.Win32.Network
       /// </returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime), DispId(4)]
+      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
       [return: MarshalAs(UnmanagedType.Interface)]
-      public extern INetworkConnection GetNetworkConnection([In] Guid gdNetworkConnectionId);
-
-
-      /// <summary>Gets an enumerator that contains a complete list of the network connections that have been made.</summary>
-      /// <returns>Returns S_OK if the method succeeds. Otherwise, the method returns one of the following values: E_POINTER: The pointer passed is NULL.</returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime), DispId(3)]
-      [return: MarshalAs(UnmanagedType.Interface)]
-      public extern IEnumerable GetNetworkConnections();
-
-
-      /// <summary>Retrieves networks based on the supplied Network IDs.</summary>
-      /// <returns>Returns S_OK if the method succeeds. Otherwise, the method returns one of the following values:
-      /// E_POINTER: The pointer passed is NULL.
-      /// E_UNEXPECTED: The specified GUID is invalid.
-      /// </returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime), DispId(1)]
-      [return: MarshalAs(UnmanagedType.Interface)]
-      public extern IEnumerable GetNetworks([In] NetworkConnectivityLevels Flags);
-
-
+      INetworkConnection GetNetworkConnection([In] Guid gdNetworkConnectionId);
+      
+      
       /// <summary>Specifies if the machine has network connectivity.</summary>
       /// <returns>
       /// If TRUE , the network has at least local connectivity via IPv4 or IPv6 or both. The network may also have Internet connectivity. Thus, the network is connected.
@@ -92,10 +86,9 @@ namespace Alphaleonis.Win32.Network
       /// </returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [DispId(6)]
-      public extern bool IsConnected
+      bool IsConnected
       {
-         [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime), DispId(6)]
+         [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
          get;
       }
 
@@ -104,11 +97,18 @@ namespace Alphaleonis.Win32.Network
       /// <returns>If TRUE, the local machine is connected to the internet; if FALSE, it is not.</returns>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [DispId(5)]
-      public extern bool IsConnectedToInternet
+      bool IsConnectedToInternet
       {
-         [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime), DispId(5)]
+         [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
          get;
       }
+
+
+      /// <summary>Returns the connectivity state of all the networks on a machine.</summary>
+      /// <returns>Returns S_OK if the method succeeds.</returns>
+      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+      ConnectivityStates GetConnectivity();
    }
 }

@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -20,20 +20,24 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   /// <summary>Specifies what types of networks are enumerated.</summary>
-   [Flags]
-   public enum NetworkConnectivityLevels
+   public partial class Host
    {
-      /// <summary>Returns connected networks.</summary>
-      Connected = 1,
+      /// <summary>[AlphaFS] Retrieves a network based on a specified network connection ID.</summary>
+      /// <param name="networkConnectionID">A <see cref="Guid"/> that specifies the network connection ID.</param>
+      /// <returns>A <see cref="NetworkConnectionInfo"/> instance that represents the network connection ID.</returns>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
+      [SecurityCritical]
+      public static NetworkConnectionInfo GetNetworkConnection(Guid networkConnectionID)
+      {
+         var networkConnection = EnumerateNetworkConnectionsCore(networkConnectionID);
 
-      /// <summary>Returns disconnected networks.</summary>
-      Disconnected = 2,
-
-      /// <summary>Returns connected and disconnected networks.</summary>
-      All = Connected | Disconnected
+         return null != networkConnection ? networkConnection.ToArray()[0] : null;
+      }
    }
 }

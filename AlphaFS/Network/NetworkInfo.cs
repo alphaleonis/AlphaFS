@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -20,49 +20,70 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Network
 {
    /// <summary>Represents a network on the local machine. It can also represent a collection of network connections with a similar network signature.</summary>
-   /// <remarks>Instances of this class are obtained by calling methods on the <see cref="NetworkListManager"/> class.</remarks>
-   public class Network
+   public class NetworkInfo
    {
+      #region Private Fields
+
       private readonly INetwork _network;
 
+      #endregion // Private Fields
 
-      internal Network(INetwork network)
+
+      #region Constructors
+
+      internal NetworkInfo(INetwork network)
       {
          _network = network;
       }
 
+      #endregion // Constructors
 
-      /// <summary>Gets or sets the category of a network. The categories are trusted, untrusted, or authenticated.</summary>
-      /// <value>A <see cref="NetworkCategory"/> value.</value>
+
+      #region Properties
+
+      /// <summary>Gets the category of a network. The categories are trusted, untrusted, or authenticated. This value of this property is not cached.</summary>
       public NetworkCategory Category
       {
          get { return _network.GetCategory(); }
 
-         set { _network.SetCategory(value); }
+         // Should we allow this in AlphaFS?
+         // set { _network.SetCategory(value); }
       }
 
 
-      /// <summary>Gets the local date and time when the network was connected.</summary>
-      /// <value>A <see cref="System.DateTime"/> object.</value>
+      /// <summary>Gets the network connections for the network. This value of this property is not cached.</summary>
+      public IEnumerable<NetworkConnectionInfo> Connections
+      {
+         get
+         {
+            foreach (var connection in _network.GetNetworkConnections())
+
+               yield return new NetworkConnectionInfo((INetworkConnection) connection);
+         }
+      }
+
+
+      /// <summary>Gets the local date and time when the network was connected. This value of this property is not cached.</summary>
       public DateTime ConnectionTime
       {
          get { return ConnectionTimeUtc.ToLocalTime(); }
       }
 
 
-      /// <summary>Gets the local date and time when the network was connected.</summary>
-      /// <value>A <see cref="System.DateTime"/> object.</value>
+      /// <summary>Gets the date and time when the network was connected. This value of this property is not cached.</summary>
       public DateTime ConnectionTimeUtc
       {
          get
          {
-            uint low, high, dummy1, dummy2;
+            uint low, high, unused1, unused2;
 
-            _network.GetTimeCreatedAndConnected(out dummy1, out dummy2, out low, out high);
+            _network.GetTimeCreatedAndConnected(out unused1, out unused2, out low, out high);
             
             long time = high;
 
@@ -75,16 +96,7 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      /// <summary>Gets the network connections for the network.</summary>
-      /// <value>A <see cref="NetworkConnectionCollection"/> object.</value>
-      public NetworkConnectionCollection Connections
-      {
-         get { return new NetworkConnectionCollection(_network.GetNetworkConnections()); }
-      }
-
-
-      /// <summary>Gets the connectivity state of the network.</summary>
-      /// <value>A <see cref="Connectivity"/> value.</value>
+      /// <summary>Gets the connectivity state of the network. This value of this property is not cached.</summary>
       /// <remarks>Connectivity provides information on whether the network is connected, and the protocols in use for network traffic.</remarks>
       public ConnectivityStates Connectivity
       {
@@ -92,23 +104,21 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      /// <summary>Gets the local date and time when the network was created.</summary>
-      /// <value>A <see cref="System.DateTime"/> object.</value>
+      /// <summary>Gets the local date and time when the network was created. This value of this property is not cached.</summary>
       public DateTime CreationTime
       {
          get { return CreationTimeUtc.ToLocalTime(); }
       }
 
 
-      /// <summary>Gets the local date and time when the network was created.</summary>
-      /// <value>A <see cref="System.DateTime"/> object.</value>
+      /// <summary>Gets the date and time when the network was created. This value of this property is not cached.</summary>
       public DateTime CreationTimeUtc
       {
          get
          {
-            uint low, high, dummy1, dummy2;
+            uint low, high, unused1, unused2;
 
-            _network.GetTimeCreatedAndConnected(out low, out high, out dummy1, out dummy2);
+            _network.GetTimeCreatedAndConnected(out low, out high, out unused1, out unused2);
 
             long time = high;
 
@@ -121,18 +131,17 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      /// <summary>Gets a description for the network.</summary>
-      /// <value>A <see cref="System.String"/> value.</value>
+      /// <summary>Gets a description for the network. This value of this property is not cached.</summary>
       public string Description
       {
          get { return _network.GetDescription(); }
 
-         //set { _network.SetDescription(value); }
+         // Should we allow this in AlphaFS?
+         //private set { _network.SetDescription(value); }
       }
 
 
-      /// <summary>Gets the domain type of the network.</summary>
-      /// <value>A <see cref="DomainType"/> value.</value>
+      /// <summary>Gets the domain type of the network. This value of this property is not cached.</summary>
       /// <remarks>The domain indictates whether the network is an Active Directory Network, and whether the machine has been authenticated by Active Directory.</remarks>
       public DomainType DomainType
       {
@@ -140,37 +149,37 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      /// <summary>Gets a value that indicates whether there is network connectivity.</summary>
-      /// <value>A <see cref="System.Boolean"/> value.</value>
+      /// <summary>Gets a value that indicates whether there is network connectivity. This value of this property is not cached.</summary>
       public bool IsConnected
       {
          get { return _network.IsConnected; }
       }
 
 
-      /// <summary>Gets a value that indicates whether there is Internet connectivity.</summary>
-      /// <value>A <see cref="System.Boolean"/> value.</value>
+      /// <summary>Gets a value that indicates whether there is Internet connectivity. This value of this property is not cached.</summary>
       public bool IsConnectedToInternet
       {
          get { return _network.IsConnectedToInternet; }
       }
 
 
-      /// <summary>Gets the name of the network.</summary>
-      /// <value>A <see cref="System.String"/> value.</value>
+      /// <summary>Gets the name of the network. This value of this property is not cached.</summary>
       public string Name
       {
          get { return _network.GetName(); }
 
-         //set { _network.SetName(value); }
+         // Should we allow this in AlphaFS?
+         //private set { _network.SetName(value); }
       }
 
 
-      /// <summary>Gets a unique identifier for the network.</summary>
-      /// <value>A <see cref="System.Guid"/> value.</value>
-      public Guid NetworkId
+      /// <summary>Gets a unique identifier for the network. This value of this property is not cached.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
+      public Guid NetworkID
       {
          get { return _network.GetNetworkId(); }
       }
+
+      #endregion // Properties
    }
 }
