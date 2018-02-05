@@ -482,6 +482,7 @@
     <Compile Include="Network\Enumerations\AccessPermissions.cs" />
     <Compile Include="Network\Enumerations\ShareResourceTypes.cs" />
     <Compile Include="Network\Enumerations\ShareType.cs" />
+    <Compile Include="Network\Host Class\Host.EnumerateNetworks.cs" />
     <Compile Include="Network\Host Class\Host.EnumerateOpenResources.cs" />
     <Compile Include="Network\Host Class\Host.EnumerateDrives.cs" />
     <Compile Include="Network\Host Class\Host.ServerMessageBlock.cs" />
@@ -489,15 +490,28 @@
     <Compile Include="Network\Host Class\Host.DistributedFileSystem.cs" />
     <Compile Include="Network\Host Class\Host.Connect.cs" />
     <Compile Include="Network\Host Class\Host.cs" />
+    <Compile Include="Network\NLM\Enumerations\NetworkConnectivityLevels.cs" />
+    <Compile Include="Network\NLM\Enumerations\NetworkCategory.cs" />
+    <Compile Include="Network\NLM\Enumerations\DomainType.cs" />
+    <Compile Include="Network\NLM\Interfaces\INetwork.cs" />
+    <Compile Include="Network\NLM\Interfaces\INetworkConnection.cs" />
+    <Compile Include="Network\NLM\Interfaces\INetworkListManager.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.WindowsNetworking.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.NetworkShareManagement.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.NetworkManagement.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.DistributedFileSystem.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.cs" />
+    <Compile Include="Network\NLM\NetworkListManagerClass.cs" />
     <Compile Include="Network\Native Other\DFS_INFO_9.cs" />
     <Compile Include="Network\Native Other\DFS_TARGET_PRIORITY.cs" />
     <Compile Include="Network\Native Other\DFS_STORAGE_INFO_1.cs" />
     <Compile Include="Network\Native Other\SHARE_INFO_502.cs" />
+    <Compile Include="Network\NLM\Network.cs" />
+    <Compile Include="Network\NLM\NetworkCollection.cs" />
+    <Compile Include="Network\NLM\NetworkConnection.cs" />
+    <Compile Include="Network\NLM\NetworkConnectionCollection.cs" />
+    <Compile Include="Network\NLM\Enumerations\ConnectivityStates.cs" />
+    <Compile Include="Network\NLM\NetworkListManager.cs" />
     <Compile Include="Network\OpenConnectionInfo.cs" />
     <Compile Include="Network\OpenResourceInfo.cs" />
     <Compile Include="Network\ShareInfo.cs" />
@@ -587,7 +601,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
