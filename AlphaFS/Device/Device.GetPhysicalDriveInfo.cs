@@ -99,12 +99,22 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var physicalDrive = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, diskNumber.ToString(CultureInfo.InvariantCulture));
 
-            SetStorageData(physicalDrive, physicalDriveInfo);
+            try
+            {
+               SetStorageData(physicalDrive, physicalDriveInfo);
+            }
+            catch { }
          }
 
 
          if (null != logicalDrive)
-            GetVolumeDiskExtents(logicalDrive);
+         {
+            try
+            {
+               GetVolumeDiskExtents(logicalDrive);
+            }
+            catch { }
+         }
 
 
          return physicalDriveInfo;
@@ -190,10 +200,10 @@ namespace Alphaleonis.Win32.Filesystem
          // FileSystemRights desiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
          // without accessing that file or device, even if GENERIC_READ access would have been denied.
          // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
-         //const int desiredAccess = 0;
+         const int desiredAccess = 0;
 
          // Requires elevation for.
-         const FileSystemRights desiredAccess = FileSystemRights.Read | FileSystemRights.Write;
+         //const FileSystemRights desiredAccess = FileSystemRights.Read | FileSystemRights.Write;
 
          //const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
 

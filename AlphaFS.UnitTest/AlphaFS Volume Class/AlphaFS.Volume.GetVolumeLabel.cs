@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
 
             var volumeLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(logicalDrive.Name);
 
-            Console.WriteLine("\t\tLabel: [{2}]", ++logicalDriveCount, logicalDrive.Name, logicalDrive.VolumeLabel);
+            Console.WriteLine("\t\tLabel: [{0}]", volumeLabel);
 
 
             Assert.AreEqual(logicalDrive.VolumeLabel, volumeLabel, "The volume labels do not match, but it is expected.");

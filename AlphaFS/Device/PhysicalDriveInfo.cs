@@ -20,10 +20,8 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -39,7 +37,6 @@ namespace Alphaleonis.Win32.Filesystem
       public PhysicalDriveInfo()
       {
          PartitionNumber = -1;
-         TotalSize = -1;
       }
 
 
