@@ -64,12 +64,21 @@ namespace Alphaleonis.Win32.Network
          get
          {
             var nicName = string.Empty;
+            Guid guid;
+
+            var adapterID = AdapterID;
 
             foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
             {
-               Guid guid;
+#if NET35
+               guid = new Guid(nic.Id);
 
-               if (Guid.TryParse(nic.Id, out guid) && Equals(guid, AdapterID))
+#else
+               if (!Guid.TryParse(nic.Id, out guid))
+                  continue;
+#endif
+
+               if (Equals(adapterID, guid))
                {
                   nicName = nic.Name;
 
@@ -85,6 +94,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Gets the description of the adapter that <see cref="AdapterID"/> points to. This value of this property is not cached.</summary>
+      [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unused")]
       public string AdapterDescription
       {
          get
