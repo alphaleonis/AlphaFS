@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 
 namespace Alphaleonis.Win32.Network
@@ -43,6 +42,7 @@ namespace Alphaleonis.Win32.Network
          });
       }
 
+      
       /// <summary>Creates a temporary connection to a network resource. The function can redirect a local device to a network resource, using a user name and password.</summary>
       /// <param name="remoteName">The network resource to connect to. The string can be up to <see cref="Filesystem.NativeMethods.MaxPath"/> characters in length.</param>
       /// <param name="userName">
@@ -68,6 +68,7 @@ namespace Alphaleonis.Win32.Network
          });
       }
 
+      
       /// <summary>Creates a temporary connection to a network resource. The function can redirect a local device to a network resource, <see cref="NetworkCredential"/> can be supplied.</summary>
       /// <param name="remoteName">The network resource to connect to. The string can be up to <see cref="Filesystem.NativeMethods.MaxPath"/> characters in length.</param>
       /// <param name="credentials">An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
@@ -85,6 +86,7 @@ namespace Alphaleonis.Win32.Network
          });
       }
 
+      
       /// <summary><see cref="DriveConnection"/> class destructor.</summary>
       ~DriveConnection()
       {
@@ -93,9 +95,22 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // Constructors
 
-      #region Methods
 
-      #region Dispose
+      #region Properties
+
+      /// <summary>The last available drive letter used for this connection.</summary>
+      /// <value>The last available drive letter used for this connection.</value>
+      public string LocalName { get; private set; }
+
+      
+      /// <summary>The path originally specified by the user.</summary>
+      /// <value>The path originally specified by the user.</value>
+      public string Share { get; private set; }
+
+      #endregion // Properties
+
+
+      #region Methods
 
       /// <summary>Releases all resources used by the <see cref="DriveConnection"/> class.</summary>
       public void Dispose()
@@ -104,10 +119,10 @@ namespace Alphaleonis.Win32.Network
          Dispose(true);
       }
 
-      [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "isDisposing")]
+
       private void Dispose(bool isDisposing)
       {
-         if (!Utils.IsNullOrWhiteSpace(LocalName))
+         if (isDisposing && !Utils.IsNullOrWhiteSpace(LocalName))
          {
             Host.ConnectDisconnectCore(new Host.ConnectDisconnectArguments
             {
@@ -121,9 +136,6 @@ namespace Alphaleonis.Win32.Network
          }
       }
 
-      #endregion // Dispose
-
-      #region ToString
 
       /// <summary>Returns the last available drive letter used for this connection.</summary>
       /// <returns>A string that represents this instance.</returns>
@@ -132,20 +144,6 @@ namespace Alphaleonis.Win32.Network
          return LocalName;
       }
 
-      #endregion // ToString
-
       #endregion // Methods
-
-      #region Properties
-
-      /// <summary>The last available drive letter used for this connection.</summary>
-      /// <value>The last available drive letter used for this connection.</value>
-      public string LocalName { get; private set; }
-
-      /// <summary>The path originally specified by the user.</summary>
-      /// <value>The path originally specified by the user.</value>
-      public string Share { get; private set; }
-
-      #endregion // Properties
    }
 }

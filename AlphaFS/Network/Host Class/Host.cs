@@ -29,6 +29,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Text;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace Alphaleonis.Win32.Network
@@ -36,43 +37,12 @@ namespace Alphaleonis.Win32.Network
    /// <summary>Provides static methods to retrieve network resource information from a local- or remote host.</summary>
    public static partial class Host
    {
-      #region GetUncName
-
-      /// <summary>Return the host name in UNC format, for example: \\hostname</summary>
-      /// <returns>The unc name.</returns>
-      [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-      [SecurityCritical]
-      public static string GetUncName()
-      {
-         return string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.UncPrefix, Environment.MachineName);
-      }
-
-      /// <summary>Return the host name in UNC format, for example: \\hostname</summary>
-      /// <param name="computerName">Name of the computer.</param>
-      /// <returns>The unc name.</returns>
-      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
-      [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-      [SecurityCritical]
-      public static string GetUncName(string computerName)
-      {
-         return Utils.IsNullOrWhiteSpace(computerName)
-            ? GetUncName()
-            : (computerName.StartsWith(Path.UncPrefix, StringComparison.Ordinal)
-               ? computerName.Trim()
-               : Path.UncPrefix + computerName.Trim());
-      }
-
-      #endregion // GetUncName
-
-
-      #region Internal Methods
-
-      private delegate uint EnumerateNetworkObjectDelegate(FunctionData functionData, out SafeGlobalMemoryBufferHandle netApiBuffer, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
+      internal delegate uint EnumerateNetworkObjectDelegate(FunctionData functionData, out SafeGlobalMemoryBufferHandle netApiBuffer, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
          [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalEntries, [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
 
 
       /// <summary>Structure is used to pass additional data to the Win32 function.</summary>
-      private struct FunctionData
+      internal struct FunctionData
       {
          public int EnumType;
          public string ExtraData1;
@@ -80,8 +50,171 @@ namespace Alphaleonis.Win32.Network
       }
 
 
+      internal struct ConnectDisconnectArguments
+      {
+         /// <summary>Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</summary>
+         public IntPtr WinOwner;
+
+         /// <summary>The name of a local device to be redirected, such as "F:". When <see cref="LocalName"/> is <see langword="null"/> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</summary>
+         public string LocalName;
+
+         /// <summary>A network resource to connect to/disconnect from, for example: \\server or \\server\share. The string can be up to <see cref="Filesystem.NativeMethods.MaxPath"/> characters in length.</summary>
+         public string RemoteName;
+
+         /// <summary>A <see cref="NetworkCredential"/> instance. Use either this or the combination of <see cref="UserName"/> and <see cref="Password"/>.</summary>
+         public NetworkCredential Credential;
+
+         /// <summary>The user name for making the connection. If <see cref="UserName"/> is <see langword="null"/>, the function uses the default user name. (The user context for the process provides the default user name)</summary>
+         public string UserName;
+
+         /// <summary>The password to be used for making the network connection. If <see cref="Password"/> is <see langword="null"/>, the function uses the current default password associated with the user specified by <see cref="UserName"/>.</summary>
+         public string Password;
+
+         /// <summary><see langword="true"/> always pops-up an authentication dialog box.</summary>
+         public bool Prompt;
+
+         /// <summary><see langword="true"/> successful network resource connections will be saved.</summary>
+         public bool UpdateProfile;
+
+         /// <summary>When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</summary>
+         public bool SaveCredentials;
+
+         /// <summary><see langword="true"/> indicates that the operation concerns a drive mapping.</summary>
+         public bool IsDeviceMap;
+
+         /// <summary><see langword="true"/> indicates that the operation needs to disconnect from the network resource, otherwise connect.</summary>
+         public bool IsDisconnect;
+      }
+
+
+      /// <summary>Connects to/disconnects from a network resource. The function can redirect a local device to a network resource.</summary>
+      /// <returns>If <see cref="ConnectDisconnectArguments.LocalName"/> is <see langword="null"/> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
+      /// <param name="arguments">The <see cref="ConnectDisconnectArguments"/>.</param>
+      [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
       [SecurityCritical]
-      private static IEnumerable<TStruct> EnumerateNetworkObjectCore<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException)
+      internal static string ConnectDisconnectCore(ConnectDisconnectArguments arguments)
+      {
+         uint lastError;
+
+         // Always remove backslash.
+         if (!Utils.IsNullOrWhiteSpace(arguments.LocalName))
+            arguments.LocalName = Path.RemoveTrailingDirectorySeparator(arguments.LocalName).ToUpperInvariant();
+
+
+         #region Disconnect
+
+         if (arguments.IsDisconnect)
+         {
+            var force = arguments.Prompt; // Use value of prompt variable for force value.
+            var target = arguments.IsDeviceMap ? arguments.LocalName : arguments.RemoteName;
+
+            if (Utils.IsNullOrWhiteSpace(target))
+               throw new ArgumentNullException(arguments.IsDeviceMap ? "localName" : "remoteName");
+
+
+            lastError = NativeMethods.WNetCancelConnection(target, arguments.UpdateProfile ? NativeMethods.Connect.UpdateProfile : NativeMethods.Connect.None, force);
+
+            if (lastError != Win32Errors.NO_ERROR)
+               throw new NetworkInformationException((int)lastError);
+
+            return null;
+         }
+
+         #endregion // Disconnect
+
+
+         #region Connect
+
+         // arguments.LocalName is allowed to be null or empty.
+         //if (Utils.IsNullOrWhiteSpace(arguments.LocalName) && !arguments.IsDeviceMap)
+         //   throw new ArgumentNullException("localName");
+
+         if (Utils.IsNullOrWhiteSpace(arguments.RemoteName) && !arguments.IsDeviceMap)
+            throw new ArgumentNullException("arguments.RemoteName");
+
+         // Always remove backslash.
+         if (!Utils.IsNullOrWhiteSpace(arguments.RemoteName))
+            arguments.RemoteName = Path.RemoveTrailingDirectorySeparator(arguments.RemoteName);
+
+
+         // When supplied, use data from NetworkCredential instance.
+         if (arguments.Credential != null)
+         {
+            arguments.UserName = Utils.IsNullOrWhiteSpace(arguments.Credential.Domain)
+               ? arguments.Credential.UserName
+               : string.Format(CultureInfo.InvariantCulture, @"{0}\{1}", arguments.Credential.Domain, arguments.Credential.UserName);
+
+            arguments.Password = arguments.Credential.Password;
+         }
+
+
+         // Assemble Connect arguments.
+         var connect = NativeMethods.Connect.None;
+
+         if (arguments.IsDeviceMap)
+            connect = connect | NativeMethods.Connect.Redirect;
+
+         if (arguments.Prompt)
+            connect = connect | NativeMethods.Connect.Prompt | NativeMethods.Connect.Interactive;
+
+         if (arguments.UpdateProfile)
+            connect = connect | NativeMethods.Connect.UpdateProfile;
+
+         if (arguments.SaveCredentials)
+            connect = connect | NativeMethods.Connect.SaveCredentialManager;
+
+
+         // Initialize structure.
+         var resource = new NativeMethods.NETRESOURCE
+         {
+            lpLocalName = arguments.LocalName,
+            lpRemoteName = arguments.RemoteName,
+            dwType = NativeMethods.ResourceType.Disk
+         };
+
+         // Three characters for: "X:\0" (Drive X: with null terminator)
+         uint bufferSize = 3;
+         StringBuilder buffer;
+
+         do
+         {
+            buffer = new StringBuilder((int)bufferSize);
+
+            uint result;
+            lastError = NativeMethods.WNetUseConnection(arguments.WinOwner, ref resource, arguments.Password, arguments.UserName, connect, buffer, out bufferSize, out result);
+
+            switch (lastError)
+            {
+               case Win32Errors.NO_ERROR:
+                  break;
+
+               case Win32Errors.ERROR_MORE_DATA:
+                  // MSDN, lpBufferSize: If the call fails because the buffer is not large enough,
+                  // the function returns the required buffer size in this location.
+                  //
+                  // Windows 8 x64: bufferSize remains unchanged.
+
+                  bufferSize = bufferSize * 2;
+                  break;
+            }
+
+         } while (lastError == Win32Errors.ERROR_MORE_DATA);
+
+
+         if (lastError != Win32Errors.NO_ERROR)
+            throw new NetworkInformationException((int)lastError);
+
+
+         return arguments.IsDeviceMap ? buffer.ToString() : null;
+
+         #endregion // Connect
+      }
+      
+
+      [SecurityCritical]
+      internal static IEnumerable<TStruct> EnumerateNetworkObjectCore<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException)
       {
          int objectSize;
          bool isString;
@@ -186,44 +319,5 @@ namespace Alphaleonis.Win32.Network
          // Return an empty structure (all fields set to null).
          return new NativeMethods.REMOTE_NAME_INFO();
       }
-
-
-      internal struct ConnectDisconnectArguments
-      {
-         /// <summary>Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</summary>
-         public IntPtr WinOwner;
-
-         /// <summary>The name of a local device to be redirected, such as "F:". When <see cref="LocalName"/> is <see langword="null"/> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</summary>
-         public string LocalName;
-
-         /// <summary>A network resource to connect to/disconnect from, for example: \\server or \\server\share. The string can be up to <see cref="Filesystem.NativeMethods.MaxPath"/> characters in length.</summary>
-         public string RemoteName;
-
-         /// <summary>A <see cref="NetworkCredential"/> instance. Use either this or the combination of <see cref="UserName"/> and <see cref="Password"/>.</summary>
-         public NetworkCredential Credential;
-
-         /// <summary>The user name for making the connection. If <see cref="UserName"/> is <see langword="null"/>, the function uses the default user name. (The user context for the process provides the default user name)</summary>
-         public string UserName;
-
-         /// <summary>The password to be used for making the network connection. If <see cref="Password"/> is <see langword="null"/>, the function uses the current default password associated with the user specified by <see cref="UserName"/>.</summary>
-         public string Password;
-
-         /// <summary><see langword="true"/> always pops-up an authentication dialog box.</summary>
-         public bool Prompt;
-
-         /// <summary><see langword="true"/> successful network resource connections will be saved.</summary>
-         public bool UpdateProfile;
-
-         /// <summary>When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</summary>
-         public bool SaveCredentials;
-
-         /// <summary><see langword="true"/> indicates that the operation concerns a drive mapping.</summary>
-         public bool IsDeviceMap;
-
-         /// <summary><see langword="true"/> indicates that the operation needs to disconnect from the network resource, otherwise connect.</summary>
-         public bool IsDisconnect;
-      }
-
-      #endregion // Internal Methods
    }
 }

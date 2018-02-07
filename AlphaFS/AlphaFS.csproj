@@ -482,12 +482,23 @@
     <Compile Include="Network\Enumerations\AccessPermissions.cs" />
     <Compile Include="Network\Enumerations\ShareResourceTypes.cs" />
     <Compile Include="Network\Enumerations\ShareType.cs" />
-    <Compile Include="Network\Host Class\Host.EnumerateOpenResources.cs" />
-    <Compile Include="Network\Host Class\Host.EnumerateDrives.cs" />
-    <Compile Include="Network\Host Class\Host.ServerMessageBlock.cs" />
-    <Compile Include="Network\Host Class\Host.DriveConnection.cs" />
-    <Compile Include="Network\Host Class\Host.DistributedFileSystem.cs" />
-    <Compile Include="Network\Host Class\Host.Connect.cs" />
+    <Compile Include="Network\Host Class\Host.DFS.GetDfsClientInfo.cs" />
+    <Compile Include="Network\Host Class\Host.DFS.EnumerateDomainDfsRoot.cs" />
+    <Compile Include="Network\Host Class\Host.DFS.EnumerateDfsRoot.cs" />
+    <Compile Include="Network\Host Class\Host.DFS.EnumerateDfsLinks.cs" />
+    <Compile Include="Network\Host Class\Host.GetUncName.cs" />
+    <Compile Include="Network\Host Class\Host.SMB.EnumerateOpenResources.cs" />
+    <Compile Include="Network\Host Class\Host.SMB.EnumerateDrives.cs" />
+    <Compile Include="Network\Host Class\Host.SMB.EnumerateOpenConnections.cs" />
+    <Compile Include="Network\Host Class\Host.SMB.EnumerateShares.cs" />
+    <Compile Include="Network\Host Class\Host.SMB.GetHostShareFromPath.cs" />
+    <Compile Include="Network\Host Class\Host.SMB.GetShareInfo.cs" />
+    <Compile Include="Network\Host Class\Host.WNet.DisconnectFrom.cs" />
+    <Compile Include="Network\Host Class\Host.WNet.DisconnectDrive.cs" />
+    <Compile Include="Network\Host Class\Host.WNet.ConnectTo.cs" />
+    <Compile Include="Network\Host Class\Host.WNet.ConnectDrive.cs" />
+    <Compile Include="Network\Host Class\Host.WNet.DriveConnection.cs" />
+    <Compile Include="Network\Host Class\Host.DFS.GetDfsInfo.cs" />
     <Compile Include="Network\Host Class\Host.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.WindowsNetworking.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.NetworkShareManagement.cs" />
@@ -587,7 +598,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
