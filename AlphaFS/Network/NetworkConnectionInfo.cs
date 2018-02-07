@@ -92,6 +92,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Gets the description of the adapter that <see cref="AdapterID"/> points to. This value of this property is not cached.</summary>
+      [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unused")]
       public string AdapterDescription
       {
          get
