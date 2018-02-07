@@ -45,6 +45,8 @@ namespace AlphaFS.UnitTest
 
             UnitTestConstants.Dump(networkConnection.NetworkInfo, -21, true);
 
+            UnitTestConstants.Dump(networkConnection.NetworkInterface, -20, true);
+
 
             Console.WriteLine();
          }

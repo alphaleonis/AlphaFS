@@ -47,7 +47,11 @@ namespace AlphaFS.UnitTest
             if (null != network.Connections)
             {
                foreach (var connection in network.Connections)
+               {
                   UnitTestConstants.Dump(connection, -21, true);
+
+                  UnitTestConstants.Dump(connection.NetworkInterface, -20, true);
+               }
             }
 
 

@@ -33,7 +33,6 @@ namespace Alphaleonis.Win32.Network
       #region Private Fields
 
       private readonly INetworkConnection _networkConnection;
-      private string _adapterDescription = string.Empty;
 
       #endregion // Private Fields
 
@@ -49,68 +48,6 @@ namespace Alphaleonis.Win32.Network
 
 
       #region Properties
-      
-      /// <summary>Gets the adapter identifier for this connection. This value of this property is not cached.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
-      public Guid AdapterID
-      {
-         get { return _networkConnection.GetAdapterId(); }
-      }
-
-
-      /// <summary>Gets the name of the adapter that <see cref="AdapterID"/> points to. This value of this property is not cached.</summary>
-      public string AdapterName
-      {
-         get
-         {
-            var nicName = string.Empty;
-            Guid guid;
-
-            var adapterID = AdapterID;
-
-            foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
-            {
-#if NET35
-               guid = new Guid(nic.Id);
-
-#else
-               if (!Guid.TryParse(nic.Id, out guid))
-                  continue;
-#endif
-
-               if (Equals(adapterID, guid))
-               {
-                  nicName = nic.Name;
-
-                  _adapterDescription = nic.Description;
-
-                  break;
-               }
-            }
-
-            return nicName;
-         }
-      }
-
-
-      /// <summary>Gets the description of the adapter that <see cref="AdapterID"/> points to. This value of this property is not cached.</summary>
-      [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "unused")]
-      public string AdapterDescription
-      {
-         get
-         {
-            if (Utils.IsNullOrWhiteSpace(_adapterDescription))
-            {
-               var unused = AdapterName;
-            }
-
-            return _adapterDescription;
-         }
-
-
-         set { _adapterDescription = value; }
-      }
-
 
       /// <summary>Gets the unique identifier for this connection. This value of this property is not cached.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
@@ -153,6 +90,35 @@ namespace Alphaleonis.Win32.Network
       public NetworkInfo NetworkInfo
       {
          get { return new NetworkInfo(_networkConnection.GetNetwork()); }
+      }
+
+
+      /// <summary>Gets the network interface for this connection. This value of this property is not cached.</summary>
+      public NetworkInterface NetworkInterface
+      {
+         get
+         {
+            Guid guid;
+            var adapterID = _networkConnection.GetAdapterId();
+            
+            
+            foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
+            {
+#if NET35
+               guid = new Guid(nic.Id);
+
+#else
+               if (!Guid.TryParse(nic.Id, out guid))
+                  continue;
+#endif
+
+               if (adapterID.Equals(guid))
+                  return nic;
+            }
+
+
+            return null;
+         }
       }
 
       #endregion // Properties
