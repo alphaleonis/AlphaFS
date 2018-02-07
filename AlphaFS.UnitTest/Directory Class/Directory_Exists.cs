@@ -59,9 +59,6 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_Exists_UseCases_LocalAndNetwork_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
          Directory_Exists_UseCases(false);
          Directory_Exists_UseCases(true);
       }

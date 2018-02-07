@@ -533,7 +533,7 @@
     <Compile Include="Network\Native Methods\NativeMethods.NetworkManagement.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.DistributedFileSystem.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.cs" />
-    <Compile Include="Network\NetworkListManager.cs" />
+    <Compile Include="Network\Native Methods\NativeMethods.NetworkListManager.cs" />
     <Compile Include="Network\Native Other\DFS_INFO_9.cs" />
     <Compile Include="Network\Native Other\DFS_TARGET_PRIORITY.cs" />
     <Compile Include="Network\Native Other\DFS_STORAGE_INFO_1.cs" />
@@ -630,7 +630,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
