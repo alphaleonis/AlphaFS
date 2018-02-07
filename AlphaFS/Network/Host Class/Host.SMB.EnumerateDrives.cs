@@ -61,6 +61,7 @@ namespace Alphaleonis.Win32.Network
 
 
 
+
       /// <summary>Enumerates local drives from the specified host.</summary>
       /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
       /// <exception cref="ArgumentNullException"/>
@@ -71,11 +72,9 @@ namespace Alphaleonis.Win32.Network
       ///   <para>such as unavailable resources.</para>
       /// </param>
       [SecurityCritical]
-      private static IEnumerable<string> EnumerateDrivesCore(string host, bool continueOnException)
+      internal static IEnumerable<string> EnumerateDrivesCore(string host, bool continueOnException)
       {
-         return EnumerateNetworkObjectCore(new FunctionData {EnumType = 1}, (string structure, SafeGlobalMemoryBufferHandle buffer) =>
-
-            structure,
+         return EnumerateNetworkObjectCore(new FunctionData {EnumType = 1}, (string structure, SafeGlobalMemoryBufferHandle buffer) => structure,
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resume) =>
             {

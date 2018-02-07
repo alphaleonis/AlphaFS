@@ -19,34 +19,39 @@
  *  THE SOFTWARE. 
  */
 
+using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Security;
-using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace Alphaleonis.Win32.Network
 {
-   /// <summary>Provides static methods to retrieve network resource information from a local- or remote host.</summary>
-   public static partial class Host
+   partial class Host
    {
-      /// <summary>Return the host name in UNC format, for example: \\hostname</summary>
-      /// <returns>The unc name.</returns>
+      /// <summary>Gets the host and share path name for the given <paramref name="uncPath"/>.</summary>
+      /// <param name="uncPath">The share in the format: \\host\share.</param>
+      /// <returns>The host and share path. For example, if <paramref name="uncPath"/> is: "\\SERVER001\C$\WINDOWS\System32",
+      ///   its is returned as string[0] = "SERVER001" and string[1] = "\C$\WINDOWS\System32".
+      /// <para>If the conversion from local path to UNC path fails, <see langword="null"/> is returned.</para>
+      /// </returns>
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]
-      public static string GetUncName()
+      public static string[] GetHostShareFromPath(string uncPath)
       {
-         return string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.UncPrefix, Environment.MachineName);
-      }
+         if (Utils.IsNullOrWhiteSpace(uncPath))
+            return null;
 
+         Uri uri;
+         if (Uri.TryCreate(Path.GetRegularPathCore(uncPath, GetFullPathOptions.None, false), UriKind.Absolute, out uri) && uri.IsUnc)
+         {
+            return new[]
+            {
+               uri.Host,
+               uri.GetComponents(UriComponents.Path, UriFormat.Unescaped).Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
+            };
+         }
 
-      /// <summary>Return the host name in UNC format, for example: \\hostname</summary>
-      /// <param name="computerName">Name of the computer.</param>
-      /// <returns>The unc name.</returns>
-      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
-      [SecurityCritical]
-      public static string GetUncName(string computerName)
-      {
-         return Utils.IsNullOrWhiteSpace(computerName) ? GetUncName() : (computerName.StartsWith(Path.UncPrefix, StringComparison.Ordinal) ? computerName.Trim() : Path.UncPrefix + computerName.Trim());
+         return null;
       }
    }
 }
