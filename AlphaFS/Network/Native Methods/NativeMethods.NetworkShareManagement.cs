@@ -113,5 +113,22 @@ namespace Alphaleonis.Win32.Network
       [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint NetShareGetInfo([MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.LPWStr)] string netName, [MarshalAs(UnmanagedType.U4)] uint level, out SafeGlobalMemoryBufferHandle lpBuffer);
+
+
+
+      /// <summary>Retrieves operating statistics for a service. Currently, only the workstation and server services are supported.</summary>
+      /// <returns>
+      /// If the function succeeds, the return value is NERR_Success.
+      /// If the function fails, the return value is a system error code.
+      /// </returns>
+      /// <remarks>
+      /// <para>No special group membership is required to obtain workstation statistics.</para>
+      /// <para>Only members of the Administrators or Server Operators local group can successfully execute the NetStatisticsGet function on a remote server.</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      internal static extern uint NetStatisticsGet([MarshalAs(UnmanagedType.LPWStr)] string server, [MarshalAs(UnmanagedType.LPWStr)] string service, [MarshalAs(UnmanagedType.U4)] uint level, [MarshalAs(UnmanagedType.U4)] uint options, out SafeGlobalMemoryBufferHandle bufptr);
    }
 }
