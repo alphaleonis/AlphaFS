@@ -21,7 +21,6 @@
 
 using System;
 using System.Globalization;
-using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -29,95 +28,171 @@ namespace Alphaleonis.Win32.Network
    [Serializable]
    public sealed class ServerStatisticsInfo
    {
-      #region Constructor
+      [NonSerialized] private readonly DateTime _dateTimeNow;
+      [NonSerialized] private NativeMethods.STAT_SERVER_0 _serverStat;
+      
 
-      /// <summary>Create a OpenConnectionInfo instance.</summary>
+      /// <summary>Create a ServerStatisticsInfo instance.</summary>
       internal ServerStatisticsInfo(string hostName, NativeMethods.STAT_SERVER_0 serverStat)
       {
-         var ts = TimeSpan.FromSeconds(serverStat.sts0_start);
+         _dateTimeNow = DateTime.UtcNow;
 
-         //StartTime =  DateTime.Now.
-         //.DateAdd("s", NumberOfSeconds, "1/1/1970")
+         HostName = hostName;
 
-
-         AverageResponseTime = TimeSpan.FromMilliseconds(serverStat.sts0_avresponse);
+         _serverStat = serverStat;
       }
-
-      #endregion // Constructor
 
 
       #region Properties
 
-      /// <summary>The local time when statistics collection started (or when the statistics were last cleared).</summary>
-      public DateTime StartTime
+      /// <summary>The number of server access permission errors.</summary>
+      public int AccessPermissionErrors
       {
-         get { return StartTime.ToLocalTime(); }
+         get { return (int) _serverStat.sts0_permerrors; }
       }
 
-      /// <summary>The time when statistics collection started (or when the statistics were last cleared).</summary>
-      public DateTime StartTimeUtc { get; set; }
+
+      /// <summary>The average server response time.</summary>
+      public TimeSpan AverageResponseTime
+      {
+         get { return TimeSpan.FromMilliseconds(_serverStat.sts0_avresponse); }
+      }
+
+
+      /// <summary>The number of times the server required a big buffer but failed to allocate one. This value indicates that the server parameters may need adjustment.</summary>
+      public int BufferAllocationFailed
+      {
+         get { return (int) _serverStat.sts0_bigbufneed; }
+      }
+
+
+      /// <summary>The number of times the server required a request buffer but failed to allocate one. This value indicates that the server parameters may need adjustment.</summary>
+      public int BufferRequestFailed
+      {
+         get { return (int) _serverStat.sts0_reqbufneed; }
+      }
+
+
+      /// <summary>The number of server bytes received from the network.</summary>
+      public long BytesReceived
+      {
+         get { return Filesystem.NativeMethods.ToLong(_serverStat.sts0_bytesrcvd_high, _serverStat.sts0_bytesrcvd_low); }
+      }
+
+
+      /// <summary>The number of server bytes received from the network, formatted as a unit size.</summary>
+      public string BytesReceivedUnitSize
+      {
+         get { return Utils.UnitSizeToText(BytesReceived); }
+      }
+
+
+      /// <summary>The number of server bytes sent to the network.</summary>
+      public long BytesSent
+      {
+         get { return Filesystem.NativeMethods.ToLong(_serverStat.sts0_bytessent_high, _serverStat.sts0_bytessent_low); }
+      }
+
+
+      /// <summary>The number of server bytes sent to the network, formatted as a unit size.</summary>
+      public string BytesSentUnitSize
+      {
+         get { return Utils.UnitSizeToText(BytesSent); }
+      }
+
+
+      /// <summary>The number of times a server device is opened.</summary>
+      public int DevicesOpened
+      {
+         get { return (int) _serverStat.sts0_devopens; }
+      }
 
 
       /// <summary>The number of times a file is opened on a server. This includes the number of times named pipes are opened.</summary>
-      public int sts0_fopens { get; set; }
+      public int FilesOpened
+      {
+         get { return (int) _serverStat.sts0_fopens; }
+      }
 
-      /// <summary>The number of times a server device is opened.</summary>
-      public int sts0_devopens { get; set; }
+
+      /// <summary>The host name from where the statistics are gathered.</summary>
+      public string HostName { get; set; }
+
 
       /// <summary>The number of server print jobs spooled.</summary>
-      public int JobsQueued { get; set; }
+      public int JobsQueued
+      {
+         get { return (int) _serverStat.sts0_jobsqueued; }
+      }
 
-      /// <summary>The number of times the server session started.</summary>
-      public int sts0_sopens { get; set; }
-
-      /// <summary>The number of times the server session automatically disconnected.</summary>
-      public int sts0_stimedout { get; set; }
-
-      /// <summary>The number of times the server sessions failed with an error.</summary>
-      public int sts0_serrorout { get; set; }
 
       /// <summary>The number of server password violations.</summary>
-      public int sts0_pwerrors { get; set; }
+      public int PasswordViolations
+      {
+         get { return (int) _serverStat.sts0_pwerrors; }
+      }
 
-      /// <summary>The number of server access permission errors.</summary>
-      public int sts0_permerrors { get; set; }
+
+      /// <summary>The number of times the server sessions failed with an error.</summary>
+      public int SessionsFailed
+      {
+         get { return (int) _serverStat.sts0_serrorout; }
+      }
+
+
+      /// <summary>The number of times the server session started.</summary>
+      public int SessionsStarted
+      {
+         get { return (int) _serverStat.sts0_sopens; }
+      }
+
+
+      /// <summary>The number of times the server session automatically disconnected.</summary>
+      public int SessionsTimedOut
+      {
+         get { return (int) _serverStat.sts0_stimedout; }
+      }
+
+
+      /// <summary>The local time when statistics collection started or when the statistics were last cleared.</summary>
+      public DateTime StartTime
+      {
+         get { return StartTimeUtc.ToLocalTime(); }
+      }
+
+
+      /// <summary>The time when statistics collection started or when the statistics were last cleared.</summary>
+      public DateTime StartTimeUtc
+      {
+         get { return new DateTime((_dateTimeNow - new DateTime(_serverStat.sts0_start, DateTimeKind.Utc)).Ticks, DateTimeKind.Utc); }
+      }
+
 
       /// <summary>The number of server system errors.</summary>
-      public int sts0_syserrors { get; set; }
-
-      /// <summary>The number of server bytes sent to the network.</summary>
-      public int sts0_bytessent_low { get; set; }
-
-      /// <summary>The number of server bytes sent to the network.</summary>
-      public int sts0_bytessent_high { get; set; }
-
-      /// <summary>The number of server bytes received from the network.</summary>
-      public int sts0_bytesrcvd_low { get; set; }
-
-      /// <summary>The number of server bytes received from the network.</summary>
-      public long sts0_bytesrcvd_high { get; set; }
-
-      /// <summary>The average server response time.</summary>
-      public TimeSpan AverageResponseTime { get; set; }
-
-      /// <summary>The number of times the server required a request buffer but failed to allocate one. This value indicates that the server parameters may need adjustment.</summary>
-      public int BufferAllocationFail { get; set; }
-
-      /// <summary>The number of times the server required a big buffer but failed to allocate one. This value indicates that the server parameters may need adjustment.</summary>
-      public int BigBufferNeeded { get; set; }
+      public int SystemErrors
+      {
+         get { return (int) _serverStat.sts0_syserrors; }
+      }
 
       #endregion // Properties
 
 
-      //#region Methods
+      #region Methods
 
-      ///// <summary>Returns the full path to the share.</summary>
-      ///// <returns>A string that represents this instance.</returns>
-      //public override string ToString()
-      //{
-      //   return Id.ToString(CultureInfo.InvariantCulture);
-      //}
+      /// <summary>Refreshes the state of the object.</summary>
+      public void Refresh()
+      {
+         _serverStat = Host.GetNetStatisticsNative(true, HostName);
+      }
 
-      //#endregion // Methods
+
+      /// <summary>Returns the local time when statistics collection started or when the statistics were last cleared.</summary>
+      /// <returns>A string that represents this instance.</returns>
+      public override string ToString()
+      {
+         return StartTime.ToString(CultureInfo.CurrentCulture);
+      }
+
+      #endregion // Methods
    }
 }

@@ -34,9 +34,10 @@ namespace Alphaleonis.Win32.Network
       internal struct STAT_SERVER_0
       {
          /// <summary>
-         /// Specifies a DWORD value that indicates the time when statistics collection started (or when the statistics were last cleared).
-         /// The value is stored as the number of seconds that have elapsed since 00:00:00, January 1, 1970, GMT. To calculate the length of time that statistics have been collected,
-         /// subtract the value of this member from the present time.
+         /// <para>Specifies a DWORD value that indicates the time when statistics collection started (or when the statistics were last cleared).</para>
+         /// <para>The value is stored as the number of seconds that have elapsed since 00:00:00, January 1, 1970, GMT.</para>
+         /// <para>To calculate the length of time that statistics have been collected,</para>
+         /// <para>subtract the value of this member from the present time.</para>
          /// </summary>
          [MarshalAs(UnmanagedType.U4)] public readonly uint sts0_start;
 

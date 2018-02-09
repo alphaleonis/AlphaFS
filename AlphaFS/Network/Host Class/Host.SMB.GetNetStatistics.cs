@@ -20,15 +20,28 @@
  */
 
 using System;
-using System.Globalization;
-using System.Net.NetworkInformation;
 using System.Security;
-using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
    partial class Host
    {
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <returns></returns>
+      [SecurityCritical]
+      public static ServerStatisticsInfo GetServerNetStatistics()
+      {
+         return GetNetStatisticsCore(true, Environment.MachineName);
+      }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="hostName"></param>
+      /// <returns></returns>
       [SecurityCritical]
       public static ServerStatisticsInfo GetServerNetStatistics(string hostName)
       {
@@ -36,6 +49,11 @@ namespace Alphaleonis.Win32.Network
       }
 
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="hostName"></param>
+      /// <returns></returns>
       [SecurityCritical]
       public static ServerStatisticsInfo GetWorkstationNetStatistics(string hostName)
       {
@@ -43,7 +61,14 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="isServer"></param>
+      /// <param name="hostName"></param>
+      /// <returns></returns>
       [SecurityCritical]
       internal static ServerStatisticsInfo GetNetStatisticsCore(bool isServer, string hostName)
       {
@@ -51,7 +76,26 @@ namespace Alphaleonis.Win32.Network
             throw new ArgumentNullException("hostName");
 
 
-         return null;
+         return new ServerStatisticsInfo(hostName, GetNetStatisticsNative(isServer, hostName));
+      }
+
+      
+      [SecurityCritical]
+      internal static NativeMethods.STAT_SERVER_0 GetNetStatisticsNative(bool isServer, string hostName)
+      {
+         SafeGlobalMemoryBufferHandle safeBuffer;
+
+         var lastError = NativeMethods.NetStatisticsGet(hostName, isServer ? "LanmanServer" : "LanmanWorkstation", 0, 0, out safeBuffer);
+
+
+         using (safeBuffer)
+         {
+            if (lastError != Win32Errors.NERR_Success)
+               NativeError.ThrowException(lastError, hostName);
+
+
+            return safeBuffer.PtrToStructure<NativeMethods.STAT_SERVER_0>(0);
+         }
       }
    }
 }
