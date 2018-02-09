@@ -26,12 +26,12 @@ using Alphaleonis.Win32.Filesystem;
 namespace Alphaleonis.Win32.Network
 {
    /// <summary>Contains the identification number of a connection, number of open files, connection time, number of users on the connection, and the type of connection.</summary>
-   [SerializableAttribute]
+   [Serializable]
    public sealed class OpenConnectionInfo
    {
       #region Constructor
 
-      /// <summary>Create a OpenConnectionInfo instance.</summary>
+      /// <summary>Create an OpenConnectionInfo instance.</summary>
       internal OpenConnectionInfo(string host, NativeMethods.CONNECTION_INFO_1 connectionInfo)
       {
          Host = host;
