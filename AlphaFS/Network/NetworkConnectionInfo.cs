@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Gets the unique identifier for this connection. This value of this property is not cached.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
-      public Guid ConnectionID
+      public Guid ConnectionId
       {
          get { return _networkConnection.GetConnectionId(); }
       }
@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Network
          get
          {
             Guid guid;
-            var adapterID = _networkConnection.GetAdapterId();
+            var adapterId = _networkConnection.GetAdapterId();
             
             
             foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Network
                   continue;
 #endif
 
-               if (adapterID.Equals(guid))
+               if (adapterId.Equals(guid))
                   return nic;
             }
 
