@@ -37,6 +37,8 @@ namespace Alphaleonis.Win32.Network
    /// <summary>Provides static methods to retrieve network resource information from a local- or remote host.</summary>
    public static partial class Host
    {
+      private static readonly NetworkListManager Manager = new NetworkListManager();
+
       internal delegate uint EnumerateNetworkObjectDelegate(FunctionData functionData, out SafeGlobalMemoryBufferHandle netApiBuffer, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
          [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalEntries, [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
 

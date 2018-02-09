@@ -175,7 +175,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Gets a unique identifier for the network. This value of this property is not cached.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
-      public Guid NetworkID
+      public Guid NetworkId
       {
          get { return _network.GetNetworkId(); }
       }

@@ -485,14 +485,7 @@
     <Compile Include="Network\Host Class\Host.GetNetworkConnection.cs" />
     <Compile Include="Network\Host Class\Host.EnumerateNetworkConnections.cs" />
     <Compile Include="Network\Host Class\Host.GetNetwork.cs" />
-    <Compile Include="Network\Host Class\Host.GetUncName.cs" />
     <Compile Include="Network\Host Class\Host.EnumerateNetworks.cs" />
-    <Compile Include="Network\Host Class\Host.EnumerateOpenResources.cs" />
-    <Compile Include="Network\Host Class\Host.EnumerateDrives.cs" />
-    <Compile Include="Network\Host Class\Host.ServerMessageBlock.cs" />
-    <Compile Include="Network\Host Class\Host.DriveConnection.cs" />
-    <Compile Include="Network\Host Class\Host.DistributedFileSystem.cs" />
-    <Compile Include="Network\Host Class\Host.Connect.cs" />
     <Compile Include="Network\Host Class\Host.DFS.GetDfsClientInfo.cs" />
     <Compile Include="Network\Host Class\Host.DFS.EnumerateDomainDfsRoot.cs" />
     <Compile Include="Network\Host Class\Host.DFS.EnumerateDfsRoot.cs" />
@@ -619,7 +612,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

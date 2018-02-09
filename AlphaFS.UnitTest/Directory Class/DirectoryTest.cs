@@ -26,9 +26,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
-using Alphaleonis;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
