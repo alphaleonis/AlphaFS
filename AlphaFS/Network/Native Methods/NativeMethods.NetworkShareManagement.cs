@@ -77,6 +77,23 @@ namespace Alphaleonis.Win32.Network
       internal static extern uint NetFileEnum([MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.LPWStr)] string basepath, [MarshalAs(UnmanagedType.LPWStr)] string username, [MarshalAs(UnmanagedType.U4)] uint level, out SafeGlobalMemoryBufferHandle buffer, [MarshalAs(UnmanagedType.I4)] int prefmaxlen, [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalentries, [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
 
 
+      /// <summary>Provides information about sessions established on a server.</summary>
+      /// <returns>
+      /// If the function succeeds, the return value is NERR_Success.
+      /// If the function fails, the return value is a system error code.
+      /// </returns>
+      /// <remarks>
+      /// <para>Only members of the Administrators or Server Operators local group can successfully execute the NetSessionEnum function at level 1 or level 2.</para>
+      /// <para>No special group membership is required for level 0 or level 10 calls.</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.U4)]
+      internal static extern uint NetSessionEnum([MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.LPWStr)] string uncClientName, [MarshalAs(UnmanagedType.LPWStr)] string userName, [MarshalAs(UnmanagedType.U4)] SessionInfoLevel level, out SafeGlobalMemoryBufferHandle bufPtr, [MarshalAs(UnmanagedType.I4)] int prefMaxLen, [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalEntries, [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
+
+
       /// <summary>Retrieves information about each (hidden) Server Message Block (SMB) resource/share on a server.</summary>
       /// <returns>
       /// If the function succeeds, the return value is NERR_Success.
@@ -84,7 +101,8 @@ namespace Alphaleonis.Win32.Network
       /// </returns>
       /// <remarks>
       /// <para>For interactive users (users who are logged on locally to the machine), no special group membership is required to execute the NetShareEnum function.</para>
-      /// <para>For non-interactive users, Administrator, Power User, Print Operator, or Server Operator group membership is required to successfully execute the NetShareEnum function at levels 2, 502, and 503. No special group membership is required for level 0 or level 1 calls.</para>
+      /// <para>For non-interactive users, Administrator, Power User, Print Operator, or Server Operator group membership is required</para>
+      /// <para>to successfully execute the NetShareEnum function at levels 2, 502, and 503. No special group membership is required for level 0 or level 1 calls.</para>
       /// <para>This function applies only to Server Message Block (SMB) shares.</para>
       /// <para>Windows Server 2003 and Windows XP: For all users, Administrator, Power User, Print Operator, or Server Operator group membership is required to successfully execute the NetShareEnum function at levels 2 and 502.</para>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>

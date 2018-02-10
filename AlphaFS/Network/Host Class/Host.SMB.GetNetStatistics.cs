@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>[AlphaFS] Retrieves <see cref="ServerStatisticsInfo"/> operating statistics for the Server service from the specified host.</summary>
       /// <returns>A <see cref="ServerStatisticsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="hostName">The name of the local or remote host to retrieve statistics from.</param>
+      /// <param name="hostName">The DNS or NetBIOS name of the local or remote host to retrieve statistics from.</param>
       [SecurityCritical]
       public static ServerStatisticsInfo GetServerStatistics(string hostName)
       {
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>[AlphaFS] Retrieves <see cref="WorkstationStatisticsInfo"/> operating statistics for the Workstation service from the specified host.</summary>
       /// <returns>A <see cref="WorkstationStatisticsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="hostName">The name of the local or remote host to retrieve statistics from.</param>
+      /// <param name="hostName">The DNS or NetBIOS name of the local or remote host to retrieve statistics from.</param>
       [SecurityCritical]
       public static WorkstationStatisticsInfo GetWorkstationStatistics(string hostName)
       {
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Network
       /// <returns>A <see cref="ServerStatisticsInfo"/> or <see cref="WorkstationStatisticsInfo"/> instance, depending on the <paramref name="isServer"/> value.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="isServer">true returns <see cref="ServerStatisticsInfo"/> information, false <see cref="WorkstationStatisticsInfo"/>.</param>
-      /// <param name="hostName">The name of the local or remote host to retrieve statistics from.</param>
+      /// <param name="hostName">The DNS or NetBIOS name of the local or remote host to retrieve statistics from.</param>
       [SecurityCritical]
       internal static object GetNetStatisticsCore(bool isServer, string hostName)
       {

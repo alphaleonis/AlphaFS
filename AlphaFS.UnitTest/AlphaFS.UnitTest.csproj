@@ -169,6 +169,7 @@
     <Compile Include="AlphaFS Host Class\AlphaFS.Host_GetWorkstationStatistics.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS.Host_GetServerStatistics.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_HostTest.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateSessions.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory_CopySymbolicLink.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File_CopySymbolicLink.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.VolumeTest.cs" />
