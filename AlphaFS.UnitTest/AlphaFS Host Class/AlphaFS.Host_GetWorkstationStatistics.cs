@@ -20,14 +20,13 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AlphaFS.UnitTest
 {
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_GetServerNetStatistics_Local_Success()
+      public void AlphaFS_Host_GetWorkstationStatistics_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -35,9 +34,9 @@ namespace AlphaFS.UnitTest
             Assert.Inconclusive();
 
 
-         var serverStatistics = Alphaleonis.Win32.Network.Host.GetServerNetStatistics();
+         var workstationStat = Alphaleonis.Win32.Network.Host.GetWorkstationStatistics();
 
-         UnitTestConstants.Dump(serverStatistics, -22);
+         UnitTestConstants.Dump(workstationStat, -36);
       }
    }
 }

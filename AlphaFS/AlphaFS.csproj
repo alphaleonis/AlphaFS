@@ -512,6 +512,7 @@
     <Compile Include="Network\Native Other\STAT_WORKSTATION_0.cs" />
     <Compile Include="Network\Native Other\STAT_SERVER_0.cs" />
     <Compile Include="Network\Native Other\SHARE_INFO_502.cs" />
+    <Compile Include="Network\WorkstationStatisticsInfo.cs" />
     <Compile Include="Network\ServerStatisticsInfo.cs" />
     <Compile Include="Network\OpenConnectionInfo.cs" />
     <Compile Include="Network\OpenResourceInfo.cs" />
@@ -602,7 +603,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

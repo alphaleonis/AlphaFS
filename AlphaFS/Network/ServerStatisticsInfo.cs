@@ -23,37 +23,39 @@ using System;
 
 namespace Alphaleonis.Win32.Network
 {
-   /// <summary>Contains the identification number of a connection, number of open files, connection time, number of users on the connection, and the type of connection.</summary>
+   /// <summary>Contains operating statistics for the Server service.</summary>
    [Serializable]
    public sealed class ServerStatisticsInfo
    {
-      [NonSerialized] private DateTime _dateTimeNow;
+      [NonSerialized] private DateTime _dateTimeNowUtc;
       [NonSerialized] private NativeMethods.STAT_SERVER_0 _serverStat;
 
 
       /// <summary>Create a ServerStatisticsInfo instance from the local host.</summary>
-      public ServerStatisticsInfo() : this(Environment.MachineName, true, null)
+      public ServerStatisticsInfo() : this(Environment.MachineName, null)
       {
       }
 
 
       /// <summary>Create a ServerStatisticsInfo instance from the specified host name.</summary>
-      public ServerStatisticsInfo(string hostName) : this(hostName, true, null)
+      public ServerStatisticsInfo(string hostName) : this(hostName, null)
       {
       }
 
 
       /// <summary>Create a ServerStatisticsInfo instance from the specified host name.</summary>
-      internal ServerStatisticsInfo(string hostName, bool refresh, NativeMethods.STAT_SERVER_0? serverStat)
+      internal ServerStatisticsInfo(string hostName, NativeMethods.STAT_SERVER_0? serverStat)
       {
          HostName = !Utils.IsNullOrWhiteSpace(hostName) ? hostName : Environment.MachineName;
 
-         _dateTimeNow = DateTime.UtcNow;
-
          if (serverStat.HasValue)
-            _serverStat = (NativeMethods.STAT_SERVER_0) serverStat;
+         {
+            _dateTimeNowUtc = DateTime.UtcNow;
 
-         else if (refresh)
+            _serverStat = (NativeMethods.STAT_SERVER_0) serverStat;
+         }
+
+         else
             Refresh();
       }
 
@@ -114,21 +116,7 @@ namespace Alphaleonis.Win32.Network
       {
          get { return Utils.UnitSizeToText(BytesSent); }
       }
-
-
-      /// <summary>The local time when statistics collection started or when the statistics were last cleared.</summary>
-      public DateTime CollectedTime
-      {
-         get { return CollectedTimeUtc.ToLocalTime(); }
-      }
-
-
-      /// <summary>The time when statistics collection started or when the statistics were last cleared.</summary>
-      public DateTime CollectedTimeUtc
-      {
-         get { return new DateTime((_dateTimeNow - new DateTime(_serverStat.sts0_start, DateTimeKind.Utc)).Ticks, DateTimeKind.Utc); }
-      }
-
+      
 
       /// <summary>The number of times a server device is opened.</summary>
       public int DevicesOpened
@@ -181,7 +169,21 @@ namespace Alphaleonis.Win32.Network
       {
          get { return (int) _serverStat.sts0_stimedout; }
       }
-      
+
+
+      /// <summary>The local time when statistics collection started or when the statistics were last cleared.</summary>
+      public DateTime StatisticsStartTime
+      {
+         get { return StatisticsStartTimeUtc.ToLocalTime(); }
+      }
+
+
+      /// <summary>The time when statistics collection started or when the statistics were last cleared.</summary>
+      public DateTime StatisticsStartTimeUtc
+      {
+         get { return new DateTime((_dateTimeNowUtc - new DateTime(_serverStat.sts0_start, DateTimeKind.Utc)).Ticks, DateTimeKind.Utc); }
+      }
+
 
       /// <summary>The number of server system errors.</summary>
       public int SystemErrors
@@ -197,9 +199,9 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Refreshes the state of the object.</summary>
       public void Refresh()
       {
-         _dateTimeNow = DateTime.UtcNow;
+         _dateTimeNowUtc = DateTime.UtcNow;
 
-         _serverStat = Host.GetNetStatisticsNative(true, HostName);
+         _serverStat = Host.GetNetStatisticsNative<NativeMethods.STAT_SERVER_0>(true, HostName);
       }
 
 
@@ -221,7 +223,7 @@ namespace Alphaleonis.Win32.Network
 
          var other = obj as ServerStatisticsInfo;
 
-         return null != other && null != other.HostName && other.HostName.Equals(HostName, StringComparison.OrdinalIgnoreCase) && other.CollectedTimeUtc.Equals(CollectedTimeUtc);
+         return null != other && null != other.HostName && other.HostName.Equals(HostName, StringComparison.OrdinalIgnoreCase) && other.StatisticsStartTimeUtc.Equals(StatisticsStartTimeUtc);
       }
 
 

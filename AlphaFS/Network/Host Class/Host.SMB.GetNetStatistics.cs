@@ -27,58 +27,70 @@ namespace Alphaleonis.Win32.Network
 {
    partial class Host
    {
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <returns></returns>
+      /// <summary>[AlphaFS] Retrieves <see cref="ServerStatisticsInfo"/> operating statistics for the Server service from the local host.</summary>
+      /// <returns>A <see cref="ServerStatisticsInfo"/> instance.</returns>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
-      public static ServerStatisticsInfo GetServerNetStatistics()
+      public static ServerStatisticsInfo GetServerStatistics()
       {
-         return GetNetStatisticsCore(true, Environment.MachineName);
+         return (ServerStatisticsInfo) GetNetStatisticsCore(true, Environment.MachineName);
       }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="hostName"></param>
-      /// <returns></returns>
+      /// <summary>[AlphaFS] Retrieves <see cref="ServerStatisticsInfo"/> operating statistics for the Server service from the specified host.</summary>
+      /// <returns>A <see cref="ServerStatisticsInfo"/> instance.</returns>
+      /// <exception cref="NetworkInformationException"/>
+      /// <param name="hostName">The name of the local or remote host to retrieve statistics from.</param>
       [SecurityCritical]
-      public static ServerStatisticsInfo GetServerNetStatistics(string hostName)
+      public static ServerStatisticsInfo GetServerStatistics(string hostName)
       {
-         return GetNetStatisticsCore(true, hostName);
-      }
-
-
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="hostName"></param>
-      /// <returns></returns>
-      [SecurityCritical]
-      public static ServerStatisticsInfo GetWorkstationNetStatistics(string hostName)
-      {
-         return GetNetStatisticsCore(false, hostName);
+         return (ServerStatisticsInfo) GetNetStatisticsCore(true, hostName);
       }
 
 
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="isServer"></param>
-      /// <param name="hostName"></param>
-      /// <returns></returns>
+      /// <summary>[AlphaFS] Retrieves <see cref="WorkstationStatisticsInfo"/> operating statistics for the Workstation service from the local host.</summary>
+      /// <returns>A <see cref="WorkstationStatisticsInfo"/> instance.</returns>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
-      internal static ServerStatisticsInfo GetNetStatisticsCore(bool isServer, string hostName)
+      public static WorkstationStatisticsInfo GetWorkstationStatistics()
       {
-         return new ServerStatisticsInfo(hostName, false, GetNetStatisticsNative(isServer, hostName));
+         return (WorkstationStatisticsInfo) GetNetStatisticsCore(false, Environment.MachineName);
       }
 
-      
+
+      /// <summary>[AlphaFS] Retrieves <see cref="WorkstationStatisticsInfo"/> operating statistics for the Workstation service from the specified host.</summary>
+      /// <returns>A <see cref="WorkstationStatisticsInfo"/> instance.</returns>
+      /// <exception cref="NetworkInformationException"/>
+      /// <param name="hostName">The name of the local or remote host to retrieve statistics from.</param>
       [SecurityCritical]
-      internal static NativeMethods.STAT_SERVER_0 GetNetStatisticsNative(bool isServer, string hostName)
+      public static WorkstationStatisticsInfo GetWorkstationStatistics(string hostName)
+      {
+         return (WorkstationStatisticsInfo) GetNetStatisticsCore(false, hostName);
+      }
+
+
+
+
+      /// <summary>[AlphaFS] Retrieves <see cref="ServerStatisticsInfo"/> or <see cref="WorkstationStatisticsInfo"/> operating statistics for the Server- or Workstation service from the specified host.</summary>
+      /// <returns>A <see cref="ServerStatisticsInfo"/> or <see cref="WorkstationStatisticsInfo"/> instance, depending on the <paramref name="isServer"/> value.</returns>
+      /// <exception cref="NetworkInformationException"/>
+      /// <param name="isServer">true returns <see cref="ServerStatisticsInfo"/> information, false <see cref="WorkstationStatisticsInfo"/>.</param>
+      /// <param name="hostName">The name of the local or remote host to retrieve statistics from.</param>
+      [SecurityCritical]
+      internal static object GetNetStatisticsCore(bool isServer, string hostName)
+      {
+         return isServer
+
+            ? (object) new ServerStatisticsInfo(hostName, null)
+
+            : new WorkstationStatisticsInfo(hostName, null);
+      }
+
+
+      [SecurityCritical]
+      internal static T GetNetStatisticsNative<T>(bool isServer, string hostName)
       {
          SafeGlobalMemoryBufferHandle safeBuffer;
 
@@ -94,7 +106,7 @@ namespace Alphaleonis.Win32.Network
                throw new NetworkInformationException((int) lastError);
 
 
-            return safeBuffer.PtrToStructure<NativeMethods.STAT_SERVER_0>(0);
+            return safeBuffer.PtrToStructure<T>(0);
          }
       }
    }

@@ -34,11 +34,12 @@ namespace Alphaleonis.Win32.Network
       internal struct STAT_WORKSTATION_0
       {
          /// <summary>
-         /// Specifies the time statistics collection started. This member also indicates when statistics for the workstations were last cleared.
-         /// The value is stored as the number of seconds elapsed since 00:00:00, January 1, 1970.
+         /// <para>Specifies the time statistics collection started. This member also indicates when statistics for the workstations were last cleared.</para>
+         /// <para>The value is stored as the number of seconds elapsed since 00:00:00, January 1, 1970.</para>
          /// </summary>
          [MarshalAs(UnmanagedType.U8)] public readonly long StatisticsStartTime;
 
+         
          /// <summary>Specifies the total number of bytes received by the workstation.</summary>
          [MarshalAs(UnmanagedType.U8)] public readonly long BytesReceived;
 
