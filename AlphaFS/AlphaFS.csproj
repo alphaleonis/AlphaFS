@@ -496,6 +496,7 @@
     <Compile Include="Network\Host Class\Host.SMB.EnumerateOpenConnections.cs" />
     <Compile Include="Network\Host Class\Host.SMB.EnumerateShares.cs" />
     <Compile Include="Network\Host Class\Host.SMB.GetHostShareFromPath.cs" />
+    <Compile Include="Network\Host Class\Host.SMB.GetNetStatistics.cs" />
     <Compile Include="Network\Host Class\Host.SMB.GetShareInfo.cs" />
     <Compile Include="Network\Host Class\Host.WNet.DisconnectFrom.cs" />
     <Compile Include="Network\Host Class\Host.WNet.DisconnectDrive.cs" />
@@ -519,10 +520,14 @@
     <Compile Include="Network\Native Other\DFS_INFO_9.cs" />
     <Compile Include="Network\Native Other\DFS_TARGET_PRIORITY.cs" />
     <Compile Include="Network\Native Other\DFS_STORAGE_INFO_1.cs" />
+    <Compile Include="Network\Native Other\STAT_WORKSTATION_0.cs" />
+    <Compile Include="Network\Native Other\STAT_SERVER_0.cs" />
     <Compile Include="Network\Native Other\SHARE_INFO_502.cs" />
     <Compile Include="Network\NetworkInfo.cs" />
     <Compile Include="Network\NetworkConnectionInfo.cs" />
     <Compile Include="Network\Enumerations\ConnectivityStates.cs" />
+    <Compile Include="Network\WorkstationStatisticsInfo.cs" />
+    <Compile Include="Network\ServerStatisticsInfo.cs" />
     <Compile Include="Network\OpenConnectionInfo.cs" />
     <Compile Include="Network\OpenResourceInfo.cs" />
     <Compile Include="Network\ShareInfo.cs" />
