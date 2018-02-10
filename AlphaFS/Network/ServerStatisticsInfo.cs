@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Globalization;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -28,18 +27,34 @@ namespace Alphaleonis.Win32.Network
    [Serializable]
    public sealed class ServerStatisticsInfo
    {
-      [NonSerialized] private readonly DateTime _dateTimeNow;
+      [NonSerialized] private DateTime _dateTimeNow;
       [NonSerialized] private NativeMethods.STAT_SERVER_0 _serverStat;
-      
 
-      /// <summary>Create a ServerStatisticsInfo instance.</summary>
-      internal ServerStatisticsInfo(string hostName, NativeMethods.STAT_SERVER_0 serverStat)
+
+      /// <summary>Create a ServerStatisticsInfo instance from the local host.</summary>
+      public ServerStatisticsInfo() : this(Environment.MachineName, true, null)
       {
+      }
+
+
+      /// <summary>Create a ServerStatisticsInfo instance from the specified host name.</summary>
+      public ServerStatisticsInfo(string hostName) : this(hostName, true, null)
+      {
+      }
+
+
+      /// <summary>Create a ServerStatisticsInfo instance from the specified host name.</summary>
+      internal ServerStatisticsInfo(string hostName, bool refresh, NativeMethods.STAT_SERVER_0? serverStat)
+      {
+         HostName = !Utils.IsNullOrWhiteSpace(hostName) ? hostName : Environment.MachineName;
+
          _dateTimeNow = DateTime.UtcNow;
 
-         HostName = hostName;
+         if (serverStat.HasValue)
+            _serverStat = (NativeMethods.STAT_SERVER_0) serverStat;
 
-         _serverStat = serverStat;
+         else if (refresh)
+            Refresh();
       }
 
 
@@ -101,6 +116,20 @@ namespace Alphaleonis.Win32.Network
       }
 
 
+      /// <summary>The local time when statistics collection started or when the statistics were last cleared.</summary>
+      public DateTime CollectedTime
+      {
+         get { return CollectedTimeUtc.ToLocalTime(); }
+      }
+
+
+      /// <summary>The time when statistics collection started or when the statistics were last cleared.</summary>
+      public DateTime CollectedTimeUtc
+      {
+         get { return new DateTime((_dateTimeNow - new DateTime(_serverStat.sts0_start, DateTimeKind.Utc)).Ticks, DateTimeKind.Utc); }
+      }
+
+
       /// <summary>The number of times a server device is opened.</summary>
       public int DevicesOpened
       {
@@ -116,7 +145,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The host name from where the statistics are gathered.</summary>
-      public string HostName { get; set; }
+      public string HostName { get; }
 
 
       /// <summary>The number of server print jobs spooled.</summary>
@@ -152,21 +181,7 @@ namespace Alphaleonis.Win32.Network
       {
          get { return (int) _serverStat.sts0_stimedout; }
       }
-
-
-      /// <summary>The local time when statistics collection started or when the statistics were last cleared.</summary>
-      public DateTime StartTime
-      {
-         get { return StartTimeUtc.ToLocalTime(); }
-      }
-
-
-      /// <summary>The time when statistics collection started or when the statistics were last cleared.</summary>
-      public DateTime StartTimeUtc
-      {
-         get { return new DateTime((_dateTimeNow - new DateTime(_serverStat.sts0_start, DateTimeKind.Utc)).Ticks, DateTimeKind.Utc); }
-      }
-
+      
 
       /// <summary>The number of server system errors.</summary>
       public int SystemErrors
@@ -182,6 +197,8 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Refreshes the state of the object.</summary>
       public void Refresh()
       {
+         _dateTimeNow = DateTime.UtcNow;
+
          _serverStat = Host.GetNetStatisticsNative(true, HostName);
       }
 
@@ -190,7 +207,49 @@ namespace Alphaleonis.Win32.Network
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         return StartTime.ToString(CultureInfo.CurrentCulture);
+         return HostName;
+      }
+
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="obj">Another object to compare to.</param>
+      /// <returns><see langword="true"/> if the specified Object is equal to the current Object; otherwise, <see langword="false"/>.</returns>
+      public override bool Equals(object obj)
+      {
+         if (null == obj || GetType() != obj.GetType())
+            return false;
+
+         var other = obj as ServerStatisticsInfo;
+
+         return null != other && null != other.HostName && other.HostName.Equals(HostName, StringComparison.OrdinalIgnoreCase) && other.CollectedTimeUtc.Equals(CollectedTimeUtc);
+      }
+
+
+      /// <summary>Serves as a hash function for a particular type.</summary>
+      /// <returns>A hash code for the current Object.</returns>
+      public override int GetHashCode()
+      {
+         return null != HostName ? HostName.GetHashCode() : 0;
+      }
+
+
+      /// <summary>Implements the operator ==</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator ==(ServerStatisticsInfo left, ServerStatisticsInfo right)
+      {
+         return left is null && right is null || !(left is null) && !(right is null) && left.Equals(right);
+      }
+
+
+      /// <summary>Implements the operator !=</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator !=(ServerStatisticsInfo left, ServerStatisticsInfo right)
+      {
+         return !(left == right);
       }
 
       #endregion // Methods

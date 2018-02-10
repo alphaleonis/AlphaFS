@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Net.NetworkInformation;
 using System.Security;
 
 namespace Alphaleonis.Win32.Network
@@ -72,11 +73,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       internal static ServerStatisticsInfo GetNetStatisticsCore(bool isServer, string hostName)
       {
-         if (Utils.IsNullOrWhiteSpace(hostName))
-            throw new ArgumentNullException("hostName");
-
-
-         return new ServerStatisticsInfo(hostName, GetNetStatisticsNative(isServer, hostName));
+         return new ServerStatisticsInfo(hostName, false, GetNetStatisticsNative(isServer, hostName));
       }
 
       
@@ -85,13 +82,16 @@ namespace Alphaleonis.Win32.Network
       {
          SafeGlobalMemoryBufferHandle safeBuffer;
 
+
+         // hostName is allowed to be null.
+
          var lastError = NativeMethods.NetStatisticsGet(hostName, isServer ? "LanmanServer" : "LanmanWorkstation", 0, 0, out safeBuffer);
 
 
          using (safeBuffer)
          {
             if (lastError != Win32Errors.NERR_Success)
-               NativeError.ThrowException(lastError, hostName);
+               throw new NetworkInformationException((int) lastError);
 
 
             return safeBuffer.PtrToStructure<NativeMethods.STAT_SERVER_0>(0);
