@@ -552,7 +552,6 @@
     <Compile Include="Network\Native Other\SESSION_INFO_2.cs" />
     <Compile Include="Network\Native Other\SESSION_INFO_1.cs" />
     <Compile Include="Network\Native Other\SESSION_INFO_0.cs" />
-    <Compile Include="Network\NetworkListManager.cs" />
     <Compile Include="Network\Native Other\DFS_INFO_9.cs" />
     <Compile Include="Network\Native Other\DFS_TARGET_PRIORITY.cs" />
     <Compile Include="Network\Native Other\DFS_STORAGE_INFO_1.cs" />
@@ -654,7 +653,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
