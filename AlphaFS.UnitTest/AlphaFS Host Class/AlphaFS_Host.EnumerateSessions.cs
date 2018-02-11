@@ -32,16 +32,16 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Host_EnumerateSessions_Local_Success()
       {
          var host = UnitTestConstants.LocalHost;
-
-         EnumerateSessions(host, true);
+         
+         EnumerateSessions(host);
       }
 
 
 
 
-      private void EnumerateSessions(string host, bool isNetwork)
+      private void EnumerateSessions(string host)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         UnitTestConstants.PrintUnitTestHeader(false);
          
          Console.WriteLine("\nInput Host: [{0}]", host);
 
@@ -52,7 +52,7 @@ namespace AlphaFS.UnitTest
          {
             //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
 
-            if (UnitTestConstants.Dump(sessionsInfo, -18))
+            if (UnitTestConstants.Dump(sessionsInfo, -16))
                sessionCount++;
 
             Console.WriteLine();

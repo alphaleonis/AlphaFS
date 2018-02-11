@@ -20,6 +20,8 @@
  */
 
 using System;
+using System.Net;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -27,68 +29,90 @@ namespace Alphaleonis.Win32.Network
    [Serializable]
    public sealed class SessionInfo
    {
+      #region Private Fields
+
+      private string _netName;
+
+      #endregion // Private Fields
+
+
       #region Constructor
 
       /// <summary>Creates a <see cref="SessionInfo"/> instance.</summary>
+      /// <param name="hostName">The DNS or NetBIOS name of the specified host.</param>
       /// <param name="sessionInfoLevel">One of the <see cref="SessionInfoLevel"/> options.</param>
-      /// <param name="sessionInfo">A <see cref="NativeMethods.SESSION_INFO_0"/>, <see cref="NativeMethods.SESSION_INFO_1"/>, <see cref="NativeMethods.SESSION_INFO_2"/>, <see cref="NativeMethods.SESSION_INFO_10"/> or <see cref="NativeMethods.SESSION_INFO_502"/> instance.</param>
-      internal SessionInfo(SessionInfoLevel sessionInfoLevel, object sessionInfo)
+      /// <param name="structure">
+      /// A <see cref="NativeMethods.SESSION_INFO_502"/>, <see cref="NativeMethods.SESSION_INFO_2"/>,
+      /// <see cref="NativeMethods.SESSION_INFO_1"/>, <see cref="NativeMethods.SESSION_INFO_10"/> or <see cref="NativeMethods.SESSION_INFO_0"/> instance.
+      /// </param>
+      internal SessionInfo(string hostName, SessionInfoLevel sessionInfoLevel, object structure)
       {
-         SessionInfoLevel = sessionInfoLevel;
+         var flags = 0;
 
 
          switch (sessionInfoLevel)
          {
             case SessionInfoLevel.Info502:
-               var sesi502 = (NativeMethods.SESSION_INFO_502) sessionInfo;
-               HostName = sesi502.sesi502_cname;
+               var sesi502 = (NativeMethods.SESSION_INFO_502) structure;
+               NetName = sesi502.sesi502_cname;
                UserName = sesi502.sesi502_username;
                OpenedResources = (int) sesi502.sesi502_num_opens;
-               ActiveTime = (int) sesi502.sesi502_time;
-               IdleTime = (int) sesi502.sesi502_idle_time;
-               //Flags = (int) sesi502.sesi502_user_flags;
+               ActiveTime = TimeSpan.FromSeconds((int) sesi502.sesi502_time);
+               IdleTime = TimeSpan.FromSeconds((int) sesi502.sesi502_idle_time);
                ClientType = sesi502.sesi502_cltype_name;
                TransportType = sesi502.sesi502_transport;
+               flags = (int) sesi502.sesi502_user_flags;
                break;
 
 
             case SessionInfoLevel.Info2:
-               var sesi2 = (NativeMethods.SESSION_INFO_2) sessionInfo;
-               HostName = sesi2.sesi2_cname;
+               var sesi2 = (NativeMethods.SESSION_INFO_2) structure;
+               NetName = sesi2.sesi2_cname;
                UserName = sesi2.sesi2_username;
                OpenedResources = (int) sesi2.sesi2_num_opens;
-               ActiveTime = (int) sesi2.sesi2_time;
-               IdleTime = (int) sesi2.sesi2_idle_time;
-               //Flags = (int) sesi2.sesi2_user_flags;
+               ActiveTime = TimeSpan.FromSeconds((int) sesi2.sesi2_time);
                ClientType = sesi2.sesi2_cltype_name;
+               flags = (int) sesi2.sesi2_user_flags;
                break;
 
 
             case SessionInfoLevel.Info1:
-               var sesi1 = (NativeMethods.SESSION_INFO_1) sessionInfo;
-               HostName = sesi1.sesi1_cname;
+               var sesi1 = (NativeMethods.SESSION_INFO_1) structure;
+               NetName = sesi1.sesi1_cname;
                UserName = sesi1.sesi1_username;
                OpenedResources = (int) sesi1.sesi1_num_opens;
-               ActiveTime = (int) sesi1.sesi1_time;
-               IdleTime = (int) sesi1.sesi1_idle_time;
-               //Flags = (int) sesi1.sesi1_user_flags;
+               ActiveTime = TimeSpan.FromSeconds((int) sesi1.sesi1_time);
+               IdleTime = TimeSpan.FromSeconds((int) sesi1.sesi1_idle_time);
+               flags = (int) sesi1.sesi1_user_flags;
                break;
 
 
             case SessionInfoLevel.Info10:
-               var sesi10 = (NativeMethods.SESSION_INFO_10) sessionInfo;
-               HostName = sesi10.sesi10_cname;
+               var sesi10 = (NativeMethods.SESSION_INFO_10) structure;
+               NetName = sesi10.sesi10_cname;
                UserName = sesi10.sesi10_username;
-               ActiveTime = (int) sesi10.sesi10_time;
-               IdleTime = (int) sesi10.sesi10_idle_time;
+               ActiveTime = TimeSpan.FromSeconds((int) sesi10.sesi10_time);
+               IdleTime = TimeSpan.FromSeconds((int) sesi10.sesi10_idle_time);
                break;
 
 
             case SessionInfoLevel.Info0:
-               var sesi0 = (NativeMethods.SESSION_INFO_0) sessionInfo;
-               HostName = sesi0.sesi0_cname;
+               var sesi0 = (NativeMethods.SESSION_INFO_0) structure;
+               NetName = sesi0.sesi0_cname;
                break;
          }
+
+
+         HostName = hostName;
+
+         SessionInfoLevel = sessionInfoLevel;
+         
+         // SESS_GUEST = 1,
+         // SESS_NOENCRYPTION = 2
+
+         GuestSession = flags == 1;
+
+         EncryptedSession = !GuestSession && flags != 2;
       }
 
       #endregion // Constructor
@@ -108,8 +132,17 @@ namespace Alphaleonis.Win32.Network
 
       #region Properties
 
-      /// <summary>The name of the Computer that established the session..</summary>
+      /// <summary>The host name of this session information.</summary>
       public string HostName { get; private set; }
+
+
+      /// <summary>The Computer name or IP address that established the session.</summary>
+      public string NetName
+      {
+         get { return _netName; }
+
+         set { _netName = null != value ? value.Replace(Path.LongPathUncPrefix, string.Empty).Replace(Path.UncPrefix, string.Empty).Trim('[', ']') : null; }
+      }
 
 
       /// <summary>The name of the User who established the session.</summary>
@@ -120,12 +153,12 @@ namespace Alphaleonis.Win32.Network
       public int OpenedResources { get; private set; }
 
 
-      /// <summary>The number of seconds the session has been active.</summary>
-      public int ActiveTime { get; private set; }
+      /// <summary>The session active duration.</summary>
+      public TimeSpan ActiveTime { get; private set; }
 
 
-      /// <summary>The number of seconds the session has been idle.</summary>
-      public int IdleTime { get; private set; }
+      /// <summary>The session idle duration.</summary>
+      public TimeSpan IdleTime { get; private set; }
 
 
       ///// <summary>
@@ -136,10 +169,10 @@ namespace Alphaleonis.Win32.Network
       ////public int Flags { get; private set; }
 
       /// <summary>A value that describes how the User established the session.</summary>
-      public bool IsGuest { get; private set; }
+      public bool GuestSession { get; private set; }
 
       /// <summary>A value that describes how the User established the session.</summary>
-      public bool IsEncrypted { get; private set; }
+      public bool EncryptedSession { get; private set; }
 
 
       /// <summary>The type of client that established the session. Sessions from LAN Manager servers running UNIX also will appear as LAN Manager 2.0.</summary>

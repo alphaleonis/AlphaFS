@@ -29,19 +29,19 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Host_EnumerateShares_Network_Success()
+      public void AlphaFS_Host_EnumerateShares_Local_Success()
       {
          var host = UnitTestConstants.LocalHost;
 
-         EnumerateShares(host, true);
+         EnumerateShares(host);
       }
 
 
 
 
-      private void EnumerateShares(string host, bool isNetwork)
+      private void EnumerateShares(string host)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         UnitTestConstants.PrintUnitTestHeader(false);
          
          Console.WriteLine("\nInput Host: [{0}]", host);
 

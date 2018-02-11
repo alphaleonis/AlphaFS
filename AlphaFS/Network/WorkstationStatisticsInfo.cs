@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The host name from where the statistics are gathered.</summary>
-      public string HostName { get; }
+      public string HostName { get; private set; }
 
 
       /// <summary>The total number of network operations that failed to begin.</summary>
@@ -479,7 +479,7 @@ namespace Alphaleonis.Win32.Network
       /// <returns>The result of the operator.</returns>
       public static bool operator ==(WorkstationStatisticsInfo left, WorkstationStatisticsInfo right)
       {
-         return left is null && right is null || !(left is null) && !(right is null) && left.Equals(right);
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
       }
 
 

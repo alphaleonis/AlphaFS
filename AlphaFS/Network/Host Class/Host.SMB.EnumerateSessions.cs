@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>[AlphaFS] Enumerates sessions established on the specified <paramref name="hostName"/>.</summary>
       /// <returns>An <see cref="IEnumerable{SessionInfo}"/> collection from the specified <paramref name="hostName"/>.</returns>
-      /// <param name="hostName">The DNS or NetBIOS name of the specified host. If this parameter is NULL, the local Computer is used.</param>
+      /// <param name="hostName">The DNS or NetBIOS name of the specified host. If this parameter is <c>null</c>, the local Computer is used.</param>
       [SecurityCritical]
       public static IEnumerable<SessionInfo> EnumerateSessions(string hostName)
       {
@@ -50,10 +50,35 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>[AlphaFS] Enumerates sessions established on the specified <paramref name="hostName"/>.</summary>
       /// <returns>An <see cref="IEnumerable{SessionInfo}"/> collection from the specified <paramref name="hostName"/>.</returns>
+      /// <param name="hostName">The DNS or NetBIOS name of the specified host. If this parameter is <c>null</c>, the local Computer is used.</param>
+      /// <param name="clientName">The name of the Computer session for which information is to be returned. If this parameter is <c>null</c>, information for all Computer sessions on the server is returned.</param>
+      [SecurityCritical]
+      public static IEnumerable<SessionInfo> EnumerateSessions(string hostName, string clientName)
+      {
+         return EnumerateSessionsCore(hostName, clientName, null);
+      }
+
+
+      /// <summary>[AlphaFS] Enumerates sessions established on the specified <paramref name="hostName"/>.</summary>
+      /// <returns>An <see cref="IEnumerable{SessionInfo}"/> collection from the specified <paramref name="hostName"/>.</returns>
+      /// <param name="hostName">The DNS or NetBIOS name of the specified host. If this parameter is <c>null</c>, the local Computer is used.</param>
+      /// <param name="clientName">The name of the Computer session for which information is to be returned. If this parameter is <c>null</c>, information for all Computer sessions on the server is returned.</param>
+      /// <param name="userName">The name of the user for which information is to be returned. If this parameter is <c>null</c>, information for all users is returned.</param>
+      [SecurityCritical]
+      public static IEnumerable<SessionInfo> EnumerateSessions(string hostName, string clientName, string userName)
+      {
+         return EnumerateSessionsCore(hostName, clientName, userName);
+      }
+
+
+      
+      
+      /// <summary>[AlphaFS] Enumerates sessions established on the specified <paramref name="hostName"/>.</summary>
+      /// <returns>An <see cref="IEnumerable{SessionInfo}"/> collection from the specified <paramref name="hostName"/>.</returns>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="hostName">The DNS or NetBIOS name of the specified host. If this parameter is NULL, the local Computer is used.</param>
-      /// <param name="clientName">The name of the Computer session for which information is to be returned. If this parameter is NULL, NetSessionEnum returns information for all Computer sessions on the server.</param>
-      /// <param name="userName">The name of the user for which information is to be returned. If this parameter is NULL, NetSessionEnum returns information for all users.</param>
+      /// <param name="hostName">The DNS or NetBIOS name of the specified host. If this parameter is <c>null</c>, the local Computer is used.</param>
+      /// <param name="clientName">The name of the Computer session for which information is to be returned. If this parameter is <c>null</c>, information for all Computer sessions on the server is returned.</param>
+      /// <param name="userName">The name of the user for which information is to be returned. If this parameter is <c>null</c>, information for all users is returned.</param>
       [SecurityCritical]
       internal static IEnumerable<SessionInfo> EnumerateSessionsCore(string hostName, string clientName, string userName)
       {
@@ -62,13 +87,15 @@ namespace Alphaleonis.Win32.Network
 
 
          // hostName is allowed to be null.
+         // clientName is allowed to be null.
+         // userName is allowed to be null.
 
          var stripUnc = !Utils.IsNullOrWhiteSpace(hostName) ? Path.GetRegularPathCore(hostName, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty) : null;
 
 
-         // Try SESSION_INFO_502 structure.
+         // Start with SESSION_INFO_502 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_502 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(SessionInfoLevel.Info502, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_502 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info502, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
@@ -84,7 +111,7 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SESSION_INFO_2 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(SessionInfoLevel.Info2, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info2, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
@@ -100,7 +127,7 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SHARE_INFO_1 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(SessionInfoLevel.Info1, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info1, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
@@ -116,7 +143,7 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SESSION_INFO_10 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_10 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(SessionInfoLevel.Info10, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_10 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info10, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
@@ -132,7 +159,7 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SESSION_INFO_0 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_0 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(SessionInfoLevel.Info0, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_0 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info0, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
