@@ -204,7 +204,7 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      /// <summary>The structure level for the ShareInfo instance.</summary>
+      /// <summary>The structure level for the <see cref="ShareInfo"/> instance.</summary>
       public ShareInfoLevel ShareLevel { get; private set; }
 
       #endregion // Properties
