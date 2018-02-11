@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Host.GetUncName(): [{0}]", hostUncName);
 
 
-         Assert.IsTrue(hostUncName.StartsWith(@"\\"));
+         Assert.IsTrue(hostUncName.StartsWith(Alphaleonis.Win32.Filesystem.Path.UncPrefix));
 
          Assert.AreEqual(Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName, hostUncName);
       }

@@ -22,6 +22,7 @@
 using System;
 using System.Net.NetworkInformation;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -40,7 +41,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>[AlphaFS] Retrieves <see cref="ServerStatisticsInfo"/> operating statistics for the Server service from the specified host.</summary>
       /// <returns>A <see cref="ServerStatisticsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="hostName">The name of the local or remote host to retrieve statistics from.</param>
+      /// <param name="hostName">The DNS or NetBIOS name of the local or remote host to retrieve statistics from.</param>
       [SecurityCritical]
       public static ServerStatisticsInfo GetServerStatistics(string hostName)
       {
@@ -63,7 +64,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>[AlphaFS] Retrieves <see cref="WorkstationStatisticsInfo"/> operating statistics for the Workstation service from the specified host.</summary>
       /// <returns>A <see cref="WorkstationStatisticsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="hostName">The name of the local or remote host to retrieve statistics from.</param>
+      /// <param name="hostName">The DNS or NetBIOS name of the local or remote host to retrieve statistics from.</param>
       [SecurityCritical]
       public static WorkstationStatisticsInfo GetWorkstationStatistics(string hostName)
       {
@@ -77,7 +78,7 @@ namespace Alphaleonis.Win32.Network
       /// <returns>A <see cref="ServerStatisticsInfo"/> or <see cref="WorkstationStatisticsInfo"/> instance, depending on the <paramref name="isServer"/> value.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="isServer">true returns <see cref="ServerStatisticsInfo"/> information, false <see cref="WorkstationStatisticsInfo"/>.</param>
-      /// <param name="hostName">The name of the local or remote host to retrieve statistics from.</param>
+      /// <param name="hostName">The DNS or NetBIOS name of the local or remote host to retrieve statistics from.</param>
       [SecurityCritical]
       internal static object GetNetStatisticsCore(bool isServer, string hostName)
       {
@@ -97,7 +98,9 @@ namespace Alphaleonis.Win32.Network
 
          // hostName is allowed to be null.
 
-         var lastError = NativeMethods.NetStatisticsGet(hostName, isServer ? "LanmanServer" : "LanmanWorkstation", 0, 0, out safeBuffer);
+         var stripUnc = !Utils.IsNullOrWhiteSpace(hostName) ? Path.GetRegularPathCore(hostName, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty) : null;
+
+         var lastError = NativeMethods.NetStatisticsGet(stripUnc, isServer ? "LanmanServer" : "LanmanWorkstation", 0, 0, out safeBuffer);
 
 
          using (safeBuffer)

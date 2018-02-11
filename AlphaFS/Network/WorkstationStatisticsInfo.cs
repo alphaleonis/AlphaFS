@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -149,7 +150,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The host name from where the statistics are gathered.</summary>
-      public string HostName { get; }
+      public string HostName { get; private set; }
 
 
       /// <summary>The total number of network operations that failed to begin.</summary>
@@ -167,6 +168,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The total number of connections to servers supporting the LanManager 2.0 dialect that have succeeded.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lanman")]
       public int Lanman20Connects
       {
          get { return (int) _workstationStat.Lanman20Connects; }
@@ -174,6 +176,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The total number of connections to servers supporting the LanManager 2.1 dialect that have succeeded.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lanman")]
       public int Lanman21Connects
       {
          get { return (int) _workstationStat.Lanman21Connects; }
@@ -181,6 +184,9 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The total number of connections to servers supporting the NTLM dialect that have succeeded.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lanman")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Nt")]
       public int LanmanNtConnects
       {
          get { return (int) _workstationStat.LanmanNtConnects; }
@@ -188,6 +194,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The total number of read requests the workstation has sent to servers that are greater than twice the size of the server's negotiated buffer size.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Smbs")]
       public int LargeReadSmbs
       {
          get { return (int) _workstationStat.LargeReadSmbs; }
@@ -195,6 +202,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The total number of write requests the workstation has sent to servers that are greater than twice the size of the server's negotiated buffer size.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Smbs")]
       public int LargeWriteSmbs
       {
          get { return (int) _workstationStat.LargeWriteSmbs; }
@@ -328,6 +336,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The total number of read requests the workstation has sent to servers.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Smbs")]
       public int ReadSmbs
       {
          get { return (int) _workstationStat.ReadSmbs; }
@@ -356,6 +365,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The total number of read requests the workstation has sent to servers that are less than 1/4 of the size of the server's negotiated buffer size.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Smbs")]
       public int SmallReadSmbs
       {
          get { return (int) _workstationStat.SmallReadSmbs; }
@@ -363,6 +373,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The total number of write requests the workstation has sent to servers that are less than 1/4 of the size of the server's negotiated buffer size.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Smbs")]
       public int SmallWriteSmbs
       {
          get { return (int) _workstationStat.SmallWriteSmbs; }
@@ -384,6 +395,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The total number of server message blocks (SMBs) received by the workstation.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Smbs")]
       public long SmbsReceived
       {
          get { return _workstationStat.SmbsReceived; }
@@ -391,6 +403,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The total number of SMBs transmitted by the workstation.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Smbs")]
       public long SmbsTransmitted
       {
          get { return _workstationStat.SmbsTransmitted; }
@@ -412,6 +425,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>The total number of write requests the workstation has sent to servers.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Smbs")]
       public int WriteSmbs
       {
          get { return (int) _workstationStat.WriteSmbs; }
@@ -465,7 +479,7 @@ namespace Alphaleonis.Win32.Network
       /// <returns>The result of the operator.</returns>
       public static bool operator ==(WorkstationStatisticsInfo left, WorkstationStatisticsInfo right)
       {
-         return left is null && right is null || !(left is null) && !(right is null) && left.Equals(right);
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
       }
 
 

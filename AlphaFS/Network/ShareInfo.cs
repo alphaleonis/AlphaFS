@@ -152,7 +152,7 @@ namespace Alphaleonis.Win32.Network
       public long MaxUses { get; private set; }
 
 
-      /// <summary>The name of a shared resource.</summary>
+      /// <summary>The name of the shared resource.</summary>
       public string NetName { get; private set; }
 
 
