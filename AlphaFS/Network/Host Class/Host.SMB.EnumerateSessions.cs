@@ -34,44 +34,45 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<SessionInfo> EnumerateSessions()
       {
-         return EnumerateSessionsCore(Environment.MachineName);
+         return EnumerateSessionsCore(Environment.MachineName, null, null);
       }
 
 
       /// <summary>[AlphaFS] Enumerates sessions established on the specified <paramref name="hostName"/>.</summary>
       /// <returns>An <see cref="IEnumerable{SessionInfo}"/> collection from the specified <paramref name="hostName"/>.</returns>
-      /// <param name="hostName">The DNS or NetBIOS name of the specified host.</param>
+      /// <param name="hostName">The DNS or NetBIOS name of the specified host. If this parameter is NULL, the local Computer is used.</param>
       [SecurityCritical]
       public static IEnumerable<SessionInfo> EnumerateSessions(string hostName)
       {
-         return EnumerateSessionsCore(hostName);
+         return EnumerateSessionsCore(hostName, null, null);
       }
 
 
       /// <summary>[AlphaFS] Enumerates sessions established on the specified <paramref name="hostName"/>.</summary>
       /// <returns>An <see cref="IEnumerable{SessionInfo}"/> collection from the specified <paramref name="hostName"/>.</returns>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="hostName">The DNS or NetBIOS name of the specified host.</param>
+      /// <param name="hostName">The DNS or NetBIOS name of the specified host. If this parameter is NULL, the local Computer is used.</param>
+      /// <param name="clientName">The name of the Computer session for which information is to be returned. If this parameter is NULL, NetSessionEnum returns information for all Computer sessions on the server.</param>
+      /// <param name="userName">The name of the user for which information is to be returned. If this parameter is NULL, NetSessionEnum returns information for all users.</param>
       [SecurityCritical]
-      internal static IEnumerable<SessionInfo> EnumerateSessionsCore(string hostName)
+      internal static IEnumerable<SessionInfo> EnumerateSessionsCore(string hostName, string clientName, string userName)
       {
          var fd = new FunctionData();
          var hasItems = false;
 
-         // When host == null, the local computer is used.
-         // However, the resulting Host property will be empty.
-         // So, explicitly state Environment.MachineName to prevent this.
-         // Furthermore, the UNC prefix: \\ is not required and always removed.
-         var stripUnc = Utils.IsNullOrWhiteSpace(hostName) ? Environment.MachineName : Path.GetRegularPathCore(hostName, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
+
+         // hostName is allowed to be null.
+
+         var stripUnc = !Utils.IsNullOrWhiteSpace(hostName) ? Path.GetRegularPathCore(hostName, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty) : null;
 
 
          // Try SESSION_INFO_502 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_502 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info502, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_502 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(SessionInfoLevel.Info502, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
-               NativeMethods.NetSessionEnum(stripUnc, null, null, SessionInfoLevel.Info502, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), true))
+               NativeMethods.NetSessionEnum(stripUnc, clientName, userName, SessionInfoLevel.Info502, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), true))
          {
             yield return sessionInfo;
             hasItems = true;
@@ -83,11 +84,11 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SESSION_INFO_2 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info2, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(SessionInfoLevel.Info2, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
-               NativeMethods.NetSessionEnum(stripUnc, null, null, SessionInfoLevel.Info2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), true))
+               NativeMethods.NetSessionEnum(stripUnc, clientName, userName, SessionInfoLevel.Info2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), true))
          {
             yield return sessionInfo;
             hasItems = true;
@@ -99,11 +100,11 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SHARE_INFO_1 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info1, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(SessionInfoLevel.Info1, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
-               NativeMethods.NetSessionEnum(stripUnc, null, null, SessionInfoLevel.Info1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), true))
+               NativeMethods.NetSessionEnum(stripUnc, clientName, userName, SessionInfoLevel.Info1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), true))
          {
             yield return sessionInfo;
             hasItems = true;
@@ -115,11 +116,11 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SESSION_INFO_10 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_10 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info10, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_10 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(SessionInfoLevel.Info10, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
-               NativeMethods.NetSessionEnum(stripUnc, null, null, SessionInfoLevel.Info10, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), true))
+               NativeMethods.NetSessionEnum(stripUnc, clientName, userName, SessionInfoLevel.Info10, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), true))
          {
             yield return sessionInfo;
             hasItems = true;
@@ -131,11 +132,11 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SESSION_INFO_0 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_0 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info0, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_0 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(SessionInfoLevel.Info0, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
-               NativeMethods.NetSessionEnum(stripUnc, null, null, SessionInfoLevel.Info0, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), true))
+               NativeMethods.NetSessionEnum(stripUnc, clientName, userName, SessionInfoLevel.Info0, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), true))
          {
             yield return sessionInfo;
          }

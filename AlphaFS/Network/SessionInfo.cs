@@ -30,12 +30,11 @@ namespace Alphaleonis.Win32.Network
       #region Constructor
 
       /// <summary>Creates a <see cref="SessionInfo"/> instance.</summary>
-      /// <param name="hostName">The DNS or NetBIOS name of the specified host.</param>
       /// <param name="sessionInfoLevel">One of the <see cref="SessionInfoLevel"/> options.</param>
       /// <param name="sessionInfo">A <see cref="NativeMethods.SESSION_INFO_0"/>, <see cref="NativeMethods.SESSION_INFO_1"/>, <see cref="NativeMethods.SESSION_INFO_2"/>, <see cref="NativeMethods.SESSION_INFO_10"/> or <see cref="NativeMethods.SESSION_INFO_502"/> instance.</param>
-      internal SessionInfo(string hostName, SessionInfoLevel sessionInfoLevel, object sessionInfo)
+      internal SessionInfo(SessionInfoLevel sessionInfoLevel, object sessionInfo)
       {
-         hostName = hostName ?? Environment.MachineName;
+         SessionInfoLevel = sessionInfoLevel;
 
 
          switch (sessionInfoLevel)
@@ -43,31 +42,53 @@ namespace Alphaleonis.Win32.Network
             case SessionInfoLevel.Info502:
                var sesi502 = (NativeMethods.SESSION_INFO_502) sessionInfo;
                HostName = sesi502.sesi502_cname;
+               UserName = sesi502.sesi502_username;
+               OpenedResources = (int) sesi502.sesi502_num_opens;
+               ActiveTime = (int) sesi502.sesi502_time;
+               IdleTime = (int) sesi502.sesi502_idle_time;
+               //Flags = (int) sesi502.sesi502_user_flags;
+               ClientType = sesi502.sesi502_cltype_name;
+               TransportType = sesi502.sesi502_transport;
                break;
+
 
             case SessionInfoLevel.Info2:
                var sesi2 = (NativeMethods.SESSION_INFO_2) sessionInfo;
                HostName = sesi2.sesi2_cname;
+               UserName = sesi2.sesi2_username;
+               OpenedResources = (int) sesi2.sesi2_num_opens;
+               ActiveTime = (int) sesi2.sesi2_time;
+               IdleTime = (int) sesi2.sesi2_idle_time;
+               //Flags = (int) sesi2.sesi2_user_flags;
+               ClientType = sesi2.sesi2_cltype_name;
                break;
+
 
             case SessionInfoLevel.Info1:
                var sesi1 = (NativeMethods.SESSION_INFO_1) sessionInfo;
                HostName = sesi1.sesi1_cname;
+               UserName = sesi1.sesi1_username;
+               OpenedResources = (int) sesi1.sesi1_num_opens;
+               ActiveTime = (int) sesi1.sesi1_time;
+               IdleTime = (int) sesi1.sesi1_idle_time;
+               //Flags = (int) sesi1.sesi1_user_flags;
                break;
+
 
             case SessionInfoLevel.Info10:
                var sesi10 = (NativeMethods.SESSION_INFO_10) sessionInfo;
                HostName = sesi10.sesi10_cname;
+               UserName = sesi10.sesi10_username;
+               ActiveTime = (int) sesi10.sesi10_time;
+               IdleTime = (int) sesi10.sesi10_idle_time;
                break;
+
 
             case SessionInfoLevel.Info0:
                var sesi0 = (NativeMethods.SESSION_INFO_0) sessionInfo;
                HostName = sesi0.sesi0_cname;
                break;
          }
-
-
-         SessionInfoLevel = sessionInfoLevel;
       }
 
       #endregion // Constructor
@@ -87,47 +108,49 @@ namespace Alphaleonis.Win32.Network
 
       #region Properties
 
-      /// <summary>The number of current connections to the resource.</summary>
-      public long CurrentUses { get; private set; }
-
-
-      /// <summary>The maximum number of concurrent connections that the shared resource can accommodate.</summary>
-      /// <remarks>The number of connections is unlimited if the value specified in this member is –1.</remarks>
-      public long MaxUses { get; private set; }
-
-
-      /// <summary>The name of a shared resource.</summary>
-      public string NetName { get; private set; }
-
-
-      /// <summary>The share's password (when the server is running with share-level security).</summary>
-      public string Password { get; private set; }
-
-
-      /// <summary>The local path for the shared resource.</summary>
-      /// <remarks>For disks, this member is the path being shared. For print queues, this member is the name of the print queue being shared.</remarks>
-      public string Path { get; private set; }
-
-
-      /// <summary>The shared resource's permissions for servers running with share-level security.</summary>
-      /// <remarks>Note that Windows does not support share-level security. This member is ignored on a server running user-level security.</remarks>
-      public AccessPermissions Permissions { get; private set; }
-
-
-      /// <summary>An optional comment about the shared resource.</summary>
-      public string Remark { get; private set; }
-
-
-      /// <summary>Specifies the SECURITY_DESCRIPTOR associated with this share.</summary>
-      public IntPtr SecurityDescriptor { get; private set; }
-
-
-      /// <summary>A pointer to a string that specifies the DNS or NetBIOS name of the remote server on which the shared resource resides.</summary>
-      /// <remarks>A value of "*" indicates no configured server name.</remarks>
+      /// <summary>The name of the Computer that established the session..</summary>
       public string HostName { get; private set; }
 
 
-      /// <summary>The structure level for the SessionInfo instance.</summary>
+      /// <summary>The name of the User who established the session.</summary>
+      public string UserName { get; private set; }
+
+
+      /// <summary>The number of files, devices, and pipes opened during the session.</summary>
+      public int OpenedResources { get; private set; }
+
+
+      /// <summary>The number of seconds the session has been active.</summary>
+      public int ActiveTime { get; private set; }
+
+
+      /// <summary>The number of seconds the session has been idle.</summary>
+      public int IdleTime { get; private set; }
+
+
+      ///// <summary>
+      ///// <para>Specifies a value that describes how the user established the session. This member can be one of the following values:</para>
+      ///// <para>SESS_GUEST: The user specified by the <see cref="UserName"/> member established the session using a guest account.</para>
+      ///// <para>SESS_NOENCRYPTION: The user specified by the <see cref="UserName"/> member established the session without using password encryption.</para>
+      ///// </summary>
+      ////public int Flags { get; private set; }
+
+      /// <summary>A value that describes how the User established the session.</summary>
+      public bool IsGuest { get; private set; }
+
+      /// <summary>A value that describes how the User established the session.</summary>
+      public bool IsEncrypted { get; private set; }
+
+
+      /// <summary>The type of client that established the session. Sessions from LAN Manager servers running UNIX also will appear as LAN Manager 2.0.</summary>
+      public string ClientType { get; private set; }
+
+
+      /// <summary>The name of the transport that the client is using to communicate with the server.</summary>
+      public string TransportType { get; private set; }
+
+
+      /// <summary>The structure level for the <see cref="SessionInfoLevel"/> instance.</summary>
       public SessionInfoLevel SessionInfoLevel { get; private set; }
 
       #endregion // Properties

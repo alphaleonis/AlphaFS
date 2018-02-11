@@ -22,6 +22,7 @@
 using System;
 using System.Net.NetworkInformation;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -97,7 +98,9 @@ namespace Alphaleonis.Win32.Network
 
          // hostName is allowed to be null.
 
-         var lastError = NativeMethods.NetStatisticsGet(hostName, isServer ? "LanmanServer" : "LanmanWorkstation", 0, 0, out safeBuffer);
+         var stripUnc = !Utils.IsNullOrWhiteSpace(hostName) ? Path.GetRegularPathCore(hostName, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty) : null;
+
+         var lastError = NativeMethods.NetStatisticsGet(stripUnc, isServer ? "LanmanServer" : "LanmanWorkstation", 0, 0, out safeBuffer);
 
 
          using (safeBuffer)
