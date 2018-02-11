@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Net;
 using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
@@ -40,17 +39,17 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Creates a <see cref="SessionInfo"/> instance.</summary>
       /// <param name="hostName">The DNS or NetBIOS name of the specified host.</param>
-      /// <param name="sessionInfoLevel">One of the <see cref="SessionInfoLevel"/> options.</param>
+      /// <param name="sessionLevel">One of the <see cref="SessionInfoLevel"/> options.</param>
       /// <param name="structure">
       /// A <see cref="NativeMethods.SESSION_INFO_502"/>, <see cref="NativeMethods.SESSION_INFO_2"/>,
       /// <see cref="NativeMethods.SESSION_INFO_1"/>, <see cref="NativeMethods.SESSION_INFO_10"/> or <see cref="NativeMethods.SESSION_INFO_0"/> instance.
       /// </param>
-      internal SessionInfo(string hostName, SessionInfoLevel sessionInfoLevel, object structure)
+      internal SessionInfo(string hostName, SessionInfoLevel sessionLevel, object structure)
       {
          var flags = 0;
 
 
-         switch (sessionInfoLevel)
+         switch (sessionLevel)
          {
             case SessionInfoLevel.Info502:
                var sesi502 = (NativeMethods.SESSION_INFO_502) structure;
@@ -105,7 +104,7 @@ namespace Alphaleonis.Win32.Network
 
          HostName = hostName;
 
-         SessionInfoLevel = sessionInfoLevel;
+         SessionLevel = sessionLevel;
          
          // SESS_GUEST = 1,
          // SESS_NOENCRYPTION = 2
@@ -183,8 +182,8 @@ namespace Alphaleonis.Win32.Network
       public string TransportType { get; private set; }
 
 
-      /// <summary>The structure level for the <see cref="SessionInfoLevel"/> instance.</summary>
-      public SessionInfoLevel SessionInfoLevel { get; private set; }
+      /// <summary>The structure level for the <see cref="SessionInfo"/> instance.</summary>
+      public SessionInfoLevel SessionLevel { get; private set; }
 
       #endregion // Properties
    }

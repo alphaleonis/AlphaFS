@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Network
 
          // Start with SESSION_INFO_502 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_502 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info502, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_502 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(stripUnc, SessionInfoLevel.Info502, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SESSION_INFO_2 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info2, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(stripUnc, SessionInfoLevel.Info2, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
@@ -127,7 +127,7 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SHARE_INFO_1 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info1, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(stripUnc, SessionInfoLevel.Info1, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SESSION_INFO_10 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_10 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info10, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_10 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(stripUnc, SessionInfoLevel.Info10, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
@@ -159,7 +159,7 @@ namespace Alphaleonis.Win32.Network
 
          // Fallback on SESSION_INFO_0 structure.
 
-         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_0 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(hostName, SessionInfoLevel.Info0, structure),
+         foreach (var sessionInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SESSION_INFO_0 structure, SafeGlobalMemoryBufferHandle buffer) => new SessionInfo(stripUnc, SessionInfoLevel.Info0, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
