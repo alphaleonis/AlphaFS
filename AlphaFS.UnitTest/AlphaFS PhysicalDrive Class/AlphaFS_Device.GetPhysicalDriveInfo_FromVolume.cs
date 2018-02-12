@@ -20,47 +20,45 @@
  */
 
 using System;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DriveInfoTest
+   public partial class AlphaFS_PhysicalDriveInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      
+
       [TestMethod]
-      public void DriveInfo_GetDrives_Local_Success()
+      public void AlphaFS_Device_GetPhysicalDriveInfo_FromVolume_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var driveCount = 0;
-         var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToList();
+         var volumeCount = 0;
 
-         foreach (var drive in drives)
-         {
-            Console.WriteLine();
-            Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++driveCount, drive.Name);
-            
-            UnitTestConstants.Dump(drive, -21);
+         var sourceDrive = UnitTestConstants.SysDrive + @"\";
+         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive);
 
 
-            if (null != drive.DiskSpaceInfo)
-               UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
-            
-            if (null != drive.VolumeInfo)
-               UnitTestConstants.Dump(drive.VolumeInfo, -26, true);
+         var pDrive = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDriveInfo(sourceVolume);
 
 
-            Console.WriteLine();
-         }
+         Console.WriteLine();
+         Console.WriteLine("#{0:000}\tVolume: [{1}]", ++volumeCount, sourceVolume);
+
+         UnitTestConstants.Dump(pDrive, -17);
 
 
-         Assert.IsTrue(drives.Count > 0, "No logical drives enumerated, but it is expected.");
+         Assert.IsNotNull(pDrive);
+         
 
-         Assert.AreEqual(drives[0].Name[0], UnitTestConstants.SysDrive[0]);
+         Assert.IsNotNull(pDrive.VolumeGuids);
+         Assert.IsTrue(pDrive.VolumeGuids.Contains(sourceVolume));
+
+
+         Assert.IsNotNull(pDrive.LogicalDrives);
+         Assert.IsTrue(pDrive.LogicalDrives.Contains(sourceDrive));
       }
    }
 }

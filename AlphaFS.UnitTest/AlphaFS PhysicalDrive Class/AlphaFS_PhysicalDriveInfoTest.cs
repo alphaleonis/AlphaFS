@@ -19,42 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_DeviceTest
+   /// <summary>This is a test class for PhysicalDriveInfo and is intended to contain all PhysicalDriveInfo Unit Tests.</summary>
+   [TestClass]
+   public partial class AlphaFS_PhysicalDriveInfoTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_Device_EnumeratePhysicalDrives_Local_Success()
-      {
-         //if (!UnitTestConstants.IsAdmin())
-         //   Assert.Inconclusive();
-         
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-
-         var driveCount = 0;
-         var drives = Alphaleonis.Win32.Filesystem.Device.EnumeratePhysicalDrives().ToArray();
-
-         foreach (var drive in drives)
-         {
-            Console.WriteLine();
-            Console.WriteLine("#{0:000}\tPhysical Drive: [{1}]", ++driveCount, drive.DeviceNumber);
-
-            UnitTestConstants.Dump(drive, -17);
-
-
-            Console.WriteLine();
-         }
-
-
-         Assert.IsTrue(drives.Length > 0);
-      }
    }
 }

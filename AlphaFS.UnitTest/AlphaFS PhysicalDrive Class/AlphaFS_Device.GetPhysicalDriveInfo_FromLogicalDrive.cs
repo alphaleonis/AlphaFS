@@ -20,41 +20,44 @@
  */
 
 using System;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_DeviceTest
+   public partial class AlphaFS_PhysicalDriveInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Device_EnumerateVolumes_Local_Success()
+      public void AlphaFS_Device_GetPhysicalDriveInfo_FromLogicalDrive_Success()
       {
-         //if (!UnitTestConstants.IsAdmin())
-         //   Assert.Inconclusive();
-
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var volumeCount = 0;
-         var volumes = Alphaleonis.Win32.Filesystem.Device.EnumerateVolumes().ToArray();
+         var driveCount = 0;
 
-         foreach (var drive in volumes)
-         {
-            Console.WriteLine();
-            Console.WriteLine("#{0:000}\tVolume: [{1}]", ++volumeCount, drive.VolumeGuids[0]);
-
-            UnitTestConstants.Dump(drive, -17);
+         var sourceDrive = UnitTestConstants.SysDrive + @"\";
+         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive);
 
 
-            Console.WriteLine();
-         }
+         var pDrive = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDriveInfo(sourceDrive);
+
+         Console.WriteLine();
+         Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++driveCount, sourceDrive);
+
+         UnitTestConstants.Dump(pDrive, -17);
 
 
-         Assert.IsTrue(volumes.Length > 0);
+         Assert.IsNotNull(pDrive);
+
+
+         Assert.IsNotNull(pDrive.LogicalDrives);
+         Assert.IsTrue(pDrive.LogicalDrives.Contains(sourceDrive));
+
+
+         Assert.IsNotNull(pDrive.VolumeGuids);
+         Assert.IsTrue(pDrive.VolumeGuids.Contains(sourceVolume));
       }
    }
 }

@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
 
-            if (!driveName.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+            if (null != driveName && !driveName.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
                driveName = Path.GetPathRoot(driveName, false);
          }
 

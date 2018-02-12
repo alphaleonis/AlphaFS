@@ -25,36 +25,30 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_DeviceTest
+   public partial class AlphaFS_PhysicalDriveInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Device_EnumerateLogicalDrives_Local_Success()
+      public void AlphaFS_Device_EnumeratePhysicalDrives_Local_Success()
       {
-         //if (!UnitTestConstants.IsAdmin())
-         //   Assert.Inconclusive();
-         
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var driveCount = 0;
-         var drives = Alphaleonis.Win32.Filesystem.Device.EnumerateLogicalDrives().ToArray();
+         var pDriveCount = 0;
+         var pDrives = Alphaleonis.Win32.Filesystem.Device.EnumeratePhysicalDrives().ToArray();
 
-         foreach (var drive in drives)
-         foreach (var driveInfo in drive.DriveInfo)
+         foreach (var pDrive in pDrives)
          {
             Console.WriteLine();
-            Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++driveCount, driveInfo.Name);
+            Console.WriteLine("#{0:000}\tPhysical Drive: [{1}]", ++pDriveCount, pDrive.DeviceNumber);
 
-            UnitTestConstants.Dump(drive, -17);
+            UnitTestConstants.Dump(pDrive, -17);
          }
 
-         Console.WriteLine();
 
-
-         Assert.IsTrue(drives.Length > 0);
+         Assert.IsTrue(pDrives.Length > 0, "No physical drives enumerated, but it is expected.");
       }
    }
 }

@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -64,16 +65,33 @@ namespace AlphaFS.UnitTest
                         propValue = propObj.Elapsed.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
                   }
 
-                  //else if (propObjType.IsAssignableToAnyOf(typeof(List<>)))
-                  //{
-                  //}
+                  else if (propObjType.IsAssignableToAnyOf(typeof(Collection<string>), typeof(List<string>)))
+                  {
+                     var propObj = (Collection<string>) value;
 
-                  //else if (propObjType == typeof(List<>))
-                  //{
-                  //   var propObj = value as List<string>;
-                  //   if (null != propObj)
-                  //      propValue = propObj.Count.ToString(CultureInfo.InvariantCulture);
-                  //}
+                     if (null != propObj)
+                     {
+                        foreach (var itemValue in propObj)
+                           propValue += itemValue + ", ";
+
+                        if (null != propValue)
+                           propValue = propValue.TrimEnd(',', ' ');
+                     }
+                  }
+
+                  else if (propObjType.IsAssignableToAnyOf(typeof(Collection<int>), typeof(List<int>)))
+                  {
+                     var propObj = (Collection<int>) value;
+
+                     if (null != propObj)
+                     {
+                        foreach (var itemValue in propObj)
+                           propValue += itemValue + ", ";
+
+                        if (null != propValue)
+                           propValue = propValue.TrimEnd(',', ' ');
+                     }
+                  }
 
                   else
                      propValue = value.ToString();

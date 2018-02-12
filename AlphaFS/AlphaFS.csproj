@@ -198,14 +198,12 @@
     </Compile>
     <Compile Include="Device\Device.GetDeviceIoData.cs" />
     <Compile Include="Device\Device.InvokeDeviceIoData.cs" />
-    <Compile Include="Device\Device.EnumerateLogicalDrives.cs" />
-    <Compile Include="Device\Device.EnumerateVolumes.cs" />
     <Compile Include="Device\Device.GetVolumeDiskExtents.cs" />
-    <Compile Include="Device\Device.GetPhysicalDriveInfo.cs" />
-    <Compile Include="Device\Device.EnumeratePhysicalDrives.cs" />
+    <Compile Include="Device\PhysicalDriveInfo\Device.GetPhysicalDriveInfo.cs" />
+    <Compile Include="Device\PhysicalDriveInfo\Device.EnumeratePhysicalDrives.cs" />
     <Compile Include="Device\Device.EnumerateDevices.cs" />
     <Compile Include="Device\Device.Compression.cs" />
-    <Compile Include="Device\PhysicalDriveInfo.cs" />
+    <Compile Include="Device\PhysicalDriveInfo\PhysicalDriveInfo.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.GetFreeDriveLetter.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.GetDeviceInfo.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.EnumerateLogicalDrives.cs" />

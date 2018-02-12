@@ -22,6 +22,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -40,40 +41,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      ///// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      ///// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z'.</param>
-      ///// <Remark>This is a Lazyloading object; call <see cref="Refresh()"/> to populate all properties first before accessing.</Remark>
-      //[SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
-      //[SecurityCritical]
-      //public PhysicalDriveInfo(string driveName) : this()
-      //{
-      //   if (Utils.IsNullOrWhiteSpace(driveName))
-      //      throw new ArgumentNullException("driveName");
-
-
-      //   driveName = driveName.Length == 1 ? driveName + Path.VolumeSeparatorChar : Path.GetPathRoot(driveName, false);
-
-      //   if (Utils.IsNullOrWhiteSpace(driveName))
-      //      throw new ArgumentException(Resources.InvalidDriveLetterArgument, "driveName");
-
-
-      //   // MSDN:
-      //   // If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").
-      //   // Furthermore, a drive specification must have a trailing backslash (for example, "C:\").
-      //   // The calling application must have FILE_LIST_DIRECTORY access rights for this directory.
-      //   DevicePath = Path.AddTrailingDirectorySeparator(driveName, false);
-      //}
+      /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
+      public PhysicalDriveInfo(PhysicalDriveInfo pDrive) : this()
+      {
+         CopyTo(pDrive, this);
+      }
 
       #endregion // Constructors
 
 
-      /// <summary>Returns the "FriendlyName" of the physical drive.</summary>
-      /// <returns>A string that represents this instance.</returns>
-      public override string ToString()
-      {
-         return Name;
-      }
-
+      #region Properties
 
       /// <summary>The bus type of the physical drive.</summary>
       public StorageBusType BusType { get; internal set; }
@@ -87,14 +64,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A string that represents the path to the device.
       ///   A drive path such as: "C:", "D:\",
       ///   a volume <see cref="Guid"/> path such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\"
-      ///   or a <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
+      ///   or a <see cref="DeviceInfo.DevicePath"/> string.
       /// </returns>
       public string DevicePath { get; internal set; }
 
 
       /// <summary>The logical drives that are located on the physical drive.</summary>
-      public Collection<DriveInfo> DriveInfo { get; internal set; }
-
+      public Collection<string> LogicalDrives { get; internal set; }
+      
 
       /// <summary>Indicates if the physical drive supports multiple outstanding commands (SCSI tagged queuing or equivalent). When false the physical drive does not support SCSI-tagged queuing or the equivalent.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Queueing")]
@@ -113,8 +90,12 @@ namespace Alphaleonis.Win32.Filesystem
       public int PartitionNumber { get; internal set; }
 
 
+      /// <summary>Indicates the partition number of the device is returned in this member, if the device can be partitioned. Otherwise, -1 is returned.</summary>
+      public Collection<int> PartitionNumbers { get; internal set; }
+
+
       /// <summary>The Partitions located on the physical drive.</summary>
-      public string[] Partitions { get; set; }
+      public string[] Partitions { get; internal set; }
 
       /// <summary>The product revision of the physical drive.</summary>
       public string ProductRevision { get; internal set; }
@@ -136,6 +117,83 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>The volumes that are located on the physical drive.</summary>
-      public string[] VolumeGuids { get; set; }
+      public Collection<string> VolumeGuids { get; internal set; }
+
+      #endregion // Properties
+
+
+      #region Methods
+
+      /// <summary>Returns the "FriendlyName" of the physical drive.</summary>
+      /// <returns>A string that represents this instance.</returns>
+      public override string ToString()
+      {
+         return Name;
+      }
+
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="obj">Another object to compare to.</param>
+      /// <returns><see langword="true"/> if the specified Object is equal to the current Object; otherwise, <see langword="false"/>.</returns>
+      public override bool Equals(object obj)
+      {
+         if (null == obj || GetType() != obj.GetType())
+            return false;
+
+         var other = obj as PhysicalDriveInfo;
+
+         return null != other && null != other.DevicePath && other.DevicePath.Equals(DevicePath, StringComparison.OrdinalIgnoreCase);
+      }
+
+
+      /// <summary>Serves as a hash function for a particular type.</summary>
+      /// <returns>A hash code for the current Object.</returns>
+      public override int GetHashCode()
+      {
+         return null != DevicePath ? DevicePath.GetHashCode() : 0;
+      }
+
+
+      /// <summary>Implements the operator ==</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator ==(PhysicalDriveInfo left, PhysicalDriveInfo right)
+      {
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
+      }
+
+
+      /// <summary>Implements the operator !=</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator !=(PhysicalDriveInfo left, PhysicalDriveInfo right)
+      {
+         return !(left == right);
+      }
+
+
+      private static void CopyTo<T>(T source, T destination)
+      {
+         // Properties listed here should not be overwritten by the physical drive template.
+
+         var excludedProps = new[] {"PartitionNumber"};
+
+
+         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite && !excludedProps.Any(prop => prop.Equals(x.Name))).ToArray();
+
+         var dstProps = srcProps.ToArray();
+
+
+         foreach (var srcProp in srcProps)
+         {
+            var dstProp = dstProps.First(x => x.Name.Equals(srcProp.Name));
+
+            dstProp.SetValue(destination, srcProp.GetValue(source, null), null);
+         }
+      }
+
+      #endregion // Methods
    }
 }

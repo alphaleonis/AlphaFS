@@ -251,6 +251,24 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Argument must be a drive letter: &quot;C&quot; or RootDir: &quot;C:\&quot;.
+        /// </summary>
+        internal static string InvalidLogicalDriveArgument {
+            get {
+                return ResourceManager.GetString("InvalidLogicalDriveArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument must be a drive letter: &quot;C&quot;, &quot;C:\&quot; or Volume GUID..
+        /// </summary>
+        internal static string InvalidLogicalDriveVolumeArgument {
+            get {
+                return ResourceManager.GetString("InvalidLogicalDriveVolumeArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The target directory of the directory junction must be on the same local drive..
         /// </summary>
         internal static string Junction_And_Target_Must_Be_On_The_Same_Drive {
