@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrives()
       {
-         var physicalDrives = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo)).Where(physicalDrive => null != physicalDrive).OrderBy(physicalDrive => physicalDrive.DeviceNumber).ToArray();
+         var physicalDrives = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo, true)).Where(physicalDrive => null != physicalDrive).OrderBy(physicalDrive => physicalDrive.DeviceNumber).ToArray();
 
          var pVolumes = Volume.EnumerateVolumes().Select(volumeGuid => GetPhysicalDriveInfoCore(volumeGuid, null, false)).Where(physicalDrive => null != physicalDrive).OrderBy(physicalDrive => physicalDrive.DeviceNumber).ThenBy(physicalDrive => physicalDrive.PartitionNumber).ToArray();
 

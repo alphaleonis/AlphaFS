@@ -30,10 +30,10 @@ namespace Alphaleonis.Win32.Filesystem
       internal struct VOLUME_DISK_EXTENTS
       {
          /// <summary>The number of disks in the volume (a volume can span multiple disks).</summary>
-         public readonly uint NumberOfDiskExtents;
+         public uint NumberOfDiskExtents;
 
          /// <summary>An array of <see cref="DISK_EXTENT"/> structures.</summary>
-         [MarshalAs(UnmanagedType.ByValArray)] public readonly DISK_EXTENT[] Extents;
+         [MarshalAs(UnmanagedType.ByValArray)] public DISK_EXTENT[] Extents;
       }
    }
 }

@@ -321,6 +321,7 @@
     <Compile Include="Filesystem\Native Other\STORAGE_PROPERTY_QUERY.cs" />
     <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_TYPE.cs" />
     <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_NUMBER.cs" />
+    <Compile Include="Filesystem\Native Other\DRIVE_LAYOUT_INFORMATION_EX.cs" />
     <Compile Include="Filesystem\Native Other\VOLUME_DISK_EXTENTS.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetRelativePath.cs" />
     <Compile Include="Filesystem\Path Class\Path.IsLogicalDrive.cs" />

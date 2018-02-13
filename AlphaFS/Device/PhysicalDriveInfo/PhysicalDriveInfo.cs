@@ -42,9 +42,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      public PhysicalDriveInfo(PhysicalDriveInfo pDrive) : this()
+      public PhysicalDriveInfo(PhysicalDriveInfo pDriveInfo) : this()
       {
-         CopyTo(pDrive, this);
+         CopyTo(pDriveInfo, this);
       }
 
       #endregion // Constructors
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       public string ProductRevision { get; internal set; }
 
 
-      /// <summary>Gets the serial number of the physical drive. If the physical drive has no serial number, this member is -1.</summary>
+      /// <summary>Gets the serial number of the physical drive. If the physical drive has no serial number or the session is not elevated, this member is -1.</summary>
       public string SerialNumber { get; internal set; }
 
 
@@ -142,7 +142,11 @@ namespace Alphaleonis.Win32.Filesystem
 
          var other = obj as PhysicalDriveInfo;
 
-         return null != other && null != other.DevicePath && other.DevicePath.Equals(DevicePath, StringComparison.OrdinalIgnoreCase);
+         return null != other && null != other.DevicePath &&
+
+                other.DevicePath.Equals(DevicePath, StringComparison.OrdinalIgnoreCase) &&
+
+                other.DeviceNumber.Equals(DeviceNumber) && other.PartitionNumber.Equals(PartitionNumber);
       }
 
 

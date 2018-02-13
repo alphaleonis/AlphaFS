@@ -141,15 +141,16 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          ///// <summary>Returns information about the physical disk's geometry (media type, number of cylinders, tracks per cylinder, sectors per track, and bytes per sector).</summary>
+         ///// <remarks>MSDN: IOCTL_DISK_GET_DRIVE_GEOMETRY has been superseded by <see cref="IOCTL_DISK_GET_DRIVE_GEOMETRY_EX"/>, which retrieves additional information.</remarks>
          //IOCTL_DISK_GET_DRIVE_GEOMETRY = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0000 << 2) | IoMethod.Buffered | (0 << 14),
 
-         ///// <summary>
-         ///// Returns information about the physical disk's geometry (media type, number of cylinders, tracks per cylinder, sectors per track, and bytes per sector).
-         ///// The difference between IOCTL_DISK_GET_DRIVE_GEOMETRY_EX and the older IOCTL_DISK_GET_DRIVE_GEOMETRY request is that 
-         ///// IOCTL_DISK_GET_DRIVE_GEOMETRY_EX can retrieve information from both Master Boot Record (MBR) and GUID Partition Table (GPT)-type 
-         ///// partitioned media, whereas IOCTL_DISK_GET_DRIVE_GEOMETRY can only read MBR-style media.
-         ///// </summary>
-         //IOCTL_DISK_GET_DRIVE_GEOMETRY_EX = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0028 << 2) | IoMethod.Buffered | (0 << 14),
+         /// <summary>
+         /// Returns information about the physical disk's geometry (media type, number of cylinders, tracks per cylinder, sectors per track, and bytes per sector).
+         /// The difference between IOCTL_DISK_GET_DRIVE_GEOMETRY_EX and the older IOCTL_DISK_GET_DRIVE_GEOMETRY request is that 
+         /// IOCTL_DISK_GET_DRIVE_GEOMETRY_EX can retrieve information from both Master Boot Record (MBR) and GUID Partition Table (GPT)-type 
+         /// partitioned media, whereas IOCTL_DISK_GET_DRIVE_GEOMETRY can only read MBR-style media.
+         /// </summary>
+         IOCTL_DISK_GET_DRIVE_GEOMETRY_EX = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0028 << 2) | IoMethod.Buffered | (0 << 14),
 
 
          ///// <summary>Returns information about the type, size, and nature of a disk partition. (Floppy drivers need not handle this request.)</summary>

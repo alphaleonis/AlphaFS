@@ -19,6 +19,9 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
 
@@ -27,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Device
    {
       [SecurityCritical]
-      public static void GetVolumeDiskExtents(string logicalDrive)
+      internal static NativeMethods.DISK_GEOMETRY? GetDiskGeometry(string logicalDrive)
       {
          // FileSystemRights desiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
          // without accessing that file or device, even if GENERIC_READ access would have been denied.
@@ -39,24 +42,83 @@ namespace Alphaleonis.Win32.Filesystem
 
          //const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
 
-
-
-         //var volumeDiskExtents = new NativeMethods.VOLUME_DISK_EXTENTS();
-
          using (var safeHandle = OpenPhysicalDrive(logicalDrive, desiredAccess))
-
-         using (var safeBuffer = GetDeviceIoData<NativeMethods.VOLUME_DISK_EXTENTS>(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, logicalDrive))
+         using (var safeBuffer = GetDeviceIoData<NativeMethods.DISK_GEOMETRY>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, logicalDrive))
          {
             if (null != safeBuffer)
             {
-               var structure = safeBuffer.PtrToStructure<NativeMethods.VOLUME_DISK_EXTENTS>(0);
+               var structure = safeBuffer.PtrToStructure<NativeMethods.DISK_GEOMETRY>(0);
 
-               for (var i = 0; i < structure.NumberOfDiskExtents; ++i)
-               {
-                  var pDiskExtent = structure.Extents[i];
-               }
+               return structure;
             }
          }
+
+
+         return null;
+
+
+         //var name = "\\\\.\\C:";
+         ////            var handle = DriveLayout.NativeMethods.CreateFile(name, DriveLayout.NativeMethods.AccessRights.GENERIC_READ | DriveLayout.NativeMethods.AccessRights.GENERIC_WRITE, FileShare.Read | FileShare.Write, IntPtr.Zero, DriveLayout.NativeMethods.FileCreationDisposition.OPEN_EXISTING, FileAttributes.Normal, IntPtr.Zero)
+
+         //int geometrySize = Marshal.SizeOf(typeof(NativeMethods.DISK_GEOMETRY));
+         ////Console.WriteLine("geometry size = {0}", geometrySize);
+
+         //IntPtr geometryBlob = Marshal.AllocHGlobal(geometrySize);
+         //uint numBytesRead = 0;
+
+
+         //NativeMethods.DeviceIoControl(handle, NativeMethods.IoControlCode.IoCtlDiskGetDriveGeometry, IntPtr.Zero, 0, geometryBlob, (uint)geometrySize, ref numBytesRead, IntPtr.Zero);
+
+
+         //NativeMethods.DISK_GEOMETRY geometry = (NativeMethods.DISK_GEOMETRY)Marshal.PtrToStructure(geometryBlob, typeof(NativeMethods.DISK_GEOMETRY));
+
+         //Marshal.FreeHGlobal(geometryBlob);
+
+         //Console.WriteLine("Cylinders: " + geometry.Cylinders);
+         //Console.WriteLine("SectorsPerTrack: " + geometry.SectorsPerTrack);
+         //Console.WriteLine("TracksPerCylinder: " + geometry.TracksPerCylinder);
+         //Console.WriteLine("BytesPerSector: " + geometry.BytesPerSector);
+
+         //return geometry;
       }
+
+
+      //[SecurityCritical]
+      //internal static void GetVolumeDiskExtents(string logicalDrive)
+      //{
+      //   // FileSystemRights desiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
+      //   // without accessing that file or device, even if GENERIC_READ access would have been denied.
+      //   // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
+      //   //const int desiredAccess = 0;
+
+      //   // Requires elevation.
+      //   const FileSystemRights desiredAccess = FileSystemRights.Read | FileSystemRights.Write;
+
+      //   //const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
+
+
+      //   using (var safeHandle = OpenPhysicalDrive(logicalDrive, desiredAccess))
+      //   using (var safeBuffer = GetDeviceIoData<NativeMethods.VOLUME_DISK_EXTENTS>(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, logicalDrive))
+      //   {
+      //      if (null != safeBuffer)
+      //      {
+      //         var structure = safeBuffer.PtrToStructure<NativeMethods.VOLUME_DISK_EXTENTS>(0);
+
+      //         var numberOfDiskExtents = structure.NumberOfDiskExtents;
+
+      //         var objectSize = Marshal.SizeOf(typeof(NativeMethods.VOLUME_DISK_EXTENTS));
+
+
+      //         for (int i = 0, itemOffset = 0; i < numberOfDiskExtents; i++, itemOffset += objectSize)
+      //         {
+      //            structure = safeBuffer.PtrToStructure<NativeMethods.VOLUME_DISK_EXTENTS>(itemOffset);
+
+      //            //var pDiskExtent = structure.Extents[i];
+
+      //            //yield return structure;
+      //         }
+      //      }
+      //   }
+      //}
    }
 }
