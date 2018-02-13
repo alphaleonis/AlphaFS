@@ -25,35 +25,28 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      public const int PartitionEntriesCount = 10;
-
-
-      /// <summary>Contains extended information about a drive's partitions.</summary>
+      /// <summary>Describes the geometry of disk devices and media.</summary>
       /// <remarks>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_EX
+      internal struct DISK_GEOMETRY
       {
-         /// <summary>The style of the partitions on the drive enumerated by the <see cref="PARTITION_STYLE"/> enumeration.</summary>
-         public PARTITION_STYLE PartitionStyle;
+         /// <summary>The number of cylinders.</summary>
+         [MarshalAs(UnmanagedType.U8)] public long Cylinders;
 
-         /// <summary>The number of partitions on the drive. On hard disks with the MBR layout, this value will always be a multiple of 4.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint PartitionCount;
+         /// <summary>The type of media.</summary>
+         [MarshalAs(UnmanagedType.U4)] public MEDIA_TYPE MediaType;
 
-         public DRIVE_LAYOUT_INFORMATION_UNION DriveLayoutInformation;
+         /// <summary>The number of tracks per cylinder.</summary>
+         [MarshalAs(UnmanagedType.U4)] public uint TracksPerCylinder;
 
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = PartitionEntriesCount)]
-         public PARTITION_INFORMATION_EX[] PartitionEntry;
-      }
+         /// <summary>The number of sectors per track.</summary>
+         [MarshalAs(UnmanagedType.U4)] public uint SectorsPerTrack;
 
-
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_UNION
-      {
-         public DRIVE_LAYOUT_INFORMATION_MBR Mbr;
-         public DRIVE_LAYOUT_INFORMATION_GPT Gpt;
+         /// <summary>The number of bytes per sector.</summary>
+         [MarshalAs(UnmanagedType.U4)] public uint BytesPerSector;
       }
    }
 }

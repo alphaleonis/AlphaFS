@@ -25,35 +25,38 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      public const int PartitionEntriesCount = 10;
-
-
-      /// <summary>Contains extended information about a drive's partitions.</summary>
+      /// <summary>Contains partition information for standard AT-style master boot record (MBR) and Extensible Firmware Interface (EFI) disks.</summary>
       /// <remarks>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_EX
+      [StructLayout(LayoutKind.Sequential)]
+      internal struct PARTITION_INFORMATION_EX
       {
-         /// <summary>The style of the partitions on the drive enumerated by the <see cref="PARTITION_STYLE"/> enumeration.</summary>
+         /// <summary>The format of the partition.</summary>
          public PARTITION_STYLE PartitionStyle;
 
-         /// <summary>The number of partitions on the drive. On hard disks with the MBR layout, this value will always be a multiple of 4.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint PartitionCount;
+         /// <summary>The starting offset of the partition.</summary>
+         [MarshalAs(UnmanagedType.U8)] public long StartingOffset;
 
-         public DRIVE_LAYOUT_INFORMATION_UNION DriveLayoutInformation;
+         /// <summary>The size of the partition, in bytes.</summary>
+         [MarshalAs(UnmanagedType.U8)] public long PartitionLength;
 
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = PartitionEntriesCount)]
-         public PARTITION_INFORMATION_EX[] PartitionEntry;
+         /// <summary>The number of the partition (1-based).</summary>
+         [MarshalAs(UnmanagedType.U4)] public uint PartitionNumber;
+
+         /// <summary>If this member is TRUE, the partition is rewritable. The value of this parameter should be set to TRUE.</summary>
+         [MarshalAs(UnmanagedType.Bool)] public bool RewritePartition;
+
+         //public PARTITION_INFORMATION_UNION PartitionInformation;
       }
 
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_UNION
+      [StructLayout(LayoutKind.Explicit)]
+      public struct PARTITION_INFORMATION_UNION
       {
-         public DRIVE_LAYOUT_INFORMATION_MBR Mbr;
-         public DRIVE_LAYOUT_INFORMATION_GPT Gpt;
+         [FieldOffset(0)] public PARTITION_INFORMATION_GPT Gpt;
+         [FieldOffset(0)] public PARTITION_INFORMATION_MBR Mbr;
       }
    }
 }

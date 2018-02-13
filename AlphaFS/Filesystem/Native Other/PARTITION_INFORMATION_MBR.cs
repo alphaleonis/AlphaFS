@@ -25,35 +25,24 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      public const int PartitionEntriesCount = 10;
-
-
-      /// <summary>Contains extended information about a drive's partitions.</summary>
+      /// <summary>Contains partition information specific to master boot record (MBR) disks.</summary>
       /// <remarks>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_EX
+      public struct PARTITION_INFORMATION_MBR
       {
-         /// <summary>The style of the partitions on the drive enumerated by the <see cref="PARTITION_STYLE"/> enumeration.</summary>
-         public PARTITION_STYLE PartitionStyle;
+         /// <summary>The type of partition.</summary>
+         [MarshalAs(UnmanagedType.I1)] public DiskPartitionTypes PartitionType;
 
-         /// <summary>The number of partitions on the drive. On hard disks with the MBR layout, this value will always be a multiple of 4.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint PartitionCount;
+         /// <summary>If the member is TRUE, the partition is a boot partition. When this structure is used with the IOCTL_DISK_SET_PARTITION_INFO_EX control code, the value of this parameter is ignored.</summary>
+         [MarshalAs(UnmanagedType.Bool)] public bool BootIndicator;
 
-         public DRIVE_LAYOUT_INFORMATION_UNION DriveLayoutInformation;
+         /// <summary>If this member is TRUE, the partition is of a recognized type. When this structure is used with the IOCTL_DISK_SET_PARTITION_INFO_EX control code, the value of this parameter is ignored.</summary>
+         [MarshalAs(UnmanagedType.Bool)] public bool RecognizedPartition;
 
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = PartitionEntriesCount)]
-         public PARTITION_INFORMATION_EX[] PartitionEntry;
-      }
-
-
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_UNION
-      {
-         public DRIVE_LAYOUT_INFORMATION_MBR Mbr;
-         public DRIVE_LAYOUT_INFORMATION_GPT Gpt;
+         /// <summary>The number of hidden sectors to be allocated when the partition table is created.</summary>
+         [MarshalAs(UnmanagedType.U4)] public uint HiddenSectors;
       }
    }
 }

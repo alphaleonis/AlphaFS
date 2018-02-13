@@ -122,7 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
          var device = storageDevice.Value;
          var diskNumber = device.DeviceNumber;
 
-         var physicalDriveInfo = new PhysicalDriveInfo()
+         var physicalDriveInfo = new PhysicalDriveInfo
          {
             DevicePath = devicePath,
             DeviceNumber = diskNumber,
@@ -152,7 +152,12 @@ namespace Alphaleonis.Win32.Filesystem
             {
                // Requires elevation.
                //GetVolumeDiskExtents(logicalDrive);
-               GetDiskGeometry(physicalDriveInfo.DevicePath);
+
+               var pDrive = @"\\.\PhysicalDrive0";
+
+               GetDiskPartitions(pDrive);
+               GetDiskGeometry(pDrive);
+               GetDiskLayout(pDrive);
             }
             catch { }
          //}

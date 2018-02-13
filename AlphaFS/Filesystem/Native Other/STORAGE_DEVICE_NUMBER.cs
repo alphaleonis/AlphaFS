@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal struct STORAGE_DEVICE_NUMBER
       {
          /// <summary>Specifies one of the system-defined FILE_DEVICE_XXX constants indicating the type of device (such as FILE_DEVICE_DISK, FILE_DEVICE_KEYBOARD, and so forth) or a vendor-defined value for a new type of device.</summary>
-         internal readonly StorageDeviceType DeviceType;
+         [MarshalAs(UnmanagedType.U4)] internal readonly StorageDeviceType DeviceType;
 
          /// <summary>Indicates the number of this device. This value is set to 0xFFFFFFFF (-1) for the disks that represent the physical paths of an MPIO disk.</summary>
          [MarshalAs(UnmanagedType.U4)] internal readonly int DeviceNumber;

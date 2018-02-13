@@ -25,35 +25,15 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      public const int PartitionEntriesCount = 10;
-
-
-      /// <summary>Contains extended information about a drive's partitions.</summary>
+      /// <summary>Provides information about a drive's master boot record (MBR) partitions.</summary>
       /// <remarks>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_EX
+      public struct DRIVE_LAYOUT_INFORMATION_MBR
       {
-         /// <summary>The style of the partitions on the drive enumerated by the <see cref="PARTITION_STYLE"/> enumeration.</summary>
-         public PARTITION_STYLE PartitionStyle;
-
-         /// <summary>The number of partitions on the drive. On hard disks with the MBR layout, this value will always be a multiple of 4.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint PartitionCount;
-
-         public DRIVE_LAYOUT_INFORMATION_UNION DriveLayoutInformation;
-
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = PartitionEntriesCount)]
-         public PARTITION_INFORMATION_EX[] PartitionEntry;
-      }
-
-
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_UNION
-      {
-         public DRIVE_LAYOUT_INFORMATION_MBR Mbr;
-         public DRIVE_LAYOUT_INFORMATION_GPT Gpt;
+         /// <summary>The signature of the drive.</summary>
+         [MarshalAs(UnmanagedType.U8)] public ulong Signature;
       }
    }
 }

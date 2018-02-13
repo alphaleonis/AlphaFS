@@ -19,41 +19,33 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      public const int PartitionEntriesCount = 10;
-
-
-      /// <summary>Contains extended information about a drive's partitions.</summary>
+      /// <summary>Contains GUID partition table (GPT) partition information.</summary>
       /// <remarks>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_EX
+      internal struct PARTITION_INFORMATION_GPT
       {
-         /// <summary>The style of the partitions on the drive enumerated by the <see cref="PARTITION_STYLE"/> enumeration.</summary>
-         public PARTITION_STYLE PartitionStyle;
+         /// <summary>A GUID that identifies the partition type.</summary>
+         public Guid PartitionType;
 
-         /// <summary>The number of partitions on the drive. On hard disks with the MBR layout, this value will always be a multiple of 4.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint PartitionCount;
+         /// <summary>The GUID of the partition.</summary>
+         public Guid PartitionId;
 
-         public DRIVE_LAYOUT_INFORMATION_UNION DriveLayoutInformation;
+         /// <summary>The Extensible Firmware Interface (EFI) attributes of the partition.</summary>
+         [MarshalAs(UnmanagedType.U8)] public EFIPartitionAttributes Attributes;
 
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = PartitionEntriesCount)]
-         public PARTITION_INFORMATION_EX[] PartitionEntry;
-      }
-
-
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_UNION
-      {
-         public DRIVE_LAYOUT_INFORMATION_MBR Mbr;
-         public DRIVE_LAYOUT_INFORMATION_GPT Gpt;
+         /// <summary>A wide-character string that describes the partition.</summary>
+         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 36)]
+         public string Name;
       }
    }
 }

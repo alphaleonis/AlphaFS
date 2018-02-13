@@ -31,8 +31,8 @@ namespace Alphaleonis.Win32.Filesystem
       [Flags]
       internal enum IoControlCode : uint
       {
-         /// <summary>Retrieves the physical location of a specified volume on one or more disks.</summary>
-         IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS = (STORAGE_DEVICE_TYPE.FILE_DEVICE_VOLUME << 16) | (0 << 2) | IoMethod.Buffered | (0 << 14),
+         ///// <summary>Retrieves the physical location of a specified volume on one or more disks.</summary>
+         //IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS = (STORAGE_DEVICE_TYPE.FILE_DEVICE_VOLUME << 16) | (0 << 2) | IoMethod.Buffered | (0 << 14),
 
 
          /// <summary>Return properties of a storage device or adapter. The request indicates the kind of information to retrieve, such as inquiry data for a device or capabilities and limitations of an adapter.</summary>
@@ -139,9 +139,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region FILE_DEVICE_DISK
 
-
          ///// <summary>Returns information about the physical disk's geometry (media type, number of cylinders, tracks per cylinder, sectors per track, and bytes per sector).</summary>
-         ///// <remarks>MSDN: IOCTL_DISK_GET_DRIVE_GEOMETRY has been superseded by <see cref="IOCTL_DISK_GET_DRIVE_GEOMETRY_EX"/>, which retrieves additional information.</remarks>
+         //[Obsolete("MSDN: IOCTL_DISK_GET_DRIVE_GEOMETRY has been superseded by IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, which retrieves additional information.")]
          //IOCTL_DISK_GET_DRIVE_GEOMETRY = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0000 << 2) | IoMethod.Buffered | (0 << 14),
 
          /// <summary>
@@ -154,19 +153,25 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          ///// <summary>Returns information about the type, size, and nature of a disk partition. (Floppy drivers need not handle this request.)</summary>
+         //[Obsolete("IOCTL_DISK_GET_PARTITION_INFO is superseded by IOCTL_DISK_GET_PARTITION_INFO_EX, which retrieves partition information for AT and Extensible Firmware Interface (EFI) partitions.")]
          //IOCTL_DISK_GET_PARTITION_INFO = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0001 << 2) | IoMethod.Buffered | (FileAccess.Read << 14),
 
+
+         /////// <summary>Returns information about the type, size, and nature of a disk partition. (Floppy drivers need not handle this request.)</summary>
+         IOCTL_DISK_GET_PARTITION_INFO_EX = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0012 << 2) | IoMethod.Buffered | (FileAccess.Read << 14),
+         
 
          ///// <summary>Changes the partition type of the specified disk partition. (Floppy drivers need not handle this request.)</summary>
          //IOCTL_DISK_SET_PARTITION_INFO = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0002 << 2) | IoMethod.Buffered | ((FileAccess.Read | FileAccess.Write) << 14),
 
 
          ///// <summary>Returns information about the number of partitions, disk signature, and features of each partition on a disk. (Floppy drivers need not handle this request.)</summary>
+         //[Obsolete("IOCTL_DISK_GET_DRIVE_LAYOUT has been superseded by IOCTL_DISK_GET_DRIVE_LAYOUT_EX, which retrieves layout information for AT and EFI (Extensible Firmware Interface) partitions.")]
          //IOCTL_DISK_GET_DRIVE_LAYOUT = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0003 << 2) | IoMethod.Buffered | (FileAccess.Read << 14),
 
 
-         ///// <summary>Contains extended information about a drive's partitions.</summary>
-         //IOCTL_DISK_GET_DRIVE_LAYOUT_EX = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0014 << 2) | IoMethod.Buffered | (0 << 14),
+         /// <summary>Contains extended information about a drive's partitions.</summary>
+         IOCTL_DISK_GET_DRIVE_LAYOUT_EX = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0014 << 2) | IoMethod.Buffered | (0 << 14),
 
 
          ///// <summary>Repartitions a disk as specified. (Floppy drivers need not handle this request.)</summary>

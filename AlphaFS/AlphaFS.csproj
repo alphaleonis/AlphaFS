@@ -313,8 +313,18 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateSubdirectory.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Create.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateAlternateDataStreams.cs" />
+    <Compile Include="Filesystem\Native Other\DiskPartitionTypes.cs" />
+    <Compile Include="Filesystem\Native Other\DISK_GEOMETRY_EX.cs" />
+    <Compile Include="Filesystem\Native Other\PARTITION_STYLE.cs" />
+    <Compile Include="Filesystem\Native Other\MEDIA_TYPE.cs" />
+    <Compile Include="Filesystem\Native Other\DISK_GEOMETRY.cs" />
+    <Compile Include="Filesystem\Native Other\DRIVE_LAYOUT_INFORMATION_MBR.cs" />
     <Compile Include="Filesystem\Native Other\IoMethod.cs" />
     <Compile Include="Filesystem\Native Other\IoControlCode.cs" />
+    <Compile Include="Filesystem\Native Other\EFIPartitionAttributes.cs" />
+    <Compile Include="Filesystem\Native Other\PARTITION_INFORMATION_GPT.cs" />
+    <Compile Include="Filesystem\Native Other\PARTITION_INFORMATION_EX.cs" />
+    <Compile Include="Filesystem\Native Other\DRIVE_LAYOUT_INFORMATION_GPT.cs" />
     <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_DESCRIPTOR.cs" />
     <Compile Include="Filesystem\Native Other\STORAGE_BUS_TYPE.cs" />
     <Compile Include="Filesystem\Native Other\DISK_EXTENT.cs" />
@@ -323,6 +333,7 @@
     <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_NUMBER.cs" />
     <Compile Include="Filesystem\Native Other\DRIVE_LAYOUT_INFORMATION_EX.cs" />
     <Compile Include="Filesystem\Native Other\VOLUME_DISK_EXTENTS.cs" />
+    <Compile Include="Filesystem\Native Other\PARTITION_INFORMATION_MBR.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetRelativePath.cs" />
     <Compile Include="Filesystem\Path Class\Path.IsLogicalDrive.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DirectoryEnumerationFilters.cs" />
@@ -652,7 +663,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

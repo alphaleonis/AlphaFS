@@ -19,41 +19,31 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      public const int PartitionEntriesCount = 10;
-
-
-      /// <summary>Contains extended information about a drive's partitions.</summary>
+      /// <summary>Contains information about a drive's GUID partition table (GPT) partitions.</summary>
       /// <remarks>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_EX
+      internal struct DRIVE_LAYOUT_INFORMATION_GPT
       {
-         /// <summary>The style of the partitions on the drive enumerated by the <see cref="PARTITION_STYLE"/> enumeration.</summary>
-         public PARTITION_STYLE PartitionStyle;
+         /// <summary>The GUID of the disk.</summary>
+         public Guid DiskId;
 
-         /// <summary>The number of partitions on the drive. On hard disks with the MBR layout, this value will always be a multiple of 4.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint PartitionCount;
+         /// <summary>The starting byte offset of the first usable block.</summary>
+         [MarshalAs(UnmanagedType.U8)] public ulong StartingUsableOffset;
 
-         public DRIVE_LAYOUT_INFORMATION_UNION DriveLayoutInformation;
+         /// <summary>The size of the usable blocks on the disk, in bytes.</summary>
+         [MarshalAs(UnmanagedType.U8)] public ulong UsableLength;
 
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = PartitionEntriesCount)]
-         public PARTITION_INFORMATION_EX[] PartitionEntry;
-      }
-
-
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_UNION
-      {
-         public DRIVE_LAYOUT_INFORMATION_MBR Mbr;
-         public DRIVE_LAYOUT_INFORMATION_GPT Gpt;
+         /// <summary>The maximum number of partitions that can be defined in the usable block.</summary>
+         [MarshalAs(UnmanagedType.U4)] public uint MaxPartitionCount;
       }
    }
 }

@@ -42,10 +42,10 @@ namespace Alphaleonis.Win32.Filesystem
          public readonly byte DeviceTypeModifier;
 
          /// <summary>Indicates when TRUE that the device's media (if any) is removable. If the device has no media, this member should be ignored. When FALSE the device's media is not removable.</summary>
-         [MarshalAs(UnmanagedType.U1)] public readonly bool RemovableMedia;
+         [MarshalAs(UnmanagedType.I1)] public readonly bool RemovableMedia;
 
          /// <summary>Indicates when TRUE that the device supports multiple outstanding commands (SCSI tagged queuing or equivalent). When FALSE, the device does not support SCSI-tagged queuing or the equivalent.</summary>
-         [MarshalAs(UnmanagedType.U1)] public readonly bool CommandQueueing;
+         [MarshalAs(UnmanagedType.I1)] public readonly bool CommandQueueing;
 
          /// <summary>Specifies the byte offset from the beginning of the structure to a null-terminated ASCII string that contains the device's vendor ID. If the device has no vendor ID, this member is zero.</summary>
          public readonly uint VendorIdOffset;

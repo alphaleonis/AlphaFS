@@ -25,35 +25,48 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      public const int PartitionEntriesCount = 10;
-
-
-      /// <summary>Contains extended information about a drive's partitions.</summary>
+      /// <summary>The following table identifies the valid partition types that are used by disk drivers.</summary>
       /// <remarks>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_EX
+      internal enum DiskPartitionTypes
       {
-         /// <summary>The style of the partitions on the drive enumerated by the <see cref="PARTITION_STYLE"/> enumeration.</summary>
-         public PARTITION_STYLE PartitionStyle;
+         /// <summary>An unused entry partition.</summary>
+         PARTITION_ENTRY_UNUSED = 0,
 
-         /// <summary>The number of partitions on the drive. On hard disks with the MBR layout, this value will always be a multiple of 4.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint PartitionCount;
+         /// <summary>A FAT12 file system partition.</summary>
+         PARTITION_FAT_12 = 1,
 
-         public DRIVE_LAYOUT_INFORMATION_UNION DriveLayoutInformation;
+         PARTITION_XENIX_1 = 2,
+         PARTITION_XENIX_2 = 3,
 
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = PartitionEntriesCount)]
-         public PARTITION_INFORMATION_EX[] PartitionEntry;
-      }
+         /// <summary>A FAT16 file system partition.</summary>
+         PARTITION_FAT_16 = 4,
 
+         /// <summary>An extended partition.</summary>
+         PARTITION_EXTENDED = 5,
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_UNION
-      {
-         public DRIVE_LAYOUT_INFORMATION_MBR Mbr;
-         public DRIVE_LAYOUT_INFORMATION_GPT Gpt;
+         PARTITION_HUGE = 6,
+
+         /// <summary>An IFS partition.</summary>
+         PARTITION_IFS = 7,
+
+         /// <summary>A FAT32 file system partition.</summary>
+         PARTITION_FAT32 = 11,
+
+         PARTITION_FAT32_XINT13 = 12,
+         PARTITION_XINT13 = 14,
+         PARTITION_XINT13_EXTENDED = 15,
+         PARTITION_PREP = 65,
+
+         /// <summary>A logical disk manager (LDM) partition.</summary>
+         PARTITION_LDM = 66,
+
+         PARTITION_UNIX = 99,
+         
+         /// <summary>An NTFT partition.</summary>
+         PARTITION_NTFT = 128,
       }
    }
 }
