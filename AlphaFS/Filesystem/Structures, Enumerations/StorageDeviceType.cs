@@ -35,12 +35,10 @@ namespace Alphaleonis.Win32.Filesystem
       Beep = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_BEEP,
 
       /// <summary>FILE_DEVICE_CD_ROM parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CDROM")]
-      CDROM = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CD_ROM,
+      CDRom = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CD_ROM,
 
       /// <summary>FILE_DEVICE_CD_ROM_FILE_SYSTEM parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "CDROM")]
-      CDROMFileSystem = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CD_ROM_FILE_SYSTEM,
+      CDRomFileSystem = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CD_ROM_FILE_SYSTEM,
 
       /// <summary>FILE_DEVICE_CONTROLLER parameter.</summary>
       Controller = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CONTROLLER,

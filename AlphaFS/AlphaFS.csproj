@@ -199,6 +199,10 @@
     <Compile Include="Device\Device.GetDeviceIoData.cs" />
     <Compile Include="Device\Device.InvokeDeviceIoData.cs" />
     <Compile Include="Device\Device.GetVolumeDiskExtents.cs" />
+    <Compile Include="Device\Device.GetDevicePath.cs" />
+    <Compile Include="Device\Device.ValidateDevicePath.cs" />
+    <Compile Include="Device\StorageDeviceInfo.cs" />
+    <Compile Include="Device\PhysicalDriveInfo\Device.GetStorageTypeInfo.cs" />
     <Compile Include="Device\PhysicalDriveInfo\Device.GetPhysicalDriveInfo.cs" />
     <Compile Include="Device\PhysicalDriveInfo\Device.EnumeratePhysicalDrives.cs" />
     <Compile Include="Device\Device.EnumerateDevices.cs" />
@@ -663,7 +667,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

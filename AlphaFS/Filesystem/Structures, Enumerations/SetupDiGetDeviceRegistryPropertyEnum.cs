@@ -19,6 +19,8 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
@@ -57,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
          Class = 7,
 
          /// <summary>SPDRP_CLASSGUID
-         /// <para>Represents the <see cref="System.Guid"/> of the device setup class that a device instance belongs to.</para>
+         /// <para>Represents the <see cref="Guid"/> of the device setup class that a device instance belongs to.</para>
          /// </summary>
          ClassGuid = 8,
 

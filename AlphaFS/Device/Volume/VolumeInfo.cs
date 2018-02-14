@@ -178,6 +178,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>The volume GUID.</summary>
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       public string Guid
       {
          get

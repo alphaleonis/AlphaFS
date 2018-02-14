@@ -35,30 +35,33 @@ namespace Alphaleonis.Win32.Filesystem
       #region Constructors
 
       /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      public PhysicalDriveInfo()
+      private PhysicalDriveInfo()
       {
-         PartitionNumber = -1;
+         StorageDeviceInfo = new StorageDeviceInfo
+         {
+            DeviceNumber = -1,
+            PartitionNumber = -1
+         };
       }
 
 
       /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      public PhysicalDriveInfo(PhysicalDriveInfo pDriveInfo) : this()
+      public PhysicalDriveInfo(StorageDeviceInfo storageInfo)
       {
-         CopyTo(pDriveInfo, this);
+         StorageDeviceInfo = storageInfo;
+      }
+
+
+      /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
+      public PhysicalDriveInfo(PhysicalDriveInfo physicalDriveInfo)
+      {
+         CopyTo(physicalDriveInfo, this);
       }
 
       #endregion // Constructors
 
 
       #region Properties
-
-      /// <summary>The bus type of the physical drive.</summary>
-      public StorageBusType BusType { get; internal set; }
-
-
-      /// <summary>The index number of the physical drive.</summary>
-      public int DeviceNumber { get; internal set; }
-
 
       /// <summary>The path to the device.</summary>
       /// <returns>A string that represents the path to the device.
@@ -82,34 +85,34 @@ namespace Alphaleonis.Win32.Filesystem
       public bool RemovableMedia { get; internal set; }
 
 
-      /// <summary>Returns the "FriendlyName" of the physical drive.</summary>
+      /// <summary>The "FriendlyName" of the physical drive.</summary>
       public string Name { get; internal set; }
 
-
-      /// <summary>Indicates the partition number of the device is returned in this member, if the device can be partitioned. Otherwise, -1 is returned.</summary>
-      public int PartitionNumber { get; internal set; }
-
-
-      /// <summary>Indicates the partition number of the device is returned in this member, if the device can be partitioned. Otherwise, -1 is returned.</summary>
+      
+      /// <summary>The partition numbers that are located on the physical drive.</summary>
       public Collection<int> PartitionNumbers { get; internal set; }
 
 
-      /// <summary>The Partitions located on the physical drive.</summary>
-      public string[] Partitions { get; internal set; }
+      ///// <summary>The partitions that are located on the physical drive.</summary>
+      //public string[] Partitions { get; internal set; }
 
       /// <summary>The product revision of the physical drive.</summary>
       public string ProductRevision { get; internal set; }
 
 
-      /// <summary>Gets the serial number of the physical drive. If the physical drive has no serial number or the session is not elevated, this member is -1.</summary>
+      /// <summary>The storage device type and device- and partition number.</summary>
+      public StorageDeviceInfo StorageDeviceInfo { get; internal set; }
+
+
+      /// <summary>The serial number of the physical drive. If the physical drive has no serial number or the session is not elevated -1 is returned.</summary>
       public string SerialNumber { get; internal set; }
 
 
-      /// <summary>The total size of the physical drive. If the session is not elevated, this member is -1.</summary>
+      /// <summary>The total size of the physical drive. If the session is not elevated -1 is returned</summary>
       public long TotalSize { get; internal set; }
 
 
-      /// <summary>The total number of bytes on a disk that are available to the user who is associated with the calling thread, formatted as a unit size.</summary>
+      /// <summary>The total size of the physical drive, formatted as a unit size.</summary>
       public string TotalSizeUnitSize
       {
          get { return Utils.UnitSizeToText(TotalSize); }
@@ -124,11 +127,37 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Methods
 
+      /// <summary>Checks if the logical drive or volume is located on the physical drive.</summary>
+      /// <param name="devicePath">
+      ///    A drive path such as: "C", "C:" or "C:\".
+      ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
+      /// </param>
+      public bool ContainsVolume(string devicePath)
+      {
+         bool isDrive;
+         bool isVolume;
+         bool isDeviceInfo;
+
+         devicePath = Device.ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
+
+
+         if (isDrive && null != LogicalDrives)
+         {
+            devicePath = Path.RemoveTrailingDirectorySeparator(devicePath, false);
+
+            return LogicalDrives.Any(driveName => driveName.Equals(devicePath, StringComparison.OrdinalIgnoreCase));
+         }
+
+
+         return isVolume && null != VolumeGuids && VolumeGuids.Any(guid => guid.Equals(devicePath, StringComparison.OrdinalIgnoreCase));
+      }
+
+
       /// <summary>Returns the "FriendlyName" of the physical drive.</summary>
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         return Name;
+         return Name ?? DevicePath;
       }
 
 
@@ -142,11 +171,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          var other = obj as PhysicalDriveInfo;
 
-         return null != other && null != other.DevicePath &&
+         return null != other && null != other.DevicePath && null != other.StorageDeviceInfo &&
 
                 other.DevicePath.Equals(DevicePath, StringComparison.OrdinalIgnoreCase) &&
 
-                other.DeviceNumber.Equals(DeviceNumber) && other.PartitionNumber.Equals(PartitionNumber);
+                other.StorageDeviceInfo.Equals(StorageDeviceInfo) &&
+
+                other.StorageDeviceInfo.DeviceNumber.Equals(StorageDeviceInfo.DeviceNumber) && other.StorageDeviceInfo.PartitionNumber.Equals(StorageDeviceInfo.PartitionNumber);
       }
 
 
@@ -182,10 +213,12 @@ namespace Alphaleonis.Win32.Filesystem
       {
          // Properties listed here should not be overwritten by the physical drive template.
 
-         var excludedProps = new[] {"PartitionNumber"};
+         //var excludedProps = new[] {"PartitionNumber"};
 
 
-         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite && !excludedProps.Any(prop => prop.Equals(x.Name))).ToArray();
+         //var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite && !excludedProps.Any(prop => prop.Equals(x.Name))).ToArray();
+
+         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite).ToArray();
 
          var dstProps = srcProps.ToArray();
 

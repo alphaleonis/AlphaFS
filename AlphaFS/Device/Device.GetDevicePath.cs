@@ -19,40 +19,34 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Globalization;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Filesystem
 {
-   public partial class AlphaFS_PhysicalDriveInfoTest
+   public static partial class Device
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_Device_EnumeratePhysicalDrives_Local_Success()
+      private static string GetDevicePath(string devicePath, out string logicalDrive)
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
+         bool isDrive;
+         bool isVolume;
+         bool isDeviceInfo;
 
+         devicePath = ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
 
-         var pDriveCount = 0;
-         var pDrives = Alphaleonis.Win32.Filesystem.Device.EnumeratePhysicalDrives().OrderBy(pDriveInfo => pDriveInfo.StorageDeviceInfo.DeviceNumber).ThenBy(pDriveInfo => pDriveInfo.StorageDeviceInfo.PartitionNumber).ToArray();
+         devicePath = string.Format(CultureInfo.InvariantCulture, "{0}{1}", isDrive ? Path.LogicalDrivePrefix : string.Empty, Path.RemoveTrailingDirectorySeparator(devicePath));
 
-         foreach (var pDrive in pDrives)
+         if (isDrive)
          {
-            Console.WriteLine();
-            Console.WriteLine("#{0:000}\tPhysical Drive: [{1}]", ++pDriveCount, pDrive.StorageDeviceInfo.DeviceNumber);
+            logicalDrive = Path.GetRegularPathCore(devicePath, GetFullPathOptions.RemoveTrailingDirectorySeparator, false);
 
-
-            UnitTestConstants.Dump(pDrive, -17);
-
-            UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -15, true);
-            Console.WriteLine();
+            logicalDrive = devicePath.Substring(Path.LogicalDrivePrefix.Length);
          }
 
+         else
+            logicalDrive = null;
 
-         Assert.IsTrue(pDrives.Length > 0, "No physical drives enumerated, but it is expected.");
+
+         return devicePath;
       }
    }
 }

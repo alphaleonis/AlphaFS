@@ -53,11 +53,15 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
+         path = GetRegularPathCore(path, GetFullPathOptions.None, false);
+
+         var regularPath = path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase) ? path.Substring(LogicalDrivePrefix.Length) : path;
+         
+         var c = regularPath.ToUpperInvariant()[0];
+
          // Don't use char.IsLetter() here as that can be misleading; The only valid drive letters are: A-Z.
 
-         var c = path.ToUpperInvariant()[0];
-
-         return path[1] == VolumeSeparatorChar && c >= 'A' && c <= 'Z';
+         return regularPath[1] == VolumeSeparatorChar && c >= 'A' && c <= 'Z';
       }
    }
 }

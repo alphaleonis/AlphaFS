@@ -37,27 +37,26 @@ namespace AlphaFS.UnitTest
 
          var driveCount = 0;
 
-         var sourceDrive = UnitTestConstants.SysDrive + @"\";
-         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive);
-
+         // Use lowercase drive letter because .Contains() is case sensitive by default.
+         var sourceDrive = UnitTestConstants.SysDrive.ToLowerInvariant() + System.IO.Path.DirectorySeparatorChar;
 
          var pDrive = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDriveInfo(sourceDrive);
 
          Console.WriteLine();
          Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++driveCount, sourceDrive);
 
+
          UnitTestConstants.Dump(pDrive, -17);
+
+         UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -15, true);
 
 
          Assert.IsNotNull(pDrive);
 
 
          Assert.IsNotNull(pDrive.LogicalDrives);
-         Assert.IsTrue(pDrive.LogicalDrives.Contains(sourceDrive));
-
-
-         Assert.IsNotNull(pDrive.VolumeGuids);
-         Assert.IsTrue(pDrive.VolumeGuids.Contains(sourceVolume));
+         //Assert.IsTrue(pDrive.LogicalDrives.Contains(sourceDrive));
+         Assert.IsTrue(pDrive.ContainsVolume(sourceDrive));
       }
    }
 }

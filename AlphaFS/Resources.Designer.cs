@@ -251,7 +251,7 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Argument must be a drive letter: &quot;C&quot; or RootDir: &quot;C:\&quot;.
+        ///   Looks up a localized string similar to Argument must be a drive letter: &quot;C&quot;, &quot;C:&quot;  or RootDir: &quot;C:\&quot;.
         /// </summary>
         internal static string InvalidLogicalDriveArgument {
             get {

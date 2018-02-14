@@ -29,8 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-
-      /// <summary>Opens a physical device, such as: "\\.\PhysicalDrive0" for access.</summary>
+      /// <summary>Opens a physical device, such as: "\\.\PhysicalDrive0" or "\\.\C:" for access.</summary>
       /// <returns>A <see cref="SafeFileHandle"/> instance.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -41,6 +40,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static SafeFileHandle OpenPhysicalDrive(string path, FileSystemRights fileSystemRights)
       {
+         // fileSystemRights: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
+         // without accessing that file or device, even if GENERIC_READ access would have been denied.
+         // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
+
+
          return File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, FileMode.Open, fileSystemRights, FileShare.ReadWrite, false, false, PathFormat.LongFullPath);
       }
    }

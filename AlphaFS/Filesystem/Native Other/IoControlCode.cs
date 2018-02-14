@@ -31,8 +31,8 @@ namespace Alphaleonis.Win32.Filesystem
       [Flags]
       internal enum IoControlCode : uint
       {
-         ///// <summary>Retrieves the physical location of a specified volume on one or more disks.</summary>
-         //IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS = (STORAGE_DEVICE_TYPE.FILE_DEVICE_VOLUME << 16) | (0 << 2) | IoMethod.Buffered | (0 << 14),
+         /// <summary>Retrieves the physical location of a specified volume on one or more disks.</summary>
+         IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS = (STORAGE_DEVICE_TYPE.FILE_DEVICE_VOLUME << 16) | (0 << 2) | IoMethod.Buffered | (0 << 14),
 
 
          /// <summary>Return properties of a storage device or adapter. The request indicates the kind of information to retrieve, such as inquiry data for a device or capabilities and limitations of an adapter.</summary>

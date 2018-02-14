@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    public enum StorageBusType
    {
       /// <summary>Indicates an unknown bus type.</summary>
-      None = NativeMethods.STORAGE_BUS_TYPE.BusTypeUnknown,
+      Unknown = NativeMethods.STORAGE_BUS_TYPE.BusTypeUnknown,
 
       /// <summary>Indicates a SCSI bus type.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SCSI")]

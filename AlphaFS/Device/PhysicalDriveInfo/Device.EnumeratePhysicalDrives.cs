@@ -33,32 +33,29 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrives()
       {
-         var physicalDrives = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(null, deviceInfo, true)).Where(physicalDrive => null != physicalDrive).OrderBy(physicalDrive => physicalDrive.DeviceNumber).ToArray();
+         var physicalDrives = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(null, null, deviceInfo, true, true)).Where(physicalDrive => null != physicalDrive).ToArray();
 
-         var pVolumes = Volume.EnumerateVolumes().Select(volumeGuid => GetPhysicalDriveInfoCore(volumeGuid, null, false)).Where(physicalDrive => null != physicalDrive).OrderBy(physicalDrive => physicalDrive.DeviceNumber).ThenBy(physicalDrive => physicalDrive.PartitionNumber).ToArray();
+         var pVolumes = Volume.EnumerateVolumes().Select(volumeGuid => GetPhysicalDriveInfoCore(null, volumeGuid, null, false, false)).Where(physicalDrive => null != physicalDrive).ToArray();
 
-         var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(driveName => GetPhysicalDriveInfoCore(driveName, null, false)).Where(physicalDrive => null != physicalDrive).OrderBy(physicalDrive => physicalDrive.DeviceNumber).ThenBy(physicalDrive => physicalDrive.PartitionNumber).ToArray();
-
-
-         var populatedPhysicalDrives = new Collection<PhysicalDriveInfo>();
+         var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(driveName => GetPhysicalDriveInfoCore(null, driveName, null, false, false)).Where(physicalDrive => null != physicalDrive).ToArray();
 
 
          foreach (var pDrive in physicalDrives)
          {
             var pDriveInfo = new PhysicalDriveInfo(pDrive)
             {
-               PartitionNumber = pDrive.PartitionNumber
+               StorageDeviceInfo = {PartitionNumber = pDrive.StorageDeviceInfo.PartitionNumber}
             };
 
-
+            
             // Get volume from physical drive matching DeviceNumber.
 
-            foreach (var pDriveVolume in pVolumes.Where(pDriveVolume => pDriveVolume.DeviceNumber == pDrive.DeviceNumber))
+            foreach (var pDriveVolume in pVolumes.Where(pDriveVolume => pDriveVolume.StorageDeviceInfo.DeviceNumber == pDrive.StorageDeviceInfo.DeviceNumber))
             {
                if (null == pDriveInfo.PartitionNumbers)
                   pDriveInfo.PartitionNumbers = new Collection<int>();
 
-               pDriveInfo.PartitionNumbers.Add(pDriveVolume.PartitionNumber);
+               pDriveInfo.PartitionNumbers.Add(pDriveVolume.StorageDeviceInfo.PartitionNumber);
 
 
                if (null == pDriveInfo.VolumeGuids)
@@ -69,21 +66,18 @@ namespace Alphaleonis.Win32.Filesystem
 
                // Get logical drive from volume matching DeviceNumber and PartitionNumber.
 
-               foreach (var pDriveLogical in pLogicalDrives.Where(pDriveLogical => pDriveLogical.DeviceNumber == pDriveVolume.DeviceNumber && pDriveLogical.PartitionNumber == pDriveVolume.PartitionNumber))
+               foreach (var pDriveLogical in pLogicalDrives.Where(pDriveLogical => pDriveLogical.StorageDeviceInfo.DeviceNumber == pDriveVolume.StorageDeviceInfo.DeviceNumber && pDriveLogical.StorageDeviceInfo.PartitionNumber == pDriveVolume.StorageDeviceInfo.PartitionNumber))
                {
                   if (null == pDriveInfo.LogicalDrives)
                      pDriveInfo.LogicalDrives = new Collection<string>();
 
-                  pDriveInfo.LogicalDrives.Add(pDriveLogical.DevicePath);
+                  pDriveInfo.LogicalDrives.Add(Path.RemoveTrailingDirectorySeparator(pDriveLogical.DevicePath));
                }
             }
 
 
-            populatedPhysicalDrives.Add(pDriveInfo);
+            yield return pDriveInfo;
          }
-
-
-         return populatedPhysicalDrives.OrderBy(pDriveInfo => pDriveInfo.DeviceNumber).ThenBy(pDriveInfo => pDriveInfo.PartitionNumber);
       }
    }
 }
