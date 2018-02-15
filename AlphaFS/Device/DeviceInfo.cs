@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {
-         return Device.EnumerateDevicesCore(HostName, deviceGuid);
+         return Device.EnumerateDevicesCore(HostName, deviceGuid, true);
       }
 
       #endregion // Methods
@@ -91,8 +91,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The device interface path.</summary>
       public string DevicePath { get; internal set; }
 
-
-      ///// <summary>Represents the device type of a device instance.</summary>
+      
+      ///// <summary>The device type of a device instance.</summary>
       //public string DeviceType { get; internal set; }
 
 

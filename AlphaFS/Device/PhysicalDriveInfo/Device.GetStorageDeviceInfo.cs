@@ -36,9 +36,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
       ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
       /// </param>
-      public static StorageDeviceInfo GetStorageTypeInfo(string devicePath)
+      public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath)
       {
-         return GetStorageTypeInfoCore(devicePath, false);
+         return GetStorageDeviceInfoCore(devicePath, false);
       }
 
 
@@ -54,9 +54,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
       /// </param>
       /// <param name="getBusType">When <c>true</c> also get the <see cref="StorageBusType"/> which requires elevated rights.</param>
-      public static StorageDeviceInfo GetStorageTypeInfo(string devicePath, bool getBusType)
+      public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath, bool getBusType)
       {
-         return GetStorageTypeInfoCore(devicePath, getBusType);
+         return GetStorageDeviceInfoCore(devicePath, getBusType);
       }
 
 
@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
       /// </param>
       /// <param name="getBusType">When <c>true</c> also get the <see cref="StorageBusType"/> which requires elevated rights.</param>
-      internal static StorageDeviceInfo GetStorageTypeInfoCore(string devicePath, bool getBusType)
+      internal static StorageDeviceInfo GetStorageDeviceInfoCore(string devicePath, bool getBusType)
       {
          string logicalDrive;
 
@@ -81,32 +81,35 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(pathToDevice))
             return null;
 
-         
+
          // No elevation needed.
 
-         using (var safeHandle = OpenPhysicalDrive(pathToDevice, 0))
+         //try { 
+            using (var safeHandle = OpenPhysicalDrive(pathToDevice, 0))
 
-         using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath))
-         {
-            var storage = null != safeBuffer ? safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0) : (NativeMethods.STORAGE_DEVICE_NUMBER?) null;
-
-            if (null != storage)
+            using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath))
             {
-               var storageInfo = new StorageDeviceInfo((NativeMethods.STORAGE_DEVICE_NUMBER) storage);
+               var storage = null != safeBuffer ? safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0) : (NativeMethods.STORAGE_DEVICE_NUMBER?) null;
 
-               if (getBusType)
+               if (null != storage)
                {
-                  // Requires elevation.
+                  var storageInfo = new StorageDeviceInfo((NativeMethods.STORAGE_DEVICE_NUMBER) storage);
 
-                  var pDriveInfo = GetPhysicalDriveInfoCore(storageInfo, pathToDevice, null, true, false);
+                  if (getBusType)
+                  {
+                     // Requires elevation.
 
-                  if (null != pDriveInfo)
-                     storageInfo.BusType = pDriveInfo.StorageDeviceInfo.BusType;
+                     var pDriveInfo = GetPhysicalDriveInfoCore(storageInfo, pathToDevice, null, false);
+
+                     if (null != pDriveInfo)
+                        storageInfo.BusType = pDriveInfo.StorageDeviceInfo.BusType;
+                  }
+
+                  return storageInfo;
                }
-
-               return storageInfo;
             }
-         }
+         //}
+         //catch {}
 
          return null;
       }

@@ -40,7 +40,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var tempPath = UnitTestConstants.LocalHost;
+         var host = UnitTestConstants.LocalHost;
          var classCount = 0;
 
          foreach (var deviceClass in EnumMemberToList<Alphaleonis.Win32.Filesystem.DeviceGuid>())
@@ -49,8 +49,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("#{0:000}\tClass: [{1}]", ++classCount, deviceClass);
 
 
-            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(tempPath, deviceClass))
-
+            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(host, deviceClass))
                UnitTestConstants.Dump(device, -24);
          }
 
@@ -72,7 +71,7 @@ namespace AlphaFS.UnitTest
          var enumValArray = Enum.GetValues(enumType).Cast<T>().OrderBy(e => e.ToString()).ToList();
          var enumValList = new List<T>(enumValArray.Count);
 
-         enumValList.AddRange(enumValArray.Select(val => (T)Enum.Parse(enumType, val.ToString())));
+         enumValList.AddRange(enumValArray.Select(val => (T) Enum.Parse(enumType, val.ToString())));
 
          return enumValList;
       }

@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -33,48 +34,131 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrives()
       {
-         var physicalDrives = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(null, null, deviceInfo, true, true)).Where(physicalDrive => null != physicalDrive).ToArray();
+         var physicalDrives = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(null, null, deviceInfo, true)).Where(physicalDrive => null != physicalDrive).ToArray();
+         
+         var pVolumes = Volume.EnumerateVolumes().Select(volumeGuid => GetPhysicalDriveInfoCore(null, volumeGuid, null, null)).Where(physicalDrive => null != physicalDrive).ToArray();
 
-         var pVolumes = Volume.EnumerateVolumes().Select(volumeGuid => GetPhysicalDriveInfoCore(null, volumeGuid, null, false, false)).Where(physicalDrive => null != physicalDrive).ToArray();
-
-         var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(driveName => GetPhysicalDriveInfoCore(null, driveName, null, false, false)).Where(physicalDrive => null != physicalDrive).ToArray();
+         var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(driveName => GetPhysicalDriveInfoCore(null, driveName, null, null)).Where(physicalDrive => null != physicalDrive).ToArray();
 
 
          foreach (var pDrive in physicalDrives)
          {
             var pDriveInfo = new PhysicalDriveInfo(pDrive)
             {
-               StorageDeviceInfo = {PartitionNumber = pDrive.StorageDeviceInfo.PartitionNumber}
+               StorageDeviceInfo =
+               {
+                  DeviceNumber = pDrive.StorageDeviceInfo.DeviceNumber,
+                  PartitionNumber = pDrive.StorageDeviceInfo.PartitionNumber
+               }
             };
 
             
             // Get volume from physical drive matching DeviceNumber.
 
-            foreach (var pDriveVolume in pVolumes.Where(pDriveVolume => pDriveVolume.StorageDeviceInfo.DeviceNumber == pDrive.StorageDeviceInfo.DeviceNumber))
+            foreach (var pVolume in pVolumes.Where(pVol => pVol.StorageDeviceInfo.DeviceNumber == pDriveInfo.StorageDeviceInfo.DeviceNumber))
             {
-               if (null == pDriveInfo.PartitionNumbers)
-                  pDriveInfo.PartitionNumbers = new Collection<int>();
+               // Add device volume labels.
 
-               pDriveInfo.PartitionNumbers.Add(pDriveVolume.StorageDeviceInfo.PartitionNumber);
+               if (null == pDriveInfo.VolumeLabels)
+                  pDriveInfo.VolumeLabels = new Collection<string>();
 
+               pDriveInfo.VolumeLabels.Add(pVolume.Name);
+
+
+               // Add device partition index numbers.
+
+               if (null == pDriveInfo.PartitionIndexes)
+                  pDriveInfo.PartitionIndexes = new Collection<int>();
+
+               pDriveInfo.PartitionIndexes.Add(pVolume.StorageDeviceInfo.PartitionNumber);
+
+
+               // Add device volume GUIDs.
 
                if (null == pDriveInfo.VolumeGuids)
                   pDriveInfo.VolumeGuids = new Collection<string>();
 
-               pDriveInfo.VolumeGuids.Add(pDriveVolume.DevicePath);
+               pDriveInfo.VolumeGuids.Add(pVolume.DevicePath);
 
 
+               
+               
                // Get logical drive from volume matching DeviceNumber and PartitionNumber.
 
-               foreach (var pDriveLogical in pLogicalDrives.Where(pDriveLogical => pDriveLogical.StorageDeviceInfo.DeviceNumber == pDriveVolume.StorageDeviceInfo.DeviceNumber && pDriveLogical.StorageDeviceInfo.PartitionNumber == pDriveVolume.StorageDeviceInfo.PartitionNumber))
+               foreach (var pLogicalDrive in pLogicalDrives.Where(pDriveLogical => pDriveLogical.StorageDeviceInfo.DeviceNumber == pVolume.StorageDeviceInfo.DeviceNumber && pDriveLogical.StorageDeviceInfo.PartitionNumber == pVolume.StorageDeviceInfo.PartitionNumber))
                {
                   if (null == pDriveInfo.LogicalDrives)
                      pDriveInfo.LogicalDrives = new Collection<string>();
 
-                  pDriveInfo.LogicalDrives.Add(Path.RemoveTrailingDirectorySeparator(pDriveLogical.DevicePath));
+                  pDriveInfo.LogicalDrives.Add(Path.RemoveTrailingDirectorySeparator(pLogicalDrive.DevicePath));
                }
             }
 
+
+            yield return pDriveInfo;
+         }
+
+
+         // Windows Disk Management shows CD-ROM so mimic that behaviour.
+         var cdRoms = EnumerateDevicesCore(null, DeviceGuid.CDRom, false).Select(deviceInfo => GetPhysicalDriveInfoCore(null, null, deviceInfo, true)).Where(physicalDrive => null != physicalDrive).ToArray();
+
+         foreach (var pCdRom in cdRoms)
+         {
+            var pDriveInfo = new PhysicalDriveInfo(pCdRom)
+            {
+               StorageDeviceInfo =
+               {
+                  DeviceNumber = pCdRom.StorageDeviceInfo.DeviceNumber,
+                  PartitionNumber = pCdRom.StorageDeviceInfo.PartitionNumber
+               }
+            };
+
+
+            // Get volume from CDRom matching DeviceNumber.
+
+            var pVolume = pVolumes.FirstOrDefault(pVol => pVol.StorageDeviceInfo.DeviceNumber == pDriveInfo.StorageDeviceInfo.DeviceNumber && pVol.StorageDeviceInfo.PartitionNumber == pDriveInfo.StorageDeviceInfo.PartitionNumber);
+
+            if (null != pVolume)
+            {
+               // Add device volume labels.
+
+               if (null == pDriveInfo.VolumeLabels)
+                  pDriveInfo.VolumeLabels = new Collection<string>();
+
+               pDriveInfo.VolumeLabels.Add(pVolume.Name);
+
+
+               // Add device partition index numbers.
+
+               if (null == pDriveInfo.PartitionIndexes)
+                  pDriveInfo.PartitionIndexes = new Collection<int>();
+
+               pDriveInfo.PartitionIndexes.Add(pVolume.StorageDeviceInfo.PartitionNumber);
+
+
+               // Add device volume GUIDs.
+
+               if (null == pDriveInfo.VolumeGuids)
+                  pDriveInfo.VolumeGuids = new Collection<string>();
+
+               pDriveInfo.VolumeGuids.Add(pVolume.DevicePath);
+
+
+
+
+               // Get logical drive from CDRom matching DeviceNumber and PartitionNumber.
+
+               var logicalDrive = pLogicalDrives.FirstOrDefault(pDriveLogical => pDriveLogical.StorageDeviceInfo.DeviceNumber == pVolume.StorageDeviceInfo.DeviceNumber && pDriveLogical.StorageDeviceInfo.PartitionNumber == pVolume.StorageDeviceInfo.PartitionNumber);
+
+               if (null != logicalDrive)
+               {
+                  if (null == pDriveInfo.LogicalDrives)
+                     pDriveInfo.LogicalDrives = new Collection<string>();
+
+                  pDriveInfo.LogicalDrives.Add(Path.RemoveTrailingDirectorySeparator(logicalDrive.DevicePath));
+               }
+            }
+            
 
             yield return pDriveInfo;
          }

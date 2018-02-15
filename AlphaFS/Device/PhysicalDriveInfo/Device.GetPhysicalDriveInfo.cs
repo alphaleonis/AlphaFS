@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          devicePath = ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
 
-         var storageInfo = GetStorageTypeInfoCore(devicePath, false);
+         var storageInfo = GetStorageDeviceInfoCore(devicePath, false);
 
          if (null == storageInfo)
             return null;
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Use either <paramref name="devicePath"/> or <paramref name="deviceInfo"/>, not both.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is disposed.")]
       [SecurityCritical]
-      internal static PhysicalDriveInfo GetPhysicalDriveInfoCore(StorageDeviceInfo storageInfo, string devicePath, DeviceInfo deviceInfo, bool getDeviceData, bool getAllData)
+      internal static PhysicalDriveInfo GetPhysicalDriveInfoCore(StorageDeviceInfo storageInfo, string devicePath, DeviceInfo deviceInfo, bool? getAllData)
       {
          var isDeviceInfo = null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.DevicePath);
 
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (null == storageInfo)
-            storageInfo = GetStorageTypeInfoCore(devicePath, false);
+            storageInfo = GetStorageDeviceInfoCore(devicePath, false);
 
          if (null == storageInfo)
             return null;
@@ -122,21 +122,35 @@ namespace Alphaleonis.Win32.Filesystem
 
          var pDriveInfo = new PhysicalDriveInfo(storageInfo)
          {
+            DeviceDescription = isDeviceInfo ? deviceInfo.DeviceDescription : null,
+
             DevicePath = devicePath,
 
             // "FriendlyName" usually contains a more complete name, as seen in Windows Explorer.
             Name = isDeviceInfo ? deviceInfo.FriendlyName : null,
          };
-
          
-         if (getDeviceData)
+
+         if (null != getAllData)
          {
             //var physicalDrivePath = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, storageInfo.DeviceNumber.ToString(CultureInfo.InvariantCulture));
 
             try
             {
                // Requires elevation.
-               PopulatePhysicalDriveInfo(getAllData, devicePath, pDriveInfo);
+               PopulatePhysicalDriveInfo((bool) getAllData, devicePath, pDriveInfo);
+
+
+               //// CDRom, SD Card.
+               //if (pDriveInfo.StorageDeviceInfo.DeviceType == StorageDeviceType.CDRom)
+               //{
+               //   if (isDeviceInfo)
+               //   {
+               //      deviceInfo.ClassGuid = new Guid(Utils.GetEnumDescription(DeviceGuid.CDRom));
+
+               //      pDriveInfo.Name = deviceInfo.FriendlyName;
+               //   }
+               //}
             }
             catch { }
          }
@@ -151,9 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          //      var pDrive = @"\\.\PhysicalDrive0";
 
-         //      GetDiskPartitions(pDrive);
-         //      GetDiskGeometry(pDrive);
-         //      GetDiskLayout(pDrive);
+         //      GetDriveStuff(devicePath);
          //   }
          //   catch { }
          ////}
@@ -203,10 +215,9 @@ namespace Alphaleonis.Win32.Filesystem
 
             // Get the device size.
 
-            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(long))))
+            using (var safeBuffer = SafeGlobalMemoryBufferHandle.FromLong(physicalDriveInfo.TotalSize))
             {
-               uint bytesReturned;
-               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
                var lastError = Marshal.GetLastWin32Error();
 

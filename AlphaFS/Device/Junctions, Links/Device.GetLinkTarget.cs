@@ -88,38 +88,24 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static SafeGlobalMemoryBufferHandle GetLinkTargetData(SafeFileHandle safeHandle, string reparsePath)
       {
-         var safeBuffer = new SafeGlobalMemoryBufferHandle(MAXIMUM_REPARSE_DATA_BUFFER_SIZE);
+         NativeMethods.IsValidHandle(safeHandle);
+
+         var bufferSize = MAXIMUM_REPARSE_DATA_BUFFER_SIZE;
 
          while (true)
          {
-            uint bytesReturned;
-            var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.FSCTL_GET_REPARSE_POINT, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+            var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize);
+
+            var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.FSCTL_GET_REPARSE_POINT, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
-            if (!success)
-            {
-               switch ((uint)lastError)
-               {
-                  case Win32Errors.ERROR_MORE_DATA:
-                  case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
 
-                     // Should not happen since we already use the maximum size.
 
-                     if (safeBuffer.Capacity < bytesReturned)
-                        safeBuffer.Close();
-                     break;
-               }
+            if (success)
+               return safeBuffer;
 
-               if (lastError != Win32Errors.ERROR_SUCCESS)
-                  NativeError.ThrowException(lastError, reparsePath);
-            }
-
-            else
-               break;
+            bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, reparsePath);
          }
-
-
-         return safeBuffer;
       }
    }
 }

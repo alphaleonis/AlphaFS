@@ -35,15 +35,14 @@ namespace Alphaleonis.Win32.Filesystem
       {
          NativeMethods.IsValidHandle(safeHandle);
 
-         //var nativeOverlapped = new NativeOverlapped();
+
          var bufferSize = size > -1 ? size : Marshal.SizeOf(typeof(T));
 
          while (true)
          {
-            uint bytesReturned;
             var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize);
 
-            var success = NativeMethods.DeviceIoControl(safeHandle, controlCode, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoControl(safeHandle, controlCode, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
 

@@ -206,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the label of the volume.</summary>
       /// <returns>The label of the volume.</returns>
-      /// <remarks>This property is the label assigned to the volume, such "MyDrive"</remarks>
+      /// <remarks>This property is the label assigned to the volume, such as: "MyDrive"</remarks>
       public string Name { get; private set; }
 
 

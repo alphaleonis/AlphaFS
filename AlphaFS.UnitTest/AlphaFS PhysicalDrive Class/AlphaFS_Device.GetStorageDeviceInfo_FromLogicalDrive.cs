@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetStorageTypeInfo_FromLogicalDrive_Success()
+      public void AlphaFS_Device_GetStorageDeviceInfo_FromLogicalDrive_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine();
             Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++driveCount, drive.Name);
 
-            var storageInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageTypeInfo(drive.Name, true);
+            var storageInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageDeviceInfo(drive.Name, true);
             
             UnitTestConstants.Dump(storageInfo, -15);
 

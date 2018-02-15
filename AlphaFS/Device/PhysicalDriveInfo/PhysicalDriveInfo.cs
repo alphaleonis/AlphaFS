@@ -63,6 +63,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Properties
 
+      /// <summary>The device description.</summary>
+      public string DeviceDescription { get; internal set; }
+      
+
       /// <summary>The path to the device.</summary>
       /// <returns>A string that represents the path to the device.
       ///   A drive path such as: "C:", "D:\",
@@ -89,8 +93,8 @@ namespace Alphaleonis.Win32.Filesystem
       public string Name { get; internal set; }
 
       
-      /// <summary>The partition numbers that are located on the physical drive.</summary>
-      public Collection<int> PartitionNumbers { get; internal set; }
+      /// <summary>The partition index numbers that are located on the physical drive.</summary>
+      public Collection<int> PartitionIndexes { get; internal set; }
 
 
       ///// <summary>The partitions that are located on the physical drive.</summary>
@@ -119,8 +123,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>The volumes that are located on the physical drive.</summary>
+      /// <summary>A collection of volume GUID strings of volumes that are located on the physical drive.</summary>
       public Collection<string> VolumeGuids { get; internal set; }
+
+
+      /// <summary>A collection of volume label strings of volumes that are located on the physical drive.</summary>
+      public Collection<string> VolumeLabels { get; internal set; }
 
       #endregion // Properties
 

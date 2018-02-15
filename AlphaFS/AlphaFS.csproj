@@ -202,7 +202,7 @@
     <Compile Include="Device\Device.GetDevicePath.cs" />
     <Compile Include="Device\Device.ValidateDevicePath.cs" />
     <Compile Include="Device\StorageDeviceInfo.cs" />
-    <Compile Include="Device\PhysicalDriveInfo\Device.GetStorageTypeInfo.cs" />
+    <Compile Include="Device\PhysicalDriveInfo\Device.GetStorageDeviceInfo.cs" />
     <Compile Include="Device\PhysicalDriveInfo\Device.GetPhysicalDriveInfo.cs" />
     <Compile Include="Device\PhysicalDriveInfo\Device.EnumeratePhysicalDrives.cs" />
     <Compile Include="Device\Device.EnumerateDevices.cs" />

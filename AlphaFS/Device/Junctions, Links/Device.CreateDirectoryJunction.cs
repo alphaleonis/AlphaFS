@@ -36,16 +36,19 @@ namespace Alphaleonis.Win32.Filesystem
          var header = new NativeMethods.ReparseDataBufferHeader
          {
             ReparseTag = ReparsePointTag.MountPoint,
-            ReparseDataLength = (ushort)(targetDirBytes.Length + 12)
+            ReparseDataLength = (ushort) (targetDirBytes.Length + 12)
          };
+
 
          var mountPoint = new NativeMethods.MountPointReparseBuffer
          {
             SubstituteNameOffset = 0,
-            SubstituteNameLength = (ushort)targetDirBytes.Length,
-            PrintNameOffset = (ushort)(targetDirBytes.Length + UnicodeEncoding.CharSize),
+            SubstituteNameLength = (ushort) targetDirBytes.Length,
+
+            PrintNameOffset = (ushort) (targetDirBytes.Length + UnicodeEncoding.CharSize),
             PrintNameLength = 0
          };
+
 
          var reparseDataBuffer = new NativeMethods.REPARSE_DATA_BUFFER
          {
@@ -54,11 +57,13 @@ namespace Alphaleonis.Win32.Filesystem
 
             SubstituteNameOffset = mountPoint.SubstituteNameOffset,
             SubstituteNameLength = mountPoint.SubstituteNameLength,
+
             PrintNameOffset = mountPoint.PrintNameOffset,
             PrintNameLength = mountPoint.PrintNameLength,
 
             PathBuffer = new byte[MAXIMUM_REPARSE_DATA_BUFFER_SIZE - 16] // 16368
          };
+
 
          targetDirBytes.CopyTo(reparseDataBuffer.PathBuffer, 0);
 
@@ -67,10 +72,10 @@ namespace Alphaleonis.Win32.Filesystem
          {
             safeBuffer.StructureToPtr(reparseDataBuffer, false);
 
-            uint bytesReturned;
-            var success = NativeMethods.DeviceIoJunctions(safeHandle, NativeMethods.IoControlCode.FSCTL_SET_REPARSE_POINT, safeBuffer, (uint)(targetDirBytes.Length + 20), IntPtr.Zero, 0, out bytesReturned, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoJunctions(safeHandle, NativeMethods.IoControlCode.FSCTL_SET_REPARSE_POINT, safeBuffer, (uint) (targetDirBytes.Length + 20), IntPtr.Zero, 0, IntPtr.Zero, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
+
             if (!success)
                NativeError.ThrowException(lastError, directoryPath);
          }

@@ -150,7 +150,7 @@
     <Compile Include="AlphaFS Crc Class\AlphaFS_CrcTest.cs" />
     <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_Device.EnumeratePhysicalDrives.cs" />
     <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_Device.GetPhysicalDriveInfo_FromDevicePath.cs" />
-    <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_Device.GetStorageTypeInfo.cs" />
+    <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_Device.GetStorageDeviceInfo_FromLogicalDrive.cs" />
     <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_Device.GetPhysicalDriveInfo_FromVolume.cs" />
     <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_Device.GetPhysicalDriveInfo_FromLogicalDrive.cs" />
     <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_PhysicalDriveInfoTest.cs" />
