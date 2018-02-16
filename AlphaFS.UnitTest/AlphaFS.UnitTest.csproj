@@ -172,6 +172,7 @@
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateSessions.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory_CopySymbolicLink.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File_CopySymbolicLink.cs" />
+    <Compile Include="AlphaFS ProcessContext Class\AlphaFS_ProcessContextTest.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.VolumeTest.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetDriveType.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetDriveNameForNtDeviceName.cs" />

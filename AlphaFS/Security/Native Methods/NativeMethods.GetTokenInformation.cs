@@ -20,14 +20,22 @@
  */
 
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Alphaleonis.Win32.Security
 {
-   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-   internal struct TokenPrivileges
+   internal static partial class NativeMethods
    {
-      [MarshalAs(UnmanagedType.U4)] public uint PrivilegeCount;
-      internal Luid Luid;
-      [MarshalAs(UnmanagedType.U4)] public uint Attributes;
+      /// <summary>The GetTokenInformation function retrieves a specified type of information about an access token. The calling process must have appropriate access rights to obtain the information.</summary>
+      /// <returns>
+      /// If the function succeeds, the return value is nonzero.
+      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// </returns>
+      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.Bool)]
+      internal static extern bool GetTokenInformation(SafeTokenHandle tokenHandle, [MarshalAs(UnmanagedType.U4)] TOKEN_INFORMATION_CLASS tokenInformationClass, SafeGlobalMemoryBufferHandle tokenInformation, [MarshalAs(UnmanagedType.U4)] uint tokenInformationLength, [MarshalAs(UnmanagedType.U4)] out uint returnLength);
    }
 }

@@ -259,4 +259,7 @@
   <data name="No_Drive_Letters_Available" xml:space="preserve">
     <value>No drive letters available.</value>
   </data>
+  <data name="GetCurrentWindowsIdentityFailed" xml:space="preserve">
+    <value>Failed to get the current WindowsIdentity.</value>
+  </data>
 </root>

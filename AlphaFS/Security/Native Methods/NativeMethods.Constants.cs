@@ -19,24 +19,14 @@
  *  THE SOFTWARE. 
  */
 
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-using System.Security;
-
 namespace Alphaleonis.Win32.Security
 {
    internal static partial class NativeMethods
    {
-      /// <summary>The LookupPrivilegeValue function retrieves the locally unique identifier (LUID) used on a specified system to locally represent the specified privilege name.</summary>
-      /// <returns>
-      /// If the function succeeds, the function returns nonzero.
-      /// If the function fails, it returns zero. To get extended error information, call GetLastError.
-      /// </returns>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
-      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "LookupPrivilegeValueW"), SuppressUnmanagedCodeSecurity]
-      [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool LookupPrivilegeValue([MarshalAs(UnmanagedType.LPWStr)] string lpSystemName, [MarshalAs(UnmanagedType.LPWStr)] string lpName, out LUID lpLuid);
+      /// <summary>Combines DELETE, READ_CONTROL, WRITE_DAC, and WRITE_OWNER access.</summary>
+      public const uint STANDARD_RIGHTS_REQUIRED = 983040;
+
+      /// <summary>The right to read the information in the object's security descriptor, not including the information in the system access control list (SACL).</summary>
+      public const uint STANDARD_RIGHTS_READ = 131072;
    }
 }

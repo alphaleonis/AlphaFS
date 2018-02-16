@@ -134,6 +134,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to get the current WindowsIdentity..
+        /// </summary>
+        internal static string GetCurrentWindowsIdentityFailed {
+            get {
+                return ResourceManager.GetString("GetCurrentWindowsIdentityFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot add and remove trailing DirectorySeparator simultaneously..
         /// </summary>
         internal static string GetFullPathOptions_Add_And_Remove_DirectorySeparator_Invalid {

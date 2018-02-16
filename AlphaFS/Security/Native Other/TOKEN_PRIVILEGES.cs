@@ -19,24 +19,26 @@
  *  THE SOFTWARE. 
  */
 
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using System.Security;
 
 namespace Alphaleonis.Win32.Security
 {
-   internal static partial class NativeMethods
+   /// <summary>The TOKEN_PRIVILEGES structure contains information about a set of privileges for an access token.</summary>
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+   internal struct TOKEN_PRIVILEGES
    {
-      /// <summary>The LookupPrivilegeValue function retrieves the locally unique identifier (LUID) used on a specified system to locally represent the specified privilege name.</summary>
-      /// <returns>
-      /// If the function succeeds, the function returns nonzero.
-      /// If the function fails, it returns zero. To get extended error information, call GetLastError.
-      /// </returns>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
-      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "LookupPrivilegeValueW"), SuppressUnmanagedCodeSecurity]
-      [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool LookupPrivilegeValue([MarshalAs(UnmanagedType.LPWStr)] string lpSystemName, [MarshalAs(UnmanagedType.LPWStr)] string lpName, out LUID lpLuid);
+      /// <summary>This must be set to the number of entries in the Privileges array.</summary>
+      [MarshalAs(UnmanagedType.U4)] public uint PrivilegeCount;
+
+      /// <summary>Specifies an array of LUID_AND_ATTRIBUTES structures. Each structure contains the LUID and attributes of a privilege.</summary>
+      public LUID Luid;
+
+      /// <summary>The attributes of a privilege can be a combination of the following values:
+      /// SE_PRIVILEGE_ENABLED: The privilege is enabled.
+      /// SE_PRIVILEGE_ENABLED_BY_DEFAULT: The privilege is enabled by default.
+      /// SE_PRIVILEGE_REMOVED: Used to remove a privilege. For details, see AdjustTokenPrivileges.
+      /// SE_PRIVILEGE_USED_FOR_ACCESS: The privilege was used to gain access to an object or service. This flag is used to identify the relevant privileges in a set passed by a client application that may contain unnecessary privileges.
+      /// </summary>
+      [MarshalAs(UnmanagedType.U4)] public uint Attributes;
    }
 }
