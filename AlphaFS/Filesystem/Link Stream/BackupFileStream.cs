@@ -466,7 +466,7 @@ namespace Alphaleonis.Win32.Filesystem
          IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
          SafeGlobalMemoryBufferHandle pSecurityDescriptor;
 
-         var lastError = (int) SecurityNativeMethods.GetSecurityInfo(SafeFileHandle, ObjectType.FileObject, SecurityInformation.Group | SecurityInformation.Owner | SecurityInformation.Label | SecurityInformation.Dacl | SecurityInformation.Sacl, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
+         var lastError = (int) SecurityNativeMethods.GetSecurityInfo(SafeFileHandle, SE_OBJECT_TYPE.SE_FILE_OBJECT, SECURITY_INFORMATION.GROUP_SECURITY_INFORMATION | SECURITY_INFORMATION.OWNER_SECURITY_INFORMATION | SECURITY_INFORMATION.LABEL_SECURITY_INFORMATION | SECURITY_INFORMATION.DACL_SECURITY_INFORMATION | SECURITY_INFORMATION.SACL_SECURITY_INFORMATION, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
 
          try
          {

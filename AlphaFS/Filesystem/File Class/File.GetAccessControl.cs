@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(SafeFileHandle handle)
       {
-         return GetAccessControlHandleCore<FileSecurity>(false, false, handle, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, SecurityInformation.None);
+         return GetAccessControlHandleCore<FileSecurity>(false, false, handle, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, SECURITY_INFORMATION.None);
       }
 
       /// <summary>[AlphaFS] Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for a specified file handle.</summary>
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(SafeFileHandle handle, AccessControlSections includeSections)
       {
-         return GetAccessControlHandleCore<FileSecurity>(false, false, handle, includeSections, SecurityInformation.None);
+         return GetAccessControlHandleCore<FileSecurity>(false, false, handle, includeSections, SECURITY_INFORMATION.None);
       }
 
 
@@ -149,7 +149,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Get/SetNamedSecurityInfo does not work with a handle but with a path, hence does not honor the privileges.
             // It magically does since Windows Server 2012 / 8 but not in previous OS versions.
 
-            var lastError = Security.NativeMethods.GetNamedSecurityInfo(pathLp, ObjectType.FileObject, securityInfo, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
+            var lastError = Security.NativeMethods.GetNamedSecurityInfo(pathLp, SE_OBJECT_TYPE.SE_FILE_OBJECT, securityInfo, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
 
 
             // When GetNamedSecurityInfo() fails with ACCESS_DENIED, try again using GetSecurityInfo().
@@ -163,7 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      internal static T GetAccessControlHandleCore<T>(bool internalCall, bool isFolder, SafeFileHandle handle, AccessControlSections includeSections, SecurityInformation securityInfo)
+      internal static T GetAccessControlHandleCore<T>(bool internalCall, bool isFolder, SafeFileHandle handle, AccessControlSections includeSections, SECURITY_INFORMATION securityInfo)
       {
          if (!internalCall)
             securityInfo = CreateSecurityInformation(includeSections);
@@ -182,29 +182,29 @@ namespace Alphaleonis.Win32.Filesystem
             IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
             SafeGlobalMemoryBufferHandle pSecurityDescriptor;
 
-            var lastError = Security.NativeMethods.GetSecurityInfo(handle, ObjectType.FileObject, securityInfo, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
+            var lastError = Security.NativeMethods.GetSecurityInfo(handle, SE_OBJECT_TYPE.SE_FILE_OBJECT, securityInfo, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
 
             return GetSecurityDescriptor<T>(lastError, isFolder, null, pSecurityDescriptor);
          }
       }
 
 
-      private static SecurityInformation CreateSecurityInformation(AccessControlSections includeSections)
+      private static SECURITY_INFORMATION CreateSecurityInformation(AccessControlSections includeSections)
       {
-         var securityInfo = SecurityInformation.None;
+         var securityInfo = SECURITY_INFORMATION.None;
 
 
          if ((includeSections & AccessControlSections.Access) != 0)
-            securityInfo |= SecurityInformation.Dacl;
+            securityInfo |= SECURITY_INFORMATION.DACL_SECURITY_INFORMATION;
 
          if ((includeSections & AccessControlSections.Audit) != 0)
-            securityInfo |= SecurityInformation.Sacl;
+            securityInfo |= SECURITY_INFORMATION.SACL_SECURITY_INFORMATION;
 
          if ((includeSections & AccessControlSections.Group) != 0)
-            securityInfo |= SecurityInformation.Group;
+            securityInfo |= SECURITY_INFORMATION.GROUP_SECURITY_INFORMATION;
 
          if ((includeSections & AccessControlSections.Owner) != 0)
-            securityInfo |= SecurityInformation.Owner;
+            securityInfo |= SECURITY_INFORMATION.OWNER_SECURITY_INFORMATION;
          
 
          return securityInfo;

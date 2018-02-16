@@ -24,10 +24,9 @@ using System.Runtime.InteropServices;
 namespace Alphaleonis.Win32.Security
 {
    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-   internal struct TokenPrivileges
+   internal struct Luid
    {
-      internal uint PrivilegeCount;
-      internal Luid Luid;
-      internal uint Attributes;
+      [MarshalAs(UnmanagedType.U4)] public uint LowPart;
+      [MarshalAs(UnmanagedType.U4)] public uint HighPart;
    }
 }

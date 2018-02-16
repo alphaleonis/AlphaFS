@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(SafeFileHandle handle)
       {
-         return File.GetAccessControlHandleCore<DirectorySecurity>(false, true, handle, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, SecurityInformation.None);
+         return File.GetAccessControlHandleCore<DirectorySecurity>(false, true, handle, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, SECURITY_INFORMATION.None);
       }
 
       /// <summary>[AlphaFS] Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for a particular directory handle.</summary>
@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(SafeFileHandle handle, AccessControlSections includeSections)
       {
-         return File.GetAccessControlHandleCore<DirectorySecurity>(false, true, handle, includeSections, SecurityInformation.None);
+         return File.GetAccessControlHandleCore<DirectorySecurity>(false, true, handle, includeSections, SECURITY_INFORMATION.None);
       }
    }
 }

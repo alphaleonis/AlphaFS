@@ -19,14 +19,25 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Alphaleonis.Win32.Security
 {
-   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-   internal struct Luid
+   internal static partial class NativeMethods
    {
-      internal uint LowPart;
-      internal uint HighPart;
+      /// <summary>The GetSecurityDescriptorSacl function retrieves a pointer to the system access control list (SACL) in a specified security descriptor.</summary>
+      /// <returns>
+      /// If the function succeeds, the function returns nonzero.
+      /// If the function fails, it returns zero. To get extended error information, call GetLastError.
+      /// </returns>
+      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.Bool)]
+      internal static extern bool GetSecurityDescriptorSacl(SafeGlobalMemoryBufferHandle pSecurityDescriptor, [MarshalAs(UnmanagedType.Bool)] out bool lpbSaclPresent, out IntPtr pSacl, [MarshalAs(UnmanagedType.Bool)] out bool lpbSaclDefaulted);
    }
 }
