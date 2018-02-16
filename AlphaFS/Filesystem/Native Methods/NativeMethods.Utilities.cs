@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      internal static long LuidToLong(Luid luid)
+      internal static long LuidToLong(LUID luid)
       {
          var high = (ulong) luid.HighPart << 32;
          var low = (ulong) luid.LowPart & 0x00000000FFFFFFFF;
@@ -51,9 +51,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      internal static Luid LongToLuid(long lluid)
+      internal static LUID LongToLuid(long lluid)
       {
-         return new Luid {HighPart = (uint) (lluid >> 32), LowPart = (uint) (lluid & 0xFFFFFFFF)};
+         return new LUID {HighPart = (uint) (lluid >> 32), LowPart = (uint) (lluid & 0xFFFFFFFF)};
       }
 
 

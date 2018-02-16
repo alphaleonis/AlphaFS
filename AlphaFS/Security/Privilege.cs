@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -267,7 +267,7 @@ namespace Alphaleonis.Win32.Security
          uint languageId;
          const uint initialCapacity = 10;
          var displayNameCapacity = initialCapacity;
-         var displayName = new StringBuilder((int) displayNameCapacity);
+         var displayName = new StringBuilder((int)displayNameCapacity);
 
 
          var success = NativeMethods.LookupPrivilegeDisplayName(_systemName, _name, ref displayName, ref displayNameCapacity, out languageId);
@@ -277,7 +277,7 @@ namespace Alphaleonis.Win32.Security
          {
             if (lastError == Win32Errors.ERROR_INSUFFICIENT_BUFFER)
             {
-               displayName = new StringBuilder((int) displayNameCapacity + 1);
+               displayName = new StringBuilder((int)displayNameCapacity + 1);
 
                success = NativeMethods.LookupPrivilegeDisplayName(_systemName, _name, ref displayName, ref displayNameCapacity, out languageId);
 
@@ -296,10 +296,10 @@ namespace Alphaleonis.Win32.Security
       /// <summary>Retrieves the locally unique identifier (LUID) used on to represent this privilege (on the system from which it originates).</summary>
       /// <returns>the locally unique identifier (LUID) used on to represent this privilege (on the system from which it originates).</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Luid")]
-      [SecurityCritical]      
+      [SecurityCritical]
       public long LookupLuid()
       {
-         Luid luid;
+         LUID luid;
 
          var success = NativeMethods.LookupPrivilegeValue(_systemName, _name, out luid);
 
@@ -338,8 +338,8 @@ namespace Alphaleonis.Win32.Security
                 (null == _systemName && null == other._systemName || null != _systemName &&
                  _systemName.Equals(other._systemName, StringComparison.OrdinalIgnoreCase));
       }
-      
-      
+
+
       /// <summary>Serves as a hash function for a particular type.</summary>
       /// <returns>A hash code for the current Object.</returns>
       public override int GetHashCode()

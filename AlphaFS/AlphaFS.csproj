@@ -444,6 +444,7 @@
     <Compile Include="Filesystem\Path Class\Path.UncPaths.cs" />
     <Compile Include="Filesystem\Path Class\Path.ShortLongConversions.cs" />
     <Compile Include="Filesystem\Path Class\Path.Temporary.cs" />
+    <Compile Include="Safe Handles\SafeTokenHandle.cs" />
     <Compile Include="Safe Handles\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Safe Handles\SafeEncryptedFileRawHandle.cs" />
     <Compile Include="Safe Handles\SafeSetupDiClassDevsExHandle.cs" />
@@ -535,6 +536,8 @@
     <Compile Include="Safe Handles\SafeNativeMemoryBufferHandle.cs" />
     <Compile Include="Security\CRC\Crc64.cs" />
     <Compile Include="Security\CRC\HashType.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.GetTokenInformation.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.OpenProcessToken.cs" />
     <Compile Include="Security\Native Methods\NativeMethods.AdjustTokenPrivileges.cs" />
     <Compile Include="Security\Native Methods\NativeMethods.LookupPrivilegeDisplayName.cs" />
     <Compile Include="Security\Native Methods\NativeMethods.LookupPrivilegeValue.cs" />
@@ -548,7 +551,11 @@
     <Compile Include="Security\Native Methods\NativeMethods.GetSecurityDescriptorControl.cs" />
     <Compile Include="Security\Native Methods\NativeMethods.GetSecurityDescriptorOwner.cs" />
     <Compile Include="Security\Native Methods\NativeMethods.GetSecurityDescriptorLength.cs" />
-    <Compile Include="Security\Native Methods\NativeMethods.template.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.Constants.cs" />
+    <Compile Include="Security\Native Other\TOKEN.cs" />
+    <Compile Include="Security\Native Other\TOKEN_ELEVATION_TYPE.cs" />
+    <Compile Include="Security\Native Other\TOKEN_INFORMATION_CLASS.cs" />
+    <Compile Include="Security\Native Other\TOKEN_PRIVILEGES.cs" />
     <Compile Include="Security\Native Other\SE_OBJECT_TYPE.cs" />
     <Compile Include="Security\Native Other\SECURITY_DESCRIPTOR_CONTROL.cs" />
     <Compile Include="Security\Native Other\SECURITY_INFORMATION.cs" />
@@ -564,6 +571,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Security\Native Methods\NativeMethods.LocalFree.cs" />
     <Compile Include="Security\CRC\Crc32.cs" />
+    <Compile Include="Security\ProcessContext.cs" />
     <Compile Include="Security\Privilege.cs" />
     <Compile Include="Security\PrivilegeEnabler.cs" />
     <Compile Include="Security\InternalPrivilegeEnabler.cs" />
@@ -579,9 +587,8 @@
     <Compile Include="Filesystem\Exceptions\TransactionException.cs" />
     <Compile Include="Device\Volume\Volume.cs" />
     <Compile Include="Device\Volume\VolumeInfo.cs" />
-    <Compile Include="Security\Native Other\Luid.cs" />
+    <Compile Include="Security\Native Other\LUID.cs" />
     <Compile Include="Security\SecurityAttributes.cs" />
-    <Compile Include="Security\Native Other\TokenPrivileges.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Win32Errors.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.VolumeManagement.cs" />
@@ -612,7 +619,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

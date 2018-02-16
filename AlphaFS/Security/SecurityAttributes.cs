@@ -28,7 +28,10 @@ namespace Alphaleonis.Win32.Security
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Class used to represent the SECURITY_ATTRIBUTES native Win32 structure. It provides initialization function from an <see cref="ObjectSecurity"/> object.</summary>
+      /// <summary>Class used to represent the SECURITY_ATTRIBUTES native Win32 structure.
+      /// The SECURITY_ATTRIBUTES structure contains the security descriptor for an object and specifies whether the handle retrieved by specifying this structure is inheritable.
+      /// This structure provides security settings for objects created by various functions, such as CreateFile, CreatePipe, CreateProcess, RegCreateKeyEx, or RegSaveKeyEx.
+      /// </summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal sealed class SecurityAttributes : IDisposable
       {
@@ -37,7 +40,7 @@ namespace Alphaleonis.Win32.Security
 
          [MarshalAs(UnmanagedType.U4)]
          private int _length;
-         
+
          private readonly SafeGlobalMemoryBufferHandle _securityDescriptor;
 
 
@@ -67,8 +70,8 @@ namespace Alphaleonis.Win32.Security
          {
             if (null == securityDescriptor)
                return new SafeGlobalMemoryBufferHandle();
-            
-            
+
+
             var src = securityDescriptor.GetSecurityDescriptorBinaryForm();
             var safeBuffer = new SafeGlobalMemoryBufferHandle(src.Length);
 
@@ -84,7 +87,7 @@ namespace Alphaleonis.Win32.Security
             }
          }
 
-         
+
          public void Dispose()
          {
             if (null != _securityDescriptor && !_securityDescriptor.IsClosed)
