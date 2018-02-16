@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      [StructLayout(LayoutKind.Sequential)]
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct PARTITION_INFORMATION_EX
       {
          /// <summary>The format of the partition.</summary>
@@ -52,11 +52,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      [StructLayout(LayoutKind.Explicit)]
-      public struct PARTITION_INFORMATION_UNION
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      internal struct PARTITION_INFORMATION_UNION
       {
-         [FieldOffset(0)] public PARTITION_INFORMATION_GPT Gpt;
-         [FieldOffset(0)] public PARTITION_INFORMATION_MBR Mbr;
+         public PARTITION_INFORMATION_MBR Mbr;
+         public PARTITION_INFORMATION_GPT Gpt;
       }
    }
 }

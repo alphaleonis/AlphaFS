@@ -133,42 +133,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (null != getAllData)
          {
-            //var physicalDrivePath = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, storageInfo.DeviceNumber.ToString(CultureInfo.InvariantCulture));
-
             try
             {
                // Requires elevation.
                PopulatePhysicalDriveInfo((bool) getAllData, devicePath, pDriveInfo);
-
-
-               //// CDRom, SD Card.
-               //if (pDriveInfo.StorageDeviceInfo.DeviceType == StorageDeviceType.CDRom)
-               //{
-               //   if (isDeviceInfo)
-               //   {
-               //      deviceInfo.ClassGuid = new Guid(Utils.GetEnumDescription(DeviceGuid.CDRom));
-
-               //      pDriveInfo.Name = deviceInfo.FriendlyName;
-               //   }
-               //}
             }
             catch { }
          }
-
-
-         ////if (null != logicalDrive)
-         ////{
-         //   try
-         //   {
-         //      // Requires elevation.
-         //      //GetVolumeDiskExtents(logicalDrive);
-
-         //      var pDrive = @"\\.\PhysicalDrive0";
-
-         //      GetDriveStuff(devicePath);
-         //   }
-         //   catch { }
-         ////}
 
 
          return pDriveInfo;
@@ -204,8 +175,10 @@ namespace Alphaleonis.Win32.Filesystem
 
                physicalDriveInfo.RemovableMedia = storageDescriptor.RemovableMedia;
 
+
                if (Utils.IsNullOrWhiteSpace(physicalDriveInfo.Name))
                   physicalDriveInfo.Name = safeBuffer.PtrToStringAnsi((int) storageDescriptor.ProductIdOffset).Trim();
+               
                
                // Get the device hardware serial number.
 
@@ -215,18 +188,9 @@ namespace Alphaleonis.Win32.Filesystem
 
             // Get the device size.
 
-            using (var safeBuffer = SafeGlobalMemoryBufferHandle.FromLong(physicalDriveInfo.TotalSize))
-            {
-               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+            using (var safeBuffer = GetDeviceIoData<long>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, devicePath))
 
-               var lastError = Marshal.GetLastWin32Error();
-
-               if (!success)
-                  NativeError.ThrowException(lastError, string.Format(CultureInfo.InvariantCulture, "Device: {0}", devicePath));
-
-
-               physicalDriveInfo.TotalSize = safeBuffer.ReadInt64();
-            }
+               physicalDriveInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
          }
       }
    }

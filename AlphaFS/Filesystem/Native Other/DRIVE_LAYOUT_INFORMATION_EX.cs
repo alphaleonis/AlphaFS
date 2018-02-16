@@ -37,22 +37,26 @@ namespace Alphaleonis.Win32.Filesystem
       internal struct DRIVE_LAYOUT_INFORMATION_EX
       {
          /// <summary>The style of the partitions on the drive enumerated by the <see cref="PARTITION_STYLE"/> enumeration.</summary>
-         public PARTITION_STYLE PartitionStyle;
+         public readonly PARTITION_STYLE PartitionStyle;
 
          /// <summary>The number of partitions on the drive. On hard disks with the MBR layout, this value will always be a multiple of 4.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint PartitionCount;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint PartitionCount;
 
          public DRIVE_LAYOUT_INFORMATION_UNION DriveLayoutInformation;
 
+         /// <summary>A variable-sized array of <see cref="PARTITION_INFORMATION_EX"/> structures, one structure for each partition on the drive.</summary>
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = PartitionEntriesCount)]
-         public PARTITION_INFORMATION_EX[] PartitionEntry;
+         public readonly PARTITION_INFORMATION_EX[] PartitionEntry;
       }
 
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct DRIVE_LAYOUT_INFORMATION_UNION
       {
+         /// <summary>A <see cref="DRIVE_LAYOUT_INFORMATION_MBR"/> structure containing information about the master boot record type partitioning on the drive.</summary>
          public DRIVE_LAYOUT_INFORMATION_MBR Mbr;
+
+         /// <summary>A <see cref="DRIVE_LAYOUT_INFORMATION_GPT"/> structure containing information about the GUID disk partition type partitioning on the drive.</summary>
          public DRIVE_LAYOUT_INFORMATION_GPT Gpt;
       }
    }

@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Globalization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -37,9 +36,6 @@ namespace Alphaleonis.Win32.Filesystem
          devicePath = devicePath.Length == 1 ? devicePath + Path.VolumeSeparatorChar : Path.GetPathRoot(devicePath, false);
 
          var hasPath = !Utils.IsNullOrWhiteSpace(devicePath);
-
-         //if (hasPath)
-         //   devicePath = Path.AddTrailingDirectorySeparator(devicePath, false);
 
 
          isVolume = hasPath && devicePath.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase);

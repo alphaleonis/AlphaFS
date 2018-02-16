@@ -51,10 +51,8 @@ namespace Alphaleonis.Win32.Filesystem
                return safeBuffer;
 
 
-            // ERROR_INVALID_FUNCTION: Dynamic disk.
-            // ERROR_NOT_SUPPORTED   : CD/DVD without medium.
-
-            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION || lastError == Win32Errors.ERROR_NOT_SUPPORTED)
+            // Dynamic disk.
+            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION)
                return null;
 
 

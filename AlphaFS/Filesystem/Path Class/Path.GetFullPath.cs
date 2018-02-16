@@ -289,7 +289,7 @@ namespace Alphaleonis.Win32.Filesystem
             path = AddTrailingDirectorySeparator(path, false);
 
          if ((options & GetFullPathOptions.RemoveTrailingDirectorySeparator) != 0)
-            path = RemoveTrailingDirectorySeparator(path);
+            path = RemoveTrailingDirectorySeparator(path, false);
 
          if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
             CheckInvalidPathChars(path, (options & GetFullPathOptions.CheckAdditional) != 0, false);

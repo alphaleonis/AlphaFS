@@ -31,13 +31,20 @@ namespace Alphaleonis.Win32.Filesystem
       {
          /// <summary>The number of the disk that contains this extent. This is the same number that is used to construct the name of the disk,
          /// for example, the X in "\\.\PhysicalDriveX" or "\\?\HarddiskX".</summary>
-         public int DiskNumber;
+         [MarshalAs(UnmanagedType.U4)] public readonly int DiskNumber;
 
          /// <summary>The offset from the beginning of the disk to the extent, in bytes.</summary>
-         public long StartingOffset;
+         [MarshalAs(UnmanagedType.U8)] public readonly long StartingOffset;
 
          /// <summary>The number of bytes in this extent.</summary>
-         public long ExtentLength;
+         [MarshalAs(UnmanagedType.U8)] public readonly long ExtentLength;
+      }
+
+
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      internal struct DiskExtentsBeforeArray
+      {
+         [MarshalAs(UnmanagedType.U4)] public readonly int NumberOfExtents;
       }
    }
 }

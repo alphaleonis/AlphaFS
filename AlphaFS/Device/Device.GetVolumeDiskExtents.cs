@@ -20,17 +20,77 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-      // https://github.com/t00/TestCrypt/blob/master/TestCrypt/PhysicalDrive.cs
+      private static NativeMethods.VOLUME_DISK_EXTENTS? GetVolumeDiskExtents(SafeFileHandle safeHandle)
+      {
+         NativeMethods.VOLUME_DISK_EXTENTS? structure;
+         var structSize = Marshal.SizeOf(typeof(NativeMethods.VOLUME_DISK_EXTENTS));
+         var bufferSize = structSize;
+         bool success;
+         int lastError;
+
+
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
+         {
+            success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+
+            lastError = Marshal.GetLastWin32Error();
+
+            structure = safeBuffer.PtrToStructure<NativeMethods.VOLUME_DISK_EXTENTS>(0);
+         }
+
+
+         if (!success)
+         {
+            if (lastError != Win32Errors.ERROR_MORE_DATA)
+               return null;
+
+
+            // 2018-02-15 Yomodo: Not fully tested.
+
+
+            var numberOfExtents = ((NativeMethods.VOLUME_DISK_EXTENTS) structure).NumberOfDiskExtents;
+
+            bufferSize = (int) (structSize * numberOfExtents);
+
+
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
+            {
+               success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+
+               lastError = Marshal.GetLastWin32Error();
+
+
+               if (success)
+               {
+                  numberOfExtents = (uint) safeBuffer.PtrToStructure<NativeMethods.DiskExtentsBeforeArray>(0).NumberOfExtents;
+
+                  var diskExtent = new NativeMethods.DISK_EXTENT[numberOfExtents];
+
+
+                  for (int i = 0, itemOffset = 0; i < numberOfExtents - 1; i++, itemOffset = structSize * i)
+                  {
+                     diskExtent[i] = safeBuffer.PtrToStructure<NativeMethods.DISK_EXTENT>(itemOffset);
+                  }
+
+
+                  return new NativeMethods.VOLUME_DISK_EXTENTS {Extents = diskExtent};
+               }
+            }
+         }
+
+
+         return structure;
+      }
+
 
       [SecurityCritical]
       internal static object GetDriveStuff(string logicalDrive)
@@ -74,19 +134,6 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
 
-            // VOLUME_DISK_EXTENTS
-
-            using (var safeBuffer = GetDeviceIoData<NativeMethods.VOLUME_DISK_EXTENTS>(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, logicalDrive))
-            {
-               if (null != safeBuffer)
-               {
-                  var structure = safeBuffer.PtrToStructure<NativeMethods.VOLUME_DISK_EXTENTS>(0);
-
-                  //return structure;
-               }
-            }
-
-
             // PARTITION_INFORMATION_EX
 
             using (var safeBuffer = GetDeviceIoData<NativeMethods.PARTITION_INFORMATION_EX>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_PARTITION_INFO_EX, logicalDrive))
@@ -102,44 +149,5 @@ namespace Alphaleonis.Win32.Filesystem
 
          return null;
       }
-
-      //[SecurityCritical]
-      //internal static void GetVolumeDiskExtents(string logicalDrive)
-      //{
-      //   // FileSystemRights desiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
-      //   // without accessing that file or device, even if GENERIC_READ access would have been denied.
-      //   // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
-      //   //const int desiredAccess = 0;
-
-      //   // Requires elevation.
-      //   const FileSystemRights desiredAccess = FileSystemRights.Read | FileSystemRights.Write;
-
-      //   //const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
-
-
-      //   using (var safeHandle = OpenPhysicalDrive(logicalDrive, desiredAccess))
-      //
-      //   using (var safeBuffer = GetDeviceIoData<NativeMethods.VOLUME_DISK_EXTENTS>(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, logicalDrive))
-      //   {
-      //      if (null != safeBuffer)
-      //      {
-      //         var structure = safeBuffer.PtrToStructure<NativeMethods.VOLUME_DISK_EXTENTS>(0);
-
-      //         var numberOfDiskExtents = structure.NumberOfDiskExtents;
-
-      //         var objectSize = Marshal.SizeOf(typeof(NativeMethods.VOLUME_DISK_EXTENTS));
-
-
-      //         for (int i = 0, itemOffset = 0; i < numberOfDiskExtents; i++, itemOffset += objectSize)
-      //         {
-      //            structure = safeBuffer.PtrToStructure<NativeMethods.VOLUME_DISK_EXTENTS>(itemOffset);
-
-      //            //var pDiskExtent = structure.Extents[i];
-
-      //            //yield return structure;
-      //         }
-      //      }
-      //   }
-      //}
    }
 }

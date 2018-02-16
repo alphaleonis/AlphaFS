@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Properties
 
-      /// <summary>The storage bus type.</summary>
+      /// <summary>The storage bus type. Requires elevated rights.</summary>
       public StorageBusType BusType { get; internal set; }
 
 

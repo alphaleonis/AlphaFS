@@ -20,6 +20,11 @@
  */
 
 using System;
+using System.ComponentModel;
+using System.Globalization;
+using System.IO;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -82,18 +87,39 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
 
+      StartGetData:
+
          // No elevation needed.
 
-         //try { 
-            using (var safeHandle = OpenPhysicalDrive(pathToDevice, 0))
+         using (var safeHandle = OpenPhysicalDrive(pathToDevice, 0))
+         {
+            StorageDeviceInfo storageInfo = null;
 
-            using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath))
+            
+            var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath);
+            
+            if (null == safeBuffer)
             {
-               var storage = null != safeBuffer ? safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0) : (NativeMethods.STORAGE_DEVICE_NUMBER?) null;
+               // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
 
-               if (null != storage)
+
+               var volDiskExtents = GetVolumeDiskExtents(safeHandle);
+
+               if (volDiskExtents.HasValue)
                {
-                  var storageInfo = new StorageDeviceInfo((NativeMethods.STORAGE_DEVICE_NUMBER) storage);
+                  // Use the first disk extent.
+
+                  pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
+                  
+                  goto StartGetData;
+               }
+            }
+
+            else
+            {
+               using (safeBuffer)
+               {
+                  storageInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0));
 
                   if (getBusType)
                   {
@@ -104,14 +130,12 @@ namespace Alphaleonis.Win32.Filesystem
                      if (null != pDriveInfo)
                         storageInfo.BusType = pDriveInfo.StorageDeviceInfo.BusType;
                   }
-
-                  return storageInfo;
                }
             }
-         //}
-         //catch {}
 
-         return null;
+            
+            return storageInfo;
+         }
       }
    }
 }

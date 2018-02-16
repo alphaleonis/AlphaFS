@@ -30,6 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       public struct PARTITION_INFORMATION_MBR
       {
          /// <summary>The type of partition.</summary>
