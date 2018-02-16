@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options)
       {
-         return CreateFileStreamCore(null, path, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
+         return CreateFileStreamCore(null, path, (ExtendedFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
       }
 
 
@@ -262,14 +262,14 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            safeHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights)access, share, true, false, pathFormat);
+            safeHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, true, false, pathFormat);
 
             return new FileStream(safeHandle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
          }
          catch
          {
-            if (null != safeHandle && !safeHandle.IsClosed)
-               safeHandle.Close();
+            if (null != safeHandle)
+               safeHandle.Dispose();
 
             throw;
          }
@@ -308,7 +308,9 @@ namespace Alphaleonis.Win32.Filesystem
             Path.CheckSupportedPathFormat(path, true, true);
 
 
-         // When opening a VOLUME or removable media drive the path string should be the following form: "\\.\C:"
+         // When isFile == null, we're working with a device.
+         // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),
+         // the path string should be the following form: "\\.\X:"
          // Do not use a trailing backslash (\), which indicates the root.
 
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
@@ -324,10 +326,10 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (null != fileSecurity)
-            fileSystemRights |= (FileSystemRights)SecurityInformation.UnprotectedSacl;
+            fileSystemRights |= (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_SACL_SECURITY_INFORMATION;
 
 
-         using ((fileSystemRights & (FileSystemRights)SecurityInformation.UnprotectedSacl) != 0 || (fileSystemRights & (FileSystemRights)SecurityInformation.UnprotectedDacl) != 0 ? new PrivilegeEnabler(Privilege.Security) : null)
+         using ((fileSystemRights & (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_SACL_SECURITY_INFORMATION) != 0 || (fileSystemRights & (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_DACL_SECURITY_INFORMATION) != 0 ? new PrivilegeEnabler(Privilege.Security) : null)
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
          {
             var safeHandle = transaction == null || !NativeMethods.IsAtLeastWindowsVista

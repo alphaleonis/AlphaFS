@@ -20,35 +20,26 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using System.Security;
 using Microsoft.Win32.SafeHandles;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Security
 {
-   /// <summary>Represents a wrapper class for a handle used by the FindFirstVolumeMountPoint/FindVolumeMountPointClose methods of the Win32 API.</summary>
-   [SecurityCritical]
-   internal sealed class SafeFindVolumeMountPointHandle : SafeHandleZeroOrMinusOneIsInvalid
+   internal static partial class NativeMethods
    {
-      /// <summary>Initializes a new instance of the <see cref="SafeFindVolumeMountPointHandle"/> class.</summary>
-      private SafeFindVolumeMountPointHandle()
-         : base(true)
-      {
-      }
-
-      /// <summary>Initializes a new instance of the <see cref="SafeFindVolumeHandle"/> class.</summary>
-      /// <param name="handle">The handle.</param>
-      /// <param name="callerHandle"><see langword="true"/> [owns handle].</param>
-      public SafeFindVolumeMountPointHandle(IntPtr handle, bool callerHandle) : base(callerHandle)
-      {
-         SetHandle(handle);
-      }
-
-      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
-      /// <returns><see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <see langword="false"/>.
+      /// <summary>The SetSecurityInfo function sets specified security information in the security descriptor of a specified object. 
+      /// The caller identifies the object by a handle.</summary>
+      /// <returns>
+      /// If the function succeeds, the function returns ERROR_SUCCESS.
+      /// If the function fails, it returns a nonzero error code defined in WinError.h.
       /// </returns>
-      protected override bool ReleaseHandle()
-      {
-         return NativeMethods.FindVolumeMountPointClose(handle);
-      }
+      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.U4)]
+      internal static extern uint SetSecurityInfo(SafeFileHandle handle, SE_OBJECT_TYPE objectType, SECURITY_INFORMATION securityInfo, IntPtr psidOwner, IntPtr psidGroup, IntPtr pDacl, IntPtr pSacl);
    }
 }

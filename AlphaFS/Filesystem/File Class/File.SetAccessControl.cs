@@ -148,7 +148,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             safeBuffer.CopyFrom(managedDescriptor, 0, managedDescriptor.Length);
 
-            SecurityDescriptorControl control;
+            SECURITY_DESCRIPTOR_CONTROL control;
             uint revision;
 
 
@@ -163,7 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             try
             {
-               var securityInfo = SecurityInformation.None;
+               var securityInfo = SECURITY_INFORMATION.None;
                var pDacl = IntPtr.Zero;
 
                if ((includeSections & AccessControlSections.Access) != 0)
@@ -180,8 +180,8 @@ namespace Alphaleonis.Win32.Filesystem
 
                   if (daclPresent)
                   {
-                     securityInfo |= SecurityInformation.Dacl;
-                     securityInfo |= (control & SecurityDescriptorControl.DaclProtected) != 0 ? SecurityInformation.ProtectedDacl : SecurityInformation.UnprotectedDacl;
+                     securityInfo |= SECURITY_INFORMATION.DACL_SECURITY_INFORMATION;
+                     securityInfo |= (control & SECURITY_DESCRIPTOR_CONTROL.SE_DACL_PROTECTED) != 0 ? SECURITY_INFORMATION.PROTECTED_DACL_SECURITY_INFORMATION : SECURITY_INFORMATION.UNPROTECTED_DACL_SECURITY_INFORMATION;
                   }
                }
 
@@ -202,8 +202,8 @@ namespace Alphaleonis.Win32.Filesystem
                   
                   if (saclPresent)
                   {
-                     securityInfo |= SecurityInformation.Sacl;
-                     securityInfo |= (control & SecurityDescriptorControl.SaclProtected) != 0 ? SecurityInformation.ProtectedSacl : SecurityInformation.UnprotectedSacl;
+                     securityInfo |= SECURITY_INFORMATION.SACL_SECURITY_INFORMATION;
+                     securityInfo |= (control & SECURITY_DESCRIPTOR_CONTROL.SE_SACL_PROTECTED) != 0 ? SECURITY_INFORMATION.PROTECTED_SACL_SECURITY_INFORMATION : SECURITY_INFORMATION.UNPROTECTED_SACL_SECURITY_INFORMATION;
 
                      privilegeEnabler = new PrivilegeEnabler(Privilege.Security);
                   }
@@ -225,7 +225,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                   if (pOwner != IntPtr.Zero)
-                     securityInfo |= SecurityInformation.Owner;
+                     securityInfo |= SECURITY_INFORMATION.OWNER_SECURITY_INFORMATION;
                }
 
 
@@ -244,7 +244,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                   if (pGroup != IntPtr.Zero)
-                     securityInfo |= SecurityInformation.Group;
+                     securityInfo |= SECURITY_INFORMATION.GROUP_SECURITY_INFORMATION;
                }
 
 
@@ -255,7 +255,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // SetNamedSecurityInfo()
                   // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-                  lastError = (int) Security.NativeMethods.SetNamedSecurityInfo(pathLp, ObjectType.FileObject, securityInfo, pOwner, pGroup, pDacl, pSacl);
+                  lastError = (int) Security.NativeMethods.SetNamedSecurityInfo(pathLp, SE_OBJECT_TYPE.SE_FILE_OBJECT, securityInfo, pOwner, pGroup, pDacl, pSacl);
 
                   if (lastError != Win32Errors.ERROR_SUCCESS)
                      NativeError.ThrowException(lastError, pathLp);
@@ -265,7 +265,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   if (NativeMethods.IsValidHandle(handle))
                   {
-                     lastError = (int) Security.NativeMethods.SetSecurityInfo(handle, ObjectType.FileObject, securityInfo, pOwner, pGroup, pDacl, pSacl);
+                     lastError = (int) Security.NativeMethods.SetSecurityInfo(handle, SE_OBJECT_TYPE.SE_FILE_OBJECT, securityInfo, pOwner, pGroup, pDacl, pSacl);
 
                      if (lastError != Win32Errors.ERROR_SUCCESS)
                         NativeError.ThrowException(lastError);

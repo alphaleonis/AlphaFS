@@ -29,12 +29,12 @@ namespace Alphaleonis.Win32
    /// <summary>Represents a block of native memory of a specified size allocated using the LocalAlloc function from Kernel32.dll.</summary>
    internal sealed class SafeGlobalMemoryBufferHandle : SafeNativeMemoryBufferHandle
    {
-      /// <summary>Creates new instance with zero IntPtr.</summary>
+      /// <summary>Initializes a new instance of the <see cref="SafeGlobalMemoryBufferHandle"/> class, with zero IntPtr.</summary>
       public SafeGlobalMemoryBufferHandle() : base(true)
       {
       }
 
-      
+
       /// <summary>Initializes a new instance of the <see cref="SafeGlobalMemoryBufferHandle"/> class allocating the specified number of bytes of unmanaged memory.</summary>
       /// <param name="capacity">The capacity.</param>
       public SafeGlobalMemoryBufferHandle(int capacity) : base(capacity)
@@ -72,8 +72,12 @@ namespace Alphaleonis.Win32
          return new SafeGlobalMemoryBufferHandle(Marshal.StringToHGlobalUni(str), str.Length * UnicodeEncoding.CharSize + UnicodeEncoding.CharSize);
       }
 
-      
-      /// <summary>Called when object is disposed or finalized.</summary>
+
+      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
+      /// <returns>
+      /// <see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure,
+      /// <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
+      /// </returns>
       protected override bool ReleaseHandle()
       {
          Marshal.FreeHGlobal(handle);

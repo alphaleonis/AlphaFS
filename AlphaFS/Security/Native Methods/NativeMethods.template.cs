@@ -19,26 +19,16 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.Win32.SafeHandles;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using System.Security;
+using Microsoft.Win32.SafeHandles;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Security
 {
-   /// <summary>Provides a concrete implementation of SafeHandle supporting transactions.</summary>
-   internal class SafeKernelTransactionHandle : SafeHandleMinusOneIsInvalid
+   internal static partial class NativeMethods
    {
-      /// <summary>Initializes a new instance of the <see cref="SafeKernelTransactionHandle"/> class.</summary>      
-      public SafeKernelTransactionHandle()
-         : base(true)
-      {
-      }
 
-      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
-      /// <returns><see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.</returns>
-      [SecurityCritical]
-      protected override bool ReleaseHandle()
-      {
-         return NativeMethods.CloseHandle(handle);
-      }
    }
 }

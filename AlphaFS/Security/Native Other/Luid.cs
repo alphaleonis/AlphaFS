@@ -26,7 +26,7 @@ namespace Alphaleonis.Win32.Security
    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
    internal struct Luid
    {
-      internal uint LowPart;
-      internal uint HighPart;
+      [MarshalAs(UnmanagedType.U4)] public uint LowPart;
+      [MarshalAs(UnmanagedType.U4)] public uint HighPart;
    }
 }

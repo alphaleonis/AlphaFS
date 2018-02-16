@@ -20,35 +20,25 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using System.Security;
 using Microsoft.Win32.SafeHandles;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Security
 {
-   /// <summary>Represents a wrapper class for a handle used by the FindFirstVolume/FindNextVolume methods of the Win32 API.</summary>
-   [SecurityCritical]
-   public sealed class SafeFindVolumeHandle : SafeHandleZeroOrMinusOneIsInvalid
+   internal static partial class NativeMethods
    {
-      /// <summary>Initializes a new instance of the <see cref="SafeFindVolumeHandle"/> class.</summary>
-      private SafeFindVolumeHandle()
-         : base(true)
-      {
-      }
-
-      /// <summary>Initializes a new instance of the <see cref="SafeFindVolumeHandle"/> class.</summary>
-      /// <param name="handle">The handle.</param>
-      /// <param name="callerHandle"><see langword="true"/> [owns handle].</param>
-      public SafeFindVolumeHandle(IntPtr handle, bool callerHandle) : base(callerHandle)
-      {
-         SetHandle(handle);
-      }
-
-      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
-      /// <returns><see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
+      /// <summary>The GetSecurityInfo function retrieves a copy of the security descriptor for an object specified by a handle.</summary>
+      /// <returns>
+      /// If the function succeeds, the function returns nonzero.
+      /// If the function fails, it returns zero. To get extended error information, call GetLastError.
       /// </returns>
-      protected override bool ReleaseHandle()
-      {
-         return NativeMethods.FindVolumeClose(handle);
-      }
+      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.U4)]
+      internal static extern uint GetSecurityInfo(SafeFileHandle handle, SE_OBJECT_TYPE objectType, SECURITY_INFORMATION securityInfo, out IntPtr pSidOwner, out IntPtr pSidGroup, out IntPtr pDacl, out IntPtr pSacl, out SafeGlobalMemoryBufferHandle pSecurityDescriptor);
    }
 }

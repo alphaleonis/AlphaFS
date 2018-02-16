@@ -19,15 +19,25 @@
  *  THE SOFTWARE. 
  */
 
-using System.Runtime.InteropServices;
+using System.Security;
+using Microsoft.Win32.SafeHandles;
 
-namespace Alphaleonis.Win32.Security
+namespace Alphaleonis.Win32.Filesystem
 {
-   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-   internal struct TokenPrivileges
+   /// <summary>Represents a wrapper class for a handle used by the CM_Connect_Machine/CM_Disconnect_Machine Win32 API functions.</summary>
+   [SecurityCritical]
+   internal sealed class SafeCmConnectMachineHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      internal uint PrivilegeCount;
-      internal Luid Luid;
-      internal uint Attributes;
+      /// <summary>Initializes a new instance of the <see cref="SafeCmConnectMachineHandle"/> class.</summary>
+      public SafeCmConnectMachineHandle() : base(true)
+      {
+      }
+
+
+      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
+      protected override bool ReleaseHandle()
+      {
+         return NativeMethods.CM_Disconnect_Machine(handle) == Win32Errors.NO_ERROR;
+      }
    }
 }
