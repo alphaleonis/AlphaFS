@@ -23,10 +23,18 @@ using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Security
 {
+   /// <summary>An LUID is a 64-bit value guaranteed to be unique only on the system on which it was generated. The uniqueness of a locally unique identifier (LUID) is guaranteed only until the system is restarted.</summary>
+   /// <remarks>
+   /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+   /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+   /// </remarks>
    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-   internal struct Luid
+   internal struct LUID
    {
+      /// <summary>Low-order bits.</summary>
       [MarshalAs(UnmanagedType.U4)] public uint LowPart;
+
+      /// <summary>High-order bits.</summary>
       [MarshalAs(UnmanagedType.U4)] public uint HighPart;
    }
 }

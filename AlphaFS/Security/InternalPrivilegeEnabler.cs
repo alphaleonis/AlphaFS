@@ -78,9 +78,9 @@ namespace Alphaleonis.Win32.Security
          {
             uint length;
             var hToken = currentIdentity.Token;
-            var mOldPrivilege = new TokenPrivileges();
+            var mOldPrivilege = new TOKEN_PRIVILEGES();
 
-            var newPrivilege = new TokenPrivileges
+            var newPrivilege = new TOKEN_PRIVILEGES
             {
                PrivilegeCount = 1,
                Luid = Filesystem.NativeMethods.LongToLuid(EnabledPrivilege.LookupLuid()),

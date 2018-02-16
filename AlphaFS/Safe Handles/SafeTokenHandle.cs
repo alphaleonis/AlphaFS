@@ -20,15 +20,35 @@
  */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
 using Microsoft.Win32.SafeHandles;
 
-namespace Alphaleonis.Win32.Security
+namespace Alphaleonis.Win32
 {
-   internal static partial class NativeMethods
+   [SecurityCritical]
+   public sealed class SafeTokenHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
+      /// <summary>Initializes a new instance of the <see cref="SafeTokenHandle"/> class.</summary>
+      public SafeTokenHandle() : base(true)
+      {
+      }
 
+
+      /// <summary>Initializes a new instance of the <see cref="SafeTokenHandle"/> class.</summary>
+      /// <param name="handle">The handle.</param>
+      /// <param name="callerHandle"><see langword="true"/> [owns handle].</param>
+      public SafeTokenHandle(IntPtr handle, bool callerHandle) : base(callerHandle)
+      {
+         SetHandle(handle);
+      }
+
+
+      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
+      /// <returns><see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.</returns>
+      protected override bool ReleaseHandle()
+      {
+         return NativeMethods.CloseHandle(handle);
+      }
    }
 }
