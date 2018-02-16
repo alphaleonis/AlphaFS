@@ -444,9 +444,9 @@
     <Compile Include="Filesystem\Path Class\Path.UncPaths.cs" />
     <Compile Include="Filesystem\Path Class\Path.ShortLongConversions.cs" />
     <Compile Include="Filesystem\Path Class\Path.Temporary.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeCmConnectMachineHandle.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeEncryptedFileRawHandle.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeSetupDiClassDevsExHandle.cs" />
+    <Compile Include="Safe Handles\SafeCmConnectMachineHandle.cs" />
+    <Compile Include="Safe Handles\SafeEncryptedFileRawHandle.cs" />
+    <Compile Include="Safe Handles\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />
     <Compile Include="Filesystem\CopyMoveResult.cs" />
     <Compile Include="Filesystem\Native Other\BY_HANDLE_FILE_INFORMATION.cs" />
@@ -538,7 +538,7 @@
     <Compile Include="Security\Enumerations\ObjectType.cs" />
     <Compile Include="Security\Enumerations\SecurityDescriptorControl.cs" />
     <Compile Include="Security\Enumerations\SecurityInformation.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeLocalMemoryBufferHandle.cs" />
+    <Compile Include="Safe Handles\SafeLocalMemoryBufferHandle.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\SymbolicLinkTarget.cs" />
     <Compile Include="Filesystem\Link Stream\SymbolicLinkTargetInfo.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\SymbolicLinkType.cs" />
@@ -556,10 +556,10 @@
     <Compile Include="Filesystem\Exceptions\InvalidTransactionException.cs" />
     <Compile Include="Filesystem\KernelTransaction.cs" />
     <Compile Include="NativeError.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeFindFileHandle.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeFindVolumeMountPointHandle.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeFindVolumeHandle.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeKernelTransactionHandle.cs" />
+    <Compile Include="Safe Handles\SafeFindFileHandle.cs" />
+    <Compile Include="Safe Handles\SafeFindVolumeMountPointHandle.cs" />
+    <Compile Include="Safe Handles\SafeFindVolumeHandle.cs" />
+    <Compile Include="Safe Handles\SafeKernelTransactionHandle.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionAlreadyAbortedException.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionAlreadyCommittedException.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionException.cs" />
@@ -598,7 +598,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -29,21 +29,25 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    public sealed class SafeFindFileHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      /// <summary>Initializes a new instance of the <see cref="SafeFindFileHandle"/> class.</summary>
+      /// <summary>Constructor that prevents a default instance of this class from being created.</summary>
       private SafeFindFileHandle() : base(true)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="SafeFindFileHandle"/> class.</summary>
       /// <param name="handle">The handle.</param>
-      /// <param name="callerHandle"><see langword="true"/> [owns handle].</param>
+      /// <param name="callerHandle"><see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).</param>
       public SafeFindFileHandle(IntPtr handle, bool callerHandle) : base(callerHandle)
       {
          SetHandle(handle);
       }
 
+      
       /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
-      /// <returns><see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.</returns>
+      /// <returns>
+      /// <see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure,
+      /// <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
+      /// </returns>
       protected override bool ReleaseHandle()
       {
          return NativeMethods.FindClose(handle);

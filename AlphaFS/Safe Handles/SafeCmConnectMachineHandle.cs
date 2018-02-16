@@ -28,22 +28,16 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    internal sealed class SafeCmConnectMachineHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      #region Constructor
-
       /// <summary>Initializes a new instance of the <see cref="SafeCmConnectMachineHandle"/> class.</summary>
       public SafeCmConnectMachineHandle() : base(true)
       {
       }
 
-      #endregion // Constructor
 
-      #region ReleaseHandle
-
+      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
       protected override bool ReleaseHandle()
       {
          return NativeMethods.CM_Disconnect_Machine(handle) == Win32Errors.NO_ERROR;
       }
-
-      #endregion // ReleaseHandle
    }
 }

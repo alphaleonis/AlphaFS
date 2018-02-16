@@ -28,14 +28,19 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>Represents a wrapper class for a handle used by the SetupDiGetClassDevs/SetupDiDestroyDeviceInfoList Win32 API functions.</summary>
       [SecurityCritical]
-      internal sealed class SafeSetupDiClassDevsExHandle : SafeHandleZeroOrMinusOneIsInvalid
+      public sealed class SafeSetupDiClassDevsExHandle : SafeHandleZeroOrMinusOneIsInvalid
       {
          /// <summary>Initializes a new instance of the <see cref="SafeSetupDiClassDevsExHandle"/> class.</summary>
-         public SafeSetupDiClassDevsExHandle()
-            : base(true)
+         public SafeSetupDiClassDevsExHandle() : base(true)
          {
          }
 
+
+         /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
+         /// <returns>
+         /// <see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure,
+         /// <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
+         /// </returns>
          protected override bool ReleaseHandle()
          {
             return SetupDiDestroyDeviceInfoList(handle);

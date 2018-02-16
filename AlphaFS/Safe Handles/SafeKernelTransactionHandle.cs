@@ -19,43 +19,29 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using Microsoft.Win32.SafeHandles;
+using System.Security;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Filesystem
 {
-   public partial class AlphaFS_DeviceTest
+   /// <summary>Provides a concrete implementation of SafeHandle supporting transactions.</summary>
+   internal class SafeKernelTransactionHandle : SafeHandleMinusOneIsInvalid
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_DeviceInfo_InitializeInstance_Local_Success()
+      /// <summary>Initializes a new instance of the <see cref="SafeKernelTransactionHandle"/> class.</summary>      
+      public SafeKernelTransactionHandle() : base(true)
       {
-         Console.WriteLine("\nMSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.");
-         Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
-
-         DeviceInfo_InitializeInstance(false);
-         //DeviceInfo_InitializeInstance(true);
       }
 
 
-
-
-      private void DeviceInfo_InitializeInstance(bool isNetwork)
+      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
+      /// <returns>
+      /// <see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure,
+      /// <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
+      /// </returns>
+      [SecurityCritical]
+      protected override bool ReleaseHandle()
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var deviceInfo = new Alphaleonis.Win32.Filesystem.DeviceInfo(isNetwork ? UnitTestConstants.LocalHost : string.Empty);
-
-         UnitTestConstants.Dump(deviceInfo, -24);
-
-         Assert.AreEqual(deviceInfo.HostName, UnitTestConstants.LocalHost);
-         Assert.AreEqual(deviceInfo.Class, null);
-         Assert.AreEqual(deviceInfo.ClassGuid, new Guid());
-
-         
-         Console.WriteLine();
+         return NativeMethods.CloseHandle(handle);
       }
    }
 }

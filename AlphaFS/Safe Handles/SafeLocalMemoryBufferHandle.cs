@@ -30,18 +30,11 @@ namespace Alphaleonis.Win32.Security
    /// </summary>
    internal sealed class SafeLocalMemoryBufferHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      #region Constructors
-
-      /// <summary>Creates new instance with zero IntPtr.</summary>      
+      /// <summary>Initializes a new instance of the <see cref="SafeLocalMemoryBufferHandle"/> class, with zero IntPtr.</summary>
       public SafeLocalMemoryBufferHandle() : base(true)
       {
       }
 
-      #endregion // Constructors
-
-      #region Methods
-
-      #region CopyFrom
 
       /// <summary>Copies data from a one-dimensional, managed 8-bit unsigned integer array to the unmanaged memory pointer referenced by this instance.</summary>
       /// <param name="source">The one-dimensional array to copy from.</param>
@@ -51,11 +44,8 @@ namespace Alphaleonis.Win32.Security
       {
          Marshal.Copy(source, startIndex, handle, length);
       }
-
-      #endregion // CopyFrom
-
-      #region CopyTo
-
+      
+      
       public void CopyTo(byte[] destination, int destinationOffset, int length)
       {
          if (destination == null)
@@ -73,32 +63,26 @@ namespace Alphaleonis.Win32.Security
          Marshal.Copy(handle, destination, destinationOffset, length);
       }
 
-      #endregion // CopyTo
-
-      #region ToByteArray
 
       public byte[] ToByteArray(int startIndex, int length)
       {
          if (IsInvalid)
             return null;
 
-         byte[] arr = new byte[length];
+         var arr = new byte[length];
          Marshal.Copy(handle, arr, startIndex, length);
          return arr;
       }
 
-      #endregion // ToByteArray
 
-      #region ReleaseHandle
-
-      /// <summary>Called when object is disposed or finalized.</summary>
+      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
+      /// <returns>
+      /// <see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure,
+      /// <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
+      /// </returns>
       protected override bool ReleaseHandle()
       {
          return handle == IntPtr.Zero || NativeMethods.LocalFree(handle) == IntPtr.Zero;
       }
-
-      #endregion // ReleaseHandle
-
-      #endregion // Methods
    }
 }

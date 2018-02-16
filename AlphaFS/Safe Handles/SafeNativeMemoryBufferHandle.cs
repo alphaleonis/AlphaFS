@@ -28,21 +28,17 @@ namespace Alphaleonis.Win32
    /// <summary>Base class for classes representing a block of unmanaged memory.</summary>
    internal abstract class SafeNativeMemoryBufferHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      #region Private Fields
-
       private readonly int m_capacity;
 
-      #endregion
 
-
-      #region Constructors
-
-      protected SafeNativeMemoryBufferHandle(bool ownsHandle) : base(ownsHandle)
+      /// <summary>Initializes a new instance of the <see cref="SafeNativeMemoryBufferHandle"/> class, specifying the allocated capacity of the memory block.</summary>
+      /// <param name="callerHandle"><see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).</param>
+      protected SafeNativeMemoryBufferHandle(bool callerHandle) : base(callerHandle)
       {
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="SafeNativeMemoryBufferHandle"/> specifying the allocated capacity of the memory block.</summary>
+      /// <summary>Initializes a new instance of the <see cref="SafeNativeMemoryBufferHandle"/> class, specifying the allocated capacity of the memory block.</summary>
       /// <param name="capacity">The capacity.</param>
       protected SafeNativeMemoryBufferHandle(int capacity) : this(true)
       {
@@ -55,11 +51,9 @@ namespace Alphaleonis.Win32
          SetHandle(memory);
       }
 
-      #endregion
 
-
-      #region Properties
-
+      
+      
       /// <summary>Gets the capacity. Only valid if this instance was created using a constructor that specifies the size,
       /// it is not correct if this handle was returned by a native method using p/invoke.
       /// </summary>
@@ -68,10 +62,8 @@ namespace Alphaleonis.Win32
          get { return m_capacity; }
       }
 
-      #endregion
 
 
-      #region Public Methods
 
       /// <summary>Copies data from a one-dimensional, managed 8-bit unsigned integer array to the unmanaged memory pointer referenced by this instance.</summary>
       /// <param name="source">The one-dimensional array to copy from. </param>
@@ -335,7 +327,5 @@ namespace Alphaleonis.Win32
       {
          return Marshal.PtrToStringUni(new IntPtr(handle.ToInt64() + offset), length);
       }
-      
-      #endregion // Public Methods
    }
 }
