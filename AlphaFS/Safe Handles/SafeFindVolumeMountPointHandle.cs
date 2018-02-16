@@ -19,31 +19,39 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Security;
 using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Represents a wrapper class for a handle used by the CM_Connect_Machine/CM_Disconnect_Machine Win32 API functions.</summary>
+   /// <summary>Represents a wrapper class for a handle used by the FindFirstVolumeMountPoint/FindNextVolumeMountPoint methods of the Win32 API.</summary>
    [SecurityCritical]
-   internal sealed class SafeCmConnectMachineHandle : SafeHandleZeroOrMinusOneIsInvalid
+   internal sealed class SafeFindVolumeMountPointHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      #region Constructor
-
-      /// <summary>Initializes a new instance of the <see cref="SafeCmConnectMachineHandle"/> class.</summary>
-      public SafeCmConnectMachineHandle() : base(true)
+      /// <summary>Constructor that prevents a default instance of this class from being created.</summary>
+      private SafeFindVolumeMountPointHandle() : base(true)
       {
       }
 
-      #endregion // Constructor
 
-      #region ReleaseHandle
+      /// <summary>Initializes a new instance of the <see cref="SafeFindVolumeMountPointHandle"/> class.</summary>
+      /// <param name="handle">The handle.</param>
+      /// <param name="callerHandle"><see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).</param>
+      public SafeFindVolumeMountPointHandle(IntPtr handle, bool callerHandle) : base(callerHandle)
+      {
+         SetHandle(handle);
+      }
 
+
+      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
+      /// <returns>
+      /// <see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure,
+      /// <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
+      /// </returns>
       protected override bool ReleaseHandle()
       {
-         return NativeMethods.CM_Disconnect_Machine(handle) == Win32Errors.NO_ERROR;
+         return NativeMethods.FindVolumeMountPointClose(handle);
       }
-
-      #endregion // ReleaseHandle
    }
 }

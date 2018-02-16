@@ -326,10 +326,10 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (null != fileSecurity)
-            fileSystemRights |= (FileSystemRights) SecurityInformation.UnprotectedSacl;
+            fileSystemRights |= (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_SACL_SECURITY_INFORMATION;
 
 
-         using ((fileSystemRights & (FileSystemRights) SecurityInformation.UnprotectedSacl) != 0 || (fileSystemRights & (FileSystemRights) SecurityInformation.UnprotectedDacl) != 0 ? new PrivilegeEnabler(Privilege.Security) : null)
+         using ((fileSystemRights & (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_SACL_SECURITY_INFORMATION) != 0 || (fileSystemRights & (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_DACL_SECURITY_INFORMATION) != 0 ? new PrivilegeEnabler(Privilege.Security) : null)
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
          {
             var safeHandle = transaction == null || !NativeMethods.IsAtLeastWindowsVista

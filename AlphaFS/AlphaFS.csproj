@@ -444,9 +444,9 @@
     <Compile Include="Filesystem\Path Class\Path.UncPaths.cs" />
     <Compile Include="Filesystem\Path Class\Path.ShortLongConversions.cs" />
     <Compile Include="Filesystem\Path Class\Path.Temporary.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeCmConnectMachineHandle.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeEncryptedFileRawHandle.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeSetupDiClassDevsExHandle.cs" />
+    <Compile Include="Safe Handles\SafeCmConnectMachineHandle.cs" />
+    <Compile Include="Safe Handles\SafeEncryptedFileRawHandle.cs" />
+    <Compile Include="Safe Handles\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />
     <Compile Include="Filesystem\CopyMoveResult.cs" />
     <Compile Include="Filesystem\Native Other\BY_HANDLE_FILE_INFORMATION.cs" />
@@ -561,11 +561,25 @@
     </Compile>
     <Compile Include="Safe Handles\SafeNativeMemoryBufferHandle.cs" />
     <Compile Include="Security\CRC\Crc64.cs" />
-    <Compile Include="Security\Enumerations\HashType.cs" />
-    <Compile Include="Security\Enumerations\ObjectType.cs" />
-    <Compile Include="Security\Enumerations\SecurityDescriptorControl.cs" />
-    <Compile Include="Security\Enumerations\SecurityInformation.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeLocalMemoryBufferHandle.cs" />
+    <Compile Include="Security\CRC\HashType.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.AdjustTokenPrivileges.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.LookupPrivilegeDisplayName.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.LookupPrivilegeValue.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.GetNamedSecurityInfo.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.GetSecurityInfo.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.SetSecurityInfo.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.SetNamedSecurityInfo.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.GetSecurityDescriptorDacl.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.GetSecurityDescriptorSacl.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.GetSecurityDescriptorGroup.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.GetSecurityDescriptorControl.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.GetSecurityDescriptorOwner.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.GetSecurityDescriptorLength.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.template.cs" />
+    <Compile Include="Security\Native Other\SE_OBJECT_TYPE.cs" />
+    <Compile Include="Security\Native Other\SECURITY_DESCRIPTOR_CONTROL.cs" />
+    <Compile Include="Security\Native Other\SECURITY_INFORMATION.cs" />
+    <Compile Include="Safe Handles\SafeLocalMemoryBufferHandle.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\SymbolicLinkTarget.cs" />
     <Compile Include="Filesystem\Link Stream\SymbolicLinkTargetInfo.cs" />
     <Compile Include="Filesystem\Structures And Enumerations\SymbolicLinkType.cs" />
@@ -575,7 +589,7 @@
     <Compile Include="Filesystem\Exceptions\UnrecognizedReparsePointException.cs" />
     <Compile Include="Filesystem\Exceptions\UnsupportedRemoteTransactionException.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Security\NativeMethods.cs" />
+    <Compile Include="Security\Native Methods\NativeMethods.LocalFree.cs" />
     <Compile Include="Security\CRC\Crc32.cs" />
     <Compile Include="Security\Privilege.cs" />
     <Compile Include="Security\PrivilegeEnabler.cs" />
@@ -583,18 +597,18 @@
     <Compile Include="Filesystem\Exceptions\InvalidTransactionException.cs" />
     <Compile Include="Filesystem\KernelTransaction.cs" />
     <Compile Include="NativeError.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeFindFileHandle.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeFindVolumeMountPointHandle.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeFindVolumeHandle.cs" />
-    <Compile Include="Filesystem\Safe Handles\SafeKernelTransactionHandle.cs" />
+    <Compile Include="Safe Handles\SafeFindFileHandle.cs" />
+    <Compile Include="Safe Handles\SafeFindVolumeMountPointHandle.cs" />
+    <Compile Include="Safe Handles\SafeFindVolumeHandle.cs" />
+    <Compile Include="Safe Handles\SafeKernelTransactionHandle.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionAlreadyAbortedException.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionAlreadyCommittedException.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionException.cs" />
     <Compile Include="Device\Volume\Volume.cs" />
     <Compile Include="Device\Volume\VolumeInfo.cs" />
-    <Compile Include="Security\Structures\Luid.cs" />
+    <Compile Include="Security\Native Other\Luid.cs" />
     <Compile Include="Security\SecurityAttributes.cs" />
-    <Compile Include="Security\Structures\TokenPrivileges.cs" />
+    <Compile Include="Security\Native Other\TokenPrivileges.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Win32Errors.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.VolumeManagement.cs" />
@@ -625,7 +639,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

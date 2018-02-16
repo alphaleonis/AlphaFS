@@ -24,22 +24,24 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   internal static partial class NativeMethods
+   /// <summary>Provides a concrete implementation of SafeHandle supporting transactions.</summary>
+   internal class SafeKernelTransactionHandle : SafeHandleMinusOneIsInvalid
    {
-      /// <summary>Represents a wrapper class for a handle used by the SetupDiGetClassDevs/SetupDiDestroyDeviceInfoList Win32 API functions.</summary>
-      [SecurityCritical]
-      internal sealed class SafeSetupDiClassDevsExHandle : SafeHandleZeroOrMinusOneIsInvalid
+      /// <summary>Initializes a new instance of the <see cref="SafeKernelTransactionHandle"/> class.</summary>      
+      public SafeKernelTransactionHandle() : base(true)
       {
-         /// <summary>Initializes a new instance of the <see cref="SafeSetupDiClassDevsExHandle"/> class.</summary>
-         public SafeSetupDiClassDevsExHandle()
-            : base(true)
-         {
-         }
+      }
 
-         protected override bool ReleaseHandle()
-         {
-            return SetupDiDestroyDeviceInfoList(handle);
-         }
+
+      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
+      /// <returns>
+      /// <see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure,
+      /// <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
+      /// </returns>
+      [SecurityCritical]
+      protected override bool ReleaseHandle()
+      {
+         return NativeMethods.CloseHandle(handle);
       }
    }
 }
