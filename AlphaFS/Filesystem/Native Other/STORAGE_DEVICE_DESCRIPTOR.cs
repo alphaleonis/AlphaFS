@@ -30,16 +30,16 @@ namespace Alphaleonis.Win32.Filesystem
       internal struct STORAGE_DEVICE_DESCRIPTOR
       {
          /// <summary>Contains the size of this structure, in bytes. The value of this member will change as members are added to the structure.</summary>
-         public readonly uint Version;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint Version;
 
          /// <summary>Specifies the total size of the descriptor, in bytes, which may include vendor ID, product ID, product revision, device serial number strings and bus-specific data which are appended to the structure.</summary>
-         public readonly uint Size;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint Size;
 
          /// <summary>Specifies the device type as defined by the Small Computer Systems Interface (SCSI) specification.</summary>
-         public readonly byte DeviceType;
+         [MarshalAs(UnmanagedType.I1)] public readonly byte DeviceType;
 
          /// <summary>Specifies the device type modifier, if any, as defined by the SCSI specification. If no device type modifier exists, this member is zero.</summary>
-         public readonly byte DeviceTypeModifier;
+         [MarshalAs(UnmanagedType.I1)] public readonly byte DeviceTypeModifier;
 
          /// <summary>Indicates when TRUE that the device's media (if any) is removable. If the device has no media, this member should be ignored. When FALSE the device's media is not removable.</summary>
          [MarshalAs(UnmanagedType.I1)] public readonly bool RemovableMedia;
@@ -48,22 +48,22 @@ namespace Alphaleonis.Win32.Filesystem
          [MarshalAs(UnmanagedType.I1)] public readonly bool CommandQueueing;
 
          /// <summary>Specifies the byte offset from the beginning of the structure to a null-terminated ASCII string that contains the device's vendor ID. If the device has no vendor ID, this member is zero.</summary>
-         public readonly uint VendorIdOffset;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint VendorIdOffset;
 
          /// <summary>Specifies the byte offset from the beginning of the structure to a null-terminated ASCII string that contains the device's product ID. If the device has no product ID, this member is zero.</summary>
-         public readonly uint ProductIdOffset;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint ProductIdOffset;
 
          /// <summary>Specifies the byte offset from the beginning of the structure to a null-terminated ASCII string that contains the device's product revision string. If the device has no product revision string, this member is zero.</summary>
-         public readonly uint ProductRevisionOffset;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint ProductRevisionOffset;
 
          /// <summary>Specifies the byte offset from the beginning of the structure to a null-terminated ASCII string that contains the device's serial number. If the device has no serial number, this member is zero.</summary>
-         public readonly uint SerialNumberOffset;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint SerialNumberOffset;
 
          /// <summary>Specifies an enumerator value of type STORAGE_BUS_TYPE that indicates the type of bus to which the device is connected. This should be used to interpret the raw device properties at the end of this structure (if any).</summary>
-         public readonly STORAGE_BUS_TYPE BusType;
+         [MarshalAs(UnmanagedType.U4)] public readonly STORAGE_BUS_TYPE BusType;
 
          /// <summary>Indicates the number of bytes of bus-specific data that have been appended to this descriptor.</summary>
-         public readonly uint RawPropertiesLength;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint RawPropertiesLength;
 
          /// <summary>Contains an array of length one that serves as a place holder for the first byte of the bus specific property data.</summary>
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 22)] public readonly byte[] RawDeviceProperties;

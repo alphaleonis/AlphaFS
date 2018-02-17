@@ -41,11 +41,11 @@ namespace AlphaFS.UnitTest
          foreach (var drive in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
          {
             Console.WriteLine();
-            Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++driveCount, drive.Name);
+            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]", ++driveCount, drive.Name);
 
-            var storageInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageDeviceInfo(drive.Name, true);
+            var storageInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageDeviceInfo(drive.Name);
             
-            UnitTestConstants.Dump(storageInfo, -15);
+            UnitTestConstants.Dump(storageInfo, -17);
 
 
             Assert.IsNotNull(storageInfo);

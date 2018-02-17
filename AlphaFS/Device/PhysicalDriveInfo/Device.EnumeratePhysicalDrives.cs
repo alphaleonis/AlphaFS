@@ -33,34 +33,36 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrives()
       {
-         return EnumeratePhysicalDrives(Security.ProcessContext.IsElevatedProcess);
+         return EnumeratePhysicalDrivesCore(Security.ProcessContext.IsElevatedProcess);
       }
 
 
+      
+      
       /// <summary>[AlphaFS] Enumerates the physical drives on the Computer, populated with volume- and logical drive information.</summary>
       /// <returns>An <see cref="IEnumerable{PhysicalDriveInfo}"/> collection that represents the physical drives on the Computer.</returns>      
       [SecurityCritical]
-      internal static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrives(bool isElevated)
+      internal static IEnumerable<PhysicalDriveInfo> EnumeratePhysicalDrivesCore(bool isElevated)
       {
-         var physicalDrives = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(isElevated, null, null, deviceInfo, true)).Where(physicalDrive => null != physicalDrive).ToArray();
-         
-         var pVolumes = Volume.EnumerateVolumes().Select(volumeGuid => GetPhysicalDriveInfoCore(isElevated, null, volumeGuid, null, null)).Where(physicalDrive => null != physicalDrive).ToArray();
+         var physicalDrives = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(isElevated, null, null, deviceInfo)).Where(physicalDrive => null != physicalDrive).ToArray();
 
-         var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(driveName => GetPhysicalDriveInfoCore(isElevated, null, driveName, null, null)).Where(physicalDrive => null != physicalDrive).ToArray();
+         var pVolumeGuids = Volume.EnumerateVolumes().Select(volumeGuid => GetPhysicalDriveInfoCore(false, null, volumeGuid, null)).Where(physicalDrive => null != physicalDrive).ToArray();
+
+         var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(driveName => GetPhysicalDriveInfoCore(false, null, driveName, null)).Where(physicalDrive => null != physicalDrive).ToArray();
 
 
          foreach (var pDrive in physicalDrives)
 
-            yield return PopulatePhysicalDrive(pDrive, pVolumes, pLogicalDrives);
+            yield return PopulatePhysicalDrive(pDrive, pVolumeGuids, pLogicalDrives);
 
 
          // Windows Disk Management shows CD-ROM so mimic that behaviour.
 
-         var cdRoms = EnumerateDevicesCore(null, DeviceGuid.CDRom, false).Select(deviceInfo => GetPhysicalDriveInfoCore(isElevated, null, null, deviceInfo, true)).Where(physicalDrive => null != physicalDrive).ToArray();
+         var cdRoms = EnumerateDevicesCore(null, DeviceGuid.CDRom, false).Select(deviceInfo => GetPhysicalDriveInfoCore(isElevated, null, null, deviceInfo)).Where(physicalDrive => null != physicalDrive).ToArray();
 
          foreach (var pCdRom in cdRoms)
 
-            yield return PopulatePhysicalCDRom(pCdRom, pVolumes, pLogicalDrives);
+            yield return PopulatePhysicalCDRom(pCdRom, pVolumeGuids, pLogicalDrives);
       }
 
 
@@ -77,12 +79,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       private static void PopulateVolumeDetails(PhysicalDriveInfo pDriveInfo, PhysicalDriveInfo pVolume)
       {
-         // Add device volume labels.
+         //// Add device volume labels.
 
-         if (null == pDriveInfo.VolumeLabels)
-            pDriveInfo.VolumeLabels = new Collection<string>();
+         //if (null == pDriveInfo.VolumeLabels)
+         //   pDriveInfo.VolumeLabels = new Collection<string>();
 
-         pDriveInfo.VolumeLabels.Add(pVolume.Name);
+         //pDriveInfo.VolumeLabels.Add(pVolume.Name);
 
 
          // Add device partition index numbers.

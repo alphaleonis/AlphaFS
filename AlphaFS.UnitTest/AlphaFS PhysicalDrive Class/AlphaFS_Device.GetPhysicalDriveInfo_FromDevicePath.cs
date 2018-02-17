@@ -45,12 +45,15 @@ namespace AlphaFS.UnitTest
 
 
          Console.WriteLine();
-         Console.WriteLine("#{0:000}\tDevice Path: [{1}]", ++deviceCount, devicePath);
+         Console.WriteLine("#{0:000}\tInput Device Path: [{1}]", ++deviceCount, devicePath);
 
 
-         UnitTestConstants.Dump(pDrive, -17);
+         UnitTestConstants.Dump(pDrive, -24);
 
-         UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -15, true);
+         UnitTestConstants.Dump(pDrive.StorageAdapterInfo, -28, true);
+
+         UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -17, true);
+         Console.WriteLine();
 
 
          Assert.IsNotNull(pDrive);

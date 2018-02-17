@@ -45,9 +45,11 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("#{0:000}\tPhysical Drive: [{1}]", ++pDriveCount, pDrive.StorageDeviceInfo.DeviceNumber);
 
 
-            UnitTestConstants.Dump(pDrive, -17);
+            UnitTestConstants.Dump(pDrive, -24);
 
-            UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -15, true);
+            UnitTestConstants.Dump(pDrive.StorageAdapterInfo, -28, true);
+
+            UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -17, true);
             Console.WriteLine();
          }
 

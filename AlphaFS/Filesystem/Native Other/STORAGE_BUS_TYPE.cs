@@ -24,6 +24,10 @@ namespace Alphaleonis.Win32.Filesystem
    internal static partial class NativeMethods
    {
       /// <summary>Provides a symbolic means of representing storage bus types.</summary>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
       internal enum STORAGE_BUS_TYPE
       {
          /// <summary>Indicates an unknown bus type.</summary>

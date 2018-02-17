@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security;
 
@@ -35,7 +36,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a StorageDeviceInfo instance.</summary>
       public StorageDeviceInfo()
       {
-         BusType = StorageBusType.Unknown;
          DeviceType = StorageDeviceType.Unknown;
       }
 
@@ -43,20 +43,78 @@ namespace Alphaleonis.Win32.Filesystem
       internal StorageDeviceInfo(NativeMethods.STORAGE_DEVICE_NUMBER device) : this()
       {
          DeviceType = device.DeviceType;
+
          DeviceNumber = device.DeviceNumber;
+
          PartitionNumber = device.PartitionNumber;
       }
 
       #endregion // Constructors
 
 
+      #region Properties
+
+      /// <summary>The type of the bus to which the device is connected.</summary>
+      public StorageBusType BusType { get; internal set; }
+
+
+      /// <summary>Indicates if the physical drive supports multiple outstanding commands (SCSI tagged queuing or equivalent). When false the physical drive does not support SCSI-tagged queuing or the equivalent.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Queueing")]
+      public bool CommandQueueing { get; internal set; }
+      
+
+      /// <summary>The storage device type.</summary>
+      public StorageDeviceType DeviceType { get; internal set; }
+
+
+      /// <summary>The device number of the storage device, starting at 0.</summary>
+      public int DeviceNumber { get; internal set; }
+
+      
+      /// <summary>The partition number of the storage device, starting at 1. If the device cannot be partitioned, like a CDROM, -1 is returned.</summary>
+      public int PartitionNumber { get; internal  set; }
+
+
+      /// <summary>The product ID of the physical drive.</summary>
+      public string ProductId { get; internal set; }
+
+
+      /// <summary>The product revision of the physical drive.</summary>
+      public string ProductRevision { get; internal set; }
+
+
+      /// <summary>Indicates if the physical drive is removable. When true the physical drive's media (if any) is removable. If the device has no media, this member should be ignored. When false the physical drive's media is not removable.</summary>
+      public bool RemovableMedia { get; internal set; }
+
+
+      /// <summary>The serial number of the physical drive. If the physical drive has no serial number or the session is not elevated -1 is returned.</summary>
+      public string SerialNumber { get; internal set; }
+
+
+      /// <summary>The total size of the physical drive. If the session is not elevated -1 is returned</summary>
+      public long TotalSize { get; internal set; }
+
+
+      /// <summary>The total size of the physical drive, formatted as a unit size.</summary>
+      public string TotalSizeUnitSize
+      {
+         get { return Utils.UnitSizeToText(TotalSize); }
+      }
+
+
+      /// <summary>The Vendor ID of the physical drive.</summary>
+      public string VendorId { get; internal set; }
+
+      #endregion // Properties
+
+
       #region Methods
 
-      /// <summary>Returns storage device as: "DeviceNumber:PartitionNumber DeviceType/BusType".</summary>
+      /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         return string.Format(CultureInfo.CurrentCulture, "{0}:{1} {2}/{3}", DeviceNumber, PartitionNumber, DeviceType.ToString(), BusType.ToString());
+         return string.Format(CultureInfo.CurrentCulture, "{0} {1} {2} {3}:{4}", VendorId, ProductId, DeviceType.ToString(), DeviceNumber, PartitionNumber).Trim();
       }
 
 
@@ -70,7 +128,12 @@ namespace Alphaleonis.Win32.Filesystem
 
          var other = obj as StorageDeviceInfo;
 
-         return null != other && other.DeviceType == DeviceType && other.DeviceNumber == DeviceNumber && other.PartitionNumber == PartitionNumber;
+         return null != other &&
+                other.DeviceNumber == DeviceNumber &&
+                other.PartitionNumber == PartitionNumber &&
+                other.DeviceType == DeviceType &&
+                other.BusType == BusType &&
+                other.SerialNumber == SerialNumber;
       }
 
 
@@ -78,7 +141,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A hash code for the current Object.</returns>
       public override int GetHashCode()
       {
-         return DeviceNumber + PartitionNumber + DeviceType.GetHashCode();
+         return DeviceNumber + PartitionNumber + (null != SerialNumber ? SerialNumber.GetHashCode() : 0) + BusType.GetHashCode() + DeviceType.GetHashCode();
       }
 
 
@@ -100,27 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return !(left == right);
       }
-      
+
       #endregion // Methods
-
-
-      #region Properties
-
-      /// <summary>The storage bus type. Requires elevated rights.</summary>
-      public StorageBusType BusType { get; internal set; }
-
-
-      /// <summary>The storage device type.</summary>
-      public StorageDeviceType DeviceType { get; internal set; }
-
-
-      /// <summary>The device number of the storage device, starting at 0.</summary>
-      public int DeviceNumber { get; internal set; }
-
-
-      /// <summary>The partition number of the storage device, starting at 1. If the device cannot be partitioned, like a CDROM, -1 is returned.</summary>
-      public int PartitionNumber { get; internal set; }
-
-      #endregion // Properties
    }
 }

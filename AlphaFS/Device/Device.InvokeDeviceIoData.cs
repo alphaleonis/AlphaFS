@@ -52,6 +52,10 @@ namespace Alphaleonis.Win32.Filesystem
                return safeBuffer;
 
 
+            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION || lastError == Win32Errors.ERROR_INVALID_PARAMETER)
+               return null;
+
+
             bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, pathForException);
          }
       }

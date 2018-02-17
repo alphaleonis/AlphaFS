@@ -201,6 +201,7 @@
     <Compile Include="Device\Device.GetVolumeDiskExtents.cs" />
     <Compile Include="Device\Device.GetDevicePath.cs" />
     <Compile Include="Device\Device.ValidateDevicePath.cs" />
+    <Compile Include="Device\StorageAdapterInfo.cs" />
     <Compile Include="Device\StorageDeviceInfo.cs" />
     <Compile Include="Device\PhysicalDriveInfo\Device.GetStorageDeviceInfo.cs" />
     <Compile Include="Device\PhysicalDriveInfo\Device.GetPhysicalDriveInfo.cs" />
@@ -319,8 +320,8 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\Native Other\DiskPartitionTypes.cs" />
     <Compile Include="Filesystem\Native Other\DISK_GEOMETRY_EX.cs" />
+    <Compile Include="Filesystem\Native Other\STORAGE_MEDIA_TYPE.cs" />
     <Compile Include="Filesystem\Native Other\PARTITION_STYLE.cs" />
-    <Compile Include="Filesystem\Native Other\MEDIA_TYPE.cs" />
     <Compile Include="Filesystem\Native Other\DISK_GEOMETRY.cs" />
     <Compile Include="Filesystem\Native Other\DRIVE_LAYOUT_INFORMATION_MBR.cs" />
     <Compile Include="Filesystem\Native Other\IoMethod.cs" />
@@ -332,6 +333,9 @@
     <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_DESCRIPTOR.cs" />
     <Compile Include="Filesystem\Native Other\STORAGE_BUS_TYPE.cs" />
     <Compile Include="Filesystem\Native Other\DISK_EXTENT.cs" />
+    <Compile Include="Filesystem\Native Other\STORAGE_ADAPTER_DESCRIPTOR.cs" />
+    <Compile Include="Filesystem\Native Other\STORAGE_QUERY_TYPE.cs" />
+    <Compile Include="Filesystem\Native Other\STORAGE_PROPERTY_ID.cs" />
     <Compile Include="Filesystem\Native Other\STORAGE_PROPERTY_QUERY.cs" />
     <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_TYPE.cs" />
     <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_NUMBER.cs" />
@@ -688,7 +692,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

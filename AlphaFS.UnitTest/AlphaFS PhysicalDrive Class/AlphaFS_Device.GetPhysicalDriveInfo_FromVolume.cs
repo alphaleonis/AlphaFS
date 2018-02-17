@@ -44,23 +44,19 @@ namespace AlphaFS.UnitTest
          var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive).ToUpperInvariant();
 
 
-         //var pDrive = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDriveInfo(@"t:\");
-
-         // \\?\Volume{db5044f9-bd1f-4243-ab97-4b985eb29e80}\,
-         // \\?\Volume{43dd0652-8ecf-4943-8275-016fc09f02c7}\,
-         // \\?\Volume{e32f9cf5-7978-4aaa-9525-86cf401487ad}\,
-         // \\?\Volume{50685374-f895-11e7-a43e-f49634afb3a5}\
-
          var pDrive = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDriveInfo(sourceVolume);
 
 
          Console.WriteLine();
-         Console.WriteLine("#{0:000}\tVolume: [{1}]", ++volumeCount, sourceVolume);
+         Console.WriteLine("#{0:000}\tInput Volume: [{1}]", ++volumeCount, sourceVolume);
 
 
-         UnitTestConstants.Dump(pDrive, -17);
+         UnitTestConstants.Dump(pDrive, -24);
 
-         UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -15, true);
+         UnitTestConstants.Dump(pDrive.StorageAdapterInfo, -28, true);
+
+         UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -17, true);
+         Console.WriteLine();
 
 
          Assert.IsNotNull(pDrive);

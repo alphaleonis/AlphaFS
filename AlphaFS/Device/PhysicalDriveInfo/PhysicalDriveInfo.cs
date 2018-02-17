@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security;
 
@@ -46,14 +45,14 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      public PhysicalDriveInfo(StorageDeviceInfo storageInfo)
+      public PhysicalDriveInfo(StorageDeviceInfo storageInfo) : this()
       {
          StorageDeviceInfo = storageInfo;
       }
 
 
       /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      public PhysicalDriveInfo(PhysicalDriveInfo physicalDriveInfo)
+      public PhysicalDriveInfo(PhysicalDriveInfo physicalDriveInfo) : this()
       {
          CopyTo(physicalDriveInfo, this);
       }
@@ -65,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The device description.</summary>
       public string DeviceDescription { get; internal set; }
-      
+
 
       /// <summary>The path to the device.</summary>
       /// <returns>A string that represents the path to the device.
@@ -78,17 +77,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The logical drives that are located on the physical drive.</summary>
       public Collection<string> LogicalDrives { get; internal set; }
+
       
+      /// <summary>The Manufacturer of the physical drive.</summary>
+      public string Manufacturer { get; internal set; }
 
-      /// <summary>Indicates if the physical drive supports multiple outstanding commands (SCSI tagged queuing or equivalent). When false the physical drive does not support SCSI-tagged queuing or the equivalent.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Queueing")]
-      public bool CommandQueueing { get; internal set; }
-
-
-      /// <summary>Indicates if the physical drive is removable. When true the physical drive's media (if any) is removable. If the device has no media, this member should be ignored. When false the physical drive's media is not removable.</summary>
-      public bool RemovableMedia { get; internal set; }
-
-
+      
       /// <summary>The "FriendlyName" of the physical drive.</summary>
       public string Name { get; internal set; }
 
@@ -100,35 +94,25 @@ namespace Alphaleonis.Win32.Filesystem
       ///// <summary>The partitions that are located on the physical drive.</summary>
       //public string[] Partitions { get; internal set; }
 
-      /// <summary>The product revision of the physical drive.</summary>
-      public string ProductRevision { get; internal set; }
+
+      /// <summary>Encapsulates the physical device location (PDO) information provided by a device's firmware to Windows.</summary>
+      public string PhysicalDeviceObjectName { get; internal set; }
 
 
-      /// <summary>The storage device type and device- and partition number.</summary>
+      /// <summary>The storage adapter information, such as bus type.</summary>
+      public StorageAdapterInfo StorageAdapterInfo { get; internal set; }
+
+
+      /// <summary>The storage device information, such as device type and number.</summary>
       public StorageDeviceInfo StorageDeviceInfo { get; internal set; }
-
-
-      /// <summary>The serial number of the physical drive. If the physical drive has no serial number or the session is not elevated -1 is returned.</summary>
-      public string SerialNumber { get; internal set; }
-
-
-      /// <summary>The total size of the physical drive. If the session is not elevated -1 is returned</summary>
-      public long TotalSize { get; internal set; }
-
-
-      /// <summary>The total size of the physical drive, formatted as a unit size.</summary>
-      public string TotalSizeUnitSize
-      {
-         get { return Utils.UnitSizeToText(TotalSize); }
-      }
-
+      
 
       /// <summary>A collection of volume GUID strings of volumes that are located on the physical drive.</summary>
       public Collection<string> VolumeGuids { get; internal set; }
 
 
-      /// <summary>A collection of volume label strings of volumes that are located on the physical drive.</summary>
-      public Collection<string> VolumeLabels { get; internal set; }
+      ///// <summary>A collection of volume label strings of volumes that are located on the physical drive.</summary>
+      //public Collection<string> VolumeLabels { get; internal set; }
 
       #endregion // Properties
 

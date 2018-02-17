@@ -19,34 +19,28 @@
  *  THE SOFTWARE. 
  */
 
-using System.Runtime.InteropServices;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Describes the geometry of disk devices and media.</summary>
+      /// <summary>Used by the <see cref="STORAGE_PROPERTY_QUERY"/> structure passed to the IOCTL_STORAGE_QUERY_PROPERTY control code to indicate what information is returned about a property of a storage device or adapter.</summary>
       /// <remarks>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DISK_GEOMETRY
+      public enum STORAGE_QUERY_TYPE
       {
-         /// <summary>The number of cylinders.</summary>
-         [MarshalAs(UnmanagedType.U8)] public long Cylinders;
+         /// <summary>Instructs the driver to return an appropriate descriptor.</summary>
+         PropertyStandardQuery = 0,
 
-         /// <summary>The type of media.</summary>
-         [MarshalAs(UnmanagedType.U4)] public STORAGE_MEDIA_TYPE MediaType;
+         ///// <summary>Instructs the driver to report whether the descriptor is supported.</summary>
+         //PropertyExistsQuery = 1,
 
-         /// <summary>The number of tracks per cylinder.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint TracksPerCylinder;
+         ///// <summary>Not currently supported. Do not use.</summary>
+         //PropertyMaskQuery = 2,
 
-         /// <summary>The number of sectors per track.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint SectorsPerTrack;
-
-         /// <summary>The number of bytes per sector.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint BytesPerSector;
+         ///// <summary>Specifies the upper limit of the list of query types. This is used to validate the query type.</summary>
+         //PropertyQueryMaxDefined = 3
       }
    }
 }
