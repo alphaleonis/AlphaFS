@@ -20,17 +20,13 @@
  */
 
 using System;
-using System.ComponentModel;
 using System.Globalization;
-using System.IO;
-using System.Runtime.InteropServices;
-using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-      /// <summary>[AlphaFS] Get the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.</summary>
+      /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.</summary>
       /// <returns>A <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
       ///  <exception cref="ArgumentException"/>
       ///  <exception cref="ArgumentNullException"/>
@@ -43,11 +39,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath)
       {
-         return GetStorageDeviceInfoCore(devicePath, false);
+         return GetStorageDeviceInfoCore(Security.ProcessContext.IsElevatedProcess, devicePath, false);
       }
 
 
-      /// <summary>[AlphaFS] Get the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.</summary>
+      /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.</summary>
       /// <returns>A <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
       ///  <exception cref="ArgumentException"/>
       ///  <exception cref="ArgumentNullException"/>
@@ -61,23 +57,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="getBusType">When <c>true</c> also get the <see cref="StorageBusType"/> which requires elevated rights.</param>
       public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath, bool getBusType)
       {
-         return GetStorageDeviceInfoCore(devicePath, getBusType);
+         return GetStorageDeviceInfoCore(Security.ProcessContext.IsElevatedProcess, devicePath, getBusType);
       }
 
 
-      /// <summary>[AlphaFS] Get the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.</summary>
+      /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.</summary>
       /// <returns>A <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
       ///  <exception cref="ArgumentException"/>
       ///  <exception cref="ArgumentNullException"/>
       ///  <exception cref="NotSupportedException"/>
       ///  <exception cref="Exception"/>
+      /// <param name="isElevated"></param>
       /// <param name="devicePath">
       ///    A drive path such as: "C", "C:" or "C:\".
       ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
       ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
       /// </param>
       /// <param name="getBusType">When <c>true</c> also get the <see cref="StorageBusType"/> which requires elevated rights.</param>
-      internal static StorageDeviceInfo GetStorageDeviceInfoCore(string devicePath, bool getBusType)
+      internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, string devicePath, bool getBusType)
       {
          string logicalDrive;
 
@@ -121,11 +118,10 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   storageInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0));
 
+
                   if (getBusType)
                   {
-                     // Requires elevation.
-
-                     var pDriveInfo = GetPhysicalDriveInfoCore(storageInfo, pathToDevice, null, false);
+                     var pDriveInfo = GetPhysicalDriveInfoCore(isElevated, storageInfo, pathToDevice, null, false);
 
                      if (null != pDriveInfo)
                         storageInfo.BusType = pDriveInfo.StorageDeviceInfo.BusType;

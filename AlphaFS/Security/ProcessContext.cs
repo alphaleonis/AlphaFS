@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Security
       }
 
 
-      /// <summary>[AlphaFS] Determines if UAC is enabled and that the current process is in an elevated state.
+      /// <summary>[AlphaFS] Determines that UAC is enabled and that the current process is in an elevated state.
       /// <para>If the current User is the default Administrator then the process is assumed to be in an elevated state.</para>
       /// <para>This assumption is made because by default, the default Administrator (disabled by default) gets all access rights without showing an UAC prompt.</para>
       /// </summary>
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Security
       }
 
 
-      /// <summary>[AlphaFS] Determines if UAC is enabled by reading the "EnableLUA" registry key of the local Computer.</summary>
+      /// <summary>[AlphaFS] Determines that UAC is enabled by reading the "EnableLUA" registry key of the local Computer.</summary>
       /// <returns><see langword="true"/> if the UAC status was successfully read from registry; otherwise, <see langword="false"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Uac")]
       public static bool IsUacEnabled
@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Security
       }
 
 
-      /// <summary>[AlphaFS] Determines if the current process is run in the context of a Windows Service.</summary>
+      /// <summary>[AlphaFS] Determines that the current process is run in the context of a Windows Service.</summary>
       /// <returns><see langword="true"/> if the current process is run in the context of a Windows Service; otherwise, <see langword="false"/>.</returns>
       public static bool IsWindowsService
       {

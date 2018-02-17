@@ -21,9 +21,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
 
@@ -31,9 +29,9 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-      /// <summary> [AlphaFS] Retrieves the physical drive on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.
+      /// <summary>[AlphaFS] Retrieves the physical drive on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.
       /// <para>Do not call this method for every volume or logical drive on the system as each call queries all physical drives and associated volumes and logical drives.</para>
-      /// <para>Instead, use method <see cref="EnumeratePhysicalDrives"/> and property <see cref="PhysicalDriveInfo.VolumeGuids"/> or <see cref="PhysicalDriveInfo.LogicalDrives"/>.</para>
+      /// <para>Instead, use method <see cref="EnumeratePhysicalDrives()"/> and property <see cref="PhysicalDriveInfo.VolumeGuids"/> and/or <see cref="PhysicalDriveInfo.LogicalDrives"/>.</para>
       /// </summary>
       /// <returns>A <see cref="PhysicalDriveInfo"/> instance that represents the physical drive on the Computer or <c>null</c> on error/no data available.</returns>
       ///  <exception cref="ArgumentException"/>
@@ -52,9 +50,12 @@ namespace Alphaleonis.Win32.Filesystem
          bool isDeviceInfo;
          string logicalDrive;
 
-         devicePath = ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
 
-         var storageInfo = GetStorageDeviceInfoCore(devicePath, false);
+         var isElevated = Security.ProcessContext.IsElevatedProcess;
+
+         devicePath = ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
+         
+         var storageInfo = GetStorageDeviceInfoCore(isElevated, devicePath, false);
 
          if (null == storageInfo)
             return null;
@@ -69,13 +70,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          var pDriveInfo = isDeviceInfo
 
-            ? EnumeratePhysicalDrives().FirstOrDefault(pDrive => pDrive.StorageDeviceInfo.DeviceNumber == storageInfo.DeviceNumber && pDrive.StorageDeviceInfo.PartitionNumber == storageInfo.PartitionNumber)
+            ? EnumeratePhysicalDrives(isElevated).FirstOrDefault(pDrive => pDrive.StorageDeviceInfo.DeviceNumber == storageInfo.DeviceNumber && pDrive.StorageDeviceInfo.PartitionNumber == storageInfo.PartitionNumber)
 
             : isVolume
-               ? EnumeratePhysicalDrives().FirstOrDefault(pDrive => null != pDrive.VolumeGuids && pDrive.VolumeGuids.Contains(devicePath, StringComparer.OrdinalIgnoreCase))
+               ? EnumeratePhysicalDrives(isElevated).FirstOrDefault(pDrive => null != pDrive.VolumeGuids && pDrive.VolumeGuids.Contains(devicePath, StringComparer.OrdinalIgnoreCase))
 
                : isDrive
-                  ? EnumeratePhysicalDrives().FirstOrDefault(pDrive => null != pDrive.LogicalDrives && pDrive.LogicalDrives.Contains(devicePath, StringComparer.OrdinalIgnoreCase))
+                  ? EnumeratePhysicalDrives(isElevated).FirstOrDefault(pDrive => null != pDrive.LogicalDrives && pDrive.LogicalDrives.Contains(devicePath, StringComparer.OrdinalIgnoreCase))
                   : null;
 
 
@@ -87,12 +88,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      ///  <summary>[AlphaFS] Gets the physical drive information such as DeviceType, DeviceNumber, PartitionNumber and the serial number and Product ID.</summary>
+
+
+      ///  <summary>[AlphaFS] Retrieves the physical drive information such as DeviceType, DeviceNumber, PartitionNumber and the serial number and Product ID.</summary>
       ///  <returns>A <see cref="PhysicalDriveInfo"/> instance that represents the physical drive on the Computer or <c>null</c> on error/no data available.</returns>
       ///  <exception cref="ArgumentException"/>
       ///  <exception cref="ArgumentNullException"/>
       ///  <exception cref="NotSupportedException"/>
       ///  <exception cref="Exception"/>
+      /// <param name="isElevated"></param>
       /// <param name="storageInfo">A <see cref="StorageDeviceInfo"/> instance.</param>
       /// <param name="devicePath">
       ///    A drive path such as: "C", "C:" or "C:\".
@@ -100,12 +104,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
       /// </param>
       /// <param name="deviceInfo">A <see cref="DeviceInfo"/> instance.</param>
-      /// <param name="getDeviceData"></param>
       /// <param name="getAllData"></param>
+      /// <param name="getDeviceData"></param>
       /// <remarks>Use either <paramref name="devicePath"/> or <paramref name="deviceInfo"/>, not both.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is disposed.")]
       [SecurityCritical]
-      internal static PhysicalDriveInfo GetPhysicalDriveInfoCore(StorageDeviceInfo storageInfo, string devicePath, DeviceInfo deviceInfo, bool? getAllData)
+      internal static PhysicalDriveInfo GetPhysicalDriveInfoCore(bool isElevated, StorageDeviceInfo storageInfo, string devicePath, DeviceInfo deviceInfo, bool? getAllData)
       {
          var isDeviceInfo = null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.DevicePath);
 
@@ -114,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (null == storageInfo)
-            storageInfo = GetStorageDeviceInfoCore(devicePath, false);
+            storageInfo = GetStorageDeviceInfoCore(isElevated, devicePath, false);
 
          if (null == storageInfo)
             return null;
@@ -129,17 +133,10 @@ namespace Alphaleonis.Win32.Filesystem
             // "FriendlyName" usually contains a more complete name, as seen in Windows Explorer.
             Name = isDeviceInfo ? deviceInfo.FriendlyName : null,
          };
-         
 
-         if (null != getAllData)
-         {
-            try
-            {
-               // Requires elevation.
-               PopulatePhysicalDriveInfo((bool) getAllData, devicePath, pDriveInfo);
-            }
-            catch { }
-         }
+
+         if (isElevated && null != getAllData)
+            PopulatePhysicalDriveInfo((bool) getAllData, devicePath, pDriveInfo);
 
 
          return pDriveInfo;
