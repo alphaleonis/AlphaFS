@@ -117,8 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets the instance ID of the device.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
-      public string InstanceID { get; internal set; }
+      public string InstanceId { get; internal set; }
 
 
       /// <summary>Represents the bus-specific physical location of a device instance.</summary>

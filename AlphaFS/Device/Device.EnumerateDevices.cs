@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   ClassGuid = deviceGuid,
                   DevicePath = GetDeviceInterfaceDetail(safeHandle, ref interfaceData, ref diData).DevicePath,
-                  InstanceID = GetDeviceInstanceID(safeMachineHandle, hostName, diData)
+                  InstanceId = GetDeviceInstanceId(safeMachineHandle, hostName, diData)
                };
 
 
@@ -134,7 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       [SecurityCritical]
-      private static string GetDeviceInstanceID(SafeCmConnectMachineHandle safeMachineHandle, string hostName, NativeMethods.SP_DEVINFO_DATA diData)
+      private static string GetDeviceInstanceId(SafeCmConnectMachineHandle safeMachineHandle, string hostName, NativeMethods.SP_DEVINFO_DATA diData)
       {
          // CM_Get_Parent_Ex()
          // Note: Using this function to access remote machines is not supported
