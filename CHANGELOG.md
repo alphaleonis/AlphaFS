@@ -74,6 +74,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #394: Improve percentage output of properties `DiskSpaceInfo`- `AvailableFreeSpacePercent` and `UsedSpacePercent`
 - Issue #401: CreateDirectory ERROR_ACCESS_DENIED reports parent folder.
 - Issue #402: Remove long path prefix from `NativeError.ThrowException` messages with paths.
+- Issue #416: Rename property `DeviceInfo.Class` to `DeviceInfo.DeviceClass`
 
 ### Breaking Changes
 
@@ -84,6 +85,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
 - Issue #388: Change method `Network.Host.EnumerateDrives()` return type from `string` to `DriveInfo`.
 - Issue #391: Mark AlphaFS enumerating methods that use both `searchPattern` and `DirectoryEnumerationFilters` as obsolete.
+- Issue #416: Rename property `DeviceInfo.Class` to `DeviceInfo.DeviceClass`
 
 
 Version 2.1.3 (2017-06-05)
