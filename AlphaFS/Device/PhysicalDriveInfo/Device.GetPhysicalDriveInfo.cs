@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///  <exception cref="ArgumentNullException"/>
       ///  <exception cref="NotSupportedException"/>
       ///  <exception cref="Exception"/>
-      /// <param name="isElevated"></param>
+      /// <param name="isElevated"><see langword="true"/> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="storageInfo">A <see cref="StorageDeviceInfo"/> instance.</param>
       /// <param name="devicePath">
       ///    A drive path such as: "C", "C:" or "C:\".
@@ -105,7 +105,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="deviceInfo">A <see cref="DeviceInfo"/> instance.</param>
       /// <param name="getAllData"></param>
-      /// <param name="getDeviceData"></param>
       /// <remarks>Use either <paramref name="devicePath"/> or <paramref name="deviceInfo"/>, not both.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is disposed.")]
       [SecurityCritical]
@@ -135,7 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
          };
 
 
-         if (isElevated && null != getAllData)
+         if (null != getAllData && isElevated)
             PopulatePhysicalDriveInfo((bool) getAllData, devicePath, pDriveInfo);
 
 

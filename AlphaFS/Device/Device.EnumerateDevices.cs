@@ -56,6 +56,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static IEnumerable<DeviceInfo> EnumerateDevicesCore(string hostName, DeviceGuid interfaceGuid, bool getAllProperties)
       {
+         if (Utils.IsNullOrWhiteSpace(hostName))
+            hostName = Environment.MachineName;
+
+
          // CM_Connect_Machine()
          // MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.
          // You cannot access remote machines when running on these versions of Windows. 
@@ -86,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // Start enumerating device interfaces.
 
-            do
+            while (true)
             {
                var interfaceData = new NativeMethods.SP_DEVICE_INTERFACE_DATA {cbSize = interfaceStructSize};
 
@@ -122,8 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                yield return deviceInfo;
-
-            } while (true);
+            }
          }
       }
 
@@ -206,7 +209,7 @@ namespace Alphaleonis.Win32.Filesystem
                // the requested property does not exist for a device or if the property data is not valid.
 
                if (lastError == Win32Errors.ERROR_INVALID_DATA)
-                  return string.Empty;
+                  return null;
 
 
                bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, property.ToString());

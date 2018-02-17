@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///  <exception cref="ArgumentNullException"/>
       ///  <exception cref="NotSupportedException"/>
       ///  <exception cref="Exception"/>
-      /// <param name="isElevated"></param>
+      /// <param name="isElevated"><see langword="true"/> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="devicePath">
       ///    A drive path such as: "C", "C:" or "C:\".
       ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
