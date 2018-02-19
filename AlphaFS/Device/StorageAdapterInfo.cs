@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         return string.Format(CultureInfo.CurrentCulture, "{0} {1} {2}", BusType.ToString(), BusVersion.ToString(), MaximumTransferBytesUnitSize);
+         return string.Format(CultureInfo.CurrentCulture, "{0} {1}", (BusType.ToString() + " " + (null != BusVersion ? BusVersion.ToString() : string.Empty)).Trim(), MaximumTransferBytesUnitSize);
       }
 
 

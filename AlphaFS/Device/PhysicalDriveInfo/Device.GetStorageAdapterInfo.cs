@@ -22,13 +22,14 @@
 using System;
 using System.Globalization;
 using System.Security.AccessControl;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
       /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.
-      /// <para>Populating <see cref="StorageAdapterInfo"/> instance properties requires an elevated state.</para>
+      /// <para>Calling this method requires an elevated state.</para>
       /// </summary>
       /// <returns>A <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
       ///  <exception cref="ArgumentException"/>
@@ -46,10 +47,10 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      
-      
+
+
       /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.
-      /// <para>Populating <see cref="StorageAdapterInfo"/> instance properties requires an elevated state.</para>
+      /// <para>Calling this method requires an elevated state.</para>
       /// </summary>
       /// <returns>A <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
       ///  <exception cref="ArgumentException"/>
@@ -71,49 +72,65 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
 
-         StorageAdapterInfo storageAdapterInfo = null;
+         using (var safeHandle = OpenPhysicalDrive(pathToDevice, FileSystemRights.Read))
+
+            return GetStorageAdapterInfoNative(safeHandle, devicePath);
+      }
+
+
+      internal static StorageAdapterInfo GetStorageAdapterInfoNative(SafeFileHandle safeHandle, string pathToDevice)
+      {
+         var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
+         {
+            PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageAdapterProperty,
+            QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
+         };
+
+         SafeFileHandle safeHandleRetry = null;
+         var isRetry = false;
 
 
       StartGetData:
+         
+         // Get storage adapter info.
 
-         using (var safeHandle = OpenPhysicalDrive(pathToDevice, FileSystemRights.Read | FileSystemRights.Write))
+         using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, NativeMethods.DefaultFileBufferSize / 4))
          {
-            var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
+            if (null == safeBuffer)
             {
-               PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageAdapterProperty,
-               QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
-            };
+               // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
 
 
-            // Get storage adapter info.
+               var volDiskExtents = GetVolumeDiskExtents(isRetry ? safeHandleRetry : safeHandle);
 
-            using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, devicePath, NativeMethods.DefaultFileBufferSize / 4))
-            {
-               if (null == safeBuffer)
+               if (volDiskExtents.HasValue)
                {
-                  // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
+                  // Use the first disk extent.
+
+                  pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
 
 
-                  var volDiskExtents = GetVolumeDiskExtents(safeHandle);
+                  safeHandleRetry = OpenPhysicalDrive(pathToDevice, FileSystemRights.Read);
 
-                  if (volDiskExtents.HasValue)
-                  {
-                     // Use the first disk extent.
-
-                     pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
-
-                     goto StartGetData;
-                  }
+                  isRetry = null != safeHandleRetry;
                }
 
-               else
-                  using (safeBuffer)
-                     storageAdapterInfo = new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>(0));
+
+               if (isRetry)
+                  goto StartGetData;
+
+               return null;
+            }
+
+
+            using (safeBuffer)
+            {
+               if (isRetry && !safeHandleRetry.IsClosed)
+                  safeHandleRetry.Close();
+
+               return new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>(0));
             }
          }
-         
-
-         return storageAdapterInfo;
       }
    }
 }

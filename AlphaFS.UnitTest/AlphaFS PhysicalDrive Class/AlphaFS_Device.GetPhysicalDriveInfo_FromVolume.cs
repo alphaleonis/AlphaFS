@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
 
 
          Console.WriteLine();
-         Console.WriteLine("#{0:000}\tInput Volume: [{1}]", ++volumeCount, sourceVolume);
+         Console.WriteLine("#{0:000}\tInput Volume: [{1}]\t\t{2}\t\t{3}", ++volumeCount, sourceVolume, pDrive.StorageAdapterInfo.ToString(), pDrive.StorageDeviceInfo.ToString());
 
 
          UnitTestConstants.Dump(pDrive, -24);

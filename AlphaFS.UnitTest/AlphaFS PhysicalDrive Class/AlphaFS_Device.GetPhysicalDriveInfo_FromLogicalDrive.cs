@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
          var pDrive = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDriveInfo(sourceDrive);
 
          Console.WriteLine();
-         Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]", ++driveCount, sourceDrive);
+         Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}\t\t{3}", ++driveCount, sourceDrive, pDrive.StorageAdapterInfo.ToString(), pDrive.StorageDeviceInfo.ToString());
 
 
          UnitTestConstants.Dump(pDrive, -24);

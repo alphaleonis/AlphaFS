@@ -34,6 +34,10 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
+
          var gotDisk = false;
          var driveCount = 0;
          

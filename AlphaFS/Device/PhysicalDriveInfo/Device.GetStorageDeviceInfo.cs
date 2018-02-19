@@ -21,6 +21,9 @@
 
 using System;
 using System.Globalization;
+using System.Net;
+using System.Security.AccessControl;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -103,13 +106,114 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         if (isElevated)
+         if (null != storageDeviceInfo && isElevated)
          {
-            var pDriveInfo = GetPhysicalDriveInfoCore(true, pathToDevice, storageDeviceInfo, null);
+            using (var safeHandle = OpenPhysicalDrive(pathToDevice, FileSystemRights.Read))
 
-            if (null != pDriveInfo)
-               storageDeviceInfo = pDriveInfo.StorageDeviceInfo;
+               storageDeviceInfo = GetStorageDeviceInfoNative(safeHandle, pathToDevice, storageDeviceInfo);
          }
+
+
+         return storageDeviceInfo;
+      }
+
+
+      /// <summary>Sets the physical drive properties such as FriendlyName, device size and serial number.</summary>
+      private static StorageDeviceInfo GetStorageDeviceInfoNative(SafeFileHandle safeHandle, string pathToDevice, StorageDeviceInfo storageDeviceInfo)
+      {
+         var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
+         {
+            PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageDeviceProperty,
+            QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
+         };
+
+         SafeFileHandle safeHandleRetry = null;
+         var isRetry = false;
+
+
+      StartGetData:
+
+         // Get storage device info.
+
+         using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, NativeMethods.DefaultFileBufferSize / 2))
+         {
+            if (null == safeBuffer)
+            {
+               // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
+
+
+               var volDiskExtents = GetVolumeDiskExtents(isRetry ? safeHandleRetry : safeHandle);
+
+               if (volDiskExtents.HasValue)
+               {
+                  // Use the first disk extent.
+
+                  pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
+
+
+                  safeHandleRetry = OpenPhysicalDrive(pathToDevice, FileSystemRights.Read);
+
+                  isRetry = null != safeHandleRetry;
+               }
+
+
+               if (isRetry)
+                  goto StartGetData;
+
+               return null;
+            }
+
+
+            var deviceDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>(0);
+
+
+            storageDeviceInfo = new StorageDeviceInfo
+            {
+               DeviceType = storageDeviceInfo.DeviceType,
+
+               DeviceNumber = storageDeviceInfo.DeviceNumber,
+
+               PartitionNumber = storageDeviceInfo.PartitionNumber,
+
+
+               BusType = (StorageBusType) deviceDescriptor.BusType,
+
+               CommandQueueing = deviceDescriptor.CommandQueueing,
+               
+               ProductId = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.ProductIdOffset).Trim(),
+
+               ProductRevision = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.ProductRevisionOffset).Trim(),
+
+               RemovableMedia = deviceDescriptor.RemovableMedia
+            };
+
+
+            var serial = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.SerialNumberOffset).Trim();
+
+            if (Utils.IsNullOrWhiteSpace(serial) || serial.Length == 1)
+               serial = null;
+
+            storageDeviceInfo.SerialNumber = serial;
+
+
+            var vendorId = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.VendorIdOffset).Trim();
+
+            if (Utils.IsNullOrWhiteSpace(vendorId) || vendorId.Length == 1)
+               vendorId = null;
+
+            storageDeviceInfo.VendorId = vendorId;
+         }
+
+
+         using (var safeBuffer = GetDeviceIoData<long>(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, pathToDevice))
+
+            storageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
+
+
+
+
+         if (isRetry && !safeHandleRetry.IsClosed)
+            safeHandleRetry.Close();
 
 
          return storageDeviceInfo;

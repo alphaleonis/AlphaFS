@@ -34,25 +34,13 @@ namespace Alphaleonis.Win32.Filesystem
       #region Constructors
 
       /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      private PhysicalDriveInfo()
+      public PhysicalDriveInfo()
       {
-         StorageDeviceInfo = new StorageDeviceInfo
-         {
-            DeviceNumber = -1,
-            PartitionNumber = -1
-         };
       }
 
 
       /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      public PhysicalDriveInfo(StorageDeviceInfo storageDeviceInfo) : this()
-      {
-         StorageDeviceInfo = storageDeviceInfo;
-      }
-
-
-      /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      public PhysicalDriveInfo(PhysicalDriveInfo physicalDriveInfo) : this()
+      public PhysicalDriveInfo(PhysicalDriveInfo physicalDriveInfo)
       {
          CopyTo(physicalDriveInfo, this);
       }

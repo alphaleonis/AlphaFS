@@ -145,8 +145,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>
       ///   Determines whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.
-      ///   <para>To determine whether a drive is a USB-type drive, call <see cref="SetupDiGetDeviceRegistryProperty"/> and specify the
-      ///   SPDRP_REMOVAL_POLICY property.</para>
+      ///   <para>To determine whether a drive is a USB-type drive, SetupDiGetDeviceRegistryProperty and specify the SPDRP_REMOVAL_POLICY property.</para>
       /// </summary>
       /// <returns>
       ///   <para>The return value specifies the type of drive, see <see cref="DriveType"/>.</para>

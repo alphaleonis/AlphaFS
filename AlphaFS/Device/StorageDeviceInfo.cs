@@ -37,6 +37,10 @@ namespace Alphaleonis.Win32.Filesystem
       public StorageDeviceInfo()
       {
          DeviceType = StorageDeviceType.Unknown;
+
+         DeviceNumber = -1;
+
+         PartitionNumber = -1;
       }
 
 
@@ -70,9 +74,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The device number of the storage device, starting at 0.</summary>
       public int DeviceNumber { get; internal set; }
 
-      
+
       /// <summary>The partition number of the storage device, starting at 1. If the device cannot be partitioned, like a CDROM, -1 is returned.</summary>
-      public int PartitionNumber { get; internal  set; }
+      public int PartitionNumber { get; internal set; }
 
 
       /// <summary>The product ID of the physical drive.</summary>

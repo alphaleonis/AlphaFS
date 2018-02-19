@@ -24,6 +24,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security;
 using System.Security.AccessControl;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -55,9 +56,9 @@ namespace Alphaleonis.Win32.Filesystem
          devicePath = ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
          
          
-         var sdi = GetStorageDeviceInfoCore(isElevated, devicePath);
+         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, devicePath);
 
-         if (null == sdi)
+         if (null == storageDeviceInfo)
             return null;
 
 
@@ -69,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          var pDriveInfo = isDeviceInfo
 
-            ? EnumeratePhysicalDrivesCore(isElevated).SingleOrDefault(pDrive => pDrive.StorageDeviceInfo.DeviceNumber == sdi.DeviceNumber && pDrive.StorageDeviceInfo.PartitionNumber == sdi.PartitionNumber)
+            ? EnumeratePhysicalDrivesCore(isElevated).SingleOrDefault(pDrive => pDrive.StorageDeviceInfo.DeviceNumber == storageDeviceInfo.DeviceNumber && pDrive.StorageDeviceInfo.PartitionNumber == storageDeviceInfo.PartitionNumber)
 
             : isVolume
                ? EnumeratePhysicalDrivesCore(isElevated).SingleOrDefault(pDrive => null != pDrive.VolumeGuids && pDrive.VolumeGuids.Contains(devicePath, StringComparer.OrdinalIgnoreCase))
@@ -80,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (null != pDriveInfo && null != pDriveInfo.StorageDeviceInfo)
-            pDriveInfo.StorageDeviceInfo.PartitionNumber = sdi.PartitionNumber;
+            pDriveInfo.StorageDeviceInfo.PartitionNumber = storageDeviceInfo.PartitionNumber;
 
 
          return pDriveInfo;
@@ -115,106 +116,50 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (null == storageDeviceInfo)
-            storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, devicePath);
+            storageDeviceInfo = GetStorageDeviceInfoCore(false, devicePath);
 
          if (null == storageDeviceInfo)
             return null;
 
 
-         var pDriveInfo = new PhysicalDriveInfo(storageDeviceInfo)
+         var pDriveInfo = new PhysicalDriveInfo
          {
             DevicePath = devicePath,
 
             DeviceDescription = isDeviceInfo ? deviceInfo.DeviceDescription : null,
-            
+
             Name = isDeviceInfo ? deviceInfo.FriendlyName : null,
 
-            PhysicalDeviceObjectName = isDeviceInfo ? deviceInfo.PhysicalDeviceObjectName : null,
-
-
-            StorageAdapterInfo = isDeviceInfo ? new StorageAdapterInfo{BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription} : null
+            PhysicalDeviceObjectName = isDeviceInfo ? deviceInfo.PhysicalDeviceObjectName : null
          };
 
 
-         if (isElevated)
-            PopulatePhysicalDriveInfo(devicePath, deviceInfo, pDriveInfo);
+         // When elevated, get populated StorageAdapterInfo and StorageDeviceInfo instances.
 
+         if (isElevated)
+         {
+            using (var safeHandle = OpenPhysicalDrive(devicePath, FileSystemRights.Read))
+            {
+               pDriveInfo.StorageAdapterInfo = GetStorageAdapterInfoNative(safeHandle, devicePath);
+
+               storageDeviceInfo = GetStorageDeviceInfoNative(safeHandle, devicePath, storageDeviceInfo);
+            }
+         }
+
+
+         pDriveInfo.StorageDeviceInfo = storageDeviceInfo;
+
+
+         if (isDeviceInfo)
+         {
+            if (null == pDriveInfo.StorageAdapterInfo)
+               pDriveInfo.StorageAdapterInfo = new StorageAdapterInfo();
+
+            pDriveInfo.StorageAdapterInfo.BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription;
+         }
+         
 
          return pDriveInfo;
-      }
-      
-
-      /// <summary>Sets the physical drive properties such as FriendlyName, device size and serial number.</summary>
-      private static void PopulatePhysicalDriveInfo(string devicePath, DeviceInfo deviceInfo, PhysicalDriveInfo physicalDriveInfo)
-      {
-         using (var safeHandle = OpenPhysicalDrive(devicePath, FileSystemRights.Read | FileSystemRights.Write))
-         {
-            var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
-            {
-               PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageAdapterProperty,
-               QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
-            };
-
-
-            // Get storage adapter info.
-
-            using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, devicePath, NativeMethods.DefaultFileBufferSize / 4))
-            {
-               if (null != safeBuffer)
-               {
-                  physicalDriveInfo.StorageAdapterInfo = new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>(0));
-
-                  if (null != deviceInfo)
-                     physicalDriveInfo.StorageAdapterInfo.BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription;
-               }
-            }
-
-
-            // Get storage device info.
-
-            storagePropertyQuery.PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageDeviceProperty;
-
-
-            using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, devicePath, NativeMethods.DefaultFileBufferSize / 2))
-            {
-               if (null != safeBuffer)
-               {
-                  var deviceDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>(0);
-
-
-                  physicalDriveInfo.StorageDeviceInfo.BusType = (StorageBusType) deviceDescriptor.BusType;
-
-                  physicalDriveInfo.StorageDeviceInfo.CommandQueueing = deviceDescriptor.CommandQueueing;
-
-                  physicalDriveInfo.StorageDeviceInfo.ProductId = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.ProductIdOffset).Trim();
-
-                  physicalDriveInfo.StorageDeviceInfo.ProductRevision = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.ProductRevisionOffset).Trim();
-
-                  physicalDriveInfo.StorageDeviceInfo.RemovableMedia = deviceDescriptor.RemovableMedia;
-
-
-                  var serial = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.SerialNumberOffset).Trim();
-
-                  if (Utils.IsNullOrWhiteSpace(serial) || serial.Length == 1)
-                     serial = null;
-
-                  physicalDriveInfo.StorageDeviceInfo.SerialNumber = serial;
-
-
-                  var vendorId = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.VendorIdOffset).Trim();
-
-                  if (Utils.IsNullOrWhiteSpace(vendorId) || vendorId.Length == 1)
-                     vendorId = null;
-
-                  physicalDriveInfo.StorageDeviceInfo.VendorId = vendorId;
-               }
-            }
-
-
-            using (var safeBuffer = GetDeviceIoData<long>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, devicePath))
-
-               physicalDriveInfo.StorageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
-         }
       }
    }
 }

@@ -66,18 +66,18 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private static void PopulateLogicalDriveDetails(PhysicalDriveInfo pDriveInfo, PhysicalDriveInfo pLogicalDrive)
+      private static void PopulateLogicalDriveDetails(PhysicalDriveInfo pDriveInfo, string drivePath)
       {
          // Add device logical drive.
 
          if (null == pDriveInfo.LogicalDrives)
             pDriveInfo.LogicalDrives = new Collection<string>();
 
-         pDriveInfo.LogicalDrives.Add(Path.RemoveTrailingDirectorySeparator(pLogicalDrive.DevicePath));
+         pDriveInfo.LogicalDrives.Add(Path.RemoveTrailingDirectorySeparator(drivePath));
       }
 
 
-      private static void PopulateVolumeDetails(PhysicalDriveInfo pDriveInfo, PhysicalDriveInfo pVolume)
+      private static void PopulateVolumeDetails(PhysicalDriveInfo pDriveInfo, int partitionNumber, string volumeGuid)
       {
          //// Add device volume labels.
 
@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (null == pDriveInfo.PartitionIndexes)
             pDriveInfo.PartitionIndexes = new Collection<int>();
 
-         pDriveInfo.PartitionIndexes.Add(pVolume.StorageDeviceInfo.PartitionNumber);
+         pDriveInfo.PartitionIndexes.Add(partitionNumber);
 
 
          // Add device volume GUIDs.
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (null == pDriveInfo.VolumeGuids)
             pDriveInfo.VolumeGuids = new Collection<string>();
 
-         pDriveInfo.VolumeGuids.Add(pVolume.DevicePath);
+         pDriveInfo.VolumeGuids.Add(volumeGuid);
       }
 
 
@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (null != pVolume)
          {
-            PopulateVolumeDetails(pDriveInfo, pVolume);
+            PopulateVolumeDetails(pDriveInfo, pVolume.StorageDeviceInfo.PartitionNumber, pVolume.DevicePath);
 
 
             // Get logical drive from CDRom matching DeviceNumber and PartitionNumber.
@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
             var pLogicalDrive = pLogicalDrives.SingleOrDefault(pDriveLogical => pDriveLogical.StorageDeviceInfo.DeviceNumber == pVolume.StorageDeviceInfo.DeviceNumber && pDriveLogical.StorageDeviceInfo.PartitionNumber == pVolume.StorageDeviceInfo.PartitionNumber);
 
             if (null != pLogicalDrive)
-               PopulateLogicalDriveDetails(pDriveInfo, pLogicalDrive);
+               PopulateLogicalDriveDetails(pDriveInfo, pLogicalDrive.DevicePath);
          }
 
 
@@ -142,14 +142,14 @@ namespace Alphaleonis.Win32.Filesystem
             var volumePartitionNumber = pVolume.StorageDeviceInfo.PartitionNumber;
 
 
-            PopulateVolumeDetails(pDriveInfo, pVolume);
+            PopulateVolumeDetails(pDriveInfo, pVolume.StorageDeviceInfo.PartitionNumber, pVolume.DevicePath);
 
 
             // Get logical drive from volume matching DeviceNumber and PartitionNumber.
 
             foreach (var pLogicalDrive in pLogicalDrives.Where(pDriveLogical => pDriveLogical.StorageDeviceInfo.DeviceNumber == volumeDriveNumber && pDriveLogical.StorageDeviceInfo.PartitionNumber == volumePartitionNumber))
 
-               PopulateLogicalDriveDetails(pDriveInfo, pLogicalDrive);
+               PopulateLogicalDriveDetails(pDriveInfo, pLogicalDrive.DevicePath);
          }
 
 
