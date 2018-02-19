@@ -363,7 +363,7 @@ namespace Alphaleonis.Win32.Filesystem
                lastError = Marshal.GetLastWin32Error();
 
                if (!success)
-                  NativeError.ThrowException(lastError, path);
+                  NativeMethods.IsValidHandle(safeHandle, lastError, path);
             }
 
             return safeHandle;
