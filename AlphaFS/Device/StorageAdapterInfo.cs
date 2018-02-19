@@ -79,6 +79,9 @@ namespace Alphaleonis.Win32.Filesystem
       public StorageBusType BusType { get; internal set; }
 
 
+      /// <summary>Represents a description of a device instance as identified by the bus.</summary>
+      public string BusReportedDeviceDescription { get; internal set; }
+
       /// <summary>The version number, if any, of the storage adapter.</summary>
       public Version BusVersion { get; internal set; }
 
@@ -107,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         return string.Format(CultureInfo.CurrentCulture, "{0} {1}", BusType.ToString(), MaximumTransferBytesUnitSize);
+         return string.Format(CultureInfo.CurrentCulture, "{0} {1} {2}", BusReportedDeviceDescription, BusType.ToString(), MaximumTransferBytesUnitSize.ToString());
       }
 
 
@@ -136,7 +139,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A hash code for the current Object.</returns>
       public override int GetHashCode()
       {
-         return MaximumTransferBytes + AcceleratedTransfer.GetHashCode() + BusVersion.GetHashCode() + BusType.GetHashCode();
+         return MaximumTransferBytes + AcceleratedTransfer.GetHashCode() + (null != BusVersion ? BusVersion.GetHashCode() : 0) + BusType.GetHashCode();
       }
 
 

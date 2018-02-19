@@ -68,6 +68,6 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Invalid FileAttributes = -1</summary>
-      internal const FileAttributes InvalidFileAttributes = (FileAttributes)(-1);
+      internal const FileAttributes InvalidFileAttributes = (FileAttributes) (-1);
    }
 }

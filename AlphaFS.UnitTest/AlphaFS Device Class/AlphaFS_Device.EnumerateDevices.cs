@@ -50,7 +50,7 @@ namespace AlphaFS.UnitTest
 
 
             foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(host, deviceClass))
-               UnitTestConstants.Dump(device, -24);
+               UnitTestConstants.Dump(device, -28);
          }
 
 

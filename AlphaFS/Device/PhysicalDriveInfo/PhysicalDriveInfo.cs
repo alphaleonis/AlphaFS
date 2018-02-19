@@ -79,10 +79,6 @@ namespace Alphaleonis.Win32.Filesystem
       public Collection<string> LogicalDrives { get; internal set; }
 
       
-      /// <summary>The Manufacturer of the physical drive.</summary>
-      public string Manufacturer { get; internal set; }
-
-      
       /// <summary>The "FriendlyName" of the physical drive.</summary>
       public string Name { get; internal set; }
 

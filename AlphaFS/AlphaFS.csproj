@@ -320,6 +320,7 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\Native Other\DiskPartitionTypes.cs" />
     <Compile Include="Filesystem\Native Other\DISK_GEOMETRY_EX.cs" />
+    <Compile Include="Filesystem\Native Other\DEVPROPKEY.cs" />
     <Compile Include="Filesystem\Native Other\STORAGE_MEDIA_TYPE.cs" />
     <Compile Include="Filesystem\Native Other\PARTITION_STYLE.cs" />
     <Compile Include="Filesystem\Native Other\DISK_GEOMETRY.cs" />
@@ -388,7 +389,6 @@
     <Compile Include="Filesystem\Native Other\FINDEX_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\ErrorMode.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\ReparsePointTag.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\SetupDiGetDeviceRegistryPropertyEnum.cs" />
     <Compile Include="Filesystem\Native Other\STREAM_ATTRIBUTES.cs" />
     <Compile Include="Filesystem\Native Other\STREAM_ID.cs" />
     <Compile Include="Filesystem\Native Other\VOLUME_INFO_FLAGS.cs" />
@@ -488,6 +488,7 @@
     <Compile Include="Filesystem\Path Class\Path.UncPaths.cs" />
     <Compile Include="Filesystem\Path Class\Path.ShortLongConversions.cs" />
     <Compile Include="Filesystem\Path Class\Path.Temporary.cs" />
+    <Compile Include="Filesystem\Structures, Enumerations\SPDRP.cs" />
     <Compile Include="Safe Handles\SafeTokenHandle.cs" />
     <Compile Include="Safe Handles\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Safe Handles\SafeEncryptedFileRawHandle.cs" />

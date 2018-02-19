@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (isElevated)
          {
-            var pDriveInfo = GetPhysicalDriveInfoCore(true, storageDeviceInfo, pathToDevice, null);
+            var pDriveInfo = GetPhysicalDriveInfoCore(true, pathToDevice, storageDeviceInfo, null);
 
             if (null != pDriveInfo)
                storageDeviceInfo = pDriveInfo.StorageDeviceInfo;

@@ -26,7 +26,7 @@ namespace Alphaleonis.Win32.Filesystem
    internal static partial class NativeMethods
    {
       /// <summary>Flags for SetupDiGetDeviceRegistryProperty().</summary>
-      internal enum SetupDiGetDeviceRegistryPropertyEnum
+      internal enum SPDRP
       {
          /// <summary>SPDRP_DEVICEDESC
          /// <para>Represents a description of a device instance.</para>
@@ -58,10 +58,10 @@ namespace Alphaleonis.Win32.Filesystem
          /// </summary>
          Class = 7,
 
-         ///// <summary>SPDRP_CLASSGUID
-         ///// <para>Represents the <see cref="Guid"/> of the device setup class that a device instance belongs to.</para>
-         ///// </summary>
-         //ClassGuid = 8,
+         /// <summary>SPDRP_CLASSGUID
+         /// <para>Represents the <see cref="Guid"/> of the device setup class that a device instance belongs to.</para>
+         /// </summary>
+         ClassGuid = 8,
 
          /// <summary>SPDRP_DRIVER
          /// <para>Represents the registry entry name of the driver key for a device instance.</para>

@@ -46,9 +46,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var physicalDrives = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDriveInfoCore(isElevated, null, null, deviceInfo)).Where(physicalDrive => null != physicalDrive).ToArray();
 
-         var pVolumeGuids = Volume.EnumerateVolumes().Select(volumeGuid => GetPhysicalDriveInfoCore(false, null, volumeGuid, null)).Where(physicalDrive => null != physicalDrive).ToArray();
+         var pVolumeGuids = Volume.EnumerateVolumes().Select(volumeGuid => GetPhysicalDriveInfoCore(false, volumeGuid, null, null)).Where(physicalDrive => null != physicalDrive).ToArray();
 
-         var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(driveName => GetPhysicalDriveInfoCore(false, null, driveName, null)).Where(physicalDrive => null != physicalDrive).ToArray();
+         var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(driveName => GetPhysicalDriveInfoCore(false, driveName, null, null)).Where(physicalDrive => null != physicalDrive).ToArray();
 
 
          foreach (var pDrive in physicalDrives)

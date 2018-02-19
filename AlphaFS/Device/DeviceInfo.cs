@@ -21,14 +21,12 @@
 
 using Alphaleonis.Win32.Network;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides access to information of a device, on a local or remote host.</summary>
-   [SerializableAttribute]
+   [Serializable]
    [SecurityCritical]
    public sealed class DeviceInfo
    {
@@ -52,36 +50,26 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Constructors
 
 
-      #region Methods
-
-      /// <summary>Enumerates all available devices on the local host.</summary>
-      /// <param name="deviceGuid">One of the <see cref="Filesystem.DeviceGuid"/> devices.</param>
-      /// <returns><see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="Filesystem.DeviceGuid"/> from the local host.</returns>
-      [SecurityCritical]
-      public IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
-      {
-         return Device.EnumerateDevicesCore(HostName, deviceGuid, true);
-      }
-
-      #endregion // Methods
-
-
       #region Properties
 
       /// <summary>Represents the <see cref="Guid"/> value of the base container identifier (ID) .The Windows Plug and Play (PnP) manager assigns this value to the device node (devnode).</summary>
       public Guid BaseContainerId { get; internal set; }
 
 
-      /// <summary>Represents the name of the device setup class that a device instance belongs to.</summary>
-      public string DeviceClass { get; internal set; }
+      /// <summary>Represents a description of a device instance as identified by the bus.</summary>
+      public string BusReportedDeviceDescription { get; internal set; }
 
 
       /// <summary>Represents the <see cref="Guid"/> of the device setup class that a device instance belongs to.</summary>
       public Guid ClassGuid { get; internal set; }
 
-
+      
       /// <summary>Represents the list of compatible identifiers for a device instance.</summary>
       public string CompatibleIds { get; internal set; }
+
+
+      /// <summary>Represents the name of the device setup class that a device instance belongs to.</summary>
+      public string DeviceClass { get; internal set; }
 
 
       /// <summary>Represents a description of a device instance.</summary>
@@ -92,12 +80,8 @@ namespace Alphaleonis.Win32.Filesystem
       public string DevicePath { get; internal set; }
 
       
-      ///// <summary>The device type of a device instance.</summary>
-      //public string DeviceType { get; internal set; }
-
-
       /// <summary>Represents the registry entry name of the driver key for a device instance.</summary>
-      public string Driver { get; internal set; }
+      public string DeviceDriver { get; internal set; }
 
 
       /// <summary>Represents the name of the enumerator for a device instance.</summary>
