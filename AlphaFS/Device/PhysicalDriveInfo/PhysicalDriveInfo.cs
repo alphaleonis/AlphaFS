@@ -45,9 +45,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      public PhysicalDriveInfo(StorageDeviceInfo storageInfo) : this()
+      public PhysicalDriveInfo(StorageDeviceInfo storageDeviceInfo) : this()
       {
-         StorageDeviceInfo = storageInfo;
+         StorageDeviceInfo = storageDeviceInfo;
       }
 
 

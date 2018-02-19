@@ -201,6 +201,7 @@
     <Compile Include="Device\Device.GetVolumeDiskExtents.cs" />
     <Compile Include="Device\Device.GetDevicePath.cs" />
     <Compile Include="Device\Device.ValidateDevicePath.cs" />
+    <Compile Include="Device\PhysicalDriveInfo\Device.GetStorageAdapterInfo.cs" />
     <Compile Include="Device\StorageAdapterInfo.cs" />
     <Compile Include="Device\StorageDeviceInfo.cs" />
     <Compile Include="Device\PhysicalDriveInfo\Device.GetStorageDeviceInfo.cs" />
@@ -693,7 +694,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

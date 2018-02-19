@@ -21,13 +21,14 @@
 
 using System;
 using System.Globalization;
+using System.Security.AccessControl;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
       /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.
-      /// <para>Most properties of the returned <see cref="StorageDeviceInfo"/> instance are meaningless unless this method is called from an elevated state.</para>
+      /// <para>Populating <see cref="StorageAdapterInfo"/> instance properties requires an elevated state.</para>
       /// </summary>
       /// <returns>A <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
       ///  <exception cref="ArgumentException"/>
@@ -39,29 +40,28 @@ namespace Alphaleonis.Win32.Filesystem
       ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
       ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
       /// </param>
-      public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath)
+      public static StorageAdapterInfo GetStorageAdapterInfo(string devicePath)
       {
-         return GetStorageDeviceInfoCore(Security.ProcessContext.IsElevatedProcess, devicePath);
+         return GetStorageAdapterInfoCore(devicePath);
       }
 
 
       
       
       /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.
-      /// <para>Most properties of the returned <see cref="StorageDeviceInfo"/> instance are meaningless unless this method is called from an elevated state.</para>
+      /// <para>Populating <see cref="StorageAdapterInfo"/> instance properties requires an elevated state.</para>
       /// </summary>
       /// <returns>A <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
       ///  <exception cref="ArgumentException"/>
       ///  <exception cref="ArgumentNullException"/>
       ///  <exception cref="NotSupportedException"/>
       ///  <exception cref="Exception"/>
-      /// <param name="isElevated"><see langword="true"/> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="devicePath">
       ///    A drive path such as: "C", "C:" or "C:\".
       ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
       ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
       /// </param>
-      internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, string devicePath)
+      internal static StorageAdapterInfo GetStorageAdapterInfoCore(string devicePath)
       {
          string logicalDrive;
 
@@ -71,48 +71,49 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
 
-         StorageDeviceInfo storageDeviceInfo = null;
+         StorageAdapterInfo storageAdapterInfo = null;
 
 
       StartGetData:
 
-         using (var safeHandle = OpenPhysicalDrive(pathToDevice, 0))
+         using (var safeHandle = OpenPhysicalDrive(pathToDevice, FileSystemRights.Read | FileSystemRights.Write))
          {
-            var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath);
-            
-            if (null == safeBuffer)
+            var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
             {
-               // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
+               PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageAdapterProperty,
+               QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
+            };
 
 
-               var volDiskExtents = GetVolumeDiskExtents(safeHandle);
+            // Get storage adapter info.
 
-               if (volDiskExtents.HasValue)
+            using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, devicePath, NativeMethods.DefaultFileBufferSize / 4))
+            {
+               if (null == safeBuffer)
                {
-                  // Use the first disk extent.
+                  // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
 
-                  pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
-                  
-                  goto StartGetData;
+
+                  var volDiskExtents = GetVolumeDiskExtents(safeHandle);
+
+                  if (volDiskExtents.HasValue)
+                  {
+                     // Use the first disk extent.
+
+                     pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
+
+                     goto StartGetData;
+                  }
                }
+
+               else
+                  using (safeBuffer)
+                     storageAdapterInfo = new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>(0));
             }
-
-            else
-               using (safeBuffer)
-                  storageDeviceInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0));
          }
+         
 
-
-         if (isElevated)
-         {
-            var pDriveInfo = GetPhysicalDriveInfoCore(true, pathToDevice, storageDeviceInfo, null);
-
-            if (null != pDriveInfo)
-               storageDeviceInfo = pDriveInfo.StorageDeviceInfo;
-         }
-
-
-         return storageDeviceInfo;
+         return storageAdapterInfo;
       }
    }
 }

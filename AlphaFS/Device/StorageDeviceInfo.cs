@@ -114,7 +114,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         return string.Format(CultureInfo.CurrentCulture, "{0} {1} {2} {3}:{4}", VendorId, ProductId, DeviceType.ToString(), DeviceNumber, PartitionNumber).Trim();
+         return string.Format(CultureInfo.CurrentCulture, "{0} {1}:{2} {3}",
+            
+            DeviceType.ToString(), DeviceNumber.ToString(), PartitionNumber.ToString(), (VendorId + " " + ProductId + " " + ProductRevision).Trim()) .Trim();
       }
 
 

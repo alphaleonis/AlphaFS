@@ -52,9 +52,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             // Dynamic disk.
-            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION ||
+            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION || lastError == Win32Errors.ERROR_NOT_READY ||
 
-                // Request device number from a DeviceGuid.StillImage device.
+                // Request device number from a DeviceGuid.Image device.
                 lastError == Win32Errors.ERROR_NOT_SUPPORTED)
 
                return null;

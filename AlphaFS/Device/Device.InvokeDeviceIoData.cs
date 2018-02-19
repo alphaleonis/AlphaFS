@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
                return safeBuffer;
 
 
-            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION || lastError == Win32Errors.ERROR_INVALID_PARAMETER)
+            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION || lastError == Win32Errors.ERROR_NOT_READY || lastError == Win32Errors.ERROR_INVALID_PARAMETER)
                return null;
 
 

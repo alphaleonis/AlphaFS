@@ -212,6 +212,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       private static string GetDeviceBusReportedDeviceDescription(SafeHandle safeHandle, NativeMethods.SP_DEVINFO_DATA infoData)
       {
+         if (!OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows7))
+            return null;
+
+
          var bufferSize = NativeMethods.DefaultFileBufferSize / 32; // 128
 
          var descriptionBuffer = new byte[bufferSize];
