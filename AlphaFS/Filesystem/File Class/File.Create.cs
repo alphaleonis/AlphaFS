@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
-         return CreateFileStreamCore(null, path, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
+         return CreateFileStreamCore(null, path, (ExtendedFileAttributes) options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, PathFormat pathFormat)
       {
-         return CreateFileStreamCore(null, path, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, pathFormat);
+         return CreateFileStreamCore(null, path, (ExtendedFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, pathFormat);
       }
 
 
@@ -127,9 +127,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
-      public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, PathFormat pathFormat)
+      public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity,
+         PathFormat pathFormat)
       {
-         return CreateFileStreamCore(null, path, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, pathFormat);
+         return CreateFileStreamCore(null, path, (ExtendedFileAttributes) options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, pathFormat);
       }
 
 
@@ -167,7 +168,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, FileOptions options)
       {
-         return CreateFileStreamCore(transaction, path, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
+         return CreateFileStreamCore(transaction, path, (ExtendedFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
       }
 
 
@@ -181,7 +182,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
-         return CreateFileStreamCore(transaction, path, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
+         return CreateFileStreamCore(transaction, path, (ExtendedFileAttributes) options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
       }
 
 
@@ -220,7 +221,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, FileOptions options, PathFormat pathFormat)
       {
-         return CreateFileStreamCore(transaction, path, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, pathFormat);
+         return CreateFileStreamCore(transaction, path, (ExtendedFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, pathFormat);
       }
 
 
@@ -233,9 +234,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
-      public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, PathFormat pathFormat)
+      public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize,
+         FileOptions options, FileSecurity fileSecurity, PathFormat pathFormat)
       {
-         return CreateFileStreamCore(transaction, path, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, pathFormat);
+         return CreateFileStreamCore(transaction, path, (ExtendedFileAttributes) options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, pathFormat);
       }
 
       #endregion
@@ -254,9 +256,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///  <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <returns>A <see cref="FileStream"/> that provides read/write access to the file specified in path.</returns>      
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "False positive")]
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification =
+         "False positive")]
       [SecurityCritical]
-      internal static FileStream CreateFileStreamCore(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, int bufferSize, PathFormat pathFormat)
+      internal static FileStream CreateFileStreamCore(KernelTransaction transaction, string path,
+         ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access,
+         FileShare share, int bufferSize, PathFormat pathFormat)
       {
          SafeFileHandle safeHandle = null;
 
@@ -268,8 +273,8 @@ namespace Alphaleonis.Win32.Filesystem
          }
          catch
          {
-            if (null != safeHandle)
-               safeHandle.Dispose();
+            if (null != safeHandle && !safeHandle.IsClosed)
+               safeHandle.Close();
 
             throw;
          }
@@ -347,8 +352,19 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             if (isAppend)
-               new FileStream(safeHandle, FileAccess.Write, NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0).Seek(0, SeekOrigin.End);
+            {
+               // Issue #417: "Using a file opened in append mode will fail after a gc occurs"
 
+               //new FileStream(safeHandle, FileAccess.Write, NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0).Seek(0, SeekOrigin.End);
+
+
+               var success = NativeMethods.SetFilePointerEx(safeHandle, 0, IntPtr.Zero, SeekOrigin.End);
+
+               lastError = Marshal.GetLastWin32Error();
+
+               if (!success)
+                  NativeError.ThrowException(lastError, path);
+            }
 
             return safeHandle;
          }

@@ -1001,8 +1001,8 @@ namespace Alphaleonis.Win32.Filesystem
          }
          catch
          {
-            if (null != safeHandle)
-               safeHandle.Dispose();
+            if (null != safeHandle && !safeHandle.IsClosed)
+               safeHandle.Close();
 
             throw;
          }
