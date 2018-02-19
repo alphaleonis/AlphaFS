@@ -27,6 +27,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #386: `Network.Host.EnumerateDrives()` returns invalid data.
 - Issue #400: `Directory.CopyDeleteCore` creates destination folder when source folder does not exist.
 - Issue #412: Method `Volume.GetVolumeDeviceName` returns wrong result.
+- Issue #417: Using a file opened in append mode will fail after a gc occurs  (Thx elgonzo)
 
 ### New Features
 
