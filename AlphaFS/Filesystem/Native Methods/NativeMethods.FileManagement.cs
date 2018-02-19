@@ -697,6 +697,18 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool SetFileAttributesTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] FileAttributes dwFileAttributes, SafeHandle hTransaction);
 
+      /// <summary>Moves the file pointer of the specified file.</summary>
+      /// <returns>
+      /// If the function succeeds, the return value is nonzero.
+      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// </returns>
+      /// <remarks>Minimum supported client: Windows XP [desktop apps | UWP apps]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps | UWP apps]</remarks>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.Bool)]
+      internal static extern bool SetFilePointerEx(SafeFileHandle hFile, [MarshalAs(UnmanagedType.U8)] ulong liDistanceToMove, IntPtr lpNewFilePointer, [MarshalAs(UnmanagedType.U4)] SeekOrigin dwMoveMethod);
+
       /// <summary>Sets the date and time that the specified file or directory was created, last accessed, or last modified.</summary>
       /// <returns>
       /// If the function succeeds, the return value is nonzero.
