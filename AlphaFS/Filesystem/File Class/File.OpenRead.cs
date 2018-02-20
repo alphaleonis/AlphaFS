@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(string path)
       {
-         return Open(path, FileMode.Open, FileAccess.Read);
+         return Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
       }
 
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(string path, PathFormat pathFormat)
       {
-         return Open(path, FileMode.Open, FileAccess.Read, pathFormat);
+         return Open(path, FileMode.Open, FileAccess.Read, FileShare.Read, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenReadTransacted(KernelTransaction transaction, string path)
       {
-         return OpenTransacted(transaction, path, FileMode.Open, FileAccess.Read);
+         return OpenTransacted(transaction, path, FileMode.Open, FileAccess.Read, FileShare.Read);
       }
 
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenReadTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenTransacted(transaction, path, FileMode.Open, FileAccess.Read, pathFormat);
+         return OpenTransacted(transaction, path, FileMode.Open, FileAccess.Read, FileShare.Read, pathFormat);
       }
    }
 }
