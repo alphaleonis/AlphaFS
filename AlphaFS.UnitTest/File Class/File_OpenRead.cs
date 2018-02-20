@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -35,6 +35,14 @@ namespace AlphaFS.UnitTest
       {
          File_OpenRead(false);
          File_OpenRead(true);
+      }
+
+
+      [TestMethod]
+      public void File_OpenRead_OpenReadTwiceShouldNotLock_LocalAndNetwork_Success()
+      {
+         File_OpenRead_OpenReadTwiceShouldNotLock(false);
+         File_OpenRead_OpenReadTwiceShouldNotLock(true);
       }
 
 
@@ -85,6 +93,32 @@ namespace AlphaFS.UnitTest
 
             Assert.AreEqual(sysIoStreamText, alphaStreamText, "The content of the two files is not equal, but is expected to.");
          }
+
+         Console.WriteLine();
+      }
+
+
+      private void File_OpenRead_OpenReadTwiceShouldNotLock(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         {
+            var filePath = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput File Path: [{0}]\n", filePath);
+
+
+            using (System.IO.File.OpenText(filePath)) { }
+
+            using (var s1 = Alphaleonis.Win32.Filesystem.File.OpenRead(filePath))
+            using (var s2 = Alphaleonis.Win32.Filesystem.File.OpenRead(filePath)) {}
+         }
+
 
          Console.WriteLine();
       }
