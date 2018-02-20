@@ -113,7 +113,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nInput File Path: [{0}]\n", filePath);
 
 
-            using (System.IO.File.OpenText(filePath)) { }
+            using (System.IO.File.Create(filePath)) { }
 
             using (var s1 = Alphaleonis.Win32.Filesystem.File.OpenRead(filePath))
             using (var s2 = Alphaleonis.Win32.Filesystem.File.OpenRead(filePath)) {}
