@@ -28,6 +28,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #400: `Directory.CopyDeleteCore` creates destination folder when source folder does not exist.
 - Issue #412: Method `Volume.GetVolumeDeviceName` returns wrong result.
 - Issue #417: Using a file opened in append mode will fail after a gc occurs  (Thx elgonzo)
+- Issue #417: `File.OpenRead` method overloads do not use `FileShare.Read`  (Thx elgonzo)
 
 ### New Features
 
