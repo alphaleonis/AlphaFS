@@ -20,47 +20,23 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AlphaFS.UnitTest
 {
    public partial class AlphaFS_HostTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
       [TestMethod]
-      public void AlphaFS_Host_EnumerateShares_Local_Success()
-      {
-         var host = UnitTestConstants.LocalHost;
-
-         EnumerateShares(host);
-      }
-
-
-
-
-      private void EnumerateShares(string host)
+      public void AlphaFS_Host_GetWorkstationStatistics_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-         
-         Console.WriteLine("\nInput Host: [{0}]", host);
+
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
 
 
-         var cnt = 0;
-         foreach (var shareInfo in Alphaleonis.Win32.Network.Host.EnumerateShares(host, true))
-         {
-            //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
+         var workstationStat = Alphaleonis.Win32.Network.Host.GetWorkstationStatistics();
 
-            if (UnitTestConstants.Dump(shareInfo, -18))
-               cnt++;
-
-            Console.WriteLine();
-         }
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
-
-         Console.WriteLine();
+         UnitTestConstants.Dump(workstationStat, -36);
       }
    }
 }

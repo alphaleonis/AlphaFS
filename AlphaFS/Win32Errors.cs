@@ -3945,10 +3945,10 @@ namespace Alphaleonis.Win32
       ///// <summary>Cannot open image file on the Remoteboot server.</summary>
       //public const uint NERR_CantOpenImageFile = 2514;
 
-      ///// <summary>Connecting to the Remoteboot server...</summary>
+      ///// <summary>Connecting to the Remoteboot server.</summary>
       //public const uint NERR_CallingRplSrvr = 2515;
 
-      ///// <summary>Connecting to the Remoteboot server...</summary>
+      ///// <summary>Connecting to the Remoteboot server.</summary>
       //public const uint NERR_StartingRplBoot = 2516;
 
       ///// <summary>Remote boot service was stopped; check the error log for the cause of the problem.</summary>

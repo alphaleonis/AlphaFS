@@ -112,56 +112,60 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       internal static IEnumerable<ShareInfo> EnumerateSharesCore(string host, ShareType shareType, bool continueOnException)
       {
+         var fd = new FunctionData();
+         var hasItems = false;
+         var yieldAll = shareType == ShareType.All;
+
+
          // When host == null, the local computer is used.
          // However, the resulting OpenResourceInfo.Host property will be empty.
          // So, explicitly state Environment.MachineName to prevent this.
          // Furthermore, the UNC prefix: \\ is not required and always removed.
          var stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
-
-         var fd = new FunctionData();
-         var hasItems = false;
-         var yieldAll = shareType == ShareType.All;
-
          
-         // Try SHARE_INFO_503 structure.
-         foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_503 structure, SafeGlobalMemoryBufferHandle buffer) => new ShareInfo(stripUnc, ShareInfoLevel.Info503, structure),
+
+         // Start with SHARE_INFO_503 structure.
+
+         foreach (var shareInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_503 structure, SafeGlobalMemoryBufferHandle buffer) => new ShareInfo(stripUnc, ShareInfoLevel.Info503, structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
                NativeMethods.NetShareEnum(stripUnc, 503, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
          {
-            yield return si;
+            yield return shareInfo;
             hasItems = true;
          }
 
-
-         // SHARE_INFO_503 is requested, but not supported/possible.
-         // Retry with SHARE_INFO_2 structure.
-
-         if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) => new ShareInfo(stripUnc, ShareInfoLevel.Info2, structure),
-
-               (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-
-                  NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
-            {
-               yield return si;
-               hasItems = true;
-            }
+         if (hasItems)
+            yield break;
 
 
-         // SHARE_INFO_2 is requested, but not supported/possible.
-         // Retry with SHARE_INFO_1 structure.
+         // Fallback on SHARE_INFO_2 structure.
 
-         if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) => new ShareInfo(stripUnc, ShareInfoLevel.Info1, structure),
+         foreach (var shareInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) => new ShareInfo(stripUnc, ShareInfoLevel.Info2, structure),
 
-               (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
 
-                  NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
-            {
-               yield return si;
-            }
+               NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
+         {
+            yield return shareInfo;
+            hasItems = true;
+         }
+
+         if (hasItems)
+            yield break;
+
+
+         // Fallback on SHARE_INFO_1 structure.
+
+         foreach (var shareInfo in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) => new ShareInfo(stripUnc, ShareInfoLevel.Info1, structure),
+
+            (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+
+               NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
+         {
+            yield return shareInfo;
+         }
       }
    }
 }

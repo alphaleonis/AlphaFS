@@ -19,48 +19,41 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Alphaleonis.Win32.Network;
 
 namespace AlphaFS.UnitTest
 {
    public partial class AlphaFS_HostTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
       [TestMethod]
-      public void AlphaFS_Host_EnumerateShares_Local_Success()
-      {
-         var host = UnitTestConstants.LocalHost;
-
-         EnumerateShares(host);
-      }
-
-
-
-
-      private void EnumerateShares(string host)
+      public void AlphaFS_Host_EnumerateNetworkConnections_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-         
-         Console.WriteLine("\nInput Host: [{0}]", host);
 
 
-         var cnt = 0;
-         foreach (var shareInfo in Alphaleonis.Win32.Network.Host.EnumerateShares(host, true))
+         var networkConnectionCount = 0;
+
+         foreach (var networkConnection in Host.EnumerateNetworkConnections().OrderBy(networkConnection => networkConnection.NetworkInfo.Name))
          {
-            //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
+            Console.WriteLine("\n#{0:000}\tNetwork: [{1}]", ++networkConnectionCount, networkConnection.NetworkInfo.Name);
 
-            if (UnitTestConstants.Dump(shareInfo, -18))
-               cnt++;
+
+            UnitTestConstants.Dump(networkConnection, -21);
+
+            UnitTestConstants.Dump(networkConnection.NetworkInfo, -21, true);
+
+            UnitTestConstants.Dump(networkConnection.NetworkInterface, -20, true);
+
 
             Console.WriteLine();
          }
 
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
 
-         Console.WriteLine();
+         if (networkConnectionCount == 0)
+            Assert.Inconclusive("No network connections enumerated, but it is expected.");
       }
    }
 }

@@ -19,48 +19,25 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Security;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Network
 {
-   public partial class AlphaFS_HostTest
+   public partial class Host
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-      [TestMethod]
-      public void AlphaFS_Host_EnumerateShares_Local_Success()
+      /// <summary>[AlphaFS] Retrieves a network based on a specified network connection ID.</summary>
+      /// <param name="networkConnectionID">A <see cref="Guid"/> that specifies the network connection ID.</param>
+      /// <returns>A <see cref="NetworkConnectionInfo"/> instance that represents the network connection ID.</returns>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
+      [SecurityCritical]
+      public static NetworkConnectionInfo GetNetworkConnection(Guid networkConnectionID)
       {
-         var host = UnitTestConstants.LocalHost;
+         var networkConnection = EnumerateNetworkConnectionsCore(networkConnectionID);
 
-         EnumerateShares(host);
-      }
-
-
-
-
-      private void EnumerateShares(string host)
-      {
-         UnitTestConstants.PrintUnitTestHeader(false);
-         
-         Console.WriteLine("\nInput Host: [{0}]", host);
-
-
-         var cnt = 0;
-         foreach (var shareInfo in Alphaleonis.Win32.Network.Host.EnumerateShares(host, true))
-         {
-            //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
-
-            if (UnitTestConstants.Dump(shareInfo, -18))
-               cnt++;
-
-            Console.WriteLine();
-         }
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
-
-         Console.WriteLine();
+         return null != networkConnection ? networkConnection.ToArray()[0] : null;
       }
    }
 }

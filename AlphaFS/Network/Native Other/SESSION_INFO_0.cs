@@ -19,48 +19,22 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using System.Runtime.InteropServices;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Network
 {
-   public partial class AlphaFS_HostTest
+   internal static partial class NativeMethods
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-      [TestMethod]
-      public void AlphaFS_Host_EnumerateShares_Local_Success()
+      /// <summary>Contains the name of the computer that established the session.</summary>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      internal struct SESSION_INFO_0
       {
-         var host = UnitTestConstants.LocalHost;
-
-         EnumerateShares(host);
-      }
-
-
-
-
-      private void EnumerateShares(string host)
-      {
-         UnitTestConstants.PrintUnitTestHeader(false);
-         
-         Console.WriteLine("\nInput Host: [{0}]", host);
-
-
-         var cnt = 0;
-         foreach (var shareInfo in Alphaleonis.Win32.Network.Host.EnumerateShares(host, true))
-         {
-            //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
-
-            if (UnitTestConstants.Dump(shareInfo, -18))
-               cnt++;
-
-            Console.WriteLine();
-         }
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
-
-         Console.WriteLine();
+         /// <summary>Pointer to a Unicode string that contains the name of the computer that established the session. This string cannot contain a backslash (\).</summary>
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string sesi0_cname;
       }
    }
 }

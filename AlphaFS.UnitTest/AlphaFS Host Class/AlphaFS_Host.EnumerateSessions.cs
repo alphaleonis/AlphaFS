@@ -29,36 +29,39 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Host_EnumerateShares_Local_Success()
+      public void AlphaFS_Host_EnumerateSessions_Local_Success()
       {
          var host = UnitTestConstants.LocalHost;
-
-         EnumerateShares(host);
+         
+         EnumerateSessions(host);
       }
 
 
 
 
-      private void EnumerateShares(string host)
+      private void EnumerateSessions(string host)
       {
          UnitTestConstants.PrintUnitTestHeader(false);
          
          Console.WriteLine("\nInput Host: [{0}]", host);
 
 
-         var cnt = 0;
-         foreach (var shareInfo in Alphaleonis.Win32.Network.Host.EnumerateShares(host, true))
+         var sessionCount = 0;
+
+         foreach (var sessionsInfo in Alphaleonis.Win32.Network.Host.EnumerateSessions(host))
          {
             //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
 
-            if (UnitTestConstants.Dump(shareInfo, -18))
-               cnt++;
+            if (UnitTestConstants.Dump(sessionsInfo, -16))
+               sessionCount++;
 
             Console.WriteLine();
          }
 
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
+
+         if (sessionCount == 0)
+            Assert.Inconclusive("No sessions enumerated, but it is expected. Try another server name if applicable.");
+
 
          Console.WriteLine();
       }

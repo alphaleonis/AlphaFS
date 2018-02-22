@@ -19,48 +19,24 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Network
 {
-   public partial class AlphaFS_HostTest
+   /// <summary>Specifies what types of networks are enumerated.</summary>
+   [Flags]
+   public enum NetworkConnectivityLevels
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
+      /// <summary>Unknown.</summary>
+      None = 0,
 
-      [TestMethod]
-      public void AlphaFS_Host_EnumerateShares_Local_Success()
-      {
-         var host = UnitTestConstants.LocalHost;
+      /// <summary>Returns connected networks.</summary>
+      Connected = 1,
 
-         EnumerateShares(host);
-      }
+      /// <summary>Returns disconnected networks.</summary>
+      Disconnected = 2,
 
-
-
-
-      private void EnumerateShares(string host)
-      {
-         UnitTestConstants.PrintUnitTestHeader(false);
-         
-         Console.WriteLine("\nInput Host: [{0}]", host);
-
-
-         var cnt = 0;
-         foreach (var shareInfo in Alphaleonis.Win32.Network.Host.EnumerateShares(host, true))
-         {
-            //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
-
-            if (UnitTestConstants.Dump(shareInfo, -18))
-               cnt++;
-
-            Console.WriteLine();
-         }
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
-
-         Console.WriteLine();
-      }
+      /// <summary>Returns connected and disconnected networks.</summary>
+      All = Connected | Disconnected
    }
 }

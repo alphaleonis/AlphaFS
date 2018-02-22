@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,27 +19,20 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Network
 {
-   public partial class AlphaFS_HostTest
+   /// <summary>Specifies the domain type of a network.</summary>
+   public enum DomainType
    {
-      [TestMethod]
-      public void AlphaFS_Host_GetUncName_Network_Success()
-      {
-         UnitTestConstants.PrintUnitTestHeader(true);
-         Console.WriteLine();
+      /// <summary>The Network is not an Active Directory Network.</summary>
+      None = 0,
 
 
-         var hostUncName = Alphaleonis.Win32.Network.Host.GetUncName();
-         Console.WriteLine("Host.GetUncName(): [{0}]", hostUncName);
+      /// <summary>The Network is an Active Directory Network, but this machine is not authenticated against it.</summary>
+      DomainNetwork = 1,
 
 
-         Assert.IsTrue(hostUncName.StartsWith(Alphaleonis.Win32.Filesystem.Path.UncPrefix));
-
-         Assert.AreEqual(Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName, hostUncName);
-      }
+      /// <summary>The Network is an Active Directory Network, and this machine is authenticated against it.</summary>
+      DomainAuthenticated = 2
    }
 }

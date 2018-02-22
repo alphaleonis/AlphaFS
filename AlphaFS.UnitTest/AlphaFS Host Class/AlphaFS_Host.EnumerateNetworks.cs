@@ -19,48 +19,48 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Alphaleonis.Win32.Network;
 
 namespace AlphaFS.UnitTest
 {
    public partial class AlphaFS_HostTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
       [TestMethod]
-      public void AlphaFS_Host_EnumerateShares_Local_Success()
-      {
-         var host = UnitTestConstants.LocalHost;
-
-         EnumerateShares(host);
-      }
-
-
-
-
-      private void EnumerateShares(string host)
+      public void AlphaFS_Host_EnumerateNetworks_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-         
-         Console.WriteLine("\nInput Host: [{0}]", host);
 
 
-         var cnt = 0;
-         foreach (var shareInfo in Alphaleonis.Win32.Network.Host.EnumerateShares(host, true))
+         var networkCount = 0;
+
+         foreach (var network in Host.EnumerateNetworks().OrderBy(network => network.Name))
          {
-            //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
+            Console.WriteLine("\n#{0:000}\tNetwork: [{1}]", ++networkCount, network.Name);
 
-            if (UnitTestConstants.Dump(shareInfo, -18))
-               cnt++;
+
+            UnitTestConstants.Dump(network, -21);
+
+
+            if (null != network.Connections)
+            {
+               foreach (var connection in network.Connections)
+               {
+                  UnitTestConstants.Dump(connection, -21, true);
+
+                  UnitTestConstants.Dump(connection.NetworkInterface, -20, true);
+               }
+            }
+
 
             Console.WriteLine();
          }
 
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
 
-         Console.WriteLine();
+         if (networkCount == 0)
+            Assert.Inconclusive("No networks enumerated, but it is expected.");
       }
    }
 }

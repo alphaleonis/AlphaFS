@@ -19,48 +19,24 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Network
 {
-   public partial class AlphaFS_HostTest
+   /// <summary>The <see cref="SessionInfo"/> information level.</summary>
+   public enum SessionInfoLevel
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
+      /// <summary>Contains the name of the computer that established the session.</summary>
+      Info0 = 0,
+      
+      /// <summary>Contains information about the session, including name of the computer; name of the user; and open files, pipes, and devices on the computer.</summary>
+      Info1 = 1,
+      
+      /// <summary>Contains information about the session, including name of the computer; name of the user; open files, pipes, and devices on the computer; and the type of client that established the session.</summary>
+      Info2 = 2,
+      
+      /// <summary>Contains information about the session, including name of the computer; name of the user; and active and idle times for the session.</summary>
+      Info10 = 10,
 
-      [TestMethod]
-      public void AlphaFS_Host_EnumerateShares_Local_Success()
-      {
-         var host = UnitTestConstants.LocalHost;
-
-         EnumerateShares(host);
-      }
-
-
-
-
-      private void EnumerateShares(string host)
-      {
-         UnitTestConstants.PrintUnitTestHeader(false);
-         
-         Console.WriteLine("\nInput Host: [{0}]", host);
-
-
-         var cnt = 0;
-         foreach (var shareInfo in Alphaleonis.Win32.Network.Host.EnumerateShares(host, true))
-         {
-            //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
-
-            if (UnitTestConstants.Dump(shareInfo, -18))
-               cnt++;
-
-            Console.WriteLine();
-         }
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
-
-         Console.WriteLine();
-      }
+      /// <summary>Contains information about the session, including name of the computer; name of the user; open files, pipes, and devices on the computer; and the name of the transport the client is using.</summary>
+      Info502 = 502
    }
 }

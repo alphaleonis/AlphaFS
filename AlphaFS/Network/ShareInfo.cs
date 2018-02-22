@@ -152,7 +152,7 @@ namespace Alphaleonis.Win32.Network
       public long MaxUses { get; private set; }
 
 
-      /// <summary>The name of a shared resource.</summary>
+      /// <summary>The name of the shared resource.</summary>
       public string NetName { get; private set; }
 
 
@@ -204,7 +204,7 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      /// <summary>The structure level for the ShareInfo instance.</summary>
+      /// <summary>The structure level for the <see cref="ShareInfo"/> instance.</summary>
       public ShareInfoLevel ShareLevel { get; private set; }
 
       #endregion // Properties

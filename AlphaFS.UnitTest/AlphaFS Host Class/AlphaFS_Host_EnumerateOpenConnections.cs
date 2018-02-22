@@ -29,16 +29,16 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Host_EnumerateOpenConnections_Network_Success()
+      public void AlphaFS_Host_EnumerateOpenConnections_Local_Success()
       {
-         var host = "localhost"; //UnitTestConstants.LocalHost;
+         var host = UnitTestConstants.LocalHost;
          var share = UnitTestConstants.SysDrive[0] + Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator;
 
          // Create an active connection to the "remote" host.
          var currentDir = System.IO.Directory.GetCurrentDirectory();
-         System.IO.Directory.SetCurrentDirectory(@"\\" + host + @"\" + share);
+         System.IO.Directory.SetCurrentDirectory(Alphaleonis.Win32.Filesystem.Path.UncPrefix + host + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator + share);
 
-         EnumerateOpenConnections(host, share, true);
+         EnumerateOpenConnections(host, share);
 
          System.IO.Directory.SetCurrentDirectory(currentDir);
       }
@@ -46,9 +46,9 @@ namespace AlphaFS.UnitTest
 
 
 
-      private void EnumerateOpenConnections(string host, string share, bool isNetwork)
+      private void EnumerateOpenConnections(string host, string share)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         UnitTestConstants.PrintUnitTestHeader(false);
 
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
