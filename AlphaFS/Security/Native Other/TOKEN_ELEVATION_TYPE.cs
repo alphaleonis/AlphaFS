@@ -19,24 +19,25 @@
  *  THE SOFTWARE. 
  */
 
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-using System.Security;
-
 namespace Alphaleonis.Win32.Security
 {
    internal static partial class NativeMethods
    {
-      /// <summary>The LookupPrivilegeValue function retrieves the locally unique identifier (LUID) used on a specified system to locally represent the specified privilege name.</summary>
-      /// <returns>
-      /// If the function succeeds, the function returns nonzero.
-      /// If the function fails, it returns zero. To get extended error information, call GetLastError.
-      /// </returns>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
-      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "LookupPrivilegeValueW"), SuppressUnmanagedCodeSecurity]
-      [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool LookupPrivilegeValue([MarshalAs(UnmanagedType.LPWStr)] string lpSystemName, [MarshalAs(UnmanagedType.LPWStr)] string lpName, out LUID lpLuid);
+      /// <summary>The TOKEN_ELEVATION_TYPE enumeration indicates the elevation type of token being queried by the GetTokenInformation function.</summary>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows Vista [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2008 [desktop apps only]</para>
+      /// </remarks>
+      internal enum TOKEN_ELEVATION_TYPE
+      {
+         ///// <summary>The token does not have a linked token: UAC is disabled or the process is started by a standard User (not a member of the Administrators group).</summary>
+         //TokenElevationTypeDefault = 1,
+
+         /// <summary>The token is an elevated token: UAC is enabled and User is elevated.</summary>
+         TokenElevationTypeFull = 2,
+
+         ///// <summary>The token is a limited token: UAC is enabled but User is not elevated.</summary>
+         //TokenElevationTypeLimited = 3
+      }
    }
 }

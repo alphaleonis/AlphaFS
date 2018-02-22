@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -28,16 +27,16 @@ namespace Alphaleonis.Win32.Security
 {
    internal static partial class NativeMethods
    {
-      /// <summary>The AdjustTokenPrivileges function enables or disables privileges in the specified access token. Enabling or disabling privileges in an access token requires TOKEN_ADJUST_PRIVILEGES access.</summary>
+      /// <summary>The OpenProcessToken function opens the access token associated with a process.</summary>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// To determine whether the function adjusted all of the specified privileges, call GetLastError.
+      /// If the function succeeds, the function returns nonzero. 
+      /// If the function fails, it returns zero. To get extended error information, call GetLastError.
       /// </returns>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
-      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool AdjustTokenPrivileges(IntPtr tokenHandle, [MarshalAs(UnmanagedType.Bool)] bool disableAllPrivileges, ref TOKEN_PRIVILEGES newState, uint bufferLength, out TOKEN_PRIVILEGES previousState, out uint returnLength);
+      internal static extern bool OpenProcessToken(IntPtr processHandle, [MarshalAs(UnmanagedType.U4)] TOKEN desiredAccess, out SafeTokenHandle tokenHandle);
    }
 }

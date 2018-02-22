@@ -24,6 +24,10 @@ namespace Alphaleonis.Win32.Security
    /// <summary>The SE_OBJECT_TYPE enumeration contains values that correspond to the types of Windows objects that support security.
    /// The functions, such as GetSecurityInfo and SetSecurityInfo, that set and retrieve the security information of an object, use these values to indicate the type of object.
    /// </summary>
+   /// <remarks>
+   /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+   /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+   /// </remarks>
    internal enum SE_OBJECT_TYPE
    {
       /// <summary>Unknown object type.</summary>
