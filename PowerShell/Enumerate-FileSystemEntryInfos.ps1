@@ -352,7 +352,7 @@ Function Enumerate-FileSystemEntryInfos {
 
 
     End {
-        [String]$Private:foundFsoText = $(If ($Null -ne $dirEnumFilters.InclusionFilter) { (' Found: [{0:N0}] ' -f $FoundFsoCount) } Else { ' ' })
+        [String]$Private:foundFsoText = $(If ($Null -ne $dirEnumFilters.InclusionFilter) { (' Found: [{0:N0}] ' -f $FoundFsoCount) } Else {''})
 
         [Console]::ForegroundColor = [ConsoleColor]::Green
         [Console]::WriteLine(('Duration: [{0}]  Processed: [{1:N0}] {2} Skipped Folders: [{3:N0}]  Errors: [{4:N0}]' -f [Timespan]::FromMilliseconds($stopwatch.Elapsed.TotalMilliseconds), $FsoCount, $foundFsoText, $SkippedFolderCount, $ErrorCount))
