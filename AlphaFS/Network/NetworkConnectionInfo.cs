@@ -129,8 +129,6 @@ namespace Alphaleonis.Win32.Network
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         var description = null != NetworkInfo && null != NetworkInterface ? NetworkInfo.ToString() + " " + NetworkInterface.ToString() : string.Empty;
-
          return null != NetworkInfo && null != NetworkInterface ? string.Format(CultureInfo.CurrentCulture, "{0} {1}", NetworkInfo.Name, NetworkInterface.Name) : GetType().Name;
       }
 
