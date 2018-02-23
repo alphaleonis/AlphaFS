@@ -187,8 +187,6 @@ Function Invoke-GenericMethod {
 
         [Bool]$Private:gotMatch = $skipFolders -ccontains $fsei.FileName
 
-        
-
         If ($gotMatch) {
             ++$Script:SkippedFolderCount
 
@@ -273,7 +271,7 @@ Function Enumerate-FileSystemEntryInfos {
 
         # Demo counters for the DirectoryEnumerationFilters; Enumeration will abort when either condition is met.
         [Long]$Script:MaxErrorCount    = 10 #-1
-        [Long]$Script:MaxFsoFoundCount = 100 #-1
+        [Long]$Script:MaxFsoFoundCount = 10 #-1
 
 
         # SkipReparsePoints = Skip reparse points by default.
