@@ -320,12 +320,11 @@
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_CatchArgumentException_PathContainsInvalidCharacters.cs" />
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_CatchArgumentException_PathStartsWithColon.cs" />
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_CatchNotSupportedException_PathContainsColon.cs" />
-    <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
-    <Compile Include="UnitTest Utility\IsAdmin.cs" />
-    <Compile Include="UnitTest Utility\Dump.cs" />
     <Compile Include="UnitTest Utility\CreateFile.cs" />
     <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
+    <Compile Include="UnitTest Utility\Dump.cs" />
     <Compile Include="UnitTest Utility\FileAssert.cs" />
+    <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
     <Compile Include="Path Class\Path.GetFullPath.cs" />
     <Compile Include="Path Class\AlphaFS_Path.LocalToUnc.cs" />
     <Compile Include="Path Class\Path.GetRelativePath.cs" />
@@ -335,12 +334,6 @@
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetFileIcon.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.GetVerbCommand.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.InitializeInstance.cs" />
-    <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
-    <Compile Include="UnitTest Utility\IsAdmin.cs" />
-    <Compile Include="UnitTest Utility\Dump.cs" />
-    <Compile Include="UnitTest Utility\CreateFile.cs" />
-    <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
-    <Compile Include="UnitTest Utility\FileAssert.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance.cs" />
     <Compile Include="File Class\FileTest.cs" />
@@ -349,6 +342,7 @@
     <Compile Include="UnitTest Utility\CreateDirectoriesAndFiles.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.SetVolumeMountPoint.cs" />
     <Compile Include="UnitTest Utility\InputPaths.cs" />
+    <Compile Include="UnitTest Utility\IsAdmin.cs" />
     <Compile Include="UnitTest Utility\TestAccessRules.cs" />
     <Compile Include="UnitTest Utility\GetRandomFileNameWithDiacriticCharacters.cs" />
     <Compile Include="UnitTest Utility\StringToByteArray.cs" />

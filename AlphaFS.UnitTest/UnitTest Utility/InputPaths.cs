@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -33,6 +33,18 @@ namespace AlphaFS.UnitTest
 
       /// <summary>The Computer system drive. For example "C:".</summary>
       public static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
+
+
+      public static readonly string MyStream = "ӍƔŞtrëƛɱ-" + GetRandomFileNameWithDiacriticCharacters();
+      public static readonly string MyStream2 = "myStreamTWO-" + GetRandomFileNameWithDiacriticCharacters();
+      public static readonly string[] AllStreams = { MyStream, MyStream2 };
+      public static readonly string StreamStringContent = "(1) Computer: [" + LocalHost + "]" + "\tHello there, " + Environment.UserName;
+      public static readonly string[] StreamArrayContent =
+      {
+         "(1) Nikolai Tesla: \"Today's scientists have substituted mathematics for experiments, and they wander off through equation after equation, and eventually build a structure which has no relation to reality.\"",
+         "(2) The quick brown fox jumps over the lazy dog.",
+         "(3) " + TextHelloWorld + " " + TextUnicode
+      };
 
 
       public static readonly string[] InputPaths =
