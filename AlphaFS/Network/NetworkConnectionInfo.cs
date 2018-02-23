@@ -21,6 +21,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Net.NetworkInformation;
 
 namespace Alphaleonis.Win32.Network
@@ -110,7 +111,7 @@ namespace Alphaleonis.Win32.Network
                   continue;
 #endif
 
-               if (adapterId.Equals(guid))
+               if (Equals(adapterId, guid))
                   return nic;
             }
 
@@ -120,5 +121,68 @@ namespace Alphaleonis.Win32.Network
       }
 
       #endregion // Properties
+
+
+      #region Methods
+
+      /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
+      /// <returns>A string that represents this instance.</returns>
+      public override string ToString()
+      {
+         var description = null != NetworkInfo && null != NetworkInterface ? NetworkInfo.ToString() + " " + NetworkInterface.ToString() : string.Empty;
+
+         return null != NetworkInfo && null != NetworkInterface ? string.Format(CultureInfo.CurrentCulture, "{0} {1}", NetworkInfo.Name, NetworkInterface.Name) : GetType().Name;
+      }
+
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="obj">Another object to compare to.</param>
+      /// <returns><see langword="true"/> if the specified Object is equal to the current Object; otherwise, <see langword="false"/>.</returns>
+      public override bool Equals(object obj)
+      {
+         if (null == obj || GetType() != obj.GetType())
+            return false;
+
+         var other = obj as NetworkConnectionInfo;
+
+         return null != other &&
+                other.NetworkInfo == NetworkInfo &&
+                other.NetworkInterface == NetworkInterface &&
+                Equals(other.NetworkInfo.NetworkId, NetworkInfo.NetworkId) &&
+                Equals(other.NetworkInterface.Id, NetworkInterface.Id);
+      }
+
+
+      /// <summary>Serves as a hash function for a particular type.</summary>
+      /// <returns>A hash code for the current Object.</returns>
+      public override int GetHashCode()
+      {
+         unchecked
+         {
+            return (null != NetworkInfo ? NetworkInfo.GetHashCode() : 0) + (null != NetworkInterface ? NetworkInterface.GetHashCode() : 0);
+         }
+      }
+
+
+      /// <summary>Implements the operator ==</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator ==(NetworkConnectionInfo left, NetworkConnectionInfo right)
+      {
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
+      }
+
+
+      /// <summary>Implements the operator !=</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator !=(NetworkConnectionInfo left, NetworkConnectionInfo right)
+      {
+         return !(left == right);
+      }
+
+      #endregion // Methods
    }
 }

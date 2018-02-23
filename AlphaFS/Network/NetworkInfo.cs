@@ -22,6 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Net.NetworkInformation;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -181,5 +183,66 @@ namespace Alphaleonis.Win32.Network
       }
 
       #endregion // Properties
+
+
+      #region Methods
+
+      /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
+      /// <returns>A string that represents this instance.</returns>
+      public override string ToString()
+      {
+         var description = !Utils.IsNullOrWhiteSpace(Description) && !Equals(Name, Description) ? " (" + Description + ")" : string.Empty;
+
+         return null != Name ? string.Format(CultureInfo.CurrentCulture, "{0}{1}, {2}", Name, description, Category) : GetType().Name;
+      }
+
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="obj">Another object to compare to.</param>
+      /// <returns><see langword="true"/> if the specified Object is equal to the current Object; otherwise, <see langword="false"/>.</returns>
+      public override bool Equals(object obj)
+      {
+         if (null == obj || GetType() != obj.GetType())
+            return false;
+
+         var other = obj as NetworkInfo;
+
+         return null != other &&
+                Equals(NetworkId, other.NetworkId) &&
+                Equals(Category, other.Category);
+      }
+
+
+      /// <summary>Serves as a hash function for a particular type.</summary>
+      /// <returns>A hash code for the current Object.</returns>
+      public override int GetHashCode()
+      {
+         unchecked
+         {
+            return NetworkId.GetHashCode() + Category.GetHashCode();
+         }
+      }
+
+
+      /// <summary>Implements the operator ==</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator ==(NetworkInfo left, NetworkInfo right)
+      {
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
+      }
+
+
+      /// <summary>Implements the operator !=</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator !=(NetworkInfo left, NetworkInfo right)
+      {
+         return !(left == right);
+      }
+
+      #endregion // Methods
    }
 }

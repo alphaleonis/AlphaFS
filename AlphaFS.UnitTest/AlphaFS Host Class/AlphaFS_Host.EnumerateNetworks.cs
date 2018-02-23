@@ -36,22 +36,19 @@ namespace AlphaFS.UnitTest
 
          var networkCount = 0;
 
-         foreach (var network in Host.EnumerateNetworks().OrderBy(network => network.Name))
+         foreach (var networkInfo in Host.EnumerateNetworks().OrderBy(network => network.Name))
          {
-            Console.WriteLine("\n#{0:000}\tNetwork: [{1}]", ++networkCount, network.Name);
+            Console.WriteLine("\n#{0:000}\tNetwork: [{1}]", ++networkCount, networkInfo.Name);
 
 
-            UnitTestConstants.Dump(network, -21);
+            UnitTestConstants.Dump(networkInfo, -21);
 
 
-            if (null != network.Connections)
+            if (null != networkInfo.Connections)
             {
-               foreach (var connection in network.Connections)
-               {
-                  UnitTestConstants.Dump(connection, -21, true);
+               foreach (var connectionInfo in networkInfo.Connections)
 
-                  UnitTestConstants.Dump(connection.NetworkInterface, -20, true);
-               }
+                  UnitTestConstants.Dump(connectionInfo.NetworkInterface, -20, true);
             }
 
 
