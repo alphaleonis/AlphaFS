@@ -54,6 +54,8 @@ Version vNext  (xxxx-xx-xx)
 - Issue #373: Improve method `Directory.CreateDirectory` to allow creating a folder consisting only of spaces.
 - Issue #385: Correct applied fileSystemRights operator in method `File.Create()`.
 - Issue #408: Add `FileSystemEntryInfo.Extension` string property.
+- Issue #414: Add additional `Network.Host` methods.
+- Issue #415: Added `ProcessContext` static class to determine the context of the current process.
 
 ### Improvements
 
@@ -74,7 +76,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #387: Replace `handle.IsInvalid` checks with a call to method `NativeMethods.IsValidHandle()`.
 - Issue #388: Change method `Network.Host.EnumerateDrives()` return type from `string` to `DriveInfo`.
 - Issue #394: Improve percentage output of properties `DiskSpaceInfo`- `AvailableFreeSpacePercent` and `UsedSpacePercent`
-- Issue #401: CreateDirectory ERROR_ACCESS_DENIED reports parent folder.
+- Issue #401: CreateDirectory `ERROR_ACCESS_DENIED` reports parent folder.
 - Issue #402: Remove long path prefix from `NativeError.ThrowException` messages with paths.
 - Issue #416: Rename property `DeviceInfo.Class` to `DeviceInfo.DeviceClass`
 

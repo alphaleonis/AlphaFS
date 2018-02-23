@@ -146,6 +146,13 @@ namespace Alphaleonis.Win32.Filesystem
       public long TotalBytes { get; internal set; }
 
 
+      /// <summary>The total number of bytes copied, formatted as a unit size.</summary>
+      public string TotalBytesUnitSize
+      {
+         get { return Utils.UnitSizeToText(TotalBytes); }
+      }
+
+
       /// <summary>The total number of files copied.</summary>
       public long TotalFiles { get; internal set; }
 
