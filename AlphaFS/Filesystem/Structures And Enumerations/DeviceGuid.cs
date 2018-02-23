@@ -38,6 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // 1394 and 61883 Devices
 
+
       #region Battery and ACPI devices
 
       /// <summary>The GUID_DEVICE_APPLICATIONLAUNCH_BUTTON device interface class is defined for Advanced Configuration and Power Interface (ACPI) application start buttons.</summary>
@@ -66,12 +67,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Battery and ACPI devices
 
+
       #region Bluetooth Devices
 
       /// <summary>The GUID_BTHPORT_DEVICE_INTERFACE device interface class is defined for Bluetooth radios.</summary>
       [Description("0850302A-B344-4fda-9BE9-90576B8D46F0")] Bluetooth,
 
       #endregion // Bluetooth Devices
+
 
       #region Display and Image Devices
 
@@ -101,6 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Display and Image Devices
 
+
       #region Interactive Input Devices
 
       /// <summary>The GUID_DEVINTERFACE_HID device interface class is defined for HID collections.</summary>
@@ -114,6 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Interactive Input Devices
 
+
       #region Modem Devices
 
       /// <summary>The GUID_DEVINTERFACE_MODEM device interface class is defined for modem devices.</summary>
@@ -121,12 +126,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Modem Devices
 
+
       #region Network Devices
 
       /// <summary>The GUID_DEVINTERFACE_NET device interface class is defined for network devices.</summary>
       [Description("CAC88484-7515-4C03-82E6-71A87ABAC361")] Network,
 
       #endregion // Network Devices
+
 
       #region Serial and Parallel Port Devices
 
@@ -144,6 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
       [Description("4D36E978-E325-11CE-BFC1-08002BE10318")] SerialEnumBusEnumerator,
 
       #endregion // Serial and Parallel Port Devices
+
 
       #region Storage Devices
 
@@ -181,6 +189,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Storage Devices
 
+
       #region USB Devices
 
       /// <summary>The GUID_DEVINTERFACE_USB_DEVICE device interface class is defined for USB devices that are attached to a USB hub.</summary>
@@ -193,8 +202,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The GUID_DEVINTERFACE_USB_HUB device interface class is defined for USB hub devices.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Usb")]
-      [Description("F18A0E88-C30C-11D0-8815-00A0C906BED8")] UsbHub
+      [Description("F18A0E88-C30C-11D0-8815-00A0C906BED8")] UsbHub,
 
       #endregion // USB Devices
+
+
+      #region Windows Portable devices
+
+      /// <summary>The GUID_DEVINTERFACE_WPD device interface class is defined for Windows Portable Devices (WPD).</summary>
+      /// <remarks>Available in Windows Vista, Windows XP, and later versions of Windows.</remarks>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wpd")]
+      [Description("6AC27878-A6FA-4155-BA85-F98F491D4F33")] Wpd,
+
+      /// <summary>The GUID_DEVINTERFACE_WPD_PRIVATE device interface class is defined for specialized Windows Portable Devices (WPD).</summary>
+      /// <remarks>Available in Windows Vista, Windows XP, and later versions of Windows.</remarks>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wpd")]
+      [Description("BA0C718F-4DED-49B7-BDD3-FABE28661211")] WpdPrivate
+
+      #endregion // Windows Portable devices
    }
 }

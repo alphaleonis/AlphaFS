@@ -116,6 +116,8 @@ namespace Alphaleonis.Win32.Security
 
       /// <summary>[AlphaFS] Retrieves the elevation type of the current process.</summary>
       /// <returns>A <see cref="NativeMethods.TOKEN_ELEVATION_TYPE"/> value.</returns>
+      [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "GetTokenInformation")]
+      [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "OpenProcessToken")]
       private static NativeMethods.TOKEN_ELEVATION_TYPE GetProcessElevationType()
       {
          SafeTokenHandle tokenHandle;
@@ -131,7 +133,7 @@ namespace Alphaleonis.Win32.Security
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(Enum.GetUnderlyingType(typeof(NativeMethods.TOKEN_ELEVATION_TYPE)))))
          {
             uint bytesReturned;
-            success = NativeMethods.GetTokenInformation(tokenHandle, NativeMethods.TOKEN_INFORMATION_CLASS.TokenElevationType, safeBuffer, (uint)safeBuffer.Capacity, out bytesReturned);
+            success = NativeMethods.GetTokenInformation(tokenHandle, NativeMethods.TOKEN_INFORMATION_CLASS.TokenElevationType, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned);
 
             lastError = Marshal.GetLastWin32Error();
 
@@ -139,7 +141,7 @@ namespace Alphaleonis.Win32.Security
                throw new Win32Exception(lastError, string.Format(CultureInfo.CurrentCulture, "{0}: GetTokenInformation failed with error: {1}", MethodBase.GetCurrentMethod().Name, lastError.ToString(CultureInfo.CurrentCulture)));
 
 
-            return (NativeMethods.TOKEN_ELEVATION_TYPE)safeBuffer.ReadInt32();
+            return (NativeMethods.TOKEN_ELEVATION_TYPE) safeBuffer.ReadInt32();
          }
       }
    }

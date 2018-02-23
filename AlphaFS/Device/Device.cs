@@ -59,11 +59,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      
-      
+
+
       /// <summary>[AlphaFS] Enumerates all available devices on the local or remote host.</summary>
       [SecurityCritical]
-      internal static IEnumerable<DeviceInfo> EnumerateDevicesCore(string hostName, DeviceGuid interfaceGuid, bool getAllProperties)
+      internal static IEnumerable<DeviceInfo> EnumerateDevicesCore(string hostName, DeviceGuid deviceGuid, bool getAllProperties)
       {
          if (Utils.IsNullOrWhiteSpace(hostName))
             hostName = Environment.MachineName;
@@ -82,30 +82,31 @@ namespace Alphaleonis.Win32.Filesystem
          NativeMethods.IsValidHandle(safeMachineHandle, lastError);
 
 
-         var deviceGuid = new Guid(Utils.GetEnumDescription(interfaceGuid));
+         var classGuid = new Guid(Utils.GetEnumDescription(deviceGuid));
 
 
          // Start at the "Root" of the device tree of the specified machine.
 
          using (safeMachineHandle)
-         using (var safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref deviceGuid, IntPtr.Zero, IntPtr.Zero, NativeMethods.SetupDiGetClassDevsExFlags.Present | NativeMethods.SetupDiGetClassDevsExFlags.DeviceInterface, IntPtr.Zero, hostName, IntPtr.Zero))
+         using (var safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref classGuid, IntPtr.Zero, IntPtr.Zero, NativeMethods.SetupDiGetClassDevsExFlags.Present | NativeMethods.SetupDiGetClassDevsExFlags.DeviceInterface, IntPtr.Zero, hostName, IntPtr.Zero))
          {
             NativeMethods.IsValidHandle(safeHandle, Marshal.GetLastWin32Error());
 
             uint memberInterfaceIndex = 0;
-            var interfaceStructSize = (uint) Marshal.SizeOf(typeof(NativeMethods.SP_DEVICE_INTERFACE_DATA));
-            var dataStructSize = (uint) Marshal.SizeOf(typeof(NativeMethods.SP_DEVINFO_DATA));
+            var interfaceStructSize = (uint)Marshal.SizeOf(typeof(NativeMethods.SP_DEVICE_INTERFACE_DATA));
+            var dataStructSize = (uint)Marshal.SizeOf(typeof(NativeMethods.SP_DEVINFO_DATA));
 
 
             // Start enumerating device interfaces.
 
             while (true)
             {
-               var interfaceData = new NativeMethods.SP_DEVICE_INTERFACE_DATA {cbSize = interfaceStructSize};
+               var interfaceData = new NativeMethods.SP_DEVICE_INTERFACE_DATA { cbSize = interfaceStructSize };
 
-               var success = NativeMethods.SetupDiEnumDeviceInterfaces(safeHandle, IntPtr.Zero, ref deviceGuid, memberInterfaceIndex++, ref interfaceData);
+               var success = NativeMethods.SetupDiEnumDeviceInterfaces(safeHandle, IntPtr.Zero, ref classGuid, memberInterfaceIndex++, ref interfaceData);
 
                lastError = Marshal.GetLastWin32Error();
+
                if (!success)
                {
                   if (lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_NO_MORE_ITEMS)
@@ -119,16 +120,15 @@ namespace Alphaleonis.Win32.Filesystem
 
                var diData = new NativeMethods.SP_DEVINFO_DATA {cbSize = dataStructSize};
 
-               var deviceInfo = new DeviceInfo(hostName)
-               {
-                  ClassGuid = deviceGuid,
-                  DevicePath = GetDeviceInterfaceDetail(safeHandle, ref interfaceData, ref diData).DevicePath,
-                  InstanceId = GetDeviceInstanceId(safeMachineHandle, hostName, diData)
-               };
+               var deviceInfo = new DeviceInfo(hostName) {DevicePath = GetDeviceInterfaceDetail(safeHandle, ref interfaceData, ref diData).DevicePath};
 
 
                if (getAllProperties)
+               {
+                  deviceInfo.InstanceId = GetDeviceInstanceId(safeMachineHandle, hostName, diData);
+
                   SetDeviceProperties(safeHandle, deviceInfo, diData);
+               }
 
                else
                   SetMinimalDeviceProperties(safeHandle, deviceInfo, diData);
@@ -145,12 +145,6 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static string GetDeviceInstanceId(SafeCmConnectMachineHandle safeMachineHandle, string hostName, NativeMethods.SP_DEVINFO_DATA diData)
       {
-         // CM_Get_Parent_Ex()
-         // Note: Using this function to access remote machines is not supported
-         // beginning with Windows 8 and Windows Server 2012, as this functionality has been removed.
-         // http://msdn.microsoft.com/en-us/library/windows/hardware/ff538615%28v=vs.85%29.aspx
-
-
          uint ptrPrevious;
 
          var lastError = NativeMethods.CM_Get_Parent_Ex(out ptrPrevious, diData.DevInst, 0, safeMachineHandle);
@@ -159,21 +153,15 @@ namespace Alphaleonis.Win32.Filesystem
             NativeError.ThrowException(lastError, hostName);
 
 
-         // Now we get the InstanceID of the USB level device.
-         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize / 4))
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize / 8)) // 512
          {
-            // CM_Get_Device_ID_Ex()
-            // Note: Using this function to access remote machines is not supported beginning with Windows 8 and Windows Server 2012,
-            // as this functionality has been removed.
-            // http://msdn.microsoft.com/en-us/library/windows/hardware/ff538411%28v=vs.85%29.aspx
-
             lastError = NativeMethods.CM_Get_Device_ID_Ex(diData.DevInst, safeBuffer, (uint) safeBuffer.Capacity, 0, safeMachineHandle);
 
             if (lastError != Win32Errors.CR_SUCCESS)
                NativeError.ThrowException(lastError, hostName);
 
 
-            // Device InstanceID.
+            // Device InstanceID, such as: "USB\VID_8087&PID_0A2B\5&2EDA7E1E&0&7", "SCSI\DISK&VEN_SANDISK&PROD_X400\4&288ED25&0&000200", ...
 
             return safeBuffer.PtrToStringUni();
          }
@@ -201,7 +189,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static string GetDeviceRegistryProperty(SafeHandle safeHandle, NativeMethods.SP_DEVINFO_DATA infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum property)
       {
-         var bufferSize = NativeMethods.DefaultFileBufferSize / 8;
+         var bufferSize = NativeMethods.DefaultFileBufferSize / 8; // 512
 
          while (true)
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
@@ -210,9 +198,13 @@ namespace Alphaleonis.Win32.Filesystem
 
                var lastError = Marshal.GetLastWin32Error();
 
-
                if (success)
-                  return safeBuffer.PtrToStringUni();
+               {
+                  var value = safeBuffer.PtrToStringUni();
+
+                  return !Utils.IsNullOrWhiteSpace(value) ? value.Trim() : null;
+               }
+
 
                // MSDN: SetupDiGetDeviceRegistryProperty returns ERROR_INVALID_DATA error code if
                // the requested property does not exist for a device or if the property data is not valid.
@@ -226,13 +218,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+
       [SecurityCritical]
       private static void SetDeviceProperties(SafeHandle safeHandle, DeviceInfo deviceInfo, NativeMethods.SP_DEVINFO_DATA infoData)
       {
          SetMinimalDeviceProperties(safeHandle, deviceInfo, infoData);
 
-
-         deviceInfo.BaseContainerId = new Guid(GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.BaseContainerId));
 
          deviceInfo.CompatibleIds = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.CompatibleIds);
 
@@ -248,8 +239,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          deviceInfo.Manufacturer = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.Manufacturer);
 
-         deviceInfo.PhysicalDeviceObjectName = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.PhysicalDeviceObjectName);
-
          deviceInfo.Service = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.Service);
       }
 
@@ -257,13 +246,17 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static void SetMinimalDeviceProperties(SafeHandle safeHandle, DeviceInfo deviceInfo, NativeMethods.SP_DEVINFO_DATA infoData)
       {
+         deviceInfo.BaseContainerId = new Guid(GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.BaseContainerId));
+
+         deviceInfo.ClassGuid = new Guid(GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.ClassGuid));
+
          deviceInfo.DeviceClass = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.Class);
 
          deviceInfo.DeviceDescription = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.DeviceDescription);
 
-         //deviceInfo.DeviceType = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.DeviceType);
-
          deviceInfo.FriendlyName = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.FriendlyName);
+
+         deviceInfo.PhysicalDeviceObjectName = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.PhysicalDeviceObjectName);
       }
 
 
@@ -290,14 +283,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          return bufferSize;
       }
-
-
-      //private static uint IOCTL_STORAGE_QUERY_PROPERTY = CTL_CODE((uint) NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_MASS_STORAGE, 0x500, 0,0);
-      //private static uint CTL_CODE(uint deviceType, uint function, uint method, uint access)
-      //{
-      //   return (deviceType << 16) | (access << 14) | (function << 2) | method;
-      //}
-
+      
 
       /// <summary>Repeatedly invokes InvokeIoControl with the specified input until enough memory has been allocated.</summary>
       [SecurityCritical]
@@ -377,7 +363,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void CreateDirectoryJunction(SafeFileHandle safeHandle, string directoryPath)
       {
          var targetDirBytes = Encoding.Unicode.GetBytes(Path.NonInterpretedPathPrefix + Path.GetRegularPathCore(directoryPath, GetFullPathOptions.AddTrailingDirectorySeparator, false));
-         
+
          var header = new NativeMethods.ReparseDataBufferHeader
          {
             ReparseTag = ReparsePointTag.MountPoint,
@@ -404,7 +390,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             PathBuffer = new byte[NativeMethods.MAXIMUM_REPARSE_DATA_BUFFER_SIZE - 16] // 16368
          };
-         
+
          targetDirBytes.CopyTo(reparseDataBuffer.PathBuffer, 0);
 
 
@@ -445,7 +431,7 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException(lastError);
          }
       }
-      
+
 
       /// <summary>[AlphaFS] Get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       /// <exception cref="NotAReparsePointException"/>
@@ -456,7 +442,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (var safeBuffer = GetLinkTargetData(safeHandle, reparsePath))
          {
             var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>(0);
-            
+
             var marshalReparseBuffer = (int) Marshal.OffsetOf(typeof(NativeMethods.ReparseDataBufferHeader), "data");
 
             var dataOffset = (int) (marshalReparseBuffer + (header.ReparseTag == ReparsePointTag.MountPoint

@@ -26,6 +26,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32
 {
+   /// <summary>Represents a wrapper class for a handle used by the Token Win32 API functions.</summary>
    [SecurityCritical]
    public sealed class SafeTokenHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
