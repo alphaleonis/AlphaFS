@@ -361,7 +361,6 @@ Function Enumerate-FileSystemEntryInfos {
 }
 
 
-#Import-Module -Name 'PATH TO AlphaFS.dll'
-Import-Module -Name 'D:\AdminJJa\AlphaFS\Bin\Debug\Net452\AlphaFS.dll'
+Import-Module -Name 'PATH TO AlphaFS.dll'
 
 Enumerate-FileSystemEntryInfos -Path $Path -Filter $Filter -Recurse:$Recurse.IsPresent -ShowProgress:$ShowProgress.IsPresent -ContinueOnException:$ContinueOnException.IsPresent -Directory:$Directory.IsPresent -File:$File.IsPresent
