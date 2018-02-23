@@ -335,6 +335,12 @@
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetFileIcon.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.GetVerbCommand.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.InitializeInstance.cs" />
+    <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
+    <Compile Include="UnitTest Utility\IsAdmin.cs" />
+    <Compile Include="UnitTest Utility\Dump.cs" />
+    <Compile Include="UnitTest Utility\CreateFile.cs" />
+    <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
+    <Compile Include="UnitTest Utility\FileAssert.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance.cs" />
     <Compile Include="File Class\FileTest.cs" />
