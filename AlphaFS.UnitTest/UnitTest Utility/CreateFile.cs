@@ -27,7 +27,7 @@ namespace AlphaFS.UnitTest
    {
       public static System.IO.FileInfo CreateFile(string rootFolder, int fileLength = 0)
       {
-         var file = System.IO.Path.Combine(rootFolder, GetRandomFileName());
+         var file = System.IO.Path.Combine(rootFolder, GetRandomFileNameWithDiacriticCharacters());
 
          using (var fs = System.IO.File.Create(file))
          {

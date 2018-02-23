@@ -213,7 +213,7 @@ namespace AlphaFS.UnitTest
 
          using (new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var randomName = UnitTestConstants.GetRandomFileName();
+            var randomName = UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
 
             // C:\randomName
             var nonExistingFolder1 = UnitTestConstants.SysDrive + @"\" + randomName;

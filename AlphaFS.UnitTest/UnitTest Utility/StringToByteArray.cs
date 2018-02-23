@@ -19,30 +19,19 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Text;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_CrcTest
+   /// <summary>Containts static variables, used by unit tests.</summary>
+   public static partial class UnitTestConstants
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_Crc64Iso_StaticDefaultSeedAndPolynomialWithShortAsciiString()
+      public static byte[] StringToByteArray(string str, params Encoding[] encoding)
       {
-         using (var crc64 = new Alphaleonis.Win32.Security.Crc64())
-         {
-            var text = UnitTestConstants.StreamArrayContent[0];
-            var hash = crc64.ComputeHash(System.Text.Encoding.ASCII.GetBytes(text)).Aggregate(string.Empty, (current, b) => current + b.ToString("x2").ToLower());
+         var encode = encoding != null && encoding.Any() ? encoding[0] : new UTF8Encoding(true, true);
 
-            Console.WriteLine("Input text: {0}", text);
-            Console.WriteLine("\n\tCRC64: {0}", hash);
-
-            Assert.AreEqual("d7931f909aa8e0c5", hash);
-         }
+         return encode.GetBytes(str);
       }
    }
 }

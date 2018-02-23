@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory-EnumerateAlternateDataStreams-" + UnitTestConstants.GetRandomFileName());
+         var tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory-EnumerateAlternateDataStreams-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters());
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 

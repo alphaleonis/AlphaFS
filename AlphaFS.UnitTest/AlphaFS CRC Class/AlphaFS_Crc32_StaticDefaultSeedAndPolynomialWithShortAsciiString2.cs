@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input text: {0}", text);
             Console.WriteLine("\n\tCRC32: {0}", hash);
 
-            Assert.AreEqual("85cd3815", hash);
+            Assert.AreEqual("c193b48c", hash);
          }
       }
    }

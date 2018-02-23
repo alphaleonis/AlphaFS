@@ -320,7 +320,11 @@
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetFileIcon.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.GetVerbCommand.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.InitializeInstance.cs" />
+    <Compile Include="UnitTest Utility\InputPaths.cs" />
+    <Compile Include="UnitTest Utility\GetRandomFileNameWithDiacriticCharacters.cs" />
     <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
+    <Compile Include="UnitTest Utility\StringToByteArray.cs" />
+    <Compile Include="UnitTest Utility\PrintUnitTestHeader.cs" />
     <Compile Include="UnitTest Utility\IsAdmin.cs" />
     <Compile Include="UnitTest Utility\Dump.cs" />
     <Compile Include="UnitTest Utility\CreateFile.cs" />
@@ -333,6 +337,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTest Utility\CreateDirectoriesAndFiles.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.SetVolumeMountPoint.cs" />
+    <Compile Include="UnitTest Utility\TestAccessRules.cs" />
     <Compile Include="UnitTest Utility\UnitTestConstants.cs" />
     <Compile Include="UnitTest Utility\TemporaryDirectory.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetVolumeInfo.cs" />

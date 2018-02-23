@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -34,21 +35,21 @@ namespace AlphaFS.UnitTest
       public static bool Dump(object obj, int width = -35, bool indent = false)
       {
          var cnt = 0;
-         const string nulll = "\t\tNULL";
          var template = "\t{0}#{1:000}\t{2, " + width + "} = [{3}]";
 
          if (obj == null)
          {
-            Console.WriteLine(nulll);
+            Console.WriteLine("\n\t\tNothing to dump because the instance is null.");
             return false;
          }
 
          Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
 
          var loopOk = false;
-         foreach (var descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
+         foreach (var descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => null != descriptor))
          {
             string propValue = null;
+
             try
             {
                var value = descriptor.GetValue(obj);
@@ -64,16 +65,33 @@ namespace AlphaFS.UnitTest
                         propValue = propObj.Elapsed.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
                   }
 
-                  //else if (propObjType.IsAssignableToAnyOf(typeof(List<>)))
-                  //{
-                  //}
+                  else if (propObjType.IsAssignableToAnyOf(typeof(Collection<string>), typeof(List<string>)))
+                  {
+                     var propObj = (Collection<string>)value;
 
-                  //else if (propObjType == typeof(List<>))
-                  //{
-                  //   var propObj = value as List<string>;
-                  //   if (null != propObj)
-                  //      propValue = propObj.Count.ToString(CultureInfo.InvariantCulture);
-                  //}
+                     if (null != propObj)
+                     {
+                        foreach (var itemValue in propObj)
+                           propValue += itemValue + ", ";
+
+                        if (null != propValue)
+                           propValue = propValue.TrimEnd(',', ' ');
+                     }
+                  }
+
+                  else if (propObjType.IsAssignableToAnyOf(typeof(Collection<int>), typeof(List<int>)))
+                  {
+                     var propObj = (Collection<int>)value;
+
+                     if (null != propObj)
+                     {
+                        foreach (var itemValue in propObj)
+                           propValue += itemValue + ", ";
+
+                        if (null != propValue)
+                           propValue = propValue.TrimEnd(',', ' ');
+                     }
+                  }
 
                   else
                      propValue = value.ToString();
@@ -91,7 +109,7 @@ namespace AlphaFS.UnitTest
             if (null == propValue)
                propValue = "NULL";
 
-            Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
+            Console.WriteLine(template, indent ? "\t" : string.Empty, ++cnt, descriptor.Name, propValue);
          }
 
          return loopOk;

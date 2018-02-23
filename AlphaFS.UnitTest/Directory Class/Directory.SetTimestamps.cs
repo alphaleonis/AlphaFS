@@ -66,7 +66,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomDirectoryFullPath;
-            var symlinkPath = System.IO.Path.Combine(rootDir.Directory.FullName, UnitTestConstants.GetRandomFileName()) + "-symlink";
+            var symlinkPath = System.IO.Path.Combine(rootDir.Directory.FullName, UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()) + "-symlink";
 
             Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
