@@ -19,31 +19,22 @@
  *  THE SOFTWARE. 
  */
 
-using System.Runtime.InteropServices;
-
 namespace Alphaleonis.Win32.Filesystem
 {
-   internal static partial class NativeMethods
+   /// <summary>Represents the format of a partition.</summary>
+   /// <remarks>
+   /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+   /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+   /// </remarks>
+   public enum PartitionStyle
    {
-      /// <summary>Contains extended information about a drive's partitions.</summary>
-      /// <remarks>
-      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </remarks>
-      [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_EX
-      {
-         /// <summary>The style of the partitions on the drive enumerated by the <see cref="Filesystem.NativeMethods.PARTITION_STYLE"/> enumeration.</summary>
-         [FieldOffset(0)] [MarshalAs(UnmanagedType.U4)]
-         public readonly PartitionStyle PartitionStyle;
+      /// <summary>Master boot record (MBR) format. This corresponds to standard AT-style MBR partitions.</summary>
+      Mbr = NativeMethods.PARTITION_STYLE.PARTITION_STYLE_MBR,
 
-         /// <summary>The number of partitions on the drive. On hard disks with the MBR layout, this value will always be a multiple of 4.</summary>
-         [FieldOffset(4)] [MarshalAs(UnmanagedType.U4)]
-         public readonly uint PartitionCount;
+      /// <summary>GUID Partition Table (GPT) format.</summary>
+      Gpt = NativeMethods.PARTITION_STYLE.PARTITION_STYLE_GPT,
 
-         [FieldOffset(8)] public DRIVE_LAYOUT_INFORMATION_MBR Mbr;
-
-         [FieldOffset(8)] public DRIVE_LAYOUT_INFORMATION_GPT Gpt;
-      }
+      /// <summary>Partition not formatted in either of the recognized formats; MBR or GPT.</summary>
+      Raw = NativeMethods.PARTITION_STYLE.PARTITION_STYLE_RAW
    }
 }

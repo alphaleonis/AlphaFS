@@ -31,10 +31,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      public struct DRIVE_LAYOUT_INFORMATION_MBR
+      internal struct DRIVE_LAYOUT_INFORMATION_MBR
       {
          /// <summary>The signature of the drive.</summary>
-         [MarshalAs(UnmanagedType.U8)] public ulong Signature;
+         [MarshalAs(UnmanagedType.U8)] public readonly ulong Signature;
       }
    }
 }

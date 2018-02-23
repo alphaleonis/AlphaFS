@@ -75,21 +75,21 @@ namespace Alphaleonis.Win32.Filesystem
       public Collection<int> PartitionIndexes { get; internal set; }
 
 
-      ///// <summary>The partitions that are located on the physical drive.</summary>
-      //public string[] Partitions { get; internal set; }
-
-
       /// <summary>Encapsulates the physical device location (PDO) information provided by a device's firmware to Windows.</summary>
       public string PhysicalDeviceObjectName { get; internal set; }
 
 
-      /// <summary>The storage adapter information, such as bus type.</summary>
+      /// <summary>The storage device adapter information.</summary>
       public StorageAdapterInfo StorageAdapterInfo { get; internal set; }
 
 
-      /// <summary>The storage device information, such as device type and number.</summary>
+      /// <summary>The storage device information.</summary>
       public StorageDeviceInfo StorageDeviceInfo { get; internal set; }
+
       
+      /// <summary>The storage device partitiion information.</summary>
+      public StoragePartitionInfo StoragePartitionInfo { get; internal set; }
+
 
       /// <summary>A collection of volume GUID strings of volumes that are located on the physical drive.</summary>
       public Collection<string> VolumeGuids { get; internal set; }

@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Globalization;
 using System.Security.AccessControl;
 using Microsoft.Win32.SafeHandles;
@@ -28,42 +27,16 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-      /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.
-      /// <para>Properties of the returned <see cref="StorageDeviceInfo"/> instance are meaningless unless this method is called from an elevated state.</para>
-      /// </summary>
-      /// <returns>A <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
-      ///  <exception cref="ArgumentException"/>
-      ///  <exception cref="ArgumentNullException"/>
-      ///  <exception cref="NotSupportedException"/>
-      ///  <exception cref="Exception"/>
-      /// <param name="devicePath">
-      ///    A drive path such as: "C", "C:" or "C:\".
-      ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
-      ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
-      /// </param>
-      public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath)
+
+      public static StorageDeviceInfo GetStoragePartitionInfo(string devicePath)
       {
          return GetStorageDeviceInfoCore(Security.ProcessContext.IsElevatedProcess, devicePath);
       }
 
 
-
-
-      /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.
-      /// <para>Properties of the returned <see cref="StorageDeviceInfo"/> instance are meaningless unless this method is called from an elevated state.</para>
-      /// </summary>
-      /// <returns>A <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
-      ///  <exception cref="ArgumentException"/>
-      ///  <exception cref="ArgumentNullException"/>
-      ///  <exception cref="NotSupportedException"/>
-      ///  <exception cref="Exception"/>
-      /// <param name="isElevated"><see langword="true"/> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
-      /// <param name="devicePath">
-      ///    A drive path such as: "C", "C:" or "C:\".
-      ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
-      ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
-      /// </param>
-      internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, string devicePath)
+      
+      
+      internal static StorageDeviceInfo GetStoragePartitionInfoCore(bool isElevated, string devicePath)
       {
          string logicalDrive;
 
@@ -117,8 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Sets the physical drive properties such as FriendlyName, device size and serial number.</summary>
-      private static StorageDeviceInfo GetStorageDeviceInfoNative(SafeFileHandle safeHandle, string pathToDevice, StorageDeviceInfo storageDeviceInfo)
+      private static StorageDeviceInfo GetStoragePartitionInfoNative(SafeFileHandle safeHandle, string pathToDevice, StorageDeviceInfo storageDeviceInfo)
       {
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
          {

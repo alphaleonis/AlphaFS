@@ -31,19 +31,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      public struct PARTITION_INFORMATION_MBR
+      internal struct PARTITION_INFORMATION_MBR
       {
-         /// <summary>The type of partition.</summary>
-         [MarshalAs(UnmanagedType.I1)] public DiskPartitionTypes PartitionType;
+         /// <summary>The type of partition. For a list of values, see <see cref="DiskPartitionTypes"/>.</summary>
+         [MarshalAs(UnmanagedType.U1)] public readonly DiskPartitionTypes PartitionType;
 
          /// <summary>If the member is TRUE, the partition is a boot partition. When this structure is used with the IOCTL_DISK_SET_PARTITION_INFO_EX control code, the value of this parameter is ignored.</summary>
-         [MarshalAs(UnmanagedType.Bool)] public bool BootIndicator;
+         [MarshalAs(UnmanagedType.Bool)] public readonly bool BootIndicator;
 
          /// <summary>If this member is TRUE, the partition is of a recognized type. When this structure is used with the IOCTL_DISK_SET_PARTITION_INFO_EX control code, the value of this parameter is ignored.</summary>
-         [MarshalAs(UnmanagedType.Bool)] public bool RecognizedPartition;
+         [MarshalAs(UnmanagedType.Bool)] public readonly bool RecognizedPartition;
 
          /// <summary>The number of hidden sectors to be allocated when the partition table is created.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint HiddenSectors;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint HiddenSectors;
       }
    }
 }

@@ -30,33 +30,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
       internal struct PARTITION_INFORMATION_EX
       {
-         /// <summary>The format of the partition.</summary>
-         public PARTITION_STYLE PartitionStyle;
+         /// <summary>The format of the partition. For a list of values, see <see cref="PARTITION_STYLE"/>.</summary>
+         [FieldOffset(0)] public readonly PARTITION_STYLE PartitionStyle;
 
          /// <summary>The starting offset of the partition.</summary>
-         [MarshalAs(UnmanagedType.U8)] public long StartingOffset;
+         [FieldOffset(8)] [MarshalAs(UnmanagedType.U8)]
+         public readonly ulong StartingOffset;
 
-         /// <summary>The size of the partition, in bytes.</summary>
-         [MarshalAs(UnmanagedType.U8)] public long PartitionLength;
+         /// <summary>The starting offset of the partition.</summary>
+         [FieldOffset(16)] [MarshalAs(UnmanagedType.U8)]
+         public readonly ulong PartitionLength;
 
          /// <summary>The number of the partition (1-based).</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint PartitionNumber;
+         [FieldOffset(24)] [MarshalAs(UnmanagedType.U4)]
+         public readonly uint PartitionNumber;
 
          /// <summary>If this member is TRUE, the partition is rewritable. The value of this parameter should be set to TRUE.</summary>
-         [MarshalAs(UnmanagedType.Bool)] public bool RewritePartition;
+         [FieldOffset(28)] [MarshalAs(UnmanagedType.U1)]
+         public readonly bool RewritePartition;
 
-         //public PARTITION_INFORMATION_UNION PartitionInformation;
-      }
+         /// <summary>A <see cref="PARTITION_INFORMATION_MBR"/> structure that specifies partition information specific to master boot record (MBR) disks. The MBR partition format is the standard AT-style format.</summary>
+         [FieldOffset(32)] public readonly PARTITION_INFORMATION_MBR Mbr;
 
-
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct PARTITION_INFORMATION_UNION
-      {
-         public PARTITION_INFORMATION_MBR Mbr;
-         public PARTITION_INFORMATION_GPT Gpt;
+         /// <summary>A <see cref="PARTITION_INFORMATION_GPT"/> structure that specifies partition information specific to GUID partition table (GPT) disks. The GPT format corresponds to the EFI partition format.</summary>
+         [FieldOffset(32)] public readonly PARTITION_INFORMATION_GPT Gpt;
       }
    }
 }

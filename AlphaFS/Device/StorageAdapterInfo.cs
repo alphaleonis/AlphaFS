@@ -139,7 +139,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A hash code for the current Object.</returns>
       public override int GetHashCode()
       {
-         return MaximumTransferBytes + AcceleratedTransfer.GetHashCode() + (null != BusVersion ? BusVersion.GetHashCode() : 0) + BusType.GetHashCode();
+         unchecked
+         {
+            return MaximumTransferBytes + AcceleratedTransfer.GetHashCode() + (null != BusVersion ? BusVersion.GetHashCode() : 0) + BusType.GetHashCode();
+         }
       }
 
 

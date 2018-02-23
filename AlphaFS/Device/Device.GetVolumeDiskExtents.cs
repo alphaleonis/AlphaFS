@@ -95,18 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static object GetDriveStuff(string logicalDrive)
       {
-         // FileSystemRights desiredAccess: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
-         // without accessing that file or device, even if GENERIC_READ access would have been denied.
-         // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
-         //const int desiredAccess = 0;
-
-         // Requires elevation.
-         const FileSystemRights desiredAccess = FileSystemRights.Read | FileSystemRights.Write;
-
-         //const bool elevatedAccess = (desiredAccess & FileSystemRights.Read) != 0 && (desiredAccess & FileSystemRights.Write) != 0;
-
-
-         using (var safeHandle = OpenPhysicalDrive(logicalDrive, desiredAccess))
+         using (var safeHandle = OpenPhysicalDrive(logicalDrive, FileSystemRights.Read | FileSystemRights.Write))
          {
             // DRIVE_LAYOUT_INFORMATION_EX
 
@@ -116,9 +105,11 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   var structure = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>(0);
 
-                  //return structure;
+                  return structure;
                }
             }
+
+            return null;
 
 
             // DISK_GEOMETRY_EX

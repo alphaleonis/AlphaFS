@@ -31,21 +31,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
       internal struct PARTITION_INFORMATION_GPT
       {
-         /// <summary>A GUID that identifies the partition type.</summary>
-         public Guid PartitionType;
+         /// <summary>A GUID that identifies the partition type.
+         /// <remarks>Each partition type that the EFI specification supports is identified by its own GUID, which is published by the developer of the partition.</remarks>
+         /// </summary>
+         [FieldOffset(0)] public readonly Guid PartitionType;
 
          /// <summary>The GUID of the partition.</summary>
-         public Guid PartitionId;
+         [FieldOffset(16)] public readonly Guid PartitionId;
 
          /// <summary>The Extensible Firmware Interface (EFI) attributes of the partition.</summary>
-         [MarshalAs(UnmanagedType.U8)] public EFIPartitionAttributes Attributes;
+         [FieldOffset(32)] [MarshalAs(UnmanagedType.U8)]
+         public readonly PartitionAttributes Attributes;
 
          /// <summary>A wide-character string that describes the partition.</summary>
-         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 36)]
-         public string Name;
+         [FieldOffset(40)] [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 36)]
+         public readonly string Name;
       }
    }
 }

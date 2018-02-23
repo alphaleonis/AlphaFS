@@ -20,37 +20,44 @@
  */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides access to information of a device, on a local or remote host.</summary>
    [Serializable]
    [SecurityCritical]
-   public sealed class StorageDeviceInfo
+   public sealed class StoragePartitionInfo
    {
       #region Constructors
 
-      /// <summary>Initializes a StorageDeviceInfo instance.</summary>
-      public StorageDeviceInfo()
+      /// <summary>Initializes a StoragePartitionInfo instance.</summary>
+      public StoragePartitionInfo()
       {
-         DeviceType = StorageDeviceType.Unknown;
-
          DeviceNumber = -1;
 
          PartitionNumber = -1;
+
+         PartitionStyle = PartitionStyle.Raw;
       }
 
 
-      internal StorageDeviceInfo(NativeMethods.STORAGE_DEVICE_NUMBER device) : this()
+      internal StoragePartitionInfo(NativeMethods.STORAGE_DEVICE_NUMBER device, NativeMethods.PARTITION_INFORMATION_EX partition) : this()
       {
-         DeviceType = device.DeviceType;
-
          DeviceNumber = device.DeviceNumber;
 
-         PartitionNumber = device.PartitionNumber;
+         PartitionNumber = (int) partition.PartitionNumber;
+
+         PartitionStyle = (PartitionStyle) partition.PartitionStyle;
+
+         
+         RewritePartition = partition.RewritePartition;
+
+         TotalSize = (long) partition.PartitionLength;
+
+         GptPartitionInfo = new StoragePartitionInfoGpt(partition.Gpt);
+
+         MbrPartitionInfo = new StoragePartitionInfoMbr(partition.Mbr);
       }
 
       #endregion // Constructors
@@ -58,44 +65,31 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Properties
 
-      /// <summary>The type of the bus to which the device is connected.</summary>
-      public StorageBusType BusType { get; internal set; }
-
-
-      /// <summary>Indicates if the physical drive supports multiple outstanding commands (SCSI tagged queuing or equivalent). When false the physical drive does not support SCSI-tagged queuing or the equivalent.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Queueing")]
-      public bool CommandQueueing { get; internal set; }
-      
-
-      /// <summary>The storage device type.</summary>
-      public StorageDeviceType DeviceType { get; internal set; }
-
-
-      /// <summary>The device number of the storage device, starting at 0.</summary>
+      /// <summary>The device number of the storage partition, starting at 0.</summary>
       public int DeviceNumber { get; internal set; }
 
 
-      /// <summary>The partition number of the storage device, starting at 1. If the device cannot be partitioned, like a CDROM, -1 is returned.</summary>
+      /// <summary>Contains GUID partition table (GPT) partition information.</summary>
+      public StoragePartitionInfoGpt GptPartitionInfo { get; internal set; }
+
+      
+      /// <summary>Contains partition information specific to master boot record (MBR) disks.</summary>
+      public StoragePartitionInfoMbr MbrPartitionInfo { get; internal set; }
+
+      
+      /// <summary>The storage partition number, starting at 1.</summary>
       public int PartitionNumber { get; internal set; }
 
 
-      /// <summary>The product ID of the physical drive.</summary>
-      public string ProductId { get; internal set; }
+      /// <summary>The format of the partition. For a list of values, see <see cref="PartitionStyle"/>.</summary>
+      public PartitionStyle PartitionStyle { get; internal set; }
 
 
-      /// <summary>The product revision of the physical drive.</summary>
-      public string ProductRevision { get; internal set; }
+      /// <summary>The rewritable status of the storage partition.</summary>
+      public bool RewritePartition { get; internal set; }
 
 
-      /// <summary>Indicates if the physical drive is removable. When true the physical drive's media (if any) is removable. If the device has no media, this member should be ignored. When false the physical drive's media is not removable.</summary>
-      public bool RemovableMedia { get; internal set; }
-
-
-      /// <summary>The serial number of the physical drive. If the physical drive has no serial number or the session is not elevated -1 is returned.</summary>
-      public string SerialNumber { get; internal set; }
-
-
-      /// <summary>The total size of the physical drive.</summary>
+      /// <summary>The total size of the storage partition.</summary>
       public long TotalSize { get; internal set; }
 
 
@@ -104,10 +98,6 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get { return Utils.UnitSizeToText(TotalSize); }
       }
-
-
-      /// <summary>The Vendor ID of the physical drive.</summary>
-      public string VendorId { get; internal set; }
 
       #endregion // Properties
 
@@ -118,9 +108,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         return string.Format(CultureInfo.CurrentCulture, "{0} {1}:{2} {3}",
-            
-            DeviceType.ToString(), DeviceNumber.ToString(), PartitionNumber.ToString(), (VendorId + " " + ProductId + " " + ProductRevision).Trim()).Trim();
+         return string.Format(CultureInfo.CurrentCulture, "{0}:{1} {2} {3}",
+
+            DeviceNumber.ToString(), PartitionNumber.ToString(), PartitionStyle.ToString(), TotalSizeUnitSize).Trim();
       }
 
 
@@ -132,14 +122,13 @@ namespace Alphaleonis.Win32.Filesystem
          if (null == obj || GetType() != obj.GetType())
             return false;
 
-         var other = obj as StorageDeviceInfo;
+         var other = obj as StoragePartitionInfo;
 
          return null != other &&
                 other.DeviceNumber == DeviceNumber &&
                 other.PartitionNumber == PartitionNumber &&
-                other.DeviceType == DeviceType &&
-                other.BusType == BusType &&
-                other.SerialNumber == SerialNumber;
+                other.PartitionStyle == PartitionStyle &&
+                other.TotalSize == TotalSize;
       }
 
 
@@ -149,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          unchecked
          {
-            return DeviceNumber + PartitionNumber + (null != SerialNumber ? SerialNumber.GetHashCode() : 0) + BusType.GetHashCode() + DeviceType.GetHashCode();
+            return DeviceNumber + PartitionNumber + PartitionStyle.GetHashCode() + TotalSize.GetHashCode();
          }
       }
 
@@ -158,7 +147,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="left">A.</param>
       /// <param name="right">B.</param>
       /// <returns>The result of the operator.</returns>
-      public static bool operator ==(StorageDeviceInfo left, StorageDeviceInfo right)
+      public static bool operator ==(StoragePartitionInfo left, StoragePartitionInfo right)
       {
          return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
       }
@@ -168,7 +157,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="left">A.</param>
       /// <param name="right">B.</param>
       /// <returns>The result of the operator.</returns>
-      public static bool operator !=(StorageDeviceInfo left, StorageDeviceInfo right)
+      public static bool operator !=(StoragePartitionInfo left, StoragePartitionInfo right)
       {
          return !(left == right);
       }

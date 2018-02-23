@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -27,5 +28,13 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public partial class AlphaFS_DeviceTest
    {
+      [TestMethod]
+      public void AlphaFS_Device_Test()
+      {
+         //var hw = new Hardware();
+
+
+         IOCtl.Main();
+      }
    }
 }

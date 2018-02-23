@@ -178,38 +178,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-//      private static Guid? GetDeviceBusTypeGuid(SafeHandle safeHandle, NativeMethods.SP_DEVINFO_DATA infoData)
-//      {
-//         var bufferSize = NativeMethods.DefaultFileBufferSize / 32; // 128
-
-//         string guidText = null;
-//         var descriptionBuffer = new byte[bufferSize];
-//         ulong propertyType = 0;
-//         var requiredSize = 0;
-
-//         var success = NativeMethods.SetupDiGetDeviceProperty(safeHandle, ref infoData, ref NativeMethods.DEVPROPKEYS.DeviceBusTypeGuid, ref propertyType, descriptionBuffer, bufferSize, ref requiredSize, 0);
-
-//         var lastError = Marshal.GetLastWin32Error();
-
-//         if (success)
-//         {
-//            var value = Encoding.Unicode.GetString(descriptionBuffer);
-
-//            var result = value.Remove(value.IndexOf((char)0));
-
-//            guidText = !Utils.IsNullOrWhiteSpace(result) ? result.Trim() : null;
-//         }
-
-
-//#if NET35
-//         return !Utils.IsNullOrWhiteSpace(guidText) ? new Guid(guidText) : (Guid?) null;
-//#else
-//         Guid guid;
-//         return Guid.TryParse(guidText, out guid) ? (Guid?) guid : null;
-//#endif
-//      }
-
-
       private static string GetDeviceBusReportedDeviceDescription(SafeHandle safeHandle, NativeMethods.SP_DEVINFO_DATA infoData)
       {
          if (!OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows7))

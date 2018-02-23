@@ -49,6 +49,9 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(pDrive.StorageAdapterInfo, -28, true);
 
             UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -17, true);
+
+            UnitTestConstants.Dump(pDrive.StoragePartitionInfo, -17, true);
+
             Console.WriteLine();
          }
 

@@ -24,7 +24,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security;
 using System.Security.AccessControl;
-using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -138,6 +137,9 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (isElevated)
          {
+            GetDriveStuff(@"\\.\C:");
+
+
             using (var safeHandle = OpenPhysicalDrive(devicePath, FileSystemRights.Read))
             {
                pDriveInfo.StorageAdapterInfo = GetStorageAdapterInfoNative(safeHandle, devicePath);

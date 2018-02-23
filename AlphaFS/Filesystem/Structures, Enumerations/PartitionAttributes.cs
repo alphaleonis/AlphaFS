@@ -20,31 +20,30 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   internal static partial class NativeMethods
+   [Flags]
+   public enum PartitionAttributes : ulong
    {
-      /// <summary>Contains information about a drive's GUID partition table (GPT) partitions.</summary>
-      /// <remarks>
-      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </remarks>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DRIVE_LAYOUT_INFORMATION_GPT
-      {
-         /// <summary>The GUID of the disk.</summary>
-         public Guid DiskId;
+      /// <summary>None.</summary>
+      None = 0,
 
-         /// <summary>The starting byte offset of the first usable block.</summary>
-         [MarshalAs(UnmanagedType.U8)] public readonly ulong StartingUsableOffset;
+      /// <summary>If this attribute is set, the partition is required by a Computer to function properly.</summary>
+      PlatformRequired = NativeMethods.PartitionAttributes.GPT_ATTRIBUTE_PLATFORM_REQUIRED,
 
-         /// <summary>The size of the usable blocks on the disk, in bytes.</summary>
-         [MarshalAs(UnmanagedType.U8)] public readonly ulong UsableLength;
+      LegacyBIOSBootable = 0x0000000000000004,
 
-         /// <summary>The maximum number of partitions that can be defined in the usable block.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint MaxPartitionCount;
-      }
+      /// <summary>If this attribute is set, the partition is read-only.</summary>
+      ReadOnly = NativeMethods.PartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_READ_ONLY,
+
+      /// <summary>If this attribute is set, the partition is a shadow copy of another partition.</summary>
+      ShadowCopy = NativeMethods.PartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_SHADOW_COPY,
+
+      /// <summary>If this attribute is set, the partition is not detected by the Mount Manager.</summary>
+      Hidden = NativeMethods.PartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_HIDDEN,
+
+      /// <summary>If this attribute is set, the partition does not receive a drive letter by default when the disk is moved to another Computer or when the disk is seen for the first time by a Computer.</summary>
+      NoDriveletter = NativeMethods.PartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_NO_DRIVE_LETTER
    }
 }

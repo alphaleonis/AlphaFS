@@ -31,16 +31,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DISK_GEOMETRY_EX
+      public struct DISK_GEOMETRY_EX
       {
          /// <summary>A <see cref="DISK_GEOMETRY"/> structure.</summary>
          public DISK_GEOMETRY Geometry;
 
          /// <summary>The disk size, in bytes.</summary>
-         [MarshalAs(UnmanagedType.U8)] public ulong DiskSize;
+         [MarshalAs(UnmanagedType.U8)] public readonly ulong DiskSize;
 
          /// <summary>Any additional data.</summary>
-         [MarshalAs(UnmanagedType.I1)] public byte Data;
+         [MarshalAs(UnmanagedType.I1)] public readonly byte Data;
       }
    }
 }
