@@ -70,6 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Initializes a new instance of the <see cref="KernelTransaction"/> class.</summary>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="securityDescriptor">The <see cref="ObjectSecurity"/> security descriptor.</param>
       /// <param name="timeout"><para>The time, in milliseconds, when the transaction will be aborted if it has not already reached the prepared state.</para>
       /// <para>Specify 0 to provide an infinite timeout.</para></param>
@@ -93,6 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Requests that the specified transaction be committed.</summary>
       /// <exception cref="TransactionAlreadyCommittedException"/>
       /// <exception cref="TransactionAlreadyAbortedException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <exception cref="Win32Exception"/>
       [SecurityCritical]
       public void Commit()
@@ -107,6 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Requests that the specified transaction be rolled back. This function is synchronous.</summary>
       /// <exception cref="TransactionAlreadyCommittedException"/>
       /// <exception cref="Win32Exception"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       [SecurityCritical]
       public void Rollback()
       {

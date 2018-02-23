@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Gets information about a specified DFS root or link in a DFS namespace.</summary>
       /// <returns>A <see cref="DfsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Network
       /// <returns>A <see cref="DfsInfo"/> instance.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="getFromClient">
       ///   <see langword="true"/> retrieves information about a Distributed File System (DFS) root or link from the cache maintained by the
       ///   DFS client. When <see langword="false"/> retrieves information about a specified Distributed File System (DFS) root or link in a

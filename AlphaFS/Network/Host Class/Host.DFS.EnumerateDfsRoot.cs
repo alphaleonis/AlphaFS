@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Enumerates the DFS namespaces from the local host.</summary>
       /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from the local host.</returns>
       /// <exception cref="NetworkInformationException"/>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDfsRoot()
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Enumerates the DFS namespaces from a host.</summary>
       /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from a host.</returns>
       /// <exception cref="NetworkInformationException"/>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="host">The DNS or NetBIOS name of a host.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Network
       /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from a host.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="host">The DNS or NetBIOS name of a host.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]

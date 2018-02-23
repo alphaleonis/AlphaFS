@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="symlinkDirectoryName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetDirectoryName">The symbolic link to be created.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="symlinkDirectoryName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetDirectoryName">The symbolic link to be created.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="symlinkDirectoryName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetDirectoryName">The symbolic link to be created.</param>
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="symlinkDirectoryName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetDirectoryName">The symbolic link to be created.</param>

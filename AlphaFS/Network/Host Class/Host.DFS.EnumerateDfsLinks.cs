@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Network
       /// <returns><see cref="IEnumerable{DfsInfo}"/> of DFS namespaces.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
