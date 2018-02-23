@@ -57,9 +57,11 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("IsWindowsService: [{0}]", IsWindowsService);
 
 
+         // TODO: Test code is the same as in AlphaFS.
          Assert.AreEqual(new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator), isAdmin);
 
-
+         
+         // Assumption.
          Assert.IsFalse(IsWindowsService);
       }
    }
