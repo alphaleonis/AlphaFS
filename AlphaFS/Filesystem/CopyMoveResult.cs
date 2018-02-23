@@ -32,6 +32,13 @@ namespace Alphaleonis.Win32.Filesystem
    [SerializableAttribute]
    public sealed class CopyMoveResult
    {
+      #region Private Fields
+   	  
+      internal readonly Stopwatch _stopwatch;
+
+      #endregion // Private Fields
+      
+
       #region Constructors
 
       /// <summary>Create a CopyMoveResult class instance for the Copy or Move action.
@@ -46,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          IsCopy = true;
 
-         Duration = Stopwatch.StartNew();
+         _stopwatch = Stopwatch.StartNew();
       }
 
 
@@ -74,21 +81,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Properties
 
-      ///// <summary>Indicates when the Copy or Move action started, in UTC format.</summary>
-      //public DateTime ActionStart { get; set; }
-
-
-      ///// <summary>Indicates when the Copy or Move action finished, in UTC format.</summary>
-      //public DateTime ActionFinish { get; set; }
-
-
-      ///// <summary>Indicates the duration of the Copy or Move action.</summary>
-      //public TimeSpan Duration { get { return ActionFinish.Subtract(ActionStart); } }
-
-
       /// <summary>Indicates the duration of the Copy or Move action.</summary>
-      public Stopwatch Duration { get; private set; }
-
+      public TimeSpan Duration
+      {
+         get { return TimeSpan.FromMilliseconds(_stopwatch.Elapsed.TotalMilliseconds); }
+      }
+      
 
       /// <summary>Indicates the destination file or directory.</summary>
       public string Destination { get; private set; }
