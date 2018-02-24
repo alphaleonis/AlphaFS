@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or null on failure.</returns>
       /// <param name="path">The path to the file.</param>
       /// <param name="continueOnException">
-      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <param name="continueOnException">
-      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="continueOnException">
-      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
@@ -122,7 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <param name="continueOnException">
-      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
@@ -135,7 +135,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> for a Non-/Transacted file or directory on the path.</summary>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory, or <c>null</c> on Exception when <paramref name="continueOnException"/> is <c>true</c>.</returns>
+      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory, or <c>null</c> on Exception when <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
       /// <remarks>BasicSearch <see cref="NativeMethods.FINDEX_INFO_LEVELS.Basic"/> and LargeCache <see cref="NativeMethods.FIND_FIRST_EX_FLAGS.LARGE_FETCH"/> are used by default, if possible.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="continueOnException">
-      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>

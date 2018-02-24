@@ -791,7 +791,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, streamNumber, callbackReason, sourceFile, destinationFile, data) =>
 
-                  progressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, streamNumber, callbackReason, userProgressData)
+                  progressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, (int) streamNumber, callbackReason, userProgressData)
 
             : (NativeMethods.NativeCopyMoveProgressRoutine) null;
 

@@ -658,7 +658,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>NativeCopyMoveProgressRoutine (NativeCopyMoveProgressRoutine) is a placeholder for the application-defined function name.</para>
       /// </summary>
       [SuppressUnmanagedCodeSecurity]
-      internal delegate CopyMoveProgressResult NativeCopyMoveProgressRoutine(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, [MarshalAs(UnmanagedType.U4)] int dwStreamNumber, CopyMoveProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData);
+      internal delegate CopyMoveProgressResult NativeCopyMoveProgressRoutine([MarshalAs(UnmanagedType.I8)] long totalFileSize, [MarshalAs(UnmanagedType.I8)] long totalBytesTransferred, [MarshalAs(UnmanagedType.I8)] long streamSize, [MarshalAs(UnmanagedType.I8)] long streamBytesTransferred, [MarshalAs(UnmanagedType.U4)] uint dwStreamNumber, [MarshalAs(UnmanagedType.U4)] CopyMoveProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData);
 
       /// <summary>Replaces one file with another file, with the option of creating a backup copy of the original file. The replacement file assumes the name of the replaced file and its identity.</summary>
       /// <returns>
