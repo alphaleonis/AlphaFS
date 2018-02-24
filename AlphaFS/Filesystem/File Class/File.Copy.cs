@@ -862,7 +862,8 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         //cmr.Duration.Stop();
+         if (isSingleFileAction)
+            cmr._stopwatch.Stop();
 
 
          return cmr;
