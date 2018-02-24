@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version vNext  (xxxx-xx-xx)
+Version 2.2  (2018-02-xx)
 -----------
 
 ### Bugs Fixed
@@ -33,27 +33,19 @@ Version vNext  (xxxx-xx-xx)
 ### New Features
 
 - Issue #212: Provide a way to retrieve errors when you choose to `ContinueOnException`
-- Issue #306: Include `ShareInfoLevel.Info502` and set as a fallback in `GetShareInfoCore()`  (Thx damiarnold)
 - Issue #314: Added Feature: `Directory.GetFileSystemEntryInfo`  (Thx besoft)
 - Issue #322: Search files/folders using multiple filters. (Thx besoft)
-- Issue #326: Add parameter `bool preserveDates` and created overloaded `Directory.Copy` methods to support this.
-- Issue #335: Add overloaded methods to `File/Directory.TransferTimestamps` to apply to ReparsePoint.
 - Issue #336: Implement methods for `Directory` class: `CreateJunction`, `DeleteJunction` and `ExistsJunction`.
 - Issue #338: Add convenience method `Directory.IsEmpty`
 - Issue #342: Add instance method: `FileInfo.IsLocked()`
 - Issue #343: Add method `File.GetProcessForFileLock`
 - Issue #347: Implement method `Directory.CreateSymbolicLink`
 - Issue #348: Implement method `Directory.GetLinkTargetInfo`
-- Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
 - Issue #351: Enable copying of Directory symbolic links.
 - Issue #353: Modify method `Directory.GetFileSystemEntryInfo` to return `FileSystemEntryInfo` structure for directories supporting also root directories, e.g., `C:\`  (Thx besoft)
 - Issue #354: Add methods `File.GetFileId` and `Directory.GetFileId` to return a unique file identifier.  (Thx besoft)
-- Issue #357: Added new Windows 10 property: `DirectAccess` (Win32 `FILE_DAX_VOLUME`) to `VolumeInfo` class.
-- Issue #360: Add overloaded `Directory.EnumerateDirectories` methods that support `DirectoryEnumerationFilters`.  (Thx SignFinder)
 - Issue #370: Relative path from a full path  (Thx QbProg)
 - Issue #373: Improve method `Directory.CreateDirectory` to allow creating a folder consisting only of spaces.
-- Issue #385: Correct applied fileSystemRights operator in method `File.Create()`.
-- Issue #408: Add `FileSystemEntryInfo.Extension` string property.
 - Issue #414: Add additional `Network.Host` methods.
 - Issue #415: Added `ProcessContext` static class to determine the context of the current process.
 - Issue #422: Add `Copy-FileWithProgress.ps1` demonstrating file copy with progress report.
@@ -66,19 +58,27 @@ Version vNext  (xxxx-xx-xx)
 - Issue #277: `Directory.DeleteDirectoryCore()`: Eliminate recursion.
 - Issue #278: `Directory.DeleteEmptySubdirectoriesCore()`: Eliminate recursion.
 - Issue #303: `Path.Constants.cs`: Don't use `CurrentCulture`  (Thx HugoRoss)
+- Issue #306: Include `ShareInfoLevel.Info502` and set as a fallback in `GetShareInfoCore()`  (Thx damiarnold)
+- Issue #326: Add parameter `bool preserveDates` and created overloaded `Directory.Copy` methods to support this.
 - Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
+- Issue #335: Add overloaded methods to `File/Directory.TransferTimestamps` to apply to ReparsePoint.
 - Issue #341: Improve usage of method `NativeError.ThrowException` and `Marshal.GetLastWin32Error`
 - Issue #345: `AlreadyExistsException` should only throw message from 1 error.
+- Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
 - Issue #352: Ignore `NonInterpretedPathPrefix` in methods: `Path.GetFullPathCore` and `Path.GetLongPathCore`  (Thx besoft)
 - Issue #355: Methods throwing an `IOException` due to error code 17 (`ERROR_NOT_SAME_DEVICE`) now throw a specific exception (`NotSameDeviceException`)
+- Issue #357: Added new Windows 10 property: `DirectAccess` (Win32 `FILE_DAX_VOLUME`) to `VolumeInfo` class.
+- Issue #360: Add overloaded `Directory.EnumerateDirectories` methods that support `DirectoryEnumerationFilters`.  (Thx SignFinder)
 - Issue #364: Avoid unnecessary allocations from Random construction in FileSystemInfo  (Thx danmosemsft)
 - Issue #377: Rename enum member: `OperatingSystem.EnumOsName.WindowsServer` to: `OperatingSystem.EnumOsName.WindowsServer2016`
 - Issue #378: `DiskSpaceInfo` should respect `CultureInfo.CurrentCulture` for number formatting.
+- Issue #385: Correct applied fileSystemRights operator in method `File.Create()`.
 - Issue #387: Replace `handle.IsInvalid` checks with a call to method `NativeMethods.IsValidHandle()`.
 - Issue #388: Change method `Network.Host.EnumerateDrives()` return type from `string` to `DriveInfo`.
 - Issue #394: Improve percentage output of properties `DiskSpaceInfo`- `AvailableFreeSpacePercent` and `UsedSpacePercent`
 - Issue #401: CreateDirectory `ERROR_ACCESS_DENIED` reports parent folder.
 - Issue #402: Remove long path prefix from `NativeError.ThrowException` messages with paths.
+- Issue #408: Add `FileSystemEntryInfo.Extension` string property.
 - Issue #416: Rename property `DeviceInfo.Class` to `DeviceInfo.DeviceClass`
 
 ### Breaking Changes
