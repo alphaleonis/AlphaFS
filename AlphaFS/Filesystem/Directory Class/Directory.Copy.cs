@@ -773,10 +773,7 @@ namespace Alphaleonis.Win32.Filesystem
             cmr.TotalFolders = cmr.ErrorCode == Win32Errors.NO_ERROR ? 1 : 0;
          }
 
-
-         cmr._stopwatch.Stop();
-
-
+         
          return cmr;
       }
 

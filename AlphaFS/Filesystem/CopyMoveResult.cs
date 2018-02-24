@@ -33,8 +33,8 @@ namespace Alphaleonis.Win32.Filesystem
    public sealed class CopyMoveResult
    {
       #region Private Fields
-   	  
-      internal readonly Stopwatch _stopwatch;
+
+      [NonSerialized] private readonly Stopwatch _stopwatch;
 
       #endregion // Private Fields
       

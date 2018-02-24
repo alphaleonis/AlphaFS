@@ -300,7 +300,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileShare">A <see cref="FileShare"/> constant that determines how the file or directory will be shared by processes.</param>
       /// <param name="checkPath">.</param>
       /// <param name="continueOnException">
-      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       /// <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>
@@ -316,7 +316,7 @@ namespace Alphaleonis.Win32.Filesystem
          // When isFile == null, we're working with a device.
          // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),
          // the path string should be the following form: "\\.\X:"
-         // Do not use a trailing backslash (\), which indicates the root.
+         // Do not use a trailing backslash ('\'), which indicates the root.
 
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
@@ -353,11 +353,6 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (isAppend)
             {
-               // Issue #417: "Using a file opened in append mode will fail after a gc occurs"
-
-               //new FileStream(safeHandle, FileAccess.Write, NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0).Seek(0, SeekOrigin.End);
-
-
                var success = NativeMethods.SetFilePointerEx(safeHandle, 0, IntPtr.Zero, SeekOrigin.End);
 
                lastError = Marshal.GetLastWin32Error();

@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Initializes a new instance of the <see cref="FindFileSystemEntryInfo"/> class.</summary>
       /// <param name="transaction">The NTFS Kernel transaction, if used.</param>
-      /// <param name="isFolder">if set to <c>true</c> the path is a folder.</param>
+      /// <param name="isFolder">if set to <see langword="true"/> the path is a folder.</param>
       /// <param name="path">The path.</param>
       /// <param name="searchPattern">The wildcard search pattern.</param>
       /// <param name="options">The enumeration options.</param>

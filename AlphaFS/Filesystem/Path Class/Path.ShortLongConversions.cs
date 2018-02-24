@@ -270,7 +270,21 @@ namespace Alphaleonis.Win32.Filesystem
          switch (pathFormat)
          {
             case PathFormat.LongFullPath:
+               if (options != GetFullPathOptions.None)
+               {
+                  // If pathFormat equals LongFullPath it is possible that the trailing backslashg ('\') is not added or removed.
+                  // Prevent that.
+
+                  options &= ~GetFullPathOptions.CheckAdditional;
+                  options &= ~GetFullPathOptions.CheckInvalidPathChars;
+                  options &= ~GetFullPathOptions.FullCheck;
+                  options &= ~GetFullPathOptions.TrimEnd;
+                  
+                  path = ApplyFullPathOptions(path, options);
+               }
+
                return path;
+
 
             case PathFormat.FullPath:
                return GetLongPathCore(path, GetFullPathOptions.None);
