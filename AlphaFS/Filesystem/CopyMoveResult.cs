@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Private Fields
 
-      [NonSerialized] private readonly Stopwatch _stopwatch;
+      [NonSerialized] internal readonly Stopwatch _stopwatch;
 
       #endregion // Private Fields
       
