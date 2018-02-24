@@ -56,6 +56,7 @@ Version vNext  (xxxx-xx-xx)
 - Issue #408: Add `FileSystemEntryInfo.Extension` string property.
 - Issue #414: Add additional `Network.Host` methods.
 - Issue #415: Added `ProcessContext` static class to determine the context of the current process.
+- Issue #422: Add `Copy-FileWithProgress.ps1` demonstrating file copy with progress report.
 
 ### Improvements
 

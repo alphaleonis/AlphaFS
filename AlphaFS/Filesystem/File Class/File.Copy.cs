@@ -931,6 +931,8 @@ namespace Alphaleonis.Win32.Filesystem
             case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
             case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
 
+               // TODO 2018-02-24: Use destinationPathLp when destination folder does not exist.
+
                Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, isFolder, lastError, true, true);
                break;
                
