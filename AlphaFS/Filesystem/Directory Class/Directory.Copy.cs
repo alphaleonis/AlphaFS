@@ -774,6 +774,8 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          
+         cmr._stopwatch.Stop();
+
          return cmr;
       }
 
