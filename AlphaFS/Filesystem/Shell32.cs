@@ -628,11 +628,12 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Creates a path from a file URL.</summary>
-      /// <param name="urlPath">The URL.</param>
       /// <returns>
       /// <para>The file path. If no path can be created, <c>string.Empty</c> is returned.</para>
       /// <para>If <paramref name="urlPath"/> is <see langword="null"/>, <see langword="null"/> will also be returned.</para>
       /// </returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <param name="urlPath">The URL.</param>
       [SecurityCritical]
       internal static string PathCreateFromUrlAlloc(string urlPath)
       {

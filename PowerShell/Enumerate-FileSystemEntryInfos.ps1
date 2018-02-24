@@ -22,7 +22,7 @@
 
  [CmdletBinding()]
  Param(
-    [String]$Path = '.',
+    [String]$Path = "$Env:WinDir\System32",
     [String]$Filter = '*',
     [Switch]$Recurse,
     [Switch]$ShowProgress,
@@ -122,7 +122,7 @@ Function Invoke-GenericMethod {
         ++$Script:FsoCount
 
         # Example: Only allow files/folders with a certain extension.
-        $Private:findExtensions = ".txt", ".ini", ".log"
+        $Private:findExtensions = '.txt', '.ini', '.log'
 
         [Bool]$Private:gotMatch = $findExtensions -ccontains $fsei.Extension
 
@@ -160,6 +160,42 @@ Function Invoke-GenericMethod {
 
         # When $True the file system entry is returned.
         Return $gotMatch
+    }
+}
+
+
+[ScriptBlock]$RecursionFilter = {
+
+<#
+    .SYNOPSIS
+        Filter to traverse/skip directories during the enumeration.
+
+
+    .NOTE
+        The filter for traverse/skip only works on root level.
+#>
+
+    [OutputType([Bool])]
+    Param(
+        [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo]$fsei
+    )
+
+
+    Process {
+        # Example: Skip recursing into these folders.
+        $Private:skipFolders = 'drivers', 'DriverStore', 'LogFiles'
+
+        [Bool]$Private:gotMatch = $skipFolders -ccontains $fsei.FileName
+
+        If ($gotMatch) {
+            ++$Script:SkippedFolderCount
+
+            Write-Warning -Message ('Skip folder: {0}' -f $fsei.FileName)
+        }
+
+        
+        # When $True the directory is traversed.
+        Return (-not $gotMatch)
     }
 }
 
@@ -259,9 +295,10 @@ Function Enumerate-FileSystemEntryInfos {
 
 
         # Counters to keep track of stuff.
-        [Long]$Script:FsoCount      = 0
-        [Long]$Script:FoundFsoCount = 0
-        [Long]$Script:ErrorCount    = 0
+        [Long]$Script:FsoCount           = 0
+        [Long]$Script:FoundFsoCount      = 0
+        [Long]$Script:SkippedFolderCount = 0
+        [Long]$Script:ErrorCount         = 0
 
 
         # Used to abort the enumeration.
@@ -271,10 +308,14 @@ Function Enumerate-FileSystemEntryInfos {
 
         # The callback error handler.
         $dirEnumFilters.ErrorFilter = $ErrorFilter
-
-
+        
+                
         # The callback file/folder handler.
         $dirEnumFilters.InclusionFilter = $InclusionFilter
+
+
+        # The callback folder recursion handler.
+        $dirEnumFilters.RecursionFilter = $RecursionFilter
 
 
         # Enables backup privileges when run elevated; This allows for browsing folders which are normally inaccessible.
@@ -311,10 +352,10 @@ Function Enumerate-FileSystemEntryInfos {
 
 
     End {
-        [String]$Private:foundFsoText = $(If ($Null -ne $dirEnumFilters.InclusionFilter) { ('Found: [{0:N0}]' -f $FoundFsoCount) } Else { '' })
+        [String]$Private:foundFsoText = $(If ($Null -ne $dirEnumFilters.InclusionFilter) { (' Found: [{0:N0}] ' -f $FoundFsoCount) } Else {''})
 
         [Console]::ForegroundColor = [ConsoleColor]::Green
-        [Console]::WriteLine(('Duration: [{0}]  Processed: [{1:N0}] {2} Errors: [{3:N0}]' -f [Timespan]::FromMilliseconds($stopwatch.Elapsed.TotalMilliseconds), $FsoCount, $foundFsoText, $ErrorCount))
+        [Console]::WriteLine(('Duration: [{0}]  Processed: [{1:N0}] {2} Skipped Folders: [{3:N0}]  Errors: [{4:N0}]' -f [Timespan]::FromMilliseconds($stopwatch.Elapsed.TotalMilliseconds), $FsoCount, $foundFsoText, $SkippedFolderCount, $ErrorCount))
         [Console]::ResetColor()
     }
 }

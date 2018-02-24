@@ -75,7 +75,7 @@ namespace AlphaFS.UnitTest
          var skipFolders = new[] {"assembly", "WinSxS"};
 
          Console.WriteLine("Extensions to search for: {0}", string.Join(" | ", findExtensions));
-         Console.WriteLine("Directories to skip     : {0}\\{1}, {0}\\{2}", inputPath, skipFolders[0], skipFolders[1]);
+         Console.WriteLine("Root directories to skip     : {0}\\{1}, {0}\\{2}", inputPath, skipFolders[0], skipFolders[1]);
          Console.WriteLine();
 
 

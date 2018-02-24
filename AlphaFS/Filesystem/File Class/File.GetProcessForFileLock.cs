@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -41,6 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="InvalidOperationException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="filePath">The path to the file.</param>
       public static Collection<Process> GetProcessForFileLock(string filePath)
       {
@@ -59,6 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="InvalidOperationException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="filePath">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       public static Collection<Process> GetProcessForFileLock(string filePath, PathFormat pathFormat)
@@ -78,6 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="InvalidOperationException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="filePaths">A list with one or more file paths.</param>
       public static Collection<Process> GetProcessForFileLock(Collection<string> filePaths)
       {
@@ -96,6 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="InvalidOperationException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="filePaths">A list with one or more file paths.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       public static Collection<Process> GetProcessForFileLock(Collection<string> filePaths, PathFormat pathFormat)
@@ -115,6 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="InvalidOperationException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="filePath">The path to the file.</param>
       public static Collection<Process> GetProcessForFileLockTransacted(KernelTransaction transaction, string filePath)
@@ -134,6 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="InvalidOperationException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="filePath">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -154,6 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="InvalidOperationException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="filePaths">A list with one or more file paths.</param>
       public static Collection<Process> GetProcessForFileLockTransacted(KernelTransaction transaction, Collection<string> filePaths)
@@ -173,6 +181,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="InvalidOperationException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="filePaths">A list with one or more file paths.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -195,12 +204,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="InvalidOperationException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction"></param>
       /// <param name="filePaths">A list with one or more file paths.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Filesystem.NativeMethods.RmEndSession(System.UInt32)")]
       internal static Collection<Process> GetProcessForFileLockCore(KernelTransaction transaction, Collection<string> filePaths, PathFormat pathFormat)
       {
+         if (!NativeMethods.IsAtLeastWindowsVista)
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
+         
          if (null == filePaths)
             throw new ArgumentNullException("filePaths");
 
