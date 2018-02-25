@@ -193,7 +193,7 @@ Function Invoke-GenericMethod {
             Write-Warning -Message ('Skip folder: {0}' -f $fsei.FileName)
         }
 
-        
+
         # When $True the directory is traversed.
         Return (-not $gotMatch)
     }
@@ -308,8 +308,8 @@ Function Enumerate-FileSystemEntryInfos {
 
         # The callback error handler.
         $dirEnumFilters.ErrorFilter = $ErrorFilter
-        
-                
+
+
         # The callback file/folder handler.
         $dirEnumFilters.InclusionFilter = $InclusionFilter
 

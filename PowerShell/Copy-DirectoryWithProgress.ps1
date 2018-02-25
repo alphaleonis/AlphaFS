@@ -20,25 +20,25 @@
  #>
 
 
-Function Copy-FileWithProgress {
+Function Copy-FolderWithProgress {
 
 <#
     .SYNOPSIS
-        Copies an existing file to a new file. Overwriting a file of the same name is allowed.
-        CopyOptions can be specified, and the possibility of notifying the application of its progress through a callback function.
+        Copies a directory and its contents to a new location, CopyOptions can be specified,
+        and the possibility of notifying the application of its progress through a callback function.
 #>
 
     [OutputType([Alphaleonis.Win32.Filesystem.CopyMoveResult])]
     Param(
-        [String]$SourceFileFullPath,
-        [String]$DestinationFileFullPath,
+        [String]$SourceFolderFullPath,
+        [String]$DestinationFolderFullPath,
         [Alphaleonis.Win32.Filesystem.CopyOptions]$CopyOptions,
         [Alphaleonis.Win32.Filesystem.CopyMoveProgressRoutine]$Callback
     )
 
 
     Process {
-        [Alphaleonis.Win32.Filesystem.File]::Copy($SourceFileFullPath, $DestinationFileFullPath, $CopyOptions, $Callback, $Null)
+        [Alphaleonis.Win32.Filesystem.Directory]::Copy($SourceFolderFullPath, $DestinationFolderFullPath, $CopyOptions, $Callback, $Null)
     }
 }
 
@@ -71,11 +71,11 @@ Function UnitSizeToText {
 
 
 
-[ScriptBlock]$FileCopyProgressHandler = {
+[ScriptBlock]$FolderCopyProgressHandler = {
 
 <#
     .SYNOPSIS
-        The file copy progress handler.
+        The folder copy progress handler.
 #>
 
     [OutputType([Alphaleonis.Win32.Filesystem.CopyMoveProgressResult])]
@@ -111,20 +111,19 @@ Function UnitSizeToText {
         [Int]$Private:CALLBACK_STREAM_SWITCH = 1
 
 
-        If ($CallbackReason -eq $CALLBACK_STREAM_SWITCH) { $Script:AllBytesTransferred = $TotalFileSize }
+        # Add size of all copied files.
+        If ($CallbackReason -eq $CALLBACK_STREAM_SWITCH) { $Script:AllBytesTransferred += $TotalFileSize }
 
-        Else {
-            [Double]$Private:percent =  ($TotalBytesTransferred / $TotalFileSize * 100)
+        [Double]$Private:percent =  ($TotalBytesTransferred / $TotalFileSize * 100)
 
-            [String]$Private:activity = ('Copying file. Copied: {0} of {1}' -f (UnitSizeToText($TotalBytesTransferred)), (UnitSizeToText($TotalFileSize)))
+        [String]$Private:activity = ('Copying folder. Copied: {0}' -f (UnitSizeToText($AllBytesTransferred)))
 
-            # Write-Progress can slow things down CONSIDERABLY; Disable when there is no need for progress report.
-            Write-Progress -Activity $activity -Status ('{0:N2}%' -f $percent) -PercentComplete $percent
+        # Write-Progress can slow things down CONSIDERABLY; Disable when there is no need for progress report.
+        Write-Progress -Activity $activity -Status ('{0:N2}%' -f $percent) -PercentComplete $percent
 
 
-            # Possible Write-Progress alternative.
-            #$Host.UI.RawUI.WindowTitle = $
-        }
+        # Possible Write-Progress alternative.
+        #$Host.UI.RawUI.WindowTitle = $activity
 
 
         return [Alphaleonis.Win32.Filesystem.CopyMoveProgressResult]::Continue
@@ -132,7 +131,7 @@ Function UnitSizeToText {
 }
 
 
-Function DemoCopy-FileWithProgress {
+Function DemoCopy-FolderWithProgress {
 
 <#
     2018-02-25 Tested on:
@@ -154,17 +153,15 @@ Function DemoCopy-FileWithProgress {
         $Error.Clear()
 
 
-        # Specify an existing file to copy. The destination directory should also exist.
+        # Specify an existing folder to copy.
 
-        [String]$Private:file = 'my_file.iso'
-        [String]$Private:srcFileFullPath = [System.IO.Path]::Combine('C:\SourceDirectory', $file)
-        [String]$Private:dstFileFullPath = [System.IO.Path]::Combine('C:\DestinationDirectory', $file)
+        [String]$Private:srcFolderFullPath = 'C:\A Big Folder'
+        [String]$Private:dstFolderFullPath = "$Env:Temp\Copy-DirectoryWithProgress-Test"
 
 
         # Demo code: Used for assertion.
-        $Error.Clear()
         [Long]$Script:AllBytesTransferred = 0
-        [Bool]$Private:failed = $False
+        [Bool]$Private:failed = $True
 
 
         # Allow copy to overwrite an existing file.
@@ -173,11 +170,11 @@ Function DemoCopy-FileWithProgress {
 
 
     Process {
-        $Private:cmr = Copy-FileWithProgress `
-            -SourceFileFullPath      $srcFileFullPath `
-            -DestinationFileFullPath $dstFileFullPath `
-            -CopyOptions             $copyOptions `
-            -Callback                $FileCopyProgressHandler
+        $Private:cmr = Copy-FolderWithProgress `
+            -SourceFolderFullPath      $srcFolderFullPath `
+            -DestinationFolderFullPath $dstFolderFullPath `
+            -CopyOptions               $copyOptions `
+            -Callback                  $FolderCopyProgressHandler
     }
 
 
@@ -210,4 +207,4 @@ Function DemoCopy-FileWithProgress {
 
 Import-Module -Name 'PATH TO\AlphaFS.dll'
 
-DemoCopy-FileWithProgress
+DemoCopy-FolderWithProgress

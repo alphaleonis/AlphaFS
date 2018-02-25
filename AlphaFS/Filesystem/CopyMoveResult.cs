@@ -41,11 +41,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Constructors
 
-      /// <summary>Create a CopyMoveResult class instance for the Copy or Move action.
-      /// <remarks>Normally there is no need to manually call this constructor.</remarks>
-      /// </summary>
-      /// <param name="source">Indicates the source file or directory.</param>
-      /// <param name="destination">Indicates the destination file or directory.</param>
+      /// <summary>Initializes a CopyMoveResult instance for the Copy or Move action.</summary>
+      /// <param name="source">Indicates the full path to the source file or directory.</param>
+      /// <param name="destination">Indicates the full path to the destination file or directory.</param>
       private CopyMoveResult(string source, string destination)
       {
          Source = source;
@@ -57,11 +55,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Create a CopyMoveResult class instance for the Copy or Move action.
+      /// <summary>Initializes a CopyMoveResult instance for the Copy or Move action.
       /// <remarks>Normally there is no need to manually call this constructor.</remarks>
       /// </summary>
-      /// <param name="source">Indicates the source file or directory.</param>
-      /// <param name="destination">Indicates the destination file or directory.</param>
+      /// <param name="source">Indicates the full path to the source file or directory.</param>
+      /// <param name="destination">Indicates the full path to the destination file or directory.</param>
       /// <param name="isCopy">>When <see langword="true"/> the action is a Copy, Move otherwise.</param>
       /// <param name="isDirectory">When <see langword="true"/> indicates the sources is a directory; file otherwise.</param>
       /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise. This parameter is ignored for move operations.</param>
