@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path)
       {
-         return File.ExistsCore(true, null, path, PathFormat.RelativePath);
+         return File.ExistsCore(null, true, path, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path, PathFormat pathFormat)
       {
-         return File.ExistsCore(true, null, path, pathFormat);
+         return File.ExistsCore(null, true, path, pathFormat);
       }
 
       #region Transactional
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool ExistsTransacted(KernelTransaction transaction, string path)
       {
-         return File.ExistsCore(true, transaction, path, PathFormat.RelativePath);
+         return File.ExistsCore(transaction, true, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool ExistsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.ExistsCore(true, transaction, path, pathFormat);
+         return File.ExistsCore(transaction, true, path, pathFormat);
       }
 
       #endregion // Transactional

@@ -26,11 +26,15 @@ namespace Alphaleonis.Win32
       /// <summary>Use this to translate error codes into HRESULTs like 0x80070006 for ERROR_INVALID_HANDLE.</summary>
       public static int GetHrFromWin32Error(uint errorCode)
       {
-         return (int) unchecked(((int) 0x80070000) | errorCode);
+         return (int) unchecked((int) 0x80070000 | errorCode);
       }
 
-      // System Error Codes
+      // System Error Codes.
       // http://msdn.microsoft.com/en-us/library/windows/desktop/ms681381%28v=vs.85%29.aspx
+
+      // Win32 Error Codes.
+      // https://infosys.beckhoff.com/content/1033/tcdiagnostics/html/tcdiagnostics_win32_errorcodes.htm
+
 
       public const uint ERROR_INVALID_FILE_SIZE = 0xFFFFFFFF;
 
@@ -60,7 +64,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_BAD_ENVIRONMENT = 10;
       //public const uint ERROR_BAD_FORMAT = 11;
       //public const uint ERROR_INVALID_ACCESS = 12;
-      //public const uint ERROR_INVALID_DATA = 13;
+
+      /// <summary>(13) The data is invalid.</summary>
+      public const uint ERROR_INVALID_DATA = 13;
+
       //public const uint ERROR_OUTOFMEMORY = 14;
 
       /// <summary>(15) The system cannot find the drive specified.</summary>
@@ -106,7 +113,7 @@ namespace Alphaleonis.Win32
       public const uint ERROR_HANDLE_EOF = 38;
 
       //public const uint ERROR_HANDLE_DISK_FULL = 39;
-      //public const uint ERROR_NOT_SUPPORTED = 50;
+      public const uint ERROR_NOT_SUPPORTED = 50;
       //public const uint ERROR_REM_NOT_LIST = 51;
       //public const uint ERROR_DUP_NAME = 52;
 
@@ -188,7 +195,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_WAIT_NO_CHILDREN = 128;
       //public const uint ERROR_CHILD_NOT_COMPLETE = 129;
       //public const uint ERROR_DIRECT_ACCESS_HANDLE = 130;
-      //public const uint ERROR_NEGATIVE_SEEK = 131;
+
+      /// <summary>(131) An attempt was made to move the file pointer before the beginning of the file.</summary>
+      public const uint ERROR_NEGATIVE_SEEK = 131;
+
       //public const uint ERROR_SEEK_ON_DEVICE = 132;
       //public const uint ERROR_IS_JOIN_TARGET = 133;
       //public const uint ERROR_IS_JOINED = 134;
@@ -258,7 +268,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_RELOC_CHAIN_XEEDS_SEGLIM = 201;
       //public const uint ERROR_INFLOOP_IN_RELOC_CHAIN = 202;
 
-      //(203) The system could not find the environment option that was entered.
+      //// <summary>(203) The system could not find the environment option that was entered.</summary>
       //public const uint ERROR_ENVVAR_NOT_FOUND = 203;
 
       //public const uint ERROR_NO_SIGNAL_SENT = 205;
@@ -287,7 +297,7 @@ namespace Alphaleonis.Win32
       //public const uint WAIT_TIMEOUT = 258;   
 
       ///// <summary>(259) No more data is available.</summary>
-      //public const uint ERROR_NO_MORE_ITEMS = 259;
+      public const uint ERROR_NO_MORE_ITEMS = 259;
 
       //public const uint ERROR_CANNOT_COPY = 266;
 
@@ -416,7 +426,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_SET_POWER_STATE_VETOED = 1140;
       //public const uint ERROR_SET_POWER_STATE_FAILED = 1141;
       //public const uint ERROR_TOO_MANY_LINKS = 1142;
-      //public const uint ERROR_OLD_WIN_VERSION = 1150;
+
+      /// <summary>(1150) The specified program requires a newer version of Windows.</summary>
+      public const uint ERROR_OLD_WIN_VERSION = 1150;
+
       //public const uint ERROR_APP_WRONG_OS = 1151;
       //public const uint ERROR_SINGLE_INSTANCE_APP = 1152;
       //public const uint ERROR_RMODE_APP = 1153;
@@ -579,7 +592,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_INVALID_SUB_AUTHORITY = 1335;
       //public const uint ERROR_INVALID_ACL = 1336;
       //public const uint ERROR_INVALID_SID = 1337;
-      //public const uint ERROR_INVALID_SECURITY_DESCR = 1338;
+
+      /// <summary>(1338) The security descriptor structure is invalid.</summary>
+      public const uint ERROR_INVALID_SECURITY_DESCR = 1338;
+
       //public const uint ERROR_BAD_INHERITANCE_ACL = 1340;
       //public const uint ERROR_SERVER_DISABLED = 1341;
       //public const uint ERROR_SERVER_NOT_DISABLED = 1342;
@@ -1046,7 +1062,10 @@ namespace Alphaleonis.Win32
       public const uint ERROR_NOT_A_REPARSE_POINT = 4390;
 
       //public const uint ERROR_REPARSE_ATTRIBUTE_CONFLICT = 4391;
-      //public const uint ERROR_INVALID_REPARSE_DATA = 4392;
+
+      /// <summary>The data present in the reparse point buffer is invalid.</summary>
+      public const uint ERROR_INVALID_REPARSE_DATA = 4392;
+
       //public const uint ERROR_REPARSE_TAG_INVALID = 4393;
       //public const uint ERROR_REPARSE_TAG_MISMATCH = 4394;
       //public const uint ERROR_VOLUME_NOT_SIS_ENABLED = 4500;
@@ -1163,7 +1182,6 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_NO_USER_KEYS = 6006;
       //public const uint ERROR_FILE_NOT_ENCRYPTED = 6007;
       //public const uint ERROR_NOT_EXPORT_FORMAT = 6008;
-
 
       /// <summary>(6009) The specified file is read only.</summary>
       public const uint ERROR_FILE_READ_ONLY = 6009;
@@ -3927,10 +3945,10 @@ namespace Alphaleonis.Win32
       ///// <summary>Cannot open image file on the Remoteboot server.</summary>
       //public const uint NERR_CantOpenImageFile = 2514;
 
-      ///// <summary>Connecting to the Remoteboot server...</summary>
+      ///// <summary>Connecting to the Remoteboot server.</summary>
       //public const uint NERR_CallingRplSrvr = 2515;
 
-      ///// <summary>Connecting to the Remoteboot server...</summary>
+      ///// <summary>Connecting to the Remoteboot server.</summary>
       //public const uint NERR_StartingRplBoot = 2516;
 
       ///// <summary>Remote boot service was stopped; check the error log for the cause of the problem.</summary>

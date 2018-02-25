@@ -84,14 +84,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>The <see cref="DirectoryInfo"/> instance of the DFS root or link.</summary>
       public DirectoryInfo DirectoryInfo
       {
-         get
-         {
-            // Do not use ?? expression here.
-            if (_directoryInfo == null)
-               _directoryInfo = new DirectoryInfo(null, EntryPath, PathFormat.FullPath);
-
-            return _directoryInfo;
-         }
+         get { return _directoryInfo ?? (_directoryInfo = new DirectoryInfo(null, EntryPath, PathFormat.FullPath)); }
       }
 
       /// <summary>The comment of the DFS root or link.</summary>

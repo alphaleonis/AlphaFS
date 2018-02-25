@@ -44,9 +44,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
 
-      #region AlphaFS
 
-      #region Non-Transactional
+      #region AlphaFS
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
@@ -56,7 +55,6 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      #endregion // Non-Transactional
 
       #region Transactional
 
@@ -75,9 +73,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public FileInfo(KernelTransaction transaction, string fileName, PathFormat pathFormat)
       {
-         InitializeCore(false, transaction, fileName, pathFormat);
+         InitializeCore(transaction, false, fileName, pathFormat);
 
-         _name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fileName, false), pathFormat != PathFormat.LongFullPath);
+         _name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fileName), pathFormat != PathFormat.LongFullPath);
       }
 
       #endregion // Transacted
@@ -85,12 +83,11 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // AlphaFS
 
       #endregion // Constructors
-      
+
+
       #region Properties
 
       #region .NET
-
-      #region Directory
 
       /// <summary>Gets an instance of the parent directory.</summary>
       /// <value>A <see cref="DirectoryInfo"/> object representing the parent directory of this file.</value>
@@ -100,14 +97,11 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get
          {
-            string dirName = DirectoryName;
+            var dirName = DirectoryName;
             return dirName == null ? null : new DirectoryInfo(Transaction, dirName, PathFormat.FullPath);
          }
       }
 
-      #endregion // Directory
-
-      #region DirectoryName
 
       /// <summary>Gets a string representing the directory's full path.</summary>
       /// <value>A string representing the directory's full path.</value>
@@ -119,12 +113,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       public string DirectoryName
       {
-         [SecurityCritical] get { return Path.GetDirectoryName(FullPath, false); }
+         [SecurityCritical]
+         get { return Path.GetDirectoryName(FullPath, false); }
       }
 
-      #endregion // DirectoryName
-
-      #region Exists
 
       /// <summary>Gets a value indicating whether the file exists.</summary>
       /// <value><see langword="true"/> if the file exists; otherwise, <see langword="false"/>.</value>
@@ -144,8 +136,8 @@ namespace Alphaleonis.Win32.Filesystem
                if (DataInitialised == -1)
                   Refresh();
 
-               FileAttributes attrs = Win32AttributeData.dwFileAttributes;
-               return DataInitialised == 0 && attrs != (FileAttributes) (-1) && (attrs & FileAttributes.Directory) == 0;
+               var attrs = Win32AttributeData.dwFileAttributes;
+               return DataInitialised == 0 && File.HasValidAttributes(attrs) && !File.IsDirectory(attrs);
             }
             catch
             {
@@ -154,9 +146,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // Exists
-
-      #region IsReadOnly
 
       /// <summary>Gets or sets a value that determines if the current file is read only.</summary>
       /// <value><see langword="true"/> if the current file is read only; otherwise, <see langword="false"/>.</value>
@@ -180,9 +169,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // IsReadOnly
-
-      #region Length
 
       /// <summary>Gets the size, in bytes, of the current file.</summary>
       /// <value>The size of the current file in bytes.</value>
@@ -206,28 +192,27 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName);
+               NativeError.ThrowException(DataInitialised, FullName);
 
-            FileAttributes attrs = Win32AttributeData.dwFileAttributes;
 
-            // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
-            if (attrs == (FileAttributes) (-1))
-               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, LongFullName);
+            var attrs = Win32AttributeData.dwFileAttributes;
 
             // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
-            if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
-               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.CurrentCulture, Resources.Target_File_Is_A_Directory, LongFullName));
+            if (!File.HasValidAttributes(attrs))
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, FullName);
+
+
+            // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
+            if (File.IsDirectory(attrs))
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, FullName));
+
 
             return Win32AttributeData.FileSize;
          }
       }
 
-      #endregion // Length
-
-      #region Name
 
       private string _name;
-
       /// <summary>Gets the name of the file.</summary>
       /// <value>The name of the file.</value>
       /// <remarks>
@@ -240,8 +225,6 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get { return _name; }
       }
-
-      #endregion // Name
 
       #endregion // .NET
 

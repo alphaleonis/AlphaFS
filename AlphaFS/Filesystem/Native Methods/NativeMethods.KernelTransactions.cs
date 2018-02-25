@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If the function fails, the return value is INVALID_HANDLE_VALUE. To get extended error information, call the GetLastError
       ///   function.</para>
       /// </returns>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       internal static extern SafeKernelTransactionHandle CreateTransaction([MarshalAs(UnmanagedType.LPStruct)] Security.NativeMethods.SecurityAttributes lpTransactionAttributes, IntPtr uow, [MarshalAs(UnmanagedType.U4)] uint createOptions, [MarshalAs(UnmanagedType.U4)] uint isolationLevel, [MarshalAs(UnmanagedType.U4)] uint isolationFlags, [MarshalAs(UnmanagedType.U4)] int timeout, [MarshalAs(UnmanagedType.LPWStr)] string description);
 
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If the function succeeds, the return value is nonzero.</para>
       ///   <para>If the function fails, the return value is 0 (zero). To get extended error information, call the GetLastError function.</para>
       /// </returns>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool CommitTransaction(SafeHandle hTrans);
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If the function succeeds, the return value is nonzero.</para>
       ///   <para>If the function fails, the return value is zero. To get extended error information, call the GetLastError function. </para>
       /// </returns>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool RollbackTransaction(SafeHandle hTrans);

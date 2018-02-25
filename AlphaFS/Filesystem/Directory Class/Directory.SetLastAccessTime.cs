@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime)
       {
-         File.SetFsoDateTimeCore(true, null, path, null, lastAccessTime.ToUniversalTime(), null, false, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(null, path, null, lastAccessTime.ToUniversalTime(), null, false, PathFormat.RelativePath);
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc)
       {
-         File.SetFsoDateTimeCore(true, null, path, null, lastAccessTimeUtc, null, false, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(null, path, null, lastAccessTimeUtc, null, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, null, path, null, lastAccessTime.ToUniversalTime(), null, false, pathFormat);
+         File.SetFsoDateTimeCore(null, path, null, lastAccessTime.ToUniversalTime(), null, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Sets the date and time that the specified directory was last accessed.</summary>
@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, null, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, pathFormat);
+         File.SetFsoDateTimeCore(null, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, pathFormat);
       }
 
 
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, null, path, null, lastAccessTimeUtc, null, false, pathFormat);
+         File.SetFsoDateTimeCore(null, path, null, lastAccessTimeUtc, null, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, null, path, null, lastAccessTimeUtc, null, modifyReparsePoint, pathFormat);
+         File.SetFsoDateTimeCore(null, path, null, lastAccessTimeUtc, null, modifyReparsePoint, pathFormat);
       }
 
       #region Transactional
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, null, lastAccessTime.ToUniversalTime(), null, false, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(transaction, path, null, lastAccessTime.ToUniversalTime(), null, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the date and time that the specified directory was last accessed.</summary>
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, null, lastAccessTime.ToUniversalTime(), null, false, pathFormat);
+         File.SetFsoDateTimeCore(transaction, path, null, lastAccessTime.ToUniversalTime(), null, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Sets the date and time that the specified directory was last accessed.</summary>
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, pathFormat);
+         File.SetFsoDateTimeCore(transaction, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, pathFormat);
       }
 
 
@@ -138,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, null, lastAccessTimeUtc, null, false, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(transaction, path, null, lastAccessTimeUtc, null, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
@@ -149,7 +149,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, null, lastAccessTimeUtc, null, false, pathFormat);
+         File.SetFsoDateTimeCore(transaction, path, null, lastAccessTimeUtc, null, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
@@ -161,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, null, lastAccessTimeUtc, null, modifyReparsePoint, pathFormat);
+         File.SetFsoDateTimeCore(transaction, path, null, lastAccessTimeUtc, null, modifyReparsePoint, pathFormat);
       }
       
       #endregion // Transactional

@@ -42,6 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
       
+
       /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
       /// <returns>The volume information, root information, or both for the specified path, or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</returns>
       /// <exception cref="ArgumentException"/>
@@ -54,6 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetDirectoryRootCore(null, path, pathFormat);
       }
+
 
       #region Transactional
 
@@ -86,6 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
       
       #endregion // Transactional
 
+
       #region Internal Methods
 
       /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
@@ -99,13 +102,19 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string GetDirectoryRootCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Path.CheckInvalidUncPath(path);
+         var pathLp = path;
 
-         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
+         if (pathFormat != PathFormat.LongFullPath)
+         {
+            Path.CheckInvalidUncPath(path);
 
-         pathLp = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false);
+            pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
 
-         string rootPath = Path.GetPathRoot(pathLp, false);
+            pathLp = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false);
+         }
+         
+
+         var rootPath = Path.GetPathRoot(pathLp, false);
 
          return Utils.IsNullOrWhiteSpace(rootPath) ? null : rootPath;
       }

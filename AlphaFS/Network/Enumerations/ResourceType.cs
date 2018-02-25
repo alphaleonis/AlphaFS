@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>RESOURCETYPE_PRINT
          /// <para>All print resources.</para>
          /// </summary>
-         Print = 2,
+         Print = 2
       }
    }
 }

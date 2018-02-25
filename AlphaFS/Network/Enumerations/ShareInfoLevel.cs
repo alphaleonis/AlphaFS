@@ -27,20 +27,30 @@ namespace Alphaleonis.Win32.Network
       /// <summary>No specific information level used.</summary>
       None = 0,
 
+
       /// <summary>Contains information about the shared resource, including the name and type of the resource, and a comment associated with the resource.</summary>
       Info1 = 1,
+
 
       /// <summary>Contains information about the shared resource, including the name, type, and permissions of the resource, comments associated with the resource,
       /// the maximum number of concurrent connections, the number of current connections, the local path for the resource, and a password for the current connection.
       /// </summary>
       Info2 = 2,
 
+
+      /// <summary>Contains information about the shared resource, including the name of the resource, type, and permissions,
+      /// the number of connections, security descriptor, and other pertinent information.
+      /// </summary>
+      Info502 = 502,
+
+
       /// <summary>Contains information about the shared resource, including the server name, name of the resource, type, and permissions,
       /// the number of connections, and other pertinent information.
       /// </summary>
       Info503 = 503,
 
+
       /// <summary>Contains information about the shared resource.</summary>
-      Info1005 = 1005,
+      Info1005 = 1005
    }
 }

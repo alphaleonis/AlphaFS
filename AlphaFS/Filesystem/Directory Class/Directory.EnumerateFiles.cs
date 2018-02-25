@@ -43,8 +43,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
@@ -63,8 +64,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, null, null, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>Returns an enumerable collection of file names that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
@@ -87,12 +89,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, SearchOption searchOption)
       {
-         var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
-
-         return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, options, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, searchOption, null, null, PathFormat.RelativePath);
       }
 
       #endregion // .NET
+
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
@@ -107,9 +108,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, Path.WildcardStarMatchAll, null, null, null, pathFormat);
       }
-
 
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
@@ -128,10 +128,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, DirectoryEnumerationOptions.Files, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, null, null, null, pathFormat);
       }
+
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
@@ -153,13 +155,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, SearchOption searchOption, PathFormat pathFormat)
       {
-         var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
-
-         return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, options, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, searchOption, null, null, pathFormat);
       }
-
 
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
@@ -175,12 +175,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, DirectoryEnumerationOptions options)
       {
-         // Adhere to the method name.
-         options &= ~DirectoryEnumerationOptions.Folders;  // Remove enumeration of directories.
-         options |= DirectoryEnumerationOptions.Files;     // Add enumeration of files.
-
-         return EnumerateFileSystemEntryInfosCore<string>(null, path, Path.WildcardStarMatchAll, options, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, Path.WildcardStarMatchAll, null, options, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
@@ -196,13 +193,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         // Adhere to the method name.
-         options &= ~DirectoryEnumerationOptions.Folders;
-         options |= DirectoryEnumerationOptions.Files;
-
-         return EnumerateFileSystemEntryInfosCore<string>(null, path, Path.WildcardStarMatchAll, options, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, Path.WildcardStarMatchAll, null, options, null, pathFormat);
       }
-
 
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
@@ -221,14 +213,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, DirectoryEnumerationOptions options)
       {
-         // Adhere to the method name.
-         options &= ~DirectoryEnumerationOptions.Folders;
-         options |= DirectoryEnumerationOptions.Files;
-
-         return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, options, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, null, options, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
@@ -247,18 +237,182 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         // Adhere to the method name.
-         options &= ~DirectoryEnumerationOptions.Folders;
-         options |= DirectoryEnumerationOptions.Files;
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, null, options, null, pathFormat);
+      }
 
-         return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, options, pathFormat);
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateFiles(string path, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, Path.WildcardStarMatchAll, null, null, filters, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateFiles(string path, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, Path.WildcardStarMatchAll, null, null, filters, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, null, null, filters, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, null, null, filters, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateFiles(string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, Path.WildcardStarMatchAll, null, options, filters, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateFiles(string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, Path.WildcardStarMatchAll, null, options, filters, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, null, options, filters, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, null, options, filters, pathFormat);
       }
 
 
 
-      #region Transactional
       
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
@@ -273,9 +427,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath);
       }
-
 
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
@@ -294,10 +447,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, null, null, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
@@ -319,13 +474,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   should include only the current directory or should include all subdirectories.
       /// </param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
-
-         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, options, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, searchOption, null, null, PathFormat.RelativePath);
       }
-
 
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
@@ -342,9 +495,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, Path.WildcardStarMatchAll, null, null, null, pathFormat);
       }
-
 
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
@@ -364,10 +516,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, DirectoryEnumerationOptions.Files, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, null, null, null, pathFormat);
       }
+
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
@@ -390,13 +544,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, PathFormat pathFormat)
       {
-         var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
-
-         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, options, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, searchOption, null, null, pathFormat);
       }
-
 
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
@@ -413,12 +565,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
       {
-         // Adhere to the method name.
-         options &= ~DirectoryEnumerationOptions.Folders;
-         options |= DirectoryEnumerationOptions.Files;
-
-         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, Path.WildcardStarMatchAll, options, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, Path.WildcardStarMatchAll, null, options, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
@@ -435,13 +584,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         // Adhere to the method name.
-         options &= ~DirectoryEnumerationOptions.Folders;
-         options |= DirectoryEnumerationOptions.Files;
-
-         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, Path.WildcardStarMatchAll, options, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, Path.WildcardStarMatchAll, null, options, null, pathFormat);
       }
-
 
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
@@ -461,14 +605,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options)
       {
-         // Adhere to the method name.
-         options &= ~DirectoryEnumerationOptions.Folders;
-         options |= DirectoryEnumerationOptions.Files;
-
-         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, options, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, null, options, null, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
@@ -488,15 +630,186 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
       public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         // Adhere to the method name.
-         options &= ~DirectoryEnumerationOptions.Folders;
-         options |= DirectoryEnumerationOptions.Files;
-
-         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, options, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, null, options, null, pathFormat);
       }
 
-      #endregion // Transactional
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, Path.WildcardStarMatchAll, null, null, filters, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, Path.WildcardStarMatchAll, null, null, filters, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, null, null, filters, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, null, null, filters, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, Path.WildcardStarMatchAll, null, options, filters, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, Path.WildcardStarMatchAll, null, options, filters, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, null, options, filters, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      {
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, null, options, filters, pathFormat);
+      }
    }
 }

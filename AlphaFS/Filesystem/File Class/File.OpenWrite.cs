@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(string path)
       {
-         return Open(path, FileMode.OpenOrCreate, FileAccess.Write);
+         return Open(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
       }
 
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(string path, PathFormat pathFormat)
       {
-         return Open(path, FileMode.OpenOrCreate, FileAccess.Write, pathFormat);
+         return Open(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWriteTransacted(KernelTransaction transaction, string path)
       {
-         return OpenTransacted(transaction, path, FileMode.OpenOrCreate, FileAccess.Write);
+         return OpenTransacted(transaction, path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
       }
 
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWriteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenTransacted(transaction, path, FileMode.OpenOrCreate, FileAccess.Write, pathFormat);
+         return OpenTransacted(transaction, path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, pathFormat);
       }
    }
 }

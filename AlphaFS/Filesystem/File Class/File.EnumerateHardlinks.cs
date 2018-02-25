@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -33,9 +34,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnumerateHardlinks
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">The name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(string path, PathFormat pathFormat)
@@ -44,8 +46,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <param name="path">The name of the file.</param>
       /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <param name="path">The name of the file.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(string path)
@@ -54,10 +57,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinksTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
@@ -66,9 +70,10 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinksTransacted(KernelTransaction transaction, string path)
@@ -81,41 +86,38 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internal Methods
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <exception cref="PlatformNotSupportedException"/>
+      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       internal static IEnumerable<string> EnumerateHardlinksCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
 
-         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // Default buffer length, will be extended if needed, although this should not happen.
          uint length = NativeMethods.MaxPathUnicode;
-         StringBuilder builder = new StringBuilder((int)length);
+         var builder = new StringBuilder((int) length);
 
 
       getFindFirstFileName:
 
-         using (SafeFindFileHandle handle = transaction == null
+         using (var safeHandle = transaction == null
 
-            // FindFirstFileName() / FindFirstFileNameTransacted()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // FindFirstFileNameW() / FindFirstFileNameTransactedW() / FindNextFileNameW()
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+            // 2017-05-30: FindFirstFileNameW() MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
-            ? NativeMethods.FindFirstFileName(pathLp, 0, out length, builder)
-            : NativeMethods.FindFirstFileNameTransacted(pathLp, 0, out length, builder, transaction.SafeHandle))
+            ? NativeMethods.FindFirstFileNameW(pathLp, 0, out length, builder)
+            : NativeMethods.FindFirstFileNameTransactedW(pathLp, 0, out length, builder, transaction.SafeHandle))
          {
-         	int lastError = Marshal.GetLastWin32Error();
+            var lastError = Marshal.GetLastWin32Error();
 
-            if (handle.IsInvalid)
+            if (!NativeMethods.IsValidHandle(safeHandle, false))
             {
-               handle.Close();
-               
                switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
@@ -132,12 +134,9 @@ namespace Alphaleonis.Win32.Filesystem
             yield return builder.ToString();
 
 
-            //length = NativeMethods.MaxPathUnicode;
-            //builder = new StringBuilder((int)length);
-
             do
             {
-               while (!NativeMethods.FindNextFileName(handle, out length, builder))
+               while (!NativeMethods.FindNextFileNameW(safeHandle, out length, builder))
                {
                   lastError = Marshal.GetLastWin32Error();
 
@@ -152,11 +151,12 @@ namespace Alphaleonis.Win32.Filesystem
                         continue;
 
                      default:
-                        //If the function fails, the return value is zero (0).
+                        // If the function fails, the return value is zero (0).
                         NativeError.ThrowException(lastError);
                         break;
                   }
                }
+
 
                yield return builder.ToString();
 

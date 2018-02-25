@@ -77,10 +77,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (path != null)
          {
-            int rootLength = GetRootLength(path, checkInvalidPathChars);
+            var rootLength = GetRootLength(path, checkInvalidPathChars);
             if (path.Length > rootLength)
             {
-               int length = path.Length;
+               var length = path.Length;
                if (length == rootLength)
                   return null;
 
@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (path == null)
             return null;
 
-         DirectoryInfo di = Directory.GetParentCore(transaction, path, PathFormat.RelativePath);
+         var di = Directory.GetParentCore(transaction, path, PathFormat.RelativePath);
          return di != null && di.Parent != null ? di.Name : null;
       }
 
@@ -171,11 +171,11 @@ namespace Alphaleonis.Win32.Filesystem
          if (checkInvalidPathChars)
             CheckInvalidPathChars(path, false, true);
 
-         int length = path.Length;
-         int index = length;
+         var length = path.Length;
+         var index = length;
          while (--index >= 0)
          {
-            char ch = path[index];
+            var ch = path[index];
             if (ch == ExtensionSeparatorChar)
                return index != length - 1 ? path.Substring(index, length - index) : string.Empty;
 
@@ -228,11 +228,11 @@ namespace Alphaleonis.Win32.Filesystem
          if (checkInvalidPathChars)
             CheckInvalidPathChars(path, false, true);
 
-         int length = path.Length;
-         int index = length;
+         var length = path.Length;
+         var index = length;
          while (--index >= 0)
          {
-            char ch = path[index];
+            var ch = path[index];
             if (IsDVsc(ch, null))
                return path.Substring(index + 1, length - index - 1);
          }
@@ -347,20 +347,22 @@ namespace Alphaleonis.Win32.Filesystem
          if (path.Trim().Length == 0)
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
-         string pathRp = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None, false);
+
+         var pathRp = GetRegularPathCore(path,checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None, false);
 
          var rootLengthPath = GetRootLength(path, false);
          var rootLengthPathRp = GetRootLength(pathRp, false);
 
+
          // Check if pathRp is an empty string.
          if (rootLengthPathRp == 0)
-            if (path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase))
+         {
+            if (path.StartsWith(LongPathPrefix, StringComparison.Ordinal))
                return GetLongPathCore(path.Substring(0, rootLengthPath), GetFullPathOptions.None);
+         }
 
-         if (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase))
-            return GetLongPathCore(pathRp.Substring(0, rootLengthPathRp), GetFullPathOptions.None);
 
-         return path.Substring(0, rootLengthPath);
+         return path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase) ? GetLongPathCore(pathRp.Substring(0, rootLengthPathRp), GetFullPathOptions.None) : path.Substring(0, rootLengthPath);
       }
 
       #endregion // GetPathRoot

@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Transaction_Invalid" xml:space="preserve">
     <value>Invalid transaction object.</value>
@@ -165,9 +165,6 @@
   <data name="UNC_Path_Should_Match_Format" xml:space="preserve">
     <value>Network share path should match the format: \\server\share</value>
   </data>
-  <data name="Unlock_Position_Negative" xml:space="preserve">
-    <value>Backup FileStream Unlock Position must not be negative.</value>
-  </data>
   <data name="Negative_Lock_Length" xml:space="preserve">
     <value>Lock length cannot be negative.</value>
   </data>
@@ -177,7 +174,7 @@
   <data name="Negative_Length" xml:space="preserve">
     <value>Length cannot be negative.</value>
   </data>
-  <data name="Source_Offset_And_Length_Outside_Bounds" xml:space="preserve">
+  <data name="Source_OffsetAndLength_Outside_Bounds" xml:space="preserve">
     <value>Source offset and length outside the bounds of the array</value>
   </data>
   <data name="Privilege_Name_Cannot_Be_Empty" xml:space="preserve">
@@ -185,9 +182,6 @@
   </data>
   <data name="Cannot_Create_Directory" xml:space="preserve">
     <value>Cannot create directory.</value>
-  </data>
-  <data name="Requires_Windows_Vista_Or_Higher" xml:space="preserve">
-    <value>This method requires Windows Vista or higher.</value>
   </data>
   <data name="Target_Directory_Is_A_File" xml:space="preserve">
     <value>The target directory is a file, not a directory: [{0}]</value>
@@ -219,11 +213,8 @@
   <data name="Invalid_Stream_Name" xml:space="preserve">
     <value>Invalid stream name.</value>
   </data>
-  <data name="Not_A_Reparse_Point" xml:space="preserve">
-    <value>The file or directory is not a reparse point.</value>
-  </data>
   <data name="File_Or_Directory_Already_Exists" xml:space="preserve">
-    <value>The file or directory already exists.</value>
+    <value>The file or directory already exists</value>
   </data>
   <data name="Destination_Buffer_Not_Large_Enough" xml:space="preserve">
     <value>Destination buffer not large enough for the requested operation.</value>
@@ -235,13 +226,40 @@
   <data name="Not_A_Valid_Guid" xml:space="preserve">
     <value>Argument is not a valid Volume GUID.</value>
   </data>
-  <data name="Device_Not_Ready" xml:space="preserve">
-    <value>The device is not ready.</value>
-  </data>
   <data name="Invalid_Subpath" xml:space="preserve">
     <value>Invalid Subpath</value>
   </data>
   <data name="Handle_Is_Closed" xml:space="preserve">
     <value>The handle is closed.</value>
+  </data>
+  <data name="Invalid_Reparse_Data" xml:space="preserve">
+    <value>The data present in the reparse point buffer is invalid</value>
+  </data>
+  <data name="Network_Path_Not_Allowed" xml:space="preserve">
+    <value>Network path is not allowed for directory junction: [{0}]</value>
+  </data>
+  <data name="MoveOptionsDelayUntilReboot_Not_Allowed_With_MoveOptionsCopyAllowed" xml:space="preserve">
+    <value>MoveOptions.CopyAllowed is not allowed when using the MoveOptions.DelayUntilReboot flag.</value>
+  </data>
+  <data name="MoveOptionsDelayUntilReboot_Not_Allowed_With_NetworkPath" xml:space="preserve">
+    <value>MoveOptions.DelayUntilReboot is not allowed when using a network path.</value>
+  </data>
+  <data name="Junction_And_Target_Must_Be_On_The_Same_Drive" xml:space="preserve">
+    <value>The target directory of the directory junction must be on the same local drive.</value>
+  </data>
+  <data name="Directory_Is_Not_A_MountPoint" xml:space="preserve">
+    <value>The directory is not a mount point: [{0}]</value>
+  </data>
+  <data name="InvalidDriveLetterArgument" xml:space="preserve">
+    <value>Argument must be a drive letter: "C", RootDir: "C:\" or UNC path: "\\server\share"</value>
+  </data>
+  <data name="GetFullPathOptions_Add_And_Remove_DirectorySeparator_Invalid" xml:space="preserve">
+    <value>Cannot add and remove trailing DirectorySeparator simultaneously.</value>
+  </data>
+  <data name="No_Drive_Letters_Available" xml:space="preserve">
+    <value>No drive letters available.</value>
+  </data>
+  <data name="GetCurrentWindowsIdentityFailed" xml:space="preserve">
+    <value>Failed to get the current WindowsIdentity.</value>
   </data>
 </root>

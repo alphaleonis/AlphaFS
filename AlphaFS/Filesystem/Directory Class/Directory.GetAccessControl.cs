@@ -21,7 +21,6 @@
 
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Security;
@@ -90,11 +89,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <param name="handle">A <see cref="SafeHandle"/> to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
+      /// <param name="handle">A <see cref="SafeFileHandle"/> to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(SafeFileHandle handle)
       {
-         return File.GetAccessControlHandleCore<DirectorySecurity>(false, true, handle, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, SecurityInformation.None);
+         return File.GetAccessControlHandleCore<DirectorySecurity>(false, true, handle, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, SECURITY_INFORMATION.None);
       }
 
       /// <summary>[AlphaFS] Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for a particular directory handle.</summary>
@@ -102,12 +101,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <param name="handle">A <see cref="SafeHandle"/> to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
+      /// <param name="handle">A <see cref="SafeFileHandle"/> to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
       /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(SafeFileHandle handle, AccessControlSections includeSections)
       {
-         return File.GetAccessControlHandleCore<DirectorySecurity>(false, true, handle, includeSections, SecurityInformation.None);
+         return File.GetAccessControlHandleCore<DirectorySecurity>(false, true, handle, includeSections, SECURITY_INFORMATION.None);
       }
    }
 }

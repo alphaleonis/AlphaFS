@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// <summary>Represents information about a file system entry.
    /// <para>This class cannot be inherited.</para>
    /// </summary>
-   [SerializableAttribute]
+   [Serializable]
    [SecurityCritical]
    public sealed class FileSystemEntryInfo
    {
@@ -40,50 +40,62 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Properties
 
-      /// <summary>Gets the 8.3 version of the filename.</summary>
-      /// <value>the 8.3 version of the filename.</value>
+
+      /// <summary>Returns the <see cref="FullPath"/> of the <see cref="FileSystemEntryInfo"/> instance.</summary>
+      public override string ToString()
+      {
+         return FullPath;
+      }
+
+
+
+
+
+      /// <summary>The instance 8.3 version of the filename.</summary>
+      /// <remarks>This property is always empty when <see cref="NativeMethods.FINDEX_INFO_LEVELS.Basic"/> is used.</remarks>
       public string AlternateFileName
       {
          get { return Win32FindData.cAlternateFileName; }
       }
 
 
-      /// <summary>Gets the attributes.</summary>
-      /// <value>The attributes.</value>
+      /// <summary>The instance attributes.</summary>
       public FileAttributes Attributes
       {
          get { return Win32FindData.dwFileAttributes; }
       }
 
 
-      /// <summary>Gets the time this entry was created.</summary>
-      /// <value>The time this entry was created.</value>
+      /// <summary>The instance creation time.</summary>
       public DateTime CreationTime
       {
          get { return CreationTimeUtc.ToLocalTime(); }
       }
 
 
-      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was created.</summary>
-      /// <value>The time, in coordinated universal time (UTC), this entry was created.</value>
+      /// <summary>The instance creation time, in coordinated universal time (UTC).</summary>
       public DateTime CreationTimeUtc
       {
          get { return DateTime.FromFileTimeUtc(Win32FindData.ftCreationTime); }
       }
 
 
-      /// <summary>Gets the name of the file.</summary>
-      /// <value>The name of the file.</value>
+      /// <summary>The instance file extension.</summary>
+      public string Extension
+      {
+         get { return Path.GetExtension(Win32FindData.cFileName, false); }
+      }
+
+
+      /// <summary>The instance file name.</summary>
       public string FileName
       {
          get { return Win32FindData.cFileName; }
       }
 
 
-      /// <summary>Gets the size of the file.</summary>
-      /// <value>The size of the file.</value>
+      /// <summary>The instance file size.</summary>
       public long FileSize
       {
          get { return NativeMethods.ToLong(Win32FindData.nFileSizeHigh, Win32FindData.nFileSizeLow); }
@@ -91,11 +103,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       private string _fullPath;
-
-      /// <summary>The full path of the file system object.</summary>
+      /// <summary>The instance full path.</summary>
       public string FullPath
       {
          get { return _fullPath; }
+
          set
          {
             LongFullPath = value;
@@ -104,112 +116,142 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Gets a value indicating whether this instance is compressed.</summary>
-      /// <value><see langword="true"/> if this instance is compressed; otherwise, <see langword="false"/>.</value>
-      /// <remarks>
-      /// It is not possible to change the compression status of a File object by using the SetAttributes method.
-      /// Instead, you must actually compress the file using either a compression tool or one of the classes in the <see cref="System.IO.Compression"/> namespace.
-      /// </remarks>
+      /// <summary>The instance is a candidate for backup or removal. </summary>
+      public bool IsArchive
+      {
+         get { return File.HasValidAttributes(Attributes) && (Attributes & FileAttributes.Archive) != 0; }
+      }
+
+
+      /// <summary>The instance is compressed.</summary>
       public bool IsCompressed
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Compressed) != 0; }
+         get { return File.HasValidAttributes(Attributes) && (Attributes & FileAttributes.Compressed) != 0; }
       }
 
 
-      /// <summary>Gets a value indicating whether this instance is hidden, and thus is not included in an ordinary directory listing.</summary>
-      /// <value><see langword="true"/> if this instance is hidden; otherwise, <see langword="false"/>.</value>
-      public bool IsHidden
+      /// <summary>Reserved for future use.</summary>
+      public bool IsDevice
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Hidden) != 0; }
+         get { return File.HasValidAttributes(Attributes) && (Attributes & FileAttributes.Device) != 0; }
       }
 
 
-      /// <summary>Gets a value indicating whether this instance represents a directory.</summary>
-      /// <value><see langword="true"/> if this instance represents a directory; otherwise, <see langword="false"/>.</value>
+      /// <summary>The instance is a directory.</summary>
       public bool IsDirectory
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Directory) != 0; }
+         get { return File.IsDirectory(Attributes); }
       }
 
 
-      /// <summary>Gets a value indicating whether this instance is encrypted (EFS).</summary>
-      /// <value><see langword="true"/> if this instance is encrypted (EFS); otherwise, <see langword="false"/>.</value>
-      /// <remarks>
-      /// For a file, this means that all data in the file is encrypted.
-      /// For a directory, this means that encryption is the default for newly created files and directories.
-      /// </remarks>
+      /// <summary>The instance is encrypted. For a file, this means that all data in the file is encrypted. For a directory, this means that encryption is the default for newly created files and directories.</summary>
       public bool IsEncrypted
       {
-         get { return Attributes != (FileAttributes) (-1) && (Attributes & FileAttributes.Encrypted) != 0; }
+         get { return File.HasValidAttributes(Attributes) && (Attributes & FileAttributes.Encrypted) != 0; }
       }
 
 
-      /// <summary>Gets a value indicating whether this instance is a mount point.</summary>
-      /// <value><see langword="true"/> if this instance is a mount point; otherwise, <see langword="false"/>.</value>
+      /// <summary>The instance is hidden, and thus is not included in an ordinary directory listing.</summary>
+      public bool IsHidden
+      {
+         get { return File.IsHidden(Attributes); }
+      }
+
+
+      /// <summary>The instance is a mount point. Applicable to local directories and local volumes.</summary>
       public bool IsMountPoint
       {
          get { return ReparsePointTag == ReparsePointTag.MountPoint; }
       }
 
 
-      /// <summary>Gets a value indicating whether this instance is offline. The data of the file is not immediately available.</summary>
-      /// <value><see langword="true"/> if this instance is offline; otherwise, <see langword="false"/>.</value>
+      /// <summary>The instance is a standard file that has no special attributes. This attribute is valid only if it is used alone.</summary>
+      public bool IsNormal
+      {
+         get { return File.HasValidAttributes(Attributes) && (Attributes & FileAttributes.Normal) != 0; }
+      }
+
+
+      /// <summary>The instance will not be indexed by the operating system's content indexing service.</summary>
+      public bool IsNotContentIndexed
+      {
+         get { return File.HasValidAttributes(Attributes) && (Attributes & FileAttributes.NotContentIndexed) != 0; }
+      }
+
+
+      /// <summary>The instance is offline. The data of the file is not immediately available.</summary>
       public bool IsOffline
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Offline) != 0; }
+         get { return File.HasValidAttributes(Attributes) && (Attributes & FileAttributes.Offline) != 0; }
       }
 
 
-      /// <summary>Gets a value indicating whether this instance is read-only.</summary>
-      /// <value><see langword="true"/> if this instance is read-only; otherwise, <see langword="false"/>.</value>
+      /// <summary>The instance is read-only.</summary>
       public bool IsReadOnly
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.ReadOnly) != 0; }
+         get { return File.IsReadOnly(Attributes); }
       }
 
 
-      /// <summary>Gets a value indicating whether this instance contains a reparse point, which is a block of user-defined data associated with a file or a directory.</summary>
-      /// <value><see langword="true"/> if this instance contains a reparse point; otherwise, <see langword="false"/>.</value>
+      /// <summary>The instance contains a reparse point, which is a block of user-defined data associated with a file or a directory.</summary>
       public bool IsReparsePoint
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.ReparsePoint) != 0; }
+         get { return File.HasValidAttributes(Attributes) && (Attributes & FileAttributes.ReparsePoint) != 0; }
       }
 
 
-      /// <summary>Gets a value indicating whether this instance is a symbolic link.</summary>
-      /// <value><see langword="true"/> if this instance is a symbolic link; otherwise, <see langword="false"/>.</value>
+      /// <summary>The instance is a sparse file. Sparse files are typically large files whose data consists of mostly zeros.</summary>
+      public bool IsSparseFile
+      {
+         get { return File.HasValidAttributes(Attributes) && (Attributes & FileAttributes.SparseFile) != 0; }
+      }
+
+
+      /// <summary>The instance is a symbolic link.</summary>
       public bool IsSymbolicLink
       {
          get { return ReparsePointTag == ReparsePointTag.SymLink; }
       }
 
 
-      /// <summary>Gets the time this entry was last accessed.</summary>
-      /// <value>The time this entry was last accessed.</value>
+      /// <summary>The instance is a system file. That is, the file is part of the operating system or is used exclusively by the operating system.</summary>
+      public bool IsSystem
+      {
+         get { return File.HasValidAttributes(Attributes) && (Attributes & FileAttributes.System) != 0; }
+      }
+
+
+      /// <summary>The instance is temporary. A temporary file contains data that is needed while an application is executing but is not needed after the application is finished.
+      /// File systems try to keep all the data in memory for quicker access rather than flushing the data back to mass storage.
+      /// A temporary file should be deleted by the application as soon as it is no longer needed.</summary>
+      public bool IsTemporary
+      {
+         get { return File.HasValidAttributes(Attributes) && (Attributes & FileAttributes.Temporary) != 0; }
+      }
+
+
+      /// <summary>The instance time this entry was last accessed.</summary>
       public DateTime LastAccessTime
       {
          get { return LastAccessTimeUtc.ToLocalTime(); }
       }
 
 
-      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last accessed.</summary>
-      /// <value>The time, in coordinated universal time (UTC), this entry was last accessed.</value>
+      /// <summary>The instance time, in coordinated universal time (UTC), this entry was last accessed.</summary>
       public DateTime LastAccessTimeUtc
       {
          get { return DateTime.FromFileTimeUtc(Win32FindData.ftLastAccessTime); }
       }
 
 
-      /// <summary>Gets the time this entry was last modified.</summary>
-      /// <value>The time this entry was last modified.</value>
+      /// <summary>The instance time this entry was last modified.</summary>
       public DateTime LastWriteTime
       {
          get { return LastWriteTimeUtc.ToLocalTime(); }
       }
 
 
-      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last modified.</summary>
-      /// <value>The time, in coordinated universal time (UTC), this entry was last modified.</value>
+      /// <summary>The instance time, in coordinated universal time (UTC), this entry was last modified.</summary>
       public DateTime LastWriteTimeUtc
       {
          get { return DateTime.FromFileTimeUtc(Win32FindData.ftLastWriteTime); }
@@ -217,38 +259,23 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       private string _longFullPath;
-
-      /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>
+      /// <summary>The instance full path in long path format.</summary>
       public string LongFullPath
       {
          get { return _longFullPath; }
+
          private set { _longFullPath = Path.GetLongPathCore(value, GetFullPathOptions.None); }
       }
 
 
-      /// <summary>Gets the reparse point tag of this entry.</summary>
-      /// <value>The reparse point tag of this entry.</value>
+      /// <summary>The instance reparse point tag.</summary>
       public ReparsePointTag ReparsePointTag
       {
          get { return IsReparsePoint ? Win32FindData.dwReserved0 : ReparsePointTag.None; }
       }
 
 
-      /// <summary>Gets internal WIN32 FIND Data</summary>
+      /// <summary>The instance internal WIN32 FIND Data</summary>
       internal NativeMethods.WIN32_FIND_DATA Win32FindData { get; private set; }
-
-      #endregion // Properties
-
-
-      #region Methods
-
-      /// <summary>Returns the <see cref="FullPath"/> of the <see cref="FileSystemEntryInfo"/> instance.</summary>
-      /// <returns>The <see cref="FullPath"/> instance as a string.</returns>
-      public override string ToString()
-      {
-         return FullPath;
-      }
-
-      #endregion // Methods
    }
 }

@@ -963,10 +963,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       internal static FileStream OpenCore(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, ExtendedFileAttributes attributes, int? bufferSize, FileSecurity security, PathFormat pathFormat)
       {
-         var rights = access == FileAccess.Read
-            ? FileSystemRights.Read
-            : (access == FileAccess.Write ? FileSystemRights.Write : FileSystemRights.Read | FileSystemRights.Write);
-
+         var rights = access == FileAccess.Read ? FileSystemRights.Read : (access == FileAccess.Write ? FileSystemRights.Write : FileSystemRights.Read | FileSystemRights.Write);
 
          return OpenCore(transaction, path, mode, rights, share, attributes, bufferSize, security, pathFormat);
       }
@@ -998,14 +995,14 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            safeHandle = CreateFileCore(transaction, path, attributes, security, mode, rights, share, true, pathFormat);
+            safeHandle = CreateFileCore(transaction, path, attributes, security, mode, rights, share, true, false, pathFormat);
 
             return new FileStream(safeHandle, access, bufferSize ?? NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
          }
          catch
          {
-            if (safeHandle != null)
-               safeHandle.Dispose();
+            if (null != safeHandle && !safeHandle.IsClosed)
+               safeHandle.Close();
 
             throw;
          }

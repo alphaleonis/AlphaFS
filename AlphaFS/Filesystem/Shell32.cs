@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -299,7 +300,7 @@ namespace Alphaleonis.Win32.Filesystem
          AttributesSpecified = 131072
       }
 
-      
+
       /// <summary>SHFILEINFO structure, contains information about a file system object.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Sh")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sh")]
@@ -338,7 +339,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Usage", "CA2217:DoNotMarkEnumsWithFlags"), SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Sh")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sh")]
-      [SuppressMessage("Microsoft.Naming", "CA1714:FlagsEnumsShouldHavePluralNames")]          
+      [SuppressMessage("Microsoft.Naming", "CA1714:FlagsEnumsShouldHavePluralNames")]
       [Flags]
       public enum GetAttributesOf
       {
@@ -429,7 +430,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>0x80000000 - The specified folders have subfolders.</summary>
          [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "SubFolder")]
-         HasSubFolder = unchecked ((int)0x80000000)
+         HasSubFolder = unchecked((int)0x80000000)
       }
 
 
@@ -539,7 +540,7 @@ namespace Alphaleonis.Win32.Filesystem
             return IntPtr.Zero;
 
          var fileInfo = GetFileInfoCore(filePath, System.IO.FileAttributes.Normal, FileAttributes.Icon | iconAttributes, true, true);
-         return fileInfo.IconHandle == IntPtr.Zero ? IntPtr.Zero : fileInfo.IconHandle; 
+         return fileInfo.IconHandle == IntPtr.Zero ? IntPtr.Zero : fileInfo.IconHandle;
       }
 
 
@@ -617,7 +618,7 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
-         var bufferSize = (uint) buffer.Capacity;
+         var bufferSize = (uint)buffer.Capacity;
 
          var lastError = NativeMethods.PathCreateFromUrl(urlPath, buffer, ref bufferSize, 0);
 
@@ -627,16 +628,18 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Creates a path from a file URL.</summary>
-      /// <param name="urlPath">The URL.</param>
       /// <returns>
       /// <para>The file path. If no path can be created, <c>string.Empty</c> is returned.</para>
       /// <para>If <paramref name="urlPath"/> is <see langword="null"/>, <see langword="null"/> will also be returned.</para>
       /// </returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <param name="urlPath">The URL.</param>
       [SecurityCritical]
       internal static string PathCreateFromUrlAlloc(string urlPath)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
+
 
          if (urlPath == null)
             return null;
@@ -656,15 +659,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool PathFileExists(string path)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            return false;
-
          // PathFileExists()
-         // In the ANSI version of this function, the name is limited to 248 characters.
-         // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-         return NativeMethods.PathFileExists(Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck | GetFullPathOptions.ContinueOnNonExist));            
+         return !Utils.IsNullOrWhiteSpace(path) && NativeMethods.PathFileExists(Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck | GetFullPathOptions.ContinueOnNonExist));
       }
 
 
@@ -699,7 +697,7 @@ namespace Alphaleonis.Win32.Filesystem
          var pathRp = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
 
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
-         var bufferSize = (uint) buffer.Capacity;
+         var bufferSize = (uint)buffer.Capacity;
 
          var lastError = NativeMethods.UrlCreateFromPath(pathRp, buffer, ref bufferSize, 0);
 
@@ -767,10 +765,8 @@ namespace Alphaleonis.Win32.Filesystem
             buffer = new StringBuilder((int)bufferSize);
 
             // AssocQueryString()
-            // In the ANSI version of this function, the name is limited to 248 characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2014-02-05: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-            // However, the function fails when using Unicode format.
+            // 2015-07-17: This function does not support long paths.
 
             retVal = NativeMethods.AssocQueryString(attributes, associationType, path, null, buffer, out bufferSize);
 
@@ -824,12 +820,10 @@ namespace Alphaleonis.Win32.Filesystem
          if (!Utils.IsNullOrWhiteSpace(path))
          {
             // ShGetFileInfo()
-            // In the ANSI version of this function, the name is limited to 248 characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-            // However, the function fails when using Unicode format.
+            // 2015-07-17: This function does not support long paths.
 
-            var shGetFileInfo = NativeMethods.ShGetFileInfo(Path.GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0, false), attributes, out fileInfo, (uint) Marshal.SizeOf(fileInfo), fileAttributes);
+            var shGetFileInfo = NativeMethods.ShGetFileInfo(Path.GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0, false), attributes, out fileInfo, (uint)Marshal.SizeOf(fileInfo), fileAttributes);
 
             if (shGetFileInfo == IntPtr.Zero && !continueOnException)
                NativeError.ThrowException(Marshal.GetLastWin32Error(), path);

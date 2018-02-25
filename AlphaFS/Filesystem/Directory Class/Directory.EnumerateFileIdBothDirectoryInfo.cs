@@ -22,10 +22,12 @@
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
+using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -33,6 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in <see cref="FileShare.ReadWrite"/> mode.</summary>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(string path)
@@ -42,6 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in <see cref="FileShare.ReadWrite"/> mode.</summary>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -54,6 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="FileShare"/> mode.</summary>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
       [SecurityCritical]
@@ -64,6 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="FileShare"/> mode.</summary>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -77,6 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory handle specified.</summary>
       /// <returns>An IEnumerable of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="handle">An open handle to the directory from which to retrieve information.</param>
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(SafeFileHandle handle)
@@ -89,6 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in <see cref="FileShare.ReadWrite"/> mode.</summary>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       [SecurityCritical]
@@ -99,6 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in <see cref="FileShare.ReadWrite"/> mode.</summary>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -112,6 +121,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="FileShare"/> mode.</summary>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
@@ -123,6 +133,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="FileShare"/> mode.</summary>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
@@ -139,52 +150,59 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an enumerable collection of information about files in the directory handle specified.</summary>
       /// <returns>An IEnumerable of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>    
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <remarks>
-      ///   <para>Either use <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</para>
+      ///   <para>Either use <paramref name="path"/> or <paramref name="safeFileHandle"/>, not both.</para>
       ///   <para>
       ///   The number of files that are returned for each call to GetFileInformationByHandleEx depends on the size of the buffer that is passed to the function.
       ///   Any subsequent calls to GetFileInformationByHandleEx on the same handle will resume the enumeration operation after the last file is returned.
       /// </para>
       /// </remarks>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="safeHandle">An open handle to the directory from which to retrieve information.</param>
+      /// <param name="safeFileHandle">An open handle to the directory from which to retrieve information.</param>
       /// <param name="path">A path to the directory.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoCore(KernelTransaction transaction, SafeFileHandle safeHandle, string path, FileShare shareMode, bool continueOnException, PathFormat pathFormat)
+      internal static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoCore(KernelTransaction transaction, SafeFileHandle safeFileHandle, string path, FileShare shareMode, bool continueOnException, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
 
-         bool callerHandle = safeHandle != null;
+
+         var pathLp = path;
+
+         var callerHandle = null != safeFileHandle;
          if (!callerHandle)
          {
             if (Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentNullException("path");
 
-            string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+            pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-            safeHandle = File.CreateFileCore(transaction, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, true, PathFormat.LongFullPath);
+            safeFileHandle = File.CreateFileCore(transaction, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, true, false, PathFormat.LongFullPath);
          }
 
 
          try
          {
-            if (!NativeMethods.IsValidHandle(safeHandle, Marshal.GetLastWin32Error(), !continueOnException))
+            if (!NativeMethods.IsValidHandle(safeFileHandle, Marshal.GetLastWin32Error(), !continueOnException))
                yield break;
 
-            var fileNameOffset = (int)Marshal.OffsetOf(typeof(NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName");
+            var fileNameOffset = (int) Marshal.OffsetOf(typeof(NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName");
 
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                while (true)
                {
-                  if (!NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, (uint)safeBuffer.Capacity))
+                  var success = NativeMethods.GetFileInformationByHandleEx(safeFileHandle, NativeMethods.FILE_INFO_BY_HANDLE_CLASS.FILE_ID_BOTH_DIR_INFO, safeBuffer, (uint) safeBuffer.Capacity);
+
+                  var lastError = Marshal.GetLastWin32Error();
+                  if (!success)
                   {
-                     uint lastError = (uint)Marshal.GetLastWin32Error();
-                     switch (lastError)
+                     switch ((uint) lastError)
                      {
                         case Win32Errors.ERROR_SUCCESS:
                         case Win32Errors.ERROR_NO_MORE_FILES:
@@ -195,33 +213,46 @@ namespace Alphaleonis.Win32.Filesystem
                            continue;
 
                         default:
-                           NativeError.ThrowException(lastError, path);
-                           yield break; // we should never get to this yield break.
+                           NativeError.ThrowException(lastError, pathLp);
+
+                           // Keep the compiler happy as we never get here.
+                           yield break;
                      }
                   }
                   
-                  int offset = 0;
+
+                  var offset = 0;
                   NativeMethods.FILE_ID_BOTH_DIR_INFO fibdi;
+
                   do
                   {
                      fibdi = safeBuffer.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>(offset);
-                     string fileName = safeBuffer.PtrToStringUni(offset + fileNameOffset, (int)(fibdi.FileNameLength / 2));
 
-                     if (!fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
-                         !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
-                        yield return new FileIdBothDirectoryInfo(fibdi, fileName);
+                     var fileName = safeBuffer.PtrToStringUni(offset + fileNameOffset, (int) (fibdi.FileNameLength / UnicodeEncoding.CharSize));
 
                      offset += fibdi.NextEntryOffset;
-                  }
-                  while (fibdi.NextEntryOffset != 0);
+
+
+                     if (File.IsDirectory(fibdi.FileAttributes) &&
+                         (fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.Ordinal) ||
+                          fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.Ordinal)))
+                        continue;
+
+
+                     yield return new FileIdBothDirectoryInfo(fibdi, fileName);
+
+
+                     //offset += fibdi.NextEntryOffset;
+
+                  } while (fibdi.NextEntryOffset != 0);
                }                           
             }
          }
          finally
          {
             // Handle is ours, dispose.
-            if (!callerHandle && safeHandle != null)
-               safeHandle.Close();
+            if (!callerHandle && null != safeFileHandle)
+               safeFileHandle.Close();
          }
       }
 

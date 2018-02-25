@@ -91,15 +91,15 @@ namespace Alphaleonis.Win32.Filesystem
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);
 
-         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
+         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
          var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-         int dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, returnErrorOnNotFound);
+         var dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, returnErrorOnNotFound);
 
          if (dataInitialised != Win32Errors.ERROR_SUCCESS)
             NativeError.ThrowException(dataInitialised, pathLp);
 
-         return (T) (typeof (T) == typeof (FileAttributes) ? (object) data.dwFileAttributes : data);
+         return (T)(typeof(T) == typeof(FileAttributes) ? (object)data.dwFileAttributes : data);
       }
 
       /// <summary>
@@ -110,77 +110,50 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">.</param>
       /// <param name="pathLp">.</param>
       /// <param name="win32AttrData">[in,out].</param>
-      /// <param name="tryagain">.</param>
+      /// <param name="tryAgain">.</param>
       /// <param name="returnErrorOnNotFound">.</param>
       /// <returns>0 on success, otherwise a Win32 error code.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
-      internal static int FillAttributeInfoCore(KernelTransaction transaction, string pathLp, ref NativeMethods.WIN32_FILE_ATTRIBUTE_DATA win32AttrData, bool tryagain, bool returnErrorOnNotFound)
+      internal static int FillAttributeInfoCore(KernelTransaction transaction, string pathLp, ref NativeMethods.WIN32_FILE_ATTRIBUTE_DATA win32AttrData, bool tryAgain, bool returnErrorOnNotFound)
       {
-         int dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
+         var lastError = (int) Win32Errors.ERROR_SUCCESS;
 
          #region Try Again
 
          // Someone has a handle to the file open, or other error.
-         if (tryagain)
+         if (tryAgain)
          {
-            NativeMethods.WIN32_FIND_DATA findData;
+            NativeMethods.WIN32_FIND_DATA win32FindData;
 
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             {
-               bool error = false;
+               var handle = FileSystemInfo.FindFirstFileNative(transaction, pathLp, NativeMethods.FindexInfoLevel, NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch, NativeMethods.UseLargeCache, out lastError, out win32FindData);
 
-               SafeFindFileHandle handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
-
-                  // FindFirstFileEx() / FindFirstFileTransacted()
-                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-                  // 2013-01-13: MSDN confirms LongPath usage.
-
-                  // A trailing backslash is not allowed.
-                  ? NativeMethods.FindFirstFileEx(Path.RemoveTrailingDirectorySeparator(pathLp, false), NativeMethods.FindexInfoLevels, out findData, NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache)
-                  : NativeMethods.FindFirstFileTransacted(Path.RemoveTrailingDirectorySeparator(pathLp, false), NativeMethods.FindexInfoLevels, out findData, NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache, transaction.SafeHandle);
-
-               try
+               if (null == handle)
                {
-                  if (handle.IsInvalid)
+                  switch ((uint) lastError)
                   {
-                     error = true;
-                     dataInitialised = Marshal.GetLastWin32Error();
+                     case Win32Errors.ERROR_FILE_NOT_FOUND: // On files.
+                     case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
+                     case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
 
-                     if (dataInitialised == Win32Errors.ERROR_FILE_NOT_FOUND ||
-                         dataInitialised == Win32Errors.ERROR_PATH_NOT_FOUND ||
-                         dataInitialised == Win32Errors.ERROR_NOT_READY) // Floppy device not ready.
-                     {
                         if (!returnErrorOnNotFound)
                         {
                            // Return default value for backward compatibility
-                           dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
-                           win32AttrData.dwFileAttributes = (FileAttributes)(-1);
+                           lastError = (int) Win32Errors.ERROR_SUCCESS;
+                           win32AttrData.dwFileAttributes = NativeMethods.InvalidFileAttributes;
                         }
-                     }
 
-                     return dataInitialised;
+                        break;
                   }
-               }
-               finally
-               {
-                  try
-                  {
-                     if (handle != null)
-                        handle.Close();
-                  }
-                  catch
-                  {
-                     // If we're already returning an error, don't throw another one.
-                     if (!error)
-                        NativeError.ThrowException(dataInitialised, pathLp);
-                  }
+
+                  return lastError;
                }
             }
 
             // Copy the attribute information.
-            win32AttrData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA(findData);
+            win32AttrData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA(win32FindData);
          }
 
          #endregion // Try Again
@@ -189,37 +162,38 @@ namespace Alphaleonis.Win32.Filesystem
          {
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             {
-               if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
+               if (!(null == transaction || !NativeMethods.IsAtLeastWindowsVista
 
                   // GetFileAttributesEx() / GetFileAttributesTransacted()
-                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                   // 2013-01-13: MSDN confirms LongPath usage.
 
-                  ? NativeMethods.GetFileAttributesEx(pathLp, NativeMethods.GetFileExInfoLevels.GetFileExInfoStandard, out win32AttrData)
-                  : NativeMethods.GetFileAttributesTransacted(pathLp, NativeMethods.GetFileExInfoLevels.GetFileExInfoStandard, out win32AttrData, transaction.SafeHandle)))
+                  ? NativeMethods.GetFileAttributesEx(pathLp, NativeMethods.GET_FILEEX_INFO_LEVELS.GetFileExInfoStandard, out win32AttrData)
+                  : NativeMethods.GetFileAttributesTransacted(pathLp, NativeMethods.GET_FILEEX_INFO_LEVELS.GetFileExInfoStandard, out win32AttrData, transaction.SafeHandle)))
                {
-                  dataInitialised = Marshal.GetLastWin32Error();
+                  lastError = Marshal.GetLastWin32Error();
 
-                  if (dataInitialised != Win32Errors.ERROR_FILE_NOT_FOUND &&
-                      dataInitialised != Win32Errors.ERROR_PATH_NOT_FOUND &&
-                      dataInitialised != Win32Errors.ERROR_NOT_READY) // Floppy device not ready.
+                  switch ((uint)lastError)
                   {
-                     // In case someone latched onto the file. Take the perf hit only for failure.
-                     return FillAttributeInfoCore(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);
+                     case Win32Errors.ERROR_FILE_NOT_FOUND: // On files.
+                     case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
+                     case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
+
+                        // In case someone latched onto the file. Take the perf hit only for failure.
+                        return FillAttributeInfoCore(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);
                   }
+
 
                   if (!returnErrorOnNotFound)
                   {
                      // Return default value for backward compbatibility.
-                     dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
-                     win32AttrData.dwFileAttributes = (FileAttributes)(-1);
+                     lastError = (int) Win32Errors.ERROR_SUCCESS;
+                     win32AttrData.dwFileAttributes = NativeMethods.InvalidFileAttributes;
                   }
                }
             }
          }
 
-         return dataInitialised;
+         return lastError;
       }
 
       #endregion // Internal Methods

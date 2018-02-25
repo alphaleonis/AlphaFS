@@ -19,8 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Callback used by CopyFileXxx and MoveFileXxx to report progress about the copy/move operation.</summary>

@@ -24,35 +24,35 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The exception that is thrown when an attempt to create a file or directory that already exists was made.</summary>
-   [SerializableAttribute]
+   /// <summary>[AlphaFS] The exception that is thrown when an attempt to create a file or directory that already exists was made.</summary>
+   [Serializable]
    public class TransactionException : SystemException
    {
-      /// <summary>Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
       public TransactionException()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public TransactionException(string message)
-         : base(message)
+      public TransactionException(string message) : base(message)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public TransactionException(string message, Exception innerException)
-         : base(message, innerException)
+      public TransactionException(string message, Exception innerException) : base(message, innerException)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
-      protected TransactionException(SerializationInfo info, StreamingContext context)
-         : base(info, context)
+      protected TransactionException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
       }
    }

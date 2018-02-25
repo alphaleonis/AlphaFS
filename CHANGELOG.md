@@ -1,13 +1,100 @@
-﻿Changelog
+Changelog
 =========
 
-Version 2.1.4 (2017-XX-XX)
--------------
+Version 2.2  (2018-02-xx)
+-----------
 
-### Enhancements:
-- Issue 355: Methods throwing an IOException due to error code 17 (ERROR_NOT_SAME_DEVICE) now throw a specific exception (NotSameDeviceException)
+### Bugs Fixed
 
-Version 2.1.3  (2017-06-05)
+- Issue #268: There are multiple warnings when building the documentation.
+- Issue #286: Property `FileSystemEntryInfo.AlternateFileName` is always an empty string.
+- Issue #292: `CopyOptions.CopySymbolicLink` not working in 2.1.2  (Thx v2kiran)
+- Issue #325: `DeleteEmptySubdirectories` (with `recursive=true`) throws `System.IO.DirectoryNotFoundException`  (Thx kryvoplias)
+- Issue #328: Several instances of `ArgumentException.ParamName` not set/used correctly  (Thx elgonzo)
+- Issue #330: Correct the parameter order for Privilege class constructors using the `ArgumentNullException`.
+- Issue #339: `Directory/File.Encrypt/Decrypt` should restore read-only attribute.
+- Issue #340: `DirectoryReadOnlyException` inherits from `System.IO.IOException`, wrong?
+- Issue #344: `Directory.Copy` throws `UnauthorizedAccessException` "The target file is a directory, not a file", while it is a file.
+- Issue #349: `File.GetFileSystemEntryInfoCore` should throw `Directory/FileNotFoundException`, depending on `isFolder` argument.
+- Issue #369: `Directory.EnumerateFileSystemEntryInfos` does not return subdirectories with spaces as name.  (Thx Lupinho)
+- Issue #371: Fix `.gitignore` to accommodate new directory structure in AlphaFS.UnitTest project.  (Thx damiarnold)
+- Issue #372: `SetFsoDateTimeCore` should always use `BackupSemantics`.  (Thx damiarnold)
+- Issue #374: Initializing `DriveInfo` instance with only a letter throws `System.ArgumentException`.
+- Issue #375: What is the expected result of `Path.LocalToUnc()` ?  (Thx damiarnold)
+- Issue #376: `Path.LocalToUnc(path, true)` does not return UNC path in long path form.  (Thx damiarnold) 
+- Issue #379: `Path.LocalToUnc()` isn't handling trailing directory separators for mapped drives.  (Thx damiarnold)
+- Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
+- Issue #386: `Network.Host.EnumerateDrives()` returns invalid data.
+- Issue #400: `Directory.CopyDeleteCore` creates destination folder when source folder does not exist.
+- Issue #412: Method `Volume.GetVolumeDeviceName` returns wrong result.
+- Issue #417: Using a file opened in append mode will fail after a gc occurs  (Thx elgonzo)
+- Issue #417: `File.OpenRead` method overloads do not use `FileShare.Read`  (Thx elgonzo)
+
+### New Features
+
+- Issue #212: Provide a way to retrieve errors when you choose to `ContinueOnException`
+- Issue #314: Added Feature: `Directory.GetFileSystemEntryInfo`  (Thx besoft)
+- Issue #322: Search files/folders using multiple filters. (Thx besoft)
+- Issue #336: Implement methods for `Directory` class: `CreateJunction`, `DeleteJunction` and `ExistsJunction`.
+- Issue #338: Add convenience method `Directory.IsEmpty`
+- Issue #342: Add instance method: `FileInfo.IsLocked()`
+- Issue #343: Add method `File.GetProcessForFileLock`
+- Issue #347: Implement method `Directory.CreateSymbolicLink`
+- Issue #348: Implement method `Directory.GetLinkTargetInfo`
+- Issue #351: Enable copying of Directory symbolic links.
+- Issue #353: Modify method `Directory.GetFileSystemEntryInfo` to return `FileSystemEntryInfo` structure for directories supporting also root directories, e.g., `C:\`  (Thx besoft)
+- Issue #354: Add methods `File.GetFileId` and `Directory.GetFileId` to return a unique file identifier.  (Thx besoft)
+- Issue #370: Relative path from a full path  (Thx QbProg)
+- Issue #373: Improve method `Directory.CreateDirectory` to allow creating a folder consisting only of spaces.
+- Issue #414: Add additional `Network.Host` methods.
+- Issue #415: Added `ProcessContext` static class to determine the context of the current process.
+- Issue #422: Add `Copy-FileWithProgress.ps1` demonstrating file copy with progress report.
+- Issue #423: Add `Copy-DirectoryWithProgress.ps1` demonstrating directory copy with progress report.
+
+### Improvements
+
+- Issue #273: Improve methods `Directory/File.CopyMoveCore`: Make code recursive-aware, skip additional path checks and validations.
+- Issue #274: Improve methods `Directory/File.CopyMoveCore`: Improve detection of same volume.
+- Issue #275: Improve methods `Directory/File.CopyMoveCore`: Eliminate recursion.
+- Issue #277: `Directory.DeleteDirectoryCore()`: Eliminate recursion.
+- Issue #278: `Directory.DeleteEmptySubdirectoriesCore()`: Eliminate recursion.
+- Issue #303: `Path.Constants.cs`: Don't use `CurrentCulture`  (Thx HugoRoss)
+- Issue #306: Include `ShareInfoLevel.Info502` and set as a fallback in `GetShareInfoCore()`  (Thx damiarnold)
+- Issue #326: Add parameter `bool preserveDates` and created overloaded `Directory.Copy` methods to support this.
+- Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
+- Issue #335: Add overloaded methods to `File/Directory.TransferTimestamps` to apply to ReparsePoint.
+- Issue #341: Improve usage of method `NativeError.ThrowException` and `Marshal.GetLastWin32Error`
+- Issue #345: `AlreadyExistsException` should only throw message from 1 error.
+- Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`
+- Issue #352: Ignore `NonInterpretedPathPrefix` in methods: `Path.GetFullPathCore` and `Path.GetLongPathCore`  (Thx besoft)
+- Issue #355: Methods throwing an `IOException` due to error code 17 (`ERROR_NOT_SAME_DEVICE`) now throw a specific exception (`NotSameDeviceException`)
+- Issue #357: Added new Windows 10 property: `DirectAccess` (Win32 `FILE_DAX_VOLUME`) to `VolumeInfo` class.
+- Issue #360: Add overloaded `Directory.EnumerateDirectories` methods that support `DirectoryEnumerationFilters`.  (Thx SignFinder)
+- Issue #364: Avoid unnecessary allocations from Random construction in FileSystemInfo  (Thx danmosemsft)
+- Issue #377: Rename enum member: `OperatingSystem.EnumOsName.WindowsServer` to: `OperatingSystem.EnumOsName.WindowsServer2016`
+- Issue #378: `DiskSpaceInfo` should respect `CultureInfo.CurrentCulture` for number formatting.
+- Issue #385: Correct applied fileSystemRights operator in method `File.Create()`.
+- Issue #387: Replace `handle.IsInvalid` checks with a call to method `NativeMethods.IsValidHandle()`.
+- Issue #388: Change method `Network.Host.EnumerateDrives()` return type from `string` to `DriveInfo`.
+- Issue #394: Improve percentage output of properties `DiskSpaceInfo`- `AvailableFreeSpacePercent` and `UsedSpacePercent`
+- Issue #401: CreateDirectory `ERROR_ACCESS_DENIED` reports parent folder.
+- Issue #402: Remove long path prefix from `NativeError.ThrowException` messages with paths.
+- Issue #408: Add `FileSystemEntryInfo.Extension` string property.
+- Issue #416: Rename property `DeviceInfo.Class` to `DeviceInfo.DeviceClass`
+
+### Breaking Changes
+
+- Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`. Currently non-breaking, the old methods are still there.
+- Issue #340: `DirectoryReadOnlyException` inherits from `System.IO.IOException`, wrong?
+- Issue #350: Add overloaded methods `Directory.GetFileSystemEntryInfo`. Current code to retrieve a directory using `File.GetFileSystemEntryInfo` will now fail. Use `Directory.GetFileSystemEntryInfo` instead.
+- Issue #377: Rename enum member: `OperatingSystem.EnumOsName.WindowsServer` to: `OperatingSystem.EnumOsName.WindowsServer2016`
+- Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
+- Issue #388: Change method `Network.Host.EnumerateDrives()` return type from `string` to `DriveInfo`.
+- Issue #391: Mark AlphaFS enumerating methods that use both `searchPattern` and `DirectoryEnumerationFilters` as obsolete.
+- Issue #416: Rename property `DeviceInfo.Class` to `DeviceInfo.DeviceClass`
+
+
+Version 2.1.3 (2017-06-05)
 -------------
 
 ### Bugs Fixed
@@ -23,7 +110,7 @@ Version 2.1.3  (2017-06-05)
 - Issue #321: `DirectoryInfo.CopyToMoveToCore()` calls `Path.GetExtendedLengthPathCore()` without `Transaction` parameter.
 
 
-Version 2.1.2  (2016-10-30)
+Version 2.1.2 (2016-10-30)
 -------------
 
 ### Bugs Fixed
@@ -39,10 +126,10 @@ Version 2.1  (2016-09-29)
 ### New Features/Enhancements
 
 - Issue #3: Added methods for backing up and restoring encrypted files:
-   * `File.ImportEncryptedFileRaw`
-   * `File.ExportEncryptedFileRaw`
-   * `Directory.ImportEncryptedDirectoryRaw`
-   * `Directory.ExportEncryptedDirectoryRaw`
+	* `File.ImportEncryptedFileRaw`
+	* `File.ExportEncryptedFileRaw`
+	* `Directory.ImportEncryptedDirectoryRaw`
+	* `Directory.ExportEncryptedDirectoryRaw`
 - Issue #2  : Unit tests for methods: `File.OpenRead()`, `File.OpenText()` and `File.Replace()` are missing.
 - Issue #101: The release now also contains a build targetting .NET 4.5.2.
 - Issue #109: Add overloaded methods for `Host.EnumerateShares()`.
@@ -166,17 +253,17 @@ Version 2.0  (2015-01-16)
 * New: Supports enumerating connected PnP devices (AlphaFS.Filesystem.Device() / AlphaFS.Filesystem.DeviceInfo() classes).
 * New: Supports extracting icons from files and folders (AlphaFS.Filesystem.Shell32Info() class).
 * New: Supports PathFormat parameter for numerous methods to control path normalization. This speeds up things internally (less string processing and GetFullPath() calls) and also enables working with files and folders with a trailing dot or space:
-   * `RelativePath` (slow): (default) Path will be checked and resolved to an absolute path. Unicode prefix is applied.
-   * `FullPath`  (fast): Path is an absolute path. Unicode prefix is applied.
-   * `LongFullPath`  (fastest): Path is already an absolute path with Unicode prefix. Use as is.
+	* `RelativePath` (slow): (default) Path will be checked and resolved to an absolute path. Unicode prefix is applied.
+	* `FullPath`  (fast): Path is an absolute path. Unicode prefix is applied.
+	* `LongFullPath`  (fastest): Path is already an absolute path with Unicode prefix. Use as is.
 * Mod: Enabled KernelTransaction parameter for all Win32 API functions that support it.
 * Mod: Added public read only properties to class FileSystemInfo(). Available for: DirectoryInfo() / FileInfo():
-   * EntryInfo	 : Instance of the FileSystemEntryInfo() class.
-   * Transaction  : Represents the KernelTransaction that was passed to the constructor.	
+	* EntryInfo	 : Instance of the FileSystemEntryInfo() class.
+	* Transaction  : Represents the KernelTransaction that was passed to the constructor.	
 * Mod: Added more entries to enum ReparsePointTag.
 * Mod: Removed method Directory.CountFiles() and added method Directory.CountFileSystemObjects().	
 * Mod: Removed method Directory.GetFullFileSystemEntries() and added method Directory.EnumerateFileSystemEntryInfos().
-   * Note: This new method currently does not support DirectoryEnumerationExceptionHandler, this will probably be added in a future release.
+	* Note: This new method currently does not support DirectoryEnumerationExceptionHandler, this will probably be added in a future release.
 * Mod: Renamed method Directory.GetFileIdBothDirectoryInfo() to Directory.EnumerateFileIdBothDirectoryInfo().
 * Mod: Method Directory.CreateDirectory() signature change: Using template directory. Ability for NTFS-compressed folders added.
 * Mod: Method Directory.GetProperties() signature change.

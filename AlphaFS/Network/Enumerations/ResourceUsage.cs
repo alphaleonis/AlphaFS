@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>RESOURCEUSAGE_ALL
          /// <para>Setting this value is equivalent to setting: <see cref="ResourceUsage.Connectable"/>, <see cref="ResourceUsage.Container"/>, and <see cref="ResourceUsage.Attached"/>.</para>
          /// </summary>
-         All = (Connectable | Container | Attached)
+         All = Connectable | Container | Attached
       }
    }
 }

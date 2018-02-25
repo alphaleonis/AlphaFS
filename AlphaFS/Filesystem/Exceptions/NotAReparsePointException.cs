@@ -20,42 +20,53 @@
  */
 
 using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The file or directory was not a reparse point.</summary>
-   [SerializableAttribute]
+   /// <summary>[AlphaFS] The file or directory was not a reparse point.</summary>
+   [Serializable]
    public class NotAReparsePointException : System.IO.IOException
    {
-      private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_A_REPARSE_POINT);
+      private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_A_REPARSE_POINT);
+      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_NOT_A_REPARSE_POINT, new Win32Exception((int) Win32Errors.ERROR_NOT_A_REPARSE_POINT).Message.Trim().TrimEnd('.').Trim());
 
-      /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
-      public NotAReparsePointException()
-         : base(Resources.Not_A_Reparse_Point, s_errorCode)
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
+      public NotAReparsePointException() : base(string.Format(CultureInfo.InvariantCulture, "{0}.", ErrorText), ErrorCode)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
-      /// <param name="message">The message.</param>
-      public NotAReparsePointException(string message)
-         : base(message, s_errorCode)
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
+      /// <param name="message">The custom error message..</param>
+      /// <param name="lastError">The GetLastWin32Error.</param>
+      public NotAReparsePointException(string message, int lastError) : base(message, lastError)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
-      /// <param name="message">The message.</param>
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
+      /// <param name="path">The path to the reparse point.</param>
+      public NotAReparsePointException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), ErrorCode)
+      {
+      }
+
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
+      /// <param name="path">The path to the reparse point.</param>
       /// <param name="innerException">The inner exception.</param>
-      public NotAReparsePointException(string message, Exception innerException)
-         : base(message, innerException)
+      public NotAReparsePointException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), innerException)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
       /// <param name="info">The info.</param>
       /// <param name="context">The context.</param>
-      protected NotAReparsePointException(SerializationInfo info, StreamingContext context)
-         : base(info, context)
+      protected NotAReparsePointException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
       }
    }

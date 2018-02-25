@@ -30,8 +30,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      #region GetMappedConnectionName
-
       /// <summary>[AlphaFS] Gets the connection name of the locally mapped drive.</summary>
       /// <returns>The server and share as: \\servername\sharename.</returns>
       /// <exception cref="ArgumentException"/>
@@ -45,9 +43,8 @@ namespace Alphaleonis.Win32.Filesystem
          return Host.GetRemoteNameInfoCore(path, true).lpConnectionName;
       }
 
-      #endregion // GetMappedConnectionName
 
-      #region GetMappedUncName
+
 
       /// <summary>[AlphaFS] Gets the network share name from the locally mapped path.</summary>
       /// <returns>The network share connection name of <paramref name="path"/>.</returns>
@@ -62,9 +59,8 @@ namespace Alphaleonis.Win32.Filesystem
          return Host.GetRemoteNameInfoCore(path, true).lpUniversalName;
       }
 
-      #endregion // GetMappedUncName
 
-      #region IsUncPath
+
 
       /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path.</summary>
       /// <returns><see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
@@ -75,23 +71,12 @@ namespace Alphaleonis.Win32.Filesystem
          return IsUncPathCore(path, false, true);
       }
 
-      /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path, optionally skip invalid path character check.</summary>
-      /// <returns><see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
-      /// <param name="path">The path to check.</param>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
-      [SecurityCritical]
-      public static bool IsUncPath(string path, bool checkInvalidPathChars)
-      {
-         return IsUncPathCore(path, false, checkInvalidPathChars);
-      }
 
-      #endregion // IsUncPath
 
-      #region LocalToUnc
 
       /// <summary>[AlphaFS] Converts a local path to a network share path.  
-      ///   <para>A Local path, e.g.: "C:\Windows" will be returned as: "\\MachineName\C$\Windows".</para>
-      ///   <para>If a logical drive points to a network share path, the share path will be returned instead.</para>
+      ///   <para>A Local path, e.g.: "C:\Windows" or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
+      ///   <para>If a logical drive points to a network share path (mapped drive), the share path will be returned without a trailing <see cref="DirectorySeparator"/> character.</para>
       /// </summary>
       /// <returns>On successful conversion a UNC path is returned.
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
@@ -104,12 +89,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string LocalToUnc(string localPath)
       {
-         return LocalToUncCore(localPath, false, false, false);
+         return LocalToUncCore(localPath, PathFormat.RelativePath, GetFullPathOptions.None);
       }
 
-      /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it in a long path format.
-      ///   <para>A Local path, e.g.: "C:\Windows" will be returned as: "\\MachineName\C$\Windows".</para>
-      ///   <para>If a logical drive points to a network share path, the share path will be returned instead.</para>
+
+      /// <summary>[AlphaFS] Converts a local path to a network share path.  
+      ///   <para>A Local path, e.g.: "C:\Windows" or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
+      ///   <para>If a logical drive points to a network share path (mapped drive), the share path will be returned without a trailing <see cref="DirectorySeparator"/> character.</para>
       /// </summary>
       /// <returns>On successful conversion a UNC path is returned.
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
@@ -119,16 +105,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="PathTooLongException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
-      /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
       [SecurityCritical]
-      public static string LocalToUnc(string localPath, bool asLongPath)
+      public static string LocalToUnc(string localPath, PathFormat pathFormat)
       {
-         return LocalToUncCore(localPath, asLongPath, false, false);
+         return LocalToUncCore(localPath, pathFormat, GetFullPathOptions.None);
       }
 
-      /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it in a long path format and the ability to add or remove a trailing backslash.
-      ///   <para>A Local path, e.g.: "C:\Windows" will be returned as: "\\MachineName\C$\Windows".</para>
-      ///   <para>If a logical drive points to a network share path, the share path will be returned instead.</para>
+
+      /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it as a long path format and the ability to add or remove a trailing backslash.
+      ///   <para>A Local path, e.g.: "C:\Windows" or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
+      ///   <para>If a logical drive points to a network share path (mapped drive), the share path will be returned without a trailing <see cref="DirectorySeparator"/> character.</para>
       /// </summary>
       /// <returns>On successful conversion a UNC path is returned.
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
@@ -138,16 +125,34 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="PathTooLongException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
-      /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
-      /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="localPath"/>, when absent.</param>
-      /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="localPath"/>, when present.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <param name="fullPathOptions">Options for controlling the full path retrieval.</param>
       [SecurityCritical]
-      public static string LocalToUnc(string localPath, bool asLongPath, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
+      public static string LocalToUnc(string localPath, PathFormat pathFormat, GetFullPathOptions fullPathOptions)
       {
-         return LocalToUncCore(localPath, asLongPath, addTrailingDirectorySeparator, removeTrailingDirectorySeparator);
+         return LocalToUncCore(localPath, pathFormat, fullPathOptions);
       }
 
-      #endregion // LocalToUnc
+
+      /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it as a long path format and the ability to add or remove a trailing backslash.
+      ///   <para>A Local path, e.g.: "C:\Windows" or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
+      ///   <para>If a logical drive points to a network share path (mapped drive), the share path will be returned without a trailing <see cref="DirectorySeparator"/> character.</para>
+      /// </summary>
+      /// <returns>On successful conversion a UNC path is returned.
+      ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
+      ///   <para>If <paramref name="localPath"/> is an empty string or <see langword="null"/>, <see langword="null"/> is returned.</para>
+      /// </returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="PathTooLongException"/>
+      /// <exception cref="NetworkInformationException"/>
+      /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
+      /// <param name="fullPathOptions">Options for controlling the full path retrieval.</param>
+      [SecurityCritical]
+      public static string LocalToUnc(string localPath, GetFullPathOptions fullPathOptions)
+      {
+         return LocalToUncCore(localPath, PathFormat.RelativePath, fullPathOptions);
+      }
+
 
       #region Internal Methods
 
@@ -160,18 +165,20 @@ namespace Alphaleonis.Win32.Filesystem
       internal static bool IsUncPathCore(string path, bool isRegularPath, bool checkInvalidPathChars)
       {
          if (!isRegularPath)
-            path = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0, false);
+            path = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None, false);
 
          else if (checkInvalidPathChars)
             CheckInvalidPathChars(path, false, false);
+
 
          Uri uri;
          return Uri.TryCreate(path, UriKind.Absolute, out uri) && uri.IsUnc;
       }
 
-      /// <summary>Converts a local path to a network share path.  
-      ///   <para>A Local path, e.g.: "C:\Windows" will be returned as: "\\MachineName\C$\Windows".</para>
-      ///   <para>If a logical drive points to a network share path, the share path will be returned instead.</para>
+
+      /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it in a long path format and the ability to add or remove a trailing backslash.
+      ///   <para>A Local path, e.g.: "C:\Windows" or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
+      ///   <para>If a logical drive points to a network share path (mapped drive), the share path will be returned without a trailing <see cref="DirectorySeparator"/> character.</para>
       /// </summary>
       /// <returns>On successful conversion a UNC path is returned.
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
@@ -181,52 +188,75 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="PathTooLongException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
-      /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
-      /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="localPath"/>, when absent.</param>
-      /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="localPath"/>, when present.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <param name="fullPathOptions">Options for controlling the full path retrieval.</param>
       [SecurityCritical]
-      internal static string LocalToUncCore(string localPath, bool asLongPath, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
+      internal static string LocalToUncCore(string localPath, PathFormat pathFormat, GetFullPathOptions fullPathOptions)
       {
          if (Utils.IsNullOrWhiteSpace(localPath))
             return null;
 
-         localPath = GetRegularPathCore(localPath, GetFullPathOptions.CheckInvalidPathChars, false);
+         if (pathFormat == PathFormat.RelativePath)
+            CheckSupportedPathFormat(localPath, true, true);
+         
+
+         var addTrailingDirectorySeparator = (fullPathOptions & GetFullPathOptions.AddTrailingDirectorySeparator) != 0;
+         var removeTrailingDirectorySeparator = (fullPathOptions & GetFullPathOptions.RemoveTrailingDirectorySeparator) != 0;
+
+         if (addTrailingDirectorySeparator && removeTrailingDirectorySeparator)
+            throw new ArgumentException(Resources.GetFullPathOptions_Add_And_Remove_DirectorySeparator_Invalid, "fullPathOptions");
 
 
-         if (!IsUncPathCore(localPath, true, false))
+         if (!removeTrailingDirectorySeparator && !addTrailingDirectorySeparator)
          {
-            if (localPath[0] == CurrentDirectoryPrefixChar || !IsPathRooted(localPath, false))
-               localPath = GetFullPathCore(null, localPath, GetFullPathOptions.None);
-
-            string drive = GetPathRoot(localPath, false);
-
-            if (Utils.IsNullOrWhiteSpace(drive))
-               return localPath;
-
-            Network.NativeMethods.REMOTE_NAME_INFO unc = Host.GetRemoteNameInfoCore(drive, true);
-
-            if (!Utils.IsNullOrWhiteSpace(unc.lpConnectionName))
-               // Only leave trailing backslash if "localPath" also ends with backslash.
-               return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase)
-                  ? AddTrailingDirectorySeparator(unc.lpConnectionName, false)
-                  : RemoveTrailingDirectorySeparator(unc.lpConnectionName, false);
-
-            // Split: localDrive[0] = "C", localDrive[1] = "\Windows"
-            string[] localDrive = localPath.Split(VolumeSeparatorChar);
-
-            // Return: "\\MachineName\C$\Windows"
-            localPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}${3}", Host.GetUncName(), DirectorySeparatorChar, localDrive[0], localDrive[1]);
+            // Add a trailing backslash when "localPath" ends with a backslash.
+            if (localPath.EndsWith(DirectorySeparator, StringComparison.Ordinal))
+            {
+               fullPathOptions &= ~GetFullPathOptions.RemoveTrailingDirectorySeparator; // Remove removal of trailing backslash.
+               fullPathOptions |= GetFullPathOptions.AddTrailingDirectorySeparator;     // Add adding trailing backslash.
+            }
          }
 
 
-         // Only leave trailing backslash if "localPath" also ends with backslash.
-         addTrailingDirectorySeparator = addTrailingDirectorySeparator ||
-                                         (localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) && !removeTrailingDirectorySeparator);
+         var getAsLongPath = (fullPathOptions & GetFullPathOptions.AsLongPath) != 0;
 
-         var options = (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) |
-                       (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0);
+         var returnUncPath = GetRegularPathCore(localPath, fullPathOptions | GetFullPathOptions.CheckInvalidPathChars, false);
+         
 
-         return asLongPath ? GetLongPathCore(localPath, options) : localPath;
+         if (!IsUncPathCore(returnUncPath, true, false))
+         {
+            if (returnUncPath[0] == CurrentDirectoryPrefixChar || !IsPathRooted(returnUncPath, false))
+               returnUncPath = GetFullPathCore(null, returnUncPath, GetFullPathOptions.None);
+
+
+            var drive = GetPathRoot(returnUncPath, false);
+
+            if (Utils.IsNullOrWhiteSpace(drive))
+               return returnUncPath;
+            
+
+            var remoteInfo = Host.GetRemoteNameInfoCore(returnUncPath, true);
+
+
+            // Network share.
+            if (!Utils.IsNullOrWhiteSpace(remoteInfo.lpUniversalName))
+               return getAsLongPath ? GetLongPathCore(remoteInfo.lpUniversalName, fullPathOptions) : GetRegularPathCore(remoteInfo.lpUniversalName, fullPathOptions, false);
+
+
+            // Network root.
+            if (!Utils.IsNullOrWhiteSpace(remoteInfo.lpConnectionName))
+               return getAsLongPath ? GetLongPathCore(remoteInfo.lpConnectionName, fullPathOptions) : GetRegularPathCore(remoteInfo.lpConnectionName, fullPathOptions, false);
+
+
+            // Split: localDrive[0] = "C", localDrive[1] = "\Windows"
+            var localDrive = returnUncPath.Split(VolumeSeparatorChar);
+
+            // Return: "\\localhost\C$\Windows"
+            returnUncPath = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}", Host.GetUncName(), DirectorySeparator, localDrive[0], NetworkDriveSeparator, localDrive[1]);
+         }
+
+
+         return getAsLongPath ? GetLongPathCore(returnUncPath, fullPathOptions) : GetRegularPathCore(returnUncPath, fullPathOptions, false);
       }
 
       #endregion // Internal Methods

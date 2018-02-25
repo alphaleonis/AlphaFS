@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Security;
 using System.Security.AccessControl;
 
@@ -54,6 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
 
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity)
       {
@@ -108,6 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
 
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity, bool compress)
       {
@@ -126,6 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
 
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
@@ -148,14 +152,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The <see cref="DirectorySecurity"/> security to apply.</param>
       /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       [SecurityCritical]
-      private DirectoryInfo CreateSubdirectoryCore(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
+      private DirectoryInfo CreateSubdirectoryCore(string path, string templatePath, ObjectSecurity directorySecurity, bool compress)
       {
          string pathLp = Path.CombineCore(false, LongFullName, path);
          string templatePathLp = templatePath == null ? null :
             Path.GetExtendedLengthPathCore(Transaction, templatePath, PathFormat.RelativePath, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          if (string.Compare(LongFullName, 0, pathLp, 0, LongFullName.Length, StringComparison.OrdinalIgnoreCase) != 0)
-            throw new ArgumentException(Resources.Invalid_Subpath, pathLp);
+            throw new ArgumentException(Resources.Invalid_Subpath, "path");
 
          return Directory.CreateDirectoryCore(Transaction, pathLp, templatePathLp, directorySecurity, compress, PathFormat.LongFullPath);
       }

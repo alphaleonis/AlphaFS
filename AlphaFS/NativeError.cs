@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,89 +19,115 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32
 {
    internal static class NativeError
    {
-      internal static void ThrowException()
-      {
-         ThrowException((uint)Marshal.GetLastWin32Error(), null, null);
-      }
-
       public static void ThrowException(int errorCode)
       {
-         ThrowException((uint)errorCode, null, null);
+         ThrowException((uint) errorCode, null, null);
       }
+
+      
+      public static void ThrowException(uint errorCode)
+      {
+         ThrowException(errorCode, null, null);
+      }
+
 
       public static void ThrowException(int errorCode, string readPath)
       {
-         ThrowException((uint)errorCode, readPath, null);
+         ThrowException((uint) errorCode, readPath, null);
       }
 
-      public static void ThrowException(int errorCode, string readPath, string writePath)
-      {
-         ThrowException((uint)errorCode, readPath, writePath);
-      }
 
       public static void ThrowException(uint errorCode, string readPath)
       {
          ThrowException(errorCode, readPath, null);
       }
 
-      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]      
+
+      public static void ThrowException(int errorCode, string readPath, string writePath)
+      {
+         ThrowException((uint) errorCode, readPath, writePath);
+      }
+
+
+      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       public static void ThrowException(uint errorCode, string readPath, string writePath)
       {
-         string errorMessage = string.Format(CultureInfo.CurrentCulture, "({0}) {1}.", errorCode, new Win32Exception((int)errorCode).Message);
+         if (null != readPath)
+            readPath = Path.GetCleanExceptionPath(readPath);
 
-         if (!Utils.IsNullOrWhiteSpace(readPath))
-            errorMessage = string.Format(CultureInfo.CurrentCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), readPath);
+         if (null != writePath)
+            writePath = Path.GetCleanExceptionPath(writePath);
 
-         if (!Utils.IsNullOrWhiteSpace(writePath))
-            errorMessage = string.Format(CultureInfo.CurrentCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), writePath);
+         var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message.Trim().TrimEnd('.').Trim());
+        
+
+         if (!Utils.IsNullOrWhiteSpace(readPath) && !Utils.IsNullOrWhiteSpace(writePath))
+            errorMessage = string.Format(CultureInfo.InvariantCulture, "{0} | Read: [{1}] | Write: [{2}]", errorMessage, readPath, writePath);
+
+         else
+         {
+            // Prevent messages like: "(87) The parameter is incorrect: []"
+            if (!Utils.IsNullOrWhiteSpace(readPath ?? writePath))
+               errorMessage = string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), readPath ?? writePath);
+         }
+
 
          switch (errorCode)
          {
             case Win32Errors.ERROR_INVALID_DRIVE:
-               throw new DriveNotFoundException(errorMessage);
+               throw new System.IO.DriveNotFoundException(errorMessage);
+
 
             case Win32Errors.ERROR_OPERATION_ABORTED:
                throw new OperationCanceledException(errorMessage);
 
+
             case Win32Errors.ERROR_FILE_NOT_FOUND:
-               throw new FileNotFoundException(errorMessage);
+               throw new System.IO.FileNotFoundException(errorMessage);
+
 
             case Win32Errors.ERROR_PATH_NOT_FOUND:
-               throw new DirectoryNotFoundException(errorMessage);
+               throw new System.IO.DirectoryNotFoundException(errorMessage);
+
 
             case Win32Errors.ERROR_BAD_RECOVERY_POLICY:
                throw new PolicyException(errorMessage);
+
 
             case Win32Errors.ERROR_FILE_READ_ONLY:
             case Win32Errors.ERROR_ACCESS_DENIED:
             case Win32Errors.ERROR_NETWORK_ACCESS_DENIED:
                throw new UnauthorizedAccessException(errorMessage);
 
+
             case Win32Errors.ERROR_ALREADY_EXISTS:
             case Win32Errors.ERROR_FILE_EXISTS:
-               throw new AlreadyExistsException(errorMessage);
+               throw new AlreadyExistsException(readPath ?? writePath, true);
+
 
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
                throw new DirectoryNotEmptyException(errorMessage);
 
+
             case Win32Errors.ERROR_NOT_READY:
-                  throw new DeviceNotReadyException(errorMessage);
+               throw new DeviceNotReadyException(errorMessage);
+
 
             case Win32Errors.ERROR_NOT_SAME_DEVICE:
                throw new NotSameDeviceException(errorMessage);
+
 
             #region Transactional
 
@@ -129,33 +155,20 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_TRANSACTIONS_UNSUPPORTED_REMOTE:
                throw new UnsupportedRemoteTransactionException(Resources.Invalid_Transaction_Request, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
-            case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
-               throw new NotAReparsePointException(Resources.Not_A_Reparse_Point, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+            #endregion // Transactional
 
-            #endregion // Transacted
 
             case Win32Errors.ERROR_SUCCESS:
             case Win32Errors.ERROR_SUCCESS_REBOOT_INITIATED:
             case Win32Errors.ERROR_SUCCESS_REBOOT_REQUIRED:
             case Win32Errors.ERROR_SUCCESS_RESTART_REQUIRED:
                // We should really never get here, throwing an exception for a successful operation.
-               throw new NotImplementedException(string.Format(CultureInfo.CurrentCulture, "{0} {1}", Resources.Exception_From_Successful_Operation, errorMessage));
+               throw new NotImplementedException(string.Format(CultureInfo.InvariantCulture, "{0} {1}", Resources.Exception_From_Successful_Operation, errorMessage));
 
             default:
                // We don't have a specific exception to generate for this error.               
-               throw new IOException(errorMessage, Win32Errors.GetHrFromWin32Error(errorCode));
+               throw new System.IO.IOException(errorMessage, Win32Errors.GetHrFromWin32Error(errorCode));
          }
-      }
-
-
-      public static void ThrowException(string readPath)
-      {
-         ThrowException((uint)Marshal.GetLastWin32Error(), readPath, null);
-      }
-      
-      public static void ThrowException(string readPath, string writePath)
-      {
-         ThrowException((uint)Marshal.GetLastWin32Error(), readPath, writePath);
       }
    }
 }

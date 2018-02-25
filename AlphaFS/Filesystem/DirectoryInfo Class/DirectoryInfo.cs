@@ -21,13 +21,12 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Exposes instance methods for creating, moving, and enumerating through directories and subdirectories. This class cannot be inherited.</summary>
-   [SerializableAttribute]
+   [Serializable]
    public sealed partial class DirectoryInfo : FileSystemInfo
    {
       #region Constructors
@@ -45,6 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
+
 
       #region AlphaFS
 
@@ -78,6 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
          DisplayPath = OriginalPath.Length != 2 || OriginalPath[1] != Path.VolumeSeparatorChar ? OriginalPath : Path.CurrentDirectoryPrefix;
       }
 
+
       #region Transactional
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
@@ -88,6 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
+
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
@@ -95,7 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
       public DirectoryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         InitializeCore(true, transaction, path, pathFormat);
+         InitializeCore(transaction, true, path, pathFormat);
       }
 
       #endregion // Transactional
@@ -103,12 +105,11 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // AlphaFS
 
       #endregion // Constructors
-      
+
+
       #region Properties
 
       #region .NET
-
-      #region Exists
 
       /// <summary>Gets a value indicating whether the directory exists.</summary>
       /// <remarks>
@@ -130,8 +131,8 @@ namespace Alphaleonis.Win32.Filesystem
                if (DataInitialised == -1)
                   Refresh();
 
-               FileAttributes attrs = Win32AttributeData.dwFileAttributes;
-               return DataInitialised == 0 && attrs != (FileAttributes) (-1) && (attrs & FileAttributes.Directory) != 0;
+               var attrs = Win32AttributeData.dwFileAttributes;
+               return DataInitialised == 0 && File.IsDirectory(attrs);
             }
             catch
             {
@@ -140,9 +141,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // Exists
-
-      #region Name
 
       /// <summary>Gets the name of this <see cref="DirectoryInfo"/> instance.</summary>
       /// <value>The directory name.</value>
@@ -154,16 +152,12 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get
          {
-            // GetDirName()
             return FullPath.Length > 3
-               ? Path.GetFileName(Path.RemoveTrailingDirectorySeparator(FullPath, false), true)
+               ? Path.GetFileName(Path.RemoveTrailingDirectorySeparator(FullPath), true)
                : FullPath;
          }
       }
 
-      #endregion // Name
-
-      #region Parent
 
       /// <summary>Gets the parent directory of a specified subdirectory.</summary>
       /// <value>The parent directory, or null if the path is null or if the file path denotes a root (such as "\", "C:", or * "\\server\share").</value>
@@ -172,19 +166,16 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          get
          {
-            string path = FullPath;
+            var path = FullPath;
 
             if (path.Length > 3)
-               path = Path.RemoveTrailingDirectorySeparator(FullPath, false);
+               path = Path.RemoveTrailingDirectorySeparator(FullPath);
 
-            string dirName = Path.GetDirectoryName(path, false);
+            var dirName = Path.GetDirectoryName(path, false);
             return dirName == null ? null : new DirectoryInfo(Transaction, dirName, true, true);
          }
       }
 
-      #endregion // Parent
-
-      #region Root
 
       /// <summary>Gets the root portion of the directory.</summary>
       /// <value>An object that represents the root of the directory.</value>
@@ -193,8 +184,6 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          get { return new DirectoryInfo(Transaction, Path.GetPathRoot(FullPath, false), PathFormat.RelativePath); }
       }
-
-      #endregion // Root
 
       #endregion // .NET
 

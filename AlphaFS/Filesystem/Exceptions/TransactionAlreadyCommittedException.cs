@@ -24,35 +24,35 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>It is too late to perform the requested operation, since the Transaction has already been committed.</summary>
-   [SerializableAttribute]
+   /// <summary>[AlphaFS] It is too late to perform the requested operation, since the Transaction has already been committed.</summary>
+   [Serializable]
    public class TransactionAlreadyCommittedException : TransactionException
    {
-      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyCommittedException"/> class.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionAlreadyCommittedException"/> class.</summary>
       public TransactionAlreadyCommittedException()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyCommittedException"/> class.</summary>
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionAlreadyCommittedException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public TransactionAlreadyCommittedException(string message)
-         : base(message)
+      public TransactionAlreadyCommittedException(string message) : base(message)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyCommittedException"/> class.</summary>
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionAlreadyCommittedException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public TransactionAlreadyCommittedException(string message, Exception innerException)
-         : base(message, innerException)
+      public TransactionAlreadyCommittedException(string message, Exception innerException) : base(message, innerException)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyCommittedException"/> class.</summary>
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionAlreadyCommittedException"/> class.</summary>
       /// <param name="info">The object that holds the serialized object data.</param>
       /// <param name="context">The contextual information about the source or destination.</param>
-      protected TransactionAlreadyCommittedException(SerializationInfo info, StreamingContext context)
-         : base(info, context)
+      protected TransactionAlreadyCommittedException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
       }
    }

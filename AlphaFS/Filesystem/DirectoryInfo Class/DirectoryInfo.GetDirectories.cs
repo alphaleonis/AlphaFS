@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories()
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders, PathFormat.LongFullPath).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(true, Transaction, LongFullName, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria.</summary>
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Folders, PathFormat.LongFullPath).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(true, Transaction, LongFullName, searchPattern, null, null, null, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria and using a value to determine whether to search subdirectories.</summary>
@@ -100,9 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories(string searchPattern, SearchOption searchOption)
       {
-         var options = DirectoryEnumerationOptions.Folders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
-
-         return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(true, Transaction, LongFullName, searchPattern, searchOption, null, null, PathFormat.LongFullPath).ToArray();
       }
 
       #endregion // .NET

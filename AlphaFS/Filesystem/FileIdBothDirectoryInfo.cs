@@ -23,6 +23,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security;
+using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -32,10 +33,6 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    public sealed class FileIdBothDirectoryInfo
    {
-      #region Constructor
-
-      #region FileIdBothDirectoryInfo
-
       internal FileIdBothDirectoryInfo(NativeMethods.FILE_ID_BOTH_DIR_INFO fibdi, string fileName)
       {
          CreationTimeUtc = DateTime.FromFileTimeUtc(fibdi.CreationTime);
@@ -53,23 +50,15 @@ namespace Alphaleonis.Win32.Filesystem
          FileName = fileName;
 
          // ShortNameLength is the number of bytes in the short name; since we have a unicode string we must divide that by 2.
-         ShortName = new string(fibdi.ShortName, 0, fibdi.ShortNameLength / 2);
+         ShortName = new string(fibdi.ShortName, 0, fibdi.ShortNameLength / UnicodeEncoding.CharSize);
       }
 
-      #endregion // FileIdBothDirectoryInfo
 
-      #endregion // Constructor
 
-      #region Properties
-
-      #region AllocationSize
 
       /// <summary>The number of bytes that are allocated for the file. This value is usually a multiple of the sector or cluster size of the underlying physical device.</summary>
       public long AllocationSize { get; set; }
 
-      #endregion // AllocationSize
-
-      #region ChangeTime
 
       /// <summary>Gets the time this entry was changed.</summary>
       /// <value>The time this entry was changed.</value>
@@ -78,17 +67,11 @@ namespace Alphaleonis.Win32.Filesystem
          get { return ChangeTimeUtc.ToLocalTime(); }
       }
 
-      #endregion // ChangeTime
-
-      #region ChangeTimeUtc
 
       /// <summary>Gets the time, in coordinated universal time (UTC), this entry was changed.</summary>
       /// <value>The time, in coordinated universal time (UTC), this entry was changed.</value>
       public DateTime ChangeTimeUtc { get; set; }
 
-      #endregion // ChangeTimeUtc
-
-      #region CreationTime
 
       /// <summary>Gets the time this entry was created.</summary>
       /// <value>The time this entry was created.</value>
@@ -97,24 +80,15 @@ namespace Alphaleonis.Win32.Filesystem
          get { return CreationTimeUtc.ToLocalTime(); }
       }
 
-      #endregion // CreationTime
-
-      #region CreationTimeUtc
 
       /// <summary>Gets the time, in coordinated universal time (UTC), this entry was created.</summary>
       /// <value>The time, in coordinated universal time (UTC), this entry was created.</value>
       public DateTime CreationTimeUtc { get; set; }
 
-      #endregion // CreationTimeUtc
-
-      #region EaSize
 
       /// <summary>The size of the extended attributes for the file.</summary>
       public int ExtendedAttributesSize { get; set; }
 
-      #endregion // EaSize
-
-      #region EndOfFile
 
       /// <summary>The absolute new end-of-file position as a byte offset from the start of the file to the end of the file. 
       /// Because this value is zero-based, it actually refers to the first free byte in the file. In other words, <b>EndOfFile</b> is the offset to 
@@ -122,39 +96,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       public long EndOfFile { get; set; }
 
-      #endregion // EndOfFile
-
-      #region FileAttributes
 
       /// <summary>The file attributes.</summary>
       public FileAttributes FileAttributes { get; set; }
 
-      #endregion FileAttributes
-
-      #region FileId
 
       /// <summary>The file ID.</summary>
       public long FileId { get; set; }
 
-      #endregion // FileId
-
-      #region FileIndex
 
       /// <summary>The byte offset of the file within the parent directory. This member is undefined for file systems, such as NTFS,
       /// in which the position of a file within the parent directory is not fixed and can be changed at any time to maintain sort order.
       /// </summary>
       public long FileIndex { get; set; }
 
-      #endregion // FileIndex
-
-      #region FileName
 
       /// <summary>The name of the file.</summary>
       public string FileName { get; set; }
 
-      #endregion // FileName
-
-      #region LastAccessTime
 
       /// <summary>Gets the time this entry was last accessed.</summary>
       /// <value>The time this entry was last accessed.</value>
@@ -163,17 +122,11 @@ namespace Alphaleonis.Win32.Filesystem
          get { return LastAccessTimeUtc.ToLocalTime(); }
       }
 
-      #endregion // LastAccessTime
-
-      #region LastAccessTimeUtc
 
       /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last accessed.</summary>
       /// <value>The time, in coordinated universal time (UTC), this entry was last accessed.</value>
       public DateTime LastAccessTimeUtc { get; set; }
 
-      #endregion // LastAccessTimeUtc
-
-      #region LastWriteTime
 
       /// <summary>Gets the time this entry was last modified.</summary>
       /// <value>The time this entry was last modified.</value>
@@ -182,23 +135,13 @@ namespace Alphaleonis.Win32.Filesystem
          get { return LastWriteTimeUtc.ToLocalTime(); }
       }
 
-      #endregion // LastWriteTime
-
-      #region LastWriteTimeUtc
 
       /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last modified.</summary>
       /// <value>The time, in coordinated universal time (UTC), this entry was last modified.</value>
       public DateTime LastWriteTimeUtc { get; set; }
 
-      #endregion // LastWriteTimeUtc
-
-      #region ShortName
 
       /// <summary>The short 8.3 file naming convention (for example, FILENAME.TXT) name of the file.</summary>
       public string ShortName { get; set; }
-
-      #endregion // ShortName
-
-      #endregion // Properties
    }
 }
