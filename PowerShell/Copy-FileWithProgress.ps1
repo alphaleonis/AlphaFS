@@ -123,7 +123,7 @@ Function UnitSizeToText {
 
 
             # Possible Write-Progress alternative.
-            #$Host.UI.RawUI.WindowTitle = $
+            #$Host.UI.RawUI.WindowTitle = $activity
         }
 
 
@@ -162,7 +162,6 @@ Function DemoCopy-FileWithProgress {
 
 
         # Demo code: Used for assertion.
-        $Error.Clear()
         [Long]$Script:AllBytesTransferred = 0
         [Bool]$Private:failed = $False
 
