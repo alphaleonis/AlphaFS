@@ -205,6 +205,22 @@ Function Invoke-GenericMethod {
 Function Enumerate-FileSystemEntryInfos {
 
 <#
+    2018-02-25 Tested on:
+
+    Name                           Value
+    ----                           -----
+    PSVersion                      5.1.14409.1005
+    PSEdition                      Desktop
+    PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0...}
+    BuildVersion                   10.0.14409.1005
+    CLRVersion                     4.0.30319.42000
+    WSManStackVersion              3.0
+    PSRemotingProtocolVersion      2.3
+    SerializationVersion           1.1.0.1
+
+
+    
+    
     .SYNOPSIS
         AlphaFS v2.2+ EnumerateFileSystemEntryInfos
 

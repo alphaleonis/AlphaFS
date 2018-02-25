@@ -197,8 +197,8 @@ Function DemoCopy-FileWithProgress {
 
             Else {
 
-                If ($cmr.ErrorCode -eq 0) { Write-Host -ForegroundColor Green ('Folder copied successfully. Message: {0}' -f $cmr.ErrorMessage) -NoNewline }
-                Else                      { Write-Host -ForegroundColor Red   ('Folder copied with errors. Message: {0}'  -f $cmr.ErrorMessage) -NoNewline }
+                If ($cmr.ErrorCode -eq 0) { Write-Host -ForegroundColor Green ('File copied successfully. Message: {0}' -f $cmr.ErrorMessage) -NoNewline }
+                Else                      { Write-Host -ForegroundColor Red   ('File copied with errors. Message: {0}'  -f $cmr.ErrorMessage) -NoNewline }
             }
 
 

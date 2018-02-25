@@ -47,6 +47,8 @@ namespace AlphaFS.UnitTest
       }
 
 
+      
+      
       private void File_Copy(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -113,6 +115,8 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The file does not exists, but is expected to.");
 
 
+            
+            
             // Allow copy to overwrite an existing file.
             const Alphaleonis.Win32.Filesystem.CopyOptions copyOptions = Alphaleonis.Win32.Filesystem.CopyOptions.None;
 
@@ -127,9 +131,9 @@ namespace AlphaFS.UnitTest
             var userProgressData = fileLength;
 
 
-            var cmr = Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy, copyOptions, callback, userProgressData);
+            var copyResult = Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy, copyOptions, callback, userProgressData);
 
-            UnitTestConstants.Dump(cmr, -18);
+            UnitTestConstants.Dump(copyResult, -18);
 
 
             Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
