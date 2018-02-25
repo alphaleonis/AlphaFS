@@ -20,7 +20,7 @@
  #>
 
 
-Function Copy-FolderWithProgress {
+Function Copy-DirectoryWithProgress {
 
 <#
     .SYNOPSIS
@@ -131,7 +131,7 @@ Function UnitSizeToText {
 }
 
 
-Function DemoCopy-FolderWithProgress {
+Function DemoCopy-DirectoryWithProgress {
 
 <#
     2018-02-25 Tested on:
@@ -170,7 +170,7 @@ Function DemoCopy-FolderWithProgress {
 
 
     Process {
-        $Private:cmr = Copy-FolderWithProgress `
+        $Private:cmr = Copy-DirectoryWithProgress `
             -SourceFolderFullPath      $srcFolderFullPath `
             -DestinationFolderFullPath $dstFolderFullPath `
             -CopyOptions               $copyOptions `
@@ -207,4 +207,4 @@ Function DemoCopy-FolderWithProgress {
 
 Import-Module -Name 'PATH TO\AlphaFS.dll'
 
-DemoCopy-FolderWithProgress
+DemoCopy-DirectoryWithProgress
