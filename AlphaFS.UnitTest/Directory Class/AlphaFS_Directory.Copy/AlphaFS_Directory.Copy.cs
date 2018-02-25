@@ -203,9 +203,6 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\tCallback: Copied: [{0}%] --> [{1:N0}] bytes.", pct.ToString("N2", CultureInfo.CurrentCulture), totalBytesTransferred);
 
             Assert.IsTrue(totalBytesTransferred > 0);
-
-
-            var bytes = Convert.ToInt64(userData);
          }
 
 
