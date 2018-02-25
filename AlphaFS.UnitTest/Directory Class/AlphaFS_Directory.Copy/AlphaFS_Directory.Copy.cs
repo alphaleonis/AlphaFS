@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
@@ -36,6 +37,16 @@ namespace AlphaFS.UnitTest
          Directory_Copy(false);
          Directory_Copy(true);
       }
+
+
+      [TestMethod]
+      public void AlphaFS_Directory_Copy_WithProgress_LocalAndNetwork_Success()
+      {
+         Directory_Copy_WithProgress(false);
+         Directory_Copy_WithProgress(true);
+      }
+
+
 
 
       private void Directory_Copy(bool isNetwork)
@@ -100,6 +111,102 @@ namespace AlphaFS.UnitTest
 
 
          Console.WriteLine();
+      }
+
+
+      private void Directory_Copy_WithProgress(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
+
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         {
+            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
+            var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination Folder"));
+
+            Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
+
+            UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), false, false, true);
+
+
+            var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
+
+            var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderSrc.FullName, dirEnumOptions);
+
+            var sourceTotal = props["Total"];
+            var sourceTotalFiles = props["File"];
+            var sourceTotalSize = props["Size"];
+
+            Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
+
+
+
+
+            // Allow copy to overwrite an existing file.
+            const Alphaleonis.Win32.Filesystem.CopyOptions copyOptions = Alphaleonis.Win32.Filesystem.CopyOptions.None;
+
+            // The copy progress handler.
+            var callback = new Alphaleonis.Win32.Filesystem.CopyMoveProgressRoutine(FolderCopyProgressHandler);
+
+            Console.WriteLine();
+
+
+            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName, copyOptions, callback, null);
+
+            UnitTestConstants.Dump(copyResult, -18);
+
+
+            props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
+            Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
+            Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
+            Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
+            Assert.AreNotEqual(null, copyResult);
+
+
+            // Test against copyResult results.
+
+            Assert.AreEqual(sourceTotal, copyResult.TotalFolders + copyResult.TotalFiles, "The number of total file system objects do not match.");
+            Assert.AreEqual(sourceTotalFiles, copyResult.TotalFiles, "The number of total files do not match.");
+            Assert.AreEqual(sourceTotalSize, copyResult.TotalBytes, "The total file size does not match.");
+            Assert.IsTrue(copyResult.IsCopy);
+            Assert.IsFalse(copyResult.IsMove);
+            Assert.IsTrue(copyResult.IsDirectory);
+            Assert.IsFalse(copyResult.IsFile);
+
+            Assert.IsTrue(System.IO.Directory.Exists(folderSrc.FullName), "The original directory does not exist, but is expected to.");
+         }
+
+
+         Console.WriteLine();
+      }
+
+
+      private static Alphaleonis.Win32.Filesystem.CopyMoveProgressResult FolderCopyProgressHandler(long totalFileSize, long totalBytesTransferred, long streamSize,
+         long streamBytesTransferred, int streamNumber, Alphaleonis.Win32.Filesystem.CopyMoveProgressCallbackReason callbackReason, object userData)
+      {
+         if (callbackReason == Alphaleonis.Win32.Filesystem.CopyMoveProgressCallbackReason.StreamSwitch)
+
+            Assert.AreEqual(0, totalBytesTransferred);
+
+
+         else
+         {
+            var pct = Convert.ToDouble(totalBytesTransferred, CultureInfo.InvariantCulture) / totalFileSize * 100;
+
+            Console.WriteLine("\tCallback: Copied: [{0}%] --> [{1:N0}] bytes.", pct.ToString("N2", CultureInfo.CurrentCulture), totalBytesTransferred);
+
+            Assert.IsTrue(totalBytesTransferred > 0);
+         }
+
+
+         return Alphaleonis.Win32.Filesystem.CopyMoveProgressResult.Continue;
       }
    }
 }

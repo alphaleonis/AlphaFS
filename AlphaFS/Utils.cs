@@ -83,22 +83,21 @@ namespace Alphaleonis
       /// <summary>Converts a number of type T to string formated using the specified <paramref name="cultureInfo"/>, suffixed with a unit size.</summary>
       public static string UnitSizeToText<T>(T numberOfBytes, CultureInfo cultureInfo)
       {
-         const int kb = 1024;
-
          var sizeFormats = new[] {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
-         var formatLength = sizeFormats.Length;
+         const int kb = 1024;
+         var index = 0;
 
          var bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
 
          if (bytes < 0)
             bytes = 0;
-
-         var index = 0;
-         while (index < formatLength && bytes > kb)
-         {
-            index++;
-            bytes /= kb;
-         }
+         
+         else
+            while (bytes > kb)
+            {
+               bytes /= kb;
+               index++;
+            }
 
 
          // Will return "512 B" instead of "512,00 B".
