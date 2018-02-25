@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
             long length = fs.Length;
 
             if (length > int.MaxValue)
-               throw new IOException(string.Format(CultureInfo.InvariantCulture, "File larger than 2GB: [{0}]", path));
+               throw new IOException(string.Format(CultureInfo.CurrentCulture, "File larger than 2GB: [{0}]", path));
 
             int count = (int)length;
             buffer = new byte[count];
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                int n = fs.Read(buffer, offset, count);
                if (n == 0)
-                  throw new IOException("UNEXPECTED end of file found");
+                  throw new IOException("Unexpected end of file found");
                offset += n;
                count -= n;
             }

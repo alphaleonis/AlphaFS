@@ -29,12 +29,9 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
+      #region Public Methods
+
       /// <summary>Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <exception cref="FileReadOnlyException"/>
-      /// <exception cref="NotSupportedException"/>
       /// <param name="path">A path that describes a file to decrypt.</param>
       [SecurityCritical]
       public static void Decrypt(string path)
@@ -42,13 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
          EncryptDecryptFileCore(false, path, false, PathFormat.RelativePath);
       }
 
-
       /// <summary>[AlphaFS] Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <exception cref="FileReadOnlyException"/>
-      /// <exception cref="NotSupportedException"/>
       /// <param name="path">A path that describes a file to decrypt.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -57,13 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
          EncryptDecryptFileCore(false, path, false, pathFormat);
       }
 
-
       /// <summary>Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <exception cref="FileReadOnlyException"/>
-      /// <exception cref="NotSupportedException"/>
       /// <param name="path">A path that describes a file to encrypt.</param>
       [SecurityCritical]
       public static void Encrypt(string path)
@@ -71,13 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
          EncryptDecryptFileCore(false, path, true, PathFormat.RelativePath);
       }
 
-
       /// <summary>[AlphaFS] Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <exception cref="FileReadOnlyException"/>
-      /// <exception cref="NotSupportedException"/>
       /// <param name="path">A path that describes a file to encrypt.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
@@ -86,88 +65,56 @@ namespace Alphaleonis.Win32.Filesystem
          EncryptDecryptFileCore(false, path, true, pathFormat);
       }
 
+      #endregion
 
 
+
+
+      #region Internal Methods
 
       /// <summary>Decrypts/encrypts a file or directory so that only the account used to encrypt the file can decrypt it.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="NotSupportedException"/>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">A path that describes a file to encrypt.</param>
       /// <param name="encrypt"><see langword="true"/> encrypt, <see langword="false"/> decrypt.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
       internal static void EncryptDecryptFileCore(bool isFolder, string path, bool encrypt, PathFormat pathFormat)
       {
-         if (pathFormat != PathFormat.LongFullPath)
-         {
-            path = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         string pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-            pathFormat = PathFormat.LongFullPath;
-         }
-
-
+         // Reset file/directory attributes.
          // MSDN: If lpFileName specifies a read-only file, the function fails and GetLastError returns ERROR_FILE_READ_ONLY.
-
-         var attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(null, path, pathFormat, true);
-         var isReadOnly = (attrs.dwFileAttributes & FileAttributes.ReadOnly) != 0;
-         if (isReadOnly)
-            SetAttributesCore(null, isFolder, path, attrs.dwFileAttributes &= ~FileAttributes.ReadOnly, pathFormat);
-         
+         SetAttributesCore(isFolder, null, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
 
          // EncryptFile() / DecryptFile()
+         // In the ANSI version of this function, the name is limited to 248 characters.
+         // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-         var success = encrypt ? NativeMethods.EncryptFile(path) : NativeMethods.DecryptFile(path, 0);
-         var lastError = Marshal.GetLastWin32Error();
-
-
-         if (isReadOnly)
+         if (!(encrypt
+            ? NativeMethods.EncryptFile(pathLp)
+            : NativeMethods.DecryptFile(pathLp, 0)))
          {
-            var isHidden = (attrs.dwFileAttributes & FileAttributes.Hidden) != 0;
-
-            // Get most current attributes.
-            attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(null, path, pathFormat, true);
-
-            attrs.dwFileAttributes |= FileAttributes.ReadOnly;
-
-            if (isHidden)
-               attrs.dwFileAttributes |= FileAttributes.Hidden;
-
-
-            SetAttributesCore(null, isFolder, path, attrs.dwFileAttributes, pathFormat);
-         }
-
-
-         if (!success)
-         {
-            switch ((uint) lastError)
+            int lastError = Marshal.GetLastWin32Error();
+            switch ((uint)lastError)
             {
                case Win32Errors.ERROR_ACCESS_DENIED:
-                  if (!string.Equals("NTFS", new DriveInfo(path).DriveFormat, StringComparison.OrdinalIgnoreCase))
-                     throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, "The drive does not support NTFS encryption: [{0}]", Path.GetPathRoot(path, false)));
-
+                  string root = Path.GetPathRoot(pathLp, false);
+                  if (!string.Equals("NTFS", new DriveInfo(root).DriveFormat, StringComparison.OrdinalIgnoreCase))
+                     throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "The drive does not support NTFS encryption: [{0}]", root));
                   break;
-
-
-               case Win32Errors.ERROR_FILE_READ_ONLY:
-                  if (IsDirectory(attrs.dwFileAttributes))
-                     throw new DirectoryReadOnlyException(path);
-                  else
-                     throw new FileReadOnlyException(path);
-
 
                default:
                   if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && isFolder)
-                     lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+                     lastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
 
-                  NativeError.ThrowException(lastError, path);
+                  NativeError.ThrowException(lastError, pathLp);
                   break;
             }
          }
       }
+
+      #endregion // Internal Methods
    }
 }

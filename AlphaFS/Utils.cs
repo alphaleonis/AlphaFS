@@ -20,36 +20,54 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
+using System.Reflection;
 
 namespace Alphaleonis
 {
    internal static class Utils
    {
+      #region EnumMemberToList
+
+      public static IEnumerable<T> EnumMemberToList<T>()
+      {
+         Type enumType = typeof(T);
+
+         // Can't use generic type constraints on value types, so have to do check like this.
+         if (enumType.BaseType != typeof(Enum))
+            throw new ArgumentException("T must be of type System.Enum");
+
+         //Array enumValArray = Enum.GetValues(enumType);
+         //List<T> enumValList = new List<T>(enumValArray.Length);
+         IOrderedEnumerable<T> enumValArray = Enum.GetValues(enumType).Cast<T>().OrderBy(e => e.ToString());
+         var enumValList = new List<T>(enumValArray.Count());
+
+         enumValList.AddRange(enumValArray.Select(val => (T)Enum.Parse(enumType, val.ToString())));
+         return enumValList;
+      }
+
+      #endregion // EnumMemberToList
+
+      #region GetEnumDescription
+
       /// <summary>Gets an attribute on an enum field value.</summary>
       /// <returns>The description belonging to the enum option, as a string</returns>
       /// <param name="enumValue">One of the <see cref="Alphaleonis.Win32.Filesystem.DeviceGuid"/> enum types.</param>
       [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       public static string GetEnumDescription(Enum enumValue)
       {
-         var enumValueString = enumValue.ToString();
-
-         var fi = enumValue.GetType().GetField(enumValueString);
-
-         var attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
-
-         return attributes.Length > 0 ? attributes[0].Description : enumValueString;
+         FieldInfo fi = enumValue.GetType().GetField(enumValue.ToString());
+         var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+         return attributes.Length > 0 ? attributes[0].Description : enumValue.ToString();
       }
 
+      #endregion // GetEnumDescription
 
-      /// <summary>Checks that the object is not null.</summary>
-      public static bool IsNotNull<T>(T obj)
-      {
-         return !Equals(null, obj);
-      }
-
+      #region IsNullOrWhiteSpace
 
       /// <summary>Indicates whether a specified string is null, empty, or consists only of white-space characters.</summary>
       /// <returns><see langword="true"/> if the <paramref name="value"/> parameter is null or <see cref="string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
@@ -57,11 +75,13 @@ namespace Alphaleonis
       public static bool IsNullOrWhiteSpace(string value)
       {
 #if NET35
-         if (null != value)
+         if (value != null)
          {
-            for (int index = 0, l = value.Length; index < l; ++index)
+            for (int index = 0; index < value.Length; ++index)
+            {
                if (!char.IsWhiteSpace(value[index]))
                   return false;
+            }
          }
 
          return true;
@@ -70,72 +90,42 @@ namespace Alphaleonis
 #endif
       }
 
+      #endregion // IsNullOrWhiteSpace
 
-      /// <summary>Converts a number of type T to string formated using <see cref="CultureInfo.InvariantCulture"/>, suffixed with a unit size.</summary>
+      #region UnitSizeToText
+
+      /// <summary>Converts a number of type T to string, suffixed with a unit size.</summary>
       public static string UnitSizeToText<T>(T numberOfBytes)
       {
-         // CultureInfo.CurrentCulture uses the culture as set in the Region applet.
+         string[] sizeFormats =
+         {
+            "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"
+         };
 
-         return UnitSizeToText(numberOfBytes, CultureInfo.CurrentCulture);
-      }
 
-
-      /// <summary>Converts a number of type T to string formated using the specified <paramref name="cultureInfo"/>, suffixed with a unit size.</summary>
-      public static string UnitSizeToText<T>(T numberOfBytes, CultureInfo cultureInfo)
-      {
-         var sizeFormats = new[] {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
-         const int kb = 1024;
-         var index = 0;
-
+         var i = 0;
          var bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
 
-         if (bytes < 0)
-            bytes = 0;
-         
-         else
-            while (bytes > kb)
-            {
-               bytes /= kb;
-               index++;
-            }
+         while (i < sizeFormats.Length && bytes > 1024)
+         {
+            i++;
+            bytes /= 1024;
+         }
 
 
          // Will return "512 B" instead of "512,00 B".
-
-         return string.Format(cultureInfo, "{0} {1}", bytes.ToString(index == 0 ? "0" : "0.##", cultureInfo), sizeFormats[index]);
+         return string.Format(CultureInfo.CurrentCulture, i == 0 ? "{0:0} {1}" : "{0:0.##} {1}", bytes, sizeFormats[i]);
       }
 
-
-      public static int CombineHashCodesOf<T1, T2>(T1 arg1, T2 arg2)
+      /// <summary>Calculates a percentage value.</summary>
+      /// <param name="currentValue"/>
+      /// <param name="minimumValue"/>
+      /// <param name="maximumValue"/>
+      public static double PercentCalculate(double currentValue, double minimumValue, double maximumValue)
       {
-         unchecked
-         {
-            var hash = 17;
-
-            hash = hash * 23 + (null != arg1 ? arg1.GetHashCode() : 0);
-            hash = hash * 23 + (null != arg2 ? arg2.GetHashCode() : 0);
-
-            return hash;
-         }
+         return (currentValue < 0 || maximumValue <= 0) ? 0 : currentValue * 100 / (maximumValue - minimumValue);
       }
 
-
-      public static int CombineHashCodesOf<T1, T2, T3>(T1 arg1, T2 arg2, T3 arg3)
-      {
-         unchecked
-         {
-            var hash = CombineHashCodesOf(arg1, arg2);
-
-            hash = hash * 23 + (null != arg3 ? arg3.GetHashCode() : 0);
-
-            return hash;
-         }
-      }
-
-
-      public static int CombineHashCodesOf<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
-      {
-         return CombineHashCodesOf(CombineHashCodesOf(arg1, arg2), CombineHashCodesOf(arg3, arg4));
-      }
+      #endregion // UnitSizeToText
    }
 }

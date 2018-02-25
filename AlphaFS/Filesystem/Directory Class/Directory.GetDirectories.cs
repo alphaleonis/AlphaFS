@@ -53,9 +53,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectories(string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, null, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders, PathFormat.RelativePath).ToArray();
       }
-
 
       /// <summary>Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.</summary>
       /// <returns>An array of the full names (including paths) of the subdirectories that match the search pattern in the specified directory, or an empty array if no directories are found.</returns>
@@ -81,9 +80,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectories(string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, DirectoryEnumerationOptions.Folders, PathFormat.RelativePath).ToArray();
       }
-
 
       /// <summary>Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.</summary>
       /// <returns>An array of the full names (including paths) of the subdirectories that match the specified criteria, or an empty array if no directories are found.</returns>
@@ -113,15 +111,16 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectories(string path, string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, searchOption, null, null, PathFormat.RelativePath).ToArray();
+         var options = DirectoryEnumerationOptions.Folders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+
+         return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, options, PathFormat.RelativePath).ToArray();
       }
 
       #endregion // .NET
 
-      
+      #region Transactional
 
-
-      /// <summary>[AlphaFS] Returns the names of subdirectories (including their paths) in the specified directory.</summary>
+      /// <summary>Returns the names of subdirectories (including their paths) in the specified directory.</summary>
       /// <returns>An array of the full names (including paths) of subdirectories in the specified path, or an empty array if no directories are found.</returns>
       /// <remarks>
       ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
@@ -141,11 +140,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectoriesTransacted(KernelTransaction transaction, string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders, PathFormat.RelativePath).ToArray();
       }
 
-
-      /// <summary>[AlphaFS] Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.</summary>
+      /// <summary>Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.</summary>
       /// <returns>An array of the full names (including paths) of the subdirectories that match the search pattern in the specified directory, or an empty array if no directories are found.</returns>
       /// <remarks>
       ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
@@ -170,11 +168,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, DirectoryEnumerationOptions.Folders, PathFormat.RelativePath).ToArray();
       }
 
-
-      /// <summary>[AlphaFS] Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.</summary>
+      /// <summary>Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.</summary>
       /// <returns>An array of the full names (including paths) of the subdirectories that match the specified criteria, or an empty array if no directories are found.</returns>
       /// <remarks>
       ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
@@ -203,7 +200,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectoriesTransacted(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, transaction, path, searchPattern, searchOption, null, null, PathFormat.RelativePath).ToArray();
+         var options = DirectoryEnumerationOptions.Folders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+
+         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, options, PathFormat.RelativePath).ToArray();
       }
+
+      #endregion // Transactional
    }
 }

@@ -40,13 +40,12 @@ namespace Alphaleonis.Win32.Security
       [SecurityCritical]
       public InternalPrivilegeEnabler(Privilege privilegeName)
       {
-         if (null == privilegeName)
+         if (privilegeName == null)
             throw new ArgumentNullException("privilegeName");
 
-         EnabledPrivilege = privilegeName;
+         _mPrivilege = privilegeName;
          AdjustPrivilege(true);
       }
-
 
       /// <summary>
       /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -56,51 +55,47 @@ namespace Alphaleonis.Win32.Security
       {
          try
          {
-            if (null != EnabledPrivilege)
+            if (_mPrivilege != null)
                AdjustPrivilege(false);
          }
          finally
          {
-            EnabledPrivilege = null;
+            _mPrivilege = null;
          }
       }
-
-
-      public Privilege EnabledPrivilege { get; private set; }
-
 
       /// <summary>Adjusts the privilege.</summary>
       /// <param name="enable"><see langword="true"/> the privilege will be enabled, otherwise disabled.</param>
       [SecurityCritical]
       private void AdjustPrivilege(bool enable)
       {
-         using (var currentIdentity = WindowsIdentity.GetCurrent(TokenAccessLevels.Query | TokenAccessLevels.AdjustPrivileges))
+         using (WindowsIdentity currentIdentity = WindowsIdentity.GetCurrent(TokenAccessLevels.Query | TokenAccessLevels.AdjustPrivileges))
          {
-            uint length;
-            var hToken = currentIdentity.Token;
-            var mOldPrivilege = new TOKEN_PRIVILEGES();
-
-            var newPrivilege = new TOKEN_PRIVILEGES
+            if (currentIdentity != null)
             {
-               PrivilegeCount = 1,
-               Luid = Filesystem.NativeMethods.LongToLuid(EnabledPrivilege.LookupLuid()),
+               IntPtr hToken = currentIdentity.Token;
+               TokenPrivileges newPrivilege = new TokenPrivileges();
+               TokenPrivileges mOldPrivilege = new TokenPrivileges();
+               newPrivilege.PrivilegeCount = 1;
+               newPrivilege.Luid = Filesystem.NativeMethods.LongToLuid(_mPrivilege.LookupLuid());
+               newPrivilege.Attributes = (uint)(enable ? 2 : 0);    // 2 = SePrivilegeEnabled;
 
-               // 2 = SePrivilegeEnabled;
-               Attributes = (uint) (enable ? 2 : 0)
-            };
+               uint length;
+               if (!NativeMethods.AdjustTokenPrivileges(hToken, false, ref newPrivilege, (uint) Marshal.SizeOf(mOldPrivilege), out mOldPrivilege, out length))
+                  NativeError.ThrowException(Marshal.GetLastWin32Error());
 
-
-            var success = NativeMethods.AdjustTokenPrivileges(hToken, false, ref newPrivilege, (uint) Marshal.SizeOf(mOldPrivilege), out mOldPrivilege, out length);
-
-            var lastError = Marshal.GetLastWin32Error();
-            if (!success)
-               NativeError.ThrowException(lastError);
-
-
-            // If no privilege was changed, we don't want to reset it.
-            if (mOldPrivilege.PrivilegeCount == 0)
-               EnabledPrivilege = null;
+               // If no privilege was changed, we don't want to reset it.
+               if (mOldPrivilege.PrivilegeCount == 0)
+                  _mPrivilege = null;
+            }
          }
       }
+
+      public Privilege EnabledPrivilege
+      {
+         get { return _mPrivilege; }
+      }
+
+      private Privilege _mPrivilege;
    }
 }

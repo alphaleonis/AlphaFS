@@ -131,7 +131,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput Path: [{0}]", tempPath);
 
          // Create some folders and files.
-         UnitTestConstants.CreateDirectoriesAndFiles(tempPath, 1, false, false, true);
+         UnitTestConstants.CreateDirectoriesAndFiles(tempPath, 10, true);
 
          var apply = FileAttributes.Hidden | FileAttributes.Archive | FileAttributes.System | FileAttributes.ReadOnly;
          Console.WriteLine("\nSetAttributes(): [{0}]", apply);
@@ -151,14 +151,14 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t\tSystem.IO: [{3}]", ++cnt, file, expected, actual);
 
                if (cnt == 0)
-                  Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+                  Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
                Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
             }
             catch (Exception ex)
             {
                allOk = false;
-               Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
          Console.WriteLine();
@@ -184,21 +184,21 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t\tSystem.IO: [{3}]", ++cnt, file, expected, actual);
 
                if (cnt == 0)
-                  Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+                  Assert.Inconclusive("Nothing was enumerated, but it was expected.");
 
                Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
             }
             catch (Exception ex)
             {
                allOk = false;
-               Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
          Console.WriteLine();
          Console.WriteLine(UnitTestConstants.Reporter());
 
 
-         Directory.Delete(tempPath, true, true);
+         Directory.Delete(tempPath, true);
          Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          Assert.IsTrue(allOk);
          Console.WriteLine();
@@ -229,7 +229,7 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\nFile.ReadLines()\n");
-         foreach (var s in File.ReadLines(tempFile))
+         foreach (var s in File.ReadLines((tempFile)))
          {
             Console.WriteLine("\t{0}", s);
             Assert.IsTrue(createText.Contains(s));
@@ -261,7 +261,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             allOk = false;
-            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(File.Exists(tempPath), "File.WriteAllBytes(): File was not created.");
          var fileSize = File.GetSize(tempPath);
@@ -282,7 +282,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             allOk = false;
-            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Assert.AreEqual(readAllAlphaFS.Length, fileSize, "File.ReadAllBytes(): Number of bytes are different.");
@@ -495,7 +495,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          encryptionStatus = File.GetEncryptionStatus(tempFile);
          Console.WriteLine("\n\tFile.Encrypt() (Should be True): [{0}]", encryptOk);
@@ -511,7 +511,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          var decryptionStatus = File.GetEncryptionStatus(tempFile);
          Console.WriteLine("\n\tFile.Decrypt() (Should be True): [{0}]:", decryptOk);

@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       [SecurityCritical]
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -131,7 +131,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">
       ///   The file to append the lines to. The file is created if it doesn't already exist.
       /// </param>
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
@@ -190,7 +190,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
@@ -219,7 +219,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
@@ -246,7 +246,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
@@ -276,7 +276,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       [SecurityCritical]
@@ -295,7 +295,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -317,7 +317,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -337,7 +337,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -362,7 +362,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
@@ -382,7 +382,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
@@ -405,7 +405,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
@@ -426,7 +426,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
@@ -457,7 +457,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       [SecurityCritical]
@@ -485,7 +485,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -505,7 +505,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -528,7 +528,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -548,7 +548,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -568,7 +568,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -589,7 +589,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -615,7 +615,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
@@ -636,7 +636,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
@@ -656,7 +656,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
@@ -677,7 +677,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
@@ -701,7 +701,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
@@ -722,7 +722,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
@@ -743,7 +743,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
@@ -765,7 +765,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
@@ -796,7 +796,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
       [SecurityCritical]
@@ -828,7 +828,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -848,7 +848,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
@@ -874,7 +874,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
@@ -894,7 +894,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
@@ -918,7 +918,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
@@ -939,7 +939,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
@@ -967,7 +967,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="SecurityException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
@@ -986,7 +986,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("encoding");
 
 
-         using (FileStream stream = OpenCore(transaction, path, isAppend ? FileMode.OpenOrCreate : FileMode.Create, FileSystemRights.AppendData, FileShare.ReadWrite, ExtendedFileAttributes.Normal, null, null, pathFormat))
+         using (FileStream stream = OpenCore(transaction, path, (isAppend ? FileMode.OpenOrCreate : FileMode.Create), FileSystemRights.AppendData, FileShare.ReadWrite, ExtendedFileAttributes.Normal, null, null, pathFormat))
          {
             if (isAppend)
                stream.Seek(0, SeekOrigin.End);

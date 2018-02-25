@@ -21,7 +21,6 @@
 
 using System;
 using System.Globalization;
-using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -31,20 +30,18 @@ namespace Alphaleonis.Win32.Network
    {
       #region Constructor
 
-      /// <summary>Create an OpenResourceInfo instance.</summary>
-      internal OpenResourceInfo(string hostName, NativeMethods.FILE_INFO_3 fileInfo)
+      /// <summary>Create a OpenResourceInfo instance.</summary>
+      internal OpenResourceInfo(string host, NativeMethods.FILE_INFO_3 fileInfo)
       {
-         Host = hostName;
-         HostName = hostName;
+         Host = host;
          Id = fileInfo.fi3_id;
          Permissions = fileInfo.fi3_permissions;
          TotalLocks = fileInfo.fi3_num_locks;
-         PathName = fileInfo.fi3_pathname.Replace(Path.UncPrefix, Path.DirectorySeparator);
+         PathName = fileInfo.fi3_pathname.Replace(@"\\", @"\");
          UserName = fileInfo.fi3_username;
       }
 
       #endregion // Constructor
-
 
       #region Methods
 
@@ -52,11 +49,9 @@ namespace Alphaleonis.Win32.Network
       /// <remarks>You should this method with caution because it does not write data cached on the client system to the file before closing the file.</remarks>
       public void Close()
       {
-         var lastError = NativeMethods.NetFileClose(HostName, (uint) Id);
-
+         uint lastError = NativeMethods.NetFileClose(Host, (uint) Id);
          if (lastError != Win32Errors.NERR_Success && lastError != Win32Errors.NERR_FileIdNotFound)
-
-            NativeError.ThrowException(lastError, HostName, PathName);
+            NativeError.ThrowException(lastError, Host, PathName);
       }
 
       /// <summary>Returns the full path to the share.</summary>
@@ -68,15 +63,10 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // Methods
 
-      
       #region Properties
 
       /// <summary>The local or remote Host.</summary>
-      [Obsolete("Use HostName")]
       public string Host { get; private set; }
-
-      /// <summary>The host name of this resource information.</summary>
-      public string HostName { get; private set; }
 
       /// <summary>The identification number assigned to the resource when it is opened.</summary>
       public long Id { get; private set; }

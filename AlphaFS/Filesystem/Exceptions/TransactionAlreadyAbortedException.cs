@@ -24,35 +24,35 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>[AlphaFS] It is too late to perform the requested operation, since the Transaction has already been aborted.</summary>
-   [Serializable]
+   /// <summary>It is too late to perform the requested operation, since the Transaction has already been aborted.</summary>
+   [SerializableAttribute]
    public class TransactionAlreadyAbortedException : TransactionException
    {
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
       public TransactionAlreadyAbortedException()
       {
       }
 
-
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public TransactionAlreadyAbortedException(string message) : base(message)
+      public TransactionAlreadyAbortedException(string message)
+         : base(message)
       {
       }
 
-
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public TransactionAlreadyAbortedException(string message, Exception innerException) : base(message, innerException)
+      public TransactionAlreadyAbortedException(string message, Exception innerException)
+         : base(message, innerException)
       {
       }
 
-
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
       /// <param name="info">The info.</param>
       /// <param name="context">The context.</param>
-      protected TransactionAlreadyAbortedException(SerializationInfo info, StreamingContext context) : base(info, context)
+      protected TransactionAlreadyAbortedException(SerializationInfo info, StreamingContext context)
+         : base(info, context)
       {
       }
    }

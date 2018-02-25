@@ -25,11 +25,15 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
+   #region ByHandleFileInfo
+
    /// <summary>Contains information that the GetFileInformationByHandle function retrieves.</summary>
    [SerializableAttribute]
    [SecurityCritical]
    public sealed class ByHandleFileInfo
    {
+      #region Constructor
+
       internal ByHandleFileInfo(NativeMethods.BY_HANDLE_FILE_INFORMATION fibh)
       {
          CreationTimeUtc = DateTime.FromFileTimeUtc(fibh.ftCreationTime);
@@ -39,15 +43,23 @@ namespace Alphaleonis.Win32.Filesystem
          Attributes = fibh.dwFileAttributes;
          FileIndex = NativeMethods.ToLong(fibh.nFileIndexHigh, fibh.nFileIndexLow);
          FileSize = NativeMethods.ToLong(fibh.nFileSizeHigh, fibh.nFileSizeLow);
-         NumberOfLinks = (int) fibh.nNumberOfLinks;
+         NumberOfLinks = fibh.nNumberOfLinks;
          VolumeSerialNumber = fibh.dwVolumeSerialNumber;
       }
 
+      #endregion // Constructor
+
+      #region Properties
+
+      #region Attributes
 
       /// <summary>Gets the file attributes.</summary>
       /// <value>The file attributes.</value>
       public FileAttributes Attributes { get; private set; }
 
+      #endregion // Attributes
+
+      #region CreationTime
 
       /// <summary>Gets the time this entry was created.</summary>
       /// <value>The time this entry was created.</value>
@@ -56,11 +68,17 @@ namespace Alphaleonis.Win32.Filesystem
          get { return CreationTimeUtc.ToLocalTime(); }
       }
 
+      #endregion // CreationTime
+
+      #region CreationTimeUtc
 
       /// <summary>Gets the time, in coordinated universal time (UTC), this entry was created.</summary>
       /// <value>The time, in coordinated universal time (UTC), this entry was created.</value>
       public DateTime CreationTimeUtc { get; private set; }
 
+      #endregion // CreationTimeUtc
+
+      #region LastAccessTime
 
       /// <summary>Gets the time this entry was last accessed.
       /// For a file, the structure specifies the last time that a file is read from or written to. 
@@ -74,6 +92,9 @@ namespace Alphaleonis.Win32.Filesystem
          get { return LastAccessTimeUtc.ToLocalTime(); }
       }
 
+      #endregion // LastAccessTime
+
+      #region LastAccessTimeUtc
 
       /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last accessed.
       /// For a file, the structure specifies the last time that a file is read from or written to. 
@@ -84,6 +105,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The time, in coordinated universal time (UTC), this entry was last accessed.</value>
       public DateTime LastAccessTimeUtc { get; private set; }
 
+      #endregion // LastAccessTimeUtc
+
+      #region LastWriteTime
 
       /// <summary>Gets the time this entry was last modified.
       /// For a file, the structure specifies the last time that a file is written to. 
@@ -96,6 +120,9 @@ namespace Alphaleonis.Win32.Filesystem
          get { return LastWriteTimeUtc.ToLocalTime(); }
       }
 
+      #endregion // LastWriteTime
+
+      #region LastWriteTimeUtc
 
       /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last modified.
       /// For a file, the structure specifies the last time that a file is written to. 
@@ -105,21 +132,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The time, in coordinated universal time (UTC), this entry was last modified.</value>
       public DateTime LastWriteTimeUtc { get; private set; }
 
+      #endregion // LastWriteTimeUtc
+
+      #region VolumeSerialNumber
 
       /// <summary>Gets the serial number of the volume that contains a file.</summary>
       /// <value>The serial number of the volume that contains a file.</value>
-      public long VolumeSerialNumber { get; private set; }
+      public int VolumeSerialNumber { get; private set; }
 
+      #endregion // VolumeSerialNumber
+
+      #region FileSize
 
       /// <summary>Gets the size of the file.</summary>
       /// <value>The size of the file.</value>
       public long FileSize { get; private set; }
 
+      #endregion // FileSize
+
+      #region NumberOfLinks
 
       /// <summary>Gets the number of links to this file. For the FAT file system this member is always 1. For the NTFS file system, it can be more than 1.</summary>
       /// <value>The number of links to this file. </value>
       public int NumberOfLinks { get; private set; }
 
+      #endregion // NumberOfLinks
+
+      #region FileIndex
 
       /// <summary>
       /// Gets the unique identifier associated with the file. The identifier and the volume serial number uniquely identify a 
@@ -128,5 +167,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <value>The unique identifier of the file.</value>
       public long FileIndex { get; private set; }
+
+      #endregion // FileIndex
+
+      #endregion // Properties
    }
+
+   #endregion // ByHandleFileInfo
 }

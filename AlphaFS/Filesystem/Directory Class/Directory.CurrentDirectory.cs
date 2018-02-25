@@ -48,10 +48,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var nameBuffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
-         // GetCurrentDirectory()
+         // SetCurrentDirectory()
+         // In the ANSI version of this function, the name is limited to 248 characters.
+         // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2016-09-29: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-         // 2017-05-30: MSDN confirms LongPath usage: Starting with Windows 10, version 1607
-         // 2018-01-15: MSDN confirmation is gone?
 
          var folderNameLength = NativeMethods.GetCurrentDirectory((uint) nameBuffer.Capacity, nameBuffer);
          var lastError = Marshal.GetLastWin32Error();
@@ -115,14 +115,12 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // SetCurrentDirectory()
-         // 2016-09-29: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-         // 2017-05-30: MSDN confirms LongPath usage: Starting with Windows 10, version 1607
+         // In the ANSI version of this function, the name is limited to 248 characters.
+         // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+         // 2016-09-29: MSDN confirms LongPath usage starting with Windows 10, version 1607.
 
-         var success = NativeMethods.SetCurrentDirectory(pathLp);
-
-         var lastError = Marshal.GetLastWin32Error();
-         if (!success)
-            NativeError.ThrowException(lastError, pathLp);
+         if (!NativeMethods.SetCurrentDirectory(pathLp))
+            NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
       }
    }
 }

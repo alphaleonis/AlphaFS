@@ -25,14 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="path">A path that describes a file to compress.</param>      
-      [SecurityCritical]
-      public static void Compress(string path)
-      {
-         Device.ToggleCompressionCore(null, path, true, PathFormat.RelativePath);
-      }
-
+      #region Compress
 
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
       /// <param name="path">A path that describes a file to compress.</param>
@@ -40,19 +33,16 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Compress(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(null, path, true, pathFormat);
+         Device.ToggleCompressionCore(false, null, path, true, pathFormat);
       }
-      
 
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a file to compress.</param>      
       [SecurityCritical]
-      public static void CompressTransacted(KernelTransaction transaction, string path)
+      public static void Compress(string path)
       {
-         Device.ToggleCompressionCore(transaction, path, true, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(false, null, path, true, PathFormat.RelativePath);
       }
-
 
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -61,7 +51,59 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(transaction, path, true, pathFormat);
+         Device.ToggleCompressionCore(false, transaction, path, true, pathFormat);
       }
+
+
+      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">A path that describes a file to compress.</param>      
+      [SecurityCritical]
+      public static void CompressTransacted(KernelTransaction transaction, string path)
+      {
+         Device.ToggleCompressionCore(false, transaction, path, true, PathFormat.RelativePath);
+      }
+
+      #endregion
+
+      #region Decompress
+
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
+      /// <param name="path">A path that describes a file to decompress.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      [SecurityCritical]
+      public static void Decompress(string path, PathFormat pathFormat)
+      {
+         Device.ToggleCompressionCore(false, null, path, false, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
+      /// <param name="path">A path that describes a file to decompress.</param>      
+      [SecurityCritical]
+      public static void Decompress(string path)
+      {
+         Device.ToggleCompressionCore(false, null, path, false, PathFormat.RelativePath);
+      }
+
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">A path that describes a file to decompress.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      [SecurityCritical]
+      public static void DecompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         Device.ToggleCompressionCore(false, transaction, path, false, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">A path that describes a file to decompress.</param>      
+      [SecurityCritical]
+      public static void DecompressTransacted(KernelTransaction transaction, string path)
+      {
+         Device.ToggleCompressionCore(false, transaction, path, false, PathFormat.RelativePath);
+      }
+
+      #endregion
    }
 }

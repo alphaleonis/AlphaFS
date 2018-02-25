@@ -1,34 +1,32 @@
 <#  Copyright (C) 2008-2017 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
- #
- #  Permission is hereby granted, free of charge, to any person obtaining a copy
- #  of this software and associated documentation files (the "Software"), to deal
- #  in the Software without restriction, including without limitation the rights
- #  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- #  copies of the Software, and to permit persons to whom the Software is
+ #  
+ #  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ #  of this software and associated documentation files (the "Software"), to deal 
+ #  in the Software without restriction, including without limitation the rights 
+ #  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ #  copies of the Software, and to permit persons to whom the Software is 
  #  furnished to do so, subject to the following conditions:
- #
- #  The above copyright notice and this permission notice shall be included in
+ #  
+ #  The above copyright notice and this permission notice shall be included in 
  #  all copies or substantial portions of the Software.
- #
- #  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- #  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- #  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- #  THE SOFTWARE.
+ #  
+ #  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ #  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ #  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ #  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ #  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ #  THE SOFTWARE. 
  #>
+ 
 
-
- [CmdletBinding()]
- Param(
-    [String]$Path = "$Env:WinDir\System32",
-    [String]$Filter = '*',
-    [Switch]$Recurse,
-    [Switch]$ShowProgress,
-    [Switch]$ContinueOnException,
-    [Switch]$Directory,
-    [Switch]$File
+Param(
+    [String]$Path = '.',
+	[String]$Filter = '*',
+	[Switch]$Recurse,
+	[Switch]$ContinueOnException,
+	[Switch]$Directory,
+	[Switch]$File
 )
 
 
@@ -46,158 +44,15 @@ Function Invoke-GenericMethod {
         [Object[]]$MethodParameters
     )
 
+    [Collections.ArrayList]$Private:parameterTypes = @{}
+    ForEach ($Private:paramType In $MethodParameters) { [Void]$parameterTypes.Add($paramType.GetType()) }
 
-    Process {
-        [Collections.ArrayList]$Private:parameterTypes = @{}
+    $Private:method = $Instance.GetMethod($methodName, "Instance,Static,Public", $Null, $parameterTypes, $Null)
 
-        ForEach ($Private:paramType In $MethodParameters) { [Void]$parameterTypes.Add($paramType.GetType()) }
-
-        $Private:method = $Instance.GetMethod($methodName, "Instance, Static, Public", $Null, $parameterTypes, $Null)
-
-        If ($Null -eq $method) { Throw ('Method not found: {0}.{1}' -f $Instance.ToString(), $methodName) }
-
+    If ($Null -eq $method) { Throw ('Method: [{0}] not found.' -f ($Instance.ToString() + '.' + $methodName)) }
+    Else {
         $method = $method.MakeGenericMethod($TypeParameters)
-
         $method.Invoke($Instance, $MethodParameters)
-    }
-}
-
-
-[ScriptBlock]$ErrorFilter = {
-
-<#
-    .SYNOPSIS
-        Filter to process Exception handling.
-#>
-
-    [OutputType([Bool])]
-    Param(
-        [Int]$errorCode,
-        [String]$errorMessage,
-        [String]$pathProcessed
-    )
-
-
-    Process {
-        [Int]$Private:ERROR_ACCESS_DENIED = 5
-        [Bool]$Private:gotException = $False
-
-
-        $gotException = $errorCode -eq $ERROR_ACCESS_DENIED
-
-        Write-Warning -Message ('[{0:000}] Error: ({1}) "{2}"  Path: [{3}]' -f ++$Script:ErrorCount, $errorCode, $errorMessage, $pathProcessed)
-
-
-        If ($MaxErrorCount -eq $ErrorCount) {
-            Write-Warning -Message 'Maximum Error count reached. Aborting enumeration.'
-
-            $cancelSource.Cancel()
-
-            $gotException = $False
-        }
-
-
-        # When $True continue enumeration.
-        return $gotException
-    }
-}
-
-
-[ScriptBlock]$InclusionFilter = {
-
-<#
-    .SYNOPSIS
-        Filter to in-/exclude file system entries during the enumeration.
-
-
-    .NOTE
-        The InclusionFilter provides better filter criteria than the -Filter argument.
-#>
-
-    [OutputType([Bool])]
-    Param(
-        [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo]$fsei
-    )
-
-
-    Process {
-        ++$Script:FsoCount
-
-        # Example: Only allow files/folders with a certain extension.
-        $Private:findExtensions = '.txt', '.ini', '.log'
-
-        [Bool]$Private:gotMatch = $findExtensions -ccontains $fsei.Extension
-
-        If ($gotMatch) {
-            ++$Script:FoundFsoCount
-
-            # Do any other processing here.
-            If ($fsei.IsDirectory) {
-                # ...
-            }
-
-            Else {
-                # ...
-            }
-        }
-
-
-        [String]$Private:status = ('Processed: [{0:N0}] Found: [{1:N0}] Errors: [{2:N0}]' -f $FsoCount, $FoundFsoCount, $ErrorCount)
-
-        # Write-Progress WILL slow things down CONSIDERABLY; Disable when there is no need for progress report.
-        If ($ShowProgress.IsPresent) { Write-Progress -Activity $fsei.FullPath -Status $status }
-
-        # A nice alternative.
-        Else { $Host.UI.RawUI.WindowTitle = $status }
-
-
-        If ($MaxFsoFoundCount -eq $FoundFsoCount) {
-            Write-Warning -Message 'Maximum file system entries found. Aborting enumeration.'
-
-            $cancelSource.Cancel()
-
-            $gotMatch = $False
-        }
-
-
-        # When $True the file system entry is returned.
-        Return $gotMatch
-    }
-}
-
-
-[ScriptBlock]$RecursionFilter = {
-
-<#
-    .SYNOPSIS
-        Filter to traverse/skip directories during the enumeration.
-
-
-    .NOTE
-        The filter for traverse/skip only works on root level.
-#>
-
-    [OutputType([Bool])]
-    Param(
-        [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo]$fsei
-    )
-
-
-    Process {
-        # Example: Skip recursing into these folders.
-        $Private:skipFolders = 'drivers', 'DriverStore', 'LogFiles'
-
-        [Bool]$Private:gotMatch = $skipFolders -ccontains $fsei.FileName
-
-        If ($gotMatch) {
-            ++$Script:SkippedFolderCount
-
-            Write-Warning -Message ('Skip folder: {0}' -f $fsei.FileName)
-        }
-
-
-        # When $True the directory is traversed.
-        Return (-not $gotMatch)
     }
 }
 
@@ -205,179 +60,66 @@ Function Invoke-GenericMethod {
 Function Enumerate-FileSystemEntryInfos {
 
 <#
-    2018-02-25 Tested on:
-
-    Name                           Value
-    ----                           -----
-    PSVersion                      5.1.14409.1005
-    PSEdition                      Desktop
-    PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0...}
-    BuildVersion                   10.0.14409.1005
-    CLRVersion                     4.0.30319.42000
-    WSManStackVersion              3.0
-    PSRemotingProtocolVersion      2.3
-    SerializationVersion           1.1.0.1
-
-
-    
-    
     .SYNOPSIS
-        AlphaFS v2.2+ EnumerateFileSystemEntryInfos
-
-        A powerful folder/file enumerator which can report and recover from access denied exceptions and supports custom filtering.
+        [Alphaleonis.Win32.Filesystem.Directory]::EnumerateFileSystemEntryInfos()
+        AlphaFS 2.1+: A powerful folder/file enumerator which can recover from access denied exceptions.
 
 
     .EXAMPLE
-        PS C:\> .\Enumerate-FileSystemEntryInfos.ps1 -Recurse -Path $ENV:windir
-
-
-    .NOTES
-        Backup privileges are enables when run elevated.
-        This allows for browsing folders which are normally inaccessible.
+        PS C:\> .\Enumerate-FileSystemEntryInfos.ps1 -Path $env:windir -Filter *.dll -Recurse -ContinueOnException
 
 
     .OUTPUTS
-        An [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo] instance. For example:
+        An [Alphaleonis.Win32.Filesystem.FileSystemEntryInfo] instance:
 
-        AlternateFileName   = []
-        Attributes          = [Archive]
-        CreationTime        = [22-8-2013 13:00:13]
-        CreationTimeUtc     = [22-8-2013 11:00:13]
-        Extension           = [.exe]
-        FileName            = [notepad.exe]
-        FileSize            = [217600]
-        FullPath            = [C:\Windows\System32\notepad.exe]
-        IsArchive           = [True]
-        IsCompressed        = [False]
-        IsDevice            = [False]
-        IsDirectory         = [False]
-        IsEncrypted         = [False]
-        IsHidden            = [False]
-        IsMountPoint        = [False]
-        IsNormal            = [False]
-        IsNotContentIndexed = [False]
-        IsOffline           = [False]
-        IsReadOnly          = [False]
-        IsReparsePoint      = [False]
-        IsSparseFile        = [False]
-        IsSymbolicLink      = [False]
-        IsSystem            = [False]
-        IsTemporary         = [False]
-        LastAccessTime      = [22-8-2013 13:00:13]
-        LastAccessTimeUtc   = [22-8-2013 11:00:13]
-        LastWriteTime       = [22-8-2013 13:00:12]
-        LastWriteTimeUtc    = [22-8-2013 11:00:12]
-        LongFullPath        = [\\?\C:\Windows\System32\notepad.exe]
-        ReparsePointTag     = [None]
+        AlternateFileName : 
+        Attributes        : Archive
+        CreationTime      : 27-4-2016 01:01:14
+        CreationTimeUtc   : 26-4-2016 23:01:14
+        FileName          : notepad.exe
+        FileSize          : 215040
+        FullPath          : C:\windows\notepad.exe
+        IsCompressed      : False
+        IsHidden          : False
+        IsDirectory       : False
+        IsEncrypted       : False
+        IsMountPoint      : False
+        IsOffline         : False
+        IsReadOnly        : False
+        IsReparsePoint    : False
+        IsSymbolicLink    : False
+        LastAccessTime    : 27-4-2016 01:01:14
+        LastAccessTimeUtc : 26-4-2016 23:01:14
+        LastWriteTime     : 3-8-2015 03:19:54
+        LastWriteTimeUtc  : 3-8-2015 01:19:54
+        LongFullPath      : \\?\C:\windows\notepad.exe
+        ReparsePointTag   : None
 #>
 
-    [CmdletBinding()]
-    Param(
-        [String]$Path = '.',
-        [String]$Filter = '*',
-        [Switch]$Recurse,
-        [Switch]$ShowProgress,
-        [Switch]$ContinueOnException,
-        [Switch]$Directory,
-        [Switch]$File
-    )
+    # Skip ReparsePoints by default.
+	$Private:dirEnumOptions = [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::SkipReparsePoints
 
+	If ($ContinueOnException.IsPresent) { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::ContinueOnException }
+	If ($Recurse.IsPresent)             { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::Recursive }
 
-    Begin {
-        $Error.Clear()
+	If (-not $Directory.IsPresent -and -not $File.IsPresent) { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::FilesAndFolders }
+	Else {
+		If ($Directory.IsPresent) { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::Folders }
+		If ($File.IsPresent)      { [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$dirEnumOptions = $dirEnumOptions -bor [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]::Files }
+	}
+	
 
+	ForEach ($Private:fsei In (Invoke-GenericMethod `
+		-Instance           ([Alphaleonis.Win32.Filesystem.Directory]) `
+		-MethodName         EnumerateFileSystemEntryInfos `
+		-TypeParameters     Alphaleonis.Win32.Filesystem.FileSystemEntryInfo `
+		-MethodParameters   $Path, $Filter, $dirEnumOptions, ([Alphaleonis.Win32.Filesystem.PathFormat]::RelativePath))) {
 
-        # Demo counters for the DirectoryEnumerationFilters; Enumeration will abort when either condition is met.
-        [Long]$Script:MaxErrorCount    = 10 #-1
-        [Long]$Script:MaxFsoFoundCount = 10 #-1
-
-
-        # SkipReparsePoints = Skip reparse points by default.
-        # LargeCache        = Uses a larger buffer for directory queries, which can increase performance of the find operation.
-        # BasicSearch       = The function does not query the short file name, improving overall enumeration speed.
-
-        $Private:enumOptions    = [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]
-        $Private:dirEnumOptions = $enumOptions::SkipReparsePoints -bor $enumOptions::LargeCache -bor $enumOptions::BasicSearch
-
-
-        If ($ContinueOnException.IsPresent) { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::ContinueOnException }
-        If ($Recurse.IsPresent)             { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::Recursive }
-
-        If (-not $Directory.IsPresent -and -not $File.IsPresent) { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::FilesAndFolders }
-
-        If ($Directory.IsPresent) { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::Folders }
-        If ($File.IsPresent)      { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::Files   }
-
-
-        [Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters]$Private:dirEnumFilters = New-Object -TypeName Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
-
-
-        # Counters to keep track of stuff.
-        [Long]$Script:FsoCount           = 0
-        [Long]$Script:FoundFsoCount      = 0
-        [Long]$Script:SkippedFolderCount = 0
-        [Long]$Script:ErrorCount         = 0
-
-
-        # Used to abort the enumeration.
-        [System.Threading.CancellationTokenSource]$Script:cancelSource = [System.Threading.CancellationTokenSource]::new()
-        $dirEnumFilters.CancellationToken = $cancelSource.Token
-
-
-        # The callback error handler.
-        $dirEnumFilters.ErrorFilter = $ErrorFilter
-
-
-        # The callback file/folder handler.
-        $dirEnumFilters.InclusionFilter = $InclusionFilter
-
-
-        # The callback folder recursion handler.
-        $dirEnumFilters.RecursionFilter = $RecursionFilter
-
-
-        # Enables backup privileges when run elevated; This allows for browsing folders which are normally inaccessible.
-        $Private:privilegeEnabler = New-Object Alphaleonis.Win32.Security.PrivilegeEnabler([Alphaleonis.Win32.Security.Privilege]::Backup)
-
-
-        [String]$Private:startupTitle = $Host.UI.RawUI.WindowTitle
-
-        If ($ShowProgress.IsPresent) { Write-Progress -Activity $Path -Status 'Processing items...' }
-
-
-        $Private:stopwatch = [system.diagnostics.stopwatch]::StartNew()
-    }
-
-
-	Process {
-        Try {
-            Invoke-GenericMethod `
-                -Instance           ([Alphaleonis.Win32.Filesystem.Directory]) `
-                -MethodName         EnumerateFileSystemEntryInfos `
-                -TypeParameters     Alphaleonis.Win32.Filesystem.FileSystemEntryInfo `
-                -MethodParameters   $Path, $Filter, $dirEnumOptions, $dirEnumFilters, ([Alphaleonis.Win32.Filesystem.PathFormat]::RelativePath)
-        }
-
-        Finally {
-            $Host.UI.RawUI.WindowTitle = $startupTitle
-
-            # Place disposing here to ensure it is always executed.
-            If ($Null -ne $privilegeEnabler) { $privilegeEnabler.Dispose() }
-            If ($Null -ne $cancelSource)     { $cancelSource.Dispose()     }
-        }
-    }
-
-
-    End {
-        [String]$Private:foundFsoText = $(If ($Null -ne $dirEnumFilters.InclusionFilter) { (' Found: [{0:N0}] ' -f $FoundFsoCount) } Else {''})
-
-        [Console]::ForegroundColor = [ConsoleColor]::Green
-        [Console]::WriteLine(('Duration: [{0}]  Processed: [{1:N0}] {2} Skipped Folders: [{3:N0}]  Errors: [{4:N0}]' -f [Timespan]::FromMilliseconds($stopwatch.Elapsed.TotalMilliseconds), $FsoCount, $foundFsoText, $SkippedFolderCount, $ErrorCount))
-        [Console]::ResetColor()
-    }
+		Write-Output $fsei
+	}
 }
 
 
-Import-Module -Name 'PATH TO\AlphaFS.dll'
+Import-Module -Name 'PATH TO AlphaFS.dll'
 
-Enumerate-FileSystemEntryInfos -Path $Path -Filter $Filter -Recurse:$Recurse.IsPresent -ShowProgress:$ShowProgress.IsPresent -ContinueOnException:$ContinueOnException.IsPresent -Directory:$Directory.IsPresent -File:$File.IsPresent
+Enumerate-FileSystemEntryInfos

@@ -22,7 +22,6 @@
 using System.Globalization;
 using System.IO;
 using System.Security;
-using System.Security.Cryptography;
 using System.Text;
 using Alphaleonis.Win32.Security;
 
@@ -42,7 +41,6 @@ namespace Alphaleonis.Win32.Filesystem
          return GetHashCore(null, fileFullPath, hashType, PathFormat.RelativePath);
       }
 
-
       /// <summary>
       /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
       /// </summary>
@@ -56,7 +54,6 @@ namespace Alphaleonis.Win32.Filesystem
          return GetHashCore(null, fileFullPath, hashType, pathFormat);
       }
 
-
       /// <summary>
       /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
       /// </summary>
@@ -69,7 +66,6 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetHashCore(transaction, fileFullPath, hashType, PathFormat.RelativePath);
       }
-
 
       /// <summary>
       /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
@@ -85,7 +81,6 @@ namespace Alphaleonis.Win32.Filesystem
          return GetHashCore(transaction, fileFullPath, hashType, pathFormat);
       }
 
-
       /// <summary>
       /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
       /// </summary>
@@ -97,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string GetHashCore(KernelTransaction transaction, string fileFullPath, HashType hashType, PathFormat pathFormat)
       {
-         const GetFullPathOptions options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
+         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
          var fileNameLp = Path.GetExtendedLengthPathCore(transaction, fileFullPath, pathFormat, options);
 
          byte[] hash = null;
@@ -120,37 +115,37 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                case HashType.MD5:
-                  using (var hType = MD5.Create())
+                  using (var hType = System.Security.Cryptography.MD5.Create())
                      hash = hType.ComputeHash(fs);
                   break;
 
 
                case HashType.RIPEMD160:
-                  using (var hType = RIPEMD160.Create())
+                  using (var hType = System.Security.Cryptography.RIPEMD160.Create())
                      hash = hType.ComputeHash(fs);
                   break;
 
 
                case HashType.SHA1:
-                  using (var hType = SHA1.Create())
+                  using (var hType = System.Security.Cryptography.SHA1.Create())
                      hash = hType.ComputeHash(fs);
                   break;
 
 
                case HashType.SHA256:
-                  using (var hType = SHA256.Create())
+                  using (var hType = System.Security.Cryptography.SHA256.Create())
                      hash = hType.ComputeHash(fs);
                   break;
 
 
                case HashType.SHA384:
-                  using (var hType = SHA384.Create())
+                  using (var hType = System.Security.Cryptography.SHA384.Create())
                      hash = hType.ComputeHash(fs);
                   break;
 
 
                case HashType.SHA512:
-                  using (var hType = SHA512.Create())
+                  using (var hType = System.Security.Cryptography.SHA512.Create())
                      hash = hType.ComputeHash(fs);
                   break;
             }
@@ -161,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var sb = new StringBuilder(hash.Length);
 
-            foreach (var b in hash)
+            foreach (byte b in hash)
                sb.Append(b.ToString("X2", CultureInfo.InvariantCulture));
 
             return sb.ToString().ToUpperInvariant();

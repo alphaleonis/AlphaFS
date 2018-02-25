@@ -32,36 +32,13 @@ namespace Alphaleonis.Win32.Filesystem
    {
       internal static uint GetHighOrderDword(long highPart)
       {
-         return (uint) ((highPart >> 32) & 0xFFFFFFFF);
+         return (uint)((highPart >> 32) & 0xFFFFFFFF);
       }
-
 
       internal static uint GetLowOrderDword(long lowPart)
       {
-         return (uint) (lowPart & 0xFFFFFFFF);
+         return (uint)(lowPart & 0xFFFFFFFF);
       }
-
-
-      internal static long LuidToLong(LUID luid)
-      {
-         var high = (ulong) luid.HighPart << 32;
-         var low = (ulong) luid.LowPart & 0x00000000FFFFFFFF;
-
-         return unchecked((long) (high | low));
-      }
-
-
-      internal static LUID LongToLuid(long lluid)
-      {
-         return new LUID {HighPart = (uint) (lluid >> 32), LowPart = (uint) (lluid & 0xFFFFFFFF)};
-      }
-
-
-      internal static long ToLong(uint highPart, uint lowPart)
-      {
-         return ((long) highPart << 32) | ((long) lowPart & 0xFFFFFFFF);
-      }
-
 
       /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
       /// <param name="handle">The current handle to check.</param>
@@ -70,20 +47,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       internal static bool IsValidHandle(SafeHandle handle, bool throwException = true)
       {
-         if (null == handle || handle.IsClosed || handle.IsInvalid)
+         if (handle == null || handle.IsClosed || handle.IsInvalid)
          {
-            if (null != handle)
+            if (handle != null)
                handle.Close();
 
             if (throwException)
-               throw new ArgumentException(Resources.Handle_Is_Invalid, "handle");
+               throw new ArgumentException(Resources.Handle_Is_Invalid);
 
             return false;
          }
 
          return true;
       }
-
 
       /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
       /// <param name="handle">The current handle to check.</param>
@@ -93,13 +69,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       internal static bool IsValidHandle(SafeHandle handle, int lastError, bool throwException = true)
       {
-         if (null == handle || handle.IsClosed || handle.IsInvalid)
+         if (handle == null || handle.IsClosed || handle.IsInvalid)
          {
-            if (null != handle)
+            if (handle != null)
                handle.Close();
 
             if (throwException)
-               throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Handle_Is_Invalid_Win32Error, lastError), "handle");
+               throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Handle_Is_Invalid_Win32Error, lastError));
 
             return false;
          }
@@ -107,33 +83,21 @@ namespace Alphaleonis.Win32.Filesystem
          return true;
       }
 
-
-      /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
-      /// <param name="handle">The current handle to check.</param>
-      /// <param name="lastError">The result of Marshal.GetLastWin32Error()</param>
-      /// <param name="path">The path on which the Exception occurred.</param>
-      /// <param name="throwException"><see langword="true"/> will throw an <exception cref="Resources.Handle_Is_Invalid_Win32Error"/>, <see langword="false"/> will not raise this exception..</param>
-      /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="Exception"/>
-      internal static bool IsValidHandle(SafeHandle handle, int lastError, string path, bool throwException = true)
+      internal static long LuidToLong(Luid luid)
       {
-         if (null == handle || handle.IsClosed || handle.IsInvalid)
-         {
-            if (null != handle)
-               handle.Close();
-
-            if (throwException)
-               NativeError.ThrowException(lastError, path);
-
-            return false;
-         }
-
-         return true;
+         ulong high = (((ulong)luid.HighPart) << 32);
+         ulong low = (((ulong)luid.LowPart) & 0x00000000FFFFFFFF);
+         return unchecked((long)(high | low));
       }
 
+      internal static Luid LongToLuid(long lluid)
+      {
+         return new Luid { HighPart = (uint)(lluid >> 32), LowPart = (uint)(lluid & 0xFFFFFFFF) };
+      }
 
-      /// <summary>Controls whether the system will handle the specified types of serious errors or whether the process will handle them.</summary>
+      /// <summary>
+      ///   Controls whether the system will handle the specified types of serious errors or whether the process will handle them.
+      /// </summary>
       /// <remarks>
       ///   Because the error mode is set for the entire process, you must ensure that multi-threaded applications do not set different error-
       ///   mode attributes. Doing so can lead to inconsistent error handling.
@@ -142,13 +106,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only].</remarks>
       /// <param name="uMode">The mode.</param>
       /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
-      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
       private static extern ErrorMode SetErrorMode(ErrorMode uMode);
 
-
-      /// <summary>Controls whether the system will handle the specified types of serious errors or whether the calling thread will handle them.</summary>
+      /// <summary>
+      ///   Controls whether the system will handle the specified types of serious errors or whether the calling thread will handle them.
+      /// </summary>
       /// <remarks>
       ///   Because the error mode is set for the entire process, you must ensure that multi-threaded applications do not set different error-
       ///   mode attributes. Doing so can lead to inconsistent error handling.
@@ -158,9 +123,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="dwNewMode">The new mode.</param>
       /// <param name="lpOldMode">[out] The old mode.</param>
       /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
-      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       private static extern bool SetThreadErrorMode(ErrorMode dwNewMode, [MarshalAs(UnmanagedType.U4)] out ErrorMode lpOldMode);
+
+      internal static long ToLong(uint highPart, uint lowPart)
+      {
+         return (((long)highPart) << 32) | (((long)lowPart) & 0xFFFFFFFF);
+      }
    }
 }

@@ -24,35 +24,35 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>[AlphaFS] The remote server or share does not support transacted file operations.</summary>
-   [Serializable]
+   /// <summary>The remote server or share does not support transacted file operations.</summary>
+   [SerializableAttribute]
    public class UnsupportedRemoteTransactionException : TransactionException
    {
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
       public UnsupportedRemoteTransactionException()
       {
       }
 
-
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public UnsupportedRemoteTransactionException(string message) : base(message)
+      public UnsupportedRemoteTransactionException(string message)
+         : base(message)
       {
       }
 
-
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public UnsupportedRemoteTransactionException(string message, Exception innerException) : base(message, innerException)
+      public UnsupportedRemoteTransactionException(string message, Exception innerException)
+         : base(message, innerException)
       {
       }
 
-
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
       /// <param name="info">The object that holds the serialized object data.</param>
       /// <param name="context">The contextual information about the source or destination.</param>
-      protected UnsupportedRemoteTransactionException(SerializationInfo info, StreamingContext context) : base(info, context)
+      protected UnsupportedRemoteTransactionException(SerializationInfo info, StreamingContext context)
+         : base(info, context)
       {
       }
    }

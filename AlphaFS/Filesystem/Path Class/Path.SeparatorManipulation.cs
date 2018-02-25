@@ -48,11 +48,11 @@ namespace Alphaleonis.Win32.Filesystem
          return path == null
             ? null
             : (addAlternateSeparator
-               ? (!path.EndsWith(AltDirectorySeparatorChar.ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal)
+               ? ((!path.EndsWith(AltDirectorySeparatorChar.ToString(CultureInfo.CurrentCulture), StringComparison.OrdinalIgnoreCase))
                   ? path + AltDirectorySeparatorChar
                   : path)
 
-               : (!path.EndsWith(DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal)
+               : ((!path.EndsWith(DirectorySeparatorChar.ToString(CultureInfo.CurrentCulture), StringComparison.OrdinalIgnoreCase))
                   ? path + DirectorySeparatorChar
                   : path));
       }

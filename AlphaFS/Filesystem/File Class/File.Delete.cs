@@ -152,25 +152,30 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void DeleteFileCore(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
+         #region Setup
+
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);
 
-         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          // If the path points to a symbolic link, the symbolic link is deleted, not the target.
 
+         #endregion // Setup
 
       startDeleteFile:
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
             // DeleteFile() / DeleteFileTransacted()
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN confirms LongPath usage.
 
             ? NativeMethods.DeleteFile(pathLp)
             : NativeMethods.DeleteFileTransacted(pathLp, transaction.SafeHandle)))
          {
-            var lastError = Marshal.GetLastWin32Error();
+            int lastError = Marshal.GetLastWin32Error();
             switch ((uint)lastError)
             {
                case Win32Errors.ERROR_FILE_NOT_FOUND:
@@ -188,34 +193,33 @@ namespace Alphaleonis.Win32.Filesystem
                   break;
 
                case Win32Errors.ERROR_ACCESS_DENIED:
-                  var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-                  var dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref attrs, false, true);
+                  var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+                  int dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
 
-
-                  if (IsDirectory(attrs.dwFileAttributes))
-                     // MSDN: .NET 3.5+: UnauthorizedAccessException: Path is a directory.
-                     throw new UnauthorizedAccessException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}",
-                        Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, pathLp)));
-
-
-                  if (IsReadOnly(attrs.dwFileAttributes))
+                  if (data.dwFileAttributes != (FileAttributes)(-1))
                   {
-                     if (ignoreReadOnly)
+                     if ((data.dwFileAttributes & FileAttributes.Directory) != 0)
+                        // MSDN: .NET 3.5+: UnauthorizedAccessException: Path is a directory.
+                        throw new UnauthorizedAccessException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}",
+                           Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.CurrentCulture, Resources.Target_File_Is_A_Directory, pathLp)));
+
+
+                     if ((data.dwFileAttributes & FileAttributes.ReadOnly) != 0)
                      {
-                        // Reset file attributes to Normal.
-                        SetAttributesCore(transaction, false, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
+                        if (ignoreReadOnly)
+                        {
+                           // Reset file attributes.
+                           SetAttributesCore(false, transaction, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
+                           goto startDeleteFile;
+                        }
 
-                        goto startDeleteFile;
+                        // MSDN: .NET 3.5+: UnauthorizedAccessException: Path specified a read-only file.
+                        throw new FileReadOnlyException(pathLp);
                      }
-
-
-                     // MSDN: .NET 3.5+: UnauthorizedAccessException: Path specified a read-only file.
-                     throw new FileReadOnlyException(pathLp);
                   }
 
-                  
-                  // MSDN: .NET 3.5+: UnauthorizedAccessException: The caller does not have the required permission.
                   if (dataInitialised == Win32Errors.ERROR_SUCCESS)
+                     // MSDN: .NET 3.5+: UnauthorizedAccessException: The caller does not have the required permission.
                      NativeError.ThrowException(lastError, pathLp);
 
                   break;

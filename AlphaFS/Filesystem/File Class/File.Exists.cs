@@ -20,6 +20,7 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -52,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path)
       {
-         return ExistsCore(null, false, path, PathFormat.RelativePath);
+         return ExistsCore(false, null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Determines whether the specified file exists.</summary>
@@ -82,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path, PathFormat pathFormat)
       {
-         return ExistsCore(null, false, path, pathFormat);
+         return ExistsCore(false, null, path, pathFormat);
       }
 
       #region Transactional
@@ -117,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool ExistsTransacted(KernelTransaction transaction, string path)
       {
-         return ExistsCore(transaction, false, path, PathFormat.RelativePath);
+         return ExistsCore(false, transaction, path, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -151,7 +152,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool ExistsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ExistsCore(transaction, false, path, pathFormat);
+         return ExistsCore(false, transaction, path, pathFormat);
       }
 
       #endregion // Transacted
@@ -175,8 +176,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Be aware that another process can potentially do something with the file in between
       ///   the time you call the Exists method and perform another operation on the file, such as Delete.</para>
       /// </remarks>
-      /// <param name="transaction">The transaction.</param>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to check.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
@@ -185,7 +186,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
-      internal static bool ExistsCore(KernelTransaction transaction, bool isFolder, string path, PathFormat pathFormat)
+      internal static bool ExistsCore(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          // Will be caught later and be thrown as an ArgumentException or ArgumentNullException.
          // Let's take a shorter route, preventing an Exception from being thrown altogether.
@@ -202,16 +203,16 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat,
-               GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator |
-               GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);
+            var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);
 
-            var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-            var dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref attrs, false, true);
+            var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+            var dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
 
-            var attrIsFolder = IsDirectory(attrs.dwFileAttributes);
-
-            return dataInitialised == Win32Errors.ERROR_SUCCESS && (isFolder ? attrIsFolder : !attrIsFolder);
+            return (dataInitialised == Win32Errors.ERROR_SUCCESS &&
+                    data.dwFileAttributes != (FileAttributes) (-1) &&
+                    (isFolder
+                       ? (data.dwFileAttributes & FileAttributes.Directory) != 0
+                       : (data.dwFileAttributes & FileAttributes.Directory) == 0));
          }
          catch
          {

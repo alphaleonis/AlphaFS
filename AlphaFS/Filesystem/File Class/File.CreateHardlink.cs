@@ -28,24 +28,9 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>[AlphaFS] Establishes a hard link (similar to CMD command: "MKLINK /H") between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
-      /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>      
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
-      [SecurityCritical]
-      public static void CreateHardlink(string fileName, string existingFileName)
-      {
-         CreateHardlinkCore(null, fileName, existingFileName, PathFormat.RelativePath);
-      }
+      #region CreateHardlink
 
-
-      /// <summary>[AlphaFS] Establishes a hard link (similar to CMD command: "MKLINK /H") between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
+      /// <summary>[AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -56,26 +41,20 @@ namespace Alphaleonis.Win32.Filesystem
          CreateHardlinkCore(null, fileName, existingFileName, pathFormat);
       }
 
-
-      /// <summary>[AlphaFS] Establishes a hard link (similar to CMD command: "MKLINK /H") between an existing file and a new file as a transacted operation. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="transaction">The transaction.</param>
+      /// <summary>[AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      public static void CreateHardlinkTransacted(KernelTransaction transaction, string fileName, string existingFileName)
+      public static void CreateHardlink(string fileName, string existingFileName)
       {
-         CreateHardlinkCore(transaction, fileName, existingFileName, PathFormat.RelativePath);
+         CreateHardlinkCore(null, fileName, existingFileName, PathFormat.RelativePath);
       }
 
-
-      /// <summary>[AlphaFS] Establishes a hard link (similar to CMD command: "MKLINK /H") between an existing file and a new file as a transacted operation. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
+      /// <summary>
+      ///   [AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system,
+      ///   and only for files, not directories.
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
@@ -87,13 +66,28 @@ namespace Alphaleonis.Win32.Filesystem
          CreateHardlinkCore(transaction, fileName, existingFileName, pathFormat);
       }
 
+      /// <summary>
+      ///   [AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system,
+      ///   and only for files, not directories.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
+      /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>      
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
+      [SecurityCritical]
+      public static void CreateHardlinkTransacted(KernelTransaction transaction, string fileName, string existingFileName)
+      {
+         CreateHardlinkCore(transaction, fileName, existingFileName, PathFormat.RelativePath);
+      }
 
+      #endregion // CreateHardlink
 
+      #region Internal Methods
 
-      /// <summary>[AlphaFS] Establishes a hard link (similar to CMD command: "MKLINK /H") between an existing file and a new file as a transacted operation. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
+      /// <summary>Establish a hard link between an existing file and a new file. This function
+      ///   is only supported on the NTFS file system, and only for files, not directories.
+      /// </summary>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
@@ -102,36 +96,34 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void CreateHardlinkCore(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
       {
-         if (pathFormat != PathFormat.LongFullPath)
-         {
-            const GetFullPathOptions options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
+         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
-            fileName = Path.GetExtendedLengthPathCore(transaction, fileName, pathFormat, options);
-            existingFileName = Path.GetExtendedLengthPathCore(transaction, existingFileName, pathFormat, options);
-         }
-
+         string fileNameLp = Path.GetExtendedLengthPathCore(transaction, fileName, pathFormat, options);
+         string existingFileNameLp = Path.GetExtendedLengthPathCore(transaction, existingFileName, pathFormat, options);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
             // CreateHardLink() / CreateHardLinkTransacted()
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-            // 2017-05-30: CreateHardLink() MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
-            ? NativeMethods.CreateHardLink(fileName, existingFileName, IntPtr.Zero)
-            : NativeMethods.CreateHardLinkTransacted(fileName, existingFileName, IntPtr.Zero, transaction.SafeHandle)))
+            ? NativeMethods.CreateHardLink(fileNameLp, existingFileNameLp, IntPtr.Zero)
+            : NativeMethods.CreateHardLinkTransacted(fileNameLp, existingFileNameLp, IntPtr.Zero, transaction.SafeHandle)))
          {
-            var lastError = (uint) Marshal.GetLastWin32Error();
-
-            switch (lastError)
+            int lastError = Marshal.GetLastWin32Error();
+            switch ((uint)lastError)
             {
                case Win32Errors.ERROR_INVALID_FUNCTION:
                   throw new NotSupportedException(Resources.HardLinks_Not_Supported);
 
                default:
-                  NativeError.ThrowException(lastError, existingFileName, fileName);
+                  NativeError.ThrowException(lastError, fileNameLp, existingFileName);
                   break;
             }
          }
       }
+
+      #endregion // Internal Methods
    }
 }

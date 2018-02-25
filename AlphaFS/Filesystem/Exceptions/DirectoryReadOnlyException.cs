@@ -20,41 +20,36 @@
  */
 
 using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>[AlphaFS] The operation could not be completed because the directory is read-only.</summary>
+   /// <summary>The operation could not be completed because the directory is read-only.</summary>
    [Serializable]
-   public class DirectoryReadOnlyException : UnauthorizedAccessException
+   public class DirectoryReadOnlyException : System.IO.IOException
    {
-      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int) Win32Errors.ERROR_FILE_READ_ONLY).Message.Trim().TrimEnd('.').Trim());
+      private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_FILE_READ_ONLY);
 
-
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
-      public DirectoryReadOnlyException() : base(string.Format(CultureInfo.InvariantCulture, "{0}.", ErrorText))
+      /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
+      public DirectoryReadOnlyException() : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is read-only", Win32Errors.ERROR_FILE_READ_ONLY), s_errorCode)
       {
       }
 
-
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
-      /// <param name="path">The path to the directory.</param>
-      public DirectoryReadOnlyException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path))
+      /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
+      /// <param name="message">The message.</param>
+      public DirectoryReadOnlyException(string message) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message), s_errorCode)
       {
       }
 
-
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
-      /// <param name="path">The path to the directory.</param>
+      /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
+      /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public DirectoryReadOnlyException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), innerException)
+      public DirectoryReadOnlyException(string message, Exception innerException) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message), innerException)
       {
       }
 
-
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
       protected DirectoryReadOnlyException(SerializationInfo info, StreamingContext context) : base(info, context)

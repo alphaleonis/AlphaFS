@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <topic id="75f7f0b6-63f5-4784-9898-0694076670a6" revisionNumber="1">
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">  
     <introduction>
@@ -23,9 +23,9 @@
 
     <relatedTopics>
       <externalLink>
-          <linkText>AlphaFS on GitHub</linkText>
-          <linkAlternateText>Go to GitHub</linkAlternateText>
-          <linkUri>https://github.com/alphaleonis/AlphaFS</linkUri>
+          <linkText>AlphaFS on CodePlex</linkText>
+          <linkAlternateText>Go to CodePlex</linkAlternateText>
+          <linkUri>http://alphafs.codeplex.com/</linkUri>
       </externalLink>
     </relatedTopics>
   </developerConceptualDocument>
