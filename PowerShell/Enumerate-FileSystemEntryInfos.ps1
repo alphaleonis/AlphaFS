@@ -47,17 +47,19 @@ Function Invoke-GenericMethod {
     )
 
 
-    [Collections.ArrayList]$Private:parameterTypes = @{}
+    Process {
+        [Collections.ArrayList]$Private:parameterTypes = @{}
 
-    ForEach ($Private:paramType In $MethodParameters) { [Void]$parameterTypes.Add($paramType.GetType()) }
+        ForEach ($Private:paramType In $MethodParameters) { [Void]$parameterTypes.Add($paramType.GetType()) }
 
-    $Private:method = $Instance.GetMethod($methodName, "Instance, Static, Public", $Null, $parameterTypes, $Null)
+        $Private:method = $Instance.GetMethod($methodName, "Instance, Static, Public", $Null, $parameterTypes, $Null)
 
-    If ($Null -eq $method) { Throw ('Method not found: {0}.{1}' -f $Instance.ToString(), $methodName) }
+        If ($Null -eq $method) { Throw ('Method not found: {0}.{1}' -f $Instance.ToString(), $methodName) }
 
-    $method = $method.MakeGenericMethod($TypeParameters)
+        $method = $method.MakeGenericMethod($TypeParameters)
 
-    $method.Invoke($Instance, $MethodParameters)
+        $method.Invoke($Instance, $MethodParameters)
+    }
 }
 
 
@@ -143,7 +145,7 @@ Function Invoke-GenericMethod {
         [String]$Private:status = ('Processed: [{0:N0}] Found: [{1:N0}] Errors: [{2:N0}]' -f $FsoCount, $FoundFsoCount, $ErrorCount)
 
         # Write-Progress WILL slow things down CONSIDERABLY; Disable when there is no need for progress report.
-        If ($ShowProgress) { Write-Progress -Activity $fsei.FullPath -Status $status }
+        If ($ShowProgress.IsPresent) { Write-Progress -Activity $fsei.FullPath -Status $status }
 
         # A nice alternative.
         Else { $Host.UI.RawUI.WindowTitle = $status }
@@ -204,7 +206,7 @@ Function Enumerate-FileSystemEntryInfos {
 
 <#
     .SYNOPSIS
-        AlphaFS v2.2 EnumerateFileSystemEntryInfos
+        AlphaFS v2.2+ EnumerateFileSystemEntryInfos
 
         A powerful folder/file enumerator which can report and recover from access denied exceptions and supports custom filtering.
 
@@ -278,8 +280,8 @@ Function Enumerate-FileSystemEntryInfos {
         # LargeCache        = Uses a larger buffer for directory queries, which can increase performance of the find operation.
         # BasicSearch       = The function does not query the short file name, improving overall enumeration speed.
 
-        $Private:enumOptions = [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]
-        [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]$Private:dirEnumOptions = $enumOptions::SkipReparsePoints -bor $enumOptions::LargeCache -bor $enumOptions::BasicSearch
+        $Private:enumOptions    = [Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions]
+        $Private:dirEnumOptions = $enumOptions::SkipReparsePoints -bor $enumOptions::LargeCache -bor $enumOptions::BasicSearch
 
 
         If ($ContinueOnException.IsPresent) { $dirEnumOptions = $dirEnumOptions -bor $enumOptions::ContinueOnException }
@@ -324,8 +326,7 @@ Function Enumerate-FileSystemEntryInfos {
 
         [String]$Private:startupTitle = $Host.UI.RawUI.WindowTitle
 
-        [Bool]$ShowProgress = $ShowProgress.IsPresent
-        If ($ShowProgress) { Write-Progress -Activity $Path -Status 'Processing items...' }
+        If ($ShowProgress.IsPresent) { Write-Progress -Activity $Path -Status 'Processing items...' }
 
 
         $Private:stopwatch = [system.diagnostics.stopwatch]::StartNew()
@@ -361,6 +362,6 @@ Function Enumerate-FileSystemEntryInfos {
 }
 
 
-Import-Module -Name 'PATH TO AlphaFS.dll'
+Import-Module -Name 'PATH TO\AlphaFS.dll'
 
 Enumerate-FileSystemEntryInfos -Path $Path -Filter $Filter -Recurse:$Recurse.IsPresent -ShowProgress:$ShowProgress.IsPresent -ContinueOnException:$ContinueOnException.IsPresent -Directory:$Directory.IsPresent -File:$File.IsPresent

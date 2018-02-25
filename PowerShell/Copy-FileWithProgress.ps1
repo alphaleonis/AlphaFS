@@ -47,7 +47,7 @@ Function UnitSizeToText {
 
 <#
     .SYNOPSIS
-        Converts a number to a string formated, suffixed with a unit size.
+        Converts a number to a string, suffixed with a unit size.
 #>
 
     [OutputType([String])]
