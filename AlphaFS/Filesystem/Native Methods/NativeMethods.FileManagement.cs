@@ -655,7 +655,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>An application-defined callback function used with the CopyFileEx, MoveFileTransacted, and MoveFileWithProgress functions.
       /// <para>It is called when a portion of a copy or move operation is completed.</para>
       /// <para>The LPPROGRESS_ROUTINE type defines a pointer to this callback function.</para>
-      /// <para>NativeCopyMoveProgressRoutine (NativeCopyMoveProgressRoutine) is a placeholder for the application-defined function name.</para>
+      /// <para>NativeCopyMoveProgressRoutine is a placeholder for the application-defined function name.</para>
       /// </summary>
       [SuppressUnmanagedCodeSecurity]
       internal delegate CopyMoveProgressResult NativeCopyMoveProgressRoutine([MarshalAs(UnmanagedType.I8)] long totalFileSize, [MarshalAs(UnmanagedType.I8)] long totalBytesTransferred, [MarshalAs(UnmanagedType.I8)] long streamSize, [MarshalAs(UnmanagedType.I8)] long streamBytesTransferred, [MarshalAs(UnmanagedType.U4)] uint dwStreamNumber, [MarshalAs(UnmanagedType.U4)] CopyMoveProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData);

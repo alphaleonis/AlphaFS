@@ -19,33 +19,33 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Describes the geometry of disk devices and media.
+      /// <summary>Contains detected drive parameters.
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DISK_GEOMETRY
+      internal struct DISK_DETECTION_INFO
       {
-         /// <summary>The number of cylinders.</summary>
-         [MarshalAs(UnmanagedType.I8)] public readonly long Cylinders;
+         /// <summary>The size of the structure, in bytes.</summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly uint SizeOfDetectInfo;
 
-         /// <summary>The type of media.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly STORAGE_MEDIA_TYPE MediaType;
+         /// <summary>The detected partition type. This member can be one of the following values from the <see cref="DetectionType"/> enumeration.</summary>
+         public readonly DetectionType DetectionType;
 
-         /// <summary>The number of tracks per cylinder.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint TracksPerCylinder;
-
-         /// <summary>The number of sectors per track.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint SectorsPerTrack;
-
-         /// <summary>The number of bytes per sector.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint BytesPerSector;
+         /// <summary>
+         /// Union of <see cref="DISK_INT13_INFO"/> and <see cref="DISK_EX_INT13_INFO"/> structs.
+         /// If DetectionType is DetectInt13, the union is a DISK_INT13_INFO structure.
+         /// If DetectionType is DetectExInt13, the union is a DISK_EX_INT13_INFO structure.
+         /// </summary>
+         public DiskInt13Union DiskInt13Union;
       }
    }
 }

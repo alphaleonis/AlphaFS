@@ -19,33 +19,38 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Describes the geometry of disk devices and media.
+      /// <summary>Contains the disk partition information.
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </summary>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DISK_GEOMETRY
+      [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
+      internal struct DISK_PARTITION_INFO
       {
-         /// <summary>The number of cylinders.</summary>
-         [MarshalAs(UnmanagedType.I8)] public readonly long Cylinders;
+         /// <summary>The size of this structure, in bytes.</summary>
+         [FieldOffset(0)] [MarshalAs(UnmanagedType.U4)]
+         public readonly uint SizeOfPartitionInfo;
 
-         /// <summary>The type of media.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly STORAGE_MEDIA_TYPE MediaType;
+         /// <summary>The format of a partition.</summary>
+         [FieldOffset(4)] [MarshalAs(UnmanagedType.U4)]
+         public readonly PARTITION_STYLE PartitionStyle;
 
-         /// <summary>The number of tracks per cylinder.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint TracksPerCylinder;
+         /// <summary>Signature: MBR signature of the partition.
+         /// <para>If PartitionStyle is PARTITION_STYLE_MBR (0), the union is a structure that contains information for an master boot record partition, which includes a disk signature and a checksum.</para>
+         /// </summary>
+         [FieldOffset(8)] [MarshalAs(UnmanagedType.U4)]
+         public readonly uint MbrSignature;
 
-         /// <summary>The number of sectors per track.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint SectorsPerTrack;
-
-         /// <summary>The number of bytes per sector.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint BytesPerSector;
+         /// <summary>DiskId: GUID of the GPT partition.
+         /// <para>If PartitionStyle is PARTITION_STYLE_GPT (1), the union is a structure that contains information for a GUID partition table partition, which includes a disk identifier (GUID).</para>
+         /// </summary>
+         [FieldOffset(8)] public Guid DiskId;
       }
    }
 }

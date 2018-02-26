@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
       internal struct DRIVE_LAYOUT_INFORMATION_EX
       {
-         /// <summary>The style of the partitions on the drive enumerated by the <see cref="Filesystem.NativeMethods.PARTITION_STYLE"/> enumeration.</summary>
+         /// <summary>The style of the partitions on the drive enumerated by the <see cref="PARTITION_STYLE"/> enumeration.</summary>
          [FieldOffset(0)] [MarshalAs(UnmanagedType.U4)]
          public readonly PartitionStyle PartitionStyle;
 
@@ -41,8 +41,10 @@ namespace Alphaleonis.Win32.Filesystem
          [FieldOffset(4)] [MarshalAs(UnmanagedType.U4)]
          public readonly uint PartitionCount;
 
+         /// <summary>A <see cref="DRIVE_LAYOUT_INFORMATION_MBR"/> structure containing information about the master boot record type partitioning on the drive.</summary>
          [FieldOffset(8)] public DRIVE_LAYOUT_INFORMATION_MBR Mbr;
 
+         /// <summary>A <see cref="DRIVE_LAYOUT_INFORMATION_GPT"/> structure containing information about the GUID disk partition type partitioning on the drive.</summary>
          [FieldOffset(8)] public DRIVE_LAYOUT_INFORMATION_GPT Gpt;
       }
    }

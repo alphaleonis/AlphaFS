@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(null, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, null, pathFormat);
+         return CopyMoveCore(null, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
 
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, bool overwrite)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(null, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, bool overwrite, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, null, pathFormat);
+         return CopyMoveCore(null, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
 
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -167,7 +167,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, null, pathFormat);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
 
@@ -191,7 +191,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -216,7 +216,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite, PathFormat pathFormat)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, null, pathFormat);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
 
@@ -242,7 +242,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -267,7 +267,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, null, null, null, pathFormat);
+         return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, null, null, pathFormat);
       }
 
 
@@ -292,7 +292,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(null, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -318,7 +318,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, null, pathFormat);
+         return CopyMoveCore(null, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, pathFormat);
       }
 
 
@@ -347,7 +347,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
+         return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
 
@@ -375,7 +375,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, null, pathFormat);
+         return CopyMoveCore(null, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
 
 
@@ -403,7 +403,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
+         return CopyMoveCore(null, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
 
@@ -432,7 +432,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, null, pathFormat);
+         return CopyMoveCore(null, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
 
 
@@ -458,7 +458,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -484,7 +484,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, null, null, null, pathFormat);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, null, null, pathFormat);
       }
 
 
@@ -510,7 +510,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -537,7 +537,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, null, pathFormat);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, pathFormat);
       }
 
 
@@ -567,7 +567,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
 
@@ -596,7 +596,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, null, pathFormat);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
 
 
@@ -625,7 +625,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, null, PathFormat.RelativePath);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
 
@@ -655,7 +655,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, null, pathFormat);
+         return CopyMoveCore(transaction, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
 
 
@@ -688,10 +688,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="copyMoveResult">A <see cref="CopyMoveResult"/> instance containing Copy or Move action progress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult, PathFormat pathFormat)
+      internal static CopyMoveResult CopyMoveCore(KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string sourcePathLp;
          string destinationPathLp;
@@ -724,7 +723,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          pathFormat = PathFormat.LongFullPath;
 
-         var cmr = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, isCopy, true, preserveDates, emulateMove);
+         var cmr = new CopyMoveResult(sourcePath, destinationPath, isCopy, true, preserveDates, emulateMove);
          
 
          if (isCopy)
@@ -745,7 +744,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
             else
-               cmr = CopyDeleteCore(transaction, sourcePathLp, destinationPathLp, preserveDates, emulateMove, copyOptions, progressHandler, userProgressData, cmr);
+               CopyDeleteCore(transaction, sourcePathLp, destinationPathLp, preserveDates, emulateMove, copyOptions, progressHandler, userProgressData, cmr);
          }
 
          // Move
@@ -780,11 +779,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private static CopyMoveResult CopyDeleteCore(KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove, CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult)
+      private static void CopyDeleteCore(KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove, CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult)
       {
-         var cmr = copyMoveResult ?? new CopyMoveResult(sourcePathLp, destinationPathLp, true, true, preserveDates, emulateMove);
-         
-
          var dirs = new Queue<string>(NativeMethods.DefaultFileBufferSize);
 
          dirs.Enqueue(sourcePathLp);
@@ -810,7 +806,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   CreateDirectoryCore(transaction, fseiDestinationPath, null, null, false, PathFormat.LongFullPath);
 
-                  cmr.TotalFolders++;
+                  copyMoveResult.TotalFolders++;
 
                   dirs.Enqueue(fseiSourcePath);
                }
@@ -821,9 +817,9 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   // File count is done in File.CopyMoveCore method.
 
-                  cmr = File.CopyMoveCore(transaction, true, false, fseiSourcePath, fseiDestinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, cmr, PathFormat.LongFullPath);
+                  copyMoveResult = File.CopyMoveCore(transaction, true, false, fseiSourcePath, fseiDestinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, copyMoveResult, PathFormat.LongFullPath);
 
-                  if (cmr.IsCanceled)
+                  if (copyMoveResult.IsCanceled)
                   {
                      // Break while loop.
                      dirs.Clear();
@@ -833,9 +829,9 @@ namespace Alphaleonis.Win32.Filesystem
                   }
 
 
-                  if (cmr.ErrorCode == Win32Errors.ERROR_SUCCESS)
+                  if (copyMoveResult.ErrorCode == Win32Errors.ERROR_SUCCESS)
                   {
-                     cmr.TotalBytes += fseiSource.FileSize;
+                     copyMoveResult.TotalBytes += fseiSource.FileSize;
 
                      if (emulateMove)
                         File.DeleteFileCore(transaction, fseiSourcePath, true, PathFormat.LongFullPath);
@@ -845,7 +841,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         if (cmr.ErrorCode == Win32Errors.ERROR_SUCCESS)
+         if (copyMoveResult.ErrorCode == Win32Errors.ERROR_SUCCESS)
          {
             if (preserveDates)
             {
@@ -866,9 +862,6 @@ namespace Alphaleonis.Win32.Filesystem
             if (emulateMove)
                DeleteDirectoryCore(transaction, null, sourcePathLp, true, true, true, PathFormat.LongFullPath);
          }
-
-
-         return cmr;
       }
       
 

@@ -291,12 +291,14 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>STK 9940.</summary>
          STK_9940 = 92,
 
-         /// <summary>SAIT tape.</summary>
-         /// <remarks>Windows Server 2003: This is not supported before Windows Server 2003 with SP1.</remarks>
+         /// <summary>SAIT tape.
+         /// <para>Windows Server 2003: This is not supported before Windows Server 2003 with SP1.</para>
+         /// </summary>
          SAIT = 93,
 
-         /// <summary>Exabyte VXA tape.</summary>
-         /// <remarks>Windows Server 2008: This is not supported before Windows Server 2008.</remarks>
+         /// <summary>Exabyte VXA tape.
+         /// <para>Windows Server 2008: This is not supported before Windows Server 2008.</para>
+         /// </summary>
          VXATape = 94
       }
    }

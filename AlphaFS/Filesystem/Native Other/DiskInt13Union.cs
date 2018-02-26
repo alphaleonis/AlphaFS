@@ -19,13 +19,29 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Runtime.InteropServices;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>This is a test class for Device and DeviceInfo and is intended to contain all Device and DeviceInfo Unit Tests.</summary>
-   [TestClass]
-   public partial class AlphaFS_DeviceTest
+   internal static partial class NativeMethods
    {
+      /// <summary>
+      /// Un-named struct for <see cref="DISK_DETECTION_INFO"/> structure
+      /// </summary>
+      [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
+      internal struct DiskInt13Union
+      {
+         /// <summary>
+         /// <see cref="DISK_INT13_INFO"/> for member description
+         /// </summary>
+         [FieldOffset(0)]
+         public DISK_INT13_INFO Int13;
+
+         /// <summary>
+         /// <see cref="DISK_EX_INT13_INFO"/> for member description
+         /// </summary>
+         [FieldOffset(0)]
+         public DISK_EX_INT13_INFO ExInt13;
+      }
    }
 }

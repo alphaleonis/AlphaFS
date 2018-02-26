@@ -148,6 +148,7 @@
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_ByHandleFileInfoTest.cs" />
     <Compile Include="AlphaFS Compression\AlphaFS CompressionTest.cs" />
     <Compile Include="AlphaFS Crc Class\AlphaFS_CrcTest.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS_DeviceTest.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingDirectoryEnumerationErrorFilter.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateSessions.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_HostTest.cs" />
@@ -157,8 +158,9 @@
     <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_Device.GetStorageDeviceInfo_FromLogicalDrive.cs" />
     <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_Device.GetPhysicalDriveInfo_FromVolume.cs" />
     <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_Device.GetPhysicalDriveInfo_FromLogicalDrive.cs" />
+    <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_Device.GetStoragePartitionInfo_FromLogicalDrive.cs" />
+    <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_DeviceTest.cs" />
     <Compile Include="AlphaFS PhysicalDrive Class\AlphaFS_PhysicalDriveInfoTest.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS_DeviceTest.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_EncryptionTest.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_Directory.GetFileIdInfo.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_File.GetFileIdInfo.cs" />

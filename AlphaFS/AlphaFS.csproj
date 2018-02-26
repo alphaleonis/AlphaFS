@@ -196,12 +196,10 @@
     <Compile Include="AssemblyVersionInfo.cs">
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
-    <Compile Include="Device\PhysicalDriveInfo\Device.GetPartitionInfo.cs" />
     <Compile Include="Device\PhysicalDriveInfo\Device.GetStoragePartitionInfo.cs" />
-    <Compile Include="Device\StoragePartitionInfoMbr.cs" />
-    <Compile Include="Device\StoragePartitionInfoGpt.cs" />
+    <Compile Include="Device\StorageMbrPartitionInfo.cs" />
+    <Compile Include="Device\StorageGptPartitionInfo.cs" />
     <Compile Include="Device\StoragePartitionInfo.cs" />
-    <Compile Include="Device\Test2.cs" />
     <Compile Include="Device\Test.cs" />
     <Compile Include="Device\Device.GetDeviceIoData.cs" />
     <Compile Include="Device\Device.InvokeDeviceIoData.cs" />
@@ -223,6 +221,7 @@
     <Compile Include="Device\Junctions, Links\Device.GetLinkTarget.cs" />
     <Compile Include="Device\Junctions, Links\Device.DeleteDirectoryJunction.cs" />
     <Compile Include="Device\Junctions, Links\Device.CreateDirectoryJunction.cs" />
+    <Compile Include="Device\Test2.cs" />
     <Compile Include="Device\Volume\Volume.DeleteDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.QueryDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.GetDriveFormat.cs" />
@@ -326,7 +325,13 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateSubdirectory.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Create.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateAlternateDataStreams.cs" />
+    <Compile Include="Filesystem\Native Other\DISK_DETECTION_INFO.cs" />
+    <Compile Include="Filesystem\Native Other\DISK_EX_INT13_INFO.cs" />
+    <Compile Include="Filesystem\Native Other\DISK_INT13_INFO.cs" />
+    <Compile Include="Filesystem\Native Other\DISK_PARTITION_INFO.cs" />
+    <Compile Include="Filesystem\Native Other\DiskInt13Union.cs" />
     <Compile Include="Filesystem\Native Other\PartitionAttributes.cs" />
+    <Compile Include="Filesystem\Structures, Enumerations\DetectionType.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DiskPartitionTypes.cs" />
     <Compile Include="Filesystem\Native Other\DISK_GEOMETRY_EX.cs" />
     <Compile Include="Filesystem\Native Other\DEVPROPKEY.cs" />
@@ -500,6 +505,7 @@
     <Compile Include="Filesystem\Path Class\Path.ShortLongConversions.cs" />
     <Compile Include="Filesystem\Path Class\Path.Temporary.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\SPDRP.cs" />
+    <Compile Include="Filesystem\Structures, Enumerations\StorageMediaType.cs" />
     <Compile Include="Safe Handles\SafeTokenHandle.cs" />
     <Compile Include="Safe Handles\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Safe Handles\SafeEncryptedFileRawHandle.cs" />
@@ -704,7 +710,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

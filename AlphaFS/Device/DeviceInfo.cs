@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides access to information of a device, on a local or remote host.</summary>
+   /// <summary>Provides access to information of a device.</summary>
    [Serializable]
    [SecurityCritical]
    public sealed class DeviceInfo

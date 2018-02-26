@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (isElevated)
          {
-            GetDriveStuff(@"\\.\C:");
+            //GetDriveStuff(@"\\.\C:");
 
 
             using (var safeHandle = OpenPhysicalDrive(devicePath, FileSystemRights.Read))

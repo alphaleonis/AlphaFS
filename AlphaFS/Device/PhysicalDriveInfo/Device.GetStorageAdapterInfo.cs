@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      internal static StorageAdapterInfo GetStorageAdapterInfoNative(SafeFileHandle safeHandle, string pathToDevice)
+      private static StorageAdapterInfo GetStorageAdapterInfoNative(SafeFileHandle safeHandle, string pathToDevice)
       {
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
          {

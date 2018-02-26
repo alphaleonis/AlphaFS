@@ -21,8 +21,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Security.AccessControl;
 using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -77,9 +75,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                   for (int i = 0, itemOffset = 0; i < numberOfExtents - 1; i++, itemOffset = structSize * i)
-                  {
+
                      diskExtent[i] = safeBuffer.PtrToStructure<NativeMethods.DISK_EXTENT>(itemOffset);
-                  }
 
 
                   return new NativeMethods.VOLUME_DISK_EXTENTS {Extents = diskExtent};
@@ -92,53 +89,53 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      [SecurityCritical]
-      internal static object GetDriveStuff(string logicalDrive)
-      {
-         using (var safeHandle = OpenPhysicalDrive(logicalDrive, FileSystemRights.Read | FileSystemRights.Write))
-         {
-            // DRIVE_LAYOUT_INFORMATION_EX
+      //[SecurityCritical]
+      //internal static object GetDriveStuff(string logicalDrive)
+      //{
+      //   using (var safeHandle = OpenPhysicalDrive(logicalDrive, FileSystemRights.Read | FileSystemRights.Write))
+      //   {
+      //      // DRIVE_LAYOUT_INFORMATION_EX
 
-            using (var safeBuffer = GetDeviceIoData<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, logicalDrive))
-            {
-               if (null != safeBuffer)
-               {
-                  var structure = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>(0);
+      //      using (var safeBuffer = GetDeviceIoData<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, logicalDrive))
+      //      {
+      //         if (null != safeBuffer)
+      //         {
+      //            var structure = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>(0);
 
-                  return structure;
-               }
-            }
+      //            return structure;
+      //         }
+      //      }
 
-            return null;
-
-
-            // DISK_GEOMETRY_EX
-
-            using (var safeBuffer = GetDeviceIoData<NativeMethods.DISK_GEOMETRY_EX>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, logicalDrive))
-            {
-               if (null != safeBuffer)
-               {
-                  var structure = safeBuffer.PtrToStructure<NativeMethods.DISK_GEOMETRY_EX>(0);
-
-                  //return structure;
-               }
-            }
+      //      return null;
 
 
-            // PARTITION_INFORMATION_EX
+      //      // DISK_GEOMETRY_EX
 
-            using (var safeBuffer = GetDeviceIoData<NativeMethods.PARTITION_INFORMATION_EX>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_PARTITION_INFO_EX, logicalDrive))
-            {
-               if (null != safeBuffer)
-               {
-                  var structure = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(0);
+      //      using (var safeBuffer = GetDeviceIoData<NativeMethods.DISK_GEOMETRY_EX>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, logicalDrive))
+      //      {
+      //         if (null != safeBuffer)
+      //         {
+      //            var structure = safeBuffer.PtrToStructure<NativeMethods.DISK_GEOMETRY_EX>(0);
 
-                  //return structure;
-               }
-            }
-         }
+      //            //return structure;
+      //         }
+      //      }
 
-         return null;
-      }
+
+      //      // PARTITION_INFORMATION_EX
+
+      //      using (var safeBuffer = GetDeviceIoData<NativeMethods.PARTITION_INFORMATION_EX>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_PARTITION_INFO_EX, logicalDrive))
+      //      {
+      //         if (null != safeBuffer)
+      //         {
+      //            var structure = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(0);
+
+      //            //return structure;
+      //         }
+      //      }
+      //   }
+
+      //   return null;
+      //}
    }
 }

@@ -20,55 +20,151 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
+   /// <summary>Provides access to GPT partition information of a storage device.</summary>
    [Serializable]
    [SecurityCritical]
-   public sealed class StoragePartitionInfoGpt
+   public sealed class StorageGptPartitionInfo
    {
+      #region Private Fields
+
+      private ulong _partitionLength;
+      private ulong _startingOffset;
+      private ulong _startingUsableOffset;
+      private static PartitionType[] _partitionTypes;
+
+      #endregion // Private Fields
+
+
       #region Constructors
 
-      /// <summary>Initializes a StoragePartitionInfoGpt instance.</summary>
-      public StoragePartitionInfoGpt()
+      /// <summary>Initializes a StorageGptPartitionInfo instance.</summary>
+      public StorageGptPartitionInfo()
       {
+         if (null == _partitionTypes)
+            _partitionTypes = Utils.EnumToArray<PartitionType>();
+
+         PartitionNumber = -1;
       }
+      
 
-
-      internal StoragePartitionInfoGpt(NativeMethods.PARTITION_INFORMATION_GPT gptPartition) : this()
+      internal StorageGptPartitionInfo(NativeMethods.PARTITION_INFORMATION_EX partition) : this()
       {
-         Attributes = (PartitionAttributes) gptPartition.Attributes;
+         _partitionLength = partition.PartitionLength;
+
+         _startingOffset = partition.StartingOffset;
+
+         PartitionNumber = (int) partition.PartitionNumber;
          
-         Id = gptPartition.PartitionId;
+         RewritePartition = partition.RewritePartition;
 
-         Description = gptPartition.Name;
 
-         Type = gptPartition.PartitionType;
+         
+
+
+         var gptPartition = partition.Gpt;
+         
+         Attributes = (PartitionAttributes) gptPartition.Attributes;
+
+         
+
+         Description = gptPartition.Name.Trim();
+
+         PartitionId = gptPartition.PartitionId;
+
+
+         foreach (var guid in _partitionTypes)
+            if (gptPartition.PartitionType.Equals(new Guid(Utils.GetEnumDescription(guid))))
+            {
+               PartitionType = guid;
+               break;
+            }
       }
 
       #endregion // Constructors
 
 
       #region Properties
+      
 
       /// <summary>The Extensible Firmware Interface (EFI) attributes of the partition.</summary>
       public PartitionAttributes Attributes { get; internal set; }
 
-      
-      /// <summary>The GUID of the partition.</summary>
-      public Guid Id { get; internal set; }
 
-      
       /// <summary>The description of the partition.</summary>
       public string Description { get; internal set; }
 
 
-      /// <summary>The GUID of the partition that identifies the partition type.
-      /// <remarks>Each partition type that the EFI specification supports is identified by its own GUID, which is published by the developer of the partition.</remarks>
-      /// </summary>
-      public Guid Type { get; internal set; }
+      /// <summary>The GUID of the partition.</summary>
+      public Guid PartitionId { get; internal set; }
+
+
+      /// <summary>The starting offset of the partition.</summary>
+      public long PartitionLength
+      {
+         get
+         {
+            unchecked
+            {
+               return (long) _partitionLength;
+            }
+         }
+
+         internal set
+         {
+            unchecked
+            {
+               _partitionLength = (ulong) value;
+            }
+         }
+      }
+
+
+      /// <summary>The starting offset of the partition, formatted as a unit size.</summary>
+      public string PartitionLengthUnitSize
+      {
+         get { return Utils.UnitSizeToText(PartitionLength); }
+      }
+
+
+      /// <summary>The storage partition number, starting at 1.</summary>
+      public int PartitionNumber { get; internal set; }
+
+
+      /// <summary>The the partition type. Each partition type that the EFI specification supports is identified by its own GUID, which is published by the developer of the partition.</summary>
+      public PartitionType PartitionType { get; internal set; }
+
+
+      /// <summary>The rewritable status of the storage partition.</summary>
+      public bool RewritePartition { get; internal set; }
+
+
+      /// <summary>The starting offset of the partition.</summary>
+      public long StartingOffset
+      {
+         get
+         {
+            unchecked
+            {
+               return (long) _startingOffset;
+            }
+         }
+
+         internal set
+         {
+            unchecked
+            {
+               _startingOffset = (ulong) value;
+            }
+         }
+      }
 
       #endregion // Properties
 
@@ -91,13 +187,13 @@ namespace Alphaleonis.Win32.Filesystem
          if (null == obj || GetType() != obj.GetType())
             return false;
 
-         var other = obj as StoragePartitionInfoGpt;
+         var other = obj as StorageGptPartitionInfo;
 
          return null != other &&
                 other.Attributes == Attributes &&
-                other.Id == Id &&
+                other.PartitionId == PartitionId &&
                 other.Description == Description &&
-                other.Type == Type;
+                other.PartitionType == PartitionType;
       }
 
 
@@ -107,7 +203,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          unchecked
          {
-            return Attributes.GetHashCode() + Id.GetHashCode() + Description.GetHashCode() + Type.GetHashCode();
+            return Attributes.GetHashCode() + PartitionId.GetHashCode() + Description.GetHashCode() + PartitionType.GetHashCode();
          }
       }
 
@@ -116,7 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="left">A.</param>
       /// <param name="right">B.</param>
       /// <returns>The result of the operator.</returns>
-      public static bool operator ==(StoragePartitionInfoGpt left, StoragePartitionInfoGpt right)
+      public static bool operator ==(StorageGptPartitionInfo left, StorageGptPartitionInfo right)
       {
          return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
       }
@@ -126,7 +222,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="left">A.</param>
       /// <param name="right">B.</param>
       /// <returns>The result of the operator.</returns>
-      public static bool operator !=(StoragePartitionInfoGpt left, StoragePartitionInfoGpt right)
+      public static bool operator !=(StorageGptPartitionInfo left, StorageGptPartitionInfo right)
       {
          return !(left == right);
       }

@@ -19,13 +19,18 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>This is a test class for Device and DeviceInfo and is intended to contain all Device and DeviceInfo Unit Tests.</summary>
-   [TestClass]
-   public partial class AlphaFS_DeviceTest
+   /// <summary>The DETECTION_TYPE enumeration type is used in conjunction with the IOCTL_DISK_GET_DRIVE_GEOMETRY_EX request and the DISK_GEOMETRY_EX structure to determine the type of formatting used by the BIOS to record the disk geometry.</summary>
+   public enum DetectionType : uint
    {
+      /// <summary>Indicates that the disk contains neither an INT 13h partition nor an extended INT 13h partition.</summary>
+      DetectNone = 0,
+
+      /// <summary>Indicates that the disk has a standard INT 13h partition.</summary>
+      DetectInt13 = 1,
+
+      /// <summary>Indicates that the disk contains an extended INT 13h partition.</summary>
+      DetectExInt13 = 2
    }
 }

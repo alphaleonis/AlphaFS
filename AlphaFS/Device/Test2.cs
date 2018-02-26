@@ -8,7 +8,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public static class IOCtl
+   internal static class IOCtl
    {
       private const int GENERIC_READ = unchecked((int) 0x80000000);
       private const int FILE_SHARE_READ = 1;
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
 
          [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
-         public static extern SafeFileHandle CreateFile(
+         internal static extern SafeFileHandle CreateFile(
             string fileName,
             int desiredAccess,
             int shareMode,
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          [DllImport("kernel32", SetLastError = true)]
          [return: MarshalAs(UnmanagedType.Bool)]
-         public static extern bool DeviceIoControl(
+         internal static extern bool DeviceIoControl(
             SafeFileHandle hVol,
             Filesystem.NativeMethods.IoControlCode controlCode,
             IntPtr inBuffer,
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       
 
 
-      public static void Main()
+      internal static void Main()
       {
          SendIoCtlDiskGetDriveLayoutEx(0);
          SendIoCtlDiskGetDriveLayoutEx(1);

@@ -23,6 +23,7 @@ using System;
 
 namespace Alphaleonis.Win32.Filesystem
 {
+   /// <summary>The different (GPT) partition attributes.</summary>
    [Flags]
    public enum PartitionAttributes : ulong
    {
@@ -32,7 +33,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>If this attribute is set, the partition is required by a Computer to function properly.</summary>
       PlatformRequired = NativeMethods.PartitionAttributes.GPT_ATTRIBUTE_PLATFORM_REQUIRED,
 
-      LegacyBIOSBootable = 0x0000000000000004,
+      /// <summary>
+      /// 
+      /// </summary>
+      LegacyBIOSBootable = 4,
 
       /// <summary>If this attribute is set, the partition is read-only.</summary>
       ReadOnly = NativeMethods.PartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_READ_ONLY,

@@ -19,42 +19,19 @@
  *  THE SOFTWARE. 
  */
 
+using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_DeviceTest
+   public partial class AlphaFS_PhysicalDriveInfoTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
-      public void AlphaFS_Device_EnumerateDevices_Local_Success()
+      public void Device_Test()
       {
-         Console.WriteLine("MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.");
-         Console.WriteLine("You cannot access remote machines when running on these versions of Windows.");
+         //var hw = new Hardware();
 
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-
-         var host = UnitTestConstants.LocalHost;
-         var classCount = 0;
-
-         foreach (var deviceClass in Alphaleonis.Utils.EnumToArray<Alphaleonis.Win32.Filesystem.DeviceGuid>().OrderBy(memberName => memberName.ToString()))
-         {
-            Console.WriteLine();
-            Console.WriteLine("#{0:000}\tClass: [{1}]", ++classCount, deviceClass);
-
-
-            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(host, deviceClass))
-               UnitTestConstants.Dump(device, -28);
-         }
-
-
-         if (classCount == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+         IOCtl.Main();
       }
    }
 }

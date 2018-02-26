@@ -25,22 +25,27 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Describes the extended geometry of disk devices and media.</summary>
-      /// <remarks>
+      /// <summary>Describes the extended geometry of disk devices and media.
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </remarks>
+      /// </summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      public struct DISK_GEOMETRY_EX
+      internal struct DISK_GEOMETRY_EX
       {
-         /// <summary>A <see cref="DISK_GEOMETRY"/> structure.</summary>
+         /// <summary>Describes the geometry of disk devices and media.</summary>
          public DISK_GEOMETRY Geometry;
 
          /// <summary>The disk size, in bytes.</summary>
-         [MarshalAs(UnmanagedType.U8)] public readonly ulong DiskSize;
+         [MarshalAs(UnmanagedType.I8)] public long DiskSize;
 
-         /// <summary>Any additional data.</summary>
-         [MarshalAs(UnmanagedType.I1)] public readonly byte Data;
+         ///// <summary>Any additional data.</summary>
+         //[MarshalAs(UnmanagedType.I1)] public readonly byte Data;
+
+         /// <summary>Contains the disk partition information.</summary>
+         public DISK_PARTITION_INFO PartitionInformation;
+
+         /// <summary>Contains detected drive parameters.</summary>
+         public DISK_DETECTION_INFO DiskDetectionInfo;
       }
    }
 }

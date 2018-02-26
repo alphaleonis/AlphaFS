@@ -33,16 +33,16 @@ namespace Alphaleonis.Win32.Filesystem
 {
    #region Helper: Enum
 
-   public static class EnumHelper
+   internal static class EnumHelper
    {
-      public static bool HasFlag<T>(this Enum flags, T value) where T : struct
+      internal static bool HasFlag<T>(this Enum flags, T value) where T : struct
       {
          var iFlags = Convert.ToUInt64(flags);
          var iValue = Convert.ToUInt64(value);
          return ((iFlags & iValue) == iValue);
       }
 
-      public static T SetFlag<T>(this Enum flags, T value, bool state = true)
+      internal static T SetFlag<T>(this Enum flags, T value, bool state = true)
       {
          if (!Enum.IsDefined(typeof(T), value)) throw new ArgumentException("Enum value and flags types don't match.");
          if (state) return (T) Enum.ToObject(typeof(T), Convert.ToUInt64(flags) | Convert.ToUInt64(value));
@@ -54,9 +54,9 @@ namespace Alphaleonis.Win32.Filesystem
 
    #region Helper: Byte[]
 
-   public static class ByteHelper
+   internal static class ByteHelper
    {
-      public static int IndexOf(this byte[] bytes, byte value, int startIndex = 0)
+      internal static int IndexOf(this byte[] bytes, byte value, int startIndex = 0)
       {
          while (startIndex < bytes.Length)
             if (bytes[startIndex++] == value)
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
          return -1;
       }
 
-      public static string GetString(this byte[] bytes, int offset)
+      internal static string GetString(this byte[] bytes, int offset)
       {
          string result = null;
          var index = -1;
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
          return result;
       }
 
-      public static T ToStruct<T>(this byte[] bytes, int start = 0) where T : struct
+      internal static T ToStruct<T>(this byte[] bytes, int start = 0) where T : struct
       {
          var result = new T();
          var size = Marshal.SizeOf(result);
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
 
    #endregion
 
-   public class Hardware
+   internal class Hardware
    {
       #region [extern] WindowsAPI
 
@@ -142,7 +142,7 @@ namespace Alphaleonis.Win32.Filesystem
       private static extern int CloseHandle(int hObject);
 
       [DllImport("KERNEL32.DLL", CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-      public static extern int EnumSystemFirmwareTables(BiosFirmwareTableProvider providerSignature,
+      internal static extern int EnumSystemFirmwareTables(BiosFirmwareTableProvider providerSignature,
          IntPtr firmwareTableBuffer, int bufferSize);
 
       [DllImport("KERNEL32.DLL", CallingConvention = CallingConvention.StdCall, SetLastError = true)]
@@ -211,7 +211,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region [enum] STORAGE_BUS_TYPE
 
-      public enum STORAGE_BUS_TYPE : byte
+      internal enum STORAGE_BUS_TYPE : byte
       {
          BusTypeUnknown = 0x00,
          BusTypeScsi = 0x01,
@@ -238,12 +238,12 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] VOLUMEDISKEXTENTS
 
       [StructLayout(LayoutKind.Explicit)]
-      public struct VOLUMEDISKEXTENTS
+      internal struct VOLUMEDISKEXTENTS
       {
-         [FieldOffset(0)] public uint numberOfDiskExtents;
-         [FieldOffset(8)] public uint diskNumber;
-         [FieldOffset(16)] public long startingOffset;
-         [FieldOffset(24)] public long extentLength;
+         [FieldOffset(0)] internal uint numberOfDiskExtents;
+         [FieldOffset(8)] internal uint diskNumber;
+         [FieldOffset(16)] internal long startingOffset;
+         [FieldOffset(24)] internal long extentLength;
       }
 
       #endregion
@@ -253,11 +253,11 @@ namespace Alphaleonis.Win32.Filesystem
       [StructLayout(LayoutKind.Sequential)]
       private struct STORAGE_PROPERTY_QUERY
       {
-         public uint PropertyId;
-         public uint QueryType;
+         internal uint PropertyId;
+         internal uint QueryType;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
-         public byte[] AdditionalParameters;
+         internal byte[] AdditionalParameters;
       }
 
       #endregion
@@ -265,23 +265,23 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] STORAGE_DEVICE_DESCRIPTOR
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct STORAGE_DEVICE_DESCRIPTOR
+      internal struct STORAGE_DEVICE_DESCRIPTOR
       {
-         public int Version;
-         public int Size;
-         public byte DeviceType;
-         public byte DeviceTypeModifier;
-         public byte RemovableMedia;
-         public byte CommandQueueing;
-         public int VendorIdOffset;
-         public int ProductIdOffset;
-         public int ProductRevisionOffset;
-         public int SerialNumberOffset;
-         public STORAGE_BUS_TYPE BusType;
-         public int RawPropertiesLength;
+         internal int Version;
+         internal int Size;
+         internal byte DeviceType;
+         internal byte DeviceTypeModifier;
+         internal byte RemovableMedia;
+         internal byte CommandQueueing;
+         internal int VendorIdOffset;
+         internal int ProductIdOffset;
+         internal int ProductRevisionOffset;
+         internal int SerialNumberOffset;
+         internal STORAGE_BUS_TYPE BusType;
+         internal int RawPropertiesLength;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10240)]
-         public byte[] RawDeviceProperties;
+         internal byte[] RawDeviceProperties;
       }
 
       #endregion
@@ -289,14 +289,14 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] STORAGE_DEVICE_ID_DESCRIPTOR
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct STORAGE_DEVICE_ID_DESCRIPTOR
+      internal struct STORAGE_DEVICE_ID_DESCRIPTOR
       {
-         public int Version;
-         public int Size;
-         public int NumberOfIdentifiers;
+         internal int Version;
+         internal int Size;
+         internal int NumberOfIdentifiers;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10240)]
-         public byte[] Identifiers;
+         internal byte[] Identifiers;
       }
 
       #endregion
@@ -304,22 +304,22 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] STORAGE_ADAPTER_DESCRIPTOR
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct STORAGE_ADAPTER_DESCRIPTOR
+      internal struct STORAGE_ADAPTER_DESCRIPTOR
       {
-         public uint Version;
-         public uint Size;
-         public uint MaximumTransferLength;
-         public uint MaximumPhysicalPages;
-         public uint AlignmentMask;
-         public byte AdapterUsesPio;
-         public byte AdapterScansDown;
-         public byte CommandQueueing;
-         public byte AcceleratedTransfer;
-         public STORAGE_BUS_TYPE BusType;
-         public ushort BusMajorVersion;
-         public ushort BusMinorVersion;
-         public byte SrbType;
-         public byte AddressType;
+         internal uint Version;
+         internal uint Size;
+         internal uint MaximumTransferLength;
+         internal uint MaximumPhysicalPages;
+         internal uint AlignmentMask;
+         internal byte AdapterUsesPio;
+         internal byte AdapterScansDown;
+         internal byte CommandQueueing;
+         internal byte AcceleratedTransfer;
+         internal STORAGE_BUS_TYPE BusType;
+         internal ushort BusMajorVersion;
+         internal ushort BusMinorVersion;
+         internal byte SrbType;
+         internal byte AddressType;
       }
 
       #endregion
@@ -327,16 +327,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] GETVERSIONOUTPARAMS
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct GETVERSIONOUTPARAMS
+      internal struct GETVERSIONOUTPARAMS
       {
-         public byte bVersion;
-         public byte bRevision;
-         public byte bReserved;
-         public byte bIDEDeviceMap;
-         public int fCapabilities;
+         internal byte bVersion;
+         internal byte bRevision;
+         internal byte bReserved;
+         internal byte bIDEDeviceMap;
+         internal int fCapabilities;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-         public int[] dwReserved;
+         internal int[] dwReserved;
       }
 
       #endregion
@@ -344,16 +344,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] IDEREGS
 
       [StructLayout(LayoutKind.Sequential, Size = 8)]
-      public struct IDEREGS
+      internal struct IDEREGS
       {
-         public byte Features;
-         public byte SectorCount;
-         public byte SectorNumber;
-         public byte CylinderLow;
-         public byte CylinderHigh;
-         public byte DriveHead;
-         public byte Command;
-         public byte Reserved;
+         internal byte Features;
+         internal byte SectorCount;
+         internal byte SectorNumber;
+         internal byte CylinderLow;
+         internal byte CylinderHigh;
+         internal byte DriveHead;
+         internal byte Command;
+         internal byte Reserved;
       }
 
       #endregion
@@ -361,17 +361,17 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] SENDCMDINPARAMS
 
       [StructLayout(LayoutKind.Sequential, Size = 32)]
-      public struct SENDCMDINPARAMS
+      internal struct SENDCMDINPARAMS
       {
-         public int BufferSize;
-         public IDEREGS DriveRegs;
-         public byte DriveNumber;
+         internal int BufferSize;
+         internal IDEREGS DriveRegs;
+         internal byte DriveNumber;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
-         public byte[] bReserved;
+         internal byte[] bReserved;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-         public int[] dwReserved;
+         internal int[] dwReserved;
       }
 
       #endregion
@@ -379,16 +379,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] DRIVERSTATUS
 
       [StructLayout(LayoutKind.Sequential, Size = 12)]
-      public struct DRIVERSTATUS
+      internal struct DRIVERSTATUS
       {
-         public byte DriveError;
-         public byte IDEStatus;
+         internal byte DriveError;
+         internal byte IDEStatus;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-         public byte[] bReserved;
+         internal byte[] bReserved;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-         public int[] dwReserved;
+         internal int[] dwReserved;
       }
 
       #endregion
@@ -396,51 +396,51 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] IDSECTOR
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct IDSECTOR
+      internal struct IDSECTOR
       {
-         public short GenConfig;
-         public short NumberCylinders;
-         public short Reserved;
-         public short NumberHeads;
-         public short BytesPerTrack;
-         public short BytesPerSector;
-         public short SectorsPerTrack;
+         internal short GenConfig;
+         internal short NumberCylinders;
+         internal short Reserved;
+         internal short NumberHeads;
+         internal short BytesPerTrack;
+         internal short BytesPerSector;
+         internal short SectorsPerTrack;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
-         public short[] VendorUnique;
+         internal short[] VendorUnique;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
-         public byte[] SerialNumber;
+         internal byte[] SerialNumber;
 
-         public short BufferClass;
-         public short BufferSize;
-         public short ECCSize;
+         internal short BufferClass;
+         internal short BufferSize;
+         internal short ECCSize;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-         public byte[] FirmwareRevision;
+         internal byte[] FirmwareRevision;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]
-         public byte[] ModelNumber;
+         internal byte[] ModelNumber;
 
-         public short MoreVendorUnique;
-         public short DoubleWordIO;
-         public short Capabilities;
-         public short Reserved1;
-         public short PIOTiming;
-         public short DMATiming;
-         public short BS;
-         public short NumberCurrentCyls;
-         public short NumberCurrentHeads;
-         public short NumberCurrentSectorsPerTrack;
-         public int CurrentSectorCapacity;
-         public short MultipleSectorCapacity;
-         public short MultipleSectorStuff;
-         public int TotalAddressableSectors;
-         public short SingleWordDMA;
-         public short MultiWordDMA;
+         internal short MoreVendorUnique;
+         internal short DoubleWordIO;
+         internal short Capabilities;
+         internal short Reserved1;
+         internal short PIOTiming;
+         internal short DMATiming;
+         internal short BS;
+         internal short NumberCurrentCyls;
+         internal short NumberCurrentHeads;
+         internal short NumberCurrentSectorsPerTrack;
+         internal int CurrentSectorCapacity;
+         internal short MultipleSectorCapacity;
+         internal short MultipleSectorStuff;
+         internal int TotalAddressableSectors;
+         internal short SingleWordDMA;
+         internal short MultiWordDMA;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 382)]
-         public byte[] bReserved;
+         internal byte[] bReserved;
       }
 
       #endregion
@@ -448,29 +448,29 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] SENDCMDOUTPARAMS
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct SENDCMDOUTPARAMS
+      internal struct SENDCMDOUTPARAMS
       {
-         public uint cBufferSize;
-         public DRIVERSTATUS Status;
-         public IDSECTOR IDS;
+         internal uint cBufferSize;
+         internal DRIVERSTATUS Status;
+         internal IDSECTOR IDS;
       }
 
       #endregion
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct PhysicalDisk
+      internal struct PhysicalDisk
       {
-         public byte Number;
-         public string Model;
-         public string Firmware;
-         public string SerialNumber;
-         public bool RemovableMedia;
-         public VOLUMEDISKEXTENTS Extents;
-         public STORAGE_DEVICE_DESCRIPTOR Device;
-         public STORAGE_DEVICE_ID_DESCRIPTOR DeviceID;
-         public STORAGE_ADAPTER_DESCRIPTOR Adapter;
-         public GETVERSIONOUTPARAMS Version;
-         public SENDCMDOUTPARAMS Params;
+         internal byte Number;
+         internal string Model;
+         internal string Firmware;
+         internal string SerialNumber;
+         internal bool RemovableMedia;
+         internal VOLUMEDISKEXTENTS Extents;
+         internal STORAGE_DEVICE_DESCRIPTOR Device;
+         internal STORAGE_DEVICE_ID_DESCRIPTOR DeviceID;
+         internal STORAGE_ADAPTER_DESCRIPTOR Adapter;
+         internal GETVERSIONOUTPARAMS Version;
+         internal SENDCMDOUTPARAMS Params;
       }
 
       #region CTL_CODE
@@ -546,7 +546,7 @@ namespace Alphaleonis.Win32.Filesystem
             Result.Firmware = string.Empty;
             Result.Model = string.Empty;
 
-            var StoragePropertyQuery = new STORAGE_PROPERTY_QUERY();
+            //var StoragePropertyQuery = new STORAGE_PROPERTY_QUERY();
 
             Result.Extents = new VOLUMEDISKEXTENTS();
             Result.Adapter = new STORAGE_ADAPTER_DESCRIPTOR();
@@ -665,7 +665,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region [enum] BiosFirmwareTableProvider
 
-      public enum BiosFirmwareTableProvider
+      internal enum BiosFirmwareTableProvider
       {
          ACPI = (byte) 'A' << 24 | (byte) 'C' << 16 | (byte) 'P' << 8 | (byte) 'I',
          FIRM = (byte) 'F' << 24 | (byte) 'I' << 16 | (byte) 'R' << 8 | (byte) 'M',
@@ -676,7 +676,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region [enum] SMBIOSTableType
 
-      public enum SMBIOSTableType : sbyte
+      internal enum SMBIOSTableType : sbyte
       {
          BIOSInformation = 0,
          SystemInformation = 1,
@@ -707,18 +707,18 @@ namespace Alphaleonis.Win32.Filesystem
       #region [enum] SMBIOSTableEntry
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct SMBIOSTableHeader
+      internal struct SMBIOSTableHeader
       {
-         public SMBIOSTableType type;
-         public byte length;
-         public ushort Handle;
+         internal SMBIOSTableType type;
+         internal byte length;
+         internal ushort Handle;
       }
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct SMBIOSTableEntry
+      internal struct SMBIOSTableEntry
       {
-         public SMBIOSTableHeader header;
-         public uint index;
+         internal SMBIOSTableHeader header;
+         internal uint index;
       }
 
       #endregion
@@ -726,99 +726,99 @@ namespace Alphaleonis.Win32.Filesystem
       #region [enum] SMBIOSTableInfo
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct SMBIOSTableBiosInfo
+      internal struct SMBIOSTableBiosInfo
       {
-         public SMBIOSTableHeader header;
-         public byte vendor;
-         public byte version;
-         public ushort startingSegment;
-         public byte releaseDate;
-         public byte biosRomSize;
-         public ulong characteristics;
+         internal SMBIOSTableHeader header;
+         internal byte vendor;
+         internal byte version;
+         internal ushort startingSegment;
+         internal byte releaseDate;
+         internal byte biosRomSize;
+         internal ulong characteristics;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-         public byte[] extensionBytes;
+         internal byte[] extensionBytes;
       }
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct SMBIOSTableSystemInfo
+      internal struct SMBIOSTableSystemInfo
       {
-         public SMBIOSTableHeader header;
-         public byte manufacturer;
-         public byte productName;
-         public byte version;
-         public byte serialNumber;
+         internal SMBIOSTableHeader header;
+         internal byte manufacturer;
+         internal byte productName;
+         internal byte version;
+         internal byte serialNumber;
 
          [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-         public byte[] UUID;
+         internal byte[] UUID;
 
-         public byte wakeUpType;
+         internal byte wakeUpType;
       }
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct SMBIOSTableBaseBoardInfo
+      internal struct SMBIOSTableBaseBoardInfo
       {
-         public SMBIOSTableHeader header;
-         public byte manufacturer;
-         public byte productName;
-         public byte version;
-         public byte serialNumber;
+         internal SMBIOSTableHeader header;
+         internal byte manufacturer;
+         internal byte productName;
+         internal byte version;
+         internal byte serialNumber;
       }
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct SMBIOSTableEnclosureInfo
+      internal struct SMBIOSTableEnclosureInfo
       {
-         public SMBIOSTableHeader header;
-         public byte manufacturer;
-         public byte type;
-         public byte version;
-         public byte serialNumber;
-         public byte assetTagNumber;
-         public byte bootUpState;
-         public byte powerSupplyState;
-         public byte thermalState;
-         public byte securityStatus;
-         public long OEM_Defined;
+         internal SMBIOSTableHeader header;
+         internal byte manufacturer;
+         internal byte type;
+         internal byte version;
+         internal byte serialNumber;
+         internal byte assetTagNumber;
+         internal byte bootUpState;
+         internal byte powerSupplyState;
+         internal byte thermalState;
+         internal byte securityStatus;
+         internal long OEM_Defined;
       }
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct SMBIOSTableProcessorInfo
+      internal struct SMBIOSTableProcessorInfo
       {
-         public SMBIOSTableHeader header;
-         public byte socketDesignation;
-         public byte processorType;
-         public byte processorFamily;
-         public byte processorManufacturer;
-         public ulong processorID;
-         public byte processorVersion;
-         public byte processorVoltage;
-         public ushort externalClock;
-         public ushort maxSpeed;
-         public ushort currentSpeed;
-         public byte status;
-         public byte processorUpgrade;
-         public ushort L1CacheHandler;
-         public ushort L2CacheHandler;
-         public ushort L3CacheHandler;
-         public byte serialNumber;
-         public byte assetTag;
-         public byte partNumber;
+         internal SMBIOSTableHeader header;
+         internal byte socketDesignation;
+         internal byte processorType;
+         internal byte processorFamily;
+         internal byte processorManufacturer;
+         internal ulong processorID;
+         internal byte processorVersion;
+         internal byte processorVoltage;
+         internal ushort externalClock;
+         internal ushort maxSpeed;
+         internal ushort currentSpeed;
+         internal byte status;
+         internal byte processorUpgrade;
+         internal ushort L1CacheHandler;
+         internal ushort L2CacheHandler;
+         internal ushort L3CacheHandler;
+         internal byte serialNumber;
+         internal byte assetTag;
+         internal byte partNumber;
       }
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct SMBIOSTableCacheInfo
+      internal struct SMBIOSTableCacheInfo
       {
-         public SMBIOSTableHeader header;
-         public byte socketDesignation;
-         public long cacheConfiguration;
-         public ushort maximumCacheSize;
-         public ushort installedSize;
-         public ushort supportedSRAMType;
-         public ushort currentSRAMType;
-         public byte cacheSpeed;
-         public byte errorCorrectionType;
-         public byte systemCacheType;
-         public byte associativity;
+         internal SMBIOSTableHeader header;
+         internal byte socketDesignation;
+         internal long cacheConfiguration;
+         internal ushort maximumCacheSize;
+         internal ushort installedSize;
+         internal ushort supportedSRAMType;
+         internal ushort currentSRAMType;
+         internal byte cacheSpeed;
+         internal byte errorCorrectionType;
+         internal byte systemCacheType;
+         internal byte associativity;
       }
 
       #endregion
@@ -826,19 +826,19 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] RawSMBIOSData
 
       [StructLayout(LayoutKind.Sequential)]
-      public struct RawSMBIOSData
+      internal struct RawSMBIOSData
       {
-         public byte Used20CallingMethod;
-         public byte MajorVersion;
-         public byte MinorVersion;
-         public byte DmiRevision;
-         public uint Length;
-         public SMBIOSTableBiosInfo BiosInfo;
-         public SMBIOSTableSystemInfo SystemInfo;
-         public SMBIOSTableBaseBoardInfo BaseBoardInfo;
-         public SMBIOSTableEnclosureInfo EnclosureInfo;
-         public SMBIOSTableProcessorInfo ProcessorInfo;
-         public SMBIOSTableCacheInfo CacheInfo;
+         internal byte Used20CallingMethod;
+         internal byte MajorVersion;
+         internal byte MinorVersion;
+         internal byte DmiRevision;
+         internal uint Length;
+         internal SMBIOSTableBiosInfo BiosInfo;
+         internal SMBIOSTableSystemInfo SystemInfo;
+         internal SMBIOSTableBaseBoardInfo BaseBoardInfo;
+         internal SMBIOSTableEnclosureInfo EnclosureInfo;
+         internal SMBIOSTableProcessorInfo ProcessorInfo;
+         internal SMBIOSTableCacheInfo CacheInfo;
       }
 
       #endregion
@@ -934,7 +934,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region [enum] DisplayDeviceStateFlags
 
-      public enum DisplayDeviceStateFlags
+      internal enum DisplayDeviceStateFlags
       {
          AttachedToDesktop = 0x0000001,
          MultiDriver = 0x0000002,
@@ -952,28 +952,28 @@ namespace Alphaleonis.Win32.Filesystem
       #region [struct] DISPLAY_DEVICE
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct DISPLAY_DEVICE
+      internal struct DISPLAY_DEVICE
       {
-         [MarshalAs(UnmanagedType.U4)] public int structSize;
+         [MarshalAs(UnmanagedType.U4)] internal int structSize;
 
          [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-         public string DeviceName;
+         internal string DeviceName;
 
          [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-         public string DeviceString;
+         internal string DeviceString;
 
-         [MarshalAs(UnmanagedType.U4)] public DisplayDeviceStateFlags StateFlags;
-
-         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-         public string DeviceID;
+         [MarshalAs(UnmanagedType.U4)] internal DisplayDeviceStateFlags StateFlags;
 
          [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-         public string DeviceKey;
+         internal string DeviceID;
+
+         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+         internal string DeviceKey;
       }
 
       #endregion
 
-      public Hardware()
+      internal Hardware()
       {
          using (var Binary = new BinaryWriter(new MemoryStream()))
          {
@@ -1287,7 +1287,7 @@ namespace Alphaleonis.Win32.Filesystem
          Console.ResetColor();
       }
 
-      public byte[] MD5
+      internal byte[] MD5
       {
          get
          {
@@ -1296,7 +1296,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      public byte[] SHA1
+      internal byte[] SHA1
       {
          get
          {
@@ -1305,7 +1305,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      public byte[] SHA256
+      internal byte[] SHA256
       {
          get
          {
@@ -1314,7 +1314,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      public byte[] SHA512
+      internal byte[] SHA512
       {
          get
          {
@@ -1323,7 +1323,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      public string MD5String
+      internal string MD5String
       {
          get
          {
@@ -1332,7 +1332,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      public string SHA1String
+      internal string SHA1String
       {
          get
          {
@@ -1341,7 +1341,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      public string SHA256String
+      internal string SHA256String
       {
          get
          {
@@ -1350,7 +1350,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      public string SHA512String
+      internal string SHA512String
       {
          get
          {

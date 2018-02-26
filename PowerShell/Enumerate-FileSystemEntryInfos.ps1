@@ -232,8 +232,7 @@ Function Enumerate-FileSystemEntryInfos {
 
 
     .NOTES
-        Backup privileges are enables when run elevated.
-        This allows for browsing folders which are normally inaccessible.
+        Backup privileges are enabled when run elevated. This allows for browsing folders which are normally inaccessible.
 
 
     .OUTPUTS

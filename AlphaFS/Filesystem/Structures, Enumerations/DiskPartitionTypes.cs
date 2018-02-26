@@ -32,43 +32,51 @@ namespace Alphaleonis.Win32.Filesystem
       UnusedEntry = 0,
 
       /// <summary>A FAT12 file system partition.</summary>
-      FAT12 = 1,
+      Fat12 = 1,
 
-      XENIX1 = 2,
-      XENIX2 = 3,
+      /// <summary>A XENIX1 partition.</summary>
+      Xenix1 = 2,
+
+      /// <summary>A XENIX2 partition.</summary>
+      Xenix2 = 3,
 
       /// <summary>A FAT16 file system partition.</summary>
-      FAT16 = 4,
+      Fat16 = 4,
 
       /// <summary>An extended partition.</summary>
       Extended = 5,
 
+      /// <summary>A huge partition.</summary>
       Huge = 6,
 
       /// <summary>An IFS (Installable File System) partition.</summary>
-      IFS = 7,
+      Ifs = 7,
 
       /// <summary>A FAT32 file system partition.</summary>
-      FAT32 = 11,
+      Fat32 = 11,
 
-      FAT32XINT13 = 12,
-      XINT13 = 14,
-      XINT13Extended = 15,
+      /// <summary>A FAT32 XINT13 partition.</summary>
+      Fat32XInt13 = 12,
 
+      /// <summary>An XINT13 partition.</summary>
+      XInt13 = 14,
+
+      /// <summary>An XINT13 Extended partition.</summary>
+      XInt13Extended = 15,
 
       /// <summary>A PREP (Power PC Reference Platform) partition.</summary>
       Prep = 65,
 
       /// <summary>An LDM (Logical Disk Manager) partition.</summary>
-      LDF = 66,
+      Ldf = 66,
 
       /// <summary>A UNIX partition.</summary>
-      UNIX = 99,
+      Unix = 99,
 
       /// <summary>An NTFT partition.</summary>
-      NTFT = 128,
+      Ntft = 128,
 
       /// <summary>A valid NTFT partition.</summary>
-      ValidNTFT = 192,
+      ValidNtft = 192,
    }
 }
