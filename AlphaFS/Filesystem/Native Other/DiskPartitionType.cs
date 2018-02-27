@@ -19,31 +19,42 @@
  *  THE SOFTWARE. 
  */
 
-using System.Runtime.InteropServices;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Contains partition information specific to master boot record (MBR) disks.</summary>
-      /// <remarks>
+      /// <summary>The following table identifies the valid partition types that are used by disk drivers.
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </remarks>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct PARTITION_INFORMATION_MBR
+      /// </summary>
+      internal enum DiskPartitionType : byte
       {
-         /// <summary>The type of partition. For a list of values, see <see cref="DiskPartitionType"/>.</summary>
-         [MarshalAs(UnmanagedType.U1)] public readonly DiskPartitionType PartitionType;
+         /// <summary>An unused entry partition.</summary>
+         PARTITION_ENTRY_UNUSED = 0,
 
-         /// <summary>If the member is TRUE, the partition is a boot partition. When this structure is used with the IOCTL_DISK_SET_PARTITION_INFO_EX control code, the value of this parameter is ignored.</summary>
-         [MarshalAs(UnmanagedType.Bool)] public readonly bool BootIndicator;
+         /// <summary>A FAT12 file system partition.</summary>
+         PARTITION_FAT_12 = 1,
 
-         /// <summary>If this member is TRUE, the partition is of a recognized type. When this structure is used with the IOCTL_DISK_SET_PARTITION_INFO_EX control code, the value of this parameter is ignored.</summary>
-         [MarshalAs(UnmanagedType.Bool)] public readonly bool RecognizedPartition;
+         /// <summary>A FAT16 file system partition.</summary>
+         PARTITION_FAT_16 = 4,
 
-         /// <summary>The number of hidden sectors to be allocated when the partition table is created.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint HiddenSectors;
+         /// <summary>An extended partition.</summary>
+         PARTITION_EXTENDED = 5,
+
+         /// <summary>An IFS (Installable File System) partition.</summary>
+         PARTITION_IFS = 7,
+
+         /// <summary>A FAT32 file system partition.</summary>
+         PARTITION_FAT32 = 11,
+
+         /// <summary>An LDM (Logical Disk Manager) partition.</summary>
+         PARTITION_LDM = 66,
+
+         /// <summary>An NTFT partition.</summary>
+         PARTITION_NTFT = 128,
+
+         /// <summary>A valid NTFT partition. The high bit of a partition type code indicates that a partition is part of an NTFT mirror or striped array.</summary>
+         VALID_NTFT = 192
       }
    }
 }

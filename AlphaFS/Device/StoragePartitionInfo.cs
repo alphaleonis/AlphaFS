@@ -21,7 +21,7 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.Net.Mime;
+using System.Diagnostics.CodeAnalysis;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // MSDN: PartitionCount: On hard disks with the MBR layout, this value will always be a multiple of 4.
                   // Any partitions that are actually unused will have a partition type of PARTITION_ENTRY_UNUSED (0).
 
-                  if (partition.Mbr.PartitionType == DiskPartitionTypes.UnusedEntry)
+                  if (partition.Mbr.PartitionType == (NativeMethods.DiskPartitionType) DiskPartitionType.EntryUnused)
                      continue;
 
 
@@ -115,6 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Properties
       
       /// <summary>The GUID of the disk.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
       public Guid GptDiskId { get; internal set; }
       
 
@@ -123,14 +124,17 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>The maximum number of partitions that can be defined in the usable block.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
       public int GptMaxPartitionCount { get; internal set; }
 
 
       /// <summary>Contains GUID partition table (GPT) partition information.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
       public Collection<StorageGptPartitionInfo> GptPartitionInfo { get; internal set; }
 
 
       /// <summary>The starting byte offset of the first usable block.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
       public long GptStartingUsableOffset
       {
          get
@@ -180,10 +184,12 @@ namespace Alphaleonis.Win32.Filesystem
       
 
       /// <summary>Contains partition information specific to master boot record (MBR) disks.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mbr")]
       public Collection<StorageMbrPartitionInfo> MbrPartitionInfo { get; internal set; }
 
 
       /// <summary>The MBR signature of the drive.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mbr")]
       public long MbrSignature { get; internal set; }
 
 

@@ -103,11 +103,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Methods
 
-      /// <summary>Checks if the logical drive or volume is located on the physical drive.</summary>
-      /// <param name="devicePath">
-      ///    A drive path such as: "C", "C:" or "C:\".
-      ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
-      /// </param>
+      /// <summary>Checks if the logical drive or volume is located on the physical drive.
+      /// <para>A drive path such as: "C", "C:" or "C:\".</para>
+      /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
+      /// </summary>
       public bool ContainsVolume(string devicePath)
       {
          bool isDrive;

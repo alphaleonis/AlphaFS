@@ -46,6 +46,7 @@ namespace Alphaleonis
       }
 
 
+      [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
       public static T[] EnumToArray<T>()
       {
          var enumType = typeof(T);

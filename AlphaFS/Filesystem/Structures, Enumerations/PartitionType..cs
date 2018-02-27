@@ -20,6 +20,7 @@
  */
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -29,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This value can be set for basic and dynamic disks.</remarks>
       /// </summary>
       [Description("00000000-0000-0000-0000-000000000000")]
-      Unused,
+      EntryUnused,
 
       /// <summary>PARTITION_BASIC_DATA_GUID: The data partition type that is created and recognized by Windows.
       /// <remarks>
@@ -43,24 +44,29 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>PARTITION_LDM_DATA_GUID: The partition is an LDM data partition on a dynamic disk.
       /// <remarks>This value can be set only for dynamic disks.</remarks>
       /// </summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ldm")]
       [Description("AF9B60A0-1431-4F62-BC68-3311714A69AD")]
       LdmData,
 
       /// <summary>PARTITION_LDM_METADATA_GUID: The partition is a Logical Disk Manager (LDM) metadata partition on a dynamic disk.
       /// <remarks>This value can be set only for dynamic disks.</remarks>
       /// </summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ldm")]
       [Description("5808C8AA-7E8F-42E0-85D2-E1E90434CFB3")]
-      LdmMetaData,
+      LdmMetadata,
 
       /// <summary>PARTITION_MSFT_RECOVERY_GUID: The partition is a Microsoft recovery partition.
       /// <remarks>This value can be set for basic and dynamic disks.</remarks>
       /// </summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Msft")]
       [Description("DE94BBA4-06D1-4D40-A16A-BFD50179D6AC")]
       MsftRecovery,
 
       /// <summary>PARTITION_MSFT_RESERVED_GUID: The partition is a Microsoft reserved partition.
       /// <remarks>This value can be set for basic and dynamic disks.</remarks>
       /// </summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Msft")]
+      [SuppressMessage("Microsoft.Naming", "CA1700:DoNotNameEnumValuesReserved")]
       [Description("E3C9E316-0B5C-4DB8-817D-F92DF00215AE")]
       MsftReserved,
 
@@ -68,6 +74,41 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This value can be set for basic and dynamic disks.</remarks>
       /// </summary>
       [Description("C12A7328-F81F-11D2-BA4B-00A0C93EC93B")]
-      System
+      System,
+
+
+
+
+      // 2018-02-27 GUID Partition Table
+      // https://en.wikipedia.org/wiki/GUID_Partition_Table
+
+
+      /// <summary>IBM General Parallel File System (GPFS) partition.</summary>
+      [Description("37AFFC90-EF7D-4E96-91C3-2D7AE055B174")]
+      IbmGpfs,
+
+      /// <summary>Storage Spaces partition.</summary>
+      [Description("E75CAF8F-F680-4CEE-AFA3-B001E56EFC2D")]
+      StorageSpace,
+
+      /// <summary>MBR partition scheme.</summary>
+      [Description("024DEE41-33E7-11D3-9D69-0008C781F39F")]
+      MbrScheme,
+
+      /// <summary>BIOS boot partition.</summary>
+      [Description("21686148-6449-6E6F-744E-656564454649F")]
+      BiosBoot,
+
+      /// <summary>Intel Fast Flash (iFFS) partition (for Intel Rapid Start technology).</summary>
+      [Description("D3BFE2DE-3DAF-11DF-BA40-E3A556D89593")]
+      iFfs,
+
+      /// <summary>Sony boot partition.</summary>
+      [Description("F4019732-066E-4E12-8273-346C5641494F")]
+      SonyBoot,
+
+      /// <summary>Lenovo boot partition.</summary>
+      [Description("BFBFAFE7-A34F-448A-9A5B-6213EB736C22")]
+      LenovoBoot,
    }
 }

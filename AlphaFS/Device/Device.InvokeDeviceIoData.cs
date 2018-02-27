@@ -46,15 +46,24 @@ namespace Alphaleonis.Win32.Filesystem
             var success = NativeMethods.DeviceIoControlAnyObjectGetSet(safeHandle, controlCode, anyObject, (uint) bufferSize, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
-            
+
 
             if (success)
                return safeBuffer;
 
 
-            if (lastError == Win32Errors.ERROR_INVALID_FUNCTION || lastError == Win32Errors.ERROR_NOT_READY || lastError == Win32Errors.ERROR_INVALID_PARAMETER)
-               return null;
+            using (safeBuffer)
+            {
+               if (lastError == Win32Errors.ERROR_NOT_READY ||
 
+                   // Dynamic disk.
+                   lastError == Win32Errors.ERROR_INVALID_FUNCTION ||
+
+                   // Request device number from a DeviceGuid.Image device.
+                   lastError == Win32Errors.ERROR_NOT_SUPPORTED)
+
+                  return null;
+            }
 
             bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, pathForException);
          }

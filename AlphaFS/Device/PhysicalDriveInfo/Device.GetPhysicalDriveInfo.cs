@@ -39,9 +39,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///  <exception cref="ArgumentNullException"/>
       ///  <exception cref="NotSupportedException"/>
       /// <param name="devicePath">
-      ///    A drive path such as: "C", "C:" or "C:\".
-      ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
-      ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
+      /// <para>A drive path such as: "C", "C:" or "C:\".</para>
+      /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk&...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
       /// </param>
       [SecurityCritical]
       public static PhysicalDriveInfo GetPhysicalDriveInfo(string devicePath)
@@ -97,9 +97,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///  <exception cref="Exception"/>
       /// <param name="isElevated"><see langword="true"/> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="devicePath">
-      ///    A drive path such as: "C", "C:" or "C:\".
-      ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
-      ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
+      /// <para>A drive path such as: "C", "C:" or "C:\".</para>
+      /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk&...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
       /// </param>
       /// <param name="storageDeviceInfo">A <see cref="StorageDeviceInfo"/> instance.</param>
       /// <param name="deviceInfo">A <see cref="DeviceInfo"/> instance.</param>

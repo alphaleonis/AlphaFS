@@ -29,23 +29,33 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-      /// <summary>Opens a physical device, such as: "\\.\PhysicalDrive0" or "\\.\C:" for access.</summary>
+      /// <summary>Opens a physical disk, volume/logical drive for read access.</summary>
       /// <returns>A <see cref="SafeFileHandle"/> instance.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="path">The path to the physical device, such as: "\\.\PhysicalDrive0".</param>
+      /// <param name="devicePath">
+      /// <para>A drive path such as: "C", "C:" or "C:\".</para>
+      /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
+      /// </param>
       /// <param name="fileSystemRights">If no elevated access is needed to access the physical device, specify 0 for this parameter.</param>
       [SecurityCritical]
-      public static SafeFileHandle OpenPhysicalDrive(string path, FileSystemRights fileSystemRights)
+      public static SafeFileHandle OpenPhysicalDrive(string devicePath, FileSystemRights fileSystemRights)
       {
-         // fileSystemRights: If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes
+         // fileSystemRights: If this parameter is 0 (FILE_ANY_ACCESS), the application can query certain metadata such as file, directory, or device attributes
          // without accessing that file or device, even if GENERIC_READ access would have been denied.
          // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
+         //
+         //
+         // When opening a volume or removable media drive (for example, a floppy disk drive or flash memory thumb drive), the lpFileName string should be the following form: "\\.\X:".
+         // Do not use a trailing backslash (\), which indicates the root directory of a drive.
+         //
+         // When opening a volume or floppy disk, the dwShareMode parameter must have the FILE_SHARE_WRITE flag.
 
 
-         return File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, FileMode.Open, fileSystemRights, FileShare.ReadWrite, false, false, PathFormat.LongFullPath);
+         return File.CreateFileCore(null, devicePath, ExtendedFileAttributes.Normal | ExtendedFileAttributes.NoBuffering, null, FileMode.Open, fileSystemRights, FileShare.ReadWrite, false, false, PathFormat.LongFullPath);
       }
    }
 }

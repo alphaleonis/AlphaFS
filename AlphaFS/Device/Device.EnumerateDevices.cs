@@ -193,7 +193,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          var success = NativeMethods.SetupDiGetDeviceProperty(safeHandle, ref infoData, ref NativeMethods.DEVPROPKEYS.DeviceBusReportedDeviceDesc, ref propertyType, descriptionBuffer, descriptionBuffer.Length, ref requiredSize, 0);
 
-         var lastError = Marshal.GetLastWin32Error();
+         Marshal.GetLastWin32Error();
 
          if (success)
          {

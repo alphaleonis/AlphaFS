@@ -20,16 +20,14 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides access to GPT partition information of a storage device.</summary>
-   [Serializable]
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt"), Serializable]
    [SecurityCritical]
    public sealed class StorageGptPartitionInfo
    {
@@ -37,7 +35,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       private ulong _partitionLength;
       private ulong _startingOffset;
-      private ulong _startingUsableOffset;
       private static PartitionType[] _partitionTypes;
 
       #endregion // Private Fields
@@ -71,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          var gptPartition = partition.Gpt;
          
-         Attributes = (PartitionAttributes) gptPartition.Attributes;
+         Attributes = (EfiPartitionAttributes) gptPartition.Attributes;
 
          
 
@@ -92,10 +89,10 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       #region Properties
-      
+
 
       /// <summary>The Extensible Firmware Interface (EFI) attributes of the partition.</summary>
-      public PartitionAttributes Attributes { get; internal set; }
+      public EfiPartitionAttributes Attributes { get; internal set; }
 
 
       /// <summary>The description of the partition.</summary>

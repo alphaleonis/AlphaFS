@@ -87,55 +87,5 @@ namespace Alphaleonis.Win32.Filesystem
 
          return structure;
       }
-
-
-      //[SecurityCritical]
-      //internal static object GetDriveStuff(string logicalDrive)
-      //{
-      //   using (var safeHandle = OpenPhysicalDrive(logicalDrive, FileSystemRights.Read | FileSystemRights.Write))
-      //   {
-      //      // DRIVE_LAYOUT_INFORMATION_EX
-
-      //      using (var safeBuffer = GetDeviceIoData<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, logicalDrive))
-      //      {
-      //         if (null != safeBuffer)
-      //         {
-      //            var structure = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>(0);
-
-      //            return structure;
-      //         }
-      //      }
-
-      //      return null;
-
-
-      //      // DISK_GEOMETRY_EX
-
-      //      using (var safeBuffer = GetDeviceIoData<NativeMethods.DISK_GEOMETRY_EX>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, logicalDrive))
-      //      {
-      //         if (null != safeBuffer)
-      //         {
-      //            var structure = safeBuffer.PtrToStructure<NativeMethods.DISK_GEOMETRY_EX>(0);
-
-      //            //return structure;
-      //         }
-      //      }
-
-
-      //      // PARTITION_INFORMATION_EX
-
-      //      using (var safeBuffer = GetDeviceIoData<NativeMethods.PARTITION_INFORMATION_EX>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_PARTITION_INFO_EX, logicalDrive))
-      //      {
-      //         if (null != safeBuffer)
-      //         {
-      //            var structure = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(0);
-
-      //            //return structure;
-      //         }
-      //      }
-      //   }
-
-      //   return null;
-      //}
    }
 }

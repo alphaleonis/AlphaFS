@@ -25,8 +25,9 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
+      /// <summary>The Extensible Firmware Interface (EFI) partition attributes.</summary>
       [Flags]
-      public enum PartitionAttributes : ulong
+      internal enum EfiPartitionAttributes : ulong
       {
          /// <summary>If this attribute is set, the partition is required by a Computer to function properly.</summary>
          GPT_ATTRIBUTE_PLATFORM_REQUIRED = 0x0000000000000001,

@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
       {
          //var hw = new Hardware();
 
-         IOCtl.Main();
+         //IOCtl.Main();
       }
    }
 }

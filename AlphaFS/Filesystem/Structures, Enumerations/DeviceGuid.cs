@@ -250,11 +250,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The GUID_DEVINTERFACE_WPD device interface class is defined for Windows Portable Devices (WPD).</summary>
       /// <remarks>Available in Windows Vista, Windows XP, and later versions of Windows.</remarks>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wpd")]
       [Description("6AC27878-A6FA-4155-BA85-F98F491D4F33")]
       Wpd,
 
       /// <summary>The GUID_DEVINTERFACE_WPD_PRIVATE device interface class is defined for specialized Windows Portable Devices (WPD).</summary>
       /// <remarks>Available in Windows Vista, Windows XP, and later versions of Windows.</remarks>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wpd")]
       [Description("BA0C718F-4DED-49B7-BDD3-FABE28661211")]
       WpdPrivate
 

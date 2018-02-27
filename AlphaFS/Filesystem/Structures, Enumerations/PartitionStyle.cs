@@ -19,6 +19,8 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Represents the format of a partition.</summary>
@@ -29,9 +31,11 @@ namespace Alphaleonis.Win32.Filesystem
    public enum PartitionStyle
    {
       /// <summary>Master boot record (MBR) format. This corresponds to standard AT-style MBR partitions.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mbr")]
       Mbr = NativeMethods.PARTITION_STYLE.PARTITION_STYLE_MBR,
 
       /// <summary>GUID Partition Table (GPT) format.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
       Gpt = NativeMethods.PARTITION_STYLE.PARTITION_STYLE_GPT,
 
       /// <summary>Partition not formatted in either of the recognized formats; MBR or GPT.</summary>

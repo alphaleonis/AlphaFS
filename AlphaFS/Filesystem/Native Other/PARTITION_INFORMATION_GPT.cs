@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>The Extensible Firmware Interface (EFI) attributes of the partition.</summary>
          [FieldOffset(32)] [MarshalAs(UnmanagedType.U8)]
-         public readonly PartitionAttributes Attributes;
+         public readonly EfiPartitionAttributes Attributes;
 
          /// <summary>A wide-character string that describes the partition.</summary>
          [FieldOffset(40)] [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 36)]

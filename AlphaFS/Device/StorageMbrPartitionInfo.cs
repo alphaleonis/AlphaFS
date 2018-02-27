@@ -20,13 +20,14 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides access to MBR partition information of a storage device.</summary>
-   [Serializable]
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mbr"), Serializable]
    [SecurityCritical]
    public sealed class StorageMbrPartitionInfo
    {
@@ -69,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          RecognizedPartition = mbrPartition.RecognizedPartition;
 
-         PartitionType = mbrPartition.PartitionType;
+         DiskPartitionType = (DiskPartitionType) mbrPartition.PartitionType;
       }
 
       #endregion // Constructors
@@ -79,6 +80,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary><see langword="true"/> if the partition is a boot partition.</summary>
       public bool BootIndicator { get; internal set; }
+
+
+      /// <summary>The type of the partition.</summary>
+      public DiskPartitionType DiskPartitionType { get; internal set; }
 
 
       /// <summary>The number of hidden sectors to be allocated when the partition table is created.</summary>
@@ -115,11 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The storage partition number, starting at 1.</summary>
       public int PartitionNumber { get; internal set; }
-
-
-      /// <summary>The type of the partition.</summary>
-      public DiskPartitionTypes PartitionType { get; internal set; }
-
+      
 
       /// <summary><see langword="true"/> if the partition is of a recognized type.</summary>
       public bool RecognizedPartition { get; internal set; }
@@ -158,7 +159,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         return string.Format(CultureInfo.CurrentCulture, "BootIndicator {0}, Type: {1}, RecognizedPartition: {2}", BootIndicator.ToString(), PartitionType.ToString(), RecognizedPartition.ToString()).Trim();
+         return string.Format(CultureInfo.CurrentCulture, "BootIndicator {0}, Type: {1}, RecognizedPartition: {2}", BootIndicator.ToString(), DiskPartitionType.ToString(), RecognizedPartition.ToString()).Trim();
       }
 
 
@@ -176,7 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
                 other.BootIndicator == BootIndicator &&
                 other.HiddenSectors == HiddenSectors &&
                 other.RecognizedPartition == RecognizedPartition &&
-                other.PartitionType == PartitionType;
+                other.DiskPartitionType == DiskPartitionType;
       }
 
 
@@ -186,7 +187,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          unchecked
          {
-            return BootIndicator.GetHashCode() + HiddenSectors.GetHashCode() + RecognizedPartition.GetHashCode() + PartitionType.GetHashCode();
+            return BootIndicator.GetHashCode() + HiddenSectors.GetHashCode() + RecognizedPartition.GetHashCode() + DiskPartitionType.GetHashCode();
          }
       }
 

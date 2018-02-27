@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security.AccessControl;
 using Microsoft.Win32.SafeHandles;
@@ -37,9 +38,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///  <exception cref="NotSupportedException"/>
       ///  <exception cref="Exception"/>
       /// <param name="devicePath">
-      ///    A drive path such as: "C", "C:" or "C:\".
-      ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
-      ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
+      /// <para>A drive path such as: "C", "C:" or "C:\".</para>
+      /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk&...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
       /// </param>
       public static StorageAdapterInfo GetStorageAdapterInfo(string devicePath)
       {
@@ -78,6 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       private static StorageAdapterInfo GetStorageAdapterInfoNative(SafeFileHandle safeHandle, string pathToDevice)
       {
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
@@ -94,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
          
          // Get storage adapter info.
 
-         using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, NativeMethods.DefaultFileBufferSize / 4))
+         using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, NativeMethods.DefaultFileBufferSize / 8))
          {
             if (null == safeBuffer)
             {
@@ -123,13 +125,10 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
 
-            using (safeBuffer)
-            {
-               if (isRetry && !safeHandleRetry.IsClosed)
-                  safeHandleRetry.Close();
+            if (isRetry && !safeHandleRetry.IsClosed)
+               safeHandleRetry.Close();
 
-               return new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>(0));
-            }
+            return new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>(0));
          }
       }
    }
