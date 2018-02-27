@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       public StorageBusType BusType { get; internal set; }
 
 
-      /// <summary>Indicates if the physical drive supports multiple outstanding commands (SCSI tagged queuing or equivalent). When false the physical drive does not support SCSI-tagged queuing or the equivalent.</summary>
+      /// <summary>Indicates if the physical disk supports multiple outstanding commands (SCSI tagged queuing or equivalent). When false the physical disk does not support SCSI-tagged queuing or the equivalent.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Queueing")]
       public bool CommandQueueing { get; internal set; }
       
@@ -79,34 +79,34 @@ namespace Alphaleonis.Win32.Filesystem
       public int PartitionNumber { get; internal set; }
 
 
-      /// <summary>The product ID of the physical drive.</summary>
+      /// <summary>The product ID of the physical disk.</summary>
       public string ProductId { get; internal set; }
 
 
-      /// <summary>The product revision of the physical drive.</summary>
+      /// <summary>The product revision of the physical disk.</summary>
       public string ProductRevision { get; internal set; }
 
 
-      /// <summary>Indicates if the physical drive is removable. When true the physical drive's media (if any) is removable. If the device has no media, this member should be ignored. When false the physical drive's media is not removable.</summary>
+      /// <summary>Indicates if the physical disk is removable. When true the physical disk's media (if any) is removable. If the device has no media, this member should be ignored. When false the physical disk's media is not removable.</summary>
       public bool RemovableMedia { get; internal set; }
 
 
-      /// <summary>The serial number of the physical drive. If the physical drive has no serial number or the session is not elevated -1 is returned.</summary>
+      /// <summary>The serial number of the physical disk. If the physical disk has no serial number or the session is not elevated -1 is returned.</summary>
       public string SerialNumber { get; internal set; }
 
 
-      /// <summary>The total size of the physical drive.</summary>
+      /// <summary>The total size of the physical disk.</summary>
       public long TotalSize { get; internal set; }
 
 
-      /// <summary>The total size of the physical drive, formatted as a unit size.</summary>
+      /// <summary>The total size of the physical disk, formatted as a unit size.</summary>
       public string TotalSizeUnitSize
       {
          get { return Utils.UnitSizeToText(TotalSize); }
       }
 
 
-      /// <summary>The Vendor ID of the physical drive.</summary>
+      /// <summary>The Vendor ID of the physical disk.</summary>
       public string VendorId { get; internal set; }
 
       #endregion // Properties

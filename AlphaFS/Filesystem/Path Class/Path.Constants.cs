@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Win32 Device Namespace. The "\\.\"prefix is how to access physical disks and volumes, without going through the file system, if the API supports this type of access.</summary>
       public static readonly string LogicalDrivePrefix = string.Format(CultureInfo.InvariantCulture, "{0}{0}.{0}", DirectorySeparatorChar);
 
-      /// <summary>[AlphaFS] PhysicalDrivePrefix = "\\.\PhysicalDrive" Provides standard physical drive prefix.</summary>
+      /// <summary>[AlphaFS] PhysicalDrivePrefix = "\\.\PhysicalDrive" Provides standard physical disk prefix.</summary>
       public static readonly string PhysicalDrivePrefix = string.Format(CultureInfo.InvariantCulture, "{0}PhysicalDrive", LogicalDrivePrefix);
 
 

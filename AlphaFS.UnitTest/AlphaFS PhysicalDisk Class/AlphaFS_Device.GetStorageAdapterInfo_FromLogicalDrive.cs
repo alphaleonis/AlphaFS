@@ -24,15 +24,19 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_PhysicalDriveInfoTest
+   public partial class AlphaFS_PhysicalDiskInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetStorageDeviceInfo_FromLogicalDrive_Success()
+      public void AlphaFS_Device_GetStorageAdapterInfo_FromLogicalDrive_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
+
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
 
          var gotDisk = false;
          var driveCount = 0;
@@ -40,26 +44,17 @@ namespace AlphaFS.UnitTest
 
          foreach (var drive in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
          {
-            var storageDeviceInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageDeviceInfo(drive.Name);
+            var storageAdapterInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageAdapterInfo(drive.Name);
 
             Console.WriteLine();
-            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, drive.Name, storageDeviceInfo.ToString());
+            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, drive.Name, storageAdapterInfo.ToString());
 
-            UnitTestConstants.Dump(storageDeviceInfo, -17);
-
-
-            Assert.IsNotNull(storageDeviceInfo);
+            UnitTestConstants.Dump(storageAdapterInfo, -28);
 
 
-            if (drive.DriveType == System.IO.DriveType.Fixed)
-            {
-               gotDisk = true;
-               Assert.AreEqual(Alphaleonis.Win32.Filesystem.StorageDeviceType.Disk, storageDeviceInfo.DeviceType);
-            }
+            Assert.IsNotNull(storageAdapterInfo);
 
-
-            if (drive.DriveType == System.IO.DriveType.CDRom)
-               Assert.AreEqual(Alphaleonis.Win32.Filesystem.StorageDeviceType.CDRom, storageDeviceInfo.DeviceType);
+            gotDisk = true;
          }
 
 

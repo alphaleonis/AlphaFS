@@ -24,13 +24,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_PhysicalDriveInfoTest
+   public partial class AlphaFS_PhysicalDiskInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetPhysicalDriveInfo_FromDevicePath_Success()
+      public void AlphaFS_Device_GetPhysicalDiskInfo_FromDevicePath_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -39,35 +39,35 @@ namespace AlphaFS.UnitTest
 
          var sourceDrive = UnitTestConstants.SysDrive;
          var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive);
-         var devicePath = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDriveInfo(sourceDrive).DevicePath;
+         var devicePath = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDiskInfo(sourceDrive).DevicePath;
 
-         var pDrive = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDriveInfo(devicePath);
+         var pDisk = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDiskInfo(devicePath);
 
 
          Console.WriteLine();
-         Console.WriteLine("#{0:000}\tInput Device Path: [{1}]\t\t{2}\t\t{3}", ++deviceCount, devicePath, pDrive.StorageAdapterInfo.ToString(), pDrive.StorageDeviceInfo.ToString());
+         Console.WriteLine("#{0:000}\tInput Device Path: [{1}]\t\t{2}\t\t{3}", ++deviceCount, devicePath, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
 
 
-         UnitTestConstants.Dump(pDrive, -24);
+         UnitTestConstants.Dump(pDisk, -24);
 
-         UnitTestConstants.Dump(pDrive.StorageAdapterInfo, -28, true);
+         UnitTestConstants.Dump(pDisk.StorageAdapterInfo, -28, true);
 
-         UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -17, true);
+         UnitTestConstants.Dump(pDisk.StorageDeviceInfo, -17, true);
          Console.WriteLine();
 
 
-         Assert.IsNotNull(pDrive);
+         Assert.IsNotNull(pDisk);
          
 
-         Assert.IsNotNull(pDrive.VolumeGuids);
-         Assert.IsTrue(pDrive.VolumeGuids.Contains(sourceVolume));
+         Assert.IsNotNull(pDisk.VolumeGuids);
+         Assert.IsTrue(pDisk.VolumeGuids.Contains(sourceVolume));
 
 
-         Assert.IsNotNull(pDrive.LogicalDrives);
+         Assert.IsNotNull(pDisk.LogicalDrives);
 
-         Assert.IsTrue(pDrive.LogicalDrives.Contains(sourceDrive));
+         Assert.IsTrue(pDisk.LogicalDrives.Contains(sourceDrive));
 
-         Assert.IsTrue(pDrive.ContainsVolume(sourceDrive[0].ToString()));
+         Assert.IsTrue(pDisk.ContainsVolume(sourceDrive[0].ToString()));
       }
    }
 }

@@ -29,20 +29,21 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-      /// <summary>Opens a physical disk, volume/logical drive for read access.</summary>
+      /// <summary>Opens a physical disk or volume/logical drive for read access.</summary>
       /// <returns>A <see cref="SafeFileHandle"/> instance.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
       /// <param name="devicePath">
+      /// <para>A disk path such as: "\\.\PhysicalDrive0"</para>
       /// <para>A drive path such as: "C", "C:" or "C:\".</para>
       /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
       /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
       /// </param>
-      /// <param name="fileSystemRights">If no elevated access is needed to access the physical device, specify 0 for this parameter.</param>
+      /// <param name="fileSystemRights">If no elevated access is needed to access the physical disk or volume/logical drive, specify 0 for this parameter.</param>
       [SecurityCritical]
-      public static SafeFileHandle OpenPhysicalDrive(string devicePath, FileSystemRights fileSystemRights)
+      public static SafeFileHandle OpenPhysicalDisk(string devicePath, FileSystemRights fileSystemRights)
       {
          // fileSystemRights: If this parameter is 0 (FILE_ANY_ACCESS), the application can query certain metadata such as file, directory, or device attributes
          // without accessing that file or device, even if GENERIC_READ access would have been denied.

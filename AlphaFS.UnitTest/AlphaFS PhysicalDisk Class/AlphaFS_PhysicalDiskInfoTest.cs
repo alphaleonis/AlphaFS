@@ -19,46 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_PhysicalDriveInfoTest
+   /// <summary>This is a test class for PhysicalDiskInfo and is intended to contain all PhysicalDiskInfo Unit Tests.</summary>
+   [TestClass]
+   public partial class AlphaFS_PhysicalDiskInfoTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_Device_GetStorageAdapterInfo_FromLogicalDrive_Success()
-      {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-
-         var gotDisk = false;
-         var driveCount = 0;
-         
-
-         foreach (var drive in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
-         {
-            var storageAdapterInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageAdapterInfo(drive.Name);
-
-            Console.WriteLine();
-            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, drive.Name, storageAdapterInfo.ToString());
-
-            UnitTestConstants.Dump(storageAdapterInfo, -28);
-
-
-            Assert.IsNotNull(storageAdapterInfo);
-
-            gotDisk = true;
-         }
-
-
-         Assert.IsTrue(gotDisk);
-      }
    }
 }

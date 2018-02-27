@@ -19,13 +19,47 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for PhysicalDriveInfo and is intended to contain all PhysicalDriveInfo Unit Tests.</summary>
-   [TestClass]
-   public partial class AlphaFS_PhysicalDriveInfoTest
+   public partial class AlphaFS_PhysicalDiskInfoTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
+      [TestMethod]
+      public void AlphaFS_Device_GetPhysicalDiskInfo_FromLogicalDrive_Success()
+      {
+         UnitTestConstants.PrintUnitTestHeader(false);
+
+
+         var driveCount = 0;
+
+         // Use lowercase drive letter because .Contains() is case sensitive by default.
+         var sourceDrive = UnitTestConstants.SysDrive.ToLowerInvariant() + System.IO.Path.DirectorySeparatorChar;
+
+         var pDisk = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDiskInfo(sourceDrive);
+
+         Console.WriteLine();
+         Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}\t\t{3}", ++driveCount, sourceDrive, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
+
+
+         UnitTestConstants.Dump(pDisk, -24);
+
+         UnitTestConstants.Dump(pDisk.StorageAdapterInfo, -28, true);
+
+         UnitTestConstants.Dump(pDisk.StorageDeviceInfo, -17, true);
+         Console.WriteLine();
+
+
+         Assert.IsNotNull(pDisk);
+
+
+         Assert.IsNotNull(pDisk.LogicalDrives);
+         //Assert.IsTrue(pDisk.LogicalDrives.Contains(sourceDrive));
+         Assert.IsTrue(pDisk.ContainsVolume(sourceDrive));
+      }
    }
 }

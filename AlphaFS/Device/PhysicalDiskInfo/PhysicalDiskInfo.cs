@@ -26,23 +26,23 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides access to information of a physical drive.</summary>
+   /// <summary>Provides access to information of a physical disk.</summary>
    [Serializable]
    [SecurityCritical]
-   public sealed class PhysicalDriveInfo
+   public sealed class PhysicalDiskInfo
    {
       #region Constructors
 
-      /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      public PhysicalDriveInfo()
+      /// <summary>Initializes a PhysicalDiskInfo instance.</summary>
+      public PhysicalDiskInfo()
       {
       }
 
 
-      /// <summary>Initializes a PhysicalDriveInfo instance.</summary>
-      public PhysicalDriveInfo(PhysicalDriveInfo physicalDriveInfo)
+      /// <summary>Initializes a PhysicalDiskInfo instance.</summary>
+      public PhysicalDiskInfo(PhysicalDiskInfo physicalDiskInfo)
       {
-         CopyTo(physicalDriveInfo, this);
+         CopyTo(physicalDiskInfo, this);
       }
 
       #endregion // Constructors
@@ -63,15 +63,15 @@ namespace Alphaleonis.Win32.Filesystem
       public string DevicePath { get; internal set; }
 
 
-      /// <summary>The logical drives that are located on the physical drive.</summary>
+      /// <summary>The logical drives that are located on the physical disk.</summary>
       public Collection<string> LogicalDrives { get; internal set; }
 
       
-      /// <summary>The "FriendlyName" of the physical drive.</summary>
+      /// <summary>The "FriendlyName" of the physical disk.</summary>
       public string Name { get; internal set; }
 
       
-      /// <summary>The partition index numbers that are located on the physical drive.</summary>
+      /// <summary>The partition index numbers that are located on the physical disk.</summary>
       public Collection<int> PartitionIndexes { get; internal set; }
 
 
@@ -91,11 +91,11 @@ namespace Alphaleonis.Win32.Filesystem
       public StoragePartitionInfo StoragePartitionInfo { get; internal set; }
 
 
-      /// <summary>A collection of volume GUID strings of volumes that are located on the physical drive.</summary>
+      /// <summary>A collection of volume GUID strings of volumes that are located on the physical disk.</summary>
       public Collection<string> VolumeGuids { get; internal set; }
 
 
-      ///// <summary>A collection of volume label strings of volumes that are located on the physical drive.</summary>
+      ///// <summary>A collection of volume label strings of volumes that are located on the physical disk.</summary>
       //public Collection<string> VolumeLabels { get; internal set; }
 
       #endregion // Properties
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Methods
 
-      /// <summary>Checks if the logical drive or volume is located on the physical drive.
+      /// <summary>Checks if the volume or logical drive or is located on the physical disk.
       /// <para>A drive path such as: "C", "C:" or "C:\".</para>
       /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
       /// </summary>
@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Returns the "FriendlyName" of the physical drive.</summary>
+      /// <summary>Returns the "FriendlyName" of the physical disk.</summary>
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
@@ -144,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (null == obj || GetType() != obj.GetType())
             return false;
 
-         var other = obj as PhysicalDriveInfo;
+         var other = obj as PhysicalDiskInfo;
 
          return null != other && null != other.DevicePath && null != other.StorageDeviceInfo &&
 
@@ -168,7 +168,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="left">A.</param>
       /// <param name="right">B.</param>
       /// <returns>The result of the operator.</returns>
-      public static bool operator ==(PhysicalDriveInfo left, PhysicalDriveInfo right)
+      public static bool operator ==(PhysicalDiskInfo left, PhysicalDiskInfo right)
       {
          return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
       }
@@ -178,7 +178,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="left">A.</param>
       /// <param name="right">B.</param>
       /// <returns>The result of the operator.</returns>
-      public static bool operator !=(PhysicalDriveInfo left, PhysicalDriveInfo right)
+      public static bool operator !=(PhysicalDiskInfo left, PhysicalDiskInfo right)
       {
          return !(left == right);
       }
@@ -186,7 +186,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       private static void CopyTo<T>(T source, T destination)
       {
-         // Properties listed here should not be overwritten by the physical drive template.
+         // Properties listed here should not be overwritten by the physical disk template.
 
          //var excludedProps = new[] {"PartitionNumber"};
 

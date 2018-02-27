@@ -38,6 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///  <exception cref="NotSupportedException"/>
       ///  <exception cref="Exception"/>
       /// <param name="devicePath">
+      /// <para>A disk path such as: "\\.\PhysicalDrive0"</para>
       /// <para>A drive path such as: "C", "C:" or "C:\".</para>
       /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
       /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
@@ -81,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Get storage device info.
 
-         using (var safeHandle = OpenPhysicalDrive(pathToDevice, NativeMethods.FILE_ANY_ACCESS))
+         using (var safeHandle = OpenPhysicalDisk(pathToDevice, NativeMethods.FILE_ANY_ACCESS))
          {
             var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath);
             
@@ -110,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (null != storageDeviceInfo && isElevated)
          {
-            using (var safeHandle = OpenPhysicalDrive(pathToDevice, FileSystemRights.Read))
+            using (var safeHandle = OpenPhysicalDisk(pathToDevice, FileSystemRights.Read))
 
                storageDeviceInfo = GetStorageDeviceInfoNative(safeHandle, pathToDevice, storageDeviceInfo);
          }
@@ -120,7 +121,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Sets the physical drive properties such as FriendlyName, device size and serial number.</summary>
+      /// <summary>Sets the physical disk properties such as FriendlyName, device size and serial number.</summary>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       private static StorageDeviceInfo GetStorageDeviceInfoNative(SafeFileHandle safeHandle, string pathToDevice, StorageDeviceInfo storageDeviceInfo)
       {
@@ -154,7 +155,7 @@ namespace Alphaleonis.Win32.Filesystem
                   pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
 
 
-                  safeHandleRetry = OpenPhysicalDrive(pathToDevice, FileSystemRights.Read);
+                  safeHandleRetry = OpenPhysicalDisk(pathToDevice, FileSystemRights.Read);
 
                   isRetry = null != safeHandleRetry && !safeHandleRetry.IsClosed && !safeHandleRetry.IsInvalid;
                }

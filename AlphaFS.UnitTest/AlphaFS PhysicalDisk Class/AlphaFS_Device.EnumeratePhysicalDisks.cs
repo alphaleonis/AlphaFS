@@ -20,51 +20,43 @@
  */
 
 using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_PhysicalDriveInfoTest
+   public partial class AlphaFS_PhysicalDiskInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetPhysicalDriveInfo_FromVolume_Success()
+      public void AlphaFS_Device_EnumeratePhysicalDisks_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var volumeCount = 0;
+         var pDriveCount = 0;
+         var pDrives = Alphaleonis.Win32.Filesystem.Device.EnumeratePhysicalDisks().OrderBy(pDiskInfo => pDiskInfo.StorageDeviceInfo.DeviceNumber).ThenBy(pDiskInfo => pDiskInfo.StorageDeviceInfo.PartitionNumber).ToArray();
 
-         // Use lowercase drive letter because .Contains() is case sensitive by default.
-         var sourceDrive = UnitTestConstants.SysDrive.ToLowerInvariant();
+         foreach (var pDisk in pDrives)
+         {
+            Console.WriteLine();
+            Console.WriteLine("#{0:000}\tPhysical Disk: [{1}]\t\t{2}\t\t{3}", ++pDriveCount, pDisk.StorageDeviceInfo.DeviceNumber, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
 
-         // Use uppercase volume guid because .Contains() is case sensitive by default.
-         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive).ToUpperInvariant();
+            UnitTestConstants.Dump(pDisk, -24);
 
+            UnitTestConstants.Dump(pDisk.StorageAdapterInfo, -28, true);
 
-         var pDrive = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDriveInfo(sourceVolume);
+            UnitTestConstants.Dump(pDisk.StorageDeviceInfo, -17, true);
 
+            UnitTestConstants.Dump(pDisk.StoragePartitionInfo, -17, true);
 
-         Console.WriteLine();
-         Console.WriteLine("#{0:000}\tInput Volume: [{1}]\t\t{2}\t\t{3}", ++volumeCount, sourceVolume, pDrive.StorageAdapterInfo.ToString(), pDrive.StorageDeviceInfo.ToString());
-
-
-         UnitTestConstants.Dump(pDrive, -24);
-
-         UnitTestConstants.Dump(pDrive.StorageAdapterInfo, -28, true);
-
-         UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -17, true);
-         Console.WriteLine();
+            Console.WriteLine();
+         }
 
 
-         Assert.IsNotNull(pDrive);
-
-
-         Assert.IsNotNull(pDrive.VolumeGuids);
-         //Assert.IsTrue(pDrive.VolumeGuids.Contains(sourceVolume));
-         Assert.IsTrue(pDrive.ContainsVolume(sourceVolume));
+         Assert.IsTrue(pDrives.Length > 0, "No physical disks enumerated, but it is expected.");
       }
    }
 }

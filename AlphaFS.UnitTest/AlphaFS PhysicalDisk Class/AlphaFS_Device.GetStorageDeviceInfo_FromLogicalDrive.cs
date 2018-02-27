@@ -24,42 +24,46 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_PhysicalDriveInfoTest
+   public partial class AlphaFS_PhysicalDiskInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetPhysicalDriveInfo_FromLogicalDrive_Success()
+      public void AlphaFS_Device_GetStorageDeviceInfo_FromLogicalDrive_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-
+         var gotDisk = false;
          var driveCount = 0;
+         
 
-         // Use lowercase drive letter because .Contains() is case sensitive by default.
-         var sourceDrive = UnitTestConstants.SysDrive.ToLowerInvariant() + System.IO.Path.DirectorySeparatorChar;
+         foreach (var drive in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
+         {
+            var storageDeviceInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageDeviceInfo(drive.Name);
 
-         var pDrive = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDriveInfo(sourceDrive);
+            Console.WriteLine();
+            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, drive.Name, storageDeviceInfo.ToString());
 
-         Console.WriteLine();
-         Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}\t\t{3}", ++driveCount, sourceDrive, pDrive.StorageAdapterInfo.ToString(), pDrive.StorageDeviceInfo.ToString());
-
-
-         UnitTestConstants.Dump(pDrive, -24);
-
-         UnitTestConstants.Dump(pDrive.StorageAdapterInfo, -28, true);
-
-         UnitTestConstants.Dump(pDrive.StorageDeviceInfo, -17, true);
-         Console.WriteLine();
+            UnitTestConstants.Dump(storageDeviceInfo, -17);
 
 
-         Assert.IsNotNull(pDrive);
+            Assert.IsNotNull(storageDeviceInfo);
 
 
-         Assert.IsNotNull(pDrive.LogicalDrives);
-         //Assert.IsTrue(pDrive.LogicalDrives.Contains(sourceDrive));
-         Assert.IsTrue(pDrive.ContainsVolume(sourceDrive));
+            if (drive.DriveType == System.IO.DriveType.Fixed)
+            {
+               gotDisk = true;
+               Assert.AreEqual(Alphaleonis.Win32.Filesystem.StorageDeviceType.Disk, storageDeviceInfo.DeviceType);
+            }
+
+
+            if (drive.DriveType == System.IO.DriveType.CDRom)
+               Assert.AreEqual(Alphaleonis.Win32.Filesystem.StorageDeviceType.CDRom, storageDeviceInfo.DeviceType);
+         }
+
+
+         Assert.IsTrue(gotDisk);
       }
    }
 }
