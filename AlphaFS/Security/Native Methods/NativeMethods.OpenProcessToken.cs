@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -34,8 +35,9 @@ namespace Alphaleonis.Win32.Security
       /// </returns>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
-      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [SuppressUnmanagedCodeSecurity]
+      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool OpenProcessToken(IntPtr processHandle, [MarshalAs(UnmanagedType.U4)] TOKEN desiredAccess, out SafeTokenHandle tokenHandle);
    }
