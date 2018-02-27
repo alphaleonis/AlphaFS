@@ -221,7 +221,6 @@
     <Compile Include="Device\Junctions, Links\Device.GetLinkTarget.cs" />
     <Compile Include="Device\Junctions, Links\Device.DeleteDirectoryJunction.cs" />
     <Compile Include="Device\Junctions, Links\Device.CreateDirectoryJunction.cs" />
-    <Compile Include="Device\Test2.cs" />
     <Compile Include="Device\Volume\Volume.DeleteDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.QueryDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.GetDriveFormat.cs" />
@@ -711,7 +710,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

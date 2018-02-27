@@ -22,7 +22,7 @@
 using System;
 
 #if !NET35
-
+using System.Threading;
 #endif
 
 namespace Alphaleonis.Win32.Filesystem

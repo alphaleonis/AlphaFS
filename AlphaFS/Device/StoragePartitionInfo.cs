@@ -77,8 +77,10 @@ namespace Alphaleonis.Win32.Filesystem
                
                GptPartitionInfo = new Collection<StorageGptPartitionInfo>();
 
+               var partitionTypes = Utils.EnumToArray<PartitionType>();
+
                for (var i = 0; i <= PartitionCount - 1; i++)
-                  GptPartitionInfo.Add(new StorageGptPartitionInfo(partitions[i]));
+                  GptPartitionInfo.Add(new StorageGptPartitionInfo(partitions[i], partitionTypes));
                
                break;
 

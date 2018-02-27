@@ -20,34 +20,35 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>The Extensible Firmware Interface (EFI) partition attributes.</summary>
+   [SuppressMessage("Microsoft.Usage", "CA2217:DoNotMarkEnumsWithFlags")]
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Efi")]
    [Flags]
-   public enum EfiPartitionAttributes : ulong
+   public enum EfiPartitionAttributes
    {
       /// <summary>None.</summary>
       None = 0,
 
-      /// <summary>If this attribute is set, the partition is required by a Computer to function properly.</summary>
-      PlatformRequired = NativeMethods.EfiPartitionAttributes.GPT_ATTRIBUTE_PLATFORM_REQUIRED,
-
-      /// <summary>
-      /// 
-      /// </summary>
+      /// <summary>If this attribute is set, the partition is an MBR partition.</summary>
       BiosBoot = 4,
 
+      /// <summary>If this attribute is set, the partition is required by a Computer to function properly.</summary>
+      PlatformRequired,
+
       /// <summary>If this attribute is set, the partition is read-only.</summary>
-      ReadOnly = NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_READ_ONLY,
+      ReadOnly,
 
       /// <summary>If this attribute is set, the partition is a shadow copy of another partition.</summary>
-      ShadowCopy = NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_SHADOW_COPY,
+      ShadowCopy,
 
       /// <summary>If this attribute is set, the partition is not detected by the Mount Manager.</summary>
-      Hidden = NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_HIDDEN,
+      Hidden,
 
       /// <summary>If this attribute is set, the partition does not receive a drive letter by default when the disk is moved to another Computer or when the disk is seen for the first time by a Computer.</summary>
-      NoDriveLetter = NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_NO_DRIVE_LETTER
+      NoDriveLetter
    }
 }

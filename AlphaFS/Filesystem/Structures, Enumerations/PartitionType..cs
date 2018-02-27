@@ -24,6 +24,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
+   /// <summary>Specifies the different types of partition GUIDs.</summary>
    public enum PartitionType
    {
       /// <summary>PARTITION_ENTRY_UNUSED_GUID: There is no partition.
@@ -84,6 +85,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>IBM General Parallel File System (GPFS) partition.</summary>
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ibm")]
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpfs")]
       [Description("37AFFC90-EF7D-4E96-91C3-2D7AE055B174")]
       IbmGpfs,
 
@@ -92,6 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       StorageSpace,
 
       /// <summary>MBR partition scheme.</summary>
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mbr")]
       [Description("024DEE41-33E7-11D3-9D69-0008C781F39F")]
       MbrScheme,
 
@@ -100,6 +104,8 @@ namespace Alphaleonis.Win32.Filesystem
       BiosBoot,
 
       /// <summary>Intel Fast Flash (iFFS) partition (for Intel Rapid Start technology).</summary>
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ffs")]
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "i")]
       [Description("D3BFE2DE-3DAF-11DF-BA40-E3A556D89593")]
       iFfs,
 

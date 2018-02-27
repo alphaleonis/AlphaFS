@@ -35,7 +35,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       private ulong _partitionLength;
       private ulong _startingOffset;
-      private static PartitionType[] _partitionTypes;
 
       #endregion // Private Fields
 
@@ -45,14 +44,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a StorageGptPartitionInfo instance.</summary>
       public StorageGptPartitionInfo()
       {
-         if (null == _partitionTypes)
-            _partitionTypes = Utils.EnumToArray<PartitionType>();
-
          PartitionNumber = -1;
       }
-      
 
-      internal StorageGptPartitionInfo(NativeMethods.PARTITION_INFORMATION_EX partition) : this()
+
+      internal StorageGptPartitionInfo(NativeMethods.PARTITION_INFORMATION_EX partition, PartitionType[] partitionTypes) : this()
       {
          _partitionLength = partition.PartitionLength;
 
@@ -61,23 +57,34 @@ namespace Alphaleonis.Win32.Filesystem
          PartitionNumber = (int) partition.PartitionNumber;
          
          RewritePartition = partition.RewritePartition;
-
-
          
-
 
          var gptPartition = partition.Gpt;
          
-         Attributes = (EfiPartitionAttributes) gptPartition.Attributes;
-
-         
-
          Description = gptPartition.Name.Trim();
 
          PartitionId = gptPartition.PartitionId;
 
 
-         foreach (var guid in _partitionTypes)
+         var attrs = gptPartition.Attributes;
+
+         if ((attrs & NativeMethods.EfiPartitionAttributes.GPT_ATTRIBUTE_PLATFORM_REQUIRED) != 0)
+            Attributes |= EfiPartitionAttributes.PlatformRequired;
+
+         if ((attrs & NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_READ_ONLY) != 0)
+            Attributes |= EfiPartitionAttributes.ReadOnly;
+
+         if ((attrs & NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_SHADOW_COPY) != 0)
+            Attributes |= EfiPartitionAttributes.ShadowCopy;
+
+         if ((attrs & NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_HIDDEN) != 0)
+            Attributes |= EfiPartitionAttributes.Hidden;
+
+         if ((attrs & NativeMethods.EfiPartitionAttributes.GPT_BASIC_DATA_ATTRIBUTE_NO_DRIVE_LETTER) != 0)
+            Attributes |= EfiPartitionAttributes.NoDriveLetter;
+
+
+         foreach (var guid in partitionTypes)
             if (gptPartition.PartitionType.Equals(new Guid(Utils.GetEnumDescription(guid))))
             {
                PartitionType = guid;
@@ -89,7 +96,6 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       #region Properties
-
 
       /// <summary>The Extensible Firmware Interface (EFI) attributes of the partition.</summary>
       public EfiPartitionAttributes Attributes { get; internal set; }
