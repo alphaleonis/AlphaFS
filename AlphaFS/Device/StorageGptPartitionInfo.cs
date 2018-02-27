@@ -66,6 +66,10 @@ namespace Alphaleonis.Win32.Filesystem
          PartitionId = gptPartition.PartitionId;
 
 
+
+
+         // Convert the native enum since it is of type ulong.
+
          var attrs = gptPartition.Attributes;
 
          if ((attrs & NativeMethods.EfiPartitionAttributes.GPT_ATTRIBUTE_PLATFORM_REQUIRED) != 0)
@@ -84,8 +88,12 @@ namespace Alphaleonis.Win32.Filesystem
             Attributes |= EfiPartitionAttributes.NoDriveLetter;
 
 
+
+
+         var partitionType = gptPartition.PartitionType.ToString();
+
          foreach (var guid in partitionTypes)
-            if (gptPartition.PartitionType.Equals(new Guid(Utils.GetEnumDescription(guid))))
+            if (partitionType.Equals(Utils.GetEnumDescription(guid), StringComparison.OrdinalIgnoreCase))
             {
                PartitionType = guid;
                break;

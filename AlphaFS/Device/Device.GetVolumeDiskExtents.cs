@@ -27,6 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
+      /// <summary>Retrieves the physical location of a specified volume on one or more disks.</summary>
       private static NativeMethods.VOLUME_DISK_EXTENTS? GetVolumeDiskExtents(SafeFileHandle safeHandle)
       {
          NativeMethods.VOLUME_DISK_EXTENTS? structure;

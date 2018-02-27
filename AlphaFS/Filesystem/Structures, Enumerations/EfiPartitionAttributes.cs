@@ -33,11 +33,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>None.</summary>
       None = 0,
 
-      /// <summary>If this attribute is set, the partition is an MBR partition.</summary>
-      BiosBoot = 4,
-
       /// <summary>If this attribute is set, the partition is required by a Computer to function properly.</summary>
       PlatformRequired,
+
+      /// <summary>If this attribute is set, the partition is an MBR partition.</summary>
+      BiosBoot = 4,
 
       /// <summary>If this attribute is set, the partition is read-only.</summary>
       ReadOnly,

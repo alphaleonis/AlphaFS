@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
          GptDiskId = disk.PartitionInformation.DiskId;
 
          MediaType = (StorageMediaType) disk.Geometry.MediaType;
-         
+
          PartitionStyle = (PartitionStyle) disk.PartitionInformation.PartitionStyle;
 
          TotalSize = disk.DiskSize;
