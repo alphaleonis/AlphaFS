@@ -24,32 +24,33 @@ using System.Diagnostics.CodeAnalysis;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>The following table identifies the valid partition types that are used by disk drivers.</summary>
+   /// <remarks>http://www.win.tue.nl/~aeb/partitions/partition_types-1.html</remarks>
    public enum DiskPartitionType
    {
       /// <summary>An unused entry partition.</summary>
-      EntryUnused = NativeMethods.DiskPartitionType.PARTITION_ENTRY_UNUSED,
+      UnusedEntry = NativeMethods.DiskPartitionType.PARTITION_ENTRY_UNUSED,
 
-      /// <summary>A FAT12 file system partition.</summary>
+      /// <summary>DOS 12-bit FAT partition.</summary>
       Fat12 = NativeMethods.DiskPartitionType.PARTITION_FAT_12,
 
-      /// <summary>A XENIX1 partition.</summary>
+      /// <summary>A XENIX root partition.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Xenix")]
-      Xenix1 = 2,
+      XenixRoot = 2,
 
-      /// <summary>A XENIX2 partition.</summary>
+      /// <summary>A XENIX /usr partition.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Xenix")]
-      Xenix2 = 3,
+      XenixUser = 3,
 
-      /// <summary>A FAT16 file system partition.</summary>
+      /// <summary>DOS 3.0+ 16-bit FAT partition (up to 32M).</summary>
       Fat16 = NativeMethods.DiskPartitionType.PARTITION_FAT_16,
 
-      /// <summary>An extended partition.</summary>
+      /// <summary>DOS 3.3+ Extended partition.</summary>
       Extended = NativeMethods.DiskPartitionType.PARTITION_EXTENDED,
 
-      /// <summary>A huge partition.</summary>
-      Huge = 6,
+      /// <summary>DOS 3.31+ 16-bit FAT partition (over 32M).</summary>
+      Fat16Big = 6,
 
-      /// <summary>An IFS (Installable File System) partition.</summary>
+      /// <summary>OS/2 IFS (Installable File System) (e.g., HPFS) partition.</summary>
       Ifs = NativeMethods.DiskPartitionType.PARTITION_IFS,
 
       /// <summary>A FAT32 file system partition.</summary>

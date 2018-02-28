@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // MSDN: PartitionCount: On hard disks with the MBR layout, this value will always be a multiple of 4.
                   // Any partitions that are actually unused will have a partition type of PARTITION_ENTRY_UNUSED (0).
 
-                  if (partition.Mbr.PartitionType == (NativeMethods.DiskPartitionType) DiskPartitionType.EntryUnused)
+                  if (partition.Mbr.PartitionType == (NativeMethods.DiskPartitionType) DiskPartitionType.UnusedEntry)
                      continue;
 
 

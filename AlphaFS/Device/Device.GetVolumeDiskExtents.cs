@@ -28,49 +28,28 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Device
    {
       /// <summary>Retrieves the physical location of a specified volume on one or more disks.</summary>
-      private static NativeMethods.VOLUME_DISK_EXTENTS? GetVolumeDiskExtents(SafeFileHandle safeHandle)
+      private static NativeMethods.VOLUME_DISK_EXTENTS? GetVolumeDiskExtents(SafeFileHandle safeHandle, string pathForException)
       {
-         NativeMethods.VOLUME_DISK_EXTENTS? structure;
          var structSize = Marshal.SizeOf(typeof(NativeMethods.VOLUME_DISK_EXTENTS));
-         var bufferSize = structSize;
-         bool success;
-         int lastError;
+         var numberOfExtents = 1;
+         var bufferSize = structSize * numberOfExtents;
 
 
-         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
-         {
-            success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
-
-            lastError = Marshal.GetLastWin32Error();
-
-            structure = safeBuffer.PtrToStructure<NativeMethods.VOLUME_DISK_EXTENTS>(0);
-         }
-
-
-         if (!success)
-         {
-            if (lastError != Win32Errors.ERROR_MORE_DATA)
-               return null;
-
-
-            // 2018-02-15 Yomodo: Not fully tested.
-
-
-            var numberOfExtents = ((NativeMethods.VOLUME_DISK_EXTENTS) structure).NumberOfDiskExtents;
-
-            bufferSize = (int) (structSize * numberOfExtents);
-
-
+         while(true)
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
             {
-               success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
-               lastError = Marshal.GetLastWin32Error();
+               var lastError = Marshal.GetLastWin32Error();
 
+
+               // https://stackoverflow.com/questions/19825910/get-size-of-volume-on-windows
+               // https://stackoverflow.com/questions/327718/how-to-list-physical-disks
+               // https://github.com/Invoke-IR/PowerForensics/blob/master/src/PowerForensicsCore/src/PowerForensics.BootSectors/GuidPartitionTable.cs
 
                if (success)
                {
-                  numberOfExtents = (uint) safeBuffer.PtrToStructure<NativeMethods.DiskExtentsBeforeArray>(0).NumberOfExtents;
+                  numberOfExtents = safeBuffer.PtrToStructure<NativeMethods.DiskExtentsBeforeArray>(0).NumberOfExtents;
 
                   var diskExtent = new NativeMethods.DISK_EXTENT[numberOfExtents];
 
@@ -82,11 +61,10 @@ namespace Alphaleonis.Win32.Filesystem
 
                   return new NativeMethods.VOLUME_DISK_EXTENTS {Extents = diskExtent};
                }
+
+               
+               bufferSize = GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, pathForException);
             }
-         }
-
-
-         return structure;
       }
    }
 }

@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
                // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
 
 
-               var volDiskExtents = GetVolumeDiskExtents(isRetry ? safeHandleRetry : safeHandle);
+               var volDiskExtents = GetVolumeDiskExtents(isRetry ? safeHandleRetry : safeHandle, pathToDevice);
 
                if (volDiskExtents.HasValue)
                {

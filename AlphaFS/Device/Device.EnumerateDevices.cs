@@ -235,7 +235,7 @@ namespace Alphaleonis.Win32.Filesystem
                   return null;
 
 
-               bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, property.ToString());
+               bufferSize = GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, property.ToString());
             }
       }
 

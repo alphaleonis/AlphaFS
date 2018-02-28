@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       [SecurityCritical]
-      internal static int GetDoubledBufferSizeOrThrowException(int lastError, SafeHandle safeBuffer, int bufferSize, string pathForException)
+      private static int GetDoubledBufferSizeOrThrowException(SafeHandle safeBuffer, int lastError, int bufferSize, string pathForException)
       {
          if (null != safeBuffer && !safeBuffer.IsClosed)
             safeBuffer.Close();
@@ -46,6 +46,11 @@ namespace Alphaleonis.Win32.Filesystem
          {
             case Win32Errors.ERROR_MORE_DATA:
             case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
+            case Win32Errors.ERROR_INVALID_PARAMETER:
+
+               if (bufferSize == 0)
+                  bufferSize = NativeMethods.DefaultFileBufferSize / 32; // 128
+
                bufferSize *= 2;
                break;
 

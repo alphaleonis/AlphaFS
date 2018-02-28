@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
                // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
 
 
-               var volDiskExtents = GetVolumeDiskExtents(isRetry ? safeHandleRetry : safeHandle);
+               var volDiskExtents = GetVolumeDiskExtents(isRetry ? safeHandleRetry : safeHandle, pathToDevice);
 
                if (volDiskExtents.HasValue)
                {
@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
                   return null;
 
 
-               bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, pathForException);
+               bufferSize = GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, pathForException);
             }
       }
 
@@ -221,7 +221,7 @@ namespace Alphaleonis.Win32.Filesystem
                   return new NativeMethods.DISK_GEOMETRY_EX();
 
 
-               bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, pathForException);
+               bufferSize = GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, pathForException);
             }
       }
    }

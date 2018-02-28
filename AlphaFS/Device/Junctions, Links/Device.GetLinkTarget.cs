@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (success)
                return safeBuffer;
 
-            bufferSize = GetDoubledBufferSizeOrThrowException(lastError, safeBuffer, bufferSize, reparsePath);
+            bufferSize = GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, reparsePath);
          }
       }
    }
