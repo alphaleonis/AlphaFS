@@ -25,11 +25,10 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Contains extended information about a drive's partitions.</summary>
-      /// <remarks>
+      /// <summary>Contains extended information about a drive's partitions.
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </remarks>
+      /// </summary>
       [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
       internal struct DRIVE_LAYOUT_INFORMATION_EX
       {

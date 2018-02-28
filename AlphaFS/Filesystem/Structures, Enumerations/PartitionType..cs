@@ -38,12 +38,14 @@ namespace Alphaleonis.Win32.Filesystem
       UnusedEntry,
 
       /// <summary>Legacy MBR partition. A partition that is sub-partitioned by a Master Boot Record; "partitions-inside-a-slice configuration".</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mbr")]
       [Description("024DEE41-33E7-11D3-9D69-0008C781F39F")]
       LegacyMbr,
 
       /// <summary>The partition is an EFI system partition.
       /// <remarks>This value can be set for basic and dynamic disks.</remarks>
       /// </summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Efi")]
       [Description("C12A7328-F81F-11D2-BA4B-00A0C93EC93B")]
       EfiSystem,
 
@@ -52,6 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       BiosBoot,
 
       /// <summary>Intel Fast Flash (iFFS, Intel Rapid Start technology) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Iffs")]
       [Description("D3BFE2DE-3DAF-11DF-BA40-E3A556D89593")]
       Iffs,
 
@@ -122,10 +125,18 @@ namespace Alphaleonis.Win32.Filesystem
       #region HP-UX
 
       /// <summary>HP-UX Data partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ux")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hp")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ux")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Hp")]
       [Description("75894C1E-3AEB-11D3-B7C1-7B03A0000000")]
       HpUxData,
 
       /// <summary>HP-UX Service partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ux")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ux")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hp")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Hp")]
       [Description("E2A1E728-32E3-11D6-A682-7B03A0000000")]
       HpUxService,
 
@@ -151,10 +162,12 @@ namespace Alphaleonis.Win32.Filesystem
       LinuxRootX8664,
 
       /// <summary>Linux Root (32bit ARM) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "bit")]
       [Description("69DAD710-2CE4-4E3C-B16C-21A1D49ABED3")]
       LinuxRoot32bitArm,
 
       /// <summary>Linux Root (64bit ARM/AArch64) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "bit")]
       [Description("B921B045-1DF0-41C3-AF44-4C6F280D3FAE")]
       LinuxRoot64bitArm,
 
@@ -163,6 +176,7 @@ namespace Alphaleonis.Win32.Filesystem
       LinuxSwap,
 
       /// <summary>Linux Logical Volume Manager(LVM) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lvm")]
       [Description("E6D6D379-F507-44C2-A23C-238F2A3DF928")]
       LinuxLvm,
 
@@ -171,10 +185,13 @@ namespace Alphaleonis.Win32.Filesystem
       LinuxHome,
 
       /// <summary>Linux /srv (server data) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Srv")]
       [Description("3B8F8425-20E0-4F3B-907F-1A25A76F98E8")]
       LinuxSrv,
 
       /// <summary>Linux Plain dm-crypt partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
       [Description("7FFEC5C9-2D00-49B7-8941-3EA10A5586B7")]
       LinuxPlainDmCrypt,
 
@@ -183,6 +200,7 @@ namespace Alphaleonis.Win32.Filesystem
       LinuxLuks,
 
       /// <summary>Linux Reserved partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1700:DoNotNameEnumValuesReserved")]
       [Description("8DA63339-0007-60C0-C436-083AC8230908")]
       LinuxReserved,
 
@@ -192,26 +210,35 @@ namespace Alphaleonis.Win32.Filesystem
       #region FreeBSD
 
       /// <summary>FreeBSD Boot partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("83BD6B9D-7F41-11DC-BE0B-001560B84F0F")]
       FreeBsdBoot,
 
       /// <summary>FreeBSD Data partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("516E7CB4-6ECF-11D6-8FF8-00022D09712B")]
       FreeBsdData,
 
       /// <summary>FreeBSD Swap partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("516E7CB5-6ECF-11D6-8FF8-00022D09712B")]
       FreeBsdSwap,
 
       /// <summary>FreeBSD Unix File System (UFS) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ufs")]
       [Description("516E7CB6-6ECF-11D6-8FF8-00022D09712B")]
       FreeBsdUfs,
 
       /// <summary>FreeBSD Vinum Volume Manager partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vvm")]
       [Description("516E7CB8-6ECF-11D6-8FF8-00022D09712B")]
       FreeBsdVvm,
 
       /// <summary>FreeBSD ZFS partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Zfs")]
       [Description("516E7CBA-6ECF-11D6-8FF8-00022D09712B")]
       FreeBsdZfs,
 
@@ -221,58 +248,92 @@ namespace Alphaleonis.Win32.Filesystem
       #region MacOS Darwin
 
       /// <summary>OSX Hierarchical File System Plus (HFS+) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hfs")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
       [Description("48465300-0000-11AA-AA11-00306543ECAC")]
       OsXHfs,
 
       /// <summary>OSX Apple APFS partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Apfs")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("7C3457EF-0000-11AA-AA11-00306543ECAC")]
       OsXAppleApfs,
 
       /// <summary>OSX Apple UFS partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ufs")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
       [Description("55465300-0000-11AA-AA11-00306543ECAC")]
       OsXAppleUfs,
 
       /// <summary>OSX ZFS partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Zfs")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("6A898CC3-1DD2-11B2-99A6-080020736631")]
       OsXZfs,
 
       /// <summary>OSX Apple RAID partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
       [Description("52414944-0000-11AA-AA11-00306543ECAC")]
       OsXAppleRaid,
 
       /// <summary>OSX Apple RAID offline partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("52414944-5F4F-11AA-AA11-00306543ECAC")]
       OsXAppleRaidOffline,
 
       /// <summary>OSX Apple Boot (Recovery HD) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
       [Description("426F6F74-0000-11AA-AA11-00306543ECAC")]
       OsXBootRecovery,
 
       /// <summary>OSX Apple Label partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("C616265-6C00-11AA-AA11-00306543ECAC")]
       OsXLabel,
 
       /// <summary>OSX Apple TV Recovery partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tv")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Tv")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("5265636F-7665-11AA-AA11-00306543ECAC")]
       OsXTvRecovery,
 
       /// <summary>OSX Apple Core Storage (i.e. Lion FileVault) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("53746F72-6167-11AA-AA11-00306543ECAC")]
       OsXCoreStorage,
 
       /// <summary>OSX SoftRAID_Status partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("B6FA30DA-92D2-4A9A-96F1-871EC6486200")]
       OsXSoftRaidStatus,
 
       /// <summary>OSX SoftRAID_Scratch partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("2E313465-19B9-463F-8126-8A7993773801")]
       OsXSoftRaidScratch,
 
       /// <summary>OSX SoftRAID_Volume partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("FA709C7E-65B1-4593-BFD5-E71D61DE9B02")]
       OsXSoftRaidVolume,
 
       /// <summary>OSX SoftRAID_Cache partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
       [Description("BBBA6DF5-F46F-4A89-8F59-8765B2727503")]
       OsXSoftRaidCache,
 
@@ -298,6 +359,7 @@ namespace Alphaleonis.Win32.Filesystem
       SolarisBackup,
 
       /// <summary>Solaris /usr partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Usr")]
       [Description("6A898CC3-1DD2-11B2-99A6-080020736631")]
       SolarisUsr,
 
@@ -314,22 +376,27 @@ namespace Alphaleonis.Win32.Filesystem
       SolarisAlternateSector,
 
       /// <summary>Solaris Reserved partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1700:DoNotNameEnumValuesReserved")]
       [Description("6A945A3B-1DD2-11B2-99A6-080020736631")]
       SolarisReserved1,
 
       /// <summary>Solaris Reserved partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1700:DoNotNameEnumValuesReserved")]
       [Description("6A9630D1-1DD2-11B2-99A6-080020736631")]
       SolarisReserved2,
 
       /// <summary>Solaris Reserved partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1700:DoNotNameEnumValuesReserved")]
       [Description("6A980767-1DD2-11B2-99A6-080020736631")]
       SolarisReserved3,
 
       /// <summary>Solaris Reserved partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1700:DoNotNameEnumValuesReserved")]
       [Description("6A96237F-1DD2-11B2-99A6-080020736631")]
       SolarisReserved4,
 
       /// <summary>Solaris Reserved partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1700:DoNotNameEnumValuesReserved")]
       [Description("6A8D2AC7-1DD2-11B2-99A6-080020736631")]
       SolarisReserved5,
 
@@ -339,26 +406,34 @@ namespace Alphaleonis.Win32.Filesystem
       #region NetBSD
 
       /// <summary>NetBSD Swap partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("6A82CB45-1DD2-11B2-99A6-080020736631")]
       NetBsdSwap,
 
       /// <summary>NetBSD Fast File System (FFS) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ffs")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("49F48D5A-B10E-11DC-B99B-0019D1879648")]
       NetBsdFfs,
 
       /// <summary>NetBSD Log-Structured File System (LFS) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lfs")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("49F48D82-B10E-11DC-B99B-0019D1879648")]
       NetBsdLfs,
 
       /// <summary>NetBSD RAID partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("49F48DAA-B10E-11DC-B99B-0019D1879648")]
       NetBsdRaid,
 
       /// <summary>NetBSD Concatenated partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("2DB519C4-B10F-11DC-B99B-0019D1879648")]
       NetBsdConcatenated,
 
       /// <summary>NetBSD Encrypted partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("2DB519EC-B10F-11DC-B99B-0019D1879648")]
       NetBsdEncrypted,
 
@@ -368,14 +443,25 @@ namespace Alphaleonis.Win32.Filesystem
       #region Chrome OS
 
       /// <summary>Chrome OS Kernel partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Chromse")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("FE3A2A5D-4F32-41A7-B725-ACCC3285A309")]
       ChromseOsKernel,
 
       /// <summary>Chrome OS RootFS partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fs")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Chromse")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Fs")]
       [Description("3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC")]
       ChromseOsRootFs,
 
       /// <summary>Chrome OS (future use) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Chromse")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("2E0A753D-9E48-43B0-8337-B15192CB1B5E")]
       ChromseOsFutureUse,
 
@@ -385,6 +471,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Haiku
 
       /// <summary>Haiku Be File System (BFS) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bfs")]
       [Description("42465331-3BA3-10F1-802A-4861696B7521")]
       HaikuBfs,
 
@@ -394,26 +481,35 @@ namespace Alphaleonis.Win32.Filesystem
       #region MidnightBSD
 
       /// <summary>MidnightBSD Boot partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("85D5E45E-237C-11E1-B4B3-E89A8F7FC3A7")]
       MidnightBsdBoot,
 
       /// <summary>MidnightBSD Data partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("85D5E45A-237C-11E1-B4B3-E89A8F7FC3A7")]
       MidnightBsdData,
 
       /// <summary>MidnightBSD Swap partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("85D5E45B-237C-11E1-B4B3-E89A8F7FC3A7")]
       MidnightBsdSwap,
 
       /// <summary>MidnightBSD Unix File System (UFS) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ufs")]
       [Description("0394EF8B-237E-11E1-B4B3-E89A8F7FC3A7")]
       MidnightBsdUfs,
 
       /// <summary>MidnightBSD Vinum Volume Manager partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vvm")]
       [Description("85D5E45C-237C-11E1-B4B3-E89A8F7FC3A7")]
       MidnightBsdVvm,
 
       /// <summary>MidnightBSD ZFS partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Zfs")]
       [Description("85D5E45D-237C-11E1-B4B3-E89A8F7FC3A7")]
       MidnightBsdZfs,
 
@@ -423,98 +519,150 @@ namespace Alphaleonis.Win32.Filesystem
       #region Ceph
 
       /// <summary>Ceph journal partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("45B0969E-9B03-4F30-B4C6-B4B80CEFF106")]
       CephJournal,
 
       /// <summary>Ceph dm-crypt journal partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
       [Description("45B0969E-9B03-4F30-B4C6-5EC00CEFF106")]
       CephDmCryptJournal,
 
       /// <summary>Ceph OSD partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Osd")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("4FBD7E29-9D25-41B8-AFD0-062C0CEFF05D")]
       CephOsd,
 
       /// <summary>Ceph dm-crypt OSD partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Osd")]
       [Description("4FBD7E29-9D25-41B8-AFD0-5EC00CEFF05D")]
       CephDmCryptOsd,
 
       /// <summary>Ceph disk in creation partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("89C57F98-2FE5-4DC0-89C1-F3AD0CEFF2BE")]
       CephDiskInCreation,
 
       /// <summary>Ceph dm-crypt disk in creation partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
       [Description("89C57F98-2FE5-4DC0-89C1-5EC00CEFF2BE")]
       CephDmCryptDiskInCreation,
 
       /// <summary>Ceph block partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("CAFECAFE-9B03-4F30-B4C6-B4B80CEFF106")]
       CephBlock,
 
       /// <summary>Ceph block DB partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("30CD0809-C2B2-499C-8879-2D6B78529876")]
       CephBlockDb,
 
       /// <summary>Ceph block write-ahead log partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("5CE17FCE-4087-4169-B7FF-056CC58473F9")]
       CephBlockWriteAheadLog,
 
       /// <summary>Ceph lockbox for dm-crypt keys partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
       [Description("FB3AABF9-D25F-47CC-BF5E-721D1816496B")]
       CephDmCryptKeysLockbox,
 
       /// <summary>Ceph multipath OSD partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Osd")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("4FBD7E29-8AE0-4982-BF9D-5A8D867AF560")]
       CephMultipathOsd,
 
       /// <summary>Ceph multipath journal partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("45B0969E-8AE0-4982-BF9D-5A8D867AF560")]
       CephMultipathJournal,
 
       /// <summary>Ceph multipath block partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("CAFECAFE-8AE0-4982-BF9D-5A8D867AF560")]
       CephMultipathBlock1,
 
       /// <summary>Ceph multipath block partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("7F4A666A-16F3-47A2-8445-152EF4D03F6C")]
       CephMultipathBlock2,
 
       /// <summary>Ceph multipath block DB partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("EC6D6385-E346-45DC-BE91-DA2A7C8B3261")]
       CephMultipathBlockDb,
 
       /// <summary>Ceph multipath block write-ahead log partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
       [Description("01B41E1B-002A-453C-9F17-88793989FF8F")]
       CephMultipathBlockWriteAheadLog,
 
       /// <summary>Ceph dm-crypt block partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
       [Description("CAFECAFE-9B03-4F30-B4C6-5EC00CEFF106")]
       CephDmCryptBlock,
 
       /// <summary>Ceph dm-crypt block DB partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
       [Description("93B0052D-02D9-4D8A-A43B-33A3EE4DFBC3")]
       CephDmCryptBlockDb,
 
       /// <summary>Ceph dm-crypt block write-ahead log partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
       [Description("306E8683-4FE2-4330-B7C0-00A917C16966")]
       CephDmCryptBlockWriteAheadLog,
 
       /// <summary>Ceph dm-crypt LUKS journal partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
       [Description("45B0969E-9B03-4F30-B4C6-35865CEFF106")]
       CephDmCryptLuksJournal,
 
       /// <summary>Ceph dm-crypt LUKS block partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
       [Description("CAFECAFE-9B03-4F30-B4C6-35865CEFF106")]
       CephDmCryptLuksBlock,
 
       /// <summary>Ceph dm-crypt LUKS block DB partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
       [Description("166418DA-C469-4022-ADF4-B30AFD37F176")]
       CephDmCryptLuksBlockDb,
 
       /// <summary>Ceph dm-crypt LUKS block write-ahead log partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
       [Description("166418DA-C469-4022-ADF4-B30AFD37F176")]
       CephDmCryptLuksBlockWriteAheadLog,
 
       /// <summary>Ceph dm-crypt LUKS OSD partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ceph")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Osd")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dm")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Dm")]
       [Description("166418DA-C469-4022-ADF4-B30AFD37F176")]
       CephDmCryptLuksOsd,
 
@@ -524,6 +672,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region OpenBSD
 
       /// <summary>OpenBSD Data partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bsd")]
       [Description("824CC7A0-36A8-11E3-890A-952519AD3F61")]
       OpenBsdData,
 
@@ -533,6 +682,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region QNX
 
       /// <summary>QNX Power-safe (QNX6) file system partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Qnx")]
       [Description("CEF5A9AD-73BC-4601-89F3-CDEEEEE321A1")]
       Qnx6,
 
@@ -551,14 +701,25 @@ namespace Alphaleonis.Win32.Filesystem
       #region VMware ESX
 
       /// <summary>VMware ESX vmkcore (coredump) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Esx")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Vm")]
       [Description("9D275380-40AD-11DB-BF97-000C2911D1B8")]
       VmWareEsxCore,
 
       /// <summary>VMware ESX Virtual Machine File System (VMFS) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vmfs")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Esx")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Vm")]
       [Description("AA31E02A-400F-11DB-9590-000C2911D1B8")]
       VmWareEsxVmfs,
 
       /// <summary>VMware ESX Reserved partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Esx")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vm")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Vm")]
+      [SuppressMessage("Microsoft.Naming", "CA1700:DoNotNameEnumValuesReserved")]
       [Description("9198EFFC-31C0-11DB-8F78-000C2911D1B8")]
       VmWareEsxReserved,
 
@@ -568,66 +729,101 @@ namespace Alphaleonis.Win32.Filesystem
       #region Android-IA
 
       /// <summary>Android-IA Bootloader partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bootloader")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("2568845D-2332-4675-BC39-8FA5A4748D15")]
       AndroidIaBootloader,
 
       /// <summary>Android-IA Bootloader2 partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bootloader")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("114EAFFE-1552-4022-B26E-9B053604CF84")]
       AndroidIaBootloader2,
 
       /// <summary>Android-IA Boot partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("49A4D17F-93A3-45C1-A0DE-F50B2EBE2599")]
       AndroidIaBoot,
 
       /// <summary>Android-IA Recovery partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("4177C722-9E92-4AAB-8644-43502BFD5506")]
       AndroidIaRecovery,
 
       /// <summary>Android-IA Misc partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("EF32A33B-A409-486C-9141-9FFB711F6266")]
       AndroidIaMisc,
 
       /// <summary>Android-IA Metadata partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("20AC26BE-20B7-11E3-84C5-6CFDB94711E9")]
       AndroidIaMetadata,
 
       /// <summary>Android-IA System partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("38F428E6-D326-425D-9140-6E0EA133647C")]
       AndroidIaSystem,
 
       /// <summary>Android-IA Cache partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("A893EF21-E428-470A-9E55-0668FD91A2D9")]
       AndroidIaCache,
 
       /// <summary>Android-IA Data partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("DC76DDA9-5AC1-491C-AF42-A82591580C0D")]
       AndroidIaData,
 
       /// <summary>Android-IA Persistent partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("EBC597D0-2053-4B15-8B64-E0AAC75F4DB1")]
       AndroidIaPersistent,
 
       /// <summary>Android-IA Vendor partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("C5A0AEEC-13EA-11E5-A1B1-001E67CA0C3C")]
       AndroidIaVendor,
 
       /// <summary>Android-IA Config partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("BD59408B-4514-490D-BF12-9878D963F378")]
       AndroidIaConfig,
 
       /// <summary>Android-IA Factory partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("8F68CC74-C5E5-48DA-BE91-A0C8C15E9C80")]
       AndroidIaFactory,
 
       /// <summary>Android-IA Factory (Alternate) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("9FDAA6EF-4B3F-40D2-BA8D-BFF16BFB887B")]
       AndroidIaFactoryAlternate,
 
       /// <summary>Android-IA Tertiary partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("767941D0-2085-11E3-AD3B-6CFDB94711E9")]
       AndroidIaTertiary,
 
       /// <summary>Android-IA OEM partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Oem")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
       [Description("AC6D7924-EB71-4DF8-B48D-E267B27148FF")]
       AndroidIaOem,
 
@@ -637,10 +833,12 @@ namespace Alphaleonis.Win32.Filesystem
       #region ONIE
 
       /// <summary>Open Network Install Environment (ONIE) Boot partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Onie")]
       [Description("7412F7D5-A156-4B13-81DC-867174929325")]
       OnieBoot,
 
       /// <summary>Open Network Install Environment (ONIE) Config partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Onie")]
       [Description("D4E6E2CD-4469-46F3-B5CB-1BFF57AFC149")]
       OnieConfig,
 
@@ -650,6 +848,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region PowerPC
 
       /// <summary>PowerPC PReP Boot partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Pc")]
       [Description("9E1A2D38-C612-4316-AA26-8B49521E5A8B")]
       PowerPcPrepBoot,
       
@@ -659,6 +858,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region freedesktop.org OSes (Linux, etc.)
 
       /// <summary>Shared boot loader configuration partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Bootloader")]
       [Description("BC13C2FF-59E6-4262-A352-B275FD6F7172")]
       SharedBootloaderConfiguration,
 
@@ -668,6 +868,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Atari TOS
 
       /// <summary>Atari TOS Basic data (GEM, BGM, F32) partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tos")]
       [Description("734E5AFE-F61A-11E6-BC64-92361F002671")]
       AtariTosBasicData
 

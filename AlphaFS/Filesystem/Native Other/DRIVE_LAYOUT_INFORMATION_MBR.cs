@@ -25,11 +25,10 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Provides information about a drive's master boot record (MBR) partitions.</summary>
-      /// <remarks>
+      /// <summary>Provides information about a drive's master boot record (MBR) partitions.
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </remarks>
+      /// </summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct DRIVE_LAYOUT_INFORMATION_MBR
       {

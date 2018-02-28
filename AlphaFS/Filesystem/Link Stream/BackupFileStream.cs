@@ -590,7 +590,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new IOException(Resources.Read_Incomplete_Header);
 
 
-            var streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>(0);
+            var streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>();
             var nameLength = (uint) Math.Min(streamID.dwStreamNameSize, hBuf.Capacity);
 
 

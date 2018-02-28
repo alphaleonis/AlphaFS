@@ -23,11 +23,10 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Represents the format of a partition.</summary>
-      /// <remarks>
+      /// <summary>Represents the format of a partition.
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </remarks>
+      /// </summary>
       internal enum PARTITION_STYLE
       {
          /// <summary>Master boot record (MBR) format. This corresponds to standard AT-style MBR partitions.</summary>

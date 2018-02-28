@@ -24,13 +24,13 @@ using System.Diagnostics.CodeAnalysis;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>The following table identifies the valid partition types that are used by disk drivers.</summary>
-   /// <remarks>http://www.win.tue.nl/~aeb/partitions/partition_types-1.html</remarks>
+   /// <remarks>https://technet.microsoft.com/en-us/library/cc739412.aspx</remarks>
    public enum DiskPartitionType
    {
-      /// <summary>An unused entry partition.</summary>
+      /// <summary>Unused partition entry.</summary>
       UnusedEntry = NativeMethods.DiskPartitionType.PARTITION_ENTRY_UNUSED,
 
-      /// <summary>DOS 12-bit FAT partition.</summary>
+      /// <summary>DOS FAT12 primary partition or logical drive (fewer than 32,680 sectors in the volume).</summary>
       Fat12 = NativeMethods.DiskPartitionType.PARTITION_FAT_12,
 
       /// <summary>A XENIX root partition.</summary>
@@ -41,46 +41,84 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Xenix")]
       XenixUser = 3,
 
-      /// <summary>DOS 3.0+ 16-bit FAT partition (up to 32M).</summary>
+      /// <summary>DOS 3.0+ FAT16 partition or logical drive (32,680–65,535 sectors or 16 MB–33 MB).</summary>
       Fat16 = NativeMethods.DiskPartitionType.PARTITION_FAT_16,
 
       /// <summary>DOS 3.3+ Extended partition.</summary>
       Extended = NativeMethods.DiskPartitionType.PARTITION_EXTENDED,
 
-      /// <summary>DOS 3.31+ 16-bit FAT partition (over 32M).</summary>
-      Fat16Big = 6,
+      /// <summary>DOS 3.31+ BIGDOS FAT16 partition or logical drive (33 MB–4 GB).</summary>
+      Fat16B = 6,
 
-      /// <summary>OS/2 IFS (Installable File System) (e.g., HPFS) partition.</summary>
+      /// <summary>Installable File System (IFS). NTFS partition or logical drive.</summary>
       Ifs = NativeMethods.DiskPartitionType.PARTITION_IFS,
 
-      /// <summary>A FAT32 file system partition.</summary>
+      /// <summary>FAT32 partition or logical drive.</summary>
       Fat32 = NativeMethods.DiskPartitionType.PARTITION_FAT32,
 
-      /// <summary>A FAT32 XINT13 partition.</summary>
-      Fat32XInt13 = 12,
+      /// <summary>FAT32 partition or logical drive using BIOS INT 13h extensions.</summary>
+      Fat32Int13 = 12,
 
-      /// <summary>An XINT13 partition.</summary>
-      XInt13 = 14,
+      /// <summary>BIGDOS FAT16 partition or logical drive using BIOS INT 13h extensions</summary>
+      Fat16BInt13 = 14,
 
-      /// <summary>An XINT13 Extended partition.</summary>
-      XInt13Extended = 15,
+      /// <summary>Extended partition using BIOS INT 13h extensions</summary>
+      ExtendedInt13 = 15,
 
-      /// <summary>A PREP (Power PC Reference Platform) partition.</summary>
+      /// <summary>EISA partition or OEM partition</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Eisa")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Oem")]
+      EisaOem = 18,
+
+      /// <summary>A PC PReP (Power PC Reference Platform) Boot partition.</summary>
       Prep = 65,
 
-      /// <summary>An LDM (Logical Disk Manager) partition.</summary>
+      /// <summary>LDM (Logical Disk Manager) Dynamic volume.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ldm")]
       Ldm = NativeMethods.DiskPartitionType.PARTITION_LDM,
 
-      /// <summary>A UNIX partition.</summary>
+      /// <summary>SCO Unix, ISC, UnixWare, AT+T System V/386, ix, MtXinu BSD 4.3 on Mach, GNU HURD.</summary>
       Unix = 99,
 
       /// <summary>An NTFT partition.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ntft")]
       Ntft = NativeMethods.DiskPartitionType.PARTITION_NTFT,
 
+      /// <summary>Power management hibernation partition.</summary>
+      PowerManagementHibernation = 132,
+
+      /// <summary>Multidisk FAT16 volume created by using Windows NT 4.0</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Multi")]
+      Fat16MultiDisk = 134,
+
+      /// <summary>Multidisk NTFS volume created by using Windows NT 4.0</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Multi")]
+      NtfsMultiDisk = 135,
+
+      /// <summary>Laptop hibernation partition</summary>
+      LaptopHibernation = 160,
+
       /// <summary>A valid NTFT partition.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ntft")]
-      ValidNtft = NativeMethods.DiskPartitionType.VALID_NTFT
+      ValidNtft = NativeMethods.DiskPartitionType.VALID_NTFT,
+
+      /// <summary>Dell OEM partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Oem")]
+      DellOem = 222,
+
+      /// <summary>IBM OEM partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ibm")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Oem")]
+      IbmOem = 254,
+
+      /// <summary>GPT partition.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
+      Gpt = 238,
+
+      /// <summary>EFI System partition on an MBR disk.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Efi")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mbr")]
+      EfiSystemOnMbr = 239
+  
    }
 }

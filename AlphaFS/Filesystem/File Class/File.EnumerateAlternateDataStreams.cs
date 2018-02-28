@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                while (true)
                {
-                  yield return new AlternateDataStreamInfo(pathLp, buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0));
+                  yield return new AlternateDataStreamInfo(pathLp, buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>());
 
                   var success = NativeMethods.FindNextStreamW(safeHandle, buffer);
                   

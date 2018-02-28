@@ -29,25 +29,25 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       internal enum DiskPartitionType : byte
       {
-         /// <summary>An unused entry partition.</summary>
+         /// <summary>Unused partition entry.</summary>
          PARTITION_ENTRY_UNUSED = 0,
 
-         /// <summary>A FAT12 file system partition.</summary>
+         /// <summary>DOS FAT12 primary partition or logical drive (fewer than 32,680 sectors in the volume).</summary>
          PARTITION_FAT_12 = 1,
 
-         /// <summary>A FAT16 file system partition.</summary>
+         /// <summary>DOS 3.0+ FAT16 partition or logical drive (32,680–65,535 sectors or 16 MB–33 MB).</summary>
          PARTITION_FAT_16 = 4,
 
-         /// <summary>An extended partition.</summary>
+         /// <summary>DOS 3.3+ Extended partition.</summary>
          PARTITION_EXTENDED = 5,
 
-         /// <summary>An IFS (Installable File System) partition.</summary>
+         /// <summary>Installable File System (IFS). NTFS partition or logical drive.</summary>
          PARTITION_IFS = 7,
 
-         /// <summary>A FAT32 file system partition.</summary>
+         /// <summary>FAT32 partition or logical drive.</summary>
          PARTITION_FAT32 = 11,
 
-         /// <summary>An LDM (Logical Disk Manager) partition.</summary>
+         /// <summary>LDM (Logical Disk Manager) partition.</summary>
          PARTITION_LDM = 66,
 
          /// <summary>An NTFT partition.</summary>

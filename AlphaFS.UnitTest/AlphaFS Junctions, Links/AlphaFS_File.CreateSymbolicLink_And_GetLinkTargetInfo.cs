@@ -84,7 +84,7 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(new System.IO.FileInfo(fileLink), -17);
 
             var alphaFSFileInfo = new Alphaleonis.Win32.Filesystem.FileInfo(fileLink);
-            UnitTestConstants.Dump(alphaFSFileInfo.EntryInfo, -17);
+            UnitTestConstants.Dump(alphaFSFileInfo.EntryInfo, -19);
 
             Assert.AreEqual(System.IO.File.Exists(alphaFSFileInfo.FullName), alphaFSFileInfo.Exists);
             Assert.IsFalse(alphaFSFileInfo.EntryInfo.IsDirectory);

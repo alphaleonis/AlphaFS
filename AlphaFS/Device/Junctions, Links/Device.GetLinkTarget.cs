@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          using (var safeBuffer = GetLinkTargetData(safeHandle, reparsePath))
          {
-            var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>(0);
+            var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>();
 
             var marshalReparseBuffer = (int)Marshal.OffsetOf(typeof(NativeMethods.ReparseDataBufferHeader), "data");
 

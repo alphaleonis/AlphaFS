@@ -308,7 +308,7 @@ namespace Alphaleonis.Win32.Network
                lastError = NativeMethods.WNetGetUniversalName(path, 2, buffer, out bufferSize);
 
                if (lastError == Win32Errors.NO_ERROR)
-                  return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>(0);
+                  return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>();
             }
 
          } while (lastError == Win32Errors.ERROR_MORE_DATA);

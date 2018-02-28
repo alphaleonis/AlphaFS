@@ -129,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (isRetry && !safeHandleRetry.IsClosed)
                safeHandleRetry.Close();
 
-            return new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>(0));
+            return new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
          }
       }
    }

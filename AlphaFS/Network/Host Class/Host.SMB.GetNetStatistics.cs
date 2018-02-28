@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Network
                throw new NetworkInformationException((int) lastError);
 
 
-            return safeBuffer.PtrToStructure<T>(0);
+            return safeBuffer.PtrToStructure<T>();
          }
       }
    }

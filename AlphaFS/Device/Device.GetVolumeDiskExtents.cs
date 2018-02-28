@@ -42,14 +42,9 @@ namespace Alphaleonis.Win32.Filesystem
 
                var lastError = Marshal.GetLastWin32Error();
 
-
-               // https://stackoverflow.com/questions/19825910/get-size-of-volume-on-windows
-               // https://stackoverflow.com/questions/327718/how-to-list-physical-disks
-               // https://github.com/Invoke-IR/PowerForensics/blob/master/src/PowerForensicsCore/src/PowerForensics.BootSectors/GuidPartitionTable.cs
-
                if (success)
                {
-                  numberOfExtents = safeBuffer.PtrToStructure<NativeMethods.DiskExtentsBeforeArray>(0).NumberOfExtents;
+                  numberOfExtents = safeBuffer.ReadInt32();
 
                   var diskExtent = new NativeMethods.DISK_EXTENT[numberOfExtents];
 

@@ -200,7 +200,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                safeBuffer.StructureToPtr(fbi, true);
-               var changeTime = safeBuffer.PtrToStructure<NativeMethods.FILE_BASIC_INFO>(0).ChangeTime;
+               var changeTime = safeBuffer.PtrToStructure<NativeMethods.FILE_BASIC_INFO>().ChangeTime;
 
 
                return getUtc ? DateTime.FromFileTimeUtc(changeTime) : DateTime.FromFileTime(changeTime);

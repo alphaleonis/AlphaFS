@@ -26,11 +26,10 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Contains information about a drive's GUID partition table (GPT) partitions.</summary>
-      /// <remarks>
+      /// <summary>Contains information about a drive's GUID partition table (GPT) partitions.
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </remarks>
+      /// </summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct DRIVE_LAYOUT_INFORMATION_GPT
       {

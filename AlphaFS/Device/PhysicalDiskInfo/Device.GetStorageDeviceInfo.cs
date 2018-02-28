@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             else
                using (safeBuffer)
-                  storageDeviceInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>(0));
+                  storageDeviceInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>());
          }
 
 
@@ -168,7 +168,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
 
-            var deviceDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>(0);
+            var deviceDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>();
 
 
             storageDeviceInfo = new StorageDeviceInfo

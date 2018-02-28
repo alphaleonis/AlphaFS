@@ -53,8 +53,9 @@ namespace Alphaleonis.Win32.Filesystem
 
             return GetStoragePartitionInfoNative(safeHandle, devicePath);
       }
-      
 
+
+      /// <summary>Retrieves information about the number of partitions on a disk and the features of each partition.</summary>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       private static StoragePartitionInfo GetStoragePartitionInfoNative(SafeFileHandle safeHandle, string pathToDevice)
       {
@@ -102,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
             var driveStructureSize = Marshal.SizeOf(typeof(NativeMethods.DRIVE_LAYOUT_INFORMATION_EX));  // 48
             var partitionStructureSize = Marshal.SizeOf(typeof(NativeMethods.PARTITION_INFORMATION_EX)); // 144
 
-            var drive = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>(0);
+            var drive = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>();
 
             var partitions = new NativeMethods.PARTITION_INFORMATION_EX[drive.PartitionCount];
 
@@ -138,7 +139,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (success)
                {
-                  var drive = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>(0);
+                  var drive = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>();
 
                   var partitions = new NativeMethods.PARTITION_INFORMATION_EX[drive.PartitionCount];
 
@@ -170,7 +171,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Gets the disk geometry extended information</summary>
+      /// <summary>Returns information about the physical disk's geometry (media type, number of cylinders, tracks per cylinder, sectors per track, and bytes per sector).</summary>
       private static NativeMethods.DISK_GEOMETRY_EX GetDiskGeometryExNative(SafeFileHandle safeHandle, string pathForException)
       {
          var bufferSize = 128;

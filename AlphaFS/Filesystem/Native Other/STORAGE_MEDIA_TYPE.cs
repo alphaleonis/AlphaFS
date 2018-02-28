@@ -23,11 +23,10 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Specifies various types of storage media. Parameters and members of type STORAGE_MEDIA_TYPE also accept values from the MEDIA_TYPE enumeration type.</summary>
-      /// <remarks>
+      /// <summary>Specifies various types of storage media. Parameters and members of type STORAGE_MEDIA_TYPE also accept values from the MEDIA_TYPE enumeration type.
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </remarks>
+      /// </summary>
       public enum STORAGE_MEDIA_TYPE
       {
          /// <summary>Format is unknown.</summary>
