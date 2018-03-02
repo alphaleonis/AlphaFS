@@ -28,6 +28,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       /// The STORAGE_DEVICE_NUMBER structure is used in conjunction with the IOCTL_STORAGE_GET_DEVICE_NUMBER request to retrieve the FILE_DEVICE_XXX device type,
       /// the device number, and, for a device that can be partitioned, the partition number assigned to a device by the driver when the device is started.
+      /// <para>The values in the STORAGE_DEVICE_NUMBER structure are guaranteed to remain unchanged until the device is removed or the system is restarted.</para>
+      /// <para>It is not guaranteed to be persistent across device restarts or system restarts.</para>
       /// </summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct STORAGE_DEVICE_NUMBER
@@ -36,10 +38,12 @@ namespace Alphaleonis.Win32.Filesystem
          [MarshalAs(UnmanagedType.U4)] internal readonly StorageDeviceType DeviceType;
 
          /// <summary>Indicates the number of this device. This value is set to 0xFFFFFFFF (-1) for the disks that represent the physical paths of an MPIO disk.</summary>
-         [MarshalAs(UnmanagedType.U4)] internal readonly int DeviceNumber;
+         [MarshalAs(UnmanagedType.U4)]
+         internal readonly int DeviceNumber; // 2018-02-28: On MSDN this is defined as ULONG.
 
          /// <summary>Indicates the partition number of the device is returned in this member, if the device can be partitioned. Otherwise, -1 is returned.</summary>
-         [MarshalAs(UnmanagedType.U4)] internal readonly int PartitionNumber;
+         [MarshalAs(UnmanagedType.U4)]
+         internal readonly int PartitionNumber; // 2018-02-28: On MSDN this is defined as ULONG.
       }
    }
 }

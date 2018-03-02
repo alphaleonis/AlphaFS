@@ -108,9 +108,9 @@ namespace Alphaleonis.Win32.Filesystem
             var partitions = new NativeMethods.PARTITION_INFORMATION_EX[drive.PartitionCount];
 
 
-            for (var partitionCount = 0; partitionCount <= drive.PartitionCount - 1; partitionCount++)
+            for (var i = 0; i <= drive.PartitionCount - 1; i++)
 
-               partitions[partitionCount] = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(driveStructureSize + partitionCount * partitionStructureSize);
+               partitions[i] = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(driveStructureSize + i * partitionStructureSize);
 
 
             var disk = GetDiskGeometryExNative(safeHandle, pathToDevice);
@@ -132,7 +132,7 @@ namespace Alphaleonis.Win32.Filesystem
          while (true)
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
             {
-               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
                var lastError = Marshal.GetLastWin32Error();
 
@@ -179,7 +179,7 @@ namespace Alphaleonis.Win32.Filesystem
          while (true)
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
             {
-               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
                var lastError = Marshal.GetLastWin32Error();
 
@@ -197,15 +197,17 @@ namespace Alphaleonis.Win32.Filesystem
                   };
 
 
-                  var offset = sizeOf + sizeof(long); // 32
+                  var offset = (uint) sizeOf + sizeof(long); // 32
 
-                  diskGeometryEx.PartitionInformation = safeBuffer.PtrToStructure<NativeMethods.DISK_PARTITION_INFO>(offset);
+                  diskGeometryEx.PartitionInformation = safeBuffer.PtrToStructure<NativeMethods.DISK_PARTITION_INFO>((int) offset);
 
 
-                  offset += (int)diskGeometryEx.PartitionInformation.SizeOfPartitionInfo;
+                  //// Intermittently throws: System.AccessViolationException: Attempted to read or write protected memory.
+                  //// Observed when mounting an .iso file.
 
-                  diskGeometryEx.DiskDetectionInfo = safeBuffer.PtrToStructure<NativeMethods.DISK_DETECTION_INFO>(offset);
+                  //offset += diskGeometryEx.PartitionInformation.SizeOfPartitionInfo;
 
+                  //diskGeometryEx.DiskDetectionInfo = safeBuffer.PtrToStructure<NativeMethods.DISK_DETECTION_INFO>((int) offset);
 
                   return diskGeometryEx;
                }

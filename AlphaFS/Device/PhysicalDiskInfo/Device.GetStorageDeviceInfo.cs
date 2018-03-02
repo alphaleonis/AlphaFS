@@ -61,9 +61,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///  <exception cref="Exception"/>
       /// <param name="isElevated"><see langword="true"/> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="devicePath">
-      ///    A drive path such as: "C", "C:" or "C:\".
-      ///    A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".
-      ///    A <see cref="DeviceInfo.DevicePath"/> string (when <see cref="DeviceInfo.ClassGuid"/> is set to <see cref="DeviceGuid.Disk"/>).
+      /// <para>A disk path such as: "\\.\PhysicalDrive0"</para>s
+      /// <para>A drive path such as: "C", "C:" or "C:\".</para>
+      /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
       /// </param>
       internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, string devicePath)
       {
@@ -212,11 +213,8 @@ namespace Alphaleonis.Win32.Filesystem
             storageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
 
 
-
-
          if (isRetry && !safeHandleRetry.IsClosed)
             safeHandleRetry.Close();
-
 
          return storageDeviceInfo;
       }

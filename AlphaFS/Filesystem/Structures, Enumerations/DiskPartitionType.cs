@@ -23,7 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The following table identifies the valid partition types that are used by disk drivers.</summary>
+   /// <summary>Valid partition types that are used by disk drivers.</summary>
    /// <remarks>https://technet.microsoft.com/en-us/library/cc739412.aspx</remarks>
    public enum DiskPartitionType
    {
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>A PC PReP (Power PC Reference Platform) Boot partition.</summary>
       Prep = 65,
 
-      /// <summary>LDM (Logical Disk Manager) Dynamic volume.</summary>
+      /// <summary>LDM (Logical Disk Manager) Data partition on a dynamic disk.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ldm")]
       Ldm = NativeMethods.DiskPartitionType.PARTITION_LDM,
 

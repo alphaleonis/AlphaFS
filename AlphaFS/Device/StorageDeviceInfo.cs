@@ -48,9 +48,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DeviceType = device.DeviceType;
 
-         DeviceNumber = device.DeviceNumber;
+         DeviceNumber = (int) device.DeviceNumber;
 
-         PartitionNumber = device.PartitionNumber;
+         PartitionNumber = (int) device.PartitionNumber;
       }
 
       #endregion // Constructors

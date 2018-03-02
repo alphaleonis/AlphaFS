@@ -23,7 +23,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>The following table identifies the valid partition types that are used by disk drivers.
+      /// <summary>Valid partition types that are used by disk drivers.
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </summary>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>FAT32 partition or logical drive.</summary>
          PARTITION_FAT32 = 11,
 
-         /// <summary>LDM (Logical Disk Manager) partition.</summary>
+         /// <summary>LDM (Logical Disk Manager) Data partition on a dynamic disk.</summary>
          PARTITION_LDM = 66,
 
          /// <summary>An NTFT partition.</summary>

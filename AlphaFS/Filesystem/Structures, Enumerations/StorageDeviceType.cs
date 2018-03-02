@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       Beep = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_BEEP,
 
       /// <summary>FILE_DEVICE_CD_ROM parameter.</summary>
-      CDRom = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CD_ROM,
+      CDRom = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CD_ROM, // .NET DriveInfo.DriveType property also uses "CDRom" instead of "CdRom".
 
       /// <summary>FILE_DEVICE_CD_ROM_FILE_SYSTEM parameter.</summary>
       CDRomFileSystem = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CD_ROM_FILE_SYSTEM,
@@ -47,8 +47,8 @@ namespace Alphaleonis.Win32.Filesystem
       DataLink = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DATALINK,
 
       /// <summary>FILE_DEVICE_DFS parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DFS")]
-      DFS = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DFS,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
+      Dfs = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DFS,
 
       /// <summary>FILE_DEVICE_DISK parameter.</summary>
       Disk = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK,
@@ -163,15 +163,15 @@ namespace Alphaleonis.Win32.Filesystem
       Modem = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_MODEM,
 
       /// <summary>FILE_DEVICE_VDM parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "VDM")]
-      VDM = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_VDM,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vdm")]
+      Vdm = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_VDM,
 
       /// <summary>FILE_DEVICE_MASS_STORAGE parameter.</summary>
       MassStorage = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_MASS_STORAGE,
 
       /// <summary>FILE_DEVICE_SMB parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SMB")]
-      SMB = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_SMB,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Smb")]
+      Smb = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_SMB,
 
       /// <summary>FILE_DEVICE_KS parameter.</summary>
       KS = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_KS,
@@ -180,67 +180,65 @@ namespace Alphaleonis.Win32.Filesystem
       Changer = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CHANGER,
 
       /// <summary>FILE_DEVICE_SMARTCARD parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "SmartCard")]
-      SmartCard = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_SMARTCARD,
+      Smartcard = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_SMARTCARD,
 
       /// <summary>FILE_DEVICE_ACPI parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ACPI")]
-      ACPI = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_ACPI,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Acpi")]
+      Acpi = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_ACPI,
 
       /// <summary>FILE_DEVICE_DVD parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DVD")]
-      DVD = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DVD,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dvd")]
+      Dvd = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DVD,
 
       /// <summary>FILE_DEVICE_FULLSCREEN_VIDEO parameter.</summary>
-      FullScreenVideo = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_FULLSCREEN_VIDEO,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fullscreen")]
+      FullscreenVideo = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_FULLSCREEN_VIDEO,
 
       /// <summary>FILE_DEVICE_DFS_FILE_SYSTEM parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DEVICE")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DFS")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "FILE")]
-      [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      DFSFileSystem = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DFS_FILE_SYSTEM,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
+      DfsFileSystem = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DFS_FILE_SYSTEM,
 
       /// <summary>FILE_DEVICE_DFS_VOLUME parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DFS")]
-      DFSVolume = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DFS_VOLUME,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
+      DfsVolume = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DFS_VOLUME,
 
       /// <summary>FILE_DEVICE_SERENUM parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Serenum")]
       Serenum = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_SERENUM,
 
       /// <summary>FILE_DEVICE_TERMSRV parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Srv")]
-      TermSrv = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_TERMSRV,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Termsrv")]
+      Termsrv = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_TERMSRV,
 
       /// <summary>FILE_DEVICE_KSEC parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "KSEC")]
-      KSEC = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_KSEC,
+      KSec = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_KSEC,
 
       /// <summary>FILE_DEVICE_FIPS parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "FIPS")]
-      FIPS = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_FIPS,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fips")]
+      Fips = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_FIPS,
 
       /// <summary>FILE_DEVICE_INFINIBAND parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infini")]
-      InfiniBand = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_INFINIBAND,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infiniband")]
+      Infiniband = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_INFINIBAND,
 
       /// <summary>FILE_DEVICE_VMBUS parameter.</summary>
-      VMBus = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_VMBUS,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vm")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Vm")]
+      VmBus = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_VMBUS,
 
       /// <summary>FILE_DEVICE_CRYPT_PROVIDER parameter.</summary>
       CryptProvider = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CRYPT_PROVIDER,
 
       /// <summary>FILE_DEVICE_WPD parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "WPD")]
-      WPD = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_WPD,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wpd")]
+      Wpd = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_WPD,
 
       /// <summary>FILE_DEVICE_BLUETOOTH parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "BlueTooth")]
-      BlueTooth = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_BLUETOOTH,
+      Bluetooth = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_BLUETOOTH,
 
       /// <summary>FILE_DEVICE_MT_COMPOSITE parameter.</summary>
-      MTComposite = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_MT_COMPOSITE,
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Mt")]
+      MtComposite = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_MT_COMPOSITE,
 
       /// <summary>FILE_DEVICE_MT_TRANSPORT parameter.</summary>
       MTTransport = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_MT_TRANSPORT,
@@ -249,35 +247,34 @@ namespace Alphaleonis.Win32.Filesystem
       Biometric = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_BIOMETRIC,
 
       /// <summary>FILE_DEVICE_PMI parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "PMI")]
-      PMI = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_PMI,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pmi")]
+      Pmi = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_PMI,
 
       /// <summary>FILE_DEVICE_EHSTOR parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Stor")]
-      EHStor = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_EHSTOR,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ehstor")]
+      Ehstor = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_EHSTOR,
 
       /// <summary>FILE_DEVICE_DEVAPI parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Api")]
-      DevApi = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DEVAPI,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Devapi")]
+      Devapi = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_DEVAPI,
 
       /// <summary>FILE_DEVICE_GPIO parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "GPIO")]
-      GPIO = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_GPIO,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpio")]
+      Gpio = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_GPIO,
 
       /// <summary>FILE_DEVICE_USBEX parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "USB")]
-      [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-      USBEx = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_USBEX,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Usbex")]
+      Usbex = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_USBEX,
 
       /// <summary>FILE_DEVICE_CONSOLE parameter.</summary>
       Console = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_CONSOLE,
 
       /// <summary>FILE_DEVICE_NFP parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "NFP")]
-      NFP = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_NFP,
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nfp")]
+      Nfp = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_NFP,
 
       /// <summary>FILE_DEVICE_SYSENV parameter.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Env")]
-      SysEnv = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_SYSENV
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sysenv")]
+      Sysenv = NativeMethods.STORAGE_DEVICE_TYPE.FILE_DEVICE_SYSENV
    }
 }
