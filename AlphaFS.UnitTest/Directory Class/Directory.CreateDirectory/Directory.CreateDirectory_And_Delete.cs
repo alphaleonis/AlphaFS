@@ -82,9 +82,9 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_CatchDeviceNotReadyException_NonExistingDriveLetter_Network_Success()
+      public void Directory_CreateDirectory_CatchIOExceptionException_NonExistingDriveLetter_Network_Success()
       {
-         Directory_CreateDirectory_CatchDeviceNotReadyException_NonExistingDriveLetter(true);
+         Directory_CreateDirectory_CatchIOExceptionException_NonExistingDriveLetter(true);
       }
 
 
@@ -355,7 +355,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void Directory_CreateDirectory_CatchDeviceNotReadyException_NonExistingDriveLetter(bool isNetwork)
+      private void Directory_CreateDirectory_CatchIOExceptionException_NonExistingDriveLetter(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -376,9 +376,9 @@ namespace AlphaFS.UnitTest
             var exType = ex.GetType();
 
             // Local: DirectoryNotFoundException.
-            // UNC: DeviceNotReadyException.
+            // UNC: IOException.
 
-            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
+            gotException = exType == typeof(System.IO.IOException);
 
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }

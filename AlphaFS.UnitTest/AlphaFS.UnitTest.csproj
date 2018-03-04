@@ -205,6 +205,7 @@
     <Compile Include="Directory Class\Directory.Exists\Directory.Exists_DriveLetter.cs" />
     <Compile Include="Directory Class\Directory.Exists\Directory.Exists_NonExistingDirectoryDoesNotExist.cs" />
     <Compile Include="Directory Class\Directory.Exists\Directory.Exists_ExistingDirectoryExists.cs" />
+    <Compile Include="Directory Class\Directory.Exists\Directory.ExistsTest.cs" />
     <Compile Include="Directory Class\Directory.GetLogicalDrives.cs" />
     <Compile Include="Directory Class\Directory.GetFiles.cs" />
     <Compile Include="Directory Class\Directory.GetFileSystemEntries.cs" />

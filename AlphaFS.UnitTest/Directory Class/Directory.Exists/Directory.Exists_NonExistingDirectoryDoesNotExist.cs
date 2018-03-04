@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class Directory_ExistsTest
    {
       [TestMethod]
       public void Directory_Exists_NonExistingDirectoryDoesNotExist_Success()

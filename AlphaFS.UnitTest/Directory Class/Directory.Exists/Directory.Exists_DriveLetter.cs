@@ -24,7 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class Directory_ExistsTest
    {
       [TestMethod]
       public void Directory_Exists_DriveLetter_LocalAndNetwork_Success()

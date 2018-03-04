@@ -20,45 +20,12 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AlphaFS.UnitTest
 {
+   /// <summary>This is a test class for Directory.Exists and is intended to contain all Directory.Exists Unit Tests.</summary>
+   [TestClass]
    public partial class Directory_ExistsTest
    {
-      [TestMethod]
-      public void AlphaFS_Directory_Exists_WithLeadingOrTrailingSpace_LocalAndNetwork_Success()
-      {
-         Directory_Exists_WithLeadingOrTrailingSpace(false);
-         Directory_Exists_WithLeadingOrTrailingSpace(true);
-      }
-
-
-      private void Directory_Exists_WithLeadingOrTrailingSpace(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.SysRoot32;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         var path = tempPath + "   ";
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
-
-         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to.");
-
-
-         path = "   " + tempPath + "   ";
-         Console.WriteLine("Input Directory Path: [{0}]\n", path);
-
-         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to.");
-
-
-         path = "   " + tempPath;
-         Console.WriteLine("Input Directory Path: [{0}]\n", path);
-
-         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to.");
-      }
    }
 }
