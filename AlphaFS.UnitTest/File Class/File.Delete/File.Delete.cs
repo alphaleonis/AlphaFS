@@ -46,9 +46,9 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_DeviceNotReadyException_NonExistingDriveLetter_Network_Success()
+      public void File_Delete_IOExceptionException_NonExistingDriveLetter_Network_Success()
       {
-         File_Delete_CatchDeviceNotReadyException_NonExistingDriveLetter(true);
+         File_Delete_CatchIOExceptionException_NonExistingDriveLetter(true);
       }
 
 
@@ -136,7 +136,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_Delete_CatchDeviceNotReadyException_NonExistingDriveLetter(bool isNetwork)
+      private void File_Delete_CatchIOExceptionException_NonExistingDriveLetter(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -157,9 +157,9 @@ namespace AlphaFS.UnitTest
             var exType = ex.GetType();
 
             // Local: DirectoryNotFoundException.
-            // UNC: DeviceNotReadyException.
+            // UNC: IOException.
 
-            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
+            gotException = exType == typeof(System.IO.IOException);
 
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
