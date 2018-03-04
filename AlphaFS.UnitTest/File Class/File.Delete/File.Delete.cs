@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_DeviceNotReadyException_NonExistingDriveLetter_Network_Success()
+      public void File_Delete_IOExceptionException_NonExistingDriveLetter_Network_Success()
       {
          File_Delete_CatchIOExceptionException_NonExistingDriveLetter(true);
       }
