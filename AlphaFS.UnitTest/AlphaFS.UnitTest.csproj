@@ -201,6 +201,10 @@
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete.CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete.CatchDirectoryNotFoundException_NonExistingDirectory.cs" />
     <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory.cs" />
+    <Compile Include="Directory Class\Directory.Exists\Directory.Exists_UseCases.cs" />
+    <Compile Include="Directory Class\Directory.Exists\Directory.Exists_DriveLetter.cs" />
+    <Compile Include="Directory Class\Directory.Exists\Directory.Exists_NonExistingDirectoryDoesNotExist.cs" />
+    <Compile Include="Directory Class\Directory.Exists\Directory.Exists_ExistingDirectoryExists.cs" />
     <Compile Include="Directory Class\Directory.GetLogicalDrives.cs" />
     <Compile Include="Directory Class\Directory.GetFiles.cs" />
     <Compile Include="Directory Class\Directory.GetFileSystemEntries.cs" />
@@ -233,7 +237,7 @@
     <Compile Include="Directory Class\Directory.Move\Directory.Move_CatchIOException_SameSourceAndDestination.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.CountFileSystemObjects.cs" />
     <Compile Include="AlphaFS Alternate Data Streams\AlphaFS_Directory.EnumerateAlternateDataStreams.cs" />
-    <Compile Include="Directory Class\Directory.Exists.cs" />
+    <Compile Include="Directory Class\Directory.Exists\AlphaFS_Directory.Exists_WithLeadingOrTrailingSpace.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_Directory.ExportImportEncryptedDirectoryRaw.cs" />
     <Compile Include="Directory Class\Directory.GetAccessControl.cs" />
     <Compile Include="Directory Class\Directory.SetTimestamps.cs" />
