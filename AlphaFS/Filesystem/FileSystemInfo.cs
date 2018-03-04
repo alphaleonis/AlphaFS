@@ -28,8 +28,8 @@ using System.Security;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides the base class for both <see cref="FileInfo"/> and <see cref="DirectoryInfo"/> objects.</summary>
-   [SerializableAttribute]
-   [ComVisibleAttribute(true)]
+   [Serializable]
+   [ComVisible(true)]
    public abstract class FileSystemInfo : MarshalByRefObject
    {
       #region Fields
@@ -69,9 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>
-      ///   Gets or sets the attributes for the current file or directory.
-      /// </summary>
+      /// <summary>Gets or sets the attributes for the current file or directory.</summary>
       /// <remarks>
       ///   <para>The value of the CreationTime property is pre-cached</para>
       ///   <para>To get the latest value, call the Refresh method.</para>
@@ -232,6 +230,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          [SecurityCritical]
          get { return LastAccessTimeUtc.ToLocalTime(); }
+
          [SecurityCritical]
          set { LastAccessTimeUtc = value.ToUniversalTime(); }
       }
@@ -423,7 +422,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   outdated.</para>
       /// </remarks>
       [SecurityCritical]
-      protected void Refresh()
+      public void Refresh()
       {
          DataInitialised = File.FillAttributeInfoCore(Transaction, LongFullName, ref Win32AttributeData, false, false);
       }

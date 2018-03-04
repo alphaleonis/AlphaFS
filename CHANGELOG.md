@@ -29,6 +29,7 @@ Version 2.2  (2018-02-xx)
 - Issue #412: Method `Volume.GetVolumeDeviceName` returns wrong result.
 - Issue #417: Using a file opened in append mode will fail after a gc occurs  (Thx elgonzo)
 - Issue #417: `File.OpenRead` method overloads do not use `FileShare.Read`  (Thx elgonzo)
+- Issue #427: `System.IO.FileSystemInfo.Refresh()` is public; but AlphaFS `FileSystemInfo.Refresh()` is protected
 
 ### New Features
 
