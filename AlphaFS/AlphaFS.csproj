@@ -286,7 +286,6 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CopyTo.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.ToString.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.SetAccessControl.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Refresh.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileSystemInfos.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFiles.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetDirectories.cs" />
@@ -395,7 +394,6 @@
     <Compile Include="Filesystem\FileInfo Class\FileInfo.ToString.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.SetAccessControl.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.Replace.cs" />
-    <Compile Include="Filesystem\FileInfo Class\FileInfo.Refresh.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.OpenWrite.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.OpenText.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.OpenRead.cs" />
@@ -646,7 +644,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

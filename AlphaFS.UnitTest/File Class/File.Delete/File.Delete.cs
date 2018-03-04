@@ -39,10 +39,16 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndNetwork_Success()
+      public void File_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter_Local_Success()
       {
          File_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
-         File_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
+      }
+
+
+      [TestMethod]
+      public void File_Delete_DeviceNotReadyException_NonExistingDriveLetter_Network_Success()
+      {
+         File_Delete_CatchDeviceNotReadyException_NonExistingDriveLetter(true);
       }
 
 
@@ -114,13 +120,50 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            // Local: UnauthorizedAccessException.
-            // UNC: IOException.
+            var exType = ex.GetType();
 
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+            // Local: DirectoryNotFoundException.
+            // UNC: DeviceNotReadyException.
+
+            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
+
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+         Console.WriteLine();
+      }
+
+
+      private void File_Delete_CatchDeviceNotReadyException_NonExistingDriveLetter(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var folder = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter";
+         if (isNetwork)
+            folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
+
+         Console.WriteLine("\nInput File Path: [{0}]", folder);
+
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.File.Delete(folder);
+         }
+         catch (Exception ex)
+         {
+            var exType = ex.GetType();
+
+            // Local: DirectoryNotFoundException.
+            // UNC: DeviceNotReadyException.
+
+            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+         }
+
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
