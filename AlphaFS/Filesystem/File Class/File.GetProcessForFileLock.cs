@@ -267,7 +267,7 @@ namespace Alphaleonis.Win32.Filesystem
             lastError = NativeMethods.RmGetList(sessionHandle, out processesFound, ref processesTotal, processInfo, ref lpdwRebootReasons);
 
 
-            // There would b no more need for this because we already have a/the total number of running processes.
+            // There would be no need for this because we already have a/the total number of running processes.
             if (lastError == Win32Errors.ERROR_MORE_DATA)
                goto GetList;
 

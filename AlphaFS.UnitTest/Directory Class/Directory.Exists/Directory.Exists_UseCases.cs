@@ -38,10 +38,12 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Exists_UseCases(bool isNetwork)
       {
-         // #288: Directory.Exists on root drive problem has come back with recent updates
+         // Issue #288: Directory.Exists on root drive problem has come back with recent updates
 
 
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
+
 
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
@@ -87,9 +89,9 @@ namespace AlphaFS.UnitTest
                {nonExistingFolder2 + @"\", new List<bool> {false, false}},
 
                {existingFolder1, new List<bool> {true, true}},
-               {existingFolder2, new List<bool> {true, true}},
+               {existingFolder2, new List<bool> {!isNetwork, !isNetwork}},
                {existingFolder1 + @"\", new List<bool> {true, true}},
-               {existingFolder2 + @"\", new List<bool> {false, false}}
+               {existingFolder2 + @"\", new List<bool> {!isNetwork, !isNetwork}}
             };
 
 
