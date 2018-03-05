@@ -38,7 +38,7 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Exists_UseCases(bool isNetwork)
       {
-         // #288: Directory.Exists on root drive problem has come back with recent updates
+         // Issue #288: Directory.Exists on root drive problem has come back with recent updates
 
 
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -87,16 +87,19 @@ namespace AlphaFS.UnitTest
                {nonExistingFolder2 + @"\", new List<bool> {false, false}},
 
                {existingFolder1, new List<bool> {true, true}},
-               {existingFolder2, new List<bool> {false, false}},
-               //{existingFolder2, new List<bool> {!isNetwork, !isNetwork}},
+               {existingFolder2, new List<bool> {true, true}},
                {existingFolder1 + @"\", new List<bool> {true, true}},
                {existingFolder2 + @"\", new List<bool> {false, false}}
-               //{existingFolder2 + @"\", new List<bool> {!isNetwork, !isNetwork}}
             };
 
 
             try
             {
+               System.IO.Directory.SetCurrentDirectory(UnitTestConstants.SysDrive + @"\");
+
+               Console.WriteLine("Current directory: " + System.IO.Directory.GetCurrentDirectory());
+
+
                foreach (var path in paths)
                {
                   var sysIOshouldBe = path.Value[0];
