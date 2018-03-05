@@ -207,7 +207,19 @@ namespace Alphaleonis.Win32.Filesystem
                GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);
 
             var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+
             var dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref attrs, false, true);
+
+            if (dataInitialised == Win32Errors.ERROR_INVALID_NAME)
+            {
+               // Issue #288: Directory.Exists on root drive problem has come back with recent updates
+               //
+               // A relative path with a long path prefix: FindFirstFileEx("\\\\?\\C:qr4bxbzb.k1v-exists", ...
+
+
+               dataInitialised = FillAttributeInfoCore(transaction, pathRp, ref attrs, false, true);
+            }
+
 
             var attrIsFolder = IsDirectory(attrs.dwFileAttributes);
 

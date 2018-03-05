@@ -42,6 +42,8 @@ namespace AlphaFS.UnitTest
 
 
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
+
 
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
@@ -87,9 +89,9 @@ namespace AlphaFS.UnitTest
                {nonExistingFolder2 + @"\", new List<bool> {false, false}},
 
                {existingFolder1, new List<bool> {true, true}},
-               {existingFolder2, new List<bool> {true, true}},
+               {existingFolder2, new List<bool> {!isNetwork, !isNetwork}},
                {existingFolder1 + @"\", new List<bool> {true, true}},
-               {existingFolder2 + @"\", new List<bool> {false, false}}
+               {existingFolder2 + @"\", new List<bool> {!isNetwork, !isNetwork}}
             };
 
 
