@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (dataInitialised != Win32Errors.ERROR_SUCCESS)
             NativeError.ThrowException(dataInitialised, pathLp);
 
-         return (T)(typeof(T) == typeof(FileAttributes) ? (object)data.dwFileAttributes : data);
+         return (T) (typeof(T) == typeof(FileAttributes) ? (object) data.dwFileAttributes : data);
       }
 
       /// <summary>
@@ -135,12 +135,6 @@ namespace Alphaleonis.Win32.Filesystem
                   switch ((uint) lastError)
                   {
                      case Win32Errors.ERROR_INVALID_NAME:
-
-                        // Issue #288: Directory.Exists on root drive problem has come back with recent updates
-                        //
-                        // A relative path with a long path prefix: FindFirstFileEx("\\\\?\\C:qr4bxbzb.k1v-exists", ...
-
-
                      case Win32Errors.ERROR_FILE_NOT_FOUND: // On files.
                      case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
                      case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
@@ -185,15 +179,6 @@ namespace Alphaleonis.Win32.Filesystem
                      case Win32Errors.ERROR_FILE_NOT_FOUND: // On files.
                      case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
                      case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
-
-                        // Issue #288: Directory.Exists on root drive problem has come back with recent updates
-                        //
-                        // It seems that GetFileAttributesEx cannot handle a relative path with a long path prefix.
-                        //
-                        // Returns false: NativeMethods.GetFileAttributesEx("\\\\?\\C:qr4bxbzb.k1v-exists", ...
-                        // Returns true : NativeMethods.GetFileAttributesEx("\\\\?\\C:\\qr4bxbzb.k1v-exists", ...
-                        // Returns true : NativeMethods.GetFileAttributesEx("C:qr4bxbzb.k1v-exists", ...
-
 
                         // In case someone latched onto the file. Take the perf hit only for failure.
                         return FillAttributeInfoCore(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);

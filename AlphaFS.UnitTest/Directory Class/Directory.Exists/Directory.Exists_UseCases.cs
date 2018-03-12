@@ -45,9 +45,15 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
 
 
+         var sysDrive = UnitTestConstants.SysDrive + @"\";
+
          var tempPath = System.IO.Path.GetTempPath();
+
          if (isNetwork)
+         {
+            sysDrive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(sysDrive);
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+         }
 
 
          using (new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
@@ -97,7 +103,7 @@ namespace AlphaFS.UnitTest
 
             try
             {
-               System.IO.Directory.SetCurrentDirectory(UnitTestConstants.SysDrive + @"\");
+               System.IO.Directory.SetCurrentDirectory(sysDrive);
 
                Console.WriteLine("Current directory: " + System.IO.Directory.GetCurrentDirectory());
 
