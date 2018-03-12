@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Check for driveletter, such as: "C:"
          var pathRp = Path.GetRegularPathCore(path, GetFullPathOptions.None, false);
 
-         if (pathRp.Length == 2 && Path.IsPathRooted(pathRp, false))
+         if (pathRp.Length == 2 && Path.IsLogicalDriveCore(pathRp, true, PathFormat.LongFullPath))
             path = pathRp;
 
 
@@ -210,11 +210,12 @@ namespace Alphaleonis.Win32.Filesystem
 
             var dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref attrs, false, true);
 
-            if (dataInitialised == Win32Errors.ERROR_INVALID_NAME)
+            if (dataInitialised == Win32Errors.ERROR_INVALID_NAME || dataInitialised == Win32Errors.ERROR_INVALID_PARAMETER)
             {
                // Issue #288: Directory.Exists on root drive problem has come back with recent updates
                //
-               // A relative path with a long path prefix: FindFirstFileEx("\\\\?\\C:qr4bxbzb.k1v-exists", ...
+               // ERROR_INVALID_NAME     : A relative path with a long path prefix: FindFirstFileEx("\\\\?\\C:qr4bxbzb.k1v-exists", ...
+               // ERROR_INVALID_PARAMETER: A drive path with a long path prefix   : GetFileAttributesTransacted("\\?\C:\", ...
 
 
                dataInitialised = FillAttributeInfoCore(transaction, pathRp, ref attrs, false, true);

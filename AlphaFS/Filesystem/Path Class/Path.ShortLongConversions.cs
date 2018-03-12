@@ -159,7 +159,7 @@ namespace Alphaleonis.Win32.Filesystem
             return LongPathUncPrefix + path.Substring(UncPrefix.Length);
 
          
-         return IsPathRooted(path, false) && IsLogicalDriveCore(path, PathFormat.LongFullPath) ? LongPathPrefix + path : path;
+         return IsPathRooted(path, false) && IsLogicalDriveCore(path, false, PathFormat.LongFullPath) ? LongPathPrefix + path : path;
       }
 
 

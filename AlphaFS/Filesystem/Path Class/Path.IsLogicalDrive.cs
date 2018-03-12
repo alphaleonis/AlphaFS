@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The absolute path to check.</param>
       public static bool IsLogicalDrive(string path)
       {
-         return IsLogicalDriveCore(path, PathFormat.FullPath);
+         return IsLogicalDriveCore(path, false, PathFormat.FullPath);
       }
 
 
@@ -41,8 +41,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The absolute path to check.</param>
+      /// <param name="isRegularPath"><see langword="true"/> indicates the path is already a regular path.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      internal static bool IsLogicalDriveCore(string path, PathFormat pathFormat)
+      internal static bool IsLogicalDriveCore(string path, bool isRegularPath, PathFormat pathFormat)
       {
          if (pathFormat != PathFormat.LongFullPath)
          {
@@ -53,7 +54,8 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         path = GetRegularPathCore(path, GetFullPathOptions.None, false);
+         if (!isRegularPath)
+            path = GetRegularPathCore(path, GetFullPathOptions.None, false);
 
          var regularPath = path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase) ? path.Substring(LogicalDrivePrefix.Length) : path;
          

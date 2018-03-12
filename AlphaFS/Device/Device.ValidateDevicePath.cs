@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          isDeviceInfo = hasPath && !isVolume && devicePath.StartsWith(Path.LongPathPrefix, StringComparison.Ordinal);
 
-         isDrive = hasPath && !isDeviceInfo && !isVolume && Path.IsLogicalDriveCore(devicePath, PathFormat.LongFullPath);
+         isDrive = hasPath && !isDeviceInfo && !isVolume && Path.IsLogicalDriveCore(devicePath, false, PathFormat.LongFullPath);
 
 
 

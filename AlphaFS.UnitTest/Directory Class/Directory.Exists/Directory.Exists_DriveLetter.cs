@@ -49,6 +49,7 @@ namespace AlphaFS.UnitTest
          var inputDrive = driveSysIO;
          var existSysIO = System.IO.Directory.Exists(inputDrive);
          var existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(inputDrive);
+
          Console.WriteLine("\nSystem.IO/AlphaFS (should be {0}):\t[{1}]\t\tdrive= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputDrive);
 
          Assert.AreEqual(sysIOshouldBe, existSysIO, "The result should be: " + sysIOshouldBe.ToString().ToUpperInvariant());
@@ -57,12 +58,14 @@ namespace AlphaFS.UnitTest
 
 
 
-         //C:\
+         // C:\
          sysIOshouldBe = true;
          inputDrive = driveSysIO + @"\";
          existSysIO = System.IO.Directory.Exists(inputDrive);
          existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(inputDrive);
-         Console.WriteLine("System.IO/AlphaFS (should be {0}):\t[{1}]\t\tdrive= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputDrive);
+
+         Console.WriteLine("\nSystem.IO   (should be {0}):\t[{1}]\t\tdrive= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputDrive);
+         Console.WriteLine("AlphaFS     (should be {0}):\t[{1}]\t\tdrive= {2}", true.ToString().ToUpperInvariant(), existAlpha, inputDrive);
 
          Assert.AreEqual(sysIOshouldBe, existSysIO, "The result should be: " + sysIOshouldBe.ToString().ToUpperInvariant());
          Assert.AreEqual(existSysIO, existAlpha, "The results are not equal, but are expected to be.");
@@ -75,8 +78,9 @@ namespace AlphaFS.UnitTest
          inputDrive = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + driveSysIO.TrimStart('\\') : Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + driveSysIO;
          existSysIO = System.IO.Directory.Exists(inputDrive);
          existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(inputDrive);
-         Console.WriteLine("\nSystem.IO (should be {0}):\t[{1}]\t\tdrive= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputDrive);
-         Console.WriteLine("AlphaFS   (should be {0}):\t[{1}]\t\tdrive= {2}", true.ToString().ToUpperInvariant(), existAlpha, inputDrive);
+
+         Console.WriteLine("\nSystem.IO   (should be {0}):\t[{1}]\t\tdrive= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputDrive);
+         Console.WriteLine("AlphaFS     (should be {0}):\t[{1}]\t\tdrive= {2}", true.ToString().ToUpperInvariant(), existAlpha, inputDrive);
 
          Assert.AreEqual(sysIOshouldBe, existSysIO, "The result should be: " + sysIOshouldBe.ToString().ToUpperInvariant());
          Assert.IsTrue(existAlpha);
@@ -89,15 +93,12 @@ namespace AlphaFS.UnitTest
          inputDrive = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + driveSysIO.TrimStart('\\') : Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + driveSysIO) + @"\";
          existSysIO = System.IO.Directory.Exists(inputDrive);
          existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(inputDrive);
-         Console.WriteLine("\nSystem.IO (should be {0}):\t[{1}]\t\tdrive= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputDrive);
-         Console.WriteLine("AlphaFS   (should be {0}):\t[{1}]\t\tdrive= {2}", true.ToString().ToUpperInvariant(), existAlpha, inputDrive);
 
-         if (!isNetwork)
-            Console.WriteLine("BUG: AlphaFS should return TRUE.");
-
-
+         Console.WriteLine("\nSystem.IO   (should be {0}):\t[{1}]\t\tdrive= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputDrive);
+         Console.WriteLine("AlphaFS     (should be {0}):\t[{1}]\t\tdrive= {2}", true.ToString().ToUpperInvariant(), existAlpha, inputDrive);
+         
          Assert.AreEqual(sysIOshouldBe, existSysIO, "The result should be: " + sysIOshouldBe.ToString().ToUpperInvariant());
-         Assert.AreEqual(isNetwork, existAlpha);
+         Assert.IsTrue(existAlpha);
 
 
          Console.WriteLine();
