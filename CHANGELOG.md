@@ -8,7 +8,7 @@ title: Changelog
 Changelog
 =========
 
-Version 2.2  (2018-02-xx)
+Version 2.2  (2018-03-25)
 -----------
 
 ### Bugs Fixed
