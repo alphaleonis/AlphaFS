@@ -6,7 +6,7 @@
 name: AlphaFS
 
 # Short bio or description (displayed in the header)
-description: Bringing Windows Volume Shadow Copy Service to .NET
+description: AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes.
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: images/avatar.png
@@ -56,6 +56,8 @@ menu:
            url: /doc/2.0/index.html
          - title: Version 2.1
            url: /doc/2.1/index.html
+         - title: Version 2.2
+           url: /doc/2.2/index.html
    - title: Changelog
      url: /changelog/
 
