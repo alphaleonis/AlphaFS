@@ -33,11 +33,11 @@
     <FrameworkVersion>.NET Framework 4.0</FrameworkVersion>
     <RootNamespaceContainer>True</RootNamespaceContainer>
     <RootNamespaceTitle>API Reference</RootNamespaceTitle>
-    <HelpTitle>AlphaFS 2.1 Documentation</HelpTitle>
-    <CopyrightText>Copyright %28C%29 2008-2016 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</CopyrightText>
+    <HelpTitle>AlphaFS 2.2 Documentation</HelpTitle>
+    <CopyrightText>Copyright %28C%29 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</CopyrightText>
     <PresentationStyle>VS2013</PresentationStyle>
     <SyntaxFilters>Standard</SyntaxFilters>
-    <HelpFileVersion>2.1.3</HelpFileVersion>
+    <HelpFileVersion>2.2</HelpFileVersion>
     <DocumentationSources>
       <DocumentationSource sourceFile="..\Bin\$(Configuration)\Net452\AlphaFS.dll" />
       <DocumentationSource sourceFile="..\Bin\$(Configuration)\Net452\AlphaFS.xml" />
