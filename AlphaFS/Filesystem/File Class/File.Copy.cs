@@ -768,8 +768,9 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!driveChecked)
          {
-            // Check for local or network drives, such as: "C:" or "\\server\c$".
-            Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, isFolder, (int) Win32Errors.NO_ERROR, true, false);
+            // Check for local or network drives, such as: "C:" or "\\server\c$" (but not for "\\?\GLOBALROOT\").
+            if (!sourcePathLp.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+               Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, isFolder, (int) Win32Errors.NO_ERROR, true, false);
 
 
             // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
