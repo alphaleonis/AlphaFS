@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 2.2.1  (2018-xx-xx)
+Version 2.2.1  (2018-04-05)
 -------------
 
 ### Bugs Fixed
