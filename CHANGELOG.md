@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 2.2.1  (2018-xx-xx)
+-------------
+
+### Bugs Fixed
+
+- Issue #433: Directory.ExistsDriveOrFolderOrFile fails on global root path, so a simple file copy from a shadow copy fails with "device GLOBALROOT not ready" (Thx CyberSinh)
+
+
 Version 2.2  (2018-03-25)
 -----------
 
