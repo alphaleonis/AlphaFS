@@ -396,7 +396,7 @@
     <Compile Include="Filesystem\Structures, Enumerations\CopyMoveProgressResult.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DirectoryEnumerationOptions.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DeviceGuid.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\DiGetClassFlags.cs" />
+    <Compile Include="Filesystem\Structures, Enumerations\DEVICE_GET_CLASS_FLAGS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DosDeviceAttributes.cs" />
     <Compile Include="Filesystem\Native Other\FILE_INFO_BY_HANDLE_CLASS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\FinalPathFormats.cs" />
@@ -708,7 +708,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

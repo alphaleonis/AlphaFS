@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Start at the "Root" of the device tree of the specified machine.
 
          using (safeMachineHandle)
-         using (var safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref classGuid, IntPtr.Zero, IntPtr.Zero, NativeMethods.SetupDiGetClassDevsExFlags.Present | NativeMethods.SetupDiGetClassDevsExFlags.DeviceInterface, IntPtr.Zero, hostName, IntPtr.Zero))
+         using (var safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref classGuid, IntPtr.Zero, IntPtr.Zero, NativeMethods.DEVICE_INFORMATION_FLAGS.DIGCF_PRESENT | NativeMethods.DEVICE_INFORMATION_FLAGS.DIGCF_DEVICEINTERFACE, IntPtr.Zero, hostName, IntPtr.Zero))
          {
             NativeMethods.IsValidHandle(safeHandle, Marshal.GetLastWin32Error());
             
@@ -193,7 +193,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          var success = NativeMethods.SetupDiGetDeviceProperty(safeHandle, ref infoData, ref NativeMethods.DEVPROPKEYS.DeviceBusReportedDeviceDesc, ref propertyType, descriptionBuffer, descriptionBuffer.Length, ref requiredSize, 0);
 
-         Marshal.GetLastWin32Error();
+         var lastError = Marshal.GetLastWin32Error();
 
          if (success)
          {
