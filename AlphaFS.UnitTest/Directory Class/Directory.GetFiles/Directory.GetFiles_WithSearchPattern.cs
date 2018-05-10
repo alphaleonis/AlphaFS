@@ -31,60 +31,11 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_GetFiles_LocalAndNetwork_Success()
-      {
-         Directory_GetFiles(false);
-         Directory_GetFiles(true);
-      }
-
-
-      private void Directory_GetFiles(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var inputPath = UnitTestConstants.SysRoot;
-         if (isNetwork)
-            inputPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(inputPath);
-
-
-         Console.WriteLine("Input Directory Path: [{0}]\n", inputPath);
-
-
-         var systemIOCount = System.IO.Directory.GetFiles(inputPath).Count();
-         var alphaFSCount = Alphaleonis.Win32.Filesystem.Directory.GetFiles(inputPath).Count();
-
-         Console.WriteLine("\tSystem.IO files get: {0:N0}", systemIOCount);
-         Console.WriteLine("\tAlphaFS files get  : {0:N0}", alphaFSCount);
-
-
-         Assert.AreEqual(systemIOCount, alphaFSCount, "No files get, but it is expected.");
-
-
-         Console.WriteLine();
-      }
-
-
-      [TestMethod]
       public void Directory_GetFiles_WithSearchPattern_LocalAndNetwork_Success()
       {
          Directory_GetFiles_WithSearchPattern(true);
          Directory_GetFiles_WithSearchPattern(false);
       }
-
-
-      [TestMethod]
-      public void Directory_GetFiles_AbsoluteAndRelativePath_Local_Success()
-      {
-         Directory_GetFiles_AbsoluteAndRelativePath(true);
-         Directory_GetFiles_AbsoluteAndRelativePath(false);
-      }
-
-
-
-
-      
 
 
       private void Directory_GetFiles_WithSearchPattern(bool isLocal)
@@ -140,43 +91,6 @@ namespace AlphaFS.UnitTest
             Assert.IsFalse(System.IO.Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
             Console.WriteLine();
          }
-      }
-
-
-      private void Directory_GetFiles_AbsoluteAndRelativePath(bool isLocal)
-      {
-         UnitTestConstants.PrintUnitTestHeader(!isLocal);
-
-         var tempPath = UnitTestConstants.SysRoot32;
-         if (!isLocal) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-         Assert.IsTrue(System.IO.Path.IsPathRooted(tempPath));
-         Environment.CurrentDirectory = tempPath;
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-
-
-         Console.WriteLine("\nRelative Paths\n");
-         var files = Alphaleonis.Win32.Filesystem.Directory.GetFiles(".");
-         Assert.IsTrue(files.Length > 0);
-         foreach (var file in files)
-         {
-            Console.WriteLine("\tFile: " + file);
-            Assert.IsFalse(System.IO.Path.IsPathRooted(file), "IsPathRooted of return and argument types should match.");
-         }
-
-
-         Console.WriteLine("\nAbsolute Paths\n");
-         files = Alphaleonis.Win32.Filesystem.Directory.GetFiles(tempPath);
-         Assert.IsTrue(files.Length > 0);
-         foreach (var file in files)
-         {
-            Console.WriteLine("\tFile: " + file);
-            Assert.IsTrue(System.IO.Path.IsPathRooted(file), "IsPathRooted of return and argument types should match.");
-         }
-
-
-         Console.WriteLine();
       }
    }
 }
