@@ -184,7 +184,6 @@
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.Copy_CopySymbolicLink.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.Copy_CopySymbolicLink.cs" />
     <Compile Include="AlphaFS ProcessContext Class\AlphaFS_ProcessContextTest.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetUniqueVolumeNameForPath.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.VolumeTest.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetDriveType.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetDriveNameForNtDeviceName.cs" />
