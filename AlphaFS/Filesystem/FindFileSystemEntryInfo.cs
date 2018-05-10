@@ -74,6 +74,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          IsRelativePath = !Path.IsPathRooted(OriginalInputPath, false);
 
+         RelativeAbsolutePrefix = IsRelativePath ? InputPath.Replace(OriginalInputPath, string.Empty) : null;
+         
          SearchPattern = searchPattern.TrimEnd(Path.TrimEndChars); // .NET behaviour.
 
          FileSystemObjectType = null;
@@ -178,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>Gets a value indicating whether the specified path string contains absolute or relative path information.</value>
       public bool IsRelativePath { get; private set; }
 
-
+      
       /// <summary>Gets or sets the initial path to the folder.</summary>
       /// <value>The initial path to the file or folder in long path format.</value>
       public string OriginalInputPath { get; private set; }
@@ -189,6 +191,10 @@ namespace Alphaleonis.Win32.Filesystem
       public string InputPath { get; private set; }
 
 
+      /// <summary>Gets or sets the absolute full path prefix of the relative path.</summary>
+      private string RelativeAbsolutePrefix { get; set; }
+
+      
       /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FINDEX_INFO_LEVELS"/> to use.</summary>
       /// <value><see langword="true"/> indicates a folder object, <see langword="false"/> indicates a file object.</value>
       public bool IsDirectory { get; private set; }
@@ -305,7 +311,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       private FileSystemEntryInfo NewFilesystemEntry(string pathLp, string fileName, NativeMethods.WIN32_FIND_DATA win32FindData)
       {
-         return new FileSystemEntryInfo(win32FindData) {FullPath = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp) + fileName};
+         var fullPath = (IsRelativePath ? pathLp.Replace(RelativeAbsolutePrefix, string.Empty) : pathLp) + fileName;
+
+         return new FileSystemEntryInfo(win32FindData) {FullPath = fullPath};
+
+         //return new FileSystemEntryInfo(win32FindData) {FullPath = (IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : pathLp) + fileName};
       }
 
 
