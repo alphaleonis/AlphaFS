@@ -482,7 +482,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         if (newBuffer.Length - 1 - lastDirectorySeparatorPos - 1 > NativeMethods.MaxDirectoryLength)
+         if (newBuffer.Length - 1 - lastDirectorySeparatorPos > NativeMethods.MaxDirectoryLength)
             throw new PathTooLongException(path);
 
 
