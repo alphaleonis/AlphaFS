@@ -46,9 +46,6 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
-         Assert.IsTrue(System.IO.Path.IsPathRooted(tempPath));
-         Environment.CurrentDirectory = tempPath;
-
          Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
 
 

@@ -133,7 +133,7 @@ namespace AlphaFS.UnitTest
          var directories = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Folders);
          var files = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Files);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\tCounted: Directories = [{1}] Files = [{2}]", tempPath, directories, files);
+         Console.WriteLine("\nInput Directory Path: [{0}]\tCounted: Directories = [{1}]  Files = [{2}]", tempPath, directories, files);
 
          var foundFse = false;
          long numDirectories = 0;

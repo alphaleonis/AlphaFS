@@ -32,14 +32,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_GetFiles_RelativePath_LocalAndNetwork_Success()
+      public void Directory_GetDirectories_RelativePath_LocalAndNetwork_Success()
       {
-         Directory_GetFiles_RelativePath(false);
-         Directory_GetFiles_RelativePath(true);
+         Directory_GetDirectories_RelativePath(false);
+         Directory_GetDirectories_RelativePath(true);
       }
 
 
-      private void Directory_GetFiles_RelativePath(bool isNetwork)
+      private void Directory_GetDirectories_RelativePath(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -60,18 +60,18 @@ namespace AlphaFS.UnitTest
 
             var relativeFolder = folder.Parent.Name + @"\" + folder.Name;
 
-            var systemIOFiles = System.IO.Directory.GetFiles(relativeFolder, "*", System.IO.SearchOption.AllDirectories).OrderBy(path => path).ToArray();
-            var alphaFSFiles = Alphaleonis.Win32.Filesystem.Directory.GetFiles(relativeFolder, "*", System.IO.SearchOption.AllDirectories).OrderBy(path => path).ToArray();
+            var systemIOFolders = System.IO.Directory.GetDirectories(relativeFolder, "*", System.IO.SearchOption.AllDirectories).OrderBy(path => path).ToArray();
+            var alphaFSFolders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(relativeFolder, "*", System.IO.SearchOption.AllDirectories).OrderBy(path => path).ToArray();
 
-            Assert.AreEqual(systemIOFiles.Length, alphaFSFiles.Length);
+            Assert.AreEqual(systemIOFolders.Length, alphaFSFolders.Length);
 
 
             var fileCount = 0;
-            for (var i = 0; i < systemIOFiles.Length; i++)
+            for (var i = 0; i < systemIOFolders.Length; i++)
             {
-               Console.WriteLine("\t#{0:000}\t{1}", ++fileCount, alphaFSFiles[i]);
+               Console.WriteLine("\t#{0:000}\t{1}", ++fileCount, alphaFSFolders[i]);
 
-               Assert.AreEqual(systemIOFiles[i], alphaFSFiles[i]);
+               Assert.AreEqual(systemIOFolders[i], alphaFSFolders[i]);
             }
          }
 
