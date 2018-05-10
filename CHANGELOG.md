@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 2.2.2  (2018-XX-XX)
+-------------
+
+### Bugs Fixed
+
+- Issue #436: Directory.GetFiles() with relative path (Thx stellarbear)
+
+
 Version 2.2.1  (2018-04-05)
 -------------
 

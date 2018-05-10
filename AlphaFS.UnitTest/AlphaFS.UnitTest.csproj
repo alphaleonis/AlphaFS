@@ -206,10 +206,14 @@
     <Compile Include="Directory Class\Directory.Exists\Directory.Exists_NonExistingDirectoryDoesNotExist.cs" />
     <Compile Include="Directory Class\Directory.Exists\Directory.Exists_ExistingDirectoryExists.cs" />
     <Compile Include="Directory Class\Directory.Exists\Directory.ExistsTest.cs" />
+    <Compile Include="Directory Class\Directory.GetDirectories\Directory.GetDirectories_RelativePath.cs" />
+    <Compile Include="Directory Class\Directory.GetDirectories\Directory.GetDirectories_AbsolutePath.cs" />
+    <Compile Include="Directory Class\Directory.GetFiles\Directory.GetFiles_RelativePath.cs" />
+    <Compile Include="Directory Class\Directory.GetFiles\Directory.GetFiles_AbsolutePath.cs" />
     <Compile Include="Directory Class\Directory.GetLogicalDrives.cs" />
-    <Compile Include="Directory Class\Directory.GetFiles.cs" />
+    <Compile Include="Directory Class\Directory.GetFiles\Directory.GetFiles_WithSearchPattern.cs" />
     <Compile Include="Directory Class\Directory.GetFileSystemEntries.cs" />
-    <Compile Include="Directory Class\Directory.GetDirectories.cs" />
+    <Compile Include="Directory Class\Directory.GetDirectories\Directory.GetDirectories_WithSearchPattern.cs" />
     <Compile Include="Directory Class\Directory.EnumerateFiles.cs" />
     <Compile Include="Directory Class\Directory.EnumerateFileSystemEntries.cs" />
     <Compile Include="Directory Class\Directory.EnumerateDirectories.cs" />
