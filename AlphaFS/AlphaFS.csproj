@@ -331,6 +331,7 @@
     <Compile Include="Filesystem\Native Other\DiskInt13Union.cs" />
     <Compile Include="Filesystem\Native Other\EfiPartitionAttributes.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DetectionType.cs" />
+    <Compile Include="Filesystem\Structures, Enumerations\DEVICE_INFORMATION_FLAGS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DiskPartitionType.cs" />
     <Compile Include="Filesystem\Native Other\DISK_GEOMETRY_EX.cs" />
     <Compile Include="Filesystem\Native Other\DEVPROPKEY.cs" />
@@ -396,7 +397,6 @@
     <Compile Include="Filesystem\Structures, Enumerations\CopyMoveProgressResult.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DirectoryEnumerationOptions.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DeviceGuid.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\DEVICE_GET_CLASS_FLAGS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DosDeviceAttributes.cs" />
     <Compile Include="Filesystem\Native Other\FILE_INFO_BY_HANDLE_CLASS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\FinalPathFormats.cs" />
@@ -708,7 +708,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
