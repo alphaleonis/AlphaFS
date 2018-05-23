@@ -223,6 +223,7 @@
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Overwrite_DestinationDirectoryAlreadyExists.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder.cs" />
     <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_CatchAlreadyExistsException_DestinationDirectoryAlreadyExists.cs" />
+    <Compile Include="Directory Class\Directory.Move\Directory.Move_UsingFiles.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Rename_DifferentCasingDirectory.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Rename.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_SameVolume.cs" />
@@ -278,6 +279,9 @@
     <Compile Include="File Class\File.OpenWrite.cs" />
     <Compile Include="File Class\File.OpenText.cs" />
     <Compile Include="File Class\File.OpenRead.cs" />
+    <Compile Include="File Class\File.Open\File_Open_OverlappedIO.cs" />
+    <Compile Include="File Class\File.Open\File_Open_Create.cs" />
+    <Compile Include="File Class\File.Open\File_Open_Append_NoObjectDisposedException.cs" />
     <Compile Include="File Class\File.Replace.cs" />
     <Compile Include="File Class\File.Move\File_Move.cs" />
     <Compile Include="File Class\File.Copy\File.CopyTest.cs" />
@@ -292,7 +296,7 @@
     <Compile Include="AlphaFS Alternate Data Streams\AlphaFS_File.EnumerateAlternateDataStreams.cs" />
     <Compile Include="File Class\File.Create.cs" />
     <Compile Include="File Class\File.GetTimestamps.cs" />
-    <Compile Include="File Class\File.Open.cs" />
+    <Compile Include="File Class\File.Open\File_Open_Append.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_File.ExportImportEncryptedFileRaw.cs" />
     <Compile Include="File Class\File.Exists.cs" />
     <Compile Include="File Class\File.SetAccessControl.cs" />

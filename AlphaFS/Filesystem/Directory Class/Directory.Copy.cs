@@ -696,7 +696,7 @@ namespace Alphaleonis.Win32.Filesystem
          string sourcePathLp;
          string destinationPathLp;
          bool isCopy;
-
+         
          // A Move action fallback using Copy + Delete.
          bool emulateMove;
 
@@ -706,25 +706,29 @@ namespace Alphaleonis.Win32.Filesystem
          
 
          File.ValidateAndUpdatePathsAndOptions(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
-         
+
+
+         // Directory.Move is applicable to both folders and files.
+         var isFile = File.ExistsCore(transaction, false, sourcePath, PathFormat.LongFullPath);
+
 
          // Check for local or network drives, such as: "C:" or "\\server\c$".
-         ExistsDriveOrFolderOrFile(transaction, sourcePathLp, true, (int) Win32Errors.NO_ERROR, true, false);
+         ExistsDriveOrFolderOrFile(transaction, sourcePathLp, !isFile, (int) Win32Errors.NO_ERROR, true, false);
          
 
          // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
          if (!delayUntilReboot)
-            ExistsDriveOrFolderOrFile(transaction, destinationPathLp, true, (int) Win32Errors.NO_ERROR, true, false);
+            ExistsDriveOrFolderOrFile(transaction, destinationPathLp, !isFile, (int) Win32Errors.NO_ERROR, true, false);
          
          
          // Process Move action options, possible fallback to Copy action.
          if (!isCopy && !deleteOnStartup)
             ValidateAndUpdateCopyMoveAction(sourcePathLp, destinationPathLp, copyOptions, moveOptions, out copyOptions, out moveOptions, out isCopy, out emulateMove);
-
-
+         
+         
          pathFormat = PathFormat.LongFullPath;
-
-         var cmr = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, isCopy, true, preserveDates, emulateMove);
+         
+         var cmr = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, isCopy, !isFile, preserveDates, emulateMove);
          
 
          if (isCopy)
@@ -745,7 +749,11 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
             else
-               cmr = CopyDeleteCore(transaction, sourcePathLp, destinationPathLp, preserveDates, emulateMove, copyOptions, progressHandler, userProgressData, cmr);
+            {
+               cmr = isFile
+                  ? File.CopyMoveCore(transaction, true, false, sourcePathLp, destinationPathLp, copyOptions, null, preserveDates, progressHandler, userProgressData, cmr, PathFormat.LongFullPath)
+                  : CopyDeleteDirectoryCore(transaction, sourcePathLp, destinationPathLp, preserveDates, emulateMove, copyOptions, progressHandler, userProgressData, cmr);
+            }
          }
 
          // Move
@@ -754,7 +762,7 @@ namespace Alphaleonis.Win32.Filesystem
             // AlphaFS feature to overcome a MoveFileXxx limitation.
             // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
 
-            if (!delayUntilReboot && File.CanOverwrite(moveOptions))
+            if (!isFile && !delayUntilReboot && File.CanOverwrite(moveOptions))
                DeleteDirectoryCore(transaction, null, destinationPathLp, true, true, true, pathFormat);
 
             // 2017-06-07: A large target directory will probably create a progress-less delay in UI.
@@ -764,7 +772,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Moves a file or directory, including its children.
             // Copies an existing directory, including its children to a new directory.
 
-            cmr = File.CopyMoveCore(transaction, true, true, sourcePathLp, destinationPathLp, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, cmr, pathFormat);
+            cmr = File.CopyMoveCore(transaction, true, !isFile, sourcePathLp, destinationPathLp, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, cmr, pathFormat);
 
 
             // If the move happened on the same drive, we have no knowledge of the number of files/folders.
@@ -780,7 +788,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private static CopyMoveResult CopyDeleteCore(KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove, CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult)
+      private static CopyMoveResult CopyDeleteDirectoryCore(KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove, CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult)
       {
          var cmr = copyMoveResult ?? new CopyMoveResult(sourcePathLp, destinationPathLp, true, true, preserveDates, emulateMove);
          
@@ -870,7 +878,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          return cmr;
       }
-      
+
 
       private static void ValidateAndUpdateCopyMoveAction(string sourcePathLp, string destinationPathLp, CopyOptions? copyOptions, MoveOptions? moveOptions, out CopyOptions? newCopyOptions, out MoveOptions? newMoveOptions, out bool isCopy, out bool emulateMove)
       {
