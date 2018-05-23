@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using Microsoft.Win32.SafeHandles;
 using System.IO;
 using System.Security;
@@ -31,6 +32,8 @@ namespace Alphaleonis.Win32.Filesystem
    partial class File
    {
       #region Using FileAccess
+
+      #region .NET
 
       /// <summary>Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
       /// <param name="path">The file to open.</param>
@@ -64,6 +67,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return OpenCore(null, path, mode, access, share, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
+
+      #endregion // .NET
 
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
@@ -135,9 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return OpenCore(null, path, mode, access, share, extendedAttributes, null, null, pathFormat);
       }
-
-      // New below
-
+      
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and sharing permission, and buffer size.</summary>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">A constant that determines how to open or create the file.</param>
@@ -304,6 +307,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       #endregion // Using FileAccess
+
 
       #region Using FileSystemRights
 
