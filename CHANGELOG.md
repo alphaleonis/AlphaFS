@@ -6,9 +6,9 @@ Version 2.2.2  (2018-XX-XX)
 
 ### Bugs Fixed
 
-- Issue #436: Directory.GetFiles() with relative path (Thx stellarbear)
-- Issue #437: Fixed PathTooLongException for boundary case of directory name length in Path.NormalizePath (Thx okrushelnitsky)
-
+- Issue #434: `Directory.Move` operation worked in v2.0.1, but now fails in v.2.2.1
+- Issue #436: `Directory.GetFiles()` with relative path (Thx stellarbear)
+- Issue #437: Fixed `PathTooLongException` for boundary case of directory name length in `Path.NormalizePath` (Thx okrushelnitsky)
 
 Version 2.2.1  (2018-04-05)
 -------------

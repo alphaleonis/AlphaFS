@@ -223,6 +223,7 @@
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Overwrite_DestinationDirectoryAlreadyExists.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder.cs" />
     <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_CatchAlreadyExistsException_DestinationDirectoryAlreadyExists.cs" />
+    <Compile Include="Directory Class\Directory.Move\Directory.Move_UsingFiles.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Rename_DifferentCasingDirectory.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Rename.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_SameVolume.cs" />

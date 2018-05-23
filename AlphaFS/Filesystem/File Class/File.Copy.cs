@@ -800,7 +800,7 @@ namespace Alphaleonis.Win32.Filesystem
          var cmr = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, isCopy, isFolder, preserveDates, emulateMove);
 
          var isMove = !isCopy;
-         var isSingleFileAction = null == copyMoveResult && !isFolder;
+         var isSingleFileAction = null == copyMoveResult && !isFolder || cmr.IsFile;
 
          preserveDates = preserveDates && isCopy && !isFolder;
 
