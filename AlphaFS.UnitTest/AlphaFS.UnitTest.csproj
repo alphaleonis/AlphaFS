@@ -170,6 +170,10 @@
     <Compile Include="AlphaFS Crc Class\AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_File.GetFileInfoByHandle.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_FileIdInfoTest.cs" />
+    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeFileInfo.cs" />
+    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeDirectoryInfo.cs" />
+    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo.cs" />
+    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_FolderWithSpaceAsName.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.GetFileSystemEntryInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_FileSystemEntryInfoTest.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File.GetFileSystemEntryInfo.cs" />
@@ -196,6 +200,7 @@
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.DefineDosDevice.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetDriveFormat.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.EnumerateVolumes.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_WithProgress.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder.cs" />
@@ -243,11 +248,11 @@
     <Compile Include="AlphaFS Compression\AlphaFS_Directory.Compress_And_Decompress.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_Directory.Encrypt_And_Decrypt.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters.cs" />
-    <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.IsEmpty.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.IsEmpty.cs" />
     <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.DeleteEmptySubdirectories.cs" />
     <Compile Include="AlphaFS Timestamps\Directory.SetTimestamps.cs" />
     <Compile Include="AlphaFS Timestamps\Directory.GetTimestamps.cs" />
-    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos.cs" />
+    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeString.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateSymbolicLink_And_GetLinkTargetInfo.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction.cs" />
     <Compile Include="Directory Class\Directory.CurrentDirectory.cs" />

@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   partial class DirectoryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
