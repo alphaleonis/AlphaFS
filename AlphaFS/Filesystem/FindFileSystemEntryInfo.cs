@@ -297,10 +297,9 @@ namespace Alphaleonis.Win32.Filesystem
                ThrowPossibleException((uint) lastError, pathLp);
             }
 
-            // When the handle is null and we are still here, it means the ErrorHandler is active,
-            // preventing the Exception from being thrown.
+            // When the handle is null and we are still here, it means the ErrorHandler is active, preventing the Exception from being thrown.
 
-            if (null != handle)
+            if (null != handle && lastError != Win32Errors.NO_ERROR)
                VerifyInstanceType(win32FindData);
          }
 
