@@ -24,7 +24,6 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Shell32 and is intended to contain all Shell32 and Shell32Info Unit Tests.</summary>
    public partial class AlphaFS_Shell32Test
    {
       [TestMethod]
@@ -54,18 +53,19 @@ namespace AlphaFS.UnitTest
          var cnt = 0;
          foreach (var file in System.IO.Directory.EnumerateFiles(inputPath))
          {
-            var info = Alphaleonis.Win32.Filesystem.Shell32.GetShell32Info(file);
+            var shell32Info = Alphaleonis.Win32.Filesystem.Shell32.GetShell32Info(file);
 
             // Not much of a test...
-            Assert.IsNotNull(info);
+            Assert.IsNotNull(shell32Info);
 
-            UnitTestConstants.Dump(info, -15);
+            UnitTestConstants.Dump(shell32Info, -15);
 
             if (++cnt == 5)
                break;
          }
 
          Console.WriteLine();
+
          Assert.IsTrue(cnt > 0, "No entries enumerated.");
       }
    }

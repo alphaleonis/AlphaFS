@@ -21,46 +21,33 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
    public partial class AlphaFS_Shell32Test
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
-      public void AlphaFS_Shell32Info_InitializeInstance_LocalAndNetwork_Success()
+      public void AlphaFS_Shell32_PathCreateFromUrlAlloc()
       {
-         Shell32Info_InitializeInstance(false);
-         Shell32Info_InitializeInstance(true);
-      }
+         Console.WriteLine("Filesystem.Shell32.PathCreateFromUrlAlloc()");
+
+         var urlPath = Alphaleonis.Win32.Filesystem.Shell32.UrlCreateFromPath(UnitTestConstants.AppData);
+         var filePath = Alphaleonis.Win32.Filesystem.Shell32.PathCreateFromUrlAlloc(urlPath);
+
+         Console.WriteLine("\n\tDirectory                  : [{0}]", UnitTestConstants.AppData);
+         Console.WriteLine("\n\tShell32.UrlCreateFromPath(): [{0}]", urlPath);
+         Console.WriteLine("\n\tShell32.PathCreateFromUrlAlloc() == [{0}]\n", filePath);
+
+         var startsWith = urlPath.StartsWith("file:///");
+         var equalsAppData = filePath.Equals(UnitTestConstants.AppData);
+
+         Console.WriteLine("\n\turlPath.StartsWith(\"file:///\") == [{0}]: {1}", UnitTestConstants.TextTrue, startsWith);
+         Console.WriteLine("\n\tfilePath.Equals(AppData)       == [{0}]: {1}\n", UnitTestConstants.TextTrue, equalsAppData);
 
 
+         Assert.IsTrue(startsWith);
 
-
-      private void Shell32Info_InitializeInstance(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var file = rootDir.RandomFileFullPath;
-
-            var shell32Info = new Alphaleonis.Win32.Filesystem.Shell32Info(file);
-            
-            Assert.IsTrue(null != shell32Info);
-
-            UnitTestConstants.Dump(shell32Info, -15);
-         }
-
-         Console.WriteLine();
+         Assert.IsTrue(equalsAppData);
       }
    }
 }

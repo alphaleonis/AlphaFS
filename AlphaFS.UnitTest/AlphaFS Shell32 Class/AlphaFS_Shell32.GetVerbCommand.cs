@@ -48,6 +48,7 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
+
          // Assumption: Extention: .txt is associated with: C:\Windows\System32\notepad.exe
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
@@ -60,14 +61,23 @@ namespace AlphaFS.UnitTest
 
             var shell32Info = Alphaleonis.Win32.Filesystem.Shell32.GetShell32Info(file);
 
+
+
             var cmd = "open";
             var result = shell32Info.GetVerbCommand(cmd);
             Console.WriteLine("\tMethod: Shell32Info.GetVerbCommand(\"{0}\")  == [{1}]", cmd, result);
+
+
             Assert.IsTrue(result.StartsWith(UnitTestConstants.NotepadExe, StringComparison.OrdinalIgnoreCase));
+
+
+
 
             cmd = "print";
             result = shell32Info.GetVerbCommand(cmd);
             Console.WriteLine("\tMethod: Shell32Info.GetVerbCommand(\"{0}\") == [{1}]\n", cmd, result);
+
+
             Assert.IsTrue(result.StartsWith(UnitTestConstants.NotepadExe, StringComparison.OrdinalIgnoreCase));
          }
       }

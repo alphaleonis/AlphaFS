@@ -187,7 +187,10 @@
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.Copy_CopySymbolicLink.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile.cs" />
     <Compile Include="AlphaFS ProcessContext Class\AlphaFS_ProcessContextTest.cs" />
-    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.GetFileAssociation.cs" />
+    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetFileAssociation.cs" />
+    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.PathCreateFromUrlAlloc.cs" />
+    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.PathCreateFromUrl.cs" />
+    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.PathFileExists.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetUniqueVolumeNameForPath.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.VolumeTest.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetDriveType.cs" />
@@ -348,7 +351,7 @@
     <Compile Include="Path Class\Path.GetExtension.cs" />
     <Compile Include="Path Class\Path.GetDirectoryName.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetFileIcon.cs" />
-    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.GetVerbCommand.cs" />
+    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetVerbCommand.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.InitializeInstance.cs" />
     <Compile Include="UnitTest Utility\InputPaths.cs" />
     <Compile Include="UnitTest Utility\GetRandomFileNameWithDiacriticCharacters.cs" />
@@ -360,7 +363,7 @@
     <Compile Include="UnitTest Utility\CreateFile.cs" />
     <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
     <Compile Include="UnitTest Utility\FileAssert.cs" />
-    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.cs" />
+    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.UrlIs.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance.cs" />
     <Compile Include="File Class\FileTest.cs" />
     <Compile Include="Path Class\PathTest.cs" />
