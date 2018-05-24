@@ -24,20 +24,20 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_MoveTest
+   public partial class AlphaFS_Directory_CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Copy_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive_LocalAndNetwork_Success()
       {
-         Directory_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive(false);
-         Directory_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive(true);
+         Directory_Copy_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(false);
+         Directory_Copy_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(true);
       }
 
 
-      private void Directory_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive(bool isNetwork)
+      private void Directory_Copy_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
 
          var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
-         
+
          var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source Folder";
          var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination Folder";
 
@@ -63,14 +63,14 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, dstFolder, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
+            Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder);
          }
          catch (Exception ex)
          {
             var exType = ex.GetType();
 
             gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
-
+                              
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 
@@ -78,7 +78,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The directory exists, but is expected not to.");
-         
+
 
          Console.WriteLine();
       }

@@ -25,20 +25,20 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   public partial class AlphaFS_Directory_CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Delete_CatchUnauthorizedAccessException_DirectoryHasDenyPermission_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Copy_ThrowAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
-         Directory_Delete_CatchUnauthorizedAccessException_DirectoryHasDenyPermission(false);
-         Directory_Delete_CatchUnauthorizedAccessException_DirectoryHasDenyPermission(true);
+         Directory_Copy_ThrowAlreadyExistsException_DestinationFileAlreadyExists(false);
+         Directory_Copy_ThrowAlreadyExistsException_DestinationFileAlreadyExists(true);
       }
 
 
-      private void Directory_Delete_CatchUnauthorizedAccessException_DirectoryHasDenyPermission(bool isNetwork)
+      private void Directory_Copy_ThrowAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -50,35 +50,36 @@ namespace AlphaFS.UnitTest
          var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
+         
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+            var dstFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Destination Folder"));
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder);
+            Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
 
-            // Set DENY permission for current user.
-            UnitTestConstants.FolderDenyPermission(true, folder.FullName);
+
+            UnitTestConstants.CreateDirectoriesAndFiles(srcFolder.FullName, 1, false, false, true);
+
+
+            // 1st Copy action.
+            Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName);
 
 
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName);
-
+               // 2nd Copy action.
+               Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName);
             }
             catch (Exception ex)
             {
                var exType = ex.GetType();
 
-               gotException = exType == typeof(UnauthorizedAccessException);
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
 
                Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-            }
-            finally
-            {
-               // Remove DENY permission for current user.
-               UnitTestConstants.FolderDenyPermission(false, folder.FullName);
             }
          }
 

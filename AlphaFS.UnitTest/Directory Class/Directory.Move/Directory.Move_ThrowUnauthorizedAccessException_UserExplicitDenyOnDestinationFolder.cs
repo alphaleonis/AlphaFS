@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder_LocalAndNetwork_Success()
+      public void Directory_Move_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder_LocalAndNetwork_Success()
       {
-         Directory_Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(false);
-         Directory_Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(true);
+         Directory_Move_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(false);
+         Directory_Move_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(true);
       }
 
 
-      private void Directory_Move_CatchUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(bool isNetwork)
+      private void Directory_Move_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();

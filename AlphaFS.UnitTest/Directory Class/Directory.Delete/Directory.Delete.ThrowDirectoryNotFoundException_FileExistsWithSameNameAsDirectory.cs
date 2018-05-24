@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
+      public void Directory_Delete_ThrowhDirectoryNotFoundException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
       {
-         Directory_Delete_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(false);
-         Directory_Delete_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(true);
+         Directory_Delete_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(false);
+         Directory_Delete_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(true);
       }
 
 
-      private void Directory_Delete_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(bool isNetwork)
+      private void Directory_Delete_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();

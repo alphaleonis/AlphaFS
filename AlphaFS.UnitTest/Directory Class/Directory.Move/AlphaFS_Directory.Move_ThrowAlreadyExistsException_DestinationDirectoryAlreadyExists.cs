@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_CatchIOException_SameSourceAndDestination_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists_LocalAndNetwork_Success()
       {
-         Directory_Move_CatchIOException_SameSourceAndDestination(false);
-         Directory_Move_CatchIOException_SameSourceAndDestination(true);
+         Directory_Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists(false);
+         Directory_Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists(true);
       }
 
 
-      private void Directory_Move_CatchIOException_SameSourceAndDestination(bool isNetwork)
+      private void Directory_Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -55,29 +55,30 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
-            var dstFolder = srcFolder;
-
+            var dstFfolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Destination Folder"));
 
             Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
-            Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
-
+            Console.WriteLine("Dst Directory Path: [{0}]", dstFfolder.FullName);
             
+            UnitTestConstants.CreateDirectoriesAndFiles(srcFolder.FullName, 1, false, false, true);
+
+
             try
             {
-               System.IO.Directory.Move(srcFolder.FullName, dstFolder.FullName);
+               Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFfolder.FullName);
             }
             catch (Exception ex)
             {
                var exType = ex.GetType();
 
-               gotException = exType == typeof(System.IO.IOException);
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
 
                Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
+
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 
          Console.WriteLine();

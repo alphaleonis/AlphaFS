@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -29,16 +28,16 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-
+      
       [TestMethod]
-      public void AlphaFS_Directory_Delete_CatchDirectoryReadOnlyException_DirectoryIsReadOnly_LocalAndNetwork_Success()
+      public void Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive_LocalAndNetwork_Success()
       {
-         Directory_Delete_CatchDirectoryReadOnlyException_DirectoryIsReadOnly(false);
-         Directory_Delete_CatchDirectoryReadOnlyException_DirectoryIsReadOnly(true);
+         Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(false);
+         Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(true);
       }
 
 
-      private void Directory_Delete_CatchDirectoryReadOnlyException_DirectoryIsReadOnly(bool isNetwork)
+      private void Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -47,37 +46,27 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var tempPath = UnitTestConstants.TempFolder;
+         var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
+
+         var folder = nonExistingDriveLetter + @":\NonExisting Source Folder";
          if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-         
+            folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
 
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+
+         Console.WriteLine("Input Directory Path: [{0}]", folder);
+
+
+         try
          {
-            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+            Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+         }
+         catch (Exception ex)
+         {
+            var exType = ex.GetType();
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder);
+            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
 
-            System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.ReadOnly);
-
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName);
-
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DirectoryReadOnlyException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-            }
-            finally
-            { 
-               System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.Normal);
-            }
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 
 

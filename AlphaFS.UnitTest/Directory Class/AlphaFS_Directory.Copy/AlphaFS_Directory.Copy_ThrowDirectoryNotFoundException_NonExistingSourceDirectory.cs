@@ -24,20 +24,20 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_MoveTest
+   public partial class AlphaFS_Directory_CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Move_CatchDirectoryNotFoundException_NonExistingSourceDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory_LocalAndNetwork_Success()
       {
-         Directory_Move_CatchDirectoryNotFoundException_NonExistingSourceDirectory(false);
-         Directory_Move_CatchDirectoryNotFoundException_NonExistingSourceDirectory(true);
+         Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(false);
+         Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(true);
       }
 
 
-      private void Directory_Move_CatchDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
+      private void Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -62,7 +62,7 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, dstFolder);
+            Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder);
          }
          catch (Exception ex)
          {
@@ -79,9 +79,9 @@ namespace AlphaFS.UnitTest
 
 
          Assert.IsNotNull(exMessage);
-            
+
          Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
-         
+
 
          Console.WriteLine();
       }

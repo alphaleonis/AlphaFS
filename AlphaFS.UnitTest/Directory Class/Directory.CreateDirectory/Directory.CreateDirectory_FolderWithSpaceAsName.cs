@@ -31,20 +31,18 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_And_Delete_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_CreateDirectory_FolderWithSpaceAsName_LocalAndNetwork_Success()
       {
-         Directory_CreateDirectory_And_Delete(false);
-         Directory_CreateDirectory_And_Delete(true);
+         Directory_CreateDirectory_FolderWithSpaceAsName(false);
+         Directory_CreateDirectory_FolderWithSpaceAsName(true);
       }
 
 
 
 
-      private void Directory_CreateDirectory_And_Delete(bool isNetwork)
+      private void Directory_CreateDirectory_FolderWithSpaceAsName(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
@@ -55,40 +53,23 @@ namespace AlphaFS.UnitTest
          {
             var folder = rootDir.Directory.FullName;
 
-            // Directory depth level.
-            var level = new Random().Next(10, 500);
-
-#if NET35
-            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-            folder += UnitTestConstants.EMspace;
-#endif
-
-            Console.WriteLine("\tInput Directory Path: [{0}]", folder);
-            Console.WriteLine();
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
 
-            var root = folder;
+            var numSpace = 1;
+            var spaceFolder1 = folder + @"\" + new string(' ', numSpace);
 
-            for (var i = 0; i < level; i++)
-            {
-               var isEven = i % 2 == 0;
-               root = System.IO.Path.Combine(root, (isEven ? "Level-" : "Lëvél-") + (i + 1) + (isEven ? "-subFolder" : "-sübFôldér"));
-            }
+            var dirInfo1 = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(spaceFolder1, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
 
-            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(root);
-
-            Console.WriteLine("\tCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level.ToString(), root.Length.ToString());
-            Console.WriteLine();
-
-            Console.WriteLine("\t{0}", root);
-            Console.WriteLine();
-
-            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(root), "The directory does not exists, but is expected to.");
+            Assert.IsTrue(dirInfo1.Exists, "The folder with " + numSpace + " space does not exist, but is expected to.");
 
 
-            Alphaleonis.Win32.Filesystem.Directory.Delete(folder, true);
+            numSpace = 5;
+            var spaceFolder2 = folder + @"\" + new string(' ', numSpace);
 
-            Assert.IsFalse(System.IO.Directory.Exists(folder), "The directory exists, but is expected not to.");
+            var dirInfo2 = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(spaceFolder2, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
+
+            Assert.IsTrue(dirInfo2.Exists, "The folder with " + numSpace + " spaces does not exist, but is expected to.");
          }
 
          Console.WriteLine();

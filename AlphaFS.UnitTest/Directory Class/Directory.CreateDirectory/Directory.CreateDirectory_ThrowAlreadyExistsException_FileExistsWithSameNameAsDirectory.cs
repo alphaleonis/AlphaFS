@@ -31,20 +31,18 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_And_Delete_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_CreateDirectory_ThrowAlreadyExistsException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
       {
-         Directory_CreateDirectory_And_Delete(false);
-         Directory_CreateDirectory_And_Delete(true);
+         Directory_CreateDirectory_ThrowAlreadyExistsException_FileExistsWithSameNameAsDirectory(false);
+         Directory_CreateDirectory_ThrowAlreadyExistsException_FileExistsWithSameNameAsDirectory(true);
       }
 
 
 
 
-      private void Directory_CreateDirectory_And_Delete(bool isNetwork)
+      private void Directory_CreateDirectory_ThrowAlreadyExistsException_FileExistsWithSameNameAsDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
@@ -53,42 +51,25 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.Directory.FullName;
+            var file = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput File Path: [{0}]", file);
 
-            // Directory depth level.
-            var level = new Random().Next(10, 500);
-
-#if NET35
-            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-            folder += UnitTestConstants.EMspace;
-#endif
-
-            Console.WriteLine("\tInput Directory Path: [{0}]", folder);
-            Console.WriteLine();
+            using (System.IO.File.Create(file)) { }
 
 
-            var root = folder;
-
-            for (var i = 0; i < level; i++)
+            var gotException = false;
+            try
             {
-               var isEven = i % 2 == 0;
-               root = System.IO.Path.Combine(root, (isEven ? "Level-" : "Lëvél-") + (i + 1) + (isEven ? "-subFolder" : "-sübFôldér"));
+               Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(file);
+
             }
-
-            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(root);
-
-            Console.WriteLine("\tCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level.ToString(), root.Length.ToString());
-            Console.WriteLine();
-
-            Console.WriteLine("\t{0}", root);
-            Console.WriteLine();
-
-            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(root), "The directory does not exists, but is expected to.");
-
-
-            Alphaleonis.Win32.Filesystem.Directory.Delete(folder, true);
-
-            Assert.IsFalse(System.IO.Directory.Exists(folder), "The directory exists, but is expected not to.");
+            catch (Exception ex)
+            {
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("AlreadyExistsException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+            }
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
 
          Console.WriteLine();

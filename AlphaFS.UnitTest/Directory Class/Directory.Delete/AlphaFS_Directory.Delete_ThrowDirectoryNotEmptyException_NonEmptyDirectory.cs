@@ -25,20 +25,20 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_Directory_CopyTest
+   public partial class Directory_DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
+      public void Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetwork_Success()
       {
-         Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
-         Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(true);
+         Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(false);
+         Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(true);
       }
 
 
-      private void Directory_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
+      private void Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -50,34 +50,31 @@ namespace AlphaFS.UnitTest
          var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-         
+
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
-            var dstFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Destination Folder"));
+            var folder = rootDir.RandomDirectoryFullPath;
+            var file = System.IO.Path.Combine(folder, UnitTestConstants.GetRandomFileNameWithDiacriticCharacters());
 
-            Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
-            Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
+            Console.WriteLine("Input File Path     : [{0}]", file);
 
+            System.IO.Directory.CreateDirectory(folder);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(srcFolder.FullName, 1, false, false, true);
-
-
-            // 1st Copy action.
-            Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName);
+            using (System.IO.File.Create(System.IO.Path.Combine(folder, file))) { }
 
 
             try
             {
-               // 2nd Copy action.
-               Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName);
+               Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+
             }
             catch (Exception ex)
             {
                var exType = ex.GetType();
 
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException);
 
                Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }

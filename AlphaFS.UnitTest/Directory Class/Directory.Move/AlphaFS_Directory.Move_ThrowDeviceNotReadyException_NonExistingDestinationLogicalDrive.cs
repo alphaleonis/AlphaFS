@@ -24,31 +24,32 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_Directory_CopyTest
+   public partial class Directory_MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive_LocalAndNetwork_Success()
       {
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(false);
-         Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(true);
+         Directory_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(false);
+         Directory_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(true);
       }
 
 
-      private void Directory_Copy_CatchDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
+      private void Directory_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
 
 
          var gotException = false;
-         string exMessage = null;
 
 
+         var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
+         
          var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source Folder";
-         var dstFolder = UnitTestConstants.SysDrive + @"\NonExisting Destination Folder";
+         var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination Folder";
 
          if (isNetwork)
          {
@@ -62,26 +63,22 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder);
+            Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, dstFolder, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
          }
          catch (Exception ex)
          {
             var exType = ex.GetType();
-            exMessage = ex.Message;
 
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
+            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
 
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, exMessage);
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 
 
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
-
-         Assert.IsNotNull(exMessage);
-
-         Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
-
+         Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The directory exists, but is expected not to.");
+         
 
          Console.WriteLine();
       }

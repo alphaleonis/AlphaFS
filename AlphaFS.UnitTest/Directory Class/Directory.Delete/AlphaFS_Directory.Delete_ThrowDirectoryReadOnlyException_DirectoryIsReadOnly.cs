@@ -25,71 +25,64 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_CreateDirectoryTest
+   public partial class Directory_DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_And_Delete_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly_LocalAndNetwork_Success()
       {
-         Directory_CreateDirectory_And_Delete(false);
-         Directory_CreateDirectory_And_Delete(true);
+         Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(false);
+         Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(true);
       }
 
 
-
-
-      private void Directory_CreateDirectory_And_Delete(bool isNetwork)
+      private void Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
 
 
-         var tempPath = System.IO.Path.GetTempPath();
+         var gotException = false;
+
+
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
+         
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.Directory.FullName;
+            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
 
-            // Directory depth level.
-            var level = new Random().Next(10, 500);
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
-#if NET35
-            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-            folder += UnitTestConstants.EMspace;
-#endif
-
-            Console.WriteLine("\tInput Directory Path: [{0}]", folder);
-            Console.WriteLine();
+            System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.ReadOnly);
 
 
-            var root = folder;
-
-            for (var i = 0; i < level; i++)
+            try
             {
-               var isEven = i % 2 == 0;
-               root = System.IO.Path.Combine(root, (isEven ? "Level-" : "Lëvél-") + (i + 1) + (isEven ? "-subFolder" : "-sübFôldér"));
+               Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName);
+
             }
+            catch (Exception ex)
+            {
+               var exType = ex.GetType();
 
-            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(root);
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DirectoryReadOnlyException);
 
-            Console.WriteLine("\tCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level.ToString(), root.Length.ToString());
-            Console.WriteLine();
-
-            Console.WriteLine("\t{0}", root);
-            Console.WriteLine();
-
-            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(root), "The directory does not exists, but is expected to.");
-
-
-            Alphaleonis.Win32.Filesystem.Directory.Delete(folder, true);
-
-            Assert.IsFalse(System.IO.Directory.Exists(folder), "The directory exists, but is expected not to.");
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            }
+            finally
+            { 
+               System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.Normal);
+            }
          }
+
+
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
 
          Console.WriteLine();
       }

@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -31,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetwork_Success()
+      public void Directory_Delete_ThrowDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
       {
-         Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory(false);
-         Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory(true);
+         Directory_Delete_ThrowDirectoryNotFoundException_NonExistingDirectory(false);
+         Directory_Delete_ThrowDirectoryNotFoundException_NonExistingDirectory(true);
       }
 
 
-      private void Directory_Delete_CatchDirectoryNotEmptyException_NonEmptyDirectory(bool isNetwork)
+      private void Directory_Delete_ThrowDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -47,37 +46,25 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var tempPath = UnitTestConstants.TempFolder;
+         var tempPath = UnitTestConstants.TempFolder + @"\Non Existing Directory";
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
+
+
+         try
          {
-            var folder = rootDir.RandomDirectoryFullPath;
-            var file = System.IO.Path.Combine(folder, UnitTestConstants.GetRandomFileNameWithDiacriticCharacters());
+            Alphaleonis.Win32.Filesystem.Directory.Delete(tempPath);
+         }
+         catch (Exception ex)
+         {
+            var exType = ex.GetType();
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder);
-            Console.WriteLine("Input File Path     : [{0}]", file);
+            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
 
-            System.IO.Directory.CreateDirectory(folder);
-
-            using (System.IO.File.Create(System.IO.Path.Combine(folder, file))) { }
-
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
-
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-            }
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 
 
