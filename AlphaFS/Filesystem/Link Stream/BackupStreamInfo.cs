@@ -25,31 +25,29 @@ namespace Alphaleonis.Win32.Filesystem
    /// <seealso cref="BackupFileStream"/>
    public sealed class BackupStreamInfo
    {
-      #region Fields
+      #region Private Fields
 
-      private readonly long _streamSize;
-      private readonly string _streamName;
-      private readonly StreamId _streamId;
-      private readonly StreamAttributes _streamAttributes;
+      private readonly long m_size;
+      private readonly string m_name;
+      private readonly STREAM_ID m_streamType;
+      private readonly STREAM_ATTRIBUTES m_attributes;
 
-      #endregion // Fields
-
+      #endregion
 
       #region Constructor
 
       /// <summary>Initializes a new instance of the <see cref="BackupStreamInfo"/> class.</summary>
-      /// <param name="streamId">The stream ID.</param>
+      /// <param name="streamID">The stream ID.</param>
       /// <param name="name">The name.</param>
-      internal BackupStreamInfo(NativeMethods.WIN32_STREAM_ID streamId, string name)
+      internal BackupStreamInfo(NativeMethods.WIN32_STREAM_ID streamID, string name)
       {
-         _streamName = name;
-         _streamSize = (long) streamId.Size;
-         _streamAttributes = (StreamAttributes) streamId.dwStreamAttributes;
-         _streamId = (StreamId) streamId.dwStreamId;
+         m_name = name;
+         m_size = (long) streamID.Size;
+         m_attributes = streamID.dwStreamAttributes;
+         m_streamType = streamID.dwStreamId;
       }
 
-      #endregion // Constructor
-
+      #endregion
 
       #region Public Properties
 
@@ -57,31 +55,28 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The size of the data in the substream, in bytes.</value>
       public long Size
       {
-         get { return _streamSize; }
+         get { return m_size; }
       }
-
 
       /// <summary>Gets a string that specifies the name of the alternative data stream.</summary>
       /// <value>A string that specifies the name of the alternative data stream.</value>
       public string Name
       {
-         get { return _streamName; }
+         get { return m_name; }
       }
-
 
       /// <summary>Gets the type of the data in the stream.</summary>
       /// <value>The type of the data in the stream.</value>
-      public StreamId StreamType
+      public STREAM_ID StreamType
       {
-         get { return _streamId; }
+         get { return m_streamType; }
       }
-
 
       /// <summary>Gets the attributes of the data to facilitate cross-operating system transfer.</summary>
       /// <value>Attributes of the data to facilitate cross-operating system transfer.</value>
-      public StreamAttributes Attributes
+      public STREAM_ATTRIBUTES Attributes
       {
-         get { return _streamAttributes; }
+         get { return m_attributes; }
       }
 
       #endregion // Public Properties

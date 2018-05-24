@@ -163,10 +163,7 @@
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeDirectoryInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_FolderWithSpaceAsName.cs" />
-    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.GetFileSystemEntryInfo_LogicalDrives.cs" />
-    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.GetFileSystemEntryInfo_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.GetFileSystemEntryInfo.cs" />
-    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File.GetFileSystemEntryInfo_CatchFileNotFoundException_DirectoryExistsWithSameNameAsFile.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_FileSystemEntryInfoTest.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File.GetFileSystemEntryInfo.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
