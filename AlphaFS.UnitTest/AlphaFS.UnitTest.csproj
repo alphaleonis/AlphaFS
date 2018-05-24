@@ -147,8 +147,10 @@
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStreamTest.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_ByHandleFileInfoTest.cs" />
     <Compile Include="AlphaFS Compression\AlphaFS CompressionTest.cs" />
+    <Compile Include="AlphaFS Compression\AlphaFS_Directory.Compress_And_Decompress_Recursive.cs" />
     <Compile Include="AlphaFS Crc Class\AlphaFS_CrcTest.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_DeviceTest.cs" />
+    <Compile Include="AlphaFS Encryption\AlphaFS_Directory.Encrypt_And_Decrypt_Recursive.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_EncryptionTest.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_Directory.GetFileIdInfo.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_File.GetFileIdInfo.cs" />
@@ -163,7 +165,10 @@
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeDirectoryInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_FolderWithSpaceAsName.cs" />
+    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.GetFileSystemEntryInfo_LogicalDrives.cs" />
+    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.GetFileSystemEntryInfo_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.GetFileSystemEntryInfo.cs" />
+    <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File.GetFileSystemEntryInfo_CatchFileNotFoundException_DirectoryExistsWithSameNameAsFile.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_FileSystemEntryInfoTest.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File.GetFileSystemEntryInfo.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
@@ -175,7 +180,12 @@
     <Compile Include="AlphaFS Host Class\AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateSessions.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.Copy_CopySymbolicLink.cs" />
+    <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction_CatchIOException_FileExistsWithSameNameAsDirectory.cs" />
+    <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction_CatchArgumentException_MappedDrive.cs" />
+    <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction_CatchArgumentException_UncPath.cs" />
+    <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateSymbolicLink_CatchIOException_FileExistsWithSameNameAsDirectory.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.Copy_CopySymbolicLink.cs" />
+    <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile.cs" />
     <Compile Include="AlphaFS ProcessContext Class\AlphaFS_ProcessContextTest.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetUniqueVolumeNameForPath.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.VolumeTest.cs" />
@@ -241,7 +251,7 @@
     <Compile Include="Directory Class\AlphaFS_Directory.IsEmpty.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeString.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateSymbolicLink_And_GetLinkTargetInfo.cs" />
-    <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction.cs" />
+    <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction_CatchDirectoryNotEmptyException.cs" />
     <Compile Include="Directory Class\Directory.CurrentDirectory.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.DeleteEmptySubdirectories.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingDirectoryEnumerationErrorFilter.cs" />

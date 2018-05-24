@@ -29,23 +29,24 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
-      public void AlphaFS_Directory_CreateSymbolicLink_And_GetLinkTargetInfo_LocalAndNetwork_Success()
+      public void AlphaFS_File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
 
-         Directory_CreateSymbolicLink_And_GetLinkTargetInfo(false);
-         Directory_CreateSymbolicLink_And_GetLinkTargetInfo(true);
+         File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(false);
+         File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(true);
       }
 
 
 
-      
-      private void Directory_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
+
+      private void File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         
+
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
@@ -62,33 +63,22 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input Directory Link: [{0}]", folderLink);
 
 
-            Alphaleonis.Win32.Filesystem.Directory.CreateSymbolicLink(folderLink, dirInfo.FullName);
+            var gotException = false;
+
+            try
+            {
+               Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(folderLink, dirInfo.FullName);
+
+            }
+            catch (Exception ex)
+            {
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+            }
 
 
-            var lvi = Alphaleonis.Win32.Filesystem.Directory.GetLinkTargetInfo(folderLink);
-            UnitTestConstants.Dump(lvi, -14);
-            Assert.IsTrue(lvi.PrintName.Equals(dirInfo.FullName, StringComparison.OrdinalIgnoreCase));
-
-
-
-
-            var dirInfoSysIO = new System.IO.DirectoryInfo(folderLink);
-            UnitTestConstants.Dump(dirInfoSysIO, -17);
-
-            Assert.IsTrue((dirInfoSysIO.Attributes & System.IO.FileAttributes.ReparsePoint) != 0);
-
-
-
-
-            var alphaFSDirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(folderLink);
-            UnitTestConstants.Dump(alphaFSDirInfo.EntryInfo, -19);
-
-            Assert.AreEqual(System.IO.Directory.Exists(alphaFSDirInfo.FullName), alphaFSDirInfo.Exists);
-            Assert.IsTrue(alphaFSDirInfo.EntryInfo.IsDirectory);
-            Assert.IsFalse(alphaFSDirInfo.EntryInfo.IsMountPoint);
-            Assert.IsTrue(alphaFSDirInfo.EntryInfo.IsReparsePoint);
-            Assert.IsTrue(alphaFSDirInfo.EntryInfo.IsSymbolicLink);
-            Assert.AreEqual(alphaFSDirInfo.EntryInfo.ReparsePointTag, Alphaleonis.Win32.Filesystem.ReparsePointTag.SymLink);
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
 
          Console.WriteLine();

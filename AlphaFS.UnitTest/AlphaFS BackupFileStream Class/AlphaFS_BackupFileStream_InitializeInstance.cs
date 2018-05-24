@@ -63,7 +63,7 @@ namespace AlphaFS.UnitTest
 
             using (var bfs = new Alphaleonis.Win32.Filesystem.BackupFileStream(file, System.IO.FileMode.Open))
             {
-               #region IOException
+               #region IOException #1
 
                bfs.Lock(0, 10);
 
@@ -83,7 +83,8 @@ namespace AlphaFS.UnitTest
 
                bfs.Unlock(0, 10);
 
-               #endregion // IOException
+               #endregion // IOException #1
+
 
                #region IOException #2
 
