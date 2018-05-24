@@ -442,6 +442,8 @@
     <Compile Include="Filesystem\Path Class\Path.UncPaths.cs" />
     <Compile Include="Filesystem\Path Class\Path.ShortLongConversions.cs" />
     <Compile Include="Filesystem\Path Class\Path.Temporary.cs" />
+    <Compile Include="Filesystem\Structures And Enumerations\StreamAttributes.cs" />
+    <Compile Include="Filesystem\Structures And Enumerations\StreamId.cs" />
     <Compile Include="Safe Handles\SafeTokenHandle.cs" />
     <Compile Include="Safe Handles\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Safe Handles\SafeEncryptedFileRawHandle.cs" />
@@ -644,7 +646,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

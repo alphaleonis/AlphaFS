@@ -11,6 +11,14 @@ Version 2.2.2  (2018-XX-XX)
 - Issue #437: Fixed `PathTooLongException` for boundary case of directory name length in `Path.NormalizePath` (Thx okrushelnitsky)
 - Issue #441: `InvalidOperationException` on `Directory.EnumerateFileSystemEntries()`
 
+### Improvements
+
+- Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
+
+### Breaking Changes
+
+- Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
+
 
 Version 2.2.1  (2018-04-05)
 -------------
