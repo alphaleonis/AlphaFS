@@ -63,7 +63,7 @@ namespace AlphaFS.UnitTest
 
             using (var bfs = new Alphaleonis.Win32.Filesystem.BackupFileStream(file, System.IO.FileMode.Open))
             {
-               #region IOException
+               #region IOException #1
 
                bfs.Lock(0, 10);
 
@@ -74,16 +74,21 @@ namespace AlphaFS.UnitTest
                }
                catch (Exception ex)
                {
-                  var exName = ex.GetType().Name;
-                  gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
-                  Console.WriteLine("\tCaught EXPECTED Exception: [{0}] Message: [{1}]", exName, ex.Message);
+                  var exType = ex.GetType();
+
+                  gotException = exType == typeof(System.IO.IOException);
+
+                  Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
                }
+
 
                Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
+
                bfs.Unlock(0, 10);
 
-               #endregion // IOException
+               #endregion // IOException #1
+
 
                #region IOException #2
 
@@ -94,10 +99,13 @@ namespace AlphaFS.UnitTest
                }
                catch (Exception ex)
                {
-                  var exName = ex.GetType().Name;
-                  gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
-                  Console.WriteLine("\tCaught EXPECTED Exception: [{0}] Message: [{1}]", exName, ex.Message);
+                  var exType = ex.GetType();
+
+                  gotException = exType == typeof(System.IO.IOException);
+
+                  Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
                }
+
 
                Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
@@ -107,7 +115,7 @@ namespace AlphaFS.UnitTest
                UnitTestConstants.Dump(bfs.ReadStreamInfo(), -10);
                Console.WriteLine();
 
-               UnitTestConstants.Dump(bfs, -14);
+               UnitTestConstants.Dump(bfs, -12);
                Console.WriteLine();
             }
          }

@@ -19,95 +19,46 @@
  *  THE SOFTWARE. 
  */
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The type of the data contained in the backup stream.</summary>
-   [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID"), SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "STREAM"), SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-   public enum STREAM_ID
+   internal static partial class NativeMethods
    {
-      /// <summary>This indicates an error.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "NONE")]
-      NONE = 0,
+      /// <summary>The type of the data contained in the backup stream.</summary>
+      internal enum STREAM_ID
+      {
+         /// <summary>This indicates an error.</summary>
+         NONE = 0,
 
+         /// <summary>Standard data. This corresponds to the NTFS $DATA stream type on the default (unnamed) data stream.</summary>
+         BACKUP_DATA = 1,
 
-      /// <summary>Standard data. This corresponds to the NTFS $DATA stream type on the default (unnamed) data stream.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BACKUP")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DATA")]
-      [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      BACKUP_DATA = 1,
+         /// <summary>Extended attribute data. This corresponds to the NTFS $EA stream type.</summary>
+         BACKUP_EA_DATA = 2,
 
+         /// <summary>Security descriptor data.</summary>
+         BACKUP_SECURITY_DATA = 3,
 
-      /// <summary>Extended attribute data. This corresponds to the NTFS $EA stream type.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BACKUP")]
-      [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DATA")]
-      BACKUP_EA_DATA = 2,
+         /// <summary>Alternative data streams. This corresponds to the NTFS $DATA stream type on a named data stream.</summary>
+         BACKUP_ALTERNATE_DATA = 4,
 
+         /// <summary>Hard link information. This corresponds to the NTFS $FILE_NAME stream type.</summary>
+         BACKUP_LINK = 5,
 
-      /// <summary>Security descriptor data.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BACKUP")]
-      [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SECURITY")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DATA")]
-      BACKUP_SECURITY_DATA = 3,
+         /// <summary>Property data.</summary>
+         BACKUP_PROPERTY_DATA = 6,
 
+         /// <summary>Objects identifiers. This corresponds to the NTFS $OBJECT_ID stream type.</summary>
+         BACKUP_OBJECT_ID = 7,
 
-      /// <summary>Alternative data streams. This corresponds to the NTFS $DATA stream type on a named data stream.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ALTERNATE")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BACKUP")]
-      [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DATA")]
-      BACKUP_ALTERNATE_DATA = 4,
+         /// <summary>Reparse points. This corresponds to the NTFS $REPARSE_POINT stream type.</summary>
+         BACKUP_REPARSE_DATA = 8,
 
+         /// <summary>Sparse file. This corresponds to the NTFS $DATA stream type for a sparse file.</summary>
+         BACKUP_SPARSE_BLOCK = 9,
 
-      /// <summary>Hard link information. This corresponds to the NTFS $FILE_NAME stream type.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BACKUP")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "LINK")]
-      [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      BACKUP_LINK = 5,
-
-
-      /// <summary>Property data.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BACKUP")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DATA")]
-      [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "PROPERTY")]
-      BACKUP_PROPERTY_DATA = 6,
-
-
-      /// <summary>Objects identifiers. This corresponds to the NTFS $OBJECT_ID stream type.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BACKUP")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "OBJECT")]
-      [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      BACKUP_OBJECT_ID = 7,
-
-
-      /// <summary>Reparse points. This corresponds to the NTFS $REPARSE_POINT stream type.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BACKUP")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DATA")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "REPARSE")]
-      [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      BACKUP_REPARSE_DATA = 8,
-
-
-      /// <summary>Sparse file. This corresponds to the NTFS $DATA stream type for a sparse file.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BACKUP")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BLOCK")]
-      [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SPARSE")]
-      BACKUP_SPARSE_BLOCK = 9,
-
-
-      /// <summary>Transactional NTFS (TxF) data stream.</summary>
-      /// <remarks>Windows Server 2003 and Windows XP:  This value is not supported.</remarks>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "BACKUP")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DATA")]
-      [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "TXFS")]
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Txfs")]
-      BACKUP_TXFS_DATA = 10
+         /// <summary>Transactional NTFS (TxF) data stream.</summary>
+         /// <remarks>Windows Server 2003 and Windows XP:  This value is not supported.</remarks>
+         BACKUP_TXFS_DATA = 10
+      }
    }
 }
