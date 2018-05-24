@@ -74,22 +74,17 @@ namespace AlphaFS.UnitTest
                }
                catch (Exception ex)
                {
-                  var exType = ex.GetType();
-
-                  gotException = exType == typeof(System.IO.IOException);
-
-                  Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+                  var exName = ex.GetType().Name;
+                  gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
+                  Console.WriteLine("\tCaught EXPECTED Exception: [{0}] Message: [{1}]", exName, ex.Message);
                }
 
-
                Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
 
                bfs.Unlock(0, 10);
 
                #endregion // IOException
 
-               
                #region IOException #2
 
                gotException = false;
@@ -99,23 +94,20 @@ namespace AlphaFS.UnitTest
                }
                catch (Exception ex)
                {
-                  var exType = ex.GetType();
-
-                  gotException = exType == typeof(System.IO.IOException);
-
-                  Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+                  var exName = ex.GetType().Name;
+                  gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
+                  Console.WriteLine("\tCaught EXPECTED Exception: [{0}] Message: [{1}]", exName, ex.Message);
                }
 
-
                Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-               
+
                #endregion // IOException #2
 
 
                UnitTestConstants.Dump(bfs.ReadStreamInfo(), -10);
                Console.WriteLine();
 
-               UnitTestConstants.Dump(bfs, -12);
+               UnitTestConstants.Dump(bfs, -14);
                Console.WriteLine();
             }
          }
