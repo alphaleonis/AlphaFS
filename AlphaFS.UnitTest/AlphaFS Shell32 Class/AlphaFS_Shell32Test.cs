@@ -32,49 +32,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public partial class AlphaFS_Shell32Test
    {
-      private void DumpGetAssociation(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         var path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
-
-         var cnt = 0;
-         foreach (var file in Directory.EnumerateFiles(path))
-         {
-            var association = Shell32.GetFileAssociation(file);
-            var contentType = Shell32.GetFileContentType(file);
-            var defaultIconPath = Shell32.GetFileDefaultIcon(file);
-            var friendlyAppName = Shell32.GetFileFriendlyAppName(file);
-            var friendlyDocName = Shell32.GetFileFriendlyDocName(file);
-            var openWithApp = Shell32.GetFileOpenWithAppName(file);
-            var verbCommand = Shell32.GetFileVerbCommand(file);
-
-            Console.WriteLine("\t#{0:000}\t[{1}]\n", ++cnt, file);
-            Console.WriteLine("\t\tGetFileAssociation()    : [{0}]", association);
-            Console.WriteLine("\t\tGetFileContentType()    : [{0}]", contentType);
-            Console.WriteLine("\t\tGetFileDefaultIcon()    : [{0}]", defaultIconPath);
-            Console.WriteLine("\t\tGetFileFriendlyAppName(): [{0}]", friendlyAppName);
-            Console.WriteLine("\t\tGetFileFriendlyDocName(): [{0}]", friendlyDocName);
-            Console.WriteLine("\t\tGetFileOpenWithAppName(): [{0}]", openWithApp);
-            Console.WriteLine("\t\tGetFileVerbCommand()    : [{0}]", verbCommand);
-
-            UnitTestConstants.StopWatcher(true);
-            var shell32Info = Shell32.GetShell32Info(file);
-            var report = UnitTestConstants.Reporter(true);
-
-            var cmd = "print";
-            verbCommand = shell32Info.GetVerbCommand(cmd);
-            Console.WriteLine("\n\t\tShell32Info.GetVerbCommand(\"{0}\"): [{1}]", cmd, verbCommand);
-
-            UnitTestConstants.Dump(shell32Info, -15);
-            Console.WriteLine("\n\t{0}\n\n", report);
-         }
-         Console.WriteLine("\n");
-         Assert.IsTrue(cnt > 0, "No entries enumerated.");
-      }
-
-
       private void DumpPathFileExists(string path, bool doesExist)
       {
          Console.WriteLine("\n\tPath: [{0}]\n", path);
@@ -89,16 +46,6 @@ namespace AlphaFS.UnitTest
 
          if (!doesExist)
             Assert.IsTrue(!fileExists);
-      }
-
-
-      [TestMethod]
-      public void AlphaFS_Shell32_GetFileAssociation()
-      {
-         Console.WriteLine("Filesystem.Shell32.GetFileAssociation()");
-
-         DumpGetAssociation(true);
-         DumpGetAssociation(false);
       }
 
 
