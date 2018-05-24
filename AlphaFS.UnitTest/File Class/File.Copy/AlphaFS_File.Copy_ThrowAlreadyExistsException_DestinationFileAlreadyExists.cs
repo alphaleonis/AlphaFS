@@ -28,17 +28,20 @@ namespace AlphaFS.UnitTest
    public partial class File_CopyTest
    {
       [TestMethod]
-      public void File_Copy_CatchUnauthorizedAccessException_DestinationFileIsReadOnly_LocalAndNetwork_Success()
+      public void AlphaFS_File_Copy_ThrowAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
-         File_Copy_CatchUnauthorizedAccessException_DestinationFileIsReadOnly(false);
-         File_Copy_CatchUnauthorizedAccessException_DestinationFileIsReadOnly(true);
+         File_Copy_ThrowAlreadyExistsException_DestinationFileAlreadyExists(false);
+         File_Copy_ThrowAlreadyExistsException_DestinationFileAlreadyExists(true);
       }
 
 
-      private void File_Copy_CatchUnauthorizedAccessException_DestinationFileIsReadOnly(bool isNetwork)
+      private void File_Copy_ThrowAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
+
+
+         var gotException = false;
 
 
          var tempPath = UnitTestConstants.TempFolder;
@@ -46,37 +49,29 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         var gotException = false;
-
-
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var srcFile = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-            var dstFile = rootDir.RandomFileFullPath;
+
+            var dstFile = srcFile + "-Existing File";
 
             Console.WriteLine("Src File Path: [{0}]", srcFile);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
-
             System.IO.File.Copy(srcFile.FullName, dstFile);
-            System.IO.File.SetAttributes(dstFile, System.IO.FileAttributes.ReadOnly);
 
 
             try
             {
-               Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile, true);
+               Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile);
             }
             catch (Exception ex)
             {
                var exType = ex.GetType();
 
-               gotException = exType == typeof(UnauthorizedAccessException);
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
 
                Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-            }
-            finally
-            {
-               System.IO.File.SetAttributes(dstFile, System.IO.FileAttributes.Normal);
             }
          }
 

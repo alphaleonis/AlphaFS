@@ -21,53 +21,48 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class PathTest
+   public partial class AlphaFS_JunctionsLinksTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Path_CheckSupportedPathFormat_CatchArgumentException_PathStartsWithColon_Local_Success()
-      {
-         Path_CheckSupportedPathFormat_CatchArgumentException_PathStartsWithColon();
-      }
-
-
-      private void Path_CheckSupportedPathFormat_CatchArgumentException_PathStartsWithColon()
+      public void AlphaFS_Directory_CreateJunction_ThrowIOException_FileExistsWithSameNameAsDirectory_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-         Console.WriteLine();
 
 
-         var gotException = false;
-
-
-         const string invalidPath = @":AAAAAAAAAA";
-
-         Console.WriteLine("Invalid Path: [{0}]", invalidPath);
-
-
-         try
+         using (var rootDir = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
          {
-            Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(invalidPath, true, true);
+            var target = rootDir.Directory.CreateSubdirectory("JunctionTarget");
+            var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
+            var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
+
+
+            // Create a file with the same name as the junction to trigger the IOException.
+            using (System.IO.File.CreateText(junction)) { }
+
+
+            var gotException = false;
+
+            try
+            {
+               Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName);
+            }
+            catch (Exception ex)
+            {
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+            }
+
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
-         catch (Exception ex)
-         {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(ArgumentException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-         }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-
-         Console.WriteLine();
       }
    }
 }

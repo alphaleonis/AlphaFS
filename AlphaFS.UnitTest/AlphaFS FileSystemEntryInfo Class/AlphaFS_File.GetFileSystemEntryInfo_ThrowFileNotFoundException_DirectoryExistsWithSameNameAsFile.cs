@@ -19,63 +19,55 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_CopyTest
+   public partial class AlphaFS_FileSystemEntryInfoTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+      
       [TestMethod]
-      public void AlphaFS_File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
+      public void AlphaFS_File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
       {
-         File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
-         File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(true);
+         File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(false);
+         File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(true);
       }
+      
 
 
-      private void File_Copy_CatchAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
+
+      private void File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
       {
+         var path = UnitTestConstants.SysRoot;
+
+         if (!System.IO.Directory.Exists(path))
+            Assert.Inconclusive("Test ignored because {0} was not found.", path);
+
+
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
+         var tempPath = path;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+
+
+         var gotException = false;
+         try
          {
-            var srcFile = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-
-            var dstFile = srcFile + "-Existing File";
-
-            Console.WriteLine("Src File Path: [{0}]", srcFile);
-            Console.WriteLine("Dst File Path: [{0}]", dstFile);
-
-            System.IO.File.Copy(srcFile.FullName, dstFile);
-
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile);
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-            }
+            Alphaleonis.Win32.Filesystem.File.GetFileSystemEntryInfo(tempPath);
          }
-
-
+         catch (Exception ex)
+         {
+            var exName = ex.GetType().Name;
+            gotException = exName.Equals("FileNotFoundException", StringComparison.OrdinalIgnoreCase);
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+         }
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 

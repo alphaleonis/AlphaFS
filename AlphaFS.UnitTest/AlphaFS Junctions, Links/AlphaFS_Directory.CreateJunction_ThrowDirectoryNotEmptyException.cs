@@ -31,21 +31,24 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_CreateJunction_CatchIOException_FileExistsWithSameNameAsDirectory_Local_Success()
+      public void AlphaFS_Directory_CreateJunction_ThrowDirectoryNotEmptyException_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
+         var tempPath = System.IO.Path.GetTempPath();
 
-         using (var rootDir = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var target = rootDir.Directory.CreateSubdirectory("JunctionTarget");
             var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
             var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
-            // Create a file with the same name as the junction to trigger the IOException.
-            using (System.IO.File.CreateText(junction)) { }
-
+            var dirInfo = new System.IO.DirectoryInfo(junction);
+            dirInfo.Create();
+            // Create an extra folder to trigger the DirectoryNotEmptyException.
+            dirInfo.CreateSubdirectory("Extra Folder");
+            
 
             var gotException = false;
 
@@ -56,7 +59,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                var exName = ex.GetType().Name;
-               gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
+               gotException = exName.Equals("DirectoryNotEmptyException", StringComparison.OrdinalIgnoreCase);
                Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
             }
 

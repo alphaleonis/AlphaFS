@@ -27,14 +27,14 @@ namespace AlphaFS.UnitTest
    public partial class File_CopyTest
    {
       [TestMethod]
-      public void AlphaFS_File_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
+      public void AlphaFS_File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
       {
-         File_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
-         File_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(true);
+         File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
+         File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(true);
       }
 
 
-      private void File_Copy_CatchDeviceNotReadyException_NonExistingSourceLogicalDrive(bool isNetwork)
+      private void File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();

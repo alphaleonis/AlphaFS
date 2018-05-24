@@ -27,14 +27,14 @@ namespace AlphaFS.UnitTest
    public partial class File_MoveTest
    {
       [TestMethod]
-      public void AlphaFS_File_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive_LocalAndNetwork_Success()
+      public void AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive_LocalAndNetwork_Success()
       {
-         File_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive(false);
-         File_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive(true);
+         File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(false);
+         File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(true);
       }
 
 
-      private void File_Move_CatchDeviceNotReadyException_NonExistingDestinationLogicalDrive(bool isNetwork)
+      private void File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();

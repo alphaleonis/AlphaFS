@@ -84,7 +84,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_GetFullPath_CatchArgumentException_InvalidPath1_Success()
+      public void Path_GetFullPath_ThrowArgumentException_InvalidPath1_Success()
       {
          var gotException = false;
          try
@@ -105,7 +105,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_GetFullPath_CatchArgumentException_InvalidPath2_Success()
+      public void Path_GetFullPath_ThrowArgumentException_InvalidPath2_Success()
       {
          var gotException = false;
          try
@@ -123,7 +123,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_GetFullPath_CatchNotSupportedException_Success()
+      public void Path_GetFullPath_ThrowNotSupportedException_Success()
       {
          var gotException = false;
          try

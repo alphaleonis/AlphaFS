@@ -31,19 +31,19 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
+      public void AlphaFS_File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
 
-         File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(false);
-         File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(true);
+         File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(false);
+         File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(true);
       }
 
 
 
 
-      private void File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
+      private void File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 

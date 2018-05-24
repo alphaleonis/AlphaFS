@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
          {
             var folder = rootDir.Directory.FullName;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
             var numSpace = 1;

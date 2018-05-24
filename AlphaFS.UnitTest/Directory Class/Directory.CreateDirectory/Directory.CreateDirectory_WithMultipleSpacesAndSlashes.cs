@@ -63,7 +63,7 @@ namespace AlphaFS.UnitTest
 
 
             var fullPath = folder + @"\" + subFolders[0] + subFolders[1] + subFolders[2] + subFolders[3] + subFolders[4];
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", fullPath);
+            Console.WriteLine("\nInput Directory Path: [{0}]", fullPath);
 
 
             Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(fullPath);

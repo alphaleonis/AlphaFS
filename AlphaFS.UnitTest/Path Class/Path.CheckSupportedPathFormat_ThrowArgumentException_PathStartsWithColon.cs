@@ -19,55 +19,51 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_FileSystemEntryInfoTest
+   public partial class PathTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      
+
       [TestMethod]
-      public void AlphaFS_File_GetFileSystemEntryInfo_CatchFileNotFoundException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
+      public void AlphaFS_Path_CheckSupportedPathFormat_ThrowArgumentException_PathStartsWithColon_Local_Success()
       {
-         File_GetFileSystemEntryInfo_CatchFileNotFoundException_DirectoryExistsWithSameNameAsFile(false);
-         File_GetFileSystemEntryInfo_CatchFileNotFoundException_DirectoryExistsWithSameNameAsFile(true);
+         Path_CheckSupportedPathFormat_ThrowArgumentException_PathStartsWithColon();
       }
-      
 
 
-
-      private void File_GetFileSystemEntryInfo_CatchFileNotFoundException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
+      private void Path_CheckSupportedPathFormat_ThrowArgumentException_PathStartsWithColon()
       {
-         var path = UnitTestConstants.SysRoot;
-
-         if (!System.IO.Directory.Exists(path))
-            Assert.Inconclusive("Test ignored because {0} was not found.", path);
-
-
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = path;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+         UnitTestConstants.PrintUnitTestHeader(false);
+         Console.WriteLine();
 
 
          var gotException = false;
+
+
+         const string invalidPath = @":AAAAAAAAAA";
+
+         Console.WriteLine("Invalid Path: [{0}]", invalidPath);
+
+
          try
          {
-            Alphaleonis.Win32.Filesystem.File.GetFileSystemEntryInfo(tempPath);
+            Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(invalidPath, true, true);
          }
          catch (Exception ex)
          {
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals("FileNotFoundException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+            var exType = ex.GetType();
+
+            gotException = exType == typeof(ArgumentException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
+
+
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 

@@ -30,13 +30,13 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Path_CheckSupportedPathFormat_CatchArgumentException_PathContainsInvalidCharacters_Local_Success()
+      public void AlphaFS_Path_CheckSupportedPathFormat_ThrowArgumentException_PathContainsInvalidCharacters_Local_Success()
       {
-         Path_CheckSupportedPathFormat_CatchArgumentException_PathContainsInvalidCharacters();
+         Path_CheckSupportedPathFormat_ThrowArgumentException_PathContainsInvalidCharacters();
       }
 
 
-      private void Path_CheckSupportedPathFormat_CatchArgumentException_PathContainsInvalidCharacters()
+      private void Path_CheckSupportedPathFormat_ThrowArgumentException_PathContainsInvalidCharacters()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
          Console.WriteLine();

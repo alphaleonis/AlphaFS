@@ -19,23 +19,25 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_MoveTest
+   public partial class PathTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
-      public void AlphaFS_File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
+      public void AlphaFS_Path_CheckSupportedPathFormat_ThrowNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
       {
-         File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(false);
-         File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(true);
+         Path_CheckSupportedPathFormat_ThrowNotSupportedException_PathContainsColon(false);
+         Path_CheckSupportedPathFormat_ThrowNotSupportedException_PathContainsColon(true);
       }
 
 
-      private void File_Move_CatchAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
+      private void Path_CheckSupportedPathFormat_ThrowNotSupportedException_PathContainsColon(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -44,35 +46,24 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+         const string colonText = @"\My:FilePath";
+
+         var invalidPath = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder + @"\dev\test") + colonText;
+
+         Console.WriteLine("Invalid Path: [{0}]", invalidPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         try
          {
-            var srcFile = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
+            Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(invalidPath, true, true);
+         }
+         catch (Exception ex)
+         {
+            var exType = ex.GetType();
 
-            var dstFile = srcFile + "-Existing File";
+            gotException = exType == typeof(NotSupportedException);
 
-            Console.WriteLine("Src File Path: [{0}]", srcFile);
-            Console.WriteLine("Dst File Path: [{0}]", dstFile);
-
-            System.IO.File.Copy(srcFile.FullName, dstFile);
-
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.File.Move(srcFile.FullName, dstFile);
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-            }
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 
 

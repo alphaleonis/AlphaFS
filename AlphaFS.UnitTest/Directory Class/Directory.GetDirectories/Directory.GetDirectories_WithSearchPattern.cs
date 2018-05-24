@@ -22,6 +22,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,63 +34,64 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_GetDirectories_WithSearchPattern_LocalAndNetwork_Success()
       {
-         Directory_GetDirectories_WithSearchPattern(true);
          Directory_GetDirectories_WithSearchPattern(false);
+         Directory_GetDirectories_WithSearchPattern(true);
       }
 
 
-      private void Directory_GetDirectories_WithSearchPattern(bool isLocal)
+      private void Directory_GetDirectories_WithSearchPattern(bool isNetwork)
       {
-         #region Setup
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         UnitTestConstants.PrintUnitTestHeader(!isLocal);
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
-         var tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Directory.GetDirectories_With_SearchPattern()-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters());
-         if (!isLocal) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
-
-         System.IO.Directory.CreateDirectory(tempPath);
-         System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempPath, "a.txt"));
-         System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempPath, "aa.txt"));
-         System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempPath, "aba.txt"));
-         System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempPath, "foo.txt"));
-         System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempPath, "footxt"));
-
-         #endregion // Setup
-
-         try
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(tempPath, "foo.txt");
-            Console.WriteLine("\tDirectory.GetDirectories(tempPath, \"foo.txt\");");
-            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(tempPath, "foo.txt"), StringComparer.InvariantCultureIgnoreCase));
-            Assert.IsFalse(folders.Contains(System.IO.Path.Combine(tempPath, "fooatxt"), StringComparer.InvariantCultureIgnoreCase));
+            var folder = new System.IO.DirectoryInfo(rootDir.RandomDirectoryFullPath).FullName;
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
-            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(tempPath, "a?a.txt");
-            Console.WriteLine("\tDirectory.GetDirectories(tempPath, \"a?a.txt\");");
-            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(tempPath, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
-            Assert.IsFalse(folders.Contains(System.IO.Path.Combine(tempPath, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
 
-            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(tempPath, "a*.*");
-            Console.WriteLine("\tDirectory.GetDirectories(tempPath, \"a*.*\");");
-            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(tempPath, "a.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
-            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(tempPath, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
-            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(tempPath, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
+            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(folder, "a.txt"));
+            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(folder, "aa.txt"));
+            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(folder, "aba.txt"));
+            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(folder, "foo.txt"));
+            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(folder, "footxt"));
 
-            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(tempPath, "*.*");
-            Console.WriteLine("\tDirectory.GetDirectories(tempPath, \"*.*\");");
-            var folders2 = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(tempPath);
+
+            var folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder, "foo.txt");
+
+            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(folder, "foo.txt"), StringComparer.InvariantCultureIgnoreCase));
+            Assert.IsFalse(folders.Contains(System.IO.Path.Combine(folder, "fooatxt"), StringComparer.InvariantCultureIgnoreCase));
+
+
+            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder, "a?a.txt");
+
+            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(folder, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
+            Assert.IsFalse(folders.Contains(System.IO.Path.Combine(folder, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
+
+
+            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder, "a*.*");
+
+            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(folder, "a.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
+            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(folder, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
+            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(folder, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
+
+
+            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder, "*.*");
+            var folders2 = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder);
+
             Assert.IsTrue(folders.Length == folders2.Length, "*.* failed");
-            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(tempPath, "*.*.*");
-            Console.WriteLine("\tDirectory.GetDirectories(tempPath, \"*.*.*\");");
+
+
+            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder, "*.*.*");
+
             Assert.IsTrue(folders.Length == folders2.Length, "*.* failed");
          }
-         finally
-         {
-            System.IO.Directory.Delete(tempPath, true);
-            Assert.IsFalse(System.IO.Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-            Console.WriteLine();
-         }
+
+         Console.WriteLine();
       }
    }
 }

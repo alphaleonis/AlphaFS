@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Copy_CatchFileNotFoundException_NonExistingSourceFile_LocalAndNetwork_Success()
+      public void File_Copy_ThrowFileNotFoundException_NonExistingSourceFile_LocalAndNetwork_Success()
       {
-         File_Copy_CatchFileNotFoundException_NonExistingSourceFile(false);
-         File_Copy_CatchFileNotFoundException_NonExistingSourceFile(true);
+         File_Copy_ThrowFileNotFoundException_NonExistingSourceFile(false);
+         File_Copy_ThrowFileNotFoundException_NonExistingSourceFile(true);
       }
 
 
-      private void File_Copy_CatchFileNotFoundException_NonExistingSourceFile(bool isNetwork)
+      private void File_Copy_ThrowFileNotFoundException_NonExistingSourceFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();

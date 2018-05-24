@@ -28,17 +28,17 @@ namespace AlphaFS.UnitTest
    public partial class DirectoryInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
-      
+
 
       [TestMethod]
-      public void DirectoryInfo_FolderName255Characters_LocalAndNetwork_Success()
+      public void DirectoryInfo_ThrowPathTooLongException_FolderNameGreaterThan255Characters_LocalAndNetwork_Success()
       {
-         DirectoryInfo_FolderName255Characters(false);
-         DirectoryInfo_FolderName255Characters(true);
+         DirectoryInfo_ThrowPathTooLongException_FolderNameGreaterThan255Characters(false);
+         DirectoryInfo_ThrowPathTooLongException_FolderNameGreaterThan255Characters(true);
       }
-      
 
-      private void DirectoryInfo_FolderName255Characters(bool isNetwork)
+
+      private void DirectoryInfo_ThrowPathTooLongException_FolderNameGreaterThan255Characters(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -57,25 +57,31 @@ namespace AlphaFS.UnitTest
 
             // System.IO: 244, anything higher throws System.IO.PathTooLongException: The specified path, file name, or both are too long. The fully qualified file name must be less than 260 characters, and the directory name must be less than 248 characters.
             // AlphaFS  : 255, anything higher throws System.IO.PathTooLongException.
-            var subFolder = new string('b', 255);
+            var subFolder = new string('b', 256);
 
 
             var local = Alphaleonis.Win32.Filesystem.Path.Combine(folder, subFolder);
             var unc = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(local);
             Console.WriteLine("SubFolder length: {0}, total path length: {1}", subFolder.Length, isNetwork ? unc.Length : local.Length);
-
-            // Success.
-            var di1 = new Alphaleonis.Win32.Filesystem.DirectoryInfo(isNetwork ? unc : local);
-
-            // Fail.
-            //var di1 = new System.IO.DirectoryInfo(local);
+            Console.WriteLine();
 
 
-            di1.Create();
-            Assert.IsTrue(di1.Exists);
+            var gotException = false;
+
+            try
+            {
+               // Fail.
+               var di1 = new Alphaleonis.Win32.Filesystem.DirectoryInfo(isNetwork ? unc : local);
+            }
+            catch (Exception ex)
+            {
+               var exName = ex.GetType().Name;
+               gotException = exName.Equals("PathTooLongException", StringComparison.OrdinalIgnoreCase);
+               Console.WriteLine("\tCaught EXPECTED Exception: [{0}] Message: [{1}]", exName, ex.Message);
+            }
 
 
-            UnitTestConstants.Dump(di1, -17);
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
 
          Console.WriteLine();

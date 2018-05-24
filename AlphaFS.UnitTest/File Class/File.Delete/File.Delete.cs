@@ -39,40 +39,40 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter_Local_Success()
+      public void File_Delete_ThrowDirectoryNotFoundException_NonExistingDriveLetter_Local_Success()
       {
-         File_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
+         File_Delete_ThrowDirectoryNotFoundException_NonExistingDriveLetter(false);
       }
 
 
       [TestMethod]
       public void File_Delete_IOExceptionException_NonExistingDriveLetter_Network_Success()
       {
-         File_Delete_CatchIOExceptionException_NonExistingDriveLetter(true);
+         File_Delete_ThrowIOExceptionException_NonExistingDriveLetter(true);
       }
 
 
       [TestMethod]
-      public void File_Delete_CatchFileNotFoundException_NonExistingFile_LocalAndNetwork_Success()
+      public void File_Delete_ThrowFileNotFoundException_NonExistingFile_LocalAndNetwork_Success()
       {
-         File_Delete_CatchFileNotFoundException_NonExistingFile(false);
-         File_Delete_CatchFileNotFoundException_NonExistingFile(true);
+         File_Delete_ThrowFileNotFoundException_NonExistingFile(false);
+         File_Delete_ThrowFileNotFoundException_NonExistingFile(true);
       }
       
 
       [TestMethod]
-      public void AlphaFS_File_Delete_CatchFileReadOnlyException_ReadOnlyFile_LocalAndNetwork_Success()
+      public void AlphaFS_File_Delete_ThrowFileReadOnlyException_ReadOnlyFile_LocalAndNetwork_Success()
       {
-         File_Delete_CatchFileReadOnlyException_ReadOnlyFile(false);
-         File_Delete_CatchFileReadOnlyException_ReadOnlyFile(true);
+         File_Delete_ThrowFileReadOnlyException_ReadOnlyFile(false);
+         File_Delete_ThrowFileReadOnlyException_ReadOnlyFile(true);
       }
 
 
       [TestMethod]
-      public void File_Delete_CatchUnauthorizedAccessException_PathIsADirectoryNotAFile_LocalAndNetwork_Success()
+      public void File_Delete_ThrowUnauthorizedAccessException_PathIsADirectoryNotAFile_LocalAndNetwork_Success()
       {
-         File_Delete_CatchUnauthorizedAccessException_PathIsADirectoryNotAFile(false);
-         File_Delete_CatchUnauthorizedAccessException_PathIsADirectoryNotAFile(true);
+         File_Delete_ThrowUnauthorizedAccessException_PathIsADirectoryNotAFile(false);
+         File_Delete_ThrowUnauthorizedAccessException_PathIsADirectoryNotAFile(true);
       }
 
 
@@ -102,7 +102,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_Delete_CatchDirectoryNotFoundException_NonExistingDriveLetter(bool isNetwork)
+      private void File_Delete_ThrowDirectoryNotFoundException_NonExistingDriveLetter(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -136,7 +136,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_Delete_CatchIOExceptionException_NonExistingDriveLetter(bool isNetwork)
+      private void File_Delete_ThrowIOExceptionException_NonExistingDriveLetter(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -170,7 +170,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_Delete_CatchFileNotFoundException_NonExistingFile(bool isNetwork)
+      private void File_Delete_ThrowFileNotFoundException_NonExistingFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -195,7 +195,7 @@ namespace AlphaFS.UnitTest
       }
       
 
-      private void File_Delete_CatchUnauthorizedAccessException_PathIsADirectoryNotAFile(bool isNetwork)
+      private void File_Delete_ThrowUnauthorizedAccessException_PathIsADirectoryNotAFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -230,7 +230,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_Delete_CatchFileReadOnlyException_ReadOnlyFile(bool isNetwork)
+      private void File_Delete_ThrowFileReadOnlyException_ReadOnlyFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
