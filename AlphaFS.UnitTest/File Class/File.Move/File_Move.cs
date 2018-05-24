@@ -65,15 +65,19 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
+               var exType = ex.GetType();
 
-               var exName = ex.GetType().Name;
-               gotException = exName.Equals("AlreadyExistsException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+
+
+               Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
 
                Assert.IsFalse(System.IO.File.Exists(fileSource.FullName), "The file does exists, but is expected not to.");
                Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
             }
+
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
 
