@@ -275,6 +275,7 @@
     <Compile Include="Directory Class\Directory.SetTimestamps.cs" />
     <Compile Include="Directory Class\Directory.GetTimestamps.cs" />
     <Compile Include="Directory Class\Directory.SetAccessControl.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo_Rename.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.ThrowPathTooLongException_FolderNameGreaterThan255Characters.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.FolderName255Characters.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo.cs" />
