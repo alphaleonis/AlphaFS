@@ -30,20 +30,20 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_GetFileSystemEntryInfo_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_GetFileSystemEntryInfo_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
       {
-         Directory_GetFileSystemEntryInfo(false);
-         Directory_GetFileSystemEntryInfo(true);
+         Directory_GetFileSystemEntryInfo_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(false);
+         Directory_GetFileSystemEntryInfo_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(true);
       }
 
 
 
 
-      private void Directory_GetFileSystemEntryInfo(bool isNetwork)
+      private void Directory_GetFileSystemEntryInfo_CatchDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(bool isNetwork)
       {
-         var path = UnitTestConstants.SysRoot;
+         var path = UnitTestConstants.NotepadExe;
 
-         if (!System.IO.Directory.Exists(path))
+         if (!System.IO.File.Exists(path))
             Assert.Inconclusive("Test ignored because {0} was not found.", path);
 
 
@@ -56,14 +56,25 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
-         var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath);
-         UnitTestConstants.Dump(fsei, -19);
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath);
+         }
+         catch (Exception ex)
+         {
+            var exType = ex.GetType();
+
+            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+         }
 
 
-         Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));
-         Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Directory) != 0, "The Directory attribute is not found, but is expected.");
-         Assert.AreEqual(tempPath, fsei.FullPath, "The paths are not equal, but are expected to be.");
-         
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+
          Console.WriteLine();
       }
    }
