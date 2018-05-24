@@ -30,13 +30,6 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-
-      [TestMethod]
-      public void DirectoryInfo_MoveTo_ThrowArgumentException_UncPathNotAllowed_DelayUntilRebootFlagCombinedWithCopyAllowedFlag_Network_Success()
-      {
-         DirectoryInfo_MoveTo_DelayUntilReboot(true);
-      }
-
       
       [TestMethod]
       public void DirectoryInfo_MoveTo_DelayUntilReboot_Local_Success()
@@ -48,9 +41,7 @@ namespace AlphaFS.UnitTest
          DirectoryInfo_MoveTo_DelayUntilReboot(false);
       }
 
-
-
-
+      
       private void DirectoryInfo_MoveTo_DelayUntilReboot(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
