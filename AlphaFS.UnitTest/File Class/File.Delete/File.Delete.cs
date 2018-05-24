@@ -219,10 +219,13 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               var exName = ex.GetType().Name;
-               gotException = exName.Equals("UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(UnauthorizedAccessException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
+
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
 
@@ -255,10 +258,13 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               var exName = ex.GetType().Name;
-               gotException = exName.Equals("FileReadOnlyException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.FileReadOnlyException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
+
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 

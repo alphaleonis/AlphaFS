@@ -75,11 +75,12 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               var exName = ex.GetType().Name;
-               gotException = exName.Equals("PathTooLongException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\tCaught EXPECTED Exception: [{0}] Message: [{1}]", exName, ex.Message);
-            }
+               var exType = ex.GetType();
 
+               gotException = exType == typeof(System.IO.PathTooLongException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            }
 
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
