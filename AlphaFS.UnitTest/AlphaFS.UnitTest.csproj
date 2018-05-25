@@ -189,7 +189,6 @@
     <Compile Include="AlphaFS Host Class\AlphaFS.Host_GetWorkstationStatistics.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS.Host_GetServerStatistics.cs" />
     <Compile Include="AlphaFS Timestamps\AlphaFS_TimestampsTest.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetUniqueVolumeNameForPath.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.Copy_CopySymbolicLink.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction_ThrowIOException_FileExistsWithSameNameAsDirectory.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction_ThrowArgumentException_MappedDrive.cs" />
@@ -364,11 +363,6 @@
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_CatchArgumentException_PathContainsInvalidCharacters.cs" />
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_CatchArgumentException_PathStartsWithColon.cs" />
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_CatchNotSupportedException_PathContainsColon.cs" />
-    <Compile Include="UnitTest Utility\CreateFile.cs" />
-    <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
-    <Compile Include="UnitTest Utility\Dump.cs" />
-    <Compile Include="UnitTest Utility\FileAssert.cs" />
-    <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_ThrowArgumentException_PathContainsInvalidCharacters.cs" />
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_ThrowArgumentException_PathStartsWithColon.cs" />
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_ThrowNotSupportedException_PathContainsColon.cs" />
@@ -382,14 +376,9 @@
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetVerbCommand.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.InitializeInstance.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.cs" />
-    <Compile Include="UnitTest Utility\InputPaths.cs" />
-    <Compile Include="UnitTest Utility\GetRandomFileNameWithDiacriticCharacters.cs" />
-    <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
-    <Compile Include="UnitTest Utility\StringToByteArray.cs" />
-    <Compile Include="UnitTest Utility\PrintUnitTestHeader.cs" />
-    <Compile Include="UnitTest Utility\IsAdmin.cs" />
-    <Compile Include="UnitTest Utility\Dump.cs" />
     <Compile Include="UnitTest Utility\CreateFile.cs" />
+    <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
+    <Compile Include="UnitTest Utility\Dump.cs" />
     <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
     <Compile Include="UnitTest Utility\FileAssert.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.UrlIs.cs" />
