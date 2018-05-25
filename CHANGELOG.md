@@ -14,7 +14,7 @@ Version 2.2.2  (2018-XX-XX)
 
 ### Improvements
 
-- The correct source-/destination folder is now shown in exceptions thrown from Directory/File.Copy/Move methods, instead always showing the source folder path.
+- The correct source-/destination folder is now shown in exceptions thrown from Directory/File.Copy/Move methods, instead of always showing the source folder path.
 - Improved some unit tests that would fail when a removable drive is already removed but there's still a cached reference.
 
 
