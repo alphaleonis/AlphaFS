@@ -60,8 +60,6 @@ namespace AlphaFS.UnitTest
 
             Assert.IsNull(Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(fi.FullName));
          }
-
-         Console.WriteLine();
       }
    }
 }
