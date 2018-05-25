@@ -175,7 +175,7 @@
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_InitializeInstance.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateNetworkConnections.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateNetworks.cs" />
-    <Compile Include="AlphaFS Host Class\AlphaFS.Host.GetWorkstationStatistics.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host.GetWorkstationStatistics.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.GetServerStatistics.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateSessions.cs" />
@@ -214,6 +214,14 @@
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.CopyTest.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.CountFileSystemObjects\AlphaFS_Directory.CountFileSystemObjectsTest.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.CountFileSystemObjects\AlphaFS_Directory_CountFileSystemObjects_FilesOnly_NonRecursive.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.CountFileSystemObjects\AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.CountFileSystemObjects\AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_Recursive.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.CountFileSystemObjects\AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_NonRecursive.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.IsEmpty\AlphaFS_Directory_IsEmpty_ContainsAFolder_IsFalse.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.IsEmpty\AlphaFS_Directory_IsEmpty_ContainsAFile_IsFalse.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.IsEmpty\AlphaFS_Directory.IsEmptyTest.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectoryTest.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_ThrowDirectoryNotFoundException_NonExistingDriveLetter.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_ThrowAlreadyExistsException_FileExistsWithSameNameAsDirectory.cs" />
@@ -259,7 +267,7 @@
     <Compile Include="AlphaFS Compression\AlphaFS_Directory.Compress_And_Decompress.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_Directory.Encrypt_And_Decrypt.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.IsEmpty.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.IsEmpty\AlphaFS_Directory.IsEmpty.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeString.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateSymbolicLink_And_GetLinkTargetInfo.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction_ThrowDirectoryNotEmptyException.cs" />
@@ -268,7 +276,7 @@
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingDirectoryEnumerationErrorFilter.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_DirectoryInfo.CreateJunction_And_ExistsJunction_And_DeleteJunction.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_ThrowIOException_SameSourceAndDestination.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.CountFileSystemObjects.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.CountFileSystemObjects\AlphaFS_Directory_CountFileSystemObjects_FoldersAndFiles_Recursive.cs" />
     <Compile Include="AlphaFS Alternate Data Streams\AlphaFS_Directory.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Directory Class\Directory.Exists\AlphaFS_Directory.Exists_WithLeadingOrTrailingSpace.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_Directory.ExportImportEncryptedDirectoryRaw.cs" />

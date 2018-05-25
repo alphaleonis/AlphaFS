@@ -25,30 +25,21 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class AlphaFS_Directory_IsEmptyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_IsEmpty_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_IsEmpty_ContainsAFolder_IsFalse_LocalAndNetwork_Success()
       {
-         Directory_IsEmpty(false);
-         Directory_IsEmpty(true);
-      }
-
-
-      [TestMethod]
-      public void AlphaFS_Directory_IsEmpty_ContainsAFile_IsFalse_LocalAndNetwork_Success()
-      {
-         Directory_IsEmpty_ContainsAFile_IsFalse(false);
-         Directory_IsEmpty_ContainsAFile_IsFalse(true);
+         Directory_IsEmpty_ContainsAFolder_IsFalse(false);
+         Directory_IsEmpty_ContainsAFolder_IsFalse(true);
       }
 
 
 
-
-      private void Directory_IsEmpty(bool isNetwork)
+      private void Directory_IsEmpty_ContainsAFolder_IsFalse(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -63,36 +54,18 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
 
 
-            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.IsEmpty(folder.FullName), "It is expected that the folder is empty.");
-         }
+            // Create folder and test again.
+            var subFolder = System.IO.Path.Combine(folder.FullName, "a_file.txt");
 
-         Console.WriteLine();
-      }
-
-
-      private void Directory_IsEmpty_ContainsAFile_IsFalse(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+            System.IO.Directory.CreateDirectory(subFolder);
+            Console.WriteLine("\n\tCreated Folder: [{0}]", subFolder);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Empty Folder"));
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
+            var isEmpty = Alphaleonis.Win32.Filesystem.Directory.IsEmpty(folder.FullName);
+            Console.WriteLine("\n\tFolder is empty: [{0}]", isEmpty);
 
 
-            // Create file and test again.
-            var file = System.IO.Path.Combine(folder.FullName, "a_file.txt");
-
-            using (System.IO.File.Create(file))
-               Console.WriteLine("\n\tCreated File: [{0}]", file);
-
-
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.Directory.IsEmpty(folder.FullName), "It is expected that the folder is not empty.");
+            Assert.IsFalse(isEmpty, "It is expected that the folder is not empty.");
          }
 
          Console.WriteLine();

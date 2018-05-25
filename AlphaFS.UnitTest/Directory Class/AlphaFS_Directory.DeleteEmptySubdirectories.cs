@@ -34,18 +34,9 @@ namespace AlphaFS.UnitTest
       {
          Directory_DeleteEmptySubdirectories(false);
          Directory_DeleteEmptySubdirectories(true);
-
-         //System.IO.Directory.CreateDirectory(@"c:\temp2\test\Foo");
-         //System.IO.Directory.CreateDirectory(@"c:\temp2\test\Bar");
-         //System.IO.Directory.CreateDirectory(@"c:\temp2\test\Foo\FooFoo");
-         //System.IO.Directory.CreateDirectory(@"c:\temp2\test\Foo\FooBar");
-
-         //Alphaleonis.Win32.Filesystem.Directory.DeleteEmptySubdirectories(@"c:\temp2\test", true);
       }
 
-
-
-
+      
       private void Directory_DeleteEmptySubdirectories(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
