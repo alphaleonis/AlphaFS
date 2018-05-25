@@ -36,9 +36,7 @@ namespace AlphaFS.UnitTest
          FileInfo_Attributes(false);
          FileInfo_Attributes(true);
       }
-
-
-
+      
 
       private void FileInfo_Attributes(bool isNetwork)
       {

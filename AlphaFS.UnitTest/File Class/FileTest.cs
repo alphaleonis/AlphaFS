@@ -22,7 +22,6 @@
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -37,77 +36,6 @@ namespace AlphaFS.UnitTest
    public partial class FileTest
    {
       #region Unit Tests
-      
-      #region DumpAppendAllLines
-
-      private void DumpAppendAllLines(bool isLocal)
-      {
-         #region Setup
-
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         var tempFolder = Path.GetTempPath();
-         var tempPath = Path.Combine(tempFolder, "File.Delete-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         // Create file and append text.
-         var tempFile = Path.GetTempFileName();
-         if (!isLocal) tempFile = Path.LocalToUnc(tempFile);
-
-         IEnumerable<string> allLines = new[] {UnitTestConstants.TenNumbers, UnitTestConstants.TextHelloWorld, UnitTestConstants.TextGoodbyeWorld, UnitTestConstants.TextUnicode};
-
-         #endregion // Setup
-
-         try
-         {
-            #region AppendAllLines
-
-            Console.WriteLine("\nDefault AlphaFS Encoding: [{0}]", NativeMethods.DefaultFileEncoding.EncodingName);
-
-            // Create real UTF-8 file.
-            File.AppendAllLines(tempFile, allLines, NativeMethods.DefaultFileEncoding);
-
-            // Read filestream contents.
-            using (var streamRead = File.OpenText(tempFile))
-            {
-               var line = streamRead.ReadToEnd();
-
-               Console.WriteLine("\nCreated: [{0}] filestream: [{1}]\n\n\tAppendAllLines content:\n{2}", streamRead.CurrentEncoding.EncodingName, tempFile, line);
-
-               foreach (var line2 in allLines)
-                  Assert.IsTrue(line.Contains(line2));
-            }
-
-            // Append
-            File.AppendAllLines(tempFile, new[] { "Append 1" });
-            File.AppendAllLines(tempFile, allLines);
-            File.AppendAllLines(tempFile, new[] { "Append 2" });
-            File.AppendAllLines(tempFile, allLines);
-
-            // Read filestream contents.
-            using (var streamRead = File.OpenText(tempFile))
-            {
-               var line = streamRead.ReadToEnd();
-
-               Console.WriteLine("AppendAllLines content:\n{0}", line);
-
-               foreach (var line2 in allLines)
-                  Assert.IsTrue(line.Contains(line2));
-            }
-
-            #endregion // AppendAllLines
-         }
-         finally
-         {
-            File.Delete(tempFile, true);
-            Assert.IsFalse(File.Exists(tempFile), "Cleanup failed: File should have been removed.");
-         }
-
-         Console.WriteLine();
-      }
-
-      #endregion // DumpAppendAllLines
-      
-      #region DumpGetSetAttributes
 
       private void DumpGetSetAttributes(bool isLocal)
       {
@@ -204,9 +132,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpGetSetAttributes
-
-      #region DumpReadAllLines
 
       private void DumpReadAllLines(bool isLocal)
       {
@@ -239,9 +164,6 @@ namespace AlphaFS.UnitTest
          Assert.IsFalse(File.Exists(tempFile), "Cleanup failed: File should have been removed.");
       }
 
-      #endregion // DumpReadAllLines
-
-      #region DumpReadWriteAllBytes
 
       private void DumpReadWriteAllBytes(bool isLocal)
       {
@@ -296,173 +218,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n");
       }
 
-      #endregion // DumpReadWriteAllBytes
-      
       #endregion // Unit Tests
 
+
       #region .NET
-
-      #region AppendAllLines
-
-      [TestMethod]
-      public void File_AppendAllLines()
-      {
-         Console.WriteLine("File.AppendAllLines()");
-
-         DumpAppendAllLines(true);
-         DumpAppendAllLines(false);
-      }
-
-      [TestMethod]
-      public void File_AppendAllLinesThenReadAllLinesShouldReturnSameCollection()
-      {
-         var file = Path.GetTempFileName();
-         var sample = new []{ "line one", "line two" };
-
-         try
-         {
-            File.AppendAllLines(file, sample);
-            CollectionAssert.AreEquivalent(sample, File.ReadAllLines(file).ToArray());
-         }
-         finally
-         {
-            File.Delete(file);
-         }
-      }
-
-      #endregion // AppendAllLines
-
-      #region AppendAllText
-
-      [TestMethod]
-      public void File_AppendAllText()
-      {
-         Console.WriteLine("File.AppendAllText()");
-         Console.WriteLine("\n\tDefault AlphaFS Encoding: [{0}]", NativeMethods.DefaultFileEncoding.EncodingName);
-
-         // Create file and append text.
-         var tempFile = Path.GetTempFileName();
-
-         var allLines = UnitTestConstants.TextHelloWorld;
-
-         // Create real UTF-8 file.
-         File.AppendAllText(tempFile, allLines, NativeMethods.DefaultFileEncoding);
-
-         // Read filestream contents.
-         using (var streamRead = File.OpenText(tempFile))
-         {
-            var line = streamRead.ReadToEnd();
-
-            Console.WriteLine("\n\tCreated: [{0}] filestream: [{1}]\n\n\tAppendAllText content:\n{2}", streamRead.CurrentEncoding.EncodingName, tempFile, line);
-
-            Assert.IsTrue(line.Contains(allLines));
-         }
-
-         // Append
-         File.AppendAllText(tempFile, "Append 1");
-         File.AppendAllText(tempFile, allLines);
-         File.AppendAllText(tempFile, "Append 2");
-         File.AppendAllText(tempFile, allLines);
-
-         // Read filestream contents.
-         using (var streamRead = File.OpenText(tempFile))
-         {
-            var line = streamRead.ReadToEnd();
-
-            Console.WriteLine("\tAppendAllText content:\n{0}", line);
-
-            Assert.IsTrue(line.Contains(allLines));
-            Assert.IsTrue(line.Contains("Append 1"));
-            Assert.IsTrue(line.Contains("Append 2"));
-         }
-
-         File.Delete(tempFile, true);
-         Assert.IsFalse(File.Exists(tempFile), "Cleanup failed: File should have been removed.");
-      }
-
-      #endregion // AppendAllText
-
-      #region AppendText
-
-      [TestMethod]
-      public void File_AppendText()
-      {
-         Console.WriteLine("File.AppendText()");
-
-         var utf8 = NativeMethods.DefaultFileEncoding.BodyName.ToUpperInvariant();
-         string line;
-         var matchLine = string.Empty;
-         var tempFile = Path.GetTempFileName();
-
-         StreamReader streamRead;
-         StreamWriter streamWrite;
-
-         Console.WriteLine("Default AlphaFS Encoding: {0}", NativeMethods.DefaultFileEncoding.EncodingName);
-
-         #region Create Filestream, CreateText()
-
-         // Create filestream and append text as UTF-8, default.
-         using (streamWrite = File.CreateText(tempFile))
-         {
-            streamWrite.Write(UnitTestConstants.TextHelloWorld);
-         }
-
-         // Read filestream contents.
-         using (streamRead = File.OpenText(tempFile))
-         {
-            while ((line = streamRead.ReadLine()) != null)
-            {
-               Console.WriteLine("\n CreateText(): [{0}] filestream: [{1}]\n  Appended: [{2}]\n  Content : [{3}]", streamRead.CurrentEncoding.EncodingName, tempFile, UnitTestConstants.TextHelloWorld, line);
-               matchLine = line; // Catch the last line.
-            }
-         }
-         Assert.IsTrue(matchLine.Equals(UnitTestConstants.TextHelloWorld, StringComparison.OrdinalIgnoreCase));
-
-         #endregion // Create Filestream, CreateText()
-
-         #region AppendText() to Filestream
-
-         // Append text as UTF-8, default.
-         using (streamWrite = File.AppendText(tempFile))
-         {
-            streamWrite.Write(UnitTestConstants.TextGoodbyeWorld);
-         }
-
-         // Read filestream contents.
-         using (streamRead = File.OpenText(tempFile))
-         {
-            while ((line = streamRead.ReadLine()) != null)
-            {
-               Console.WriteLine("\n AppendText() as [{0}]\n  Appended: [{1}]\n  Content : [{2}]", utf8, UnitTestConstants.TextGoodbyeWorld, line);
-            }
-         }
-
-         // Append text as UTF-8, default.
-         using (streamWrite = File.AppendText(tempFile))
-         {
-            streamWrite.WriteLine(UnitTestConstants.TextUnicode);
-         }
-
-         // Read filestream contents.
-         matchLine = string.Empty;
-         using (streamRead = File.OpenText(tempFile))
-         {
-            while ((line = streamRead.ReadLine()) != null)
-            {
-               Console.WriteLine("\n AppendText() as [{0}]\n  Appended: [{1}]\n  Content : [{2}]", utf8, UnitTestConstants.TextGoodbyeWorld, line);
-               matchLine = line; // Catch the last line.
-            }
-         }
-
-         Assert.IsTrue(matchLine.Equals(UnitTestConstants.TextHelloWorld + UnitTestConstants.TextGoodbyeWorld + UnitTestConstants.TextUnicode, StringComparison.OrdinalIgnoreCase));
-
-         File.Delete(tempFile, true);
-         Assert.IsFalse(File.Exists(tempFile), "Cleanup failed: File should have been removed.");
-
-         #endregion // AppendText() to Filestream
-      }
-
-      #endregion // AppendText
 
       #region Encrypt
 
@@ -529,6 +288,7 @@ namespace AlphaFS.UnitTest
 
       #endregion // Encrypt
 
+
       #region GetAttributes
 
       [TestMethod]
@@ -541,6 +301,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetAttributes
+
 
       #region ReadAllBytes
 
@@ -555,6 +316,7 @@ namespace AlphaFS.UnitTest
 
       #endregion // WriteAllBytes
 
+
       #region ReadAllLines
 
       [TestMethod]
@@ -567,6 +329,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // ReadAllLines
+
 
       #region ReadAllText
 
@@ -591,6 +354,7 @@ namespace AlphaFS.UnitTest
 
       #endregion // ReadAllText
 
+
       #region ReadLines
 
       [TestMethod]
@@ -603,6 +367,7 @@ namespace AlphaFS.UnitTest
 
       #endregion // ReadLines
 
+
       #region WriteAllBytes
 
       [TestMethod]
@@ -614,6 +379,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // WriteAllBytes
+
 
       #region WriteAllLines
 
@@ -647,6 +413,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // WriteAllLines
+
 
       #region WriteAllText
 

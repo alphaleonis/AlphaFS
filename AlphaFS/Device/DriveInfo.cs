@@ -248,7 +248,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Retrieves the drive names of all logical drives on the Computer.</summary>
+      /// <summary>Retrieves the <see cref="DriveInfo"/> of all logical drives on the Computer.</summary>
       /// <returns>An array of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on the Computer.</returns>
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
