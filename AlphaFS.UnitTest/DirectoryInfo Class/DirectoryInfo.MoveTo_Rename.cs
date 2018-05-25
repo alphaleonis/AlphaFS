@@ -51,15 +51,13 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
+            var newFolderName = UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
+
             var folderSrc = new Alphaleonis.Win32.Filesystem.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
-            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination Folder"));
+            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, newFolderName));
 
             Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("\n\tRename folder to: [{0}]", folderDst.Name);
-
-
-            Assert.IsFalse(folderDst.Exists, "The source folder exists which is not expected.");
-            Assert.IsFalse(folderDst.Exists, "The destination folder exists which is not expected.");
 
 
             // Create folder.
@@ -72,11 +70,9 @@ namespace AlphaFS.UnitTest
 
             folderSrc.Refresh();
             folderDst.Refresh();
-            
 
-            Assert.IsTrue(folderSrc.Exists, "The source folder does not exist which is not expected.");
-            Assert.IsTrue(folderDst.Exists, "The destination folder does not exist which is not expected.");
 
+            Assert.IsTrue(folderSrc.Exists, "It is expected that the source exists, but is does not.");
             Assert.AreEqual(folderSrc.Parent.FullName, folderDst.Parent.FullName);
          }
 

@@ -51,34 +51,28 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = new Alphaleonis.Win32.Filesystem.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "TestFolder"));
-            //var folderSrc = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "TestFolder"));
-            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination Folder", "TestFolder"));
+            var testfolder = UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
+
+            var folderSrc = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, testfolder));
+            var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Destination Folder"));
 
 
             Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("\n\tMove folder to: [{0}]", folderDst.FullName);
 
 
-            Assert.IsFalse(folderDst.Exists, "The source folder exists which is not expected.");
-            Assert.IsFalse(folderDst.Exists, "The destination folder exists which is not expected.");
-
-
-            // Create folder.
-            folderSrc.Create();
-
-
             // Move folder.
-            folderSrc.MoveTo(folderDst.FullName);
-            //folderSrc.MoveTo(folderDst.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
-            
+            var newLocation = System.IO.Path.Combine(folderDst.FullName, testfolder);
+
+            folderSrc.MoveTo(newLocation);
+
 
             folderSrc.Refresh();
             folderDst.Refresh();
             
 
-            //Assert.IsFalse(folderSrc.Exists, "The source folder exists which is not expected.");
-            //Assert.IsTrue(folderDst.Exists, "The destination folder does not exist which is not expected.");
+            Assert.IsTrue(folderSrc.Exists, "It is expected that the source exists, but is does not.");
+            Assert.AreEqual(folderSrc.Parent.FullName, folderDst.FullName);
          }
 
 

@@ -932,21 +932,19 @@ namespace Alphaleonis.Win32.Filesystem
             // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified in sourcePath or destinationPath is invalid (for example, it is on an unmapped drive).
             case Win32Errors.ERROR_FILE_NOT_FOUND: // On files.
             case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
-            case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
 
                if (!srcExists)
                   Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, isFolder, lastError, true, true);
 
-               else if (!dstExists)
+               if (!dstExists)
                   Directory.ExistsDriveOrFolderOrFile(transaction, destinationPathLp, isFolder, lastError, true, true);
 
-               // Drive.
-               else
-               {
-                  Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, false, lastError, true, false);
-                  Directory.ExistsDriveOrFolderOrFile(transaction, destinationPathLp, false, lastError, true, false);
-               }
+               break;
 
+
+            case Win32Errors.ERROR_NOT_READY: // DeviceNotReadyException: Floppy device or network drive not ready.
+               Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, false, lastError, true, false);
+               Directory.ExistsDriveOrFolderOrFile(transaction, destinationPathLp, false, lastError, true, false);
                break;
                
                
