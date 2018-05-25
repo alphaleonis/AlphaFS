@@ -6,18 +6,11 @@ Version 2.2.2  (2018-XX-XX)
 
 ### Bugs Fixed
 
-- Issue #434: `Directory.Move` operation worked in v2.0.1, but now fails in v.2.2.1
-- Issue #436: `Directory.GetFiles()` with relative path (Thx stellarbear)
-- Issue #437: Fixed `PathTooLongException` for boundary case of directory name length in `Path.NormalizePath` (Thx okrushelnitsky)
-- Issue #441: `InvalidOperationException` on `Directory.EnumerateFileSystemEntries()`
-
-### Improvements
-
-- Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
-
-### Breaking Changes
-
-- Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
+- Issue #434: `Directory.Move` operation worked in v2.0.1, but now fails in v.2.2.1  (Thx warrenlbrown)
+- Issue #436: `Directory.GetFiles()` with relative path  (Thx stellarbear)
+- Issue #437: Fixed `PathTooLongException` for boundary case of directory name length in `Path.NormalizePath`  (Thx okrushelnitsky)
+- Issue #441: `InvalidOperationException` on `Directory.EnumerateFileSystemEntries()`  (Thx CyberSinh)
+- Issue #444: Exception when moving or renaming a folder after updating from 2.1.3 to 2.2.1  (Thx mlaily)
 
 
 Version 2.2.1  (2018-04-05)
@@ -56,7 +49,7 @@ Version 2.2  (2018-03-25)
 - Issue #412: Method `Volume.GetVolumeDeviceName` returns wrong result.
 - Issue #417: Using a file opened in append mode will fail after a gc occurs  (Thx elgonzo)
 - Issue #417: `File.OpenRead` method overloads do not use `FileShare.Read`  (Thx elgonzo)
-- Issue #427: `System.IO.FileSystemInfo.Refresh()` is public; but AlphaFS `FileSystemInfo.Refresh()` is protected
+- Issue #427: `System.IO.FileSystemInfo.Refresh()` is public; but AlphaFS `FileSystemInfo.Refresh()` is protected  (Thx elgonzo)
 
 ### New Features
 

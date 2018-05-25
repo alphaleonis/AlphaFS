@@ -778,7 +778,8 @@ namespace Alphaleonis.Win32.Filesystem
             // If the move happened on the same drive, we have no knowledge of the number of files/folders.
             // However, we do know that the one folder was moved successfully.
 
-            cmr.TotalFolders = cmr.ErrorCode == Win32Errors.NO_ERROR ? 1 : 0;
+            if (cmr.ErrorCode == Win32Errors.NO_ERROR)
+               cmr.TotalFolders = 1;
          }
 
          

@@ -68,8 +68,11 @@ namespace AlphaFS.UnitTest
             // Because of the colon, you must supply a full path and use PathFormat.FullPath or PathFormat.LongFullPath,
             // to prevent a: "NotSupportedException: path is in an invalid format." exception.
 
-            Alphaleonis.Win32.Filesystem.File.WriteAllLines(tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream, UnitTestConstants.StreamArrayContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
-            Alphaleonis.Win32.Filesystem.File.WriteAllText(tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream2, UnitTestConstants.StreamStringContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
+            var stream1Name = tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream;
+            var stream2Name = tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream2;
+
+            Alphaleonis.Win32.Filesystem.File.WriteAllLines(stream1Name, UnitTestConstants.StreamArrayContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
+            Alphaleonis.Win32.Filesystem.File.WriteAllText(stream2Name, UnitTestConstants.StreamStringContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
 
 
             var newNumberofStreams = Alphaleonis.Win32.Filesystem.Directory.EnumerateAlternateDataStreams(tempPath).Count();
@@ -95,6 +98,24 @@ namespace AlphaFS.UnitTest
                foreach (var line in Alphaleonis.Win32.Filesystem.File.ReadAllLines(tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + streamName, Alphaleonis.Win32.Filesystem.PathFormat.FullPath))
                   Console.WriteLine("\t\t{0}", line);
             }
+
+
+
+            // Show FileInfo instance data of the streams.
+
+            var fileInfo1 = new Alphaleonis.Win32.Filesystem.FileInfo(stream1Name, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
+            var fileInfo2 = new Alphaleonis.Win32.Filesystem.FileInfo(stream2Name, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
+
+            Console.WriteLine();
+            UnitTestConstants.Dump(fileInfo1, -17);
+            UnitTestConstants.Dump(fileInfo2, -17);
+
+
+            Assert.AreEqual(UnitTestConstants.MyStream, fileInfo1.Name);
+            Assert.AreEqual(UnitTestConstants.MyStream2, fileInfo2.Name);
+
+            Assert.IsNull(fileInfo1.EntryInfo);
+            Assert.IsNull(fileInfo2.EntryInfo);
          }
          catch (Exception ex)
          {

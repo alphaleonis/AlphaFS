@@ -40,19 +40,8 @@ namespace AlphaFS.UnitTest
       }
 
 
-      [TestMethod]
-      public void AlphaFS_Directory_CreateSymbolicLink_CatchIOException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
-      {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
 
-         Directory_CreateSymbolicLink_CatchIOException_FileExistsWithSameNameAsDirectory(false);
-         Directory_CreateSymbolicLink_CatchIOException_FileExistsWithSameNameAsDirectory(true);
-      }
-
-
-
-
+      
       private void Directory_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -100,48 +89,6 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(alphaFSDirInfo.EntryInfo.IsReparsePoint);
             Assert.IsTrue(alphaFSDirInfo.EntryInfo.IsSymbolicLink);
             Assert.AreEqual(alphaFSDirInfo.EntryInfo.ReparsePointTag, Alphaleonis.Win32.Filesystem.ReparsePointTag.SymLink);
-         }
-
-         Console.WriteLine();
-      }
-
-
-      private void Directory_CreateSymbolicLink_CatchIOException_FileExistsWithSameNameAsDirectory(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var folderLink = System.IO.Path.Combine(rootDir.Directory.FullName, "FolderLink-ToOriginalFolder");
-
-            var fileInfo = new System.IO.FileInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "OriginalFile.txt"));
-            using (fileInfo.Create()) {}
-
-            Console.WriteLine("\nInput File Path     : [{0}]", fileInfo.FullName);
-            Console.WriteLine("Input Directory Link: [{0}]", folderLink);
-
-
-            var gotException = false;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.CreateSymbolicLink(folderLink, fileInfo.FullName);
-
-            }
-            catch (Exception ex)
-            {
-               var exName = ex.GetType().Name;
-               gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
-            }
-
-
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
 
          Console.WriteLine();
