@@ -84,7 +84,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
             const int expectedFso = 10;
             UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false, false, false);
@@ -113,7 +113,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
             const int expectedFso = 10;
             const int expectedSubfolders = expectedFso * expectedFso + expectedFso;
@@ -142,7 +142,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
             const int expectedFso = 0;
             UnitTestConstants.CreateDirectoriesAndFiles(folder, 10, false, false, false);
@@ -209,7 +209,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
             const int expectedFso = 200;
             UnitTestConstants.CreateDirectoriesAndFiles(folder, 100, false, false, false);

@@ -49,7 +49,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
+         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
          var count = 0;
          foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemEntryInfo>(tempPath))

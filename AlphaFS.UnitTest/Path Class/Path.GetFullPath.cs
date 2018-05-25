@@ -84,7 +84,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_GetFullPath_CatchArgumentException_InvalidPath1_Success()
+      public void Path_GetFullPath_ThrowArgumentException_InvalidPath1_Success()
       {
          var gotException = false;
          try
@@ -96,16 +96,19 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+            var exType = ex.GetType();
+
+            gotException = exType == typeof(ArgumentException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
+
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
       }
 
 
       [TestMethod]
-      public void Path_GetFullPath_CatchArgumentException_InvalidPath2_Success()
+      public void Path_GetFullPath_ThrowArgumentException_InvalidPath2_Success()
       {
          var gotException = false;
          try
@@ -114,16 +117,19 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+            var exType = ex.GetType();
+
+            gotException = exType == typeof(ArgumentException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
+
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
       }
 
 
       [TestMethod]
-      public void Path_GetFullPath_CatchNotSupportedException_Success()
+      public void Path_GetFullPath_ThrowNotSupportedException_Success()
       {
          var gotException = false;
          try
@@ -132,10 +138,13 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            var exName = ex.GetType().Name;
-            gotException = exName.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
+            var exType = ex.GetType();
+
+            gotException = exType == typeof(NotSupportedException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
+
          Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
       }
       

@@ -38,14 +38,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-      [TestMethod]
-      public void AlphaFS_Directory_Compress_And_Decompress_Recursive_LocalAndNetwork_Success()
-      {
-         Directory_Compress_And_Decompress(false, true);
-         Directory_Compress_And_Decompress(true, true);
-      }
-
-
 
 
       private void Directory_Compress_And_Decompress(bool isNetwork, bool recursive)

@@ -685,28 +685,30 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DirectoryInfo CreateDirectoryCore(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
+         var longPath = path;
+
          if (pathFormat != PathFormat.LongFullPath)
          {
             Path.CheckSupportedPathFormat(path, true, true);
             Path.CheckSupportedPathFormat(templatePath, true, true);
 
-            path = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+            longPath = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
             pathFormat = PathFormat.LongFullPath;
          }
 
 
-         if (!char.IsWhiteSpace(path[path.Length - 1]))
+         if (!char.IsWhiteSpace(longPath[longPath.Length - 1]))
          {
             // Return DirectoryInfo instance if the directory specified by path already exists.
-            if (File.ExistsCore(transaction, true, path, pathFormat))
-               return new DirectoryInfo(transaction, path, pathFormat);
+            if (File.ExistsCore(transaction, true, longPath, pathFormat))
+               return new DirectoryInfo(transaction, longPath, pathFormat);
          }
 
 
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
-         if (File.ExistsCore(transaction, false, path, pathFormat))
-            NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, path);
+         if (File.ExistsCore(transaction, false, longPath, pathFormat))
+            NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, longPath);
 
 
          var templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
@@ -714,7 +716,8 @@ namespace Alphaleonis.Win32.Filesystem
             : Path.GetExtendedLengthPathCore(transaction, templatePath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
 
-         var list = ConstructFullPath(transaction, path, out path);
+         string regularPath;
+         var list = ConstructFullPath(transaction, longPath, out regularPath);
 
 
          // Directory security.
@@ -741,8 +744,8 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
                      case Win32Errors.ERROR_ALREADY_EXISTS:
-                        if (File.ExistsCore(transaction, false, path, pathFormat))
-                           NativeError.ThrowException(lastError, path);
+                        if (File.ExistsCore(transaction, false, longPath, pathFormat))
+                           NativeError.ThrowException(lastError, longPath);
 
                         if (File.ExistsCore(transaction, false, folderLp, pathFormat))
                            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, null, folderLp);
@@ -750,13 +753,13 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                      case Win32Errors.ERROR_BAD_NET_NAME:
-                        NativeError.ThrowException(lastError, path);
+                        NativeError.ThrowException(lastError, longPath);
                         break;
 
 
                      case Win32Errors.ERROR_DIRECTORY:
                         // MSDN: .NET 3.5+: NotSupportedException: path contains a colon character (:) that is not part of a drive label ("C:\").
-                        throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, Resources.Unsupported_Path_Format, path));
+                        throw new NotSupportedException(string.Format(CultureInfo.InvariantCulture, Resources.Unsupported_Path_Format, longPath));
 
 
                      case Win32Errors.ERROR_ACCESS_DENIED:
@@ -778,7 +781,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
 
-            return new DirectoryInfo(transaction, path, pathFormat);
+            return new DirectoryInfo(transaction, longPath, pathFormat);
          }
       }
 

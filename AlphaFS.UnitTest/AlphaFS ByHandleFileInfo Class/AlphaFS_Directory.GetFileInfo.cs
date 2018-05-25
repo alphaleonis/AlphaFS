@@ -52,7 +52,7 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]]", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
             var dirInfo = new System.IO.DirectoryInfo(folder);
