@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -22,6 +22,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
+using System.Text;
 
 namespace AlphaFS.UnitTest
 {
@@ -31,14 +32,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Create_LocalAndNetwork_Success()
+      public void File_CreateText_LocalAndNetwork_Success()
       {
-         File_Create(false);
-         File_Create(true);
+         File_CreateText(false);
+         File_CreateText(true);
       }
 
 
-      private void File_Create(bool isNetwork)
+      private void File_CreateText(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -49,29 +50,24 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
-
-#if NET35
-            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-            file += UnitTestConstants.EMspace;
-#endif
-
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+            var file1 = rootDir.RandomFileFullPath;
+            var file2 = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput File1 Path: [{0}]", file1);
+            Console.WriteLine("\nInput File2 Path: [{0}]", file2);
 
 
-            long fileLength;
-            var ten = UnitTestConstants.TenNumbers.Length;
+            using (var stream = System.IO.File.CreateText(file1))
+               stream.Write(UnitTestConstants.TextHelloWorld);
 
-            using (var fs = Alphaleonis.Win32.Filesystem.File.Create(file))
+
+            using (var stream = Alphaleonis.Win32.Filesystem.File.CreateText(file2))
             {
-               // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
-
-               fileLength = fs.Length;
+               stream.Write(UnitTestConstants.TextHelloWorld);
+               Assert.AreEqual(stream.Encoding, Encoding.UTF8, "The text encoding is not equal, but is expected to.");
             }
 
-            Assert.IsTrue(System.IO.File.Exists(file), "File should exist.");
-            Assert.IsTrue(fileLength == ten, "The file is: {0} bytes, but is expected to be: {1} bytes.", fileLength, ten);
+
+            Assert.AreEqual(System.IO.File.ReadAllText(file1), System.IO.File.ReadAllText(file2), "The content of the two files is not equal, but is expected to.");
          }
 
          Console.WriteLine();

@@ -22,7 +22,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
-using System.Text;
 
 namespace AlphaFS.UnitTest
 {
@@ -32,16 +31,17 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_CreateText_LocalAndNetwork_Success()
+      public void File_OpenText_LocalAndNetwork_Success()
       {
-         File_CreateText(false);
-         File_CreateText(true);
+         File_OpenText(false);
+         File_OpenText(true);
       }
 
-
-      private void File_CreateText(bool isNetwork)
+      
+      private void File_OpenText(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
 
          var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
@@ -50,24 +50,27 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file1 = rootDir.RandomFileFullPath;
-            var file2 = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput File1 Path: [{0}]", file1);
-            Console.WriteLine("\nInput File2 Path: [{0}]", file2);
+            var file = rootDir.RandomFileFullPath;
+            Console.WriteLine("Input File Path: [{0}]\n", file);
 
 
-            using (var stream = System.IO.File.CreateText(file1))
-               stream.Write(UnitTestConstants.TextHelloWorld);
+            System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);
 
 
-            using (var stream = Alphaleonis.Win32.Filesystem.File.CreateText(file2))
-            {
-               stream.Write(UnitTestConstants.TextHelloWorld);
-               Assert.AreEqual(stream.Encoding, Encoding.UTF8, "The text encoding is not equal, but is expected to.");
-            }
+            var sysIoStreamText = string.Empty;
+            var alphaStreamText = string.Empty;
+
+            using (var stream = System.IO.File.OpenText(file))
+               sysIoStreamText = stream.ReadLine();
+
+            using (var stream = Alphaleonis.Win32.Filesystem.File.OpenText(file))
+               alphaStreamText = stream.ReadLine();
+
+            Console.WriteLine("\tSystem IO: " + sysIoStreamText);
+            Console.WriteLine("\tAlphaFS  : " + alphaStreamText);
 
 
-            Assert.AreEqual(System.IO.File.ReadAllText(file1), System.IO.File.ReadAllText(file2), "The content of the two files is not equal, but is expected to.");
+            Assert.AreEqual(sysIoStreamText, alphaStreamText, "The content of the two files is not equal, but is expected to.");
          }
 
          Console.WriteLine();

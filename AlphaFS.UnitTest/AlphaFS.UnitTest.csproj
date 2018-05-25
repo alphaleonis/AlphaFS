@@ -311,6 +311,12 @@
     <Compile Include="File Class\AlphaFS_File.IsLocked\AlphaFS_File.GetProcessForFileLock_NoLockReturnsNull.cs" />
     <Compile Include="File Class\AlphaFS_File.IsLocked\AlphaFS_File.GetProcessForFileLock.cs" />
     <Compile Include="File Class\AlphaFS_File.IsLocked\AlphaFS_File.IsLockedTest.cs" />
+    <Compile Include="File Class\File.Create\File.CreateTest.cs" />
+    <Compile Include="File Class\File.Create\File.CreateText_ThenReadAllLinesShouldReturnSameCollection.cs" />
+    <Compile Include="File Class\File.Append\File.AppendText_ThenReadAllLinesShouldReturnSameCollection.cs" />
+    <Compile Include="File Class\File.Append\File.AppendAllText_ThenReadAllLinesShouldReturnSameCollection.cs" />
+    <Compile Include="File Class\File.Append\File.AppendAllLines_ThenReadAllLinesShouldReturnSameCollection.cs" />
+    <Compile Include="File Class\File.Append\File.AppendTest.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_WithProgress.cs" />
     <Compile Include="File Class\File.Copy\File.Copy.cs" />
     <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive.cs" />
@@ -335,10 +341,10 @@
     <Compile Include="File Class\File.Move\AlphaFS_File.Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists.cs" />
     <Compile Include="File Class\File.Move\File.Move.cs" />
     <Compile Include="File Class\File.Move\File.MoveTest.cs" />
-    <Compile Include="File Class\File.CreateText.cs" />
+    <Compile Include="File Class\File.Create\File.CreateText.cs" />
     <Compile Include="File Class\File.OpenRead\File.OpenRead_OpenReadTwiceShouldNotLock.cs" />
-    <Compile Include="File Class\File.OpenWrite.cs" />
-    <Compile Include="File Class\File.OpenText.cs" />
+    <Compile Include="File Class\File.Open\File.OpenWrite.cs" />
+    <Compile Include="File Class\File.Open\File.OpenText.cs" />
     <Compile Include="File Class\File.OpenRead\File.OpenRead.cs" />
     <Compile Include="File Class\File.Open\File_Open_OverlappedIO.cs" />
     <Compile Include="File Class\File.Open\File_Open_Create.cs" />
@@ -363,8 +369,8 @@
     <Compile Include="File Class\File.Open\File_Open_Append.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_File.ExportImportEncryptedFileRaw.cs" />
     <Compile Include="File Class\File.Exists\File.Exists.cs" />
-    <Compile Include="File Class\File.SetAccessControl.cs" />
-    <Compile Include="File Class\File.GetAccessControl.cs" />
+    <Compile Include="File Class\File.AccessControl\File.SetAccessControl.cs" />
+    <Compile Include="File Class\File.AccessControl\File.GetAccessControl.cs" />
     <Compile Include="File Class\File.Timestamps\File.TimestampsTest.cs" />
     <Compile Include="FileInfo Class\FileInfo.InitializeInstance\FileInfo.InitializeInstance_NonExistingFile.cs" />
     <Compile Include="FileInfo Class\FileInfoTest.cs" />

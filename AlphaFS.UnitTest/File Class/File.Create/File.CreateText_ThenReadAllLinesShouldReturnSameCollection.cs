@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,30 +19,32 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class FileTest
+   public partial class File_CreateTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void File_OpenText_LocalAndNetwork_Success()
+      public void File_CreateText_ThenReadAllLinesShouldReturnSameCollection_LocalAndNetwork_Succes()
       {
-         File_OpenText(false);
-         File_OpenText(true);
+         File_CreateText_ThenReadAllLinesShouldReturnSameCollection(false);
+         File_CreateText_ThenReadAllLinesShouldReturnSameCollection(true);
       }
 
-      
-      private void File_OpenText(bool isNetwork)
+
+      private void File_CreateText_ThenReadAllLinesShouldReturnSameCollection(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
 
-         var tempPath = System.IO.Path.GetTempPath();
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -50,26 +52,26 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+
+            Console.WriteLine("Input File Path: [{0}]", file);
+
+            var sample = new[] {UnitTestConstants.StreamArrayContent[0], UnitTestConstants.StreamArrayContent[1]};
 
 
-            System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);
+            using (var sw = Alphaleonis.Win32.Filesystem.File.CreateText(file))
+            {
+               sw.WriteLine(sample[0]);
+               sw.WriteLine(sample[1]);
+            }
 
 
-            var sysIoStreamText = string.Empty;
-            var alphaStreamText = string.Empty;
+            var collection = System.IO.File.ReadAllLines(file).ToArray();
 
-            using (var stream = System.IO.File.OpenText(file))
-               sysIoStreamText = stream.ReadLine();
-
-            using (var stream = Alphaleonis.Win32.Filesystem.File.OpenText(file))
-               alphaStreamText = stream.ReadLine();
-
-            Console.WriteLine("\tSystem IO: " + sysIoStreamText);
-            Console.WriteLine("\tAlphaFS  : " + alphaStreamText);
+            for (int i = 0, l = collection.Length; i < l; i++)
+               Console.WriteLine("\n\t" + collection[i]);
 
 
-            Assert.AreEqual(sysIoStreamText, alphaStreamText, "The content of the two files is not equal, but is expected to.");
+            CollectionAssert.AreEquivalent(sample, collection);
          }
 
          Console.WriteLine();

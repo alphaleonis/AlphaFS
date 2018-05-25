@@ -19,30 +19,32 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_CreateTest
+   public partial class File_AppendTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void File_Create_LocalAndNetwork_Success()
+      public void File_AppendAllText_ThenReadAllLinesShouldReturnSameCollection_LocalAndNetwork_Succes()
       {
-         File_Create(false);
-         File_Create(true);
+         File_AppendAllText_ThenReadAllLinesShouldReturnSameCollection(false);
+         File_AppendAllText_ThenReadAllLinesShouldReturnSameCollection(true);
       }
 
 
-      private void File_Create(bool isNetwork)
+      private void File_AppendAllText_ThenReadAllLinesShouldReturnSameCollection(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         Console.WriteLine();
 
-         var tempPath = System.IO.Path.GetTempPath();
+         var tempPath = UnitTestConstants.TempFolder;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -51,27 +53,22 @@ namespace AlphaFS.UnitTest
          {
             var file = rootDir.RandomFileFullPath;
 
-#if NET35
-            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-            file += UnitTestConstants.EMspace;
-#endif
+            Console.WriteLine("Input File Path: [{0}]", file);
 
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+            var sample = new[] {UnitTestConstants.StreamArrayContent[0], UnitTestConstants.StreamArrayContent[1]};
 
 
-            long fileLength;
-            var ten = UnitTestConstants.TenNumbers.Length;
+            Alphaleonis.Win32.Filesystem.File.AppendAllText(file, sample[0] + Environment.NewLine);
+            Alphaleonis.Win32.Filesystem.File.AppendAllText(file, sample[1] + Environment.NewLine);
 
-            using (var fs = Alphaleonis.Win32.Filesystem.File.Create(file))
-            {
-               // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
 
-               fileLength = fs.Length;
-            }
+            var collection = System.IO.File.ReadAllLines(file).ToArray();
 
-            Assert.IsTrue(System.IO.File.Exists(file), "File should exist.");
-            Assert.IsTrue(fileLength == ten, "The file is: {0} bytes, but is expected to be: {1} bytes.", fileLength, ten);
+            for (int i = 0, l = collection.Length; i < l; i++)
+               Console.WriteLine("\n\t" + collection[i]);
+
+
+            CollectionAssert.AreEquivalent(sample, collection);
          }
 
          Console.WriteLine();

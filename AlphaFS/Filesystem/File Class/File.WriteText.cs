@@ -266,7 +266,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Appends the specified stringto the file, creating the file if it does not already exist.</summary>
+      /// <summary>Appends the specified string to the file, creating the file if it does not already exist.</summary>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
@@ -282,7 +282,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllText(string path, string contents)
       {
-         WriteAppendAllLinesCore(null, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, PathFormat.RelativePath);
+         WriteAppendAllLinesCore(null, path, new[] {contents}, NativeMethods.DefaultFileEncoding, true, false, PathFormat.RelativePath);
       }
 
       /// <summary>Appends the specified string to the file, creating the file if it does not already exist.</summary>
@@ -302,12 +302,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllText(string path, string contents, Encoding encoding)
       {
-         WriteAppendAllLinesCore(null, path, new[] { contents }, encoding, true, false, PathFormat.RelativePath);
+         WriteAppendAllLinesCore(null, path, new[] {contents}, encoding, true, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
 
-      /// <summary>[AlphaFS] Appends the specified stringto the file, creating the file if it does not already exist.</summary>
+      /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
@@ -324,7 +324,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllText(string path, string contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesCore(null, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, pathFormat);
+         WriteAppendAllLinesCore(null, path, new[] {contents}, NativeMethods.DefaultFileEncoding, true, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
@@ -345,14 +345,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllText(string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesCore(null, path, new[] { contents }, encoding, true, false, pathFormat);
+         WriteAppendAllLinesCore(null, path, new[] {contents}, encoding, true, false, pathFormat);
       }
 
       #region Transactional
 
       #region .NET
 
-      /// <summary>[AlphaFS] Appends the specified stringto the file, creating the file if it does not already exist.</summary>
+      /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
@@ -369,7 +369,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllTextTransacted(KernelTransaction transaction, string path, string contents)
       {
-         WriteAppendAllLinesCore(transaction, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, PathFormat.RelativePath);
+         WriteAppendAllLinesCore(transaction, path, new[] {contents}, NativeMethods.DefaultFileEncoding, true, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
@@ -390,12 +390,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllTextTransacted(KernelTransaction transaction, string path, string contents, Encoding encoding)
       {
-         WriteAppendAllLinesCore(transaction, path, new[] { contents }, encoding, true, false, PathFormat.RelativePath);
+         WriteAppendAllLinesCore(transaction, path, new[] {contents}, encoding, true, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
 
-      /// <summary>[AlphaFS] Appends the specified stringto the file, creating the file if it does not already exist.</summary>
+      /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
@@ -413,7 +413,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllTextTransacted(KernelTransaction transaction, string path, string contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesCore(transaction, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, pathFormat);
+         WriteAppendAllLinesCore(transaction, path, new[] {contents}, NativeMethods.DefaultFileEncoding, true, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
@@ -435,7 +435,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllTextTransacted(KernelTransaction transaction, string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesCore(transaction, path, new[] { contents }, encoding, true, false, pathFormat);
+         WriteAppendAllLinesCore(transaction, path, new[] {contents}, encoding, true, false, pathFormat);
       }
 
       #endregion // Transactional
@@ -802,7 +802,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(string path, string contents)
       {
-         WriteAppendAllLinesCore(null, path, new[] { contents }, new UTF8Encoding(false, true), false, false, PathFormat.RelativePath);
+         WriteAppendAllLinesCore(null, path, new[] {contents}, new UTF8Encoding(false, true), false, false, PathFormat.RelativePath);
       }
 
       /// <summary>Creates a new file, writes the specified string to the file using the specified encoding, and then closes the file. If the target file already exists, it is overwritten.</summary>
@@ -812,7 +812,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(string path, string contents, Encoding encoding)
       {
-         WriteAppendAllLinesCore(null, path, new[] { contents }, encoding, false, false, PathFormat.RelativePath);
+         WriteAppendAllLinesCore(null, path, new[] {contents}, encoding, false, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -835,7 +835,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(string path, string contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesCore(null, path, new[] { contents }, new UTF8Encoding(false, true), false, false, pathFormat);
+         WriteAppendAllLinesCore(null, path, new[] {contents}, new UTF8Encoding(false, true), false, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Creates a new file, writes the specified string to the file using the specified encoding, and then closes the file. If the target file already exists, it is overwritten.</summary>
@@ -856,7 +856,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesCore(null, path, new[] { contents }, encoding, false, false, pathFormat);
+         WriteAppendAllLinesCore(null, path, new[] {contents}, encoding, false, false, pathFormat);
       }
 
       #region Transactional
@@ -881,7 +881,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllTextTransacted(KernelTransaction transaction, string path, string contents)
       {
-         WriteAppendAllLinesCore(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, PathFormat.RelativePath);
+         WriteAppendAllLinesCore(transaction, path, new[] {contents}, new UTF8Encoding(false, true), false, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates a new file as part of a transaction, writes the specified string to the file using the specified encoding, and then closes the file. If the target file already exists, it is overwritten.</summary>
@@ -902,7 +902,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllTextTransacted(KernelTransaction transaction, string path, string contents, Encoding encoding)
       {
-         WriteAppendAllLinesCore(transaction, path, new[] { contents }, encoding, false, false, PathFormat.RelativePath);
+         WriteAppendAllLinesCore(transaction, path, new[] {contents}, encoding, false, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -926,7 +926,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllTextTransacted(KernelTransaction transaction, string path, string contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesCore(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, pathFormat);
+         WriteAppendAllLinesCore(transaction, path, new[] {contents}, new UTF8Encoding(false, true), false, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Creates a new file as part of a transaction, writes the specified string to the file using the specified encoding, and then closes the file. If the target file already exists, it is overwritten.</summary>
@@ -948,7 +948,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllTextTransacted(KernelTransaction transaction, string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesCore(transaction, path, new[] { contents }, encoding, false, false, pathFormat);
+         WriteAppendAllLinesCore(transaction, path, new[] {contents}, encoding, false, false, pathFormat);
       }
 
       #endregion // Transactional
@@ -973,7 +973,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       /// <param name="isAppend"><see langword="true"/> for file Append, <see langword="false"/> for file Write.</param>
-      /// <param name="addNewLine"><see langword="true"/> to a line terminator, <see langword="false"/> to ommit the line terminator.</param>
+      /// <param name="addNewLine"><see langword="true"/> to add a line terminator, <see langword="false"/> to ommit the line terminator.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]
       [SecurityCritical]

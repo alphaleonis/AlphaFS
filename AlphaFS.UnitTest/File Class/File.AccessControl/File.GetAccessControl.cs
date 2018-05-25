@@ -20,9 +20,9 @@
  */
 
 using System;
+using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -44,28 +44,31 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = Path.Combine(Path.GetTempPath(), "File.GetAccessControl()-" + Path.GetRandomFileName());
-
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
-         try
+
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            using (File.Create(tempPath))
-            {
-            }
+            var file = rootDir.RandomFileFullPath;
+
+            using (Alphaleonis.Win32.Filesystem.File.Create(file)) {}
+
 
             var foundRules = false;
 
-            var sysIO = System.IO.File.GetAccessControl(tempPath);
+            var sysIO = System.IO.File.GetAccessControl(file);
             var sysIOaccessRules = sysIO.GetAccessRules(true, true, typeof(NTAccount));
 
-            var alphaFS = File.GetAccessControl(tempPath);
+            var alphaFS = Alphaleonis.Win32.Filesystem.File.GetAccessControl(file);
             var alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(NTAccount));
 
 
-            Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+            Console.WriteLine("\nInput File Path: [{0}]", file);
             Console.WriteLine("\n\tSystem.IO rules found: [{0}]\n\tAlphaFS rules found  : [{1}]", sysIOaccessRules.Count, alphaFSaccessRules.Count);
+
+
             Assert.AreEqual(sysIOaccessRules.Count, alphaFSaccessRules.Count);
 
 
@@ -78,17 +81,8 @@ namespace AlphaFS.UnitTest
                foundRules = true;
             }
 
+
             Assert.IsTrue(foundRules);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            Assert.IsTrue(false);
-         }
-         finally
-         {
-            File.Delete(tempPath, true);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
          }
       }
    }

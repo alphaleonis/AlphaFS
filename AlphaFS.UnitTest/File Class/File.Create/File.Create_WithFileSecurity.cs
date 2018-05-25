@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class FileTest
+   public partial class File_CreateTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -38,7 +38,6 @@ namespace AlphaFS.UnitTest
 
 
          File_Create_WithFileSecurity(false);
-
          File_Create_WithFileSecurity(true);
       }
 
