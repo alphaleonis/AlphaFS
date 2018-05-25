@@ -360,9 +360,6 @@
     <Compile Include="Directory Class\DirectoryTest.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_JunctionsLinksTest.cs" />
     <Compile Include="AlphaFS OperatingSystem Class\AlphaFS_OperatingSystemTest.cs" />
-    <Compile Include="Path Class\Path.CheckSupportedPathFormat_CatchArgumentException_PathContainsInvalidCharacters.cs" />
-    <Compile Include="Path Class\Path.CheckSupportedPathFormat_CatchArgumentException_PathStartsWithColon.cs" />
-    <Compile Include="Path Class\Path.CheckSupportedPathFormat_CatchNotSupportedException_PathContainsColon.cs" />
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_ThrowArgumentException_PathContainsInvalidCharacters.cs" />
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_ThrowArgumentException_PathStartsWithColon.cs" />
     <Compile Include="Path Class\Path.CheckSupportedPathFormat_ThrowNotSupportedException_PathContainsColon.cs" />
