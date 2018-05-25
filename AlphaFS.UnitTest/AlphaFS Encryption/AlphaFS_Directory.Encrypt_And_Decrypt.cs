@@ -38,21 +38,13 @@ namespace AlphaFS.UnitTest
       }
 
 
-      [TestMethod]
-      public void AlphaFS_Directory_Encrypt_And_Decrypt_Recursive_LocalAndNetwork_Success()
-      {
-         Directory_Encrypt_And_Decrypt_Recursive(false);
-         Directory_Encrypt_And_Decrypt_Recursive(true);
-      }
-
-
 
 
       private void Directory_Encrypt_And_Decrypt(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = UnitTestConstants.TempFolder;
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -60,9 +52,9 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, new Random().Next(1, 3), false, false, false);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, 1, false, false, false);
 
 
 
@@ -98,63 +90,6 @@ namespace AlphaFS.UnitTest
             {
                cnt++;
                Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Encrypted) != 0, "It is expected that the file system object is encrypted, but it is not.");
-            }
-
-            if (cnt == 0)
-               Assert.Inconclusive("Test decrypt: Nothing is enumerated, but it is expected.");
-         }
-
-         Console.WriteLine();
-      }
-
-
-      private void Directory_Encrypt_And_Decrypt_Recursive(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
-
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, new Random().Next(1, 3), false, false, false);
-
-            
-            
-            
-            // Encrypt.
-            Alphaleonis.Win32.Filesystem.Directory.Encrypt(folder, true);
-
-
-            // Verify that the entire folder is encrypted.
-            var cnt = 0;
-            foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemEntryInfo>(folder, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive))
-            {
-               cnt++;
-               Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Encrypted) != 0, "It is expected that the file system object is encrypted, but it is not.");
-            }
-
-            if (cnt == 0)
-               Assert.Inconclusive("Test encrypt: Nothing is enumerated, but it is expected.");
-
-
-
-
-            // Decrypt.
-            Alphaleonis.Win32.Filesystem.Directory.Decrypt(folder, true);
-
-
-            // Verify that the entire folder is decrypted.
-            cnt = 0;
-            foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemEntryInfo>(folder, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive))
-            {
-               cnt++;
-               Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Encrypted) == 0, "It is expected that the file system object is decrypted, but it is not.");
             }
 
             if (cnt == 0)

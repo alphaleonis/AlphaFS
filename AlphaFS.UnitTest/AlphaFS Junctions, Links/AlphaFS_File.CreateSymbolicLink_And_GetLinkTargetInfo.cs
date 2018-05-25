@@ -40,24 +40,13 @@ namespace AlphaFS.UnitTest
       }
 
 
-      [TestMethod]
-      public void AlphaFS_File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
-      {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-         File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(false);
-         File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(true);
-      }
-
-
 
 
       private void File_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
-         var tempPath = UnitTestConstants.TempFolder;
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -84,7 +73,7 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(new System.IO.FileInfo(fileLink), -17);
 
             var alphaFSFileInfo = new Alphaleonis.Win32.Filesystem.FileInfo(fileLink);
-            UnitTestConstants.Dump(alphaFSFileInfo.EntryInfo, -19);
+            UnitTestConstants.Dump(alphaFSFileInfo.EntryInfo, -17);
 
             Assert.AreEqual(System.IO.File.Exists(alphaFSFileInfo.FullName), alphaFSFileInfo.Exists);
             Assert.IsFalse(alphaFSFileInfo.EntryInfo.IsDirectory);
@@ -92,48 +81,6 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(alphaFSFileInfo.EntryInfo.IsReparsePoint);
             Assert.IsTrue(alphaFSFileInfo.EntryInfo.IsSymbolicLink);
             Assert.AreEqual(alphaFSFileInfo.EntryInfo.ReparsePointTag, Alphaleonis.Win32.Filesystem.ReparsePointTag.SymLink);
-         }
-
-         Console.WriteLine();
-      }
-
-
-      private void File_CreateSymbolicLink_CatchIOException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var folderLink = System.IO.Path.Combine(rootDir.Directory.FullName, "FolderLink-ToDestinationFolder");
-
-            var dirInfo = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "DestinationFolder"));
-            dirInfo.Create();
-
-            Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
-            Console.WriteLine("Input Directory Link: [{0}]", folderLink);
-
-
-            var gotException = false;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(folderLink, dirInfo.FullName);
-
-            }
-            catch (Exception ex)
-            {
-               var exName = ex.GetType().Name;
-               gotException = exName.Equals("IOException", StringComparison.OrdinalIgnoreCase);
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exName, ex.Message);
-            }
-
-
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
 
          Console.WriteLine();

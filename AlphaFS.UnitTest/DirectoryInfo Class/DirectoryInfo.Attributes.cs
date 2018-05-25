@@ -38,8 +38,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void DirectoryInfo_Attributes(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
