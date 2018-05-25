@@ -27,6 +27,9 @@ namespace AlphaFS.UnitTest
 {
    public partial class Directory_ExistsTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void Directory_Exists_ExistingDirectoryExists_Success()
       {

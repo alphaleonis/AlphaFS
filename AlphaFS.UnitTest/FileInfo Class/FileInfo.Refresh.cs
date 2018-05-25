@@ -36,9 +36,7 @@ namespace AlphaFS.UnitTest
          FileInfo_Refresh(false);
          FileInfo_Refresh(true);
       }
-
-
-
+      
 
       private void FileInfo_Refresh(bool isNetwork)
       {

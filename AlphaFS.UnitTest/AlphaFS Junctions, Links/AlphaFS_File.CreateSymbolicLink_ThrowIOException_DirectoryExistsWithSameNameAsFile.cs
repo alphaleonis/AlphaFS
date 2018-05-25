@@ -41,8 +41,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

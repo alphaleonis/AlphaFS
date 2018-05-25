@@ -38,8 +38,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Directory_CreateDirectory_FolderWithSpaceAsName(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

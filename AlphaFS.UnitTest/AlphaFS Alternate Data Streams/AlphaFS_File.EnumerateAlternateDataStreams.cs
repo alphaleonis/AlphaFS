@@ -35,9 +35,7 @@ namespace AlphaFS.UnitTest
          File_EnumerateAlternateDataStreams(false);
          File_EnumerateAlternateDataStreams(true);
       }
-
-
-
+      
 
       private void File_EnumerateAlternateDataStreams(bool isNetwork)
       {

@@ -40,8 +40,6 @@ namespace AlphaFS.UnitTest
          File_Copy_CopySymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(false);
          File_Copy_CopySymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(true);
       }
-      
-
 
 
       private void File_Copy_CopySymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(bool isNetwork)

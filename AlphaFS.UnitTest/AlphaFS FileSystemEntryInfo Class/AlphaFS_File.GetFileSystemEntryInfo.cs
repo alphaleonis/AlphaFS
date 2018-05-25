@@ -37,8 +37,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void File_GetFileSystemEntryInfo(bool isNetwork)
       {
          if (!System.IO.File.Exists(UnitTestConstants.NotepadExe))

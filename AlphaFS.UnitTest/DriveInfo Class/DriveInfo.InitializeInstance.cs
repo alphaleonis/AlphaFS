@@ -28,16 +28,14 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      
+
       [TestMethod]
       public void DriveInfo_InitializeInstance_LocalAndNetwork_Success()
       {
          DriveInfo_InitializeInstance(false);
          DriveInfo_InitializeInstance(true);
       }
-
-
-
+      
 
       private void DriveInfo_InitializeInstance(bool isNetwork)
       {

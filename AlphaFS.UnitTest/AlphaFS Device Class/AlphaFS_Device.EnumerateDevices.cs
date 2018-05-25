@@ -21,40 +21,58 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
    public partial class AlphaFS_DeviceTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
       public void AlphaFS_Device_EnumerateDevices_Local_Success()
       {
-         Console.WriteLine("MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.");
-         Console.WriteLine("You cannot access remote machines when running on these versions of Windows.");
+         Console.WriteLine("\nMSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.");
+         Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
 
-         UnitTestConstants.PrintUnitTestHeader(false);
+         Device_EnumerateDevices(false);
+      }
 
 
-         var host = UnitTestConstants.LocalHost;
-         var classCount = 0;
+      private void Device_EnumerateDevices(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         foreach (var deviceClass in Alphaleonis.Utils.EnumToArray<Alphaleonis.Win32.Filesystem.DeviceGuid>().OrderBy(memberName => memberName.ToString()))
+         var tempPath = UnitTestConstants.LocalHost;
+         var classCnt = 0;
+
+         foreach (var deviceClass in EnumMemberToList<Alphaleonis.Win32.Filesystem.DeviceGuid>())
          {
-            Console.WriteLine();
-            Console.WriteLine("#{0:000}\tClass: [{1}]", ++classCount, deviceClass);
+            Console.WriteLine("\n#{0:000}\tClass: [{1}]", ++classCnt, deviceClass);
 
-
-            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(host, deviceClass))
-               UnitTestConstants.Dump(device, -28);
+            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(tempPath, deviceClass))
+               UnitTestConstants.Dump(device, -24);
          }
 
-
-         if (classCount == 0)
+         if (classCnt == 0)
             Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+      }
+
+
+      private static IEnumerable<T> EnumMemberToList<T>()
+      {
+         var enumType = typeof(T);
+
+         // Can't use generic type constraints on value types, so have to do check like this.
+         if (enumType.BaseType != typeof(Enum))
+            throw new ArgumentException("T must be of type System.Enum", "T");
+
+
+         var enumValArray = Enum.GetValues(enumType).Cast<T>().OrderBy(e => e.ToString()).ToList();
+         var enumValList = new List<T>(enumValArray.Count);
+
+         enumValList.AddRange(enumValArray.Select(val => (T) Enum.Parse(enumType, val.ToString())));
+
+         return enumValList;
       }
    }
 }

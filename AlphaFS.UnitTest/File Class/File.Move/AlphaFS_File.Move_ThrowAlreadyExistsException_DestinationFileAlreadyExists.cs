@@ -27,6 +27,9 @@ namespace AlphaFS.UnitTest
 {
    public partial class File_MoveTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {

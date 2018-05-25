@@ -17,6 +17,8 @@ The file system support in .NET is pretty good for most uses. However there are 
 * Transactional file operations
 * Support for NTFS Alternate Data Streams (files/folders)
 * Accessing network resources (SMB/DFS)
+* Create and access folders/files that contain space(s) in their name.
+* Uses folder/file enumerator which can report and recover from access denied exceptions and supports custom filtering
 * ...and much more!
 
 ## What does AlphaFS provide?

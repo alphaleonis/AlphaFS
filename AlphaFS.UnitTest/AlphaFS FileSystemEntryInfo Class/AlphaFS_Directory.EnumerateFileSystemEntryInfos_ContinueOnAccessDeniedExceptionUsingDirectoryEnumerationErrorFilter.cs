@@ -42,8 +42,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Directory_EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingErrorFilter(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

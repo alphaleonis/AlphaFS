@@ -26,6 +26,9 @@ namespace AlphaFS.UnitTest
 {
    public partial class File_CopyTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
       {

@@ -37,8 +37,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Directory_EnumerateFileSystemEntryInfos_TypeString(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
