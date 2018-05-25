@@ -80,6 +80,8 @@ namespace AlphaFS.UnitTest
             FileAssert.AreEqual(inputFile, importedFile);
             FileAssert.IsEncrypted(importedFile);
          }
+
+         Console.WriteLine();
       }
    }
 }

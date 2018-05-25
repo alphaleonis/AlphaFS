@@ -19,68 +19,47 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_MoveTest
+   public partial class AlphaFS_File_IsLockedTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
+      public void AlphaFS_File_IsLocked_LocalAndNetwork_Success()
       {
-         File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(false);
-         File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(true);
+         AlphaFS_File_IsLocked(false);
+         AlphaFS_File_IsLocked(true);
       }
 
 
-      private void File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
+      private void AlphaFS_File_IsLocked(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var srcFile = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
+            var file = rootDir.RandomFileFullPath;
+            var fi = new System.IO.FileInfo(file);
 
-            var dstFile = srcFile + "-Existing File";
-
-            Console.WriteLine("Src File Path: [{0}]", srcFile);
-            Console.WriteLine("Dst File Path: [{0}]", dstFile);
-
-            System.IO.File.Copy(srcFile.FullName, dstFile);
+            Console.WriteLine("\nInput File Path: [{0}]]", file);
 
 
-            try
-            {
-               Alphaleonis.Win32.Filesystem.File.Move(srcFile.FullName, dstFile);
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
+            using (fi.CreateText())
+               Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is not locked, but is expected to.");
 
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-            }
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is locked, but is expected not to.");
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
 
          Console.WriteLine();
       }

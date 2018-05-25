@@ -19,68 +19,60 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_MoveTest
+   partial class FileTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
+      public void File_Create_LocalAndNetwork_Success()
       {
-         File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(false);
-         File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(true);
+         File_Create(false);
+         File_Create(true);
       }
 
 
-      private void File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
+      private void File_Create(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var srcFile = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
+            var file = rootDir.RandomFileFullPath;
 
-            var dstFile = srcFile + "-Existing File";
+#if NET35
+            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
+            file += UnitTestConstants.EMspace;
+#endif
 
-            Console.WriteLine("Src File Path: [{0}]", srcFile);
-            Console.WriteLine("Dst File Path: [{0}]", dstFile);
-
-            System.IO.File.Copy(srcFile.FullName, dstFile);
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
-            try
+            long fileLength;
+            var ten = UnitTestConstants.TenNumbers.Length;
+
+            using (var fs = Alphaleonis.Win32.Filesystem.File.Create(file))
             {
-               Alphaleonis.Win32.Filesystem.File.Move(srcFile.FullName, dstFile);
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
+               // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
+               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
 
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               fileLength = fs.Length;
             }
+
+            Assert.IsTrue(System.IO.File.Exists(file), "File should exist.");
+            Assert.IsTrue(fileLength == ten, "The file is: {0} bytes, but is expected to be: {1} bytes.", fileLength, ten);
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
 
          Console.WriteLine();
       }

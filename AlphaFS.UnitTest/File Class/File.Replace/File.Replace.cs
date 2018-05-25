@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_OpenText_LocalAndNetwork_Success()
+      public void File_Replace_LocalAndNetwork_Success()
       {
-         File_OpenText(false);
-         File_OpenText(true);
+         File_Replace(false);
+         File_Replace(true);
       }
 
       
-      private void File_OpenText(bool isNetwork)
+      private void File_Replace(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -49,27 +49,29 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+            var fileSrc = rootDir.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextHelloWorld + ".txt";
+            var fileDst = rootDir.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
+            var fileBackup = rootDir.RandomFileFullPathNoExtension + "-Backup.txt";
+            Console.WriteLine("\nInput File Path: [{0}]", fileSrc);
 
 
-            System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);
+            using (var stream = System.IO.File.CreateText(fileSrc))
+               stream.Write(UnitTestConstants.TextHelloWorld);
+
+            using (var stream = System.IO.File.CreateText(fileDst))
+               stream.Write(UnitTestConstants.TextGoodbyeWorld);
 
 
-            var sysIoStreamText = string.Empty;
-            var alphaStreamText = string.Empty;
-
-            using (var stream = System.IO.File.OpenText(file))
-               sysIoStreamText = stream.ReadLine();
-
-            using (var stream = Alphaleonis.Win32.Filesystem.File.OpenText(file))
-               alphaStreamText = stream.ReadLine();
-
-            Console.WriteLine("\tSystem IO: " + sysIoStreamText);
-            Console.WriteLine("\tAlphaFS  : " + alphaStreamText);
+            Alphaleonis.Win32.Filesystem.File.Replace(fileSrc, fileDst, fileBackup);
 
 
-            Assert.AreEqual(sysIoStreamText, alphaStreamText, "The content of the two files is not equal, but is expected to.");
+            Assert.IsFalse(System.IO.File.Exists(fileSrc), "The file exists, but is expected not to.");
+            Assert.IsTrue(System.IO.File.Exists(fileDst), "The file does not exist, but is expected to.");
+            Assert.IsTrue(System.IO.File.Exists(fileBackup), "The file does not exist, but is expected to.");
+
+
+            Assert.AreEqual(UnitTestConstants.TextHelloWorld, Alphaleonis.Win32.Filesystem.File.ReadAllText(fileDst), "The texts do not match, but are expected to.");
+            Assert.AreEqual(UnitTestConstants.TextGoodbyeWorld, Alphaleonis.Win32.Filesystem.File.ReadAllText(fileBackup), "The texts do not match, but are expected to.");
          }
 
          Console.WriteLine();

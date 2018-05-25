@@ -30,14 +30,13 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
       public void File_CreateText_LocalAndNetwork_Success()
       {
          File_CreateText(false);
          File_CreateText(true);
       }
-
-
 
 
       private void File_CreateText(bool isNetwork)

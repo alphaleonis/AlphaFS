@@ -19,68 +19,71 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Text;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_MoveTest
+   partial class FileTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
+      public void File_OpenRead_LocalAndNetwork_Success()
       {
-         File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(false);
-         File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(true);
+         File_OpenRead(false);
+         File_OpenRead(true);
       }
 
 
-      private void File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
+      private void File_OpenRead(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var srcFile = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-
-            var dstFile = srcFile + "-Existing File";
-
-            Console.WriteLine("Src File Path: [{0}]", srcFile);
-            Console.WriteLine("Dst File Path: [{0}]", dstFile);
-
-            System.IO.File.Copy(srcFile.FullName, dstFile);
+            var file = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
-            try
+            System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);
+
+
+            var sysIoStreamText = string.Empty;
+            var alphaStreamText = string.Empty;
+
+            using (var stream = System.IO.File.OpenRead(file))
             {
-               Alphaleonis.Win32.Filesystem.File.Move(srcFile.FullName, dstFile);
+               var b = new byte[15];
+               var temp = new UTF8Encoding(true);
+
+               while (stream.Read(b, 0, b.Length) > 0)
+                  sysIoStreamText += temp.GetString(b);
             }
-            catch (Exception ex)
+
+            using (var stream = Alphaleonis.Win32.Filesystem.File.OpenRead(file))
             {
-               var exType = ex.GetType();
+               var b = new byte[15];
+               var temp = new UTF8Encoding(true);
 
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               while (stream.Read(b, 0, b.Length) > 0)
+                  alphaStreamText += temp.GetString(b);
             }
+
+            Console.WriteLine("\tSystem IO: " + sysIoStreamText);
+            Console.WriteLine("\tAlphaFS  : " + alphaStreamText);
+
+
+            Assert.AreEqual(sysIoStreamText, alphaStreamText, "The content of the two files is not equal, but is expected to.");
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
 
          Console.WriteLine();
       }

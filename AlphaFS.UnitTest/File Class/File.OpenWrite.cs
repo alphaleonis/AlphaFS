@@ -30,14 +30,13 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
       public void File_OpenWrite_LocalAndNetwork_Success()
       {
          File_OpenWrite(false);
          File_OpenWrite(true);
       }
-
-
 
 
       private void File_OpenWrite(bool isNetwork)

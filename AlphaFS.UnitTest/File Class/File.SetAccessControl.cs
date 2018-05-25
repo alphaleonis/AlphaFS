@@ -31,17 +31,17 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
       public void File_SetAccessControl_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
 
+
          File_SetAccessControl(false);
          File_SetAccessControl(true);
       }
-
-
 
 
       private void File_SetAccessControl(bool isNetwork)

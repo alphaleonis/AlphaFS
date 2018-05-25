@@ -25,21 +25,20 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_MoveTest
+   public partial class FileInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
-
       [TestMethod]
-      public void File_Move_Overwrite_DestinationFileAlreadyExists_LocalAndNetwork_Success()
+      public void FileInfo_InitializeInstance_NonExistingFile_LocalAndNetwork_Success()
       {
-         File_Move_Overwrite_DestinationFileAlreadyExists(false);
-         File_Move_Overwrite_DestinationFileAlreadyExists(true);
+         FileInfo_InitializeInstance_NonExistingFile(false);
+         FileInfo_InitializeInstance_NonExistingFile(true);
       }
+      
 
-
-      private void File_Move_Overwrite_DestinationFileAlreadyExists(bool isNetwork)
+      private void FileInfo_InitializeInstance_NonExistingFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -50,35 +49,9 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-            var fileCopy = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nSource File Path: [{0}]", fileSource);
+            var file = rootDir.RandomFileFullPath;
 
-            // Copy it.
-            System.IO.File.Copy(fileSource.FullName, fileCopy);
-
-
-            var gotException = false;
-            try
-            {
-               Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy);
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-
-
-               Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
-
-               Assert.IsFalse(System.IO.File.Exists(fileSource.FullName), "The file does exists, but is expected not to.");
-               Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
-            }
-
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+            CompareFileInfos(new System.IO.FileInfo(file), new Alphaleonis.Win32.Filesystem.FileInfo(file), false);
          }
 
          Console.WriteLine();

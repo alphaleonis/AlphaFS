@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,68 +19,45 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_MoveTest
+   partial class FileTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
+      public void File_Exists_LocalAndNetwork_Success()
       {
-         File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(false);
-         File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(true);
+         File_Exists(false);
+         File_Exists(true);
       }
+      
 
-
-      private void File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
+      private void File_Exists(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var srcFile = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
+            var file = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
-            var dstFile = srcFile + "-Existing File";
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file exists, but is expected not to.");
 
-            Console.WriteLine("Src File Path: [{0}]", srcFile);
-            Console.WriteLine("Dst File Path: [{0}]", dstFile);
+            using (System.IO.File.Create(file)) {}
 
-            System.IO.File.Copy(srcFile.FullName, dstFile);
-
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.File.Move(srcFile.FullName, dstFile);
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-            }
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file does not exists, but is expected to.");
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
 
          Console.WriteLine();
       }

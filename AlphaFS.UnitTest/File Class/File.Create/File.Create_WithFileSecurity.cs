@@ -29,13 +29,6 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      [TestMethod]
-      public void File_Create_LocalAndNetwork_Success()
-      {
-         File_Create(false);
-         File_Create(true);
-      }
-
 
       [TestMethod]
       public void File_Create_WithFileSecurity_LocalAndNetwork_Success()
@@ -47,48 +40,6 @@ namespace AlphaFS.UnitTest
          File_Create_WithFileSecurity(false);
 
          File_Create_WithFileSecurity(true);
-      }
-
-
-
-
-      private void File_Create(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var file = rootDir.RandomFileFullPath;
-
-#if NET35
-            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-            file += UnitTestConstants.EMspace;
-#endif
-
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
-
-
-            long fileLength;
-            var ten = UnitTestConstants.TenNumbers.Length;
-
-            using (var fs = Alphaleonis.Win32.Filesystem.File.Create(file))
-            {
-               // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
-
-               fileLength = fs.Length;
-            }
-
-            Assert.IsTrue(System.IO.File.Exists(file), "File should exist.");
-            Assert.IsTrue(fileLength == ten, "The file is: {0} bytes, but is expected to be: {1} bytes.", fileLength, ten);
-         }
-
-         Console.WriteLine();
       }
 
 

@@ -25,64 +25,20 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class FileTest
+   public partial class AlphaFS_File_IsLockedTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
-
-      [TestMethod]
-      public void AlphaFS_File_IsLocked_LocalAndNetwork_Success()
-      {
-         File_IsLocked(false);
-         File_IsLocked(true);
-      }
 
 
       [TestMethod]
       public void AlphaFS_File_GetProcessForFileLock_LocalAndNetwork_Success()
       {
-         File_GetProcessForFileLock(false);
-         File_GetProcessForFileLock(true);
+         AlphaFS_File_GetProcessForFileLock(false);
+         AlphaFS_File_GetProcessForFileLock(true);
       }
+      
 
-
-      [TestMethod]
-      public void AlphaFS_File_GetProcessForFileLock_NoLockReturnsNull_LocalAndNetwork_Success()
-      {
-         File_GetProcessForFileLock_NoLockReturnsNull(false);
-         File_GetProcessForFileLock_NoLockReturnsNull(true);
-      }
-
-
-
-
-      private void File_IsLocked(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var file = rootDir.RandomFileFullPath;
-            var fi = new System.IO.FileInfo(file);
-
-            Console.WriteLine("\nInput File Path: [{0}]]", file);
-
-
-            using (fi.CreateText())
-               Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is not locked, but is expected to.");
-
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is locked, but is expected not to.");
-         }
-
-         Console.WriteLine();
-      }
-
-
-      private void File_GetProcessForFileLock(bool isNetwork)
+      private void AlphaFS_File_GetProcessForFileLock(bool isNetwork)
       {
          var currentProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
 
@@ -119,33 +75,6 @@ namespace AlphaFS.UnitTest
                      Assert.IsTrue(process.Id == currentProcessId, "File was locked by a process other than the current process.");
                   }
             }
-         }
-
-         Console.WriteLine();
-      }
-
-
-      private void File_GetProcessForFileLock_NoLockReturnsNull(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var file = rootDir.RandomFileFullPath;
-            var fi = new System.IO.FileInfo(file);
-
-            Console.WriteLine("\nInput File Path: [{0}]]\n", file);
-
-
-            using (fi.CreateText()) { }
-
-
-            Assert.IsNull(Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(fi.FullName));
          }
 
          Console.WriteLine();

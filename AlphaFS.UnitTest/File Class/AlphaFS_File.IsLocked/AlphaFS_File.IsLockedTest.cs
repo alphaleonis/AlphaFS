@@ -23,9 +23,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for File and is intended to contain all File.Move Unit Tests.</summary>
+   /// <summary>This is a test class for File and is intended to contain all File.IsLocked Unit Tests.</summary>
    [TestClass]
-   public partial class File_MoveTest
+   public partial class AlphaFS_File_IsLockedTest
    {
    }
 }

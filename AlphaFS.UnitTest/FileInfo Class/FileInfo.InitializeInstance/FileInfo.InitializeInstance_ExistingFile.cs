@@ -31,21 +31,11 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_FileInfo_InitializeInstance_ExistingFile_LocalAndNetwork_Success()
+      public void FileInfo_InitializeInstance_ExistingFile_LocalAndNetwork_Success()
       {
          FileInfo_InitializeInstance_ExistingFile(false);
          FileInfo_InitializeInstance_ExistingFile(true);
       }
-
-
-      [TestMethod]
-      public void AlphaFS_FileInfo_InitializeInstance_NonExistingFile_LocalAndNetwork_Success()
-      {
-         FileInfo_InitializeInstance_NonExistingFile(false);
-         FileInfo_InitializeInstance_NonExistingFile(true);
-      }
-
-
 
 
       private void FileInfo_InitializeInstance_ExistingFile(bool isNetwork)
@@ -67,25 +57,6 @@ namespace AlphaFS.UnitTest
             CompareFileInfos(fileInfo, new Alphaleonis.Win32.Filesystem.FileInfo(file), true);
 
             fsSysIo.Close();
-         }
-
-         Console.WriteLine();
-      }
-
-
-      private void FileInfo_InitializeInstance_NonExistingFile(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var file = rootDir.RandomFileFullPath;
-            CompareFileInfos(new System.IO.FileInfo(file), new Alphaleonis.Win32.Filesystem.FileInfo(file), false);
          }
 
          Console.WriteLine();

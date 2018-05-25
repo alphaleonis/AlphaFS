@@ -22,7 +22,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
-using System.Text;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,71 +29,12 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      [TestMethod]
-      public void File_OpenRead_LocalAndNetwork_Success()
-      {
-         File_OpenRead(false);
-         File_OpenRead(true);
-      }
-
 
       [TestMethod]
       public void File_OpenRead_OpenReadTwiceShouldNotLock_LocalAndNetwork_Success()
       {
          File_OpenRead_OpenReadTwiceShouldNotLock(false);
          File_OpenRead_OpenReadTwiceShouldNotLock(true);
-      }
-
-
-
-
-      private void File_OpenRead(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var file = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
-
-
-            System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);
-
-
-            var sysIoStreamText = string.Empty;
-            var alphaStreamText = string.Empty;
-
-            using (var stream = System.IO.File.OpenRead(file))
-            {
-               var b = new byte[15];
-               var temp = new UTF8Encoding(true);
-
-               while (stream.Read(b, 0, b.Length) > 0)
-                  sysIoStreamText += temp.GetString(b);
-            }
-
-            using (var stream = Alphaleonis.Win32.Filesystem.File.OpenRead(file))
-            {
-               var b = new byte[15];
-               var temp = new UTF8Encoding(true);
-
-               while (stream.Read(b, 0, b.Length) > 0)
-                  alphaStreamText += temp.GetString(b);
-            }
-
-            Console.WriteLine("\tSystem IO: " + sysIoStreamText);
-            Console.WriteLine("\tAlphaFS  : " + alphaStreamText);
-
-
-            Assert.AreEqual(sysIoStreamText, alphaStreamText, "The content of the two files is not equal, but is expected to.");
-         }
-
-         Console.WriteLine();
       }
 
 

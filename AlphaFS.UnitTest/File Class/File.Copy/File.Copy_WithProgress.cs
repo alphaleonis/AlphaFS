@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
@@ -31,14 +32,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Copy_LocalAndNetwork_Success()
+      public void File_Copy_WithProgress_LocalAndNetwork_Success()
       {
-         File_Copy(false);
-         File_Copy(true);
+         File_Copy_WithProgress(false);
+         File_Copy_WithProgress(true);
       }
+      
 
-
-      private void File_Copy(bool isNetwork)
+      private void File_Copy_WithProgress(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -56,27 +57,79 @@ namespace AlphaFS.UnitTest
             var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName, fileLength);
             var fileCopy = rootDir.RandomFileFullPath;
 
-            Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
+            Console.WriteLine("Src File Path: [{0:N0} ({1}) [{2}]", fileLength, Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
             Console.WriteLine("Dst File Path: [{0}]", fileCopy);
-            
+
             Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The file does not exists, but is expected to.");
 
 
-            Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy);
             
+            
+            // Allow copy to overwrite an existing file.
+            const Alphaleonis.Win32.Filesystem.CopyOptions copyOptions = Alphaleonis.Win32.Filesystem.CopyOptions.None;
+
+            // The copy progress handler.
+            var callback = new Alphaleonis.Win32.Filesystem.CopyMoveProgressRoutine(FileCopyProgressHandler);
+
+            Console.WriteLine();
+
+
+            // You can pass any piece of data to userProgressData. This data can be accessed from the callback method.
+            // Specify file length for assertion.
+            var userProgressData = fileLength;
+
+
+            var copyResult = Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy, copyOptions, callback, userProgressData);
+
+            UnitTestConstants.Dump(copyResult, -18);
+
 
             Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
-            
+
 
             var fileLen = new System.IO.FileInfo(fileCopy).Length;
-            
+
             Assert.AreEqual(fileLength, fileLen, "The file copy is: {0} bytes, but is expected to be: {1} bytes.", fileLen, fileLength);
-            
+
             Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The original file does not exist, but is expected to.");
          }
 
 
          Console.WriteLine();
+      }
+
+
+      private static Alphaleonis.Win32.Filesystem.CopyMoveProgressResult FileCopyProgressHandler(long totalFileSize, long totalBytesTransferred, long streamSize,
+         long streamBytesTransferred, int streamNumber, Alphaleonis.Win32.Filesystem.CopyMoveProgressCallbackReason callbackReason, object userData)
+      {
+         if (callbackReason == Alphaleonis.Win32.Filesystem.CopyMoveProgressCallbackReason.StreamSwitch)
+
+            Assert.AreEqual(0, totalBytesTransferred);
+
+
+         else
+         {
+            var pct = Convert.ToDouble(totalBytesTransferred, CultureInfo.InvariantCulture) / totalFileSize * 100;
+
+            Console.WriteLine("\tCallback: Copied: [{0}%] --> [{1:N0}] bytes.", pct.ToString("N2", CultureInfo.CurrentCulture), totalBytesTransferred);
+
+            Assert.IsTrue(totalBytesTransferred > 0);
+
+
+            var bytes = Convert.ToInt64(userData);
+
+            if (pct.Equals(100))
+            {
+               Assert.AreEqual(totalBytesTransferred, bytes);
+               Assert.AreEqual(totalFileSize, bytes);
+            }
+
+            else
+               Assert.IsTrue(totalBytesTransferred < bytes);
+         }
+
+
+         return Alphaleonis.Win32.Filesystem.CopyMoveProgressResult.Continue;
       }
    }
 }
