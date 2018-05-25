@@ -27,7 +27,16 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class Directory
    {
-      /// <summary>[AlphaFS] Check if the directory has permission inheritance enabled.</summary>
+      /// <summary>[AlphaFS] Checks if the directory has permission inheritance enabled.</summary>
+      /// <param name="path">The full path to the directory to check.</param>
+      /// <returns><see langword="true"/> if permission inheritance is enabled, <see langword="false"/> if permission inheritance is disabled.</returns>
+      public static bool HasInheritedPermissions(string path)
+      {
+         return HasInheritedPermissions(path, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Checks if the directory has permission inheritance enabled.</summary>
       /// <returns><see langword="true"/> if permission inheritance is enabled, <see langword="false"/> if permission inheritance is disabled.</returns>
       /// <param name="path">The full path to the directory to check.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -37,20 +46,6 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("path");
 
          var acl = File.GetAccessControlCore<DirectorySecurity>(true, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, pathFormat);
-
-         return acl.GetAccessRules(false, true, typeof(SecurityIdentifier)).Count > 0;
-      }
-
-
-      /// <summary>[AlphaFS] Check if the directory has permission inheritance enabled.</summary>
-      /// <param name="path">The full path to the directory to check.</param>
-      /// <returns><see langword="true"/> if permission inheritance is enabled, <see langword="false"/> if permission inheritance is disabled.</returns>
-      public static bool HasInheritedPermissions(string path)
-      {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
-
-         var acl = File.GetAccessControlCore<DirectorySecurity>(true, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.RelativePath);
 
          return acl.GetAccessRules(false, true, typeof(SecurityIdentifier)).Count > 0;
       }

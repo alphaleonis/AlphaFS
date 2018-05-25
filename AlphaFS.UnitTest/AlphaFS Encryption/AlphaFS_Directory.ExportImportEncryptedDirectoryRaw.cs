@@ -29,15 +29,16 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
       public void AlphaFS_Directory_ExportImportEncryptedDirectoryRaw_LocalAndNetwork_Success()
       {
-         Directory_ExportImportEncryptedDirectoryRaw(false);
-         Directory_ExportImportEncryptedDirectoryRaw(true);
+         AlphaFS_Directory_ExportImportEncryptedDirectoryRaw(false);
+         AlphaFS_Directory_ExportImportEncryptedDirectoryRaw(true);
       }
 
 
-      private void Directory_ExportImportEncryptedDirectoryRaw(bool isNetwork)
+      private void AlphaFS_Directory_ExportImportEncryptedDirectoryRaw(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -53,14 +54,21 @@ namespace AlphaFS.UnitTest
             System.IO.Directory.CreateDirectory(inputDir);
             System.IO.File.WriteAllText(System.IO.Path.Combine(inputDir, "test.txt"), "Test file");
 
+
             Alphaleonis.Win32.Filesystem.Directory.Encrypt(inputDir, false);
+
+
             Console.WriteLine("\nEncrypted Input Directory: [{0}]", inputDir);
 
 
             // Export the file using the method under test.
             var exportedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "export.dat");
+
+
             using (var fs = System.IO.File.Create(exportedFile))
                Alphaleonis.Win32.Filesystem.Directory.ExportEncryptedDirectoryRaw(inputDir, fs);               
+
+
             Console.WriteLine("\nExported Input Directory: [{0}]", exportedFile);
 
 
@@ -70,8 +78,12 @@ namespace AlphaFS.UnitTest
 
             // Import the directory again.
             var importedDir = System.IO.Path.Combine(rootDir.Directory.FullName, "importDir");
+
+
             using (var fs = System.IO.File.OpenRead(exportedFile))
                Alphaleonis.Win32.Filesystem.Directory.ImportEncryptedDirectoryRaw(fs, importedDir);               
+
+
             Console.WriteLine("\nImported Input Directory: [{0}]", importedDir);
 
 
