@@ -38,8 +38,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Directory_Compress_And_Decompress(bool isNetwork, bool recursive)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

@@ -20,52 +20,12 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_FileIdInfoTest
+   /// <summary>This is a test class for Shell32 and is intended to contain all Shell32 and Shell32Info Unit Tests.</summary>
+   [TestClass]
+   public partial class AlphaFS_Shell32Test
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_Directory_GetFileIdInfo_LocalAndNetwork_Success()
-      {
-         Directory_GetFileIdInfo(false);
-         Directory_GetFileIdInfo(true);
-      }
-
-
-      private void Directory_GetFileIdInfo(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
-
-
-            var dirInfo = new System.IO.DirectoryInfo(folder);
-            dirInfo.Create();
-
-
-            var fid = Alphaleonis.Win32.Filesystem.Directory.GetFileIdInfo(folder);
-
-            Console.WriteLine("\n\tToString(): {0}", fid);
-
-            Assert.IsNotNull(fid);
-
-         }
-
-         Console.WriteLine();
-      }
    }
 }

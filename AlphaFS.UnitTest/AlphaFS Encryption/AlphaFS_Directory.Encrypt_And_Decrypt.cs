@@ -37,9 +37,6 @@ namespace AlphaFS.UnitTest
          Directory_Encrypt_And_Decrypt(true);
       }
 
-
-
-
       private void Directory_Encrypt_And_Decrypt(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

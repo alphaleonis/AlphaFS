@@ -39,8 +39,6 @@ namespace AlphaFS.UnitTest
          Directory_CreateSymbolicLink_And_GetLinkTargetInfo(true);
       }
 
-
-
       
       private void Directory_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
       {

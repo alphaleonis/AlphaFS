@@ -40,8 +40,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void File_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

@@ -191,6 +191,7 @@
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.PathCreateFromUrlAlloc.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.PathCreateFromUrl.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.PathFileExists.cs" />
+    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test..cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetUniqueVolumeNameForPath.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.VolumeTest.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.GetDriveType.cs" />

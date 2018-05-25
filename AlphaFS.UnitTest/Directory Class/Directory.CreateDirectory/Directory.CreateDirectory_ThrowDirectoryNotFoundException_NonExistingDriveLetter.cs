@@ -36,8 +36,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Directory_CreateDirectory_ThrowDirectoryNotFoundException_NonExistingDriveLetter(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

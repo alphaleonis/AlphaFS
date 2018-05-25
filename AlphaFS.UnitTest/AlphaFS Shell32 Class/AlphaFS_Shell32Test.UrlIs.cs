@@ -24,8 +24,6 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Shell32 and is intended to contain all Shell32 and Shell32Info Unit Tests.</summary>
-   [TestClass]
    public partial class AlphaFS_Shell32Test
    {
       [TestMethod]

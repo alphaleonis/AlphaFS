@@ -40,8 +40,6 @@ namespace AlphaFS.UnitTest
          Directory_CreateSymbolicLink_ThrowIOException_FileExistsWithSameNameAsDirectory(true);
       }
 
-
-
       
       private void Directory_CreateSymbolicLink_ThrowIOException_FileExistsWithSameNameAsDirectory(bool isNetwork)
       {
