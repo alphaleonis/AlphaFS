@@ -21,57 +21,52 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Globalization;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_Directory_CountFileSystemObjectsTest
+   public partial class AlphaFS_Directory_IsEmptyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_IsEmpty_DirectoryContainsAFolder_IsFalse_LocalAndNetwork_Success()
       {
-         Directory_CountFileSystemObjects_FilesOnly_Recursive(false);
-         Directory_CountFileSystemObjects_FilesOnly_Recursive(true);
+         Directory_IsEmpty_DirectoryContainsAFolder_IsFalse(false);
+         Directory_IsEmpty_DirectoryContainsAFolder_IsFalse(true);
       }
 
 
-      private void Directory_CountFileSystemObjects_FilesOnly_Recursive(bool isNetwork)
+
+      private void Directory_IsEmpty_DirectoryContainsAFolder_IsFalse(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         const int expectedFso = 10;
-         long fsoCount;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
+         var tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
-
-            Console.WriteLine("Input Directory Path: [{0}]", folder);
-
-
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false, false, false);
+            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Empty Folder"));
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
 
 
-            fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
+            // Create folder and test again.
+            var subFolder = System.IO.Path.Combine(folder.FullName, "a_file.txt");
 
-            Console.WriteLine("\tTotal file system objects = [{0}]", fsoCount);
+            System.IO.Directory.CreateDirectory(subFolder);
+            Console.WriteLine("\n\tCreated Folder: [{0}]", subFolder);
+
+
+            var isEmpty = Alphaleonis.Win32.Filesystem.Directory.IsEmpty(folder.FullName);
+            Console.WriteLine("\n\tFolder is empty: [{0}]", isEmpty);
+
+
+            Assert.IsFalse(isEmpty, "It is expected that the folder is not empty.");
          }
-
-
-         Assert.AreEqual(expectedFso, fsoCount, string.Format(CultureInfo.InvariantCulture, "The number of file system objects are not equal, but are expected to."));
-
 
          Console.WriteLine();
       }

@@ -32,14 +32,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_NonRecursive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_Recursive_LocalAndNetwork_Success()
       {
-         Directory_CountFileSystemObjects_FoldersOnly_NonRecursive(false);
-         Directory_CountFileSystemObjects_FoldersOnly_NonRecursive(true);
+         Directory_CountFileSystemObjects_FoldersOnly_Recursive(false);
+         Directory_CountFileSystemObjects_FoldersOnly_Recursive(true);
       }
 
 
-      private void Directory_CountFileSystemObjects_FoldersOnly_NonRecursive(bool isNetwork)
+      private void Directory_CountFileSystemObjects_FoldersOnly_Recursive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -54,14 +54,14 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
             const int expectedFso = 10;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false, false, false);
-            
+            const int expectedSubfolders = expectedFso * expectedFso + expectedFso;
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false, false, true);
 
-            var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Folders);
 
-            Console.WriteLine("\tTotal file system objects = [{0}]", fsoCount);
+            var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Folders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
+            Assert.AreEqual(expectedSubfolders, fsoCount, string.Format(CultureInfo.InvariantCulture, "The number of file system objects: {0} is not equal than expected: {1}", expectedSubfolders, fsoCount));
 
-            Assert.AreEqual(expectedFso, fsoCount, string.Format(CultureInfo.InvariantCulture, "The number of file system objects: {0} is not equal than expected: {1}", expectedFso, fsoCount));
+            Console.WriteLine("\n\tTotal file system objects = [{0}]", fsoCount);
          }
 
          Console.WriteLine();

@@ -26,53 +26,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   partial class FileTest
+   public partial class File_TimestampsTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
-      
-      [TestMethod]
-      public void File_GetXxxTimeXxx_LocalAndNetwork_Success()
-      {
-         File_GetXxxTimeXxx(false);
-         File_GetXxxTimeXxx(true);
-      }
 
 
       [TestMethod]
-      public void File_GetXxxTimeXxx_NonExistingFile_Success()
+      public void AlphaFS_File_GetChangeTime_LocalAndNetwork_Success()
       {
-         const string Path = @"z:\nonExistingPath\nonExistingFile.txt";
-         Assert.IsFalse(System.IO.File.Exists(Path));
-
-         var newDateTime = new DateTime(1601, 1, 1);
-         var newDateTimeLocaltime = new DateTime(1601, 1, 1).ToLocalTime();
-
-
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetCreationTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetCreationTime(Path));
-         
-         Assert.AreEqual(newDateTime, System.IO.File.GetCreationTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(Path));
-
-
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetLastAccessTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(Path));
-
-         Assert.AreEqual(newDateTime, System.IO.File.GetLastAccessTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(Path));
-
-
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.File.GetLastWriteTime(Path));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(Path));
-
-         Assert.AreEqual(newDateTime, System.IO.File.GetLastWriteTimeUtc(Path));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(Path));
+         AlphaFS_File_GetChangeTime(false);
+         AlphaFS_File_GetChangeTime(true);
       }
 
 
-      
-
-      private void File_GetXxxTimeXxx(bool isNetwork)
+      private void AlphaFS_File_GetChangeTime(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -116,7 +83,7 @@ namespace AlphaFS.UnitTest
             var delay = 3;
 
             fileInfo.MoveTo(fileInfo.FullName.Replace(fileName, fileName + "-Renamed"));
-            Thread.Sleep(delay*1000);
+            Thread.Sleep(delay * 1000);
             fileInfo.MoveTo(fileInfo.FullName.Replace(fileName + "-Renamed", fileName));
 
 

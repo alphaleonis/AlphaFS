@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -21,25 +21,24 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Globalization;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_Directory_CountFileSystemObjectsTest
+   public partial class AlphaFS_Directory_DeleteEmptySubdirectoriesTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_CountFileSystemObjects_FoldersAndFiles_Recursive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_DeleteEmptySubdirectories_DirectoryContainsAFolder_DirectoryRemains_LocalAndNetwork_Success()
       {
-         Directory_CountFileSystemObjects_FoldersAndFiles_Recursive(false);
-         Directory_CountFileSystemObjects_FoldersAndFiles_Recursive(true);
+         Directory_DeleteEmptySubdirectories_DirectoryContainsAFolder_DirectoryRemains(false);
+         Directory_DeleteEmptySubdirectories_DirectoryContainsAFolder_DirectoryRemains(true);
       }
 
-
-      private void Directory_CountFileSystemObjects_FoldersAndFiles_Recursive(bool isNetwork)
+      
+      private void Directory_DeleteEmptySubdirectories_DirectoryContainsAFolder_DirectoryRemains(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -50,18 +49,21 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
-
-            const int expectedFso = 200;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, 100, false, false, false);
+            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
 
 
-            var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
+            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(folder.FullName, "A Folder"));
 
-            Console.WriteLine("\tTotal file system objects = [{0}]", fsoCount);
+            Alphaleonis.Win32.Filesystem.Directory.DeleteEmptySubdirectories(folder.FullName, true);
 
-            Assert.AreEqual(expectedFso, fsoCount, string.Format(CultureInfo.InvariantCulture, "The number of file system objects: {0} is not equal than expected: {1}", expectedFso, fsoCount));
+
+            folder.Refresh();
+
+            var exists = folder.Exists;
+            Console.WriteLine("\n\tFolder exists: [{0}]", exists);
+
+            Assert.IsTrue(folder.Exists);
          }
 
          Console.WriteLine();

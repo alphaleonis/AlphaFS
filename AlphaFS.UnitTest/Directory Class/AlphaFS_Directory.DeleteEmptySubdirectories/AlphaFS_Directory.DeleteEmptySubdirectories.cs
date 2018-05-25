@@ -25,9 +25,10 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class AlphaFS_Directory_DeleteEmptySubdirectoriesTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void AlphaFS_Directory_DeleteEmptySubdirectories_LocalAndNetwork_Success()

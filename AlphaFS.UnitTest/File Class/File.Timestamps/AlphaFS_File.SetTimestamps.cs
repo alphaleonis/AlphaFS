@@ -21,37 +21,28 @@
 
 using System;
 using System.Reflection;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   partial class FileTest
+   public partial class File_TimestampsTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
       
+
       [TestMethod]
-      public void AlphaFS_File_SetTimestampsXxx_LocalAndNetwork_Success()
+      public void AlphaFS_File_SetTimestamps_LocalAndNetwork_Success()
       {
          if (!UnitTestConstants.IsAdmin())
             Assert.Inconclusive();
 
-         File_SetTimestampsXxx(false);
-         File_SetTimestampsXxx(true);
+
+         AlphaFS_File_SetTimestamps(false);
+         AlphaFS_File_SetTimestamps(true);
       }
 
 
-      [TestMethod]
-      public void AlphaFS_File_CopyTimestamps_LocalAndNetwork_Success()
-      {
-         File_CopyTimestamps(false);
-         File_CopyTimestamps(true);
-      }
-
-
-
-
-      private void File_SetTimestampsXxx(bool isNetwork)
+      private void AlphaFS_File_SetTimestamps(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -111,49 +102,6 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(System.IO.File.GetCreationTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(symlinkPath));
             Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(symlinkPath));
             Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(symlinkPath));
-         }
-
-         Console.WriteLine();
-      }
-
-
-      private void File_CopyTimestamps(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var file = rootDir.RandomFileFullPath;
-            var file2 = rootDir.RandomFileFullPath;
-            if (isNetwork)
-            {
-               file = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(file);
-               file2 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(file2);
-            }
-
-            using (System.IO.File.Create(file)) {}
-            Thread.Sleep(1500);
-            using (System.IO.File.Create(file2)) { }
-
-
-            Console.WriteLine("\nInput File1 Path: [{0}]", file);
-            Console.WriteLine("\nInput File2 Path: [{0}]", file2);
-
-
-            Assert.AreNotEqual(System.IO.File.GetCreationTime(file), System.IO.File.GetCreationTime(file2));
-            Assert.AreNotEqual(System.IO.File.GetLastAccessTime(file), System.IO.File.GetLastAccessTime(file2));
-            Assert.AreNotEqual(System.IO.File.GetLastWriteTime(file), System.IO.File.GetLastWriteTime(file2));
-
-            Alphaleonis.Win32.Filesystem.File.CopyTimestamps(file, file2);
-
-            Assert.AreEqual(System.IO.File.GetCreationTime(file), System.IO.File.GetCreationTime(file2));
-            Assert.AreEqual(System.IO.File.GetLastAccessTime(file), System.IO.File.GetLastAccessTime(file2));
-            Assert.AreEqual(System.IO.File.GetLastWriteTime(file), System.IO.File.GetLastWriteTime(file2));
          }
 
          Console.WriteLine();

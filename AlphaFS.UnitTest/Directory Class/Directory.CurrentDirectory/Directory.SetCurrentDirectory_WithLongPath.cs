@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -21,48 +21,56 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Globalization;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_Directory_CountFileSystemObjectsTest
+   public partial class Directory_CurrentDirectoryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_CountFileSystemObjects_FilesOnly_NonRecursive_LocalAndNetwork_Success()
+      public void Directory_SetCurrentDirectory_WithLongPath_LocalAndNetwork_Success()
       {
-         Directory_CountFileSystemObjects_FilesOnly_NonRecursive(false);
-         Directory_CountFileSystemObjects_FilesOnly_NonRecursive(true);
+         Directory_SetCurrentDirectory_WithLongPath(false);
+         Directory_SetCurrentDirectory_WithLongPath(true);
       }
 
 
-      private void Directory_CountFileSystemObjects_FilesOnly_NonRecursive(bool isNetwork)
+      private void Directory_SetCurrentDirectory_WithLongPath(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
+         var tempPath = UnitTestConstants.SysRoot;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
-
-            const int expectedFso = 0;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, 10, false, false, false);
+         Console.WriteLine("\n\tNo compare with System.IO possible because of: \"System.ArgumentException: Illegal characters in path.\"\n");
 
 
-            var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files);
+         Console.WriteLine("\tAlphaFS Set Current Directory Path: [{0}]", tempPath);
+         Alphaleonis.Win32.Filesystem.Directory.SetCurrentDirectory(tempPath);
 
-            Console.WriteLine("\tTotal file system objects = [{0}]", fsoCount);
 
-            Assert.AreEqual(expectedFso, fsoCount, string.Format(CultureInfo.InvariantCulture, "The number of file system objects: {0} is not equal than expected: {1}", expectedFso, fsoCount));
-         }
+         // No compare with System.IO possible: System.ArgumentException: Illegal characters in path.
+         //var sysIoCurrPath = System.IO.Directory.GetCurrentDirectory();
+
+         var alphaFSCurrPath = Alphaleonis.Win32.Filesystem.Directory.GetCurrentDirectory();
+
+
+         Console.WriteLine("\tAlphaFS Get Current Directory Path: [{0}]", alphaFSCurrPath);
+
+
+         var lpPrefix = isNetwork
+            ? Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix
+            : Alphaleonis.Win32.Filesystem.Path.LongPathPrefix;
+
+         if (isNetwork)
+            tempPath = tempPath.TrimStart('\\');
+
+         Assert.AreEqual(lpPrefix + tempPath, alphaFSCurrPath, "The current directories do not match, but are expected to.");
+
 
          Console.WriteLine();
       }

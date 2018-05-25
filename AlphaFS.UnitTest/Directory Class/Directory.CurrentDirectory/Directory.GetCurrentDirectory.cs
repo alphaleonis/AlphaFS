@@ -24,9 +24,10 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class Directory_CurrentDirectoryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void Directory_GetCurrentDirectory_LocalAndNetwork_Success()
@@ -34,24 +35,6 @@ namespace AlphaFS.UnitTest
          Directory_GetCurrentDirectory(false);
          Directory_GetCurrentDirectory(true);
       }
-
-
-      [TestMethod]
-      public void Directory_SetCurrentDirectory_LocalAndNetwork_Success()
-      {
-         Directory_SetCurrentDirectory(false);
-         Directory_SetCurrentDirectory(true);
-      }
-
-
-      [TestMethod]
-      public void Directory_SetCurrentDirectory_WithLongPath_LocalAndNetwork_Success()
-      {
-         Directory_SetCurrentDirectory_WithLongPath(false);
-         Directory_SetCurrentDirectory_WithLongPath(true);
-      }
-
-
 
 
       private void Directory_GetCurrentDirectory(bool isNetwork)
@@ -92,72 +75,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\tAlphaFS   Current Directory Path: [{0}]", alphaFSCurrPath);
 
          Assert.AreEqual(sysIoCurrPath, alphaFSCurrPath, "The current directories do not match, but are expected to.");
-
-
-         Console.WriteLine();
-      }
-
-
-      private void Directory_SetCurrentDirectory(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.SysRoot;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-         
-         Console.WriteLine("\n\tAlphaFS Set Current Directory Path: [{0}]\n", tempPath);
-
-         Alphaleonis.Win32.Filesystem.Directory.SetCurrentDirectory(tempPath, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
-
-
-         var sysIoCurrPath = System.IO.Directory.GetCurrentDirectory();
-         var alphaFSCurrPath = Alphaleonis.Win32.Filesystem.Directory.GetCurrentDirectory();
-
-         Console.WriteLine("\tSystem.IO Get Current Directory Path: [{0}]", sysIoCurrPath);
-         Console.WriteLine("\tAlphaFS   Get Current Directory Path: [{0}]", alphaFSCurrPath);
-
-         Assert.AreEqual(sysIoCurrPath, alphaFSCurrPath, "The current directories do not match, but are expected to.");
-
-
-         Console.WriteLine();
-      }
-
-
-      private void Directory_SetCurrentDirectory_WithLongPath(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.SysRoot;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         Console.WriteLine("\n\tNo compare with System.IO possible because of: \"System.ArgumentException: Illegal characters in path.\"\n");
-
-
-         Console.WriteLine("\tAlphaFS Set Current Directory Path: [{0}]", tempPath);
-         Alphaleonis.Win32.Filesystem.Directory.SetCurrentDirectory(tempPath);
-
-
-         // No compare with System.IO possible: System.ArgumentException: Illegal characters in path.
-         //var sysIoCurrPath = System.IO.Directory.GetCurrentDirectory();
-
-         var alphaFSCurrPath = Alphaleonis.Win32.Filesystem.Directory.GetCurrentDirectory();
-
-
-         Console.WriteLine("\tAlphaFS Get Current Directory Path: [{0}]", alphaFSCurrPath);
-
-
-         var lpPrefix = isNetwork
-            ? Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix
-            : Alphaleonis.Win32.Filesystem.Path.LongPathPrefix;
-
-         if (isNetwork)
-            tempPath = tempPath.TrimStart('\\');
-
-         Assert.AreEqual(lpPrefix + tempPath, alphaFSCurrPath, "The current directories do not match, but are expected to.");
 
 
          Console.WriteLine();
