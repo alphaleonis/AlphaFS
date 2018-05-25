@@ -46,9 +46,9 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_IOExceptionException_NonExistingDriveLetter_Network_Success()
+      public void File_Delete_ThrowIOExceptionOrDeviceNotReadyException_NonExistingDriveLetter_Network_Success()
       {
-         File_Delete_ThrowIOExceptionException_NonExistingDriveLetter(true);
+         File_Delete_ThrowIOExceptionOrDeviceNotReadyException_NonExistingDriveLetter(true);
       }
 
 
@@ -136,7 +136,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      private void File_Delete_ThrowIOExceptionException_NonExistingDriveLetter(bool isNetwork)
+      private void File_Delete_ThrowIOExceptionOrDeviceNotReadyException_NonExistingDriveLetter(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -157,9 +157,14 @@ namespace AlphaFS.UnitTest
             var exType = ex.GetType();
 
             // Local: DirectoryNotFoundException.
-            // UNC: IOException.
+            // UNC: IOException or DeviceNotReadyException.
+            // The latter occurs when a removable drive is already removed but there's still a cached reference.
 
             gotException = exType == typeof(System.IO.IOException);
+
+            if (!gotException && isNetwork)
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
+
 
             Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }

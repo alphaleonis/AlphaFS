@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_UsingFiles_LocalAndNetwork_Success()
+      public void Directory_Move_UsingFile_LocalAndNetwork_Success()
       {
-         Directory_Move_UsingFiles(false);
-         Directory_Move_UsingFiles(true);
+         Directory_Move_UsingFile(false);
+         Directory_Move_UsingFile(true);
       }
 
 
-      private void Directory_Move_UsingFiles(bool isNetwork)
+      private void Directory_Move_UsingFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -103,6 +103,9 @@ namespace AlphaFS.UnitTest
             Assert.IsFalse(cmr.IsCanceled);
             Assert.AreEqual(0, cmr.TotalFolders);
             Assert.AreEqual(1, cmr.TotalFiles);
+
+
+            System.IO.File.Delete(dstFile);
          }
 
 

@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void DirectoryInfo_MoveTo_Rename_LocalAndNetwork_Success()
+      public void DirectoryInfo_MoveTo_MoveToEmptyFolder_LocalAndNetwork_Success()
       {
-         DirectoryInfo_MoveTo_Rename(false);
-         DirectoryInfo_MoveTo_Rename(true);
+         DirectoryInfo_MoveTo_MoveToEmptyFolder(false);
+         DirectoryInfo_MoveTo_MoveToEmptyFolder(true);
       }
 
 
-      private void DirectoryInfo_MoveTo_Rename(bool isNetwork)
+      private void DirectoryInfo_MoveTo_MoveToEmptyFolder(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -51,11 +51,13 @@ namespace AlphaFS.UnitTest
 
          using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = new Alphaleonis.Win32.Filesystem.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
-            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination Folder"));
+            var folderSrc = new Alphaleonis.Win32.Filesystem.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "TestFolder"));
+            //var folderSrc = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "TestFolder"));
+            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination Folder", "TestFolder"));
+
 
             Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("\n\tRename folder to: [{0}]", folderDst.Name);
+            Console.WriteLine("\n\tMove folder to: [{0}]", folderDst.FullName);
 
 
             Assert.IsFalse(folderDst.Exists, "The source folder exists which is not expected.");
@@ -66,18 +68,17 @@ namespace AlphaFS.UnitTest
             folderSrc.Create();
 
 
-            // Rename folder.
+            // Move folder.
             folderSrc.MoveTo(folderDst.FullName);
-
+            //folderSrc.MoveTo(folderDst.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
+            
 
             folderSrc.Refresh();
             folderDst.Refresh();
             
 
-            Assert.IsTrue(folderSrc.Exists, "The source folder does not exist which is not expected.");
-            Assert.IsTrue(folderDst.Exists, "The destination folder does not exist which is not expected.");
-
-            Assert.AreEqual(folderSrc.Parent.FullName, folderDst.Parent.FullName);
+            //Assert.IsFalse(folderSrc.Exists, "The source folder exists which is not expected.");
+            //Assert.IsTrue(folderDst.Exists, "The destination folder does not exist which is not expected.");
          }
 
 

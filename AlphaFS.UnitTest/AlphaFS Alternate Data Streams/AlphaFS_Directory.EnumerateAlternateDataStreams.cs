@@ -111,6 +111,9 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(fileInfo2, -17);
 
 
+            Assert.AreEqual(UnitTestConstants.MyStream, fileInfo1.Name);
+            Assert.AreEqual(UnitTestConstants.MyStream2, fileInfo2.Name);
+
             Assert.IsNull(fileInfo1.EntryInfo);
             Assert.IsNull(fileInfo2.EntryInfo);
          }

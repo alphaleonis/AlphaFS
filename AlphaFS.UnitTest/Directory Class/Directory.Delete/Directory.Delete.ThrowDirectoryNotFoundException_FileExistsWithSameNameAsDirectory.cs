@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_ThrowhDirectoryNotFoundException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
+      public void Directory_Delete_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
       {
          Directory_Delete_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(false);
          Directory_Delete_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(true);

@@ -835,6 +835,8 @@ namespace Alphaleonis.Win32.Filesystem
                CopyTimestampsCore(transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
          }
 
+
+         // Copy/Move action failed or canceled.
          else
          {
             // MSDN: If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
@@ -845,14 +847,12 @@ namespace Alphaleonis.Win32.Filesystem
             // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
             // In this case, the partially copied destination file is left intact.
 
-            var isCanceled = lastError == Win32Errors.ERROR_REQUEST_ABORTED;
 
             cmr.ErrorCode = lastError;
 
-            cmr.IsCanceled = isCanceled;
+            cmr.IsCanceled = lastError == Win32Errors.ERROR_REQUEST_ABORTED;
 
-
-            if (!isCanceled)
+            if (!cmr.IsCanceled)
             {
                if (RestartCopyMoveOrThrowException(lastError, isFolder, isMove, transaction, sourcePathLp, destinationPathLp, moveOptions))
 
@@ -916,6 +916,8 @@ namespace Alphaleonis.Win32.Filesystem
       private static bool RestartCopyMoveOrThrowException(int lastError, bool isFolder, bool isMove, KernelTransaction transaction, string sourcePathLp, string destinationPathLp, MoveOptions? moveOptions)
       {
          var restart = false;
+         var srcExists = ExistsCore(transaction, isFolder, sourcePathLp, PathFormat.LongFullPath);
+         var dstExists = ExistsCore(transaction, isFolder, destinationPathLp, PathFormat.LongFullPath);
 
 
          switch ((uint) lastError)
@@ -932,9 +934,19 @@ namespace Alphaleonis.Win32.Filesystem
             case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
             case Win32Errors.ERROR_NOT_READY:      // DeviceNotReadyException: Floppy device or network drive not ready.
 
-               // TODO 2018-02-24: Use destinationPathLp when destination folder does not exist.
+               if (!srcExists)
+                  Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, isFolder, lastError, true, true);
 
-               Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, isFolder, lastError, true, true);
+               else if (!dstExists)
+                  Directory.ExistsDriveOrFolderOrFile(transaction, destinationPathLp, isFolder, lastError, true, true);
+
+               // Drive.
+               else
+               {
+                  Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, false, lastError, true, false);
+                  Directory.ExistsDriveOrFolderOrFile(transaction, destinationPathLp, false, lastError, true, false);
+               }
+
                break;
                
                
@@ -953,10 +965,7 @@ namespace Alphaleonis.Win32.Filesystem
                FillAttributeInfoCore(transaction, destinationPathLp, ref attrs, false, false);
 
                var destIsFolder = IsDirectory(attrs.dwFileAttributes);
-
-               // Check for FSO type depends on isFolder.
-               var destExists = ExistsCore(transaction, isFolder, destinationPathLp, PathFormat.LongFullPath);
-
+               
 
                // For a number of error codes (sharing violation, path not found, etc)
                // we don't know if the problem was with the source or destination file.
@@ -965,7 +974,7 @@ namespace Alphaleonis.Win32.Filesystem
                // Directory.Move()
                // MSDN: .NET 3.5+: IOException: destDirName already exists.
 
-               if (destIsFolder && destExists)
+               if (destIsFolder && dstExists)
                   NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destinationPathLp);
 
 
@@ -977,8 +986,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // Directory.Move()
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive). 
 
-                  if (!ExistsCore(transaction, isFolder, sourcePathLp, PathFormat.LongFullPath))
-
+                  if (!srcExists)
                      NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourcePathLp);
                }
 
@@ -1002,7 +1010,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                   // Directory exists with the same name as the file.
-                  if (destExists && !isFolder && destIsFolder)
+                  if (dstExists && !isFolder && destIsFolder)
                      NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
 
 

@@ -219,7 +219,7 @@
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_WithDirectorySecurity.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_WithMultipleSpacesAndSlashes.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_FolderWithSpaceAsName.cs" />
-    <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_ThrowIOExceptionException_NonExistingDriveLetter.cs" />
+    <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_ThrowDeviceNotReadyException_NonExistingDriveLetter.cs" />
     <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.DeleteTest.cs" />
     <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_ThrowUnauthorizedAccessException_DirectoryHasDenyPermission.cs" />
     <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly.cs" />
@@ -248,7 +248,7 @@
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Overwrite_DestinationDirectoryAlreadyExists.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder.cs" />
     <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists.cs" />
-    <Compile Include="Directory Class\Directory.Move\Directory.Move_UsingFiles.cs" />
+    <Compile Include="Directory Class\Directory.Move\Directory.Move_UsingFile.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Rename_DifferentCasingDirectory.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Rename.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_SameVolume.cs" />
@@ -275,6 +275,7 @@
     <Compile Include="Directory Class\Directory.SetTimestamps.cs" />
     <Compile Include="Directory Class\Directory.GetTimestamps.cs" />
     <Compile Include="Directory Class\Directory.SetAccessControl.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo_MoveToEmptyFolder.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo_Rename.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo_DelayUntilReboot.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.ThrowPathTooLongException_FolderNameGreaterThan255Characters.cs" />
