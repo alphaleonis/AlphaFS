@@ -29,15 +29,14 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
       public void AlphaFS_File_GetSize_LocalAndNetwork_Success()
       {
          File_GetSize(false);
          File_GetSize(true);
       }
-
-
-
+      
 
       private void File_GetSize(bool isNetwork)
       {

@@ -51,7 +51,7 @@ namespace AlphaFS.UnitTest
          {
             var driveName = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(logicalDrive.Name) : logicalDrive.Name;
 
-            Console.WriteLine("\n#{0:000}\tInput Logical Drive Path: [{1}]", logicalDriveCount, driveName);
+            Console.WriteLine("\n#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveName);
 
             if (logicalDrive.DriveType == System.IO.DriveType.CDRom)
             {
@@ -64,7 +64,7 @@ namespace AlphaFS.UnitTest
             {
                var driveInfo2 = new Alphaleonis.Win32.Filesystem.DriveInfo(driveName);
 
-               
+
                // GetVolumeInfo fails when DriveType is not of type Network.
 
                if (driveInfo2.DriveType != System.IO.DriveType.Network)
@@ -78,12 +78,11 @@ namespace AlphaFS.UnitTest
 
                Assert.AreEqual(driveInfo2.VolumeLabel, volInfo.Name);
                Assert.AreEqual(driveInfo2.DriveFormat, volInfo.FileSystemName);
-               Assert.AreEqual(driveInfo2.Name, volInfo.FullPath);
+
+               if (logicalDrive.DriveType != System.IO.DriveType.Network)
+                  Assert.AreEqual(driveInfo2.Name, volInfo.FullPath);
 
                Assert.IsNull(volInfo.Guid);
-
-
-               logicalDriveCount++;
             }
 
             else
@@ -101,12 +100,12 @@ namespace AlphaFS.UnitTest
                Assert.AreEqual(driveInfo2.DriveFormat, volInfo.FileSystemName);
                Assert.AreEqual(driveInfo2.Name, volInfo.FullPath);
 
-               Assert.IsNotNull(volInfo.Guid);
+               if (logicalDrive.DriveType != System.IO.DriveType.Network)
+               {
+                  Assert.IsNotNull(volInfo.Guid);
 
-               Assert.IsTrue(volInfo.Guid.StartsWith(Alphaleonis.Win32.Filesystem.Path.VolumePrefix));
-
-
-               logicalDriveCount++;
+                  Assert.IsTrue(volInfo.Guid.StartsWith(Alphaleonis.Win32.Filesystem.Path.VolumePrefix));
+               }
             }
 
 

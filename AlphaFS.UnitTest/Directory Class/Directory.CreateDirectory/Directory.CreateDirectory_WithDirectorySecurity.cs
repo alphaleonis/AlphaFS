@@ -42,8 +42,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Directory_CreateDirectory_WithDirectorySecurity(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

@@ -38,8 +38,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Device_EnumerateDevices(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

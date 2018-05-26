@@ -38,8 +38,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Directory_Encrypt_And_Decrypt_Recursive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

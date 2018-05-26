@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for File.Delete and is intended to contain all File.Delete Unit Tests.</summary>
+   /// <summary>This is a test class for File and is intended to contain all File.Delete Unit Tests.</summary>
    [TestClass]
    public partial class File_DeleteTest
    {

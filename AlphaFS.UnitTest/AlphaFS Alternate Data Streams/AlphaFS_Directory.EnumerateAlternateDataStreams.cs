@@ -37,8 +37,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Directory_EnumerateAlternateDataStreams(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

@@ -37,8 +37,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Directory_GetFileSystemEntryInfo_LogicalDrives()
       {
          UnitTestConstants.PrintUnitTestHeader(false);

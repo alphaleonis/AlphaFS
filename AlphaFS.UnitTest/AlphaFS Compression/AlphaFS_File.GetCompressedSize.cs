@@ -38,8 +38,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void File_GetCompressedSize(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

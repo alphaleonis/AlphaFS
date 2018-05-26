@@ -201,11 +201,8 @@ namespace AlphaFS.UnitTest
          return acl.GetAccessRules(false, true, typeof(SecurityIdentifier)).Count > 0;
       }
 
+
       #region .NET
-
-
-
-
 
       [TestMethod]
       public void Directory_GetDirectoryRoot()
@@ -279,7 +276,6 @@ namespace AlphaFS.UnitTest
 
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
-
       
 
       [TestMethod]
@@ -374,6 +370,7 @@ namespace AlphaFS.UnitTest
 
       #endregion // .NET
 
+
       #region AlphaFS
 
       [TestMethod]
@@ -385,6 +382,7 @@ namespace AlphaFS.UnitTest
          DumpEnableDisableEncryption(false);
       }
 
+
       [TestMethod]
       public void AlphaFS_Directory_EnumerateFileIdBothDirectoryInfo()
       {
@@ -394,6 +392,7 @@ namespace AlphaFS.UnitTest
          DumpEnumerateFileIdBothDirectoryInfo(false);
       }
 
+
       [TestMethod]
       public void AlphaFS_Directory_GetProperties()
       {
@@ -402,6 +401,7 @@ namespace AlphaFS.UnitTest
          DumpGetProperties(true);
          DumpGetProperties(false);
       }
+
 
       [TestMethod]
       public void AlphaFS_Directory_HasInheritedPermissions()

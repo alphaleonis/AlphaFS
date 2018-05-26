@@ -37,8 +37,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void File_ExportImportEncryptedFileRaw(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -82,6 +80,8 @@ namespace AlphaFS.UnitTest
             FileAssert.AreEqual(inputFile, importedFile);
             FileAssert.IsEncrypted(importedFile);
          }
+
+         Console.WriteLine();
       }
    }
 }

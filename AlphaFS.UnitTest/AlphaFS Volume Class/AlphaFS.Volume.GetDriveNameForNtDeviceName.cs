@@ -37,8 +37,14 @@ namespace AlphaFS.UnitTest
 
          var logicalDriveCount = 0;
 
-         foreach (var driveName in System.IO.Directory.GetLogicalDrives())
+         foreach (var drive in System.IO.DriveInfo.GetDrives())
          {
+            if (drive.DriveType == System.IO.DriveType.Network)
+               continue;
+
+
+            var driveName = drive.Name;
+
             var dosDeviceName = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(driveName);
 
             var deviceGuid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(driveName);

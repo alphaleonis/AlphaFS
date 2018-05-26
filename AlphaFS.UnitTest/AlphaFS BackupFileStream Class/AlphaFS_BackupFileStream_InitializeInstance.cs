@@ -35,9 +35,7 @@ namespace AlphaFS.UnitTest
          BackupFileStream_InitializeInstance(false);
          BackupFileStream_InitializeInstance(true);
       }
-
-
-
+      
 
       private void BackupFileStream_InitializeInstance(bool isNetwork)
       {

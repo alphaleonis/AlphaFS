@@ -37,8 +37,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void File_GetHash(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

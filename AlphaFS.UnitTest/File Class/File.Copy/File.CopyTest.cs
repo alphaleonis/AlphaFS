@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for File.Copy and is intended to contain all File.Copy Unit Tests.</summary>
+   /// <summary>This is a test class for File and is intended to contain all File.Copy Unit Tests.</summary>
    [TestClass]
    public partial class File_CopyTest
    {

@@ -27,6 +27,9 @@ namespace AlphaFS.UnitTest
 {
    public partial class File_CopyTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void File_Copy_ThrowUnauthorizedAccessException_DestinationFileIsReadOnly_LocalAndNetwork_Success()
       {

@@ -39,8 +39,6 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Directory_Copy_WithProgress(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

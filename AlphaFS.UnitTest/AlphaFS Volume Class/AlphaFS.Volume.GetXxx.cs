@@ -61,24 +61,38 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("\n\tGetVolumeDeviceName\t\t\t: [{0}]", deviceNameFromLogicalDrive);
 
+
             Assert.IsNotNull(deviceNameFromLogicalDrive);
 
-            Assert.IsTrue(deviceNameFromLogicalDrive.StartsWith(deviceNamePrefix));
+
+            if (logicalDrive.DriveType != System.IO.DriveType.Network)
+            {
+               Assert.IsTrue(deviceNameFromLogicalDrive.StartsWith(deviceNamePrefix));
+
+
+               // GetVolumeGuid: "C:\" --> "\\?\Volume{db5044f9-bd1f-4243-ab97-4b985eb29e80}\"
+
+               var volumeGuidFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(logicalDrive.Name);
+
+               Console.WriteLine("\n\tGetVolumeGuid\t\t\t\t: [{0}]", volumeGuidFromLogicalDrive);
+
+               Assert.IsNotNull(volumeGuidFromLogicalDrive);
+
+               Assert.IsTrue(volumeGuidFromLogicalDrive.StartsWith(volumePrefix));
 
 
 
 
-            // GetVolumeGuid: "C:\" --> "\\?\Volume{db5044f9-bd1f-4243-ab97-4b985eb29e80}\"
+               // GetUniqueVolumeNameForPath: "C:\" --> "\\?\Volume{db5044f9-bd1f-4243-ab97-4b985eb29e80}\"
 
-            var volumeGuidFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(logicalDrive.Name);
+               var uniqueVolumeNameFromlDriveInputPath = Alphaleonis.Win32.Filesystem.Volume.GetUniqueVolumeNameForPath(logicalDrive.Name);
 
-            Console.WriteLine("\n\tGetVolumeGuid\t\t\t\t: [{0}]", volumeGuidFromLogicalDrive);
+               Console.WriteLine("\n\tGetUniqueVolumeNameForPath\t: [{0}]", uniqueVolumeNameFromlDriveInputPath);
 
-            Assert.IsNotNull(volumeGuidFromLogicalDrive);
+               Assert.IsNotNull(uniqueVolumeNameFromlDriveInputPath);
 
-            Assert.IsTrue(volumeGuidFromLogicalDrive.StartsWith(volumePrefix));
-
-
+               Assert.IsTrue(uniqueVolumeNameFromlDriveInputPath.StartsWith(volumePrefix));
+            }
 
 
             // GetVolumePathName: "C:\" or "C:\Windows" --> "C:\"
@@ -90,21 +104,6 @@ namespace AlphaFS.UnitTest
             Assert.IsNotNull(volumePathNameFromLogicalDrive);
 
             Assert.AreEqual(logicalDrive.Name, volumePathNameFromLogicalDrive);
-
-
-
-
-            // GetUniqueVolumeNameForPath: "C:\" --> "\\?\Volume{db5044f9-bd1f-4243-ab97-4b985eb29e80}\"
-
-            var uniqueVolumeNameFromlDriveInputPath = Alphaleonis.Win32.Filesystem.Volume.GetUniqueVolumeNameForPath(logicalDrive.Name);
-
-            Console.WriteLine("\n\tGetUniqueVolumeNameForPath\t: [{0}]", uniqueVolumeNameFromlDriveInputPath);
-
-            Assert.IsNotNull(uniqueVolumeNameFromlDriveInputPath);
-
-            Assert.IsTrue(uniqueVolumeNameFromlDriveInputPath.StartsWith(volumePrefix));
-
-            
 
 
             Console.WriteLine();
