@@ -40,6 +40,9 @@ namespace AlphaFS.UnitTest
 
          foreach (var drive in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
          {
+            if (drive.DriveType == System.IO.DriveType.Network)
+               continue;
+
             var storagePartitionInfo = Alphaleonis.Win32.Filesystem.Device.GetStoragePartitionInfo(drive.Name);
 
             Console.WriteLine();

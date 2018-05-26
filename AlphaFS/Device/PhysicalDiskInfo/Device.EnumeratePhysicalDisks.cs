@@ -21,6 +21,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Security;
 
@@ -48,7 +49,11 @@ namespace Alphaleonis.Win32.Filesystem
 
          var pVolumeGuids = Volume.EnumerateVolumes().Select(volumeGuid => GetPhysicalDiskInfoCore(false, volumeGuid, null, null)).Where(physicalDisk => null != physicalDisk).ToArray();
 
-         var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false).Select(driveName => GetPhysicalDiskInfoCore(false, driveName, null, null)).Where(physicalDisk => null != physicalDisk).ToArray();
+         var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false)
+            
+            .Select(driveName => new DriveInfo(driveName)).Where(driveInfo => driveInfo.DriveType == DriveType.CDRom || driveInfo.DriveType == DriveType.Fixed || driveInfo.DriveType == DriveType.Removable)
+
+            .Select(driveInfo => GetPhysicalDiskInfoCore(false, driveInfo.Name, null, null)).Where(physicalDisk => null != physicalDisk).ToArray();
 
 
          foreach (var pDisk in physicalDisks)
