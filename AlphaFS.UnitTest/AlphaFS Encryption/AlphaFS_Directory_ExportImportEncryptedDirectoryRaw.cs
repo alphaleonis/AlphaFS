@@ -42,15 +42,10 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
             // Create an encrypted file to use for testing.
-            var inputDir = System.IO.Path.Combine(rootDir.Directory.FullName, "testDir");
+            var inputDir = System.IO.Path.Combine(tempRoot.Directory.FullName, "testDir");
             System.IO.Directory.CreateDirectory(inputDir);
             System.IO.File.WriteAllText(System.IO.Path.Combine(inputDir, "test.txt"), "Test file");
 
@@ -62,7 +57,7 @@ namespace AlphaFS.UnitTest
 
 
             // Export the file using the method under test.
-            var exportedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "export.dat");
+            var exportedFile = System.IO.Path.Combine(tempRoot.Directory.FullName, "export.dat");
 
 
             using (var fs = System.IO.File.Create(exportedFile))
@@ -77,7 +72,7 @@ namespace AlphaFS.UnitTest
             
 
             // Import the directory again.
-            var importedDir = System.IO.Path.Combine(rootDir.Directory.FullName, "importDir");
+            var importedDir = System.IO.Path.Combine(tempRoot.Directory.FullName, "importDir");
 
 
             using (var fs = System.IO.File.OpenRead(exportedFile))

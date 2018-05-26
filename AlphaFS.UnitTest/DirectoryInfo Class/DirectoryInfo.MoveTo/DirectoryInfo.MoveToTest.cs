@@ -23,9 +23,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for File and is intended to contain all File.IsLocked Unit Tests.</summary>
+   /// <summary>This is a test class for DirectoryInfo and is intended to contain all DirectoryInfo.MoveTo Unit Tests.</summary>
    [TestClass]
-   public partial class AlphaFS_File_IsLockedTest
+   public partial class DirectoryInfo_MoveToTest
    {
    }
 }

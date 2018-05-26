@@ -1,7 +1,7 @@
 /*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
- *  of this software and associated documentation directorys (the "Software"), to deal 
+ *  of this software and associated documentation files (the "Software"), to deal 
  *  in the Software without restriction, including without limitation the rights 
  *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
  *  copies of the Software, and to permit persons to whom the Software is 
@@ -20,18 +20,46 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DirectoryInfoTest
+   public partial class AlphaFS_File_LockTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void DirectoryInfo_MoveTo_ThrowArgumentException_UncPathNotAllowed_DelayUntilRebootFlagCombinedWithCopyAllowedFlag_Network_Success()
+      public void AlphaFS_File_GetProcessForFileLock_NoLockReturnsNull_LocalAndNetwork_Success()
       {
-         DirectoryInfo_MoveTo_DelayUntilReboot(true);
+         AlphaFS_File_GetProcessForFileLock_NoLockReturnsNull(false);
+         AlphaFS_File_GetProcessForFileLock_NoLockReturnsNull(true);
+      }
+
+
+      private void AlphaFS_File_GetProcessForFileLock_NoLockReturnsNull(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         {
+            var file = rootDir.RandomFileFullPath;
+            var fi = new System.IO.FileInfo(file);
+
+            Console.WriteLine("\nInput File Path: [{0}]]\n", file);
+
+
+            using (fi.CreateText()) { }
+
+
+            Assert.IsNull(Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(fi.FullName));
+         }
       }
    }
 }

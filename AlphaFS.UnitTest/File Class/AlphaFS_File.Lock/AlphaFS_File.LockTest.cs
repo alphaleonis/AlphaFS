@@ -20,46 +20,12 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_File_IsLockedTest
+   /// <summary>This is a test class for File and is intended to contain all File.Lock Unit Tests.</summary>
+   [TestClass]
+   public partial class AlphaFS_File_LockTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_File_GetProcessForFileLock_NoLockReturnsNull_LocalAndNetwork_Success()
-      {
-         AlphaFS_File_GetProcessForFileLock_NoLockReturnsNull(false);
-         AlphaFS_File_GetProcessForFileLock_NoLockReturnsNull(true);
-      }
-
-
-      private void AlphaFS_File_GetProcessForFileLock_NoLockReturnsNull(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var file = rootDir.RandomFileFullPath;
-            var fi = new System.IO.FileInfo(file);
-
-            Console.WriteLine("\nInput File Path: [{0}]]\n", file);
-
-
-            using (fi.CreateText()) { }
-
-
-            Assert.IsNull(Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(fi.FullName));
-         }
-      }
    }
 }

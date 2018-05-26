@@ -36,92 +36,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public partial class DirectoryTest
    {
-      private void DumpEnableDisableEncryption(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         var tempPath = Path.Combine(Path.GetTempPath(), "Directory.EnableDisableEncryption()-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-
-         const string disabled = "Disable=0";
-         const string enabled = "Disable=1";
-         var lineDisable = string.Empty;
-         var deskTopIni = Path.Combine(tempPath, "Desktop.ini");
-
-         Directory.CreateDirectory(tempPath);
-         var actual = File.GetAttributes(tempPath);
-
-
-         var report = string.Empty;
-         var action = false;
-         try
-         {
-            UnitTestConstants.StopWatcher(true);
-            Directory.EnableEncryption(tempPath);
-            report = UnitTestConstants.Reporter(true);
-            action = true;
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Assert.IsTrue(action, "Encryption should be True");
-
-
-         // Read filestream contents, get the last line.
-         using (var streamRead = File.OpenText(deskTopIni))
-         {
-            string line;
-            while ((line = streamRead.ReadLine()) != null)
-            {
-               lineDisable = line;
-            }
-         }
-         action = lineDisable.Equals(disabled);
-         Console.WriteLine("\nEnableEncryption() (Should be True): [{0}]", action);
-         Console.WriteLine("File Desktop.ini contents: [{0}]\t{1}", lineDisable, report);
-         Assert.IsTrue(action, "Encryption should be True");
-         Assert.IsTrue(File.Exists(deskTopIni), "Desktop.ini should Exist");
-
-
-         action = false;
-         try
-         {
-            UnitTestConstants.StopWatcher(true);
-            Directory.DisableEncryption(tempPath);
-            report = UnitTestConstants.Reporter(true);
-            action = true;
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Assert.IsTrue(action, "Encryption should be True");
-
-
-         // Read filestream contents, get the last line.
-         using (var streamRead = File.OpenText(deskTopIni))
-         {
-            string line;
-            while ((line = streamRead.ReadLine()) != null)
-            {
-               lineDisable = line;
-            }
-         }
-         action = lineDisable.Equals(enabled);
-         Console.WriteLine("\nDisableEncryption() (Should be True): [{0}]", action);
-         Console.WriteLine("File Desktop.ini contents: [{0}]\t{1}", lineDisable, report);
-         Assert.IsTrue(action, "Encryption should be True");
-         Assert.IsTrue(File.Exists(deskTopIni), "Desktop.ini should Exist");
-
-
-         Directory.Delete(tempPath, true);
-         Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
-      }
-
-
       private void DumpEnumerateFileIdBothDirectoryInfo(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
@@ -162,8 +76,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-
-
       
       private void DumpGetProperties(bool isLocal)
       {
@@ -194,6 +106,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(size > 0, "0 Size.");
          Console.WriteLine();
       }
+
 
       private bool HasInheritedPermissions(string path)
       {
@@ -371,18 +284,6 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
 
-      #region AlphaFS
-
-      [TestMethod]
-      public void AlphaFS_Directory_EnableEncryption()
-      {
-         Console.WriteLine("Directory.EnableEncryption()");
-
-         DumpEnableDisableEncryption(true);
-         DumpEnableDisableEncryption(false);
-      }
-
-
       [TestMethod]
       public void AlphaFS_Directory_EnumerateFileIdBothDirectoryInfo()
       {
@@ -431,7 +332,5 @@ namespace AlphaFS.UnitTest
          }
          Console.Write("\n{0}", UnitTestConstants.Reporter());
       }
-
-      #endregion // AlphaFS
    }
 }

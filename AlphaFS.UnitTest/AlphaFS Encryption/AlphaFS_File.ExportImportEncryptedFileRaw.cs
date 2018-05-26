@@ -41,15 +41,10 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
             // Create an encrypted file to use for testing
-            var inputFile = System.IO.Path.Combine(rootDir.Directory.FullName, "test.txt");
+            var inputFile = System.IO.Path.Combine(tempRoot.Directory.FullName, "test.txt");
             System.IO.File.WriteAllText(inputFile, "Test file #1");
 
             Alphaleonis.Win32.Filesystem.File.Encrypt(inputFile);
@@ -57,9 +52,11 @@ namespace AlphaFS.UnitTest
 
 
             // Export the file using the method under test.
-            var exportedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "export.dat");
+            var exportedFile = System.IO.Path.Combine(tempRoot.Directory.FullName, "export.dat");
+
             using (var fs = System.IO.File.Create(exportedFile))
                Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw(inputFile, fs);
+
             Console.WriteLine("\nExported Input File: [{0}]", exportedFile);
 
 
@@ -69,9 +66,11 @@ namespace AlphaFS.UnitTest
 
 
             // Import the file again.
-            var importedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "import.txt");
+            var importedFile = System.IO.Path.Combine(tempRoot.Directory.FullName, "import.txt");
+
             using (var fs = System.IO.File.OpenRead(exportedFile))
                Alphaleonis.Win32.Filesystem.File.ImportEncryptedFileRaw(fs, importedFile);
+
             Console.WriteLine("\nImported Input File: [{0}]", importedFile);
 
 

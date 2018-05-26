@@ -38,7 +38,7 @@ namespace AlphaFS.UnitTest
       public const string EMspace = "\u3000";
 #endif
 
-      /// <summary>The Computer name.</summary>
+      /// <summary>The User %TEMP% folder.</summary>
       public static readonly string TempFolder = Environment.GetEnvironmentVariable("Temp");
       public static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
       public static readonly string SysRoot32 = System.IO.Path.Combine(SysRoot, "System32");

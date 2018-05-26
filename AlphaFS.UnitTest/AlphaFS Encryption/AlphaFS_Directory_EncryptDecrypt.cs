@@ -31,25 +31,20 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Encrypt_And_Decrypt_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_EncryptDecrypt_LocalAndNetwork_Success()
       {
-         Directory_Encrypt_And_Decrypt(false);
-         Directory_Encrypt_And_Decrypt(true);
+         AlphaFS_Directory_EncryptDecrypt(false);
+         AlphaFS_Directory_EncryptDecrypt(true);
       }
 
 
-      private void Directory_Encrypt_And_Decrypt(bool isNetwork)
+      private void AlphaFS_Directory_EncryptDecrypt(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
+            var folder = tempRoot.RandomDirectoryFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
             UnitTestConstants.CreateDirectoriesAndFiles(folder, 1, false, false, false);

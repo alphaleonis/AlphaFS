@@ -29,10 +29,11 @@ namespace AlphaFS.UnitTest
    {
       public TemporaryDirectory(string prefix = null) : this(System.IO.Path.GetTempPath(), prefix) { }
 
+
       public TemporaryDirectory(string root, string prefix)
       {
          if (Utils.IsNullOrWhiteSpace(prefix))
-            prefix = "AlphaFS";
+            prefix = "TempDir";
 
          do
          {

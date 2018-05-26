@@ -41,14 +41,9 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var file = System.IO.Path.Combine(rootDir.Directory.FullName, "HashFile.txt");
+            var file = System.IO.Path.Combine(tempRoot.Directory.FullName, "HashFile.txt");
             System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);
 
             Console.WriteLine("\nInput File Path: [{0}]\n", file);

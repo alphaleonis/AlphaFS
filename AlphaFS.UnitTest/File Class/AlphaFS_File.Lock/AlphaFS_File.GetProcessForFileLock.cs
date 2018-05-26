@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_File_IsLockedTest
+   public partial class AlphaFS_File_LockTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
