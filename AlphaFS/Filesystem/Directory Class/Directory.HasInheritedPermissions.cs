@@ -21,7 +21,6 @@
 
 using System;
 using System.Security.AccessControl;
-using System.Security.Principal;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -45,9 +44,18 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
+
          var acl = File.GetAccessControlCore<DirectorySecurity>(true, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, pathFormat);
 
-         return acl.GetAccessRules(false, true, typeof(SecurityIdentifier)).Count > 0;
+         var rawBytes = acl.GetSecurityDescriptorBinaryForm();
+
+         var rsd = new RawSecurityDescriptor(rawBytes, 0);
+
+
+         // "Include inheritable permissions from this object's parent" is unchecked
+         var inheritanceDisabled = (rsd.ControlFlags & ControlFlags.DiscretionaryAclProtected) == ControlFlags.DiscretionaryAclProtected;
+
+         return !inheritanceDisabled;
       }
    }
 }

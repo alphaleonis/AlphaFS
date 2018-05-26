@@ -19,13 +19,10 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.Principal;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using File = Alphaleonis.Win32.Filesystem.File;
 using Path = Alphaleonis.Win32.Filesystem.Path;
@@ -36,46 +33,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public partial class DirectoryTest
    {
-      private void DumpGetProperties(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         var path = isLocal ? UnitTestConstants.SysRoot32 : Path.LocalToUnc(UnitTestConstants.SysRoot32);
-
-         Console.WriteLine("\n\tAggregated properties of file system objects from Directory: [{0}]\n", path);
-
-         UnitTestConstants.StopWatcher(true);
-         var props = Directory.GetProperties(path, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         var report = UnitTestConstants.Reporter();
-
-         var total = props["Total"];
-         var file = props["File"];
-         var size = props["Size"];
-         var cnt = 0;
-
-         foreach (var key in props.Keys)
-            Console.WriteLine("\t\t#{0:000}\t{1, -17} = [{2}]", ++cnt, key, props[key]);
-
-         Console.WriteLine("\n\t{0}", report);
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
-
-         Assert.IsTrue(total > 0, "0 Objects.");
-         Assert.IsTrue(file > 0, "0 Files.");
-         Assert.IsTrue(size > 0, "0 Size.");
-         Console.WriteLine();
-      }
-
-
-      private bool HasInheritedPermissions(string path)
-      {
-         var acl = Directory.GetAccessControl(path);
-         return acl.GetAccessRules(false, true, typeof(SecurityIdentifier)).Count > 0;
-      }
-
-
-      #region .NET
-
       [TestMethod]
       public void Directory_GetDirectoryRoot()
       {
@@ -238,48 +195,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
-      }
-
-      #endregion // .NET
-
-
-      [TestMethod]
-      public void AlphaFS_Directory_GetProperties()
-      {
-         Console.WriteLine("Directory.GetProperties()");
-
-         DumpGetProperties(true);
-         DumpGetProperties(false);
-      }
-
-
-      [TestMethod]
-      public void AlphaFS_Directory_HasInheritedPermissions()
-      {
-         Console.WriteLine("Directory.HasInheritedPermissions()\n");
-
-         var searchPattern = Path.WildcardStarMatchAll;
-         var searchOption = SearchOption.TopDirectoryOnly;
-
-         var cnt = 0;
-         UnitTestConstants.StopWatcher(true);
-         foreach (var dir in Directory.EnumerateDirectories(UnitTestConstants.SysRoot, searchPattern, searchOption))
-         {
-            try
-            {
-               var hasIp = Directory.HasInheritedPermissions(dir);
-
-               if (hasIp)
-                  Console.WriteLine("\t#{0:000}\t[{1}]\t\tDirectory has inherited permissions: [{2}]", ++cnt, hasIp, dir);
-
-               Assert.AreEqual(hasIp, HasInheritedPermissions(dir));
-            }
-            catch (Exception ex)
-            {
-               Console.Write("\t#{0:000}\tCaught {1} for directory: [{2}]\t[{3}]\n", cnt, ex.GetType().FullName, dir, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-         }
-         Console.Write("\n{0}", UnitTestConstants.Reporter());
       }
    }
 }
