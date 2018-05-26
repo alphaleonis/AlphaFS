@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
             
 
             // Read Desktop.ini file.
-            var collection = System.IO.File.ReadAllLines(deskTopIni).ToArray();
+            var collection = System.IO.File.ReadAllLines(deskTopIni);
 
             for (int i = 0, l = collection.Length; i < l; i++)
                Console.WriteLine("\t" + collection[i]);
@@ -73,7 +73,7 @@ namespace AlphaFS.UnitTest
 
 
             // Read Desktop.ini file.
-            collection = System.IO.File.ReadAllLines(deskTopIni).ToArray();
+            collection = System.IO.File.ReadAllLines(deskTopIni);
 
             for (int i = 0, l = collection.Length; i < l; i++)
                Console.WriteLine("\t" + collection[i]);

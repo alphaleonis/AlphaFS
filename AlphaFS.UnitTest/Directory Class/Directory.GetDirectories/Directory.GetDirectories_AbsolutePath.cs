@@ -21,7 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,36 +33,32 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_GetDirectories_AbsolutePath_LocalAndNetwork_Success()
       {
-         Directory_GetDirectories_Absolute(false);
-         Directory_GetDirectories_Absolute(true);
+         Directory_GetDirectories_AbsolutePath(false);
+         Directory_GetDirectories_AbsolutePath(true);
       }
 
 
-      private void Directory_GetDirectories_Absolute(bool isNetwork)
+      private void Directory_GetDirectories_AbsolutePath(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = UnitTestConstants.SysRoot;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-
-
-         var systemIOFolders = System.IO.Directory.GetDirectories(tempPath).OrderBy(path => path).ToArray();
-         var alphaFSFolders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(tempPath).OrderBy(path => path).ToArray();
-
-         Assert.AreEqual(systemIOFolders.Length, alphaFSFolders.Length);
-
-
-         var fileCount = 0;
-         for (var i = 0; i < systemIOFolders.Length; i++)
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            Console.WriteLine("\t#{0:000}\t{1}", ++fileCount, alphaFSFolders[i]);
+            var folder = new System.IO.DirectoryInfo(tempRoot.RandomDirectoryFullPath);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
 
-            Assert.AreEqual(systemIOFolders[i], alphaFSFolders[i]);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, 5, true, true, true);
+
+            Environment.CurrentDirectory = tempRoot.Directory.Parent.FullName;
+
+
+            var systemIOCollection = System.IO.Directory.GetDirectories(folder.FullName, "*", System.IO.SearchOption.AllDirectories);
+
+            var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder.FullName, "*", System.IO.SearchOption.AllDirectories);
+
+
+            CollectionAssert.AreEquivalent(systemIOCollection, alphaFSCollection);
          }
-
 
          Console.WriteLine();
       }

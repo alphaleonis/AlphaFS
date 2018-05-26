@@ -34,15 +34,17 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_GetFileSystemEntries_LongPathWithPrefix_ShouldReturnCorrectEntries_Local_Success()
+      public void Directory_GetFileSystemEntries_LongPathWithPrefix_ShouldReturnCorrectEntries_LocalAndNetwork_Success()
       {
          Directory_GetFileSystemEntries_LongPath_ShouldReturnCorrectEntries(false, true);
+         Directory_GetFileSystemEntries_LongPath_ShouldReturnCorrectEntries(true, true);
       }
 
 
       [TestMethod]
       public void Directory_GetFileSystemEntries_LongPathWithoutPrefix_ShouldReturnCorrectEntries_Network_Success()
       {
+         Directory_GetFileSystemEntries_LongPath_ShouldReturnCorrectEntries(false, false);
          Directory_GetFileSystemEntries_LongPath_ShouldReturnCorrectEntries(true, false);
       }
 
@@ -67,11 +69,16 @@ namespace AlphaFS.UnitTest
 
             Alphaleonis.Win32.Filesystem.File.WriteAllText(System.IO.Path.Combine(longDir, "C"), "C");
 
-            var entries = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntries((withPrefix ? @"\\?\" : string.Empty) + longDir).ToArray();
+
+            var prefix = withPrefix ? isNetwork ? Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix : Alphaleonis.Win32.Filesystem.Path.LongPathPrefix : string.Empty;
+
+            var entries = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntries(prefix + longDir).ToArray();
 
 
             Assert.AreEqual(3, entries.Length);
          }
+
+         Console.WriteLine();
       }
    }
 }

@@ -62,7 +62,7 @@ namespace AlphaFS.UnitTest
             Alphaleonis.Win32.Filesystem.File.AppendAllText(file, sample[1] + Environment.NewLine);
 
 
-            var collection = System.IO.File.ReadAllLines(file).ToArray();
+            var collection = System.IO.File.ReadAllLines(file);
 
             for (int i = 0, l = collection.Length; i < l; i++)
                Console.WriteLine("\n\t" + collection[i]);

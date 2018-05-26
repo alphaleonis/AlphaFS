@@ -151,7 +151,7 @@
     <Compile Include="AlphaFS Compression\AlphaFS_Directory.CompressDecompress_Recursive.cs" />
     <Compile Include="AlphaFS Crc Class\AlphaFS_CrcTest.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_Directory_EncryptDecrypt_Recursive.cs" />
-    <Compile Include="AlphaFS Encryption\AlphaFS_EncryptionTest.cs" />
+    <Compile Include="AlphaFS_EncryptionTest.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_Directory.GetFileIdInfo.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_File.GetFileIdInfo.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_Directory.GetFileInfo.cs" />

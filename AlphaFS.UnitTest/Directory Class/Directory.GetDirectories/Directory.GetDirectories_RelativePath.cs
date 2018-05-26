@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
@@ -43,36 +42,24 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = new System.IO.DirectoryInfo(rootDir.RandomDirectoryFullPath);
-            Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
+            var folder = new System.IO.DirectoryInfo(tempRoot.RandomDirectoryFullPath);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, 10, false, false, false);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, 5, true, true, true);
 
-            Environment.CurrentDirectory = tempPath;
-
-
+            Environment.CurrentDirectory = tempRoot.Directory.Parent.FullName;
+            
             var relativeFolder = folder.Parent.Name + @"\" + folder.Name;
 
-            var systemIOFolders = System.IO.Directory.GetDirectories(relativeFolder, "*", System.IO.SearchOption.AllDirectories).OrderBy(path => path).ToArray();
-            var alphaFSFolders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(relativeFolder, "*", System.IO.SearchOption.AllDirectories).OrderBy(path => path).ToArray();
 
-            Assert.AreEqual(systemIOFolders.Length, alphaFSFolders.Length);
+            var systemIOCollection = System.IO.Directory.GetDirectories(relativeFolder, "*", System.IO.SearchOption.AllDirectories);
+
+            var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(relativeFolder, "*", System.IO.SearchOption.AllDirectories);
 
 
-            var fileCount = 0;
-            for (var i = 0; i < systemIOFolders.Length; i++)
-            {
-               Console.WriteLine("\t#{0:000}\t{1}", ++fileCount, alphaFSFolders[i]);
-
-               Assert.AreEqual(systemIOFolders[i], alphaFSFolders[i]);
-            }
+            CollectionAssert.AreEquivalent(systemIOCollection, alphaFSCollection);
          }
 
          Console.WriteLine();
