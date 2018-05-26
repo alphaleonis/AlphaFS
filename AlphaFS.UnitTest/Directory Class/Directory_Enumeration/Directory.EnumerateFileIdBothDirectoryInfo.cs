@@ -22,45 +22,47 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class Directory_EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_EnumerateFiles_LocalAndNetwork_Success()
+      public void Directory_EnumerateFileIdBothDirectoryInfo_LocalAndNetwork_Success()
       {
-         Directory_EnumerateFiles(false);
-         Directory_EnumerateFiles(true);
+         Directory_EnumerateFileIdBothDirectoryInfo(false);
+         Directory_EnumerateFileIdBothDirectoryInfo(true);
       }
 
 
-      private void Directory_EnumerateFiles(bool isNetwork)
+      private void Directory_EnumerateFileIdBothDirectoryInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
+
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         {
+            var folder = tempRoot.RandomDirectoryFullPath;
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, 10, false, false, false);
 
 
-         var inputPath = UnitTestConstants.SysRoot;
-         if (isNetwork)
-            inputPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(inputPath);
+            var sysIOCollection = System.IO.Directory.EnumerateDirectories(folder).Select(System.IO.Path.GetFileName).ToArray();
+
+            var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.EnumerateFileIdBothDirectoryInfo(folder).ToArray();
+
+            Console.WriteLine("\tSystem.IO items enumerated: {0:N0}", sysIOCollection.Length);
+            Console.WriteLine("\tAlphaFS   items enumerated: {0:N0}", alphaFSCollection.Length);
 
 
-         Console.WriteLine("Input Directory Path: [{0}]\n", inputPath);
+            // Since System.IO does not have a EnumerateFileIdBothDirectoryInfo method, we can only compare the collection of folder names.
 
-
-         var systemIOCount = System.IO.Directory.EnumerateFiles(inputPath).Count();
-         var alphaFSCount = Alphaleonis.Win32.Filesystem.Directory.EnumerateFiles(inputPath).Count();
-
-         Console.WriteLine("\tSystem.IO files enumerated: {0:N0}", systemIOCount);
-         Console.WriteLine("\tAlphaFS files enumerated  : {0:N0}", alphaFSCount);
-
-
-         Assert.AreEqual(systemIOCount, alphaFSCount, "No files enumerated, but it is expected.");
-
+            CollectionAssert.AreEquivalent(sysIOCollection, alphaFSCollection.Select(item => item.FileName).ToArray());
+         }
 
          Console.WriteLine();
       }

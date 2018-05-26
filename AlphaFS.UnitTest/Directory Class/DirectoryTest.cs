@@ -36,47 +36,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public partial class DirectoryTest
    {
-      private void DumpEnumerateFileIdBothDirectoryInfo(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         var tempPath = UnitTestConstants.SysRoot;
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         var searchPattern = Path.WildcardStarMatchAll;
-
-         var directories = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Folders);
-         var files = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Files);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]\tCounted: Directories = [{1}]  Files = [{2}]", tempPath, directories, files);
-
-         var foundFse = false;
-         long numDirectories = 0;
-         long numFiles = 0;
-
-         UnitTestConstants.StopWatcher(true);
-         foreach (var fibdi in Directory.EnumerateFileIdBothDirectoryInfo(tempPath))
-         {
-            if ((fibdi.FileAttributes & FileAttributes.Directory) != 0)
-               numDirectories++;
-            else
-               numFiles++;
-
-            foundFse = UnitTestConstants.Dump(fibdi, -22);
-         }
-         var report = UnitTestConstants.Reporter();
-
-         Console.WriteLine("\n\tEnumerated: Directories = [{0}] Files = [{1}]\t{2}", numDirectories, numFiles, report);
-
-         if (!foundFse)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
-
-         var matchAll = directories == numDirectories && files == numFiles;
-         Assert.IsTrue(matchAll, "Number of directories and/or files don't match.");
-
-         Console.WriteLine();
-      }
-
-      
       private void DumpGetProperties(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
@@ -282,16 +241,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // .NET
-
-
-      [TestMethod]
-      public void AlphaFS_Directory_EnumerateFileIdBothDirectoryInfo()
-      {
-         Console.WriteLine("Directory.EnumerateFileIdBothDirectoryInfo()");
-
-         DumpEnumerateFileIdBothDirectoryInfo(true);
-         DumpEnumerateFileIdBothDirectoryInfo(false);
-      }
 
 
       [TestMethod]

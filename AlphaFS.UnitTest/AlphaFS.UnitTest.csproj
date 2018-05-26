@@ -147,7 +147,7 @@
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStreamTest.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_ByHandleFileInfoTest.cs" />
     <Compile Include="AlphaFS Compression\AlphaFS CompressionTest.cs" />
-    <Compile Include="AlphaFS Compression\AlphaFS_Directory.Compress_And_Decompress_Recursive.cs" />
+    <Compile Include="AlphaFS Compression\AlphaFS_Directory.CompressDecompress_Recursive.cs" />
     <Compile Include="AlphaFS Crc Class\AlphaFS_CrcTest.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_DeviceTest.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_Directory_EncryptDecrypt_Recursive.cs" />
@@ -256,9 +256,10 @@
     <Compile Include="Directory Class\Directory.GetFiles\Directory.GetFiles_WithSearchPattern.cs" />
     <Compile Include="Directory Class\Directory.GetFileSystemEntries.cs" />
     <Compile Include="Directory Class\Directory.GetDirectories\Directory.GetDirectories_WithSearchPattern.cs" />
-    <Compile Include="Directory Class\Directory.EnumerateFiles.cs" />
-    <Compile Include="Directory Class\Directory.EnumerateFileSystemEntries.cs" />
-    <Compile Include="Directory Class\Directory.EnumerateDirectories.cs" />
+    <Compile Include="Directory Class\Directory_Enumeration\Directory.EnumerateFileIdBothDirectoryInfo.cs" />
+    <Compile Include="Directory Class\Directory_Enumeration\Directory.EnumerateFiles.cs" />
+    <Compile Include="Directory Class\Directory_Enumeration\Directory.EnumerateFileSystemEntries.cs" />
+    <Compile Include="Directory Class\Directory_Enumeration\Directory.EnumerateDirectories.cs" />
     <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.MoveTest.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Overwrite_DestinationDirectoryAlreadyExists.cs" />
@@ -271,7 +272,7 @@
     <Compile Include="Directory Class\Directory.Move\Directory.Move_ToDifferentVolume_EmulateUsingCopyDelete.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_ThrowDirectoryNotFoundException_NonExistingSourceDirectory.cs" />
     <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive.cs" />
-    <Compile Include="AlphaFS Compression\AlphaFS_Directory.Compress_And_Decompress.cs" />
+    <Compile Include="AlphaFS Compression\AlphaFS_Directory.CompressDecompress.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_Directory_EncryptDecrypt.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.IsEmpty\AlphaFS_Directory.IsEmpty.cs" />
@@ -288,12 +289,13 @@
     <Compile Include="Directory Class\Directory.Exists\AlphaFS_Directory.Exists_WithLeadingOrTrailingSpace.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_Directory_ExportImportEncryptedDirectoryRaw.cs" />
     <Compile Include="Directory Class\Directory.GetAccessControl.cs" />
-    <Compile Include="Directory Class\Directory.Timestamps\AlphaFS_Directory.CopyTimestamps.cs" />
-    <Compile Include="Directory Class\Directory.Timestamps\AlphaFS_Directory.SetTimestamps.cs" />
-    <Compile Include="Directory Class\Directory.Timestamps\Directory.Timestamps_CompareTimestamps_NonExistingDirectory.cs" />
-    <Compile Include="Directory Class\Directory.Timestamps\AlphaFS_Directory.GetChangeTime.cs" />
+    <Compile Include="Directory Class\Directory_Enumeration\Directory.EnumerationTest.cs" />
+    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.CopyTimestamps.cs" />
+    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.SetTimestamps.cs" />
+    <Compile Include="Directory Class\Directory_Timestamps\Directory.Timestamps_CompareTimestamps_NonExistingDirectory.cs" />
+    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.GetChangeTime.cs" />
     <Compile Include="Directory Class\Directory.SetAccessControl.cs" />
-    <Compile Include="Directory Class\Directory.Timestamps\Directory.TimestampsTest.cs" />
+    <Compile Include="Directory Class\Directory_Timestamps\Directory.TimestampsTest.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_NonExistingDirectory.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_AnalyzeDirectoryInfoSecurity.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\DirectoryInfo.MoveTo_MoveToEmptyFolder.cs" />
@@ -362,7 +364,7 @@
     <Compile Include="File Class\AlphaFS_File.Lock\AlphaFS_File.IsLocked.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.CreateSymbolicLink_And_GetLinkTargetInfo.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.CreateHardlink_And_EnumerateHardlinks.cs" />
-    <Compile Include="AlphaFS Compression\AlphaFS_File.Compress_And_Decompress.cs" />
+    <Compile Include="AlphaFS Compression\AlphaFS_File.CompressDecompress.cs" />
     <Compile Include="AlphaFS Compression\AlphaFS_File.GetCompressedSize.cs" />
     <Compile Include="File Class\AlphaFS_File.GetSize.cs" />
     <Compile Include="AlphaFS Alternate Data Streams\AlphaFS_File.EnumerateAlternateDataStreams.cs" />
@@ -415,7 +417,6 @@
     <Compile Include="UnitTest Utility\PrintUnitTestHeader.cs" />
     <Compile Include="UnitTest Utility\IsAdmin.cs" />
     <Compile Include="UnitTest Utility\Dump.cs" />
-    <Compile Include="UnitTest Utility\CreateFile.cs" />
     <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
     <Compile Include="UnitTest Utility\FileAssert.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.UrlIs.cs" />

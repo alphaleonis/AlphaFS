@@ -22,10 +22,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class DirectoryTest
+   public partial class Directory_EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -41,26 +42,26 @@ namespace AlphaFS.UnitTest
       private void Directory_EnumerateFileSystemEntries(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
+
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         {
+            var folder = tempRoot.RandomDirectoryFullPath;
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, 10, false, true, true);
 
 
-         var inputPath = UnitTestConstants.SysRoot;
-         if (isNetwork)
-            inputPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(inputPath);
+            var sysIOCollection = System.IO.Directory.EnumerateFileSystemEntries(folder, "*", System.IO.SearchOption.AllDirectories).ToArray();
+
+            var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntries(folder, "*", System.IO.SearchOption.AllDirectories).ToArray();
 
 
-         Console.WriteLine("Input Directory Path: [{0}]\n", inputPath);
+            Console.WriteLine("\tSystem.IO file system entries enumerated: {0:N0}", sysIOCollection.Length);
+            Console.WriteLine("\tAlphaFS   file system entries enumerated: {0:N0}", alphaFSCollection.Length);
 
 
-         var systemIOCount = System.IO.Directory.EnumerateFileSystemEntries(inputPath).Count();
-         var alphaFSCount = Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntries(inputPath).Count();
-
-         Console.WriteLine("\tSystem.IO file system entries enumerated: {0:N0}", systemIOCount);
-         Console.WriteLine("\tAlphaFS file system entries enumerated  : {0:N0}", alphaFSCount);
-
-
-         Assert.AreEqual(systemIOCount, alphaFSCount, "No file system entries enumerated, but it is expected.");
-
+            CollectionAssert.AreEquivalent(sysIOCollection, alphaFSCollection);
+         }
 
          Console.WriteLine();
       }

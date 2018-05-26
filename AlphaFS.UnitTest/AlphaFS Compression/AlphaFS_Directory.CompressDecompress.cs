@@ -31,25 +31,20 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Compress_And_Decompress_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_CompressDecompress_LocalAndNetwork_Success()
       {
-         Directory_Compress_And_Decompress(false, false);
-         Directory_Compress_And_Decompress(true, false);
+         AlphaFS_Directory_CompressDecompress(false, false);
+         AlphaFS_Directory_CompressDecompress(true, false);
       }
 
 
-      private void Directory_Compress_And_Decompress(bool isNetwork, bool recursive)
+      private void AlphaFS_Directory_CompressDecompress(bool isNetwork, bool recursive)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var folderRoot = rootDir.RandomDirectoryFullPath;
+            var folderRoot = tempRoot.RandomDirectoryFullPath;
             Console.WriteLine("\nInput Directory Path: [{0}]", folderRoot);
 
 

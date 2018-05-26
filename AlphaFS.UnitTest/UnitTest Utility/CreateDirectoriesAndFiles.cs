@@ -35,7 +35,7 @@ namespace AlphaFS.UnitTest
          {
             var file = System.IO.Path.Combine(rootPath, GetRandomFileNameWithDiacriticCharacters());
             var dir = file + "-" + i + "-dir";
-            file = file + "-" + i + "-file";
+            file = file + "-" + i + "-file.txt";
 
             folderCount++;
             System.IO.Directory.CreateDirectory(dir);
@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
             // Every other folder is empty.
             if (i % 2 == 0)
             {
-               CreateFile(dir);
+               CreateFile(dir, i);
 
                System.IO.File.WriteAllText(filePath, TextGoodbyeWorld);
 
@@ -74,6 +74,28 @@ namespace AlphaFS.UnitTest
 
 
          Assert.AreEqual(max, folderCount, "The number of folders does not equal the max folder-level, but is expected to.");
+      }
+
+
+      public static System.IO.FileInfo CreateFile(string rootFolder, int fileLength = 0)
+      {
+         return CreateFile(rootFolder, 0, fileLength);
+      }
+
+
+      public static System.IO.FileInfo CreateFile(string rootFolder, int count, int fileLength = 0)
+      {
+         var file = System.IO.Path.Combine(rootFolder, GetRandomFileNameWithDiacriticCharacters() + "-" + count + "-file");
+
+         using (var fs = System.IO.File.Create(file))
+         {
+            if (fileLength <= 0)
+               fileLength = new Random().Next(0, 10485760);
+
+            fs.SetLength(fileLength);
+         }
+
+         return new System.IO.FileInfo(file);
       }
    }
 }

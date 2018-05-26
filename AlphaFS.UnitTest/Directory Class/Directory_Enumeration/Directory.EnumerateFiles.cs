@@ -21,58 +21,46 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class AlphaFS_CompressionTest
+   public partial class Directory_EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_File_GetCompressedSize_LocalAndNetwork_Success()
+      public void Directory_EnumerateFiles_LocalAndNetwork_Success()
       {
-         File_GetCompressedSize(false);
-         File_GetCompressedSize(true);
+         Directory_EnumerateFiles(false);
+         Directory_EnumerateFiles(true);
       }
 
 
-      private void File_GetCompressedSize(bool isNetwork)
+      private void Directory_EnumerateFiles(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
          using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var file = tempRoot.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]", file);
+            var folder = tempRoot.RandomDirectoryFullPath;
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-            long streamLength;
-            var thousand = 100 * UnitTestConstants.TenNumbers.Length;
-            var compressedSize = 4096;
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, 10, false, true, true);
 
 
-            // Size: 9,76 KB(10.000 bytes)
-            // Size on disk: 12,0 KB(12.288 bytes)
-            using (var fs = System.IO.File.Create(file))
-            {
-               // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
+            var sysIOCollection = System.IO.Directory.EnumerateFiles(folder, "*", System.IO.SearchOption.AllDirectories).ToArray();
 
-               for (var count = 0; count < thousand; count ++)
-                  fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, UnitTestConstants.TenNumbers.Length);
-
-               streamLength = fs.Length;
-            }
+            var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.EnumerateFiles(folder, "*", System.IO.SearchOption.AllDirectories).ToArray();
 
 
-            // Compress file.
-            // Size on disk: 4,00 KB (4.096 bytes)
-            Alphaleonis.Win32.Filesystem.File.Compress(file);
+            Console.WriteLine("\tSystem.IO files enumerated: {0:N0}", sysIOCollection.Length);
+            Console.WriteLine("\tAlphaFS   files enumerated: {0:N0}", alphaFSCollection.Length);
 
 
-            var fileLength = Alphaleonis.Win32.Filesystem.File.GetCompressedSize(file);
-
-            Assert.IsTrue(fileLength == compressedSize && fileLength != streamLength, "File should be [{0}] bytes in size.", compressedSize);
+            CollectionAssert.AreEquivalent(sysIOCollection, alphaFSCollection);
          }
 
          Console.WriteLine();

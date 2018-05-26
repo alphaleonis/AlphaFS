@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Contains information about files in the specified directory. Used for directory handles.</summary>
+   /// <summary>[AlphaFS] Contains information about files in the specified directory. Used for directory handles.</summary>
    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
    [Serializable]
    [SecurityCritical]

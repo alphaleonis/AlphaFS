@@ -19,25 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public static partial class UnitTestConstants
+   /// <summary>This is a test class for Directory and is intended to contain all Directory Enumeration Unit Tests.</summary>
+   [TestClass]
+   public partial class Directory_EnumerationTest
    {
-      public static System.IO.FileInfo CreateFile(string rootFolder, int fileLength = 0)
-      {
-         var file = System.IO.Path.Combine(rootFolder, GetRandomFileNameWithDiacriticCharacters());
-
-         using (var fs = System.IO.File.Create(file))
-         {
-            if (fileLength <= 0)
-               fileLength = new Random().Next(0, 10485760);
-
-            fs.SetLength(fileLength);
-         }
-
-         return new System.IO.FileInfo(file);
-      }
    }
 }
