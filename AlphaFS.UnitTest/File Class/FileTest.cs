@@ -66,7 +66,7 @@ namespace AlphaFS.UnitTest
 
          var allOk = true;
          var cnt = 0;
-         UnitTestConstants.StopWatcher(true);
+
          foreach (var file in Directory.EnumerateFiles(tempPath))
          {
             try
@@ -90,7 +90,7 @@ namespace AlphaFS.UnitTest
             }
          }
          Console.WriteLine();
-         Console.WriteLine(UnitTestConstants.Reporter());
+
          Assert.IsTrue(allOk);
 
 
@@ -99,7 +99,7 @@ namespace AlphaFS.UnitTest
 
          allOk = true;
          cnt = 0;
-         UnitTestConstants.StopWatcher(true);
+
          foreach (var file in Directory.EnumerateFiles(tempPath))
          {
             try
@@ -123,7 +123,6 @@ namespace AlphaFS.UnitTest
             }
          }
          Console.WriteLine();
-         Console.WriteLine(UnitTestConstants.Reporter());
 
 
          Directory.Delete(tempPath, true, true);
