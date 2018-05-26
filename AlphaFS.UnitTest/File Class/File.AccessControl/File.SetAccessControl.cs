@@ -27,7 +27,7 @@ using System.Security.Principal;
 
 namespace AlphaFS.UnitTest
 {
-   partial class FileTest
+   public partial class AccessControlTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

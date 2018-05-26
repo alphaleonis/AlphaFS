@@ -25,7 +25,7 @@ using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_HostTest
+   public partial class EnumerationTest
    {
       [TestMethod]
       public void AlphaFS_Host_EnumerateDrives_Network_Success()

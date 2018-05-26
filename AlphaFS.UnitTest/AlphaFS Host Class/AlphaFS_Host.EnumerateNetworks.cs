@@ -26,7 +26,7 @@ using Alphaleonis.Win32.Network;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_HostTest
+   public partial class EnumerationTest
    {
       [TestMethod]
       public void AlphaFS_Host_EnumerateNetworks_Local_Success()

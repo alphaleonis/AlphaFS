@@ -29,7 +29,7 @@ using System.Threading;
 
 namespace AlphaFS.UnitTest
 {
-   partial class AlphaFS_FileSystemEntryInfoTest
+   public partial class EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

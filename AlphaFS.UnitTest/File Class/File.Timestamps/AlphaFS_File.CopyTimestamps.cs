@@ -26,7 +26,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_TimestampsTest
+   public partial class TimestampsTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
