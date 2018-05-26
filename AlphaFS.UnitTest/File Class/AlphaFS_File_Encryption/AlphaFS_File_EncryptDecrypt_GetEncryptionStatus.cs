@@ -25,36 +25,46 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class AlphaFS_CompressionTest
+   public partial class AlphaFS_EncryptionTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
-      public void AlphaFS_File_CompressDecompress_LocalAndNetwork_Success()
+      public void AlphaFS_File_EncryptDecrypt_GetEncryptionStatus_LocalAndNetwork_Success()
       {
-         AlphaFS_File_CompressDecompress(false);
-         AlphaFS_File_CompressDecompress(true);
+         AlphaFS_File_EncryptDecrypt_GetEncryptionStatus(false);
+         AlphaFS_File_EncryptDecrypt_GetEncryptionStatus(true);
+
       }
 
 
-      private void AlphaFS_File_CompressDecompress(bool isNetwork)
+      private void AlphaFS_File_EncryptDecrypt_GetEncryptionStatus(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
+         
          using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
             var file = tempRoot.RandomFileFullPath;
+            System.IO.File.WriteAllLines(file, new[] {DateTime.Now.ToString(), DateTime.Now.ToLongDateString()});
+
             Console.WriteLine("\nInput File Path: [{0}]", file);
 
-            using (System.IO.File.CreateText(file)) { }
+            
+            // Encrypt file.
+            Alphaleonis.Win32.Filesystem.File.Encrypt(file);
+            
+            Assert.IsTrue((System.IO.File.GetAttributes(file) & System.IO.FileAttributes.Encrypted) != 0, "The file is not encrypted, but it is expected.");
+
+            Assert.AreEqual(Alphaleonis.Win32.Filesystem.FileEncryptionStatus.Encrypted, Alphaleonis.Win32.Filesystem.File.GetEncryptionStatus(file), "The file is not encrypted, but it is expected.");
 
 
-            Alphaleonis.Win32.Filesystem.File.Compress(file);
-            FileAssert.IsCompressed(file);
+            
+            
+            // Decrypt file.
+            Alphaleonis.Win32.Filesystem.File.Decrypt(file);
+            
+            Assert.IsTrue((System.IO.File.GetAttributes(file) & System.IO.FileAttributes.Encrypted) == 0, "The file is encrypted, but it is not expected.");
 
-            Alphaleonis.Win32.Filesystem.File.Decompress(file);
-            FileAssert.IsNotCompressed(file);
+            Assert.AreNotEqual(Alphaleonis.Win32.Filesystem.FileEncryptionStatus.Encrypted, Alphaleonis.Win32.Filesystem.File.GetEncryptionStatus(file), "The file is encrypted, but it is not expected.");
+
          }
 
          Console.WriteLine();

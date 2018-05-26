@@ -25,36 +25,59 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class AlphaFS_CompressionTest
+   public partial class AlphaFS_EncryptionTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
-      public void AlphaFS_File_CompressDecompress_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_EnableDisableEncryption_LocalAndNetwork_Success()
       {
-         AlphaFS_File_CompressDecompress(false);
-         AlphaFS_File_CompressDecompress(true);
+         AlphaFS_Directory_EnableDisableEncryption(false);
+         AlphaFS_Directory_EnableDisableEncryption(true);
+
       }
 
 
-      private void AlphaFS_File_CompressDecompress(bool isNetwork)
+      private void AlphaFS_Directory_EnableDisableEncryption(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
+         
          using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var file = tempRoot.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]", file);
-
-            using (System.IO.File.CreateText(file)) { }
+            var folder = System.IO.Directory.CreateDirectory(tempRoot.RandomDirectoryFullPath).FullName;
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
 
-            Alphaleonis.Win32.Filesystem.File.Compress(file);
-            FileAssert.IsCompressed(file);
+            var deskTopIni = System.IO.Path.Combine(folder, "Desktop.ini");
+            var enabled = new[] {"[Encryption]", "Disable=0"};
+            var disabled = new[] {"[Encryption]", "Disable=1"};
 
-            Alphaleonis.Win32.Filesystem.File.Decompress(file);
-            FileAssert.IsNotCompressed(file);
+
+            // Enable.
+            Alphaleonis.Win32.Filesystem.Directory.EnableEncryption(folder);
+            
+
+            // Read Desktop.ini file.
+            var collection = System.IO.File.ReadAllLines(deskTopIni);
+
+            for (int i = 0, l = collection.Length; i < l; i++)
+               Console.WriteLine("\t" + collection[i]);
+            Console.WriteLine();
+
+            CollectionAssert.AreEquivalent(enabled, collection);
+
+
+
+
+            // Disable.
+            Alphaleonis.Win32.Filesystem.Directory.DisableEncryption(folder);
+
+
+            // Read Desktop.ini file.
+            collection = System.IO.File.ReadAllLines(deskTopIni);
+
+            for (int i = 0, l = collection.Length; i < l; i++)
+               Console.WriteLine("\t" + collection[i]);
+
+            CollectionAssert.AreEquivalent(disabled, collection);
          }
 
          Console.WriteLine();

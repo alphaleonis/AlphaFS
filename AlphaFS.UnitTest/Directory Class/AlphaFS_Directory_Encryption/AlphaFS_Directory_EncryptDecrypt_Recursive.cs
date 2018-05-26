@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_EncryptDecrypt_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_EncryptDecrypt_Recursive_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_EncryptDecrypt(false);
-         AlphaFS_Directory_EncryptDecrypt(true);
+         AlphaFS_Directory_EncryptDecrypt_Recursive(false);
+         AlphaFS_Directory_EncryptDecrypt_Recursive(true);
       }
 
 
-      private void AlphaFS_Directory_EncryptDecrypt(bool isNetwork)
+      private void AlphaFS_Directory_EncryptDecrypt_Recursive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -49,19 +49,17 @@ namespace AlphaFS.UnitTest
 
             UnitTestConstants.CreateDirectoriesAndFiles(folder, 1, false, false, false);
 
+            
+            // Encrypt.
+            Alphaleonis.Win32.Filesystem.Directory.Encrypt(folder, true);
 
 
-
-            // Encrypt root folder only.
-            Alphaleonis.Win32.Filesystem.Directory.Encrypt(folder);
-
-
-            // Verify that the contents of the folder are still decrypted.
+            // Verify that the entire folder is encrypted.
             var cnt = 0;
             foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemEntryInfo>(folder, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive))
             {
                cnt++;
-               Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Encrypted) == 0, "It is expected that the file system object is decrypted, but it is not.");
+               Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Encrypted) != 0, "It is expected that the file system object is encrypted, but it is not.");
             }
 
             if (cnt == 0)
@@ -70,19 +68,16 @@ namespace AlphaFS.UnitTest
 
 
 
-            // Encrypt entire folder for decrypt test.
-            Alphaleonis.Win32.Filesystem.Directory.Encrypt(folder, true);
-
-            // Decrypt root folder only.
-            Alphaleonis.Win32.Filesystem.Directory.Decrypt(folder);
+            // Decrypt.
+            Alphaleonis.Win32.Filesystem.Directory.Decrypt(folder, true);
 
 
-            // Verify that the contents of the folder are still encrypted.
+            // Verify that the entire folder is decrypted.
             cnt = 0;
             foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemEntryInfo>(folder, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive))
             {
                cnt++;
-               Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Encrypted) != 0, "It is expected that the file system object is encrypted, but it is not.");
+               Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Encrypted) == 0, "It is expected that the file system object is decrypted, but it is not.");
             }
 
             if (cnt == 0)

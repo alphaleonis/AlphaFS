@@ -22,39 +22,43 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Reflection;
+using System.Text;
 
 namespace AlphaFS.UnitTest
 {
-   partial class AlphaFS_CompressionTest
+   public partial class FileTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
-      public void AlphaFS_File_CompressDecompress_LocalAndNetwork_Success()
+      public void File_WriteAllBytes_LocalAndNetwork_Success()
       {
-         AlphaFS_File_CompressDecompress(false);
-         AlphaFS_File_CompressDecompress(true);
+         File_WriteAllBytes(false);
+         File_WriteAllBytes(true);
+
       }
 
 
-      private void AlphaFS_File_CompressDecompress(bool isNetwork)
+      private void File_WriteAllBytes(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
+         
          using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var file = tempRoot.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]", file);
+            var file1 = tempRoot.RandomFileFullPath;
+            var file2 = tempRoot.RandomFileFullPath;
 
-            using (System.IO.File.CreateText(file)) { }
+            Console.WriteLine("\nInput File1 Path: [{0}]", file1);
+            Console.WriteLine("\nInput File2 Path: [{0}]", file2);
 
 
-            Alphaleonis.Win32.Filesystem.File.Compress(file);
-            FileAssert.IsCompressed(file);
+            var bytes = Encoding.UTF8.GetBytes(new string('X', new Random(DateTime.Now.Millisecond).Next(10, 1000)));
 
-            Alphaleonis.Win32.Filesystem.File.Decompress(file);
-            FileAssert.IsNotCompressed(file);
+            System.IO.File.WriteAllBytes(file1, bytes);
+            
+
+            Alphaleonis.Win32.Filesystem.File.WriteAllBytes(file2, bytes);
+            
+
+            CollectionAssert.AreEquivalent(System.IO.File.ReadAllBytes(file1), System.IO.File.ReadAllBytes(file2));
          }
 
          Console.WriteLine();

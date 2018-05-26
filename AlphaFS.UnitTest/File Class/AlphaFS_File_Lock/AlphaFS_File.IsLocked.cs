@@ -31,17 +31,15 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_GetProcessForFileLock_LocalAndNetwork_Success()
+      public void AlphaFS_File_IsLocked_LocalAndNetwork_Success()
       {
-         AlphaFS_File_GetProcessForFileLock(false);
-         AlphaFS_File_GetProcessForFileLock(true);
+         AlphaFS_File_IsLocked(false);
+         AlphaFS_File_IsLocked(true);
       }
-      
 
-      private void AlphaFS_File_GetProcessForFileLock(bool isNetwork)
+
+      private void AlphaFS_File_IsLocked(bool isNetwork)
       {
-         var currentProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
-
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
          var tempPath = System.IO.Path.GetTempPath();
@@ -54,27 +52,13 @@ namespace AlphaFS.UnitTest
             var file = rootDir.RandomFileFullPath;
             var fi = new System.IO.FileInfo(file);
 
-            Console.WriteLine("\nInput File Path: [{0}]]", file);
+            Console.WriteLine("\nInput File Path: [{0}]", file);
 
 
             using (fi.CreateText())
-            {
-               var processes = Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(fi.FullName);
-               var processesFound = processes.Count;
+               Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is not locked, but is expected to.");
 
-               Console.WriteLine("\n\tProcesses found: [{0}]", processesFound);
-
-
-               Assert.AreEqual(1, processesFound);
-
-
-               foreach (var process in processes)
-                  using (process)
-                  {
-                     UnitTestConstants.Dump(process, -26);
-                     Assert.IsTrue(process.Id == currentProcessId, "File was locked by a process other than the current process.");
-                  }
-            }
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is locked, but is expected not to.");
          }
 
          Console.WriteLine();

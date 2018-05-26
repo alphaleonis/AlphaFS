@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -25,40 +25,35 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_File_LockTest
+   partial class FileTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_File_IsLocked_LocalAndNetwork_Success()
+      public void File_GetAttributes_LocalAndNetwork_Success()
       {
-         AlphaFS_File_IsLocked(false);
-         AlphaFS_File_IsLocked(true);
+         File_GetAttributes(false);
+         File_GetAttributes(true);
       }
+      
 
-
-      private void AlphaFS_File_IsLocked(bool isNetwork)
+      private void File_GetAttributes(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
-            var fi = new System.IO.FileInfo(file);
+            var folder = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("\nInput File Path: [{0}]]", file);
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, 5, true, true, true);
 
 
-            using (fi.CreateText())
-               Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is not locked, but is expected to.");
+            foreach (var fso in System.IO.Directory.EnumerateFileSystemEntries(folder, "*", System.IO.SearchOption.AllDirectories))
 
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is locked, but is expected not to.");
+               Assert.AreEqual(System.IO.File.GetAttributes(fso), Alphaleonis.Win32.Filesystem.File.GetAttributes(fso));
          }
 
          Console.WriteLine();

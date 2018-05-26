@@ -25,36 +25,56 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class AlphaFS_CompressionTest
+   public partial class AlphaFS_File_LockTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_File_CompressDecompress_LocalAndNetwork_Success()
+      public void AlphaFS_File_GetProcessForFileLock_LocalAndNetwork_Success()
       {
-         AlphaFS_File_CompressDecompress(false);
-         AlphaFS_File_CompressDecompress(true);
+         AlphaFS_File_GetProcessForFileLock(false);
+         AlphaFS_File_GetProcessForFileLock(true);
       }
+      
 
-
-      private void AlphaFS_File_CompressDecompress(bool isNetwork)
+      private void AlphaFS_File_GetProcessForFileLock(bool isNetwork)
       {
+         var currentProcessId = System.Diagnostics.Process.GetCurrentProcess().Id;
+
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         var tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = rootDir.RandomFileFullPath;
+            var fi = new System.IO.FileInfo(file);
+
             Console.WriteLine("\nInput File Path: [{0}]", file);
 
-            using (System.IO.File.CreateText(file)) { }
+
+            using (fi.CreateText())
+            {
+               var processes = Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(fi.FullName);
+               var processesFound = processes.Count;
+
+               Console.WriteLine("\n\tProcesses found: [{0}]", processesFound);
 
 
-            Alphaleonis.Win32.Filesystem.File.Compress(file);
-            FileAssert.IsCompressed(file);
+               Assert.AreEqual(1, processesFound);
 
-            Alphaleonis.Win32.Filesystem.File.Decompress(file);
-            FileAssert.IsNotCompressed(file);
+
+               foreach (var process in processes)
+                  using (process)
+                  {
+                     UnitTestConstants.Dump(process, -26);
+                     Assert.IsTrue(process.Id == currentProcessId, "File was locked by a process other than the current process.");
+                  }
+            }
          }
 
          Console.WriteLine();

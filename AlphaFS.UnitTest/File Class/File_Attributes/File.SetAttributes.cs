@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -25,36 +25,53 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   partial class AlphaFS_CompressionTest
+   partial class FileTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_File_CompressDecompress_LocalAndNetwork_Success()
+      public void File_SetAttributes_LocalAndNetwork_Success()
       {
-         AlphaFS_File_CompressDecompress(false);
-         AlphaFS_File_CompressDecompress(true);
+         File_SetAttributes(false);
+         File_SetAttributes(true);
       }
+      
 
-
-      private void AlphaFS_File_CompressDecompress(bool isNetwork)
+      private void File_SetAttributes(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
          using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var file = tempRoot.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]", file);
+            var folder = tempRoot.RandomFileFullPath;
 
-            using (System.IO.File.CreateText(file)) { }
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, 5, false, false, true);
 
 
-            Alphaleonis.Win32.Filesystem.File.Compress(file);
-            FileAssert.IsCompressed(file);
+            foreach (var fullPath in System.IO.Directory.EnumerateFileSystemEntries(folder, "*", System.IO.SearchOption.AllDirectories))
+            {
+               System.IO.File.SetAttributes(fullPath, System.IO.FileAttributes.Normal);
 
-            Alphaleonis.Win32.Filesystem.File.Decompress(file);
-            FileAssert.IsNotCompressed(file);
+               const System.IO.FileAttributes attributes = System.IO.FileAttributes.Hidden | System.IO.FileAttributes.Archive | System.IO.FileAttributes.System | System.IO.FileAttributes.ReadOnly;
+
+
+               Alphaleonis.Win32.Filesystem.File.SetAttributes(fullPath, attributes);
+
+
+               var sysIO = System.IO.File.GetAttributes(fullPath);
+
+               // Remove Directory attribute for comparing.
+               var noDir = sysIO;
+               noDir &= ~System.IO.FileAttributes.Directory;
+               
+
+               Assert.AreEqual(attributes, noDir);
+
+               Assert.AreEqual(sysIO, Alphaleonis.Win32.Filesystem.File.GetAttributes(fullPath));
+            }
          }
 
          Console.WriteLine();
