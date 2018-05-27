@@ -19,37 +19,34 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>Containts static variables, used by unit tests.</summary>
-   public static partial class UnitTestConstants
+   public partial class PathTest
    {
-      #region Fields
+      // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      public const string Local = @"LOCAL";
-      public const string Network = @"NETWORK";
 
-#if NET35
-      public const string EMspace = "\u3000";
-#endif
-      
-      /// <summary>The User %TEMP% folder.</summary>
-      public static readonly string TempFolder = Environment.GetEnvironmentVariable("Temp");
-      public static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
-      public static readonly string SysRoot32 = Environment.SystemDirectory;
-      public static readonly string AppData = Environment.GetEnvironmentVariable("AppData");
-      public static readonly string NotepadExe = System.IO.Path.Combine(SysRoot32, "notepad.exe");
+      [TestMethod]
+      public void Path_GetPathRoot_ThrowArgumentExceptionEmptyString_Success()
+      {
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Path.GetPathRoot(string.Empty);
+         }
+         catch (Exception ex)
+         {
+            var exType = ex.GetType();
 
-      public const string TextTrue = "IsTrue";
-      public const string TextFalse = "IsFalse";
-      public const string TenNumbers = "0123456789";
-      public const string TextHelloWorld = "Hëllõ Wørld!";
-      public const string TextGoodbyeWorld = "Góödbyé Wôrld!";
-      public const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
+            gotException = exType == typeof(ArgumentException);
 
-      #endregion // Fields
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+         }
+
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+      }
    }
 }

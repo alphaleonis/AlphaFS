@@ -19,37 +19,21 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Diagnostics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>Containts static variables, used by unit tests.</summary>
-   public static partial class UnitTestConstants
+   public partial class PathTest
    {
-      #region Fields
+      // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      public const string Local = @"LOCAL";
-      public const string Network = @"NETWORK";
 
-#if NET35
-      public const string EMspace = "\u3000";
-#endif
-      
-      /// <summary>The User %TEMP% folder.</summary>
-      public static readonly string TempFolder = Environment.GetEnvironmentVariable("Temp");
-      public static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
-      public static readonly string SysRoot32 = Environment.SystemDirectory;
-      public static readonly string AppData = Environment.GetEnvironmentVariable("AppData");
-      public static readonly string NotepadExe = System.IO.Path.Combine(SysRoot32, "notepad.exe");
+      [TestMethod]
+      public void Path_GetFileNameWithoutExtension_NullOrEmpty_Success()
+      {
+         Assert.AreEqual(System.IO.Path.GetFileNameWithoutExtension(null), Alphaleonis.Win32.Filesystem.Path.GetFileNameWithoutExtension(null));
 
-      public const string TextTrue = "IsTrue";
-      public const string TextFalse = "IsFalse";
-      public const string TenNumbers = "0123456789";
-      public const string TextHelloWorld = "Hëllõ Wørld!";
-      public const string TextGoodbyeWorld = "Góödbyé Wôrld!";
-      public const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
-
-      #endregion // Fields
+         Assert.AreEqual(System.IO.Path.GetFileNameWithoutExtension(string.Empty), Alphaleonis.Win32.Filesystem.Path.GetFileNameWithoutExtension(string.Empty));
+      }
    }
 }

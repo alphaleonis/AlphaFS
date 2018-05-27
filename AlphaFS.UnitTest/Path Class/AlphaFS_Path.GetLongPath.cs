@@ -30,55 +30,62 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_GetFullPath_LocalAndNetwork_Success()
+      public void AlphaFS_Path_GetLongPath_LocalAndNetwork_Success()
+      {
+         AlphaFS_Path_GetLongPath();
+      }
+
+
+      private void AlphaFS_Path_GetLongPath()
       {
          UnitTestConstants.PrintUnitTestHeader();
 
          var pathCnt = 0;
          var errorCnt = 0;
-         
+
          foreach (var path in UnitTestConstants.InputPaths)
          {
             Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
 
-            string expected = null;
             string actual = null;
-            var skipAssert = false;
-            
-
-            // System.IO
-            try
-            {
-               expected = System.IO.Path.GetFullPath(path);
-            }
-            catch (Exception ex)
-            {
-               skipAssert = ex is ArgumentException;
-
-               Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\t    System.IO : [{0}]", expected ?? "null");
 
 
             // AlphaFS
             try
             {
-               actual = Alphaleonis.Win32.Filesystem.Path.GetFullPath(path);
+               actual = Alphaleonis.Win32.Filesystem.Path.GetLongPath(path);
 
-               if (!skipAssert)
-                  Assert.AreEqual(expected, actual);
+               if (Alphaleonis.Win32.Filesystem.Path.IsUncPath(path))
+                  Assert.IsTrue(actual.StartsWith(Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix), "Path should start with a long unc path prefix.");
+
+               else
+               {
+                  var c = path[0];
+
+                  if (!System.IO.Path.IsPathRooted(path) && (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'))
+
+                     Assert.IsFalse(actual.StartsWith(Alphaleonis.Win32.Filesystem.Path.LongPathPrefix), "Path should not start with a long path prefix.");
+
+                  else
+                  {
+                     if (!System.IO.Path.IsPathRooted(path) &&
+                         !Alphaleonis.Utils.IsNullOrWhiteSpace(System.IO.Path.GetDirectoryName(path)))
+
+                        Assert.IsTrue(actual.StartsWith(Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix), "Path should start with a long path prefix.");
+                  }
+               }
             }
             catch (Exception ex)
             {
-               errorCnt++;
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
-               Console.WriteLine("\tCaught [AlphaFS]   {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               errorCnt++;
             }
+
             Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
          }
-         Console.WriteLine();
 
-         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
+         Assert.AreEqual(0, errorCnt, "No errors were expected.");
       }
    }
 }

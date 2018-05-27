@@ -27,8 +27,11 @@ namespace AlphaFS.UnitTest
    /// <summary>This is a test class for Path and is intended to contain all Path Unit Tests.</summary>
    public partial class PathTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
-      public void Path_GetDirectoryName_LocalAndNetwork_Success()
+      public void Path_GetExtension_LocalAndNetwork_Success()
       {
          UnitTestConstants.PrintUnitTestHeader();
 
@@ -42,12 +45,12 @@ namespace AlphaFS.UnitTest
             string expected = null;
             string actual = null;
             var skipAssert = false;
-            
+
 
             // System.IO
             try
             {
-               expected = System.IO.Path.GetDirectoryName(path);
+               expected = System.IO.Path.GetExtension(path);
             }
             catch (Exception ex)
             {
@@ -61,7 +64,7 @@ namespace AlphaFS.UnitTest
             // AlphaFS
             try
             {
-               actual = Alphaleonis.Win32.Filesystem.Path.GetDirectoryName(path);
+               actual = Alphaleonis.Win32.Filesystem.Path.GetExtension(path);
 
                if (!skipAssert)
                   Assert.AreEqual(expected, actual);

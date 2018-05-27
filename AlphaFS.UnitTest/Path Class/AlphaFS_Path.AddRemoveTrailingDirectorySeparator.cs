@@ -24,28 +24,26 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Path and is intended to contain all Path Unit Tests.</summary>
    public partial class PathTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      [TestMethod]
-      public void Path_IsPathRooted_LocalAndNetwork_Success()
-      {
-         foreach (var path in UnitTestConstants.InputPaths)
-         {
-            var action = Alphaleonis.Win32.Filesystem.Path.IsPathRooted(path);
-            Console.WriteLine("\tIsPathRooted: [{0}]\t\tInput Path: [{1}]", action, path);
-            Assert.AreEqual(System.IO.Path.IsPathRooted(path), action);
-         }
-      }
-
 
       [TestMethod]
-      public void Path_IsPathRooted_NullOrEmpty_Success()
+      public void AlphaFS_Path_AddRemoveTrailingDirectorySeparator_Success()
       {
-         Assert.AreEqual(System.IO.Path.IsPathRooted(null), Alphaleonis.Win32.Filesystem.Path.IsPathRooted(null));
-         Assert.AreEqual(System.IO.Path.IsPathRooted(string.Empty), Alphaleonis.Win32.Filesystem.Path.IsPathRooted(string.Empty));
+         var aString = "a_string";
+         var backslash = @"\";
+
+
+         aString = Alphaleonis.Win32.Filesystem.Path.AddTrailingDirectorySeparator(aString);
+
+         Assert.IsTrue(aString.EndsWith(backslash));
+
+
+         aString = Alphaleonis.Win32.Filesystem.Path.RemoveTrailingDirectorySeparator(aString);
+
+         Assert.IsFalse(aString.EndsWith(backslash));
       }
    }
 }

@@ -24,20 +24,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Path and is intended to contain all Path Unit Tests.</summary>
    public partial class PathTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
-      public void AlphaFS_Path_GetRelativePath_And_ResolveRelativePath_LocalAndNetwork_Success()
+      public void AlphaFS_Path_GetRelativePathResolveRelativePath_LocalAndNetwork_Success()
       {
-         Path_GetRelativePath(false);
-         Path_GetRelativePath(true);
+         AlphaFS_Path_GetRelativePathResolveRelativePath(false);
+         AlphaFS_Path_GetRelativePathResolveRelativePath(true);
       }
 
 
-      private void Path_GetRelativePath(bool isNetwork)
+      private void AlphaFS_Path_GetRelativePathResolveRelativePath(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();

@@ -24,19 +24,15 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Path and is intended to contain all Path Unit Tests.</summary>
    public partial class PathTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      [TestMethod]
-      public void Path_GetExtension_NullOrEmpty_Success()
-      {
-         Assert.IsNull(System.IO.Path.GetExtension(null));
-         Assert.IsNull(Alphaleonis.Win32.Filesystem.Path.GetExtension(null));
-         Assert.AreEqual("", System.IO.Path.GetExtension(""));
-         Assert.AreEqual("", Alphaleonis.Win32.Filesystem.Path.GetExtension(""));
 
+      [TestMethod]
+      public void Path_GetFileNameWithoutExtension_LocalAndNetwork_Success()
+      {
+         UnitTestConstants.PrintUnitTestHeader();
 
          var pathCnt = 0;
          var errorCnt = 0;
@@ -48,12 +44,12 @@ namespace AlphaFS.UnitTest
             string expected = null;
             string actual = null;
             var skipAssert = false;
-
+            
 
             // System.IO
             try
             {
-               expected = System.IO.Path.GetExtension(path);
+               expected = System.IO.Path.GetFileNameWithoutExtension(path);
             }
             catch (Exception ex)
             {
@@ -67,7 +63,7 @@ namespace AlphaFS.UnitTest
             // AlphaFS
             try
             {
-               actual = Alphaleonis.Win32.Filesystem.Path.GetExtension(path);
+               actual = Alphaleonis.Win32.Filesystem.Path.GetFileNameWithoutExtension(path);
 
                if (!skipAssert)
                   Assert.AreEqual(expected, actual);

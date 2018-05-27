@@ -24,7 +24,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Path and is intended to contain all Path Unit Tests.</summary>
    public partial class PathTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>

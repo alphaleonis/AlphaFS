@@ -24,61 +24,24 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
+   /// <summary>This is a test class for Path and is intended to contain all Path Unit Tests.</summary>
    public partial class PathTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Path_GetFullPath_LocalAndNetwork_Success()
+      public void Path_IsPathRooted_LocalAndNetwork_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader();
-
-         var pathCnt = 0;
-         var errorCnt = 0;
-         
          foreach (var path in UnitTestConstants.InputPaths)
          {
-            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+            var action = Alphaleonis.Win32.Filesystem.Path.IsPathRooted(path);
 
-            string expected = null;
-            string actual = null;
-            var skipAssert = false;
-            
-
-            // System.IO
-            try
-            {
-               expected = System.IO.Path.GetFullPath(path);
-            }
-            catch (Exception ex)
-            {
-               skipAssert = ex is ArgumentException;
-
-               Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\t    System.IO : [{0}]", expected ?? "null");
+            Console.WriteLine("\tIsPathRooted: [{0}]\t\tInput Path: [{1}]", action, path);
 
 
-            // AlphaFS
-            try
-            {
-               actual = Alphaleonis.Win32.Filesystem.Path.GetFullPath(path);
-
-               if (!skipAssert)
-                  Assert.AreEqual(expected, actual);
-            }
-            catch (Exception ex)
-            {
-               errorCnt++;
-
-               Console.WriteLine("\tCaught [AlphaFS]   {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
+            Assert.AreEqual(System.IO.Path.IsPathRooted(path), action);
          }
-         Console.WriteLine();
-
-         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
    }
 }
