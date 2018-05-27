@@ -38,6 +38,14 @@ namespace AlphaFS.UnitTest
       }
 
 
+      [TestMethod]
+      public void AlphaFS_Directory_CompressDecompress_Recursive_LocalAndNetwork_Success()
+      {
+         AlphaFS_Directory_CompressDecompress(false, true);
+         AlphaFS_Directory_CompressDecompress(true, true);
+      }
+
+
       private void AlphaFS_Directory_CompressDecompress(bool isNetwork, bool recursive)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -45,6 +53,7 @@ namespace AlphaFS.UnitTest
          using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
             var folderRoot = tempRoot.RandomDirectoryFullPath;
+
             Console.WriteLine("\nInput Directory Path: [{0}]", folderRoot);
 
 

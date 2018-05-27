@@ -27,7 +27,7 @@ namespace AlphaFS.UnitTest
    public partial class AlphaFS_HostTest
    {
       [TestMethod]
-      public void AlphaFS_Host_ConnectTo_And_DisconnectFrom_Network_Success()
+      public void AlphaFS_Host_ConnectToAndDisconnectFrom_Network_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(true);
          Console.WriteLine();

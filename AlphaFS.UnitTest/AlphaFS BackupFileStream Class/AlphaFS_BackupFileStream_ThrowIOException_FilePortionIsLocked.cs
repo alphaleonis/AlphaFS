@@ -21,44 +21,59 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_FileIdInfoTest
+   public partial class AlphaFS_BackupFileStreamTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_GetFileIdInfo_LocalAndNetwork_Success()
+      public void AlphaFS_BackupFileStream_ThrowIOException_FilePortionIsLocked_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_GetFileIdInfo(false);
-         AlphaFS_Directory_GetFileIdInfo(true);
+         AlphaFS_BackupFileStream_ThrowIOException_FilePortionIsLocked(false);
+         AlphaFS_BackupFileStream_ThrowIOException_FilePortionIsLocked(true);
       }
+      
 
-
-      private void AlphaFS_Directory_GetFileIdInfo(bool isNetwork)
+      private void AlphaFS_BackupFileStream_ThrowIOException_FilePortionIsLocked(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
          using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = tempRoot.RandomDirectoryFullPath;
+            var file = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("\nInput File Path: [{0}]", file);
 
-
-            var dirInfo = new System.IO.DirectoryInfo(folder);
-            dirInfo.Create();
+            System.IO.File.WriteAllText(file, DateTime.Now.ToString(CultureInfo.InvariantCulture));
 
 
-            var fid = Alphaleonis.Win32.Filesystem.Directory.GetFileIdInfo(folder);
+            using (var bfs = new Alphaleonis.Win32.Filesystem.BackupFileStream(file, System.IO.FileMode.Open))
+            {
+               bfs.Lock(0, 10);
 
-            Console.WriteLine("\n\tToString(): {0}", fid);
+               var gotException = false;
+               try
+               {
+                  bfs.Lock(0, 10);
+               }
+               catch (Exception ex)
+               {
+                  var exType = ex.GetType();
 
-            Assert.IsNotNull(fid);
+                  gotException = exType == typeof(System.IO.IOException);
 
+                  Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               }
+
+               Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+               bfs.Unlock(0, 10);
+            }
          }
 
          Console.WriteLine();

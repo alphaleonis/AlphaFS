@@ -144,11 +144,12 @@
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
     <Compile Include="AccessControlTest.cs" />
+    <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_ThrowIOException_SegmentAlreadyUnlocked.cs" />
+    <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_ThrowIOException_FilePortionIsLocked.cs" />
     <Compile Include="AlphaFS_AlternateDataStreamsTest.cs" />
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStreamTest.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_ByHandleFileInfoTest.cs" />
     <Compile Include="AlphaFS Compression\AlphaFS CompressionTest.cs" />
-    <Compile Include="AlphaFS Compression\AlphaFS_Directory.CompressDecompress_Recursive.cs" />
     <Compile Include="AlphaFS Crc Class\AlphaFS_CrcTest.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory_Encryption\AlphaFS_Directory_EncryptDecrypt_Recursive.cs" />
     <Compile Include="AlphaFS_EncryptionTest.cs" />
@@ -418,8 +419,8 @@
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateDomainDfsRoot.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateDfsRoot.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateDfsLinks.cs" />
-    <Compile Include="AlphaFS Host Class\AlphaFS_Host.ConnectTo_And_DisconnectFrom.cs" />
-    <Compile Include="AlphaFS Host Class\AlphaFS_Host.ConnectDrive_And_DisconnectDrive.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host.ConnectToAndDisconnectFrom.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host.ConnectDriveAndDisconnectDrive.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateDrives.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.GetHostShareFromPath.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.DriveConnection.cs" />
@@ -427,7 +428,7 @@
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateOpenResources.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateOpenConnections.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateShares.cs" />
-    <Compile Include="AlphaFS DfsInfo Class\AlphaFS_DfsInfoTest.cs" />
+    <Compile Include="AlphaFS_DfsInfoTest.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_And_Delete.cs" />
     <Compile Include="Directory Class\Directory_GetFileSystemEntries_LongPathPrefix_ShouldReturnCorrectEntries.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_JunctionsLinksTest.cs" />
@@ -449,7 +450,7 @@
     <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
     <Compile Include="UnitTest Utility\StringToByteArray.cs" />
     <Compile Include="UnitTest Utility\PrintUnitTestHeader.cs" />
-    <Compile Include="UnitTest Utility\IsAdmin.cs" />
+    <Compile Include="UnitTest Utility\ElevationAssert.cs" />
     <Compile Include="UnitTest Utility\Dump.cs" />
     <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
     <Compile Include="UnitTest Utility\FileAssert.cs" />

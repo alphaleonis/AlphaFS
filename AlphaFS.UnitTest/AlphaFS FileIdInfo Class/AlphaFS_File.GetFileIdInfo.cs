@@ -33,23 +33,19 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_GetFileIdInfo_LocalAndNetwork_Success()
       {
-         File_GetFileIdInfo(false);
-         File_GetFileIdInfo(true);
+         AlphaFS_File_GetFileIdInfo(false);
+         AlphaFS_File_GetFileIdInfo(true);
       }
 
 
-      private void File_GetFileIdInfo(bool isNetwork)
+      private void AlphaFS_File_GetFileIdInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
+            var file = tempRoot.RandomFileFullPath;
+
             Console.WriteLine("\nInput File Path: [{0}]", file);
 
 

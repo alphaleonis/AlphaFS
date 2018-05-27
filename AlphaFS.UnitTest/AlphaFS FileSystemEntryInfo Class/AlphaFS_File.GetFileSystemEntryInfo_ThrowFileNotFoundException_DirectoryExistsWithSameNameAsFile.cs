@@ -32,12 +32,12 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
       {
-         File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(false);
-         File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(true);
+         AlphaFS_File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(false);
+         AlphaFS_File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(true);
       }
 
 
-      private void File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
+      private void AlphaFS_File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
       {
          var path = UnitTestConstants.SysRoot;
 

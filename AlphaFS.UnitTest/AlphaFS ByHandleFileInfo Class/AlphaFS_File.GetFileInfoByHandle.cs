@@ -33,23 +33,19 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_GetFileInfoByHandle_LocalAndNetwork_Success()
       {
-         File_GetFileInfoByHandle(false);
-         File_GetFileInfoByHandle(true);
+         AlphaFS_File_GetFileInfoByHandle(false);
+         AlphaFS_File_GetFileInfoByHandle(true);
       }
 
 
-      private void File_GetFileInfoByHandle(bool isNetwork)
+      private void AlphaFS_File_GetFileInfoByHandle(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
+            var file = tempRoot.RandomFileFullPath;
+
             Console.WriteLine("\nInput File Path: [{0}]", file);
 
 
@@ -57,15 +53,20 @@ namespace AlphaFS.UnitTest
 
             using (var stream = fileInfo.OpenWrite())
             {
-               var size = new Random().Next(1000, 10000);
+               var size = new Random().Next(0, 999);
+
                stream.Write(new byte[size], 0, size);
 
+
                var bhfi = Alphaleonis.Win32.Filesystem.File.GetFileInfoByHandle(stream.SafeFileHandle);
+
+
                Assert.IsTrue(UnitTestConstants.Dump(bhfi, -18));
-
-
+               
                Assert.AreEqual(fileInfo.CreationTimeUtc, bhfi.CreationTimeUtc);
+
                Assert.AreEqual(fileInfo.LastAccessTimeUtc, bhfi.LastAccessTimeUtc);
+
                Assert.AreEqual(fileInfo.LastWriteTimeUtc, bhfi.LastWriteTimeUtc);
 
                Assert.AreEqual(fileInfo.Length, bhfi.FileSize);

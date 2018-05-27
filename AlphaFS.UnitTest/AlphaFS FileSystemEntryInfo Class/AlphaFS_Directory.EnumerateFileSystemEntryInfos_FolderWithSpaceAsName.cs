@@ -33,29 +33,24 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName_LocalAndNetwork_Success()
       {
-         Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(false);
-         Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(true);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(false);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(true);
       }
 
 
-      private void Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(bool isNetwork)
+      private void AlphaFS_Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.Directory.FullName;
+            var folder = tempRoot.Directory.FullName;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
 
             var maxFolder = 10;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, maxFolder / 2, false, false, false);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, maxFolder / 2, true, true, false);
 
 
             for (var i = 0; i < maxFolder / 2; i++)

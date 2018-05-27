@@ -30,15 +30,12 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateDrives_Network_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-
+         ElevationAssert.IsElevated();
          UnitTestConstants.PrintUnitTestHeader(true);
          
          var host = UnitTestConstants.LocalHost;
 
-         var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true).ToList();
+         var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true).ToArray();
 
          foreach (var driveInfo in drives)
          {
@@ -57,7 +54,7 @@ namespace AlphaFS.UnitTest
          }
 
 
-         Assert.IsTrue(drives.Count > 0, "Nothing is enumerated, but it is expected.");
+         Assert.IsTrue(drives.Length > 0, "Nothing is enumerated, but it is expected.");
 
 
          // \\localhost\C$

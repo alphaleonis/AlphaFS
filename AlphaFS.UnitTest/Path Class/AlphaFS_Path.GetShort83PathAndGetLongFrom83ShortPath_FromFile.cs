@@ -35,8 +35,14 @@ namespace AlphaFS.UnitTest
       {
          var isDisabled = (int) Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem", "NtfsDisable8dot3NameCreation", 0) > 0;
          if (isDisabled)
-            Assert.Inconclusive("NtfsDisable8dot3NameCreation is disabled.");
+         {
+            const string errorMessage = "NtfsDisable8dot3NameCreation is disabled in registry.";
 
+            Console.WriteLine(errorMessage);
+
+            Assert.Inconclusive(errorMessage);
+         }
+         
          AlphaFS_Path_GetShort83PathAndGetLongFrom83ShortPath_FromFile(false);
          AlphaFS_Path_GetShort83PathAndGetLongFrom83ShortPath_FromFile(true);
       }

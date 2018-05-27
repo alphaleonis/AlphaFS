@@ -33,13 +33,10 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Volume_EnumerateVolumeMountPoints_Local_Success()
       {
+         ElevationAssert.IsElevated();
          UnitTestConstants.PrintUnitTestHeader(false);
          Console.WriteLine();
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-
+         
          var cnt = 0;
          Console.WriteLine("Logical Drives\n");
 

@@ -34,12 +34,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Volume_SetVolumeMountPoint_And_DeleteVolumeMountPoint_Local_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-
+         ElevationAssert.IsElevated();
          UnitTestConstants.PrintUnitTestHeader(false);
-
+         
 
          var tempPath = UnitTestConstants.TempFolder;
          

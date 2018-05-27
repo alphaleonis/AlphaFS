@@ -35,8 +35,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_SetAccessControl_LocalAndNetwork_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
+         ElevationAssert.IsElevated();
 
          Directory_SetAccessControl(false);
          Directory_SetAccessControl(true);

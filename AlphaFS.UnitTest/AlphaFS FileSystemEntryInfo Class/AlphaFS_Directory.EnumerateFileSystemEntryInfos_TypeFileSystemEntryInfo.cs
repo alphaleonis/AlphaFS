@@ -32,12 +32,12 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo_LocalAndNetwork_Success()
       {
-         Directory_EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo(false);
-         Directory_EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo(true);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo(false);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo(true);
       }
 
 
-      private void Directory_EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo(bool isNetwork)
+      private void AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 

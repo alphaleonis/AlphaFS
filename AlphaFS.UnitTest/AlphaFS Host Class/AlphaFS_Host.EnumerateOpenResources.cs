@@ -35,16 +35,12 @@ namespace AlphaFS.UnitTest
 
          EnumerateOpenResources(host);
       }
-
-
-
+      
 
       private void EnumerateOpenResources(string host)
       {
+         ElevationAssert.IsElevated();
          UnitTestConstants.PrintUnitTestHeader(false);
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
 
          Console.WriteLine("\nConnected to Host: [{0}]", host);
 
@@ -53,14 +49,22 @@ namespace AlphaFS.UnitTest
          foreach (var openResourceInfo in Alphaleonis.Win32.Network.Host.EnumerateOpenResources(host, null, null, false))
          {
             if (UnitTestConstants.Dump(openResourceInfo, -11))
+            {
                cnt++;
 
-            Console.WriteLine();
+               Console.WriteLine();
+            }
          }
 
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
+         {
+            const string errorMessage = "Nothing is enumerated, but it is expected.";
+
+            Console.WriteLine(errorMessage);
+
+            Assert.Inconclusive(errorMessage);
+         }
 
          Console.WriteLine();
       }

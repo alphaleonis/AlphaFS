@@ -31,10 +31,9 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Host_EnumerateDomainDfsRoot_Network_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(true);
-         Console.WriteLine();
 
+         Console.Write("\nEnumerating DFS Root from user domain: [{0}]\n", Alphaleonis.Win32.Network.NativeMethods.ComputerDomain);
 
-         Console.Write("Enumerating DFS Root from user domain: [{0}]\n", Alphaleonis.Win32.Network.NativeMethods.ComputerDomain);
          var cnt = 0;
          var noDomainConnection = true;
          try
@@ -57,6 +56,7 @@ namespace AlphaFS.UnitTest
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
+
          else if (cnt == 0)
             Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 

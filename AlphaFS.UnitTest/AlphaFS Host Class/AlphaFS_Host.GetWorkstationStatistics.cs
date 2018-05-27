@@ -30,10 +30,6 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-
          var workstationStat = Alphaleonis.Win32.Network.Host.GetWorkstationStatistics();
 
          UnitTestConstants.Dump(workstationStat, -36);

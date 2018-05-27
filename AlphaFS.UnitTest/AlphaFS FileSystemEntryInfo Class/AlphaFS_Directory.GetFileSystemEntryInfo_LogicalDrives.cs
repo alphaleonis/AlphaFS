@@ -33,14 +33,14 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_GetFileSystemEntryInfo_LogicalDrives_Local_Success()
       {
-         Directory_GetFileSystemEntryInfo_LogicalDrives();
+         AlphaFS_Directory_GetFileSystemEntryInfo_LogicalDrives();
       }
 
 
-      private void Directory_GetFileSystemEntryInfo_LogicalDrives()
+      private void AlphaFS_Directory_GetFileSystemEntryInfo_LogicalDrives()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-
+         
 
          var drives = Alphaleonis.Win32.Filesystem.Directory.EnumerateLogicalDrives().ToList();
 

@@ -32,9 +32,6 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Volume_GetVolumeInfo_LocalAndNetwork_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
          Volume_GetVolumeInfo_FromLogicalDrive(false);
          Volume_GetVolumeInfo_FromLogicalDrive(true);
       }

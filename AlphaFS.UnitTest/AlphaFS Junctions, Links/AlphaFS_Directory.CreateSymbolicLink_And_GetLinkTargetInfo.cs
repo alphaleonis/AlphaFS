@@ -32,8 +32,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_CreateSymbolicLink_And_GetLinkTargetInfo_LocalAndNetwork_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
+         ElevationAssert.IsElevated();
 
          Directory_CreateSymbolicLink_And_GetLinkTargetInfo(false);
          Directory_CreateSymbolicLink_And_GetLinkTargetInfo(true);

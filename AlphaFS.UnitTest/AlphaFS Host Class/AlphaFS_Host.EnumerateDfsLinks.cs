@@ -32,7 +32,6 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Host_EnumerateDfsLinks_Network_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(true);
-         Console.WriteLine();
 
 
          var cnt = 0;
@@ -75,6 +74,7 @@ namespace AlphaFS.UnitTest
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
+
          else if (cnt == 0)
             Assert.Inconclusive("Nothing is enumerated, but it is expected.");
 

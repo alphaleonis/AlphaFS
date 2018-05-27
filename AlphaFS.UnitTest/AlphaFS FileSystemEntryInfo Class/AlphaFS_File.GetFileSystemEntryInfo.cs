@@ -32,12 +32,12 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_GetFileSystemEntryInfo_LocalAndNetwork_Success()
       {
-         File_GetFileSystemEntryInfo(false);
-         File_GetFileSystemEntryInfo(true);
+         AlphaFS_File_GetFileSystemEntryInfo(false);
+         AlphaFS_File_GetFileSystemEntryInfo(true);
       }
 
 
-      private void File_GetFileSystemEntryInfo(bool isNetwork)
+      private void AlphaFS_File_GetFileSystemEntryInfo(bool isNetwork)
       {
          if (!System.IO.File.Exists(UnitTestConstants.NotepadExe))
             Assert.Inconclusive("Test ignored because {0} was not found.", UnitTestConstants.NotepadExe);

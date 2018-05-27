@@ -33,9 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_CreateDirectory_WithDirectorySecurity_LocalAndNetwork_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
+         ElevationAssert.IsElevated();
 
          Directory_CreateDirectory_WithDirectorySecurity(false);
          Directory_CreateDirectory_WithDirectorySecurity(true);

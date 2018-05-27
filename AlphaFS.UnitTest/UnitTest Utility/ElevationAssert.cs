@@ -20,20 +20,26 @@
  */
 
 using System;
-using System.Security.Principal;
+using System.Globalization;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public static partial class UnitTestConstants
+   public static class ElevationAssert
    {
-      public static bool IsAdmin()
+      public static void IsElevated()
       {
-         var isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+         if (!Alphaleonis.Win32.Security.ProcessContext.IsElevatedProcess)
+         {
+            var errorMessage = "This unit test must be run elevated.";
 
-         if (!isAdmin)
-            Console.WriteLine("\nThis Unit Test must be run as Administrator.\n");
+            Console.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0}{1}{0}", Environment.NewLine, errorMessage));
 
-         return isAdmin;
+
+            Assert.Inconclusive(errorMessage);
+
+            //throw new AssertFailedException(errorMessage);
+         }
       }
    }
 }

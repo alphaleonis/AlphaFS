@@ -35,11 +35,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
          Console.WriteLine();
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-
+         
          var TempFolder = UnitTestConstants.TempFolder;
 
 

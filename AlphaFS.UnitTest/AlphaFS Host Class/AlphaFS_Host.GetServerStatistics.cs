@@ -30,11 +30,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Host_GetServerStatistics_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-
+         
          var serverStatistics = Alphaleonis.Win32.Network.Host.GetServerStatistics();
 
          UnitTestConstants.Dump(serverStatistics, -22);

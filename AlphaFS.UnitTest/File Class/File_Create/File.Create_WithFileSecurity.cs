@@ -33,9 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void File_Create_WithFileSecurity_LocalAndNetwork_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
+         ElevationAssert.IsElevated();
 
          File_Create_WithFileSecurity(false);
          File_Create_WithFileSecurity(true);

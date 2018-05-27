@@ -32,12 +32,12 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeDirectoryInfo_LocalAndNetwork_Success()
       {
-         Directory_EnumerateFileSystemEntryInfos_TypeDirectoryInfo(false);
-         Directory_EnumerateFileSystemEntryInfos_TypeDirectoryInfo(true);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeDirectoryInfo(false);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeDirectoryInfo(true);
       }
 
 
-      private void Directory_EnumerateFileSystemEntryInfos_TypeDirectoryInfo(bool isNetwork)
+      private void AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeDirectoryInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -55,7 +55,10 @@ namespace AlphaFS.UnitTest
             count++;
          }
 
+
          Assert.IsTrue(count > 0, "Nothing is enumerated, but it is expected.");
+
+         Console.WriteLine();
       }
    }
 }
