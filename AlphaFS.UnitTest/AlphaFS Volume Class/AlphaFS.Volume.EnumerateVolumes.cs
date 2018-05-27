@@ -58,7 +58,7 @@ namespace AlphaFS.UnitTest
 
 
          if (volumeCount == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

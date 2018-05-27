@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo_LocalAndNetwork_Success()
       {
-         ElevationAssert.IsElevated();
+         UnitTestAssert.IsElevated();
 
          File_CreateSymbolicLink_And_GetLinkTargetInfo(false);
          File_CreateSymbolicLink_And_GetLinkTargetInfo(true);

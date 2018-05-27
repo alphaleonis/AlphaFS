@@ -28,6 +28,7 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
       public void AlphaFS_Host_EnumerateOpenConnections_Local_Success()
       {
@@ -51,32 +52,27 @@ namespace AlphaFS.UnitTest
 
       private void EnumerateOpenConnections(string host, string share)
       {
-         //ElevationAssert.IsElevated();
+         //UnitTestAssert.IsElevated(); // In User mode nothing is enumerated.
          UnitTestConstants.PrintUnitTestHeader(false);
          
          Console.WriteLine("\nConnected to Share: [{0}\\{1}]", host, share);
          
 
-         var cnt = 0;
+         var count = 0;
          foreach (var openConnectionInfo in Alphaleonis.Win32.Network.Host.EnumerateOpenConnections(host, share, true))
          {
             if (UnitTestConstants.Dump(openConnectionInfo, -16))
             {
-               cnt++;
+               count++;
 
                Console.WriteLine();
             }
          }
 
 
-         if (cnt == 0)
-         {
-            const string errorMessage = "Nothing is enumerated, but it is expected.";
+         if (count == 0)
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
 
-            Console.WriteLine(errorMessage);
-
-            Assert.Inconclusive(errorMessage);
-         }
 
          Console.WriteLine();
       }

@@ -33,7 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_SetTimestamps_LocalAndNetwork_Success()
       {
-         ElevationAssert.IsElevated();
+         UnitTestAssert.IsElevated();
 
          AlphaFS_Directory_SetTimestamps(false);
          AlphaFS_Directory_SetTimestamps(true);

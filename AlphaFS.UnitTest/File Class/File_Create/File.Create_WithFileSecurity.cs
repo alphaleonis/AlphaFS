@@ -33,7 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void File_Create_WithFileSecurity_LocalAndNetwork_Success()
       {
-         ElevationAssert.IsElevated();
+         UnitTestAssert.IsElevated();
 
          File_Create_WithFileSecurity(false);
          File_Create_WithFileSecurity(true);

@@ -28,6 +28,7 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
       public void AlphaFS_Host_EnumerateShares_Local_Success()
       {
@@ -35,9 +36,6 @@ namespace AlphaFS.UnitTest
 
          EnumerateShares(host);
       }
-
-
-
 
       private void EnumerateShares(string host)
       {
@@ -58,7 +56,8 @@ namespace AlphaFS.UnitTest
          }
 
          if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+
 
          Console.WriteLine();
       }

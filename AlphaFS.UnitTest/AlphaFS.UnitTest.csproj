@@ -450,7 +450,7 @@
     <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
     <Compile Include="UnitTest Utility\StringToByteArray.cs" />
     <Compile Include="UnitTest Utility\PrintUnitTestHeader.cs" />
-    <Compile Include="UnitTest Utility\ElevationAssert.cs" />
+    <Compile Include="UnitTest Utility\UnitTestAssert.cs" />
     <Compile Include="UnitTest Utility\Dump.cs" />
     <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
     <Compile Include="UnitTest Utility\FileAssert.cs" />

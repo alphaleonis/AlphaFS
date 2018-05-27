@@ -25,21 +25,34 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public static class ElevationAssert
+   public static class UnitTestAssert
    {
       public static void IsElevated()
       {
          if (!Alphaleonis.Win32.Security.ProcessContext.IsElevatedProcess)
-         {
-            var errorMessage = "This unit test must be run elevated.";
-
-            Console.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0}{1}{0}", Environment.NewLine, errorMessage));
+            SetInconclusive("This unit test must be run elevated.");
+      }
 
 
-            Assert.Inconclusive(errorMessage);
+      public static void SetInconclusive(string errorMessage)
+      {
+         Console.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0}{1}{0}", Environment.NewLine, errorMessage));
 
-            //throw new AssertFailedException(errorMessage);
-         }
+         Assert.Inconclusive(errorMessage);
+
+         //throw new AssertFailedException(errorMessage);
+      }
+
+
+      public static void SetInconclusiveBecauseEnumerationIsEmpty()
+      {
+         SetInconclusive("The enumeration returned an empty collection, which is not expected.");
+      }
+
+
+      public static void SetInconclusiveBecauseFileNotFound(string fullPath)
+      {
+         SetInconclusive("The file system object was not found: " + fullPath);
       }
    }
 }

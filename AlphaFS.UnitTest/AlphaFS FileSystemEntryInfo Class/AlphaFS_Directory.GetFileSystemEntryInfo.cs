@@ -39,15 +39,9 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Directory_GetFileSystemEntryInfo(bool isNetwork)
       {
-         var path = UnitTestConstants.SysRoot;
-
-         if (!System.IO.Directory.Exists(path))
-            Assert.Inconclusive("Test ignored because {0} was not found.", path);
-
-
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = path;
+         var tempPath = UnitTestConstants.SysRoot;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -59,9 +53,12 @@ namespace AlphaFS.UnitTest
 
 
          Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));
+
          Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Directory) != 0, "The Directory attribute is not found, but is expected.");
+
          Assert.AreEqual(tempPath, fsei.FullPath, "The paths are not equal, but are expected to be.");
          
+
          Console.WriteLine();
       }
    }

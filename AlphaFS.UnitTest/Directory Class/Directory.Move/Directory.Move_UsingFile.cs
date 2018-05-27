@@ -50,9 +50,7 @@ namespace AlphaFS.UnitTest
 
 
          if (!Alphaleonis.Win32.Filesystem.Directory.ExistsDrive(destinationDrivePath, false))
-            Assert.Inconclusive("This unit tests needs an additional drive: [" + destinationDrivePath + "]");
-
-
+            UnitTestAssert.SetInconclusive("This unit tests needs an additional drive: [" + destinationDrivePath + "]");
 
 
          var tempPath = UnitTestConstants.TempFolder;

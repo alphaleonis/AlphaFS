@@ -27,12 +27,16 @@ namespace AlphaFS.UnitTest
 {
    public partial class EnumerationTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_Host_EnumerateDrives_Network_Success()
       {
-         ElevationAssert.IsElevated();
+         //UnitTestAssert.IsElevated(); // In User mode nothing is enumerated.
          UnitTestConstants.PrintUnitTestHeader(true);
          
+
          var host = UnitTestConstants.LocalHost;
 
          var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true).ToArray();

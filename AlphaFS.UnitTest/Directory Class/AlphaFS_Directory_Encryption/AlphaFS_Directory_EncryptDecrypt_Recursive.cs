@@ -63,7 +63,7 @@ namespace AlphaFS.UnitTest
             }
 
             if (cnt == 0)
-               Assert.Inconclusive("Test encrypt: Nothing is enumerated, but it is expected.");
+               UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
 
 
 
@@ -81,7 +81,7 @@ namespace AlphaFS.UnitTest
             }
 
             if (cnt == 0)
-               Assert.Inconclusive("Test decrypt: Nothing is enumerated, but it is expected.");
+               UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
          }
 
          Console.WriteLine();

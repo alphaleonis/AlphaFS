@@ -33,7 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Volume_EnumerateVolumeMountPoints_Local_Success()
       {
-         ElevationAssert.IsElevated();
+         UnitTestAssert.IsElevated();
          UnitTestConstants.PrintUnitTestHeader(false);
          Console.WriteLine();
          
@@ -71,7 +71,7 @@ namespace AlphaFS.UnitTest
 
 
          if (cnt == 0)
-            Assert.Inconclusive("No Volume Mount Points found.");
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

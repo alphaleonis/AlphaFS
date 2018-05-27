@@ -39,15 +39,9 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
       {
-         var path = UnitTestConstants.SysRoot;
-
-         if (!System.IO.Directory.Exists(path))
-            Assert.Inconclusive("Test ignored because {0} was not found.", path);
-
-
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = path;
+         var tempPath = UnitTestConstants.SysRoot;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 

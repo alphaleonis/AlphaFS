@@ -28,18 +28,17 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
       public void AlphaFS_Host_EnumerateOpenResources_Local_Success()
       {
-         var host = UnitTestConstants.LocalHost;
-
-         EnumerateOpenResources(host);
+         EnumerateOpenResources(UnitTestConstants.LocalHost);
       }
       
 
       private void EnumerateOpenResources(string host)
       {
-         ElevationAssert.IsElevated();
+         UnitTestAssert.IsElevated();
          UnitTestConstants.PrintUnitTestHeader(false);
 
          Console.WriteLine("\nConnected to Host: [{0}]", host);
@@ -58,13 +57,7 @@ namespace AlphaFS.UnitTest
 
 
          if (cnt == 0)
-         {
-            const string errorMessage = "Nothing is enumerated, but it is expected.";
-
-            Console.WriteLine(errorMessage);
-
-            Assert.Inconclusive(errorMessage);
-         }
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
 
          Console.WriteLine();
       }

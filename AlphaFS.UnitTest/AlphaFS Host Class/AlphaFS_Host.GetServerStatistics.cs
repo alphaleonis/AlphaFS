@@ -20,12 +20,14 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AlphaFS.UnitTest
 {
    public partial class AlphaFS_HostTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_Host_GetServerStatistics_Local_Success()
       {

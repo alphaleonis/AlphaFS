@@ -28,6 +28,9 @@ namespace AlphaFS.UnitTest
 {
    public partial class EnumerationTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_Host_EnumerateNetworks_Local_Success()
       {
@@ -57,7 +60,7 @@ namespace AlphaFS.UnitTest
 
 
          if (networkCount == 0)
-            Assert.Inconclusive("No networks enumerated, but it is expected.");
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

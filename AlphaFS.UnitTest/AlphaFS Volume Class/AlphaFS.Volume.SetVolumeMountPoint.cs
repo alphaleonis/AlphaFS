@@ -34,7 +34,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Volume_SetVolumeMountPoint_And_DeleteVolumeMountPoint_Local_Success()
       {
-         ElevationAssert.IsElevated();
+         UnitTestAssert.IsElevated();
          UnitTestConstants.PrintUnitTestHeader(false);
          
 

@@ -34,7 +34,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_DirectoryInfo_MoveTo_DelayUntilReboot_Local_Success()
       {
-         ElevationAssert.IsElevated();
+         UnitTestAssert.IsElevated();
 
          AlphaFS_DirectoryInfo_MoveTo_DelayUntilReboot(false);
       }

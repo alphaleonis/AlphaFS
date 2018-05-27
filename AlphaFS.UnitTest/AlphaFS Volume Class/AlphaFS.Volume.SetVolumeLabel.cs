@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Volume_SetVolumeLabel_Local_Success()
       {
-         ElevationAssert.IsElevated();
+         UnitTestAssert.IsElevated();
          UnitTestConstants.PrintUnitTestHeader(false);
          Console.WriteLine();
          
