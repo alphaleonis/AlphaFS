@@ -19,55 +19,36 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
+using System;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_AppendTest
+   public partial class FileTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
-      public void File_AppendAllLines_ThenReadAllLinesShouldReturnSameCollection_LocalAndNetwork_Succes()
+      public void File_ReadAllText_LocalAndNetwork_Success()
       {
-         File_AppendAllLines_ThenReadAllLinesShouldReturnSameCollection(false);
-         File_AppendAllLines_ThenReadAllLinesShouldReturnSameCollection(true);
+         File_ReadAllText(false);
+         File_ReadAllText(true);
       }
 
 
-      private void File_AppendAllLines_ThenReadAllLinesShouldReturnSameCollection(bool isNetwork)
+      private void File_ReadAllText(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
+            var file = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("\nInput File Path: [{0}]", file);
 
-            var sample = new[] {UnitTestConstants.StreamArrayContent[0], UnitTestConstants.StreamArrayContent[1]};
-
-
-            Alphaleonis.Win32.Filesystem.File.AppendAllLines(file, sample);
+            System.IO.File.WriteAllLines(file, new[] {DateTime.Now.ToString(), DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString()});
 
 
-            var collection = System.IO.File.ReadAllLines(file);
-
-            for (int i = 0, l = collection.Length; i < l; i++)
-               Console.WriteLine("\n\t" + collection[i]);
-
-
-            CollectionAssert.AreEqual(sample, collection);
+            Assert.AreEqual(System.IO.File.ReadAllText(file), Alphaleonis.Win32.Filesystem.File.ReadAllText(file));
          }
 
          Console.WriteLine();

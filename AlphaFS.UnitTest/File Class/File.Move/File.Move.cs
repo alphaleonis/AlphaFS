@@ -64,7 +64,7 @@ namespace AlphaFS.UnitTest
 
             var moveResult = Alphaleonis.Win32.Filesystem.File.Move(srcFile.FullName, dstFile, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
 
-            UnitTestConstants.Dump(moveResult, -16);
+            UnitTestConstants.Dump(moveResult, -18);
 
 
             // Test against moveResult results.

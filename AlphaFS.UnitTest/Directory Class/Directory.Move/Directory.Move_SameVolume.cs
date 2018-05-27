@@ -72,7 +72,7 @@ namespace AlphaFS.UnitTest
 
             var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFolder.FullName, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
 
-            UnitTestConstants.Dump(moveResult, -16);
+            UnitTestConstants.Dump(moveResult, -18);
 
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(dstFolder.FullName, dirEnumOptions);
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");

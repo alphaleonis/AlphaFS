@@ -81,7 +81,7 @@ namespace AlphaFS.UnitTest
 
                var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.GetFiles(folder, searchPattern, System.IO.SearchOption.AllDirectories);
 
-               CollectionAssert.AreEquivalent(systemIOCollection, alphaFSCollection);
+               CollectionAssert.AreEqual(systemIOCollection, alphaFSCollection);
             }
          }
 

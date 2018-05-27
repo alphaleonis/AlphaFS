@@ -61,7 +61,7 @@ namespace AlphaFS.UnitTest
 
             // Since System.IO does not have a EnumerateFileIdBothDirectoryInfo method, we can only compare the collection of folder names.
 
-            CollectionAssert.AreEquivalent(sysIOCollection, alphaFSCollection.Select(item => item.FileName).ToArray());
+            CollectionAssert.AreEqual(sysIOCollection, alphaFSCollection.Select(item => item.FileName).ToArray());
          }
 
          Console.WriteLine();

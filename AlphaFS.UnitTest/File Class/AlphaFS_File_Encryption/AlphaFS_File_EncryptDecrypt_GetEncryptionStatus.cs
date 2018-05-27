@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
          using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
             var file = tempRoot.RandomFileFullPath;
-            System.IO.File.WriteAllLines(file, new[] {DateTime.Now.ToString(), DateTime.Now.ToLongDateString()});
+            System.IO.File.WriteAllLines(file, new[] {DateTime.Now.ToString(), DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString()});
 
             Console.WriteLine("\nInput File Path: [{0}]", file);
 

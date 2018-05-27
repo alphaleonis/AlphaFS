@@ -62,7 +62,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\t" + collection[i]);
             Console.WriteLine();
 
-            CollectionAssert.AreEquivalent(enabled, collection);
+            CollectionAssert.AreEqual(enabled, collection);
 
 
 
@@ -77,7 +77,7 @@ namespace AlphaFS.UnitTest
             for (int i = 0, l = collection.Length; i < l; i++)
                Console.WriteLine("\t" + collection[i]);
 
-            CollectionAssert.AreEquivalent(disabled, collection);
+            CollectionAssert.AreEqual(disabled, collection);
          }
 
          Console.WriteLine();

@@ -60,7 +60,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\tAlphaFS   directories enumerated: {0:N0}", alphaFSCollection.Length);
 
 
-            CollectionAssert.AreEquivalent(sysIOCollection, alphaFSCollection);
+            CollectionAssert.AreEqual(sysIOCollection, alphaFSCollection);
          }
 
          Console.WriteLine();

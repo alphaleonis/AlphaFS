@@ -43,22 +43,17 @@ namespace AlphaFS.UnitTest
          
          using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
          {
-            var file1 = tempRoot.RandomFileFullPath;
-            var file2 = tempRoot.RandomFileFullPath;
+            var file = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("\nInput File1 Path: [{0}]", file1);
-            Console.WriteLine("\nInput File2 Path: [{0}]", file2);
+            Console.WriteLine("\nInput File Path: [{0}]", file);
+            
+            var bytes = Encoding.UTF8.GetBytes(new string('X', new Random(DateTime.Now.Millisecond).Next(0, 999)));
 
 
-            var bytes = Encoding.UTF8.GetBytes(new string('X', new Random(DateTime.Now.Millisecond).Next(10, 1000)));
-
-            System.IO.File.WriteAllBytes(file1, bytes);
+            Alphaleonis.Win32.Filesystem.File.WriteAllBytes(file, bytes);
             
 
-            Alphaleonis.Win32.Filesystem.File.WriteAllBytes(file2, bytes);
-            
-
-            CollectionAssert.AreEquivalent(System.IO.File.ReadAllBytes(file1), System.IO.File.ReadAllBytes(file2));
+            CollectionAssert.AreEqual(bytes, System.IO.File.ReadAllBytes(file));
          }
 
          Console.WriteLine();

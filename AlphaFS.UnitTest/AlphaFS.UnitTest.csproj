@@ -264,6 +264,11 @@
     <Compile Include="Directory Class\Directory_Enumeration\Directory.EnumerateFiles.cs" />
     <Compile Include="Directory Class\Directory_Enumeration\Directory.EnumerateFileSystemEntries.cs" />
     <Compile Include="Directory Class\Directory_Enumeration\Directory.EnumerateDirectories.cs" />
+    <Compile Include="File Class\File_Read\File.ReadAllText.cs" />
+    <Compile Include="File Class\File_Read\File.ReadLines.cs" />
+    <Compile Include="File Class\File_Read\File.ReadAllLines.cs" />
+    <Compile Include="File Class\File_Write\File.WriteAllText.cs" />
+    <Compile Include="File Class\File_Write\File.WriteAllLines.cs" />
     <Compile Include="File Class\File_Write\File.WriteAllBytes.cs" />
     <Compile Include="File Class\File_Read\File.ReadAllBytes.cs" />
     <Compile Include="File Class\AlphaFS_File_Encryption\AlphaFS_File_EncryptDecrypt_GetEncryptionStatus.cs" />
@@ -329,8 +334,8 @@
     <Compile Include="File Class\AlphaFS_File_Lock\AlphaFS_File.GetProcessForFileLock_NoLockReturnsNull.cs" />
     <Compile Include="File Class\AlphaFS_File_Lock\AlphaFS_File.GetProcessForFileLock.cs" />
     <Compile Include="File Class\AlphaFS_File_Lock\AlphaFS_File.LockTest.cs" />
-    <Compile Include="File Class\File.Create\File.CreateTest.cs" />
-    <Compile Include="File Class\File.Create\File.CreateText_ThenReadAllLinesShouldReturnSameCollection.cs" />
+    <Compile Include="File Class\File_Create\File.CreateTest.cs" />
+    <Compile Include="File Class\File_Create\File.CreateText_ThenReadAllLinesShouldReturnSameCollection.cs" />
     <Compile Include="File Class\File_Append\File.AppendText_ThenReadAllLinesShouldReturnSameCollection.cs" />
     <Compile Include="File Class\File_Append\File.AppendAllText_ThenReadAllLinesShouldReturnSameCollection.cs" />
     <Compile Include="File Class\File_Append\File.AppendAllLines_ThenReadAllLinesShouldReturnSameCollection.cs" />
@@ -344,7 +349,7 @@
     <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive.cs" />
     <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_ThrowAlreadyExistsException_DestinationFileAlreadyExists.cs" />
     <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_Overwrite_DestinationFileAlreadyExists.cs" />
-    <Compile Include="File Class\File.Create\File.Create_WithFileSecurity.cs" />
+    <Compile Include="File Class\File_Create\File.Create_WithFileSecurity.cs" />
     <Compile Include="File Class\File.Exists\AlphaFS_File.Exists_WithLeadingOrTrailingSpace.cs" />
     <Compile Include="File Class\File.Move\File.Move_ThrowDirectoryNotFoundException_NonExistingSourceDirectory.cs" />
     <Compile Include="File Class\File.Move\File.Move_ThrowFileNotFoundException_NonExistingSourceFile.cs" />
@@ -352,7 +357,7 @@
     <Compile Include="File Class\File.Move\AlphaFS_File.Move_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive.cs" />
     <Compile Include="File Class\File.Move\AlphaFS_File.Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists.cs" />
     <Compile Include="File Class\File.Move\File.Move.cs" />
-    <Compile Include="File Class\File.Create\File.CreateText.cs" />
+    <Compile Include="File Class\File_Create\File.CreateText.cs" />
     <Compile Include="File Class\File.Open\File.OpenRead_OpenReadTwiceShouldNotLock.cs" />
     <Compile Include="File Class\File.Open\File.OpenWrite.cs" />
     <Compile Include="File Class\File.Open\File.OpenText.cs" />
@@ -374,7 +379,7 @@
     <Compile Include="AlphaFS Compression\AlphaFS_File.GetCompressedSize.cs" />
     <Compile Include="File Class\AlphaFS_File.GetSize.cs" />
     <Compile Include="File Class\AlphaFS_File.EnumerateAlternateDataStreams.cs" />
-    <Compile Include="File Class\File.Create\File.Create.cs" />
+    <Compile Include="File Class\File_Create\File.Create.cs" />
     <Compile Include="File Class\File.Open\File_Open_Append.cs" />
     <Compile Include="File Class\AlphaFS_File_Encryption\AlphaFS_File.ExportImportEncryptedFileRaw.cs" />
     <Compile Include="File Class\File.Exists\File.Exists.cs" />
@@ -425,7 +430,6 @@
     <Compile Include="UnitTest Utility\FileAssert.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.UrlIs.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_ExistingDirectory.cs" />
-    <Compile Include="File Class\File_Read\FileTest.cs" />
     <Compile Include="Path Class\PathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTest Utility\CreateDirectoriesAndFiles.cs" />

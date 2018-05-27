@@ -26,20 +26,20 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_AppendTest
+   public partial class File_CreateTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void File_AppendAllLines_ThenReadAllLinesShouldReturnSameCollection_LocalAndNetwork_Succes()
+      public void File_CreateText_ThenReadAllLinesShouldReturnSameCollection_LocalAndNetwork_Succes()
       {
-         File_AppendAllLines_ThenReadAllLinesShouldReturnSameCollection(false);
-         File_AppendAllLines_ThenReadAllLinesShouldReturnSameCollection(true);
+         File_CreateText_ThenReadAllLinesShouldReturnSameCollection(false);
+         File_CreateText_ThenReadAllLinesShouldReturnSameCollection(true);
       }
 
 
-      private void File_AppendAllLines_ThenReadAllLinesShouldReturnSameCollection(bool isNetwork)
+      private void File_CreateText_ThenReadAllLinesShouldReturnSameCollection(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          Console.WriteLine();
@@ -58,7 +58,11 @@ namespace AlphaFS.UnitTest
             var sample = new[] {UnitTestConstants.StreamArrayContent[0], UnitTestConstants.StreamArrayContent[1]};
 
 
-            Alphaleonis.Win32.Filesystem.File.AppendAllLines(file, sample);
+            using (var sw = Alphaleonis.Win32.Filesystem.File.CreateText(file))
+            {
+               sw.WriteLine(sample[0]);
+               sw.WriteLine(sample[1]);
+            }
 
 
             var collection = System.IO.File.ReadAllLines(file);
