@@ -24,130 +24,10 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Path and is intended to contain all Path Unit Tests.</summary>
    public partial class PathTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      [TestMethod]
-      public void Path_GetFullPath_CompareWithSystemIO_Success()
-      {
-         Console.WriteLine("Path.GetFullPath()");
-
-         var pathCnt = 0;
-         var errorCnt = 0;
-         var skipAssert = false;
-
-
-         foreach (var path in UnitTestConstants.InputPaths)
-         {
-            string expected = null;
-            string actual = null;
-            skipAssert = false;
-
-            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
-
-            // System.IO
-            try
-            {
-               expected = System.IO.Path.GetFullPath(path);
-            }
-            catch (Exception ex)
-            {
-               skipAssert = ex is ArgumentException;
-
-               Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\t   System.IO : [{0}]", expected ?? "NULL");
-
-
-            // AlphaFS
-            try
-            {
-               actual = Alphaleonis.Win32.Filesystem.Path.GetFullPath(path);
-
-               if (!skipAssert)
-                  Assert.AreEqual(expected, actual);
-            }
-            catch (Exception ex)
-            {
-               errorCnt++;
-
-               Console.WriteLine("\tCaught [AlphaFS]   {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\t   AlphaFS   : [{0}]", actual ?? "NULL");
-         }
-         Console.WriteLine();
-
-         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
-      }
-
-
-      [TestMethod]
-      public void Path_GetFullPath_ThrowArgumentException_InvalidPath1_Success()
-      {
-         var gotException = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\?test.txt");
-            //Path.GetFullPath(UnitTestConstants.SysDrive + @"\*test.txt");
-            //Path.GetFullPath(UnitTestConstants.SysDrive + @"\\test.txt");
-            //Path.GetFullPath(UnitTestConstants.SysDrive + @"\/test.txt");
-         }
-         catch (Exception ex)
-         {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(ArgumentException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-         }
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-      }
-
-
-      [TestMethod]
-      public void Path_GetFullPath_ThrowArgumentException_InvalidPath2_Success()
-      {
-         var gotException = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Path.GetFullPath(@"\\\\.txt");
-         }
-         catch (Exception ex)
-         {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(ArgumentException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-         }
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-      }
-
-
-      [TestMethod]
-      public void Path_GetFullPath_ThrowNotSupportedException_Success()
-      {
-         var gotException = false;
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt");
-         }
-         catch (Exception ex)
-         {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(NotSupportedException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-         }
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-      }
-      
 
       [TestMethod]
       public void AlphaFS_Path_GetFullPath_WithTrailingDotOrSpace_LocalAndNetwork_Success()
@@ -155,8 +35,6 @@ namespace AlphaFS.UnitTest
          Path_GetFullPath_WithTrailingDotOrSpace(false);
          Path_GetFullPath_WithTrailingDotOrSpace(true);
       }
-      
-
 
 
       private void Path_GetFullPath_WithTrailingDotOrSpace(bool isNetwork)

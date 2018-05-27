@@ -26,9 +26,13 @@ namespace AlphaFS.UnitTest
    /// <summary>Containts static variables, used by unit tests.</summary>
    public static partial class UnitTestConstants
    {
-      public static void PrintUnitTestHeader(bool isNetwork)
+      public static void PrintUnitTestHeader(bool? isNetwork = null)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isNetwork ? "NETWORK" : "LOCAL");
+         if (null == isNetwork)
+            Console.WriteLine("\n=== TEST LOCAL & NETWORK ===");
+
+         else
+            Console.WriteLine("\n=== TEST {0} ===", (bool) isNetwork ? "NETWORK" : "LOCAL");
       }
    }
 }

@@ -38,16 +38,14 @@ namespace AlphaFS.UnitTest
 
       private void Directory_GetDirectoryRoot()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
+         UnitTestConstants.PrintUnitTestHeader();
          
          var pathCnt = 0;
          var errorCnt = 0;
-
-
+         
          foreach (var path in UnitTestConstants.InputPaths)
          {
             Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
-
 
             string expected = null;
             string actual = null;

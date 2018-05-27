@@ -84,7 +84,6 @@ namespace AlphaFS.UnitTest
 
             using (var stream = System.IO.File.OpenRead(file))
             {
-               UnitTestConstants.StopWatcher(true);
                var bhfi = Alphaleonis.Win32.Filesystem.File.GetFileInfoByHandle(stream.SafeFileHandle);
 
                Assert.AreEqual(numCreate + 1, bhfi.NumberOfLinks);

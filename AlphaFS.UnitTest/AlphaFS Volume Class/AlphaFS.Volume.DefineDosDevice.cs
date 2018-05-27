@@ -104,7 +104,6 @@ namespace AlphaFS.UnitTest
          try
          {
             drive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter(true), Alphaleonis.Win32.Filesystem.Path.VolumeSeparatorChar, Alphaleonis.Win32.Filesystem.Path.DirectorySeparatorChar);
-            UnitTestConstants.StopWatcher(true);
 
             // Create Symbolic Link.
             var createSymbolicLink = false;

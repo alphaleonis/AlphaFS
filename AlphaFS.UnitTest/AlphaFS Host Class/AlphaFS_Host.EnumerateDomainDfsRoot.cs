@@ -37,7 +37,6 @@ namespace AlphaFS.UnitTest
          Console.Write("Enumerating DFS Root from user domain: [{0}]\n", Alphaleonis.Win32.Network.NativeMethods.ComputerDomain);
          var cnt = 0;
          var noDomainConnection = true;
-         UnitTestConstants.StopWatcher(true);
          try
          {
             foreach (var dfsNamespace in Alphaleonis.Win32.Network.Host.EnumerateDomainDfsRoot())

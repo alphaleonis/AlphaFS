@@ -30,17 +30,19 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Path_GetDirectoryName_LocalAndNetwork_Success()
       {
+         UnitTestConstants.PrintUnitTestHeader();
+
          var pathCnt = 0;
          var errorCnt = 0;
-         var skipAssert = false;
 
-         UnitTestConstants.StopWatcher(true);
          foreach (var path in UnitTestConstants.InputPaths)
          {
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
             string expected = null;
             string actual = null;
-
-            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+            var skipAssert = false;
+            
 
             // System.IO
             try
@@ -53,7 +55,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\t   System.IO : [{0}]", expected ?? "null");
+            Console.WriteLine("\t    System.IO : [{0}]", expected ?? "null");
 
 
             // AlphaFS
@@ -70,9 +72,8 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\t   AlphaFS   : [{0}]", actual ?? "null");
+            Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
          }
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
