@@ -19,31 +19,36 @@
  *  THE SOFTWARE. 
  */
 
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
-namespace Alphaleonis.Win32.Network
+namespace AlphaFS.UnitTest
 {
-   internal static partial class NativeMethods
+   public partial class PathTest
    {
-      ///<summary>Contains path and name information for a network resource.</summary>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct REMOTE_NAME_INFO
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
+      [TestMethod]
+      public void AlphaFS_Path_GetMappedConnectionName()
       {
-         /// <summary>Identifies a network resource.</summary>
-         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-         [MarshalAs(UnmanagedType.LPWStr)]
-         public readonly string lpUniversalName;
+         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder);
 
-         /// <summary>The name of a network connection.</summary>
-         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-         [MarshalAs(UnmanagedType.LPWStr)]
-         public readonly string lpConnectionName;
+         using (var connection = new Alphaleonis.Win32.Network.DriveConnection(share))
+         {
+            var driveName = connection.LocalName;
 
-         /// <summary>The remaing path.</summary>
-         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-         [MarshalAs(UnmanagedType.LPWStr)]
-         public readonly string lpRemainingPath;
+            Console.WriteLine("Mapped drive letter [{0}] to [{1}]", driveName, share);
+
+            UnitTestConstants.Dump(connection, -9);
+            
+
+            var connectionName = Alphaleonis.Win32.Filesystem.Path.GetMappedConnectionName(driveName);
+
+            Console.WriteLine("\n\tGetMappedConnectionName: [{0}]", connectionName);
+
+            Assert.AreEqual(share, connectionName);
+         }
       }
    }
 }

@@ -30,54 +30,47 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_Combine_LocalAndNetwork_Success()
+      public void AlphaFS_Path_GetRegularPath_LocalAndNetwork_Success()
+      {
+         AlphaFS_Path_GetRegularPath();
+      }
+
+
+      private void AlphaFS_Path_GetRegularPath()
       {
          UnitTestConstants.PrintUnitTestHeader();
 
          var pathCnt = 0;
          var errorCnt = 0;
 
-         foreach (var path1 in UnitTestConstants.InputPaths)
+         foreach (var path in UnitTestConstants.InputPaths)
          {
-            foreach (var path2 in UnitTestConstants.InputPaths)
+            string actual = null;
+
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
+            // AlphaFS
+            try
             {
-               string expected = null;
-               string actual = null;
+               actual = Alphaleonis.Win32.Filesystem.Path.GetRegularPath(path);
 
-               Console.WriteLine("\n#{0:000}\tInput Path: [{1}]\tCombine with: [{2}]", ++pathCnt, path1, path2);
+               if (actual.StartsWith(Alphaleonis.Win32.Filesystem.Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||
+                   actual.StartsWith(Alphaleonis.Win32.Filesystem.Path.VolumePrefix, StringComparison.OrdinalIgnoreCase))
+                  continue;
 
-
-               // System.IO
-               try
-               {
-                  expected = System.IO.Path.Combine(path1, path2);
-               }
-               catch (Exception ex)
-               {
-                  Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               Console.WriteLine("\t    System.IO : [{0}]", expected ?? "null");
-
-
-               // AlphaFS
-               try
-               {
-                  actual = Alphaleonis.Win32.Filesystem.Path.Combine(path1, path2);
-
-                  Assert.AreEqual(expected, actual);
-               }
-               catch (Exception ex)
-               {
-                  errorCnt++;
-
-                  Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
+               Assert.IsFalse(actual.StartsWith(Alphaleonis.Win32.Filesystem.Path.LongPathPrefix, StringComparison.OrdinalIgnoreCase));
             }
+            catch (Exception ex)
+            {
+               errorCnt++;
+
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
          }
 
 
-         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
+         Assert.AreEqual(0, errorCnt, "No errors were expected.");
       }
    }
 }

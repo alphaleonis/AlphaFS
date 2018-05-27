@@ -317,6 +317,11 @@
     <Compile Include="Directory Class\Directory_AccessControl\Directory.SetAccessControl.cs" />
     <Compile Include="Path Class\AlphaFS_Path.GetFinalPathNameByHandle\AlphaFS_Path.GetFinalPathNameByHandle_ToGetFileStreamName.cs" />
     <Compile Include="Path Class\AlphaFS_Path.GetFinalPathNameByHandle\AlphaFS_Path.GetFinalPathNameByHandle.cs" />
+    <Compile Include="Path Class\AlphaFS_Path.IsLongPath.cs" />
+    <Compile Include="Path Class\AlphaFS_Path.GetRegularPath.cs" />
+    <Compile Include="Path Class\AlphaFS_Path_GetMappedName\AlphaFS_Path.GetMappedUncName.cs" />
+    <Compile Include="Path Class\AlphaFS_Path_GetMappedName\AlphaFS_Path.GetMappedConnectionName.cs" />
+    <Compile Include="Path Class\AlphaFS_Path.GetShort83PathAndGetLongFrom83ShortPath_FromFile.cs" />
     <Compile Include="Path Class\Path.Combine.cs" />
     <Compile Include="Path Class\AlphaFS_Path.AddRemoveTrailingDirectorySeparator.cs" />
     <Compile Include="Path Class\AlphaFS_Path.GetLongPath.cs" />
@@ -450,7 +455,7 @@
     <Compile Include="UnitTest Utility\FileAssert.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.UrlIs.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_ExistingDirectory.cs" />
-    <Compile Include="Path Class\PathTest.cs" />
+    <Compile Include="Path Class\AlphaFS_Path_IsUncPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTest Utility\CreateDirectoriesAndFiles.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS.Volume.SetVolumeMountPoint.cs" />

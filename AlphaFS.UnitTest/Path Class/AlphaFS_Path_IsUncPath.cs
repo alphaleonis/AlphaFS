@@ -24,60 +24,55 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
+   /// <summary>This is a test class for Path and is intended to contain all Path Unit Tests.</summary>
+   [TestClass]
    public partial class PathTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
       [TestMethod]
-      public void Path_Combine_LocalAndNetwork_Success()
+      public void AlphaFS_Path_IsUncPath()
       {
          UnitTestConstants.PrintUnitTestHeader();
 
          var pathCnt = 0;
          var errorCnt = 0;
+         var uncPathCnt = 0;
 
-         foreach (var path1 in UnitTestConstants.InputPaths)
+         foreach (var path in UnitTestConstants.InputPaths)
          {
-            foreach (var path2 in UnitTestConstants.InputPaths)
+            var actual = false;
+
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
+            // AlphaFS
+            try
             {
-               string expected = null;
-               string actual = null;
+               var expected = path.StartsWith(Alphaleonis.Win32.Filesystem.Path.UncPrefix, StringComparison.OrdinalIgnoreCase);
 
-               Console.WriteLine("\n#{0:000}\tInput Path: [{1}]\tCombine with: [{2}]", ++pathCnt, path1, path2);
+               actual = Alphaleonis.Win32.Filesystem.Path.IsUncPath(path);
 
-
-               // System.IO
-               try
-               {
-                  expected = System.IO.Path.Combine(path1, path2);
-               }
-               catch (Exception ex)
-               {
-                  Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               Console.WriteLine("\t    System.IO : [{0}]", expected ?? "null");
-
-
-               // AlphaFS
-               try
-               {
-                  actual = Alphaleonis.Win32.Filesystem.Path.Combine(path1, path2);
+               if (!(!path.StartsWith(Alphaleonis.Win32.Filesystem.Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||
+                     !path.StartsWith(Alphaleonis.Win32.Filesystem.Path.VolumePrefix, StringComparison.OrdinalIgnoreCase)))
 
                   Assert.AreEqual(expected, actual);
-               }
-               catch (Exception ex)
-               {
-                  errorCnt++;
 
-                  Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
+               if (actual)
+                  uncPathCnt++;
             }
+            catch (Exception ex)
+            {
+               errorCnt++;
+
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual);
          }
 
 
-         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
+         // Hand counted 32 True's.
+         Assert.AreEqual(32, uncPathCnt, "Number of UNC paths do not match.");
+
+
+         Assert.AreEqual(0, errorCnt, "No errors were expected.");
       }
    }
 }
