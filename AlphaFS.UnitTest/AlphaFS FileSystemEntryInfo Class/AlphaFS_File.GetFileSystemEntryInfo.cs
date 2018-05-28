@@ -42,7 +42,7 @@ namespace AlphaFS.UnitTest
          var path = UnitTestConstants.NotepadExe;
 
          if (!System.IO.File.Exists(path))
-            UnitTestAssert.InconclusiveBecauseFileNotFound(path);
+            UnitTestAssert.SetInconclusiveBecauseFileNotFound(path);
 
 
          UnitTestConstants.PrintUnitTestHeader(isNetwork);

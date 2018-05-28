@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -32,7 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_SetTimestamps_LocalAndNetwork_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
+         UnitTestAssert.IsElevated();
 
          AlphaFS_Directory_SetTimestamps(false);
          AlphaFS_Directory_SetTimestamps(true);

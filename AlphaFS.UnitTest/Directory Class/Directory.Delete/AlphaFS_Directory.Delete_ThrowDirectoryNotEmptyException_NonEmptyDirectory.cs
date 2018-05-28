@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -52,7 +53,7 @@ namespace AlphaFS.UnitTest
             using (System.IO.File.Create(System.IO.Path.Combine(folder, file))) { }
 
 
-            Exception exception = null;
+            var gotException = false;
 
             try
             {
@@ -61,11 +62,15 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               exception = ex;
-            }
-            
+               var exType = ex.GetType();
 
-            ExceptionAssert.DirectoryNotEmptyException(exception);
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            }
+
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
          
          Console.WriteLine();

@@ -21,6 +21,7 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -43,7 +44,7 @@ namespace AlphaFS.UnitTest
             using (System.IO.File.CreateText(junction)) { }
 
 
-            Exception exception = null;
+            var gotException = false;
 
             try
             {
@@ -51,11 +52,14 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               exception = ex;
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(System.IO.IOException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
 
-
-            ExceptionAssert.IOException(exception);
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
       }
    }

@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -32,7 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void File_Create_WithFileSecurity_LocalAndNetwork_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
+         UnitTestAssert.IsElevated();
 
          File_Create_WithFileSecurity(false);
          File_Create_WithFileSecurity(true);

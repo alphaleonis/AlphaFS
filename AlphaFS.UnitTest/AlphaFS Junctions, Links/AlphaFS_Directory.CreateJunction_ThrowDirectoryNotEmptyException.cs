@@ -21,6 +21,7 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -44,21 +45,23 @@ namespace AlphaFS.UnitTest
 
             // Create an extra folder to trigger the DirectoryNotEmptyException.
             dirInfo.CreateSubdirectory("Extra Folder");
+            
 
-
-            Exception exception = null;
-
+            var gotException = false;
             try
             {
                Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName);
             }
             catch (Exception ex)
             {
-               exception = ex;
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
 
-
-            ExceptionAssert.DirectoryNotEmptyException(exception);
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
       }
    }

@@ -44,7 +44,7 @@ namespace AlphaFS.UnitTest
          Alphaleonis.Win32.Network.Host.ConnectTo(share);
 
 
-         Console.WriteLine("\nDisconnect Computer.");
+         Console.WriteLine("\nDisconnect from Computer: [{0}]", share);
 
          Alphaleonis.Win32.Network.Host.DisconnectFrom(share);
       }

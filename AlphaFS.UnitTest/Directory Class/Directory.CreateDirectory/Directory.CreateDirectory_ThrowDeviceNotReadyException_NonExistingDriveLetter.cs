@@ -47,27 +47,28 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
-         Exception exception = null;
-
+         var gotException = false;
          try
          {
             Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder);
          }
          catch (Exception ex)
          {
-            exception = ex;
+            var exType = ex.GetType();
+
+            // Local: DirectoryNotFoundException.
+            // UNC: IOException or DeviceNotReadyException.
+            // The latter occurs when a removable drive is already removed but there's still a cached reference.
+
+            gotException = exType == typeof(System.IO.IOException);
+
+            if (!gotException && isNetwork)
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 
-
-         // Local: IOException.
-         // UNC: IOException or DeviceNotReadyException.
-         // The latter occurs when a removable drive is already removed but there's still a cached reference.
-
-         //if (isNetwork)
-         //   ExceptionAssert.DeviceNotReadyException(exception);
-         //else
-            ExceptionAssert.IOException(exception);
-
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Console.WriteLine();
       }

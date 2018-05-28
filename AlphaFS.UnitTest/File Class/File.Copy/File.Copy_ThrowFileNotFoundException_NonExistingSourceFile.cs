@@ -41,6 +41,9 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
+         var gotException = false;
+
+
          var srcFile = UnitTestConstants.SysDrive + @"\NonExisting Source File";
          var dstFile = UnitTestConstants.SysDrive + @"\NonExisting Destination File";
 
@@ -49,19 +52,21 @@ namespace AlphaFS.UnitTest
 
 
 
-         Exception exception = null;
-
          try
          {
             Alphaleonis.Win32.Filesystem.File.Copy(srcFile, dstFile);
          }
          catch (Exception ex)
          {
-            exception = ex;
-         }
-         
+            var exType = ex.GetType();
 
-         ExceptionAssert.FileNotFoundException(exception);
+            gotException = exType == typeof(System.IO.FileNotFoundException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+         }
+
+
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
          Assert.IsFalse(System.IO.Directory.Exists(dstFile), "The file exists, but is expected not to.");
 

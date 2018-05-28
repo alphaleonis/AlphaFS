@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -66,7 +67,7 @@ namespace AlphaFS.UnitTest
             dstFolder.SetAccessControl(dirSecurity);
 
 
-            Exception exception = null;
+            var gotException = false;
 
             try
             {
@@ -74,7 +75,11 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               exception = ex;
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(UnauthorizedAccessException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
             finally
             {
@@ -83,9 +88,9 @@ namespace AlphaFS.UnitTest
                dirSecurity.RemoveAccessRule(rule);
                dstFolder.SetAccessControl(dirSecurity);
             }
-            
 
-            ExceptionAssert.UnauthorizedAccessException(exception);
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
          
          Console.WriteLine();

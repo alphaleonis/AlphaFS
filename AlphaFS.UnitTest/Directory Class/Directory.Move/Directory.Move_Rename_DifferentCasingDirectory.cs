@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -48,7 +49,7 @@ namespace AlphaFS.UnitTest
             var destFolder = System.IO.Path.Combine(folderSrc.Parent.FullName, upperCaseFolderName);
 
             Console.WriteLine("Input Directory Path: [{0}]\n", folderSrc.FullName);
-            Console.WriteLine("\tRename folder [{0}] to [{1}]", folderSrc.Name, upperCaseFolderName);
+            Console.WriteLine("\tRename folder: [{0}] to: [{1}]", folderSrc.Name, upperCaseFolderName);
 
 
             Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, destFolder);

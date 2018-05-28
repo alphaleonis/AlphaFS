@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -34,7 +35,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_SetAccessControl_LocalAndNetwork_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
+         UnitTestAssert.IsElevated();
 
          Directory_SetAccessControl(false);
          Directory_SetAccessControl(true);

@@ -42,7 +42,7 @@ namespace AlphaFS.UnitTest
          var path = UnitTestConstants.NotepadExe;
 
          if (!System.IO.File.Exists(path))
-            UnitTestAssert.InconclusiveBecauseFileNotFound(path);
+            UnitTestAssert.SetInconclusiveBecauseFileNotFound(path);
 
 
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
@@ -54,19 +54,21 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Input Directory Path: [{0}]", tempPath);
 
 
-         Exception exception = null;
-
+         var gotException = false;
          try
          {
             Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath);
          }
          catch (Exception ex)
          {
-            exception = ex;
-         }
-         
+            var exType = ex.GetType();
 
-         ExceptionAssert.DirectoryNotFoundException(exception);
+            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+         }
+
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 
          Console.WriteLine();

@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -54,7 +55,6 @@ namespace AlphaFS.UnitTest
 
 
             var folderCount = 0;
-
             foreach (var fso in systemIOCollection)
                Console.WriteLine("\t#{0:000}\t{1}", ++folderCount, fso);
 

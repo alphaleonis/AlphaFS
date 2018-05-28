@@ -40,12 +40,13 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
+         var gotException = false;
+
+
          var invalidPath = UnitTestConstants.TempPath + @"\ThisIs<My>File";
 
          Console.WriteLine("Invalid Path: [{0}]", invalidPath);
 
-
-         Exception exception = null;
 
          try
          {
@@ -53,11 +54,15 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            exception = ex;
-         }
-         
+            var exType = ex.GetType();
 
-         ExceptionAssert.ArgumentException(exception);
+            gotException = exType == typeof(ArgumentException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+         }
+
+
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 
          Console.WriteLine();

@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Principal;
 
@@ -34,7 +35,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void File_SetAccessControl_LocalAndNetwork_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
+         UnitTestAssert.IsElevated();
 
          File_SetAccessControl(false);
          File_SetAccessControl(true);

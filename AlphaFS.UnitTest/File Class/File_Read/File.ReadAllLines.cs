@@ -22,6 +22,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -46,7 +47,7 @@ namespace AlphaFS.UnitTest
             System.IO.File.WriteAllLines(file, new[] {DateTime.Now.ToString(CultureInfo.CurrentCulture), DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString()});
 
 
-            CollectionAssert.AreEqual(System.IO.File.ReadAllLines(file), Alphaleonis.Win32.Filesystem.File.ReadAllLines(file));
+            CollectionAssert.AreEquivalent(System.IO.File.ReadAllLines(file), Alphaleonis.Win32.Filesystem.File.ReadAllLines(file));
          }
 
          Console.WriteLine();

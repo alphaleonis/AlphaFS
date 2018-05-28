@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -50,7 +51,7 @@ namespace AlphaFS.UnitTest
             System.IO.File.Copy(srcFile.FullName, dstFile);
 
 
-            Exception exception = null;
+            var gotException = false;
 
             try
             {
@@ -58,11 +59,15 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               exception = ex;
-            }
-            
+               var exType = ex.GetType();
 
-            ExceptionAssert.AlreadyExistsException(exception);
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            }
+
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
          
          Console.WriteLine();

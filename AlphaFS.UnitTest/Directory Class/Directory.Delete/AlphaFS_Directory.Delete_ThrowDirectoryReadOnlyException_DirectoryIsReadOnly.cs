@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -48,7 +49,7 @@ namespace AlphaFS.UnitTest
             System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.ReadOnly);
 
 
-            Exception exception = null;
+            var gotException = false;
 
             try
             {
@@ -57,15 +58,19 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               exception = ex;
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DirectoryReadOnlyException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
             finally
             { 
                System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.Normal);
             }
-            
 
-            ExceptionAssert.DirectoryReadOnlyException(exception);
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
 
          Console.WriteLine();

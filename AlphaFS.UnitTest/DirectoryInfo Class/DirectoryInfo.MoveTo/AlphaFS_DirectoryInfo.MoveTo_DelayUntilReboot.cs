@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 using Microsoft.Win32;
 
 namespace AlphaFS.UnitTest
@@ -33,7 +34,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_DirectoryInfo_MoveTo_DelayUntilReboot_Local_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
+         UnitTestAssert.IsElevated();
 
          AlphaFS_DirectoryInfo_MoveTo_DelayUntilReboot(false);
       }
@@ -52,8 +53,9 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.CreateDirectoriesAndFiles(pendingEntry, 1, false, false, true);
 
 
-            Exception exception = null;
+            var gotException = false;
             
+
             try
             {
                // Trigger DelayUntilReboot.
@@ -62,12 +64,18 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               exception = ex;
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(ArgumentException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
 
 
+
+
             if (isNetwork)
-               ExceptionAssert.ArgumentException(exception);
+               Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
             else
             {

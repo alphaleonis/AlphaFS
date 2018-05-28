@@ -64,7 +64,6 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            
             Console.WriteLine("\t    System.IO : [{0}]", expected ?? "null");
 
 
@@ -85,8 +84,6 @@ namespace AlphaFS.UnitTest
             }
 
             Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
-
-            Console.WriteLine();
          }
 
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");

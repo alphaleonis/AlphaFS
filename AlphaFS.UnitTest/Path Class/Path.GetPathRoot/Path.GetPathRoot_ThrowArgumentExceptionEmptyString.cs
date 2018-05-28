@@ -32,9 +32,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Path_GetPathRoot_ThrowArgumentExceptionEmptyString_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-         Exception exception = null;
+         var gotException = false;
 
          try
          {
@@ -42,11 +40,14 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            exception = ex;
+            var exType = ex.GetType();
+
+            gotException = exType == typeof(ArgumentException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
          }
 
-
-         ExceptionAssert.ArgumentException(exception);
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
       }
    }
 }

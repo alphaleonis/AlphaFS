@@ -21,6 +21,7 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -37,7 +38,7 @@ namespace AlphaFS.UnitTest
          {
             var mappedPath = connection.LocalName + @"\" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
 
-            Console.WriteLine("\nMapped drive [{0}] to [{1}]", connection.LocalName, connection.Share);
+            Console.WriteLine("\nUsing mapped drive: [{0}] to: [{1}]", connection.LocalName, connection.Share);
 
 
             var target = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(mappedPath);
@@ -45,15 +46,18 @@ namespace AlphaFS.UnitTest
             var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
-            Exception exception = null;
-
+            var gotException = false;
             try
             {
                Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName);
             }
             catch (Exception ex)
             {
-               exception = ex;
+               var exType = ex.GetType();
+
+               gotException = exType == typeof(ArgumentException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
             finally
             {
@@ -61,7 +65,7 @@ namespace AlphaFS.UnitTest
             }
 
 
-            ExceptionAssert.ArgumentException(exception);
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
       }
    }

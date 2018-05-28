@@ -22,6 +22,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -51,7 +52,7 @@ namespace AlphaFS.UnitTest
 
             using (var bfs = new Alphaleonis.Win32.Filesystem.BackupFileStream(file, System.IO.FileMode.Open))
             {
-               Exception exception = null;
+               var gotException = false;
 
                try
                {
@@ -62,14 +63,19 @@ namespace AlphaFS.UnitTest
                }
                catch (Exception ex)
                {
-                  exception = ex;
+                  var exType = ex.GetType();
+
+                  gotException = exType == typeof(System.IO.IOException);
+
+                  Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
                }
                finally
                {
                   bfs.Unlock(0, 10);
                }
 
-               ExceptionAssert.IOException(exception);
+
+               Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
             }
          }
 

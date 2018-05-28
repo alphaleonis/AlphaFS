@@ -35,8 +35,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(true);
 
-         var drive = string.Format(CultureInfo.InvariantCulture, "{0}:", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter());
-
+         var drive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter(), Alphaleonis.Win32.Filesystem.Path.VolumeSeparatorChar, Alphaleonis.Win32.Filesystem.Path.DirectorySeparatorChar);
          var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath);
 
          // An Exception is thrown for any error, so no Assert needed.
@@ -47,7 +46,7 @@ namespace AlphaFS.UnitTest
          Alphaleonis.Win32.Network.Host.ConnectDrive(drive, share);
 
 
-         Console.WriteLine("\nDisconnect drive.");
+         Console.WriteLine("\nDisconnect drive [{0}] from [{1}]", drive, share);
 
          Alphaleonis.Win32.Network.Host.DisconnectDrive(drive);
       }

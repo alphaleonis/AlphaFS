@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 using System.Text;
 
 namespace AlphaFS.UnitTest
@@ -50,7 +51,7 @@ namespace AlphaFS.UnitTest
             System.IO.File.WriteAllBytes(file, bytes);
 
 
-            CollectionAssert.AreEqual(System.IO.File.ReadAllBytes(file), Alphaleonis.Win32.Filesystem.File.ReadAllBytes(file));
+            CollectionAssert.AreEquivalent(System.IO.File.ReadAllBytes(file), Alphaleonis.Win32.Filesystem.File.ReadAllBytes(file));
          }
 
          Console.WriteLine();

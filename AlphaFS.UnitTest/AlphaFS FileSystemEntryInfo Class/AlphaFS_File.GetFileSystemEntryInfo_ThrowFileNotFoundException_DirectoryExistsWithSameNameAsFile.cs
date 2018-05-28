@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Input File Path: [{0}]", tempPath);
 
 
-         Exception exception = null;
+         var gotException = false;
 
          try
          {
@@ -56,11 +56,14 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            exception = ex;
-         }
-         
+            var exType = ex.GetType();
 
-         ExceptionAssert.FileNotFoundException(exception);
+            gotException = exType == typeof(System.IO.FileNotFoundException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+         }
+
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
 
 
          Console.WriteLine();

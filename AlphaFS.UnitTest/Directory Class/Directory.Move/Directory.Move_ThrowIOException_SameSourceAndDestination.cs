@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -48,7 +49,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
 
 
-            Exception exception = null;
+            var gotException = false;
 
             try
             {
@@ -56,11 +57,15 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               exception = ex;
-            }
-            
+               var exType = ex.GetType();
 
-            ExceptionAssert.IOException(exception);
+               gotException = exType == typeof(System.IO.IOException);
+
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            }
+
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
          
          Console.WriteLine();

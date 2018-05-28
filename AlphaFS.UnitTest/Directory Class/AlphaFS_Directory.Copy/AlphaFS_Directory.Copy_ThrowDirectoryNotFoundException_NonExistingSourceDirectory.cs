@@ -41,6 +41,10 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
+         var gotException = false;
+         string exMessage = null;
+
+
          var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source Folder";
          var dstFolder = UnitTestConstants.SysDrive + @"\NonExisting Destination Folder";
 
@@ -54,24 +58,27 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
 
 
-         Exception exception = null;
-         string exMessage = null;
-
          try
          {
             Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder);
          }
          catch (Exception ex)
          {
-            exception = ex;
+            var exType = ex.GetType();
             exMessage = ex.Message;
+
+            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
+
+            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, exMessage);
          }
-         
 
-         ExceptionAssert.DirectoryNotFoundException(exception);
 
-         if (null != exMessage)
-            Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
+         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+
+         Assert.IsNotNull(exMessage);
+
+         Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
 
 
          Console.WriteLine();
