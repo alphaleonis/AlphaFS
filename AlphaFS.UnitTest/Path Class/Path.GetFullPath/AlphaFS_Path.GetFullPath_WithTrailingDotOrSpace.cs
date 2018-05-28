@@ -32,12 +32,12 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Path_GetFullPath_WithTrailingDotOrSpace_LocalAndNetwork_Success()
       {
-         Path_GetFullPath_WithTrailingDotOrSpace(false);
-         Path_GetFullPath_WithTrailingDotOrSpace(true);
+         AlphaFS_Path_GetFullPath_WithTrailingDotOrSpace(false);
+         AlphaFS_Path_GetFullPath_WithTrailingDotOrSpace(true);
       }
 
 
-      private void Path_GetFullPath_WithTrailingDotOrSpace(bool isNetwork)
+      private void AlphaFS_Path_GetFullPath_WithTrailingDotOrSpace(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          

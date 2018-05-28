@@ -33,16 +33,14 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly_LocalAndNetwork_Success()
       {
-         Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(false);
-         Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(true);
+         AlphaFS_Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(false);
+         AlphaFS_Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(true);
       }
 
 
-      private void Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(bool isNetwork)
+      private void AlphaFS_Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
 

@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
          
          foreach (var path in UnitTestConstants.InputPaths)
          {
-            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+            Console.WriteLine("#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
 
             string expected = null;
             string actual = null;

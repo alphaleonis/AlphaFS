@@ -44,9 +44,7 @@ namespace AlphaFS.UnitTest
 
       private void Directory_SetAccessControl(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.RandomDirectoryFullPath;
             System.IO.Directory.CreateDirectory(folder);
@@ -58,7 +56,7 @@ namespace AlphaFS.UnitTest
             var alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(NTAccount));
 
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
             Console.WriteLine("\n\tSystem.IO rules found: [{0}]\n\tAlphaFS rules found  : [{1}]", sysIOaccessRules.Count, alphaFSaccessRules.Count);
             Assert.AreEqual(sysIOaccessRules.Count, alphaFSaccessRules.Count);
 

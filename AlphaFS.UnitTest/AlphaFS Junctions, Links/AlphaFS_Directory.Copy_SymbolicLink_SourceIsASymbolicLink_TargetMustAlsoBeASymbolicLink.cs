@@ -42,16 +42,14 @@ namespace AlphaFS.UnitTest
       
       private void AlphaFS_Directory_Copy_SymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var sourceFolderLink = System.IO.Path.Combine(tempRoot.Directory.FullName, "SourceDirectoryLink-ToOriginalDirectory");
 
             var dirInfo = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "OriginalDirectory"));
             dirInfo.Create();
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
+            Console.WriteLine("Input Directory Path: [{0}]", dirInfo.FullName);
             Console.WriteLine("Input Directory Link: [{0}]", sourceFolderLink);
 
             Alphaleonis.Win32.Filesystem.Directory.CreateSymbolicLink(sourceFolderLink, dirInfo.FullName);

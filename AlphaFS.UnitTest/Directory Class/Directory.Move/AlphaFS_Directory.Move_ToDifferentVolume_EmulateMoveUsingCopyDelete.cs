@@ -40,12 +40,9 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Directory_Move_ToDifferentVolume_EmulateMoveUsingCopyDelete(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         // Do not pass isNetwork, as to always use UnitTestConstants.TempPath
 
-         
-         // Always use UnitTestConstants.TempPath
-
-         using (var tempRoot = new TemporaryDirectory(UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory())
          {
             var random = UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
             var srcFolderName = System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder.") + random;

@@ -38,7 +38,7 @@ namespace AlphaFS.UnitTest
 
          using (var connection = new Alphaleonis.Win32.Network.DriveConnection(share))
          {
-            Console.WriteLine("\nMapped drive [{0}] to [{1}]", connection.LocalName, share);
+            Console.WriteLine("Mapped drive [{0}] to [{1}]", connection.LocalName, share);
 
             UnitTestConstants.Dump(connection, -9);
 

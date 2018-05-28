@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for FileSystemEntryInfo and is intended to contain all FileSystemEntryInfo Unit Tests.</summary>
+   /// <summary>This is a test class for all FileSystemEntryInfo class Unit Tests.</summary>
    [TestClass]
    public partial class AlphaFS_FileSystemEntryInfoTest
    {

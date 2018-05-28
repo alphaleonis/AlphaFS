@@ -33,20 +33,18 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_DeleteEmptySubdirectories_LocalAndNetwork_Success()
       {
-         Directory_DeleteEmptySubdirectories(false);
-         Directory_DeleteEmptySubdirectories(true);
+         AlphaFS_Directory_DeleteEmptySubdirectories(false);
+         AlphaFS_Directory_DeleteEmptySubdirectories(true);
       }
 
       
-      private void Directory_DeleteEmptySubdirectories(bool isNetwork)
+      private void AlphaFS_Directory_DeleteEmptySubdirectories(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Source Folder"));
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
             const int maxDepth = 10;

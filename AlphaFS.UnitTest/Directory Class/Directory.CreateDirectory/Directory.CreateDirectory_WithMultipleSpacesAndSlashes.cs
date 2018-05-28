@@ -40,9 +40,7 @@ namespace AlphaFS.UnitTest
 
       private void Directory_CreateDirectory_WithMultipleSpacesAndSlashes(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.Directory.FullName;
             var subFolders = new[]
@@ -57,7 +55,7 @@ namespace AlphaFS.UnitTest
 
             var fullPath = folder + @"\" + subFolders[0] + subFolders[1] + subFolders[2] + subFolders[3] + subFolders[4];
 
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", fullPath);
+            Console.WriteLine("Input Directory Path: [{0}]\n", fullPath);
 
 
             Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(fullPath);

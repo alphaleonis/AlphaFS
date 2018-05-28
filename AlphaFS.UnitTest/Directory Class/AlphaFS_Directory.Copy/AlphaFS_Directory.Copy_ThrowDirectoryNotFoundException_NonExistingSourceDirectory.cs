@@ -32,17 +32,15 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory_LocalAndNetwork_Success()
       {
-         Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(false);
-         Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(true);
+         AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(false);
+         AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(true);
       }
 
 
-      private void Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
+      private void AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
+         
          var gotException = false;
          string exMessage = null;
 

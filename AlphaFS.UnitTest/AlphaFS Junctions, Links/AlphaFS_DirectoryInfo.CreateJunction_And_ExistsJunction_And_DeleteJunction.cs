@@ -33,9 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_DirectoryInfo_CreateJunction_And_ExistsJunction_And_DeleteJunction_Local_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-         using (var tempRoot = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory())
          {
             var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
             var junction = System.IO.Path.Combine(toDelete.FullName, "MyJunctionPoint");

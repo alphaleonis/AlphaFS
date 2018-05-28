@@ -39,8 +39,6 @@ namespace AlphaFS.UnitTest
       private void Path_CheckSupportedPathFormat_ThrowArgumentException_PathContainsInvalidCharacters()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-         Console.WriteLine();
-
 
          var gotException = false;
 

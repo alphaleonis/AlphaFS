@@ -54,7 +54,7 @@ namespace AlphaFS.UnitTest
          
          foreach (var driveName in drivesAlphaFS)
          {
-            Console.WriteLine("\n\t#{0:000}\tLogical Drive: [{1}]", drivesCount, driveName);
+            Console.WriteLine("\t#{0:000}\tLogical Drive: [{1}]\n", drivesCount, driveName);
 
             Assert.AreEqual(drivesSystemIO[drivesCount++], driveName, "The logical drive drive name does not match, but is expected to.");
          }

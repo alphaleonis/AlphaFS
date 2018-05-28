@@ -45,13 +45,12 @@ namespace AlphaFS.UnitTest
       private void AlphaFS_Directory_EnumerateFileSystemEntryInfos_ContinueOnAccessDeniedExceptionUsingDirectoryEnumerationErrorFilter(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-
+         
          var inputPath = System.IO.Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)).FullName;
          if (isNetwork)
             inputPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(inputPath);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", inputPath);
+         Console.WriteLine("Input Directory Path: [{0}]\n", inputPath);
          
          Test_ContinueOnAccessDeniedExceptionUsingErrorFilter(inputPath);
          

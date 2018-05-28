@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
          // An Exception is thrown for any error, so no Assert needed.
 
 
-         Console.WriteLine("\nConnect drive [{0}] to [{1}]", drive, share);
+         Console.WriteLine("Connect drive [{0}] to [{1}]", drive, share);
 
          Alphaleonis.Win32.Network.Host.ConnectDrive(drive, share);
 

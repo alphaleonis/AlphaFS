@@ -42,14 +42,12 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_File_SetTimestamps(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var file = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
             var symlinkPath = System.IO.Path.Combine(tempRoot.Directory.FullName, UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()) + "-symlink";
 
-            Console.WriteLine("\nInput File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", file);
 
 
             Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(symlinkPath, file.FullName);

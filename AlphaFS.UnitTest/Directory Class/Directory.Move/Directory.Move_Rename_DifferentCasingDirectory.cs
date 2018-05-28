@@ -40,9 +40,7 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Move_Rename_DifferentCasingDirectory(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
 
@@ -50,8 +48,7 @@ namespace AlphaFS.UnitTest
 
             var destFolder = System.IO.Path.Combine(folderSrc.Parent.FullName, upperCaseFolderName);
 
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folderSrc.FullName);
-
+            Console.WriteLine("Input Directory Path: [{0}]\n", folderSrc.FullName);
             Console.WriteLine("\tRename folder: [{0}] to: [{1}]", folderSrc.Name, upperCaseFolderName);
 
 

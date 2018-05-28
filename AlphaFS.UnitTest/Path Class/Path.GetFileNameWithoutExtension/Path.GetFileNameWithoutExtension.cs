@@ -39,7 +39,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var path in UnitTestConstants.InputPaths)
          {
-            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+            Console.WriteLine("#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
 
             string expected = null;
             string actual = null;
@@ -57,6 +57,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+
             Console.WriteLine("\t    System.IO : [{0}]", expected ?? "null");
 
 
@@ -74,6 +75,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+
             Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
          }
 

@@ -33,20 +33,18 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_DeleteEmptySubdirectories_DirectoryContainsAFile_DirectoryRemains_LocalAndNetwork_Success()
       {
-         Directory_DeleteEmptySubdirectories_DirectoryContainsAFile_DirectoryRemains(false);
-         Directory_DeleteEmptySubdirectories_DirectoryContainsAFile_DirectoryRemains(true);
+         AlphaFS_Directory_DeleteEmptySubdirectories_DirectoryContainsAFile_DirectoryRemains(false);
+         AlphaFS_Directory_DeleteEmptySubdirectories_DirectoryContainsAFile_DirectoryRemains(true);
       }
 
       
-      private void Directory_DeleteEmptySubdirectories_DirectoryContainsAFile_DirectoryRemains(bool isNetwork)
+      private void AlphaFS_Directory_DeleteEmptySubdirectories_DirectoryContainsAFile_DirectoryRemains(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Source Folder"));
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
             using (System.IO.File.Create(System.IO.Path.Combine(folder.FullName, "A File"))) { }

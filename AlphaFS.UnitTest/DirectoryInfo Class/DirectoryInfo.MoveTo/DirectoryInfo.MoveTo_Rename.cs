@@ -40,16 +40,14 @@ namespace AlphaFS.UnitTest
 
       private void DirectoryInfo_MoveTo_Rename(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var newFolderName = UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
 
             var folderSrc = new Alphaleonis.Win32.Filesystem.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "Source Folder"));
             var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, newFolderName));
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("\n\tRename folder to: [{0}]", folderDst.Name);
 
 

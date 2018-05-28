@@ -40,14 +40,12 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_File_GetProcessForFileLock_NoLockReturnsNull(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var file = tempRoot.RandomFileFullPath;
             var fi = new System.IO.FileInfo(file);
 
-            Console.WriteLine("\nInput File Path: [{0}]]\n", file);
+            Console.WriteLine("Input File Path: [{0}]]\n", file);
 
 
             using (fi.CreateText()) { }

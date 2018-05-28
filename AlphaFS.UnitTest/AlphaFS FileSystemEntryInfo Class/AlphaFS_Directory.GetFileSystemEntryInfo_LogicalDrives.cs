@@ -41,12 +41,11 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
          
-
          var drives = Alphaleonis.Win32.Filesystem.Directory.EnumerateLogicalDrives().ToList();
 
          foreach (var drive in drives)
          {
-            Console.WriteLine("\nInput Logical Drive: [{0}]", drive.Name);
+            Console.WriteLine("Input Logical Drive: [{0}]", drive.Name);
 
             try
             { 

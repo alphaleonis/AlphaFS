@@ -45,15 +45,17 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
+         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
          var count = 0;
+
          foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<string>(tempPath))
          {
             Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(string)));
             count++;
          }
+
 
          Assert.IsTrue(count > 0, "Nothing is enumerated, but it is expected.");
       }

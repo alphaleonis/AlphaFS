@@ -40,8 +40,6 @@ namespace AlphaFS.UnitTest
       private void AlphaFS_Path_GetRelativePathResolveRelativePath(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var tempPath = UnitTestConstants.TempPath;
          var sysDrive = UnitTestConstants.SysDrive;

@@ -42,7 +42,7 @@ namespace AlphaFS.UnitTest
          {
             var actual = false;
 
-            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+            Console.WriteLine("#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
 
             // AlphaFS
             try
@@ -61,6 +61,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+
             Console.WriteLine("\t    AlphaFS   : [{0}]", actual);
          }
 

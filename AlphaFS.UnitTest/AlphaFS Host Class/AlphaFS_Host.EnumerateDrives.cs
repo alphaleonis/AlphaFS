@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var driveInfo in drives)
          {
-            Console.WriteLine("\nHost Local Drive: [{0}]", driveInfo.Name);
+            Console.WriteLine("Host Local Drive: [{0}]", driveInfo.Name);
 
 
             UnitTestConstants.Dump(driveInfo, -21);

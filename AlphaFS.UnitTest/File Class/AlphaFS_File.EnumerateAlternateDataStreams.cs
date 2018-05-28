@@ -41,13 +41,11 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_EnumerateAlternateDataStreams(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var file = tempRoot.RandomFileFullPathNoExtension;
 
-            Console.WriteLine("\nInput File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", file);
 
 
             Console.WriteLine("\nA file is created and {0} streams are added.", UnitTestConstants.AllStreams.Length.ToString(CultureInfo.CurrentCulture));

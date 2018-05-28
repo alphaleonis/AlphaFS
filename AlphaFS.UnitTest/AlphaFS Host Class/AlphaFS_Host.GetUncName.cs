@@ -33,8 +33,6 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Host_GetUncName_Network_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(true);
-         Console.WriteLine();
-
 
          var hostUncName = Alphaleonis.Win32.Network.Host.GetUncName();
          Console.WriteLine("Host.GetUncName(): [{0}]", hostUncName);

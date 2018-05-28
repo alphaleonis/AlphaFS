@@ -33,9 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_CreateJunction_ThrowArgumentException_MappedDrive_Netwerk_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-         using (var tempRoot = new TemporaryDirectory(UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory())
          using (var connection = new Alphaleonis.Win32.Network.DriveConnection(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath)))
          {
             var mappedPath = connection.LocalName + @"\" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();

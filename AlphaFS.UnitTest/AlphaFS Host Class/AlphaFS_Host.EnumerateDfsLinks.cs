@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
             {
                noDomainConnection = false;
 
-               Console.Write("\n#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsNamespace);
+               Console.Write("#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsNamespace);
                var cnt2 = 0;
 
                try

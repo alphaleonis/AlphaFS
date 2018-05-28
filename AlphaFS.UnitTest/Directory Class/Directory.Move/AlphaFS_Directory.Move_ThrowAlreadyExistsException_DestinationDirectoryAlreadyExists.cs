@@ -33,21 +33,19 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists_LocalAndNetwork_Success()
       {
-         Directory_Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists(false);
-         Directory_Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists(true);
+         AlphaFS_Directory_Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists(false);
+         AlphaFS_Directory_Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists(true);
       }
 
 
-      private void Directory_Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists(bool isNetwork)
+      private void AlphaFS_Directory_Move_ThrowAlreadyExistsException_DestinationDirectoryAlreadyExists(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
             var dstFfolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Destination Folder"));
 
-            Console.WriteLine("\nSrc Directory Path: [{0}]", srcFolder.FullName);
+            Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", dstFfolder.FullName);
             
             UnitTestConstants.CreateDirectoriesAndFiles(srcFolder.FullName, 1, false, false, true);

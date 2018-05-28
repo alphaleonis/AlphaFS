@@ -40,13 +40,11 @@ namespace AlphaFS.UnitTest
 
       private void File_Delete_ThrowUnauthorizedAccessException_PathIsADirectoryNotAFile(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.RandomDirectoryFullPath;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
             System.IO.Directory.CreateDirectory(folder);
 

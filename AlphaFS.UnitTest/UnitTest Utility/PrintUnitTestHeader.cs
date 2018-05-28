@@ -29,10 +29,13 @@ namespace AlphaFS.UnitTest
       public static void PrintUnitTestHeader(bool? isNetwork = null)
       {
          if (null == isNetwork)
-            Console.WriteLine("\n=== TEST LOCAL & NETWORK ===");
+            Console.WriteLine("\n=== TEST LOCAL / NETWORK ===");
 
          else
             Console.WriteLine("\n=== TEST {0} ===", (bool) isNetwork ? "NETWORK" : "LOCAL");
+
+
+         Console.WriteLine();
       }
    }
 }

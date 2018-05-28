@@ -34,8 +34,6 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Host_GetHostShareFromPath_Network_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(true);
-         Console.WriteLine();
-
 
          var folderWithspaces = @"\Folder with spaces";
 

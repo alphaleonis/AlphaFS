@@ -40,8 +40,6 @@ namespace AlphaFS.UnitTest
       private void Path_CheckSupportedPathFormat_ThrowNotSupportedException_PathContainsColon(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var gotException = false;
 

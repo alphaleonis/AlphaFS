@@ -33,23 +33,21 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
       {
-         File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(false);
-         File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(true);
+         AlphaFS_File_File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(false);
+         AlphaFS_File_File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(true);
       }
 
 
-      private void File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
+      private void AlphaFS_File_File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folderLink = System.IO.Path.Combine(tempRoot.Directory.FullName, "FolderLink-ToDestinationFolder");
 
             var dirInfo = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "DestinationFolder"));
             dirInfo.Create();
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
+            Console.WriteLine("Input Directory Path: [{0}]", dirInfo.FullName);
             Console.WriteLine("Input Directory Link: [{0}]", folderLink);
 
 

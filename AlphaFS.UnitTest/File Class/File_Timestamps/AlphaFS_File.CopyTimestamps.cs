@@ -41,9 +41,7 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_File_CopyTimestamps(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var file = tempRoot.RandomFileFullPath;
             var file2 = tempRoot.RandomFileFullPath;
@@ -53,7 +51,7 @@ namespace AlphaFS.UnitTest
             using (System.IO.File.Create(file2)) { }
 
 
-            Console.WriteLine("\nInput File1 Path: [{0}]", file);
+            Console.WriteLine("Input File1 Path: [{0}]", file);
             Console.WriteLine("Input File2 Path: [{0}]", file2);
 
 

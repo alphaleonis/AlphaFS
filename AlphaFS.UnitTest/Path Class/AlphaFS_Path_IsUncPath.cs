@@ -24,10 +24,11 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Path and is intended to contain all Path Unit Tests.</summary>
-   [TestClass]
    public partial class PathTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_Path_IsUncPath()
       {
@@ -41,7 +42,7 @@ namespace AlphaFS.UnitTest
          {
             var actual = false;
 
-            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+            Console.WriteLine("#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
 
             // AlphaFS
             try
@@ -64,6 +65,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+
             Console.WriteLine("\tAlphaFS   : [{0}]", actual);
          }
 

@@ -31,18 +31,16 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetwork_Success()
       {
-         Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(false);
-         Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(true);
+         AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(false);
+         AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(true);
       }
 
 
-      private void Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(bool isNetwork)
+      private void AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.RandomDirectoryFullPath;
             var file = System.IO.Path.Combine(folder, UnitTestConstants.GetRandomFileNameWithDiacriticCharacters());

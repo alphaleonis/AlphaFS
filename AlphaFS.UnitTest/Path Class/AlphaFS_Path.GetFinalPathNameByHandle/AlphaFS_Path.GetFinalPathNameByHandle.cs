@@ -33,15 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Path_GetFinalPathNameByHandle_Local_Success()
       {
-         AlphaFS_Path_GetFinalPathNameByHandle();
-      }
-      
-
-      private void AlphaFS_Path_GetFinalPathNameByHandle()
-      {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-         using (var tempRoot = new TemporaryDirectory(UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory())
          {
             var file = tempRoot.RandomDirectoryFullPath;
 

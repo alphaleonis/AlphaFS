@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
             {
                noDomainConnection = false;
 
-               Console.Write("\n#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsName);
+               Console.Write("#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsName);
 
                try
                {
@@ -70,6 +70,8 @@ namespace AlphaFS.UnitTest
                {
                   Console.WriteLine("\n\tCaught (UNEXPECTED #1) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
                }
+
+               Console.WriteLine();
             }
 
             if (cnt == 0)

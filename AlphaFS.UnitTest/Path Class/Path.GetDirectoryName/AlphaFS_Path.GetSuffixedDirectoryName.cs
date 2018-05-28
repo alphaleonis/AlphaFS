@@ -54,7 +54,7 @@ namespace AlphaFS.UnitTest
 
          var suffixedDirectoryName = Alphaleonis.Win32.Filesystem.Path.GetSuffixedDirectoryName(fullPath);
 
-         Console.WriteLine("\nFull Path               : " + fullPath);
+         Console.WriteLine("Full Path               : " + fullPath);
          Console.WriteLine("GetSuffixedDirectoryName: " + suffixedDirectoryName);
          
          Assert.IsTrue(suffixedDirectoryName.Equals(sys32, StringComparison.OrdinalIgnoreCase));

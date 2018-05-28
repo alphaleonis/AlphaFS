@@ -41,14 +41,12 @@ namespace AlphaFS.UnitTest
 
       private void File_CreateText(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var file1 = tempRoot.RandomFileFullPath;
             var file2 = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("\nInput File1 Path: [{0}]", file1);
+            Console.WriteLine("Input File1 Path: [{0}]", file1);
             Console.WriteLine("Input File2 Path: [{0}]", file2);
 
 

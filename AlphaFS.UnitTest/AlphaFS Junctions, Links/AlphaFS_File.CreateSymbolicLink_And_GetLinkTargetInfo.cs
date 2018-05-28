@@ -34,23 +34,21 @@ namespace AlphaFS.UnitTest
       {
          UnitTestAssert.IsElevated();
 
-         File_CreateSymbolicLink_And_GetLinkTargetInfo(false);
-         File_CreateSymbolicLink_And_GetLinkTargetInfo(true);
+         AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo(false);
+         AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo(true);
       }
 
 
-      private void File_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
+      private void AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var fileLink = System.IO.Path.Combine(tempRoot.Directory.FullName, "FileLink-ToOriginalFile.txt");
 
             var fileInfo = new System.IO.FileInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "OriginalFile.txt"));
             using (fileInfo.CreateText()) {}
 
-            Console.WriteLine("\nInput File Path: [{0}]", fileInfo.FullName);
+            Console.WriteLine("Input File Path: [{0}]", fileInfo.FullName);
             Console.WriteLine("Input File Link: [{0}]", fileLink);
             
 

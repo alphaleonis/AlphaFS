@@ -39,7 +39,7 @@ namespace AlphaFS.UnitTest
          // An Exception is thrown for any error, so no Assert needed.
 
 
-         Console.WriteLine("\nConnect to Computer: [{0}]", share);
+         Console.WriteLine("Connect to Computer: [{0}]", share);
 
          Alphaleonis.Win32.Network.Host.ConnectTo(share);
 

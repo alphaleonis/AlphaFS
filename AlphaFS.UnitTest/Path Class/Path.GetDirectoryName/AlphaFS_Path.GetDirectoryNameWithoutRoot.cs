@@ -54,7 +54,7 @@ namespace AlphaFS.UnitTest
 
          var directoryNameWithoutRoot = Alphaleonis.Win32.Filesystem.Path.GetDirectoryNameWithoutRoot(fullPath);
 
-         Console.WriteLine("\nFull Path                  : " + fullPath);
+         Console.WriteLine("Full Path                  : " + fullPath);
          Console.WriteLine("GetDirectoryNameWithoutRoot: " + directoryNameWithoutRoot);
 
          Assert.AreEqual(directoryNameWithoutRoot, sys32);

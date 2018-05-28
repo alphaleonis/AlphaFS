@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for File and is intended to contain all File.CreateXxx Unit Tests.</summary>
+   /// <summary>This is a test class for File and is intended to contain all Create Unit Tests.</summary>
    [TestClass]
    public partial class File_CreateTest
    {

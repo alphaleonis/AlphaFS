@@ -41,9 +41,7 @@ namespace AlphaFS.UnitTest
       
       private void AlphaFS_Directory_CopyTimestamps(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder1 = tempRoot.RandomDirectoryFullPath;
             var folder2 = tempRoot.RandomDirectoryFullPath;
@@ -53,8 +51,8 @@ namespace AlphaFS.UnitTest
             System.IO.Directory.CreateDirectory(folder2);
 
 
-            Console.WriteLine("\nInput Directory1 Path: [{0}]", folder1);
-            Console.WriteLine("\nInput Directory2 Path: [{0}]", folder2);
+            Console.WriteLine("Input Directory1 Path: [{0}]", folder1);
+            Console.WriteLine("Input Directory2 Path: [{0}]", folder2);
 
 
             Assert.AreNotEqual(System.IO.Directory.GetCreationTime(folder1), System.IO.Directory.GetCreationTime(folder2));

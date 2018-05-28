@@ -42,7 +42,7 @@ namespace AlphaFS.UnitTest
 
          var tempPath = UnitTestConstants.SysDrive + @"\nonExistingFile-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
 
-         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+         Console.WriteLine("Input File Path: [{0}]", tempPath);
 
 
          Assert.IsFalse(System.IO.File.Exists(tempPath));

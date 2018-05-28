@@ -40,14 +40,12 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Directory_Move_Overwrite_DestinationDirectoryAlreadyExists(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
             var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "Destination Folder"));
 
-            Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
             
 

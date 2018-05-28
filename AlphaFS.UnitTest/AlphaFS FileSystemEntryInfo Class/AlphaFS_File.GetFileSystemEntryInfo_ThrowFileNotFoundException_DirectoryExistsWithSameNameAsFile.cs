@@ -44,12 +44,12 @@ namespace AlphaFS.UnitTest
          var tempPath = UnitTestConstants.SysRoot;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+         
+         Console.WriteLine("Input File Path: [{0}]", tempPath);
 
 
          var gotException = false;
+
          try
          {
             Alphaleonis.Win32.Filesystem.File.GetFileSystemEntryInfo(tempPath);

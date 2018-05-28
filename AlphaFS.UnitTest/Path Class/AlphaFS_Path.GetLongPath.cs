@@ -32,12 +32,6 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Path_GetLongPath_LocalAndNetwork_Success()
       {
-         AlphaFS_Path_GetLongPath();
-      }
-
-
-      private void AlphaFS_Path_GetLongPath()
-      {
          UnitTestConstants.PrintUnitTestHeader();
 
          var pathCnt = 0;
@@ -45,7 +39,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var path in UnitTestConstants.InputPaths)
          {
-            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+            Console.WriteLine("#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
 
             string actual = null;
 

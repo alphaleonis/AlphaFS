@@ -41,22 +41,23 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_BackupFileStream_ThrowIOException_SegmentAlreadyUnlocked(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var file = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("\nInput File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", file);
 
-            System.IO.File.WriteAllText(file, DateTime.Now.ToString(CultureInfo.InvariantCulture));
+            System.IO.File.WriteAllText(file, DateTime.Now.ToString(CultureInfo.CurrentCulture));
 
 
             using (var bfs = new Alphaleonis.Win32.Filesystem.BackupFileStream(file, System.IO.FileMode.Open))
             {
                var gotException = false;
+
                try
                {
+                  bfs.ReadStreamInfo();
+
                   bfs.Unlock(0, 10);
                }
                catch (Exception ex)
@@ -67,6 +68,7 @@ namespace AlphaFS.UnitTest
 
                   Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
                }
+
 
                Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
             }

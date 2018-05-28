@@ -26,8 +26,6 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Directory and is intended to contain all Directory class Unit Tests.</summary>
-   [TestClass]
    public partial class DirectoryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
@@ -51,13 +49,11 @@ namespace AlphaFS.UnitTest
 
       private void Directory_GetFileSystemEntries_LongPath_ShouldReturnCorrectEntries(bool isNetwork, bool withPrefix)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.RandomDirectoryFullPath;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
             var longDir = System.IO.Path.Combine(folder, new string('x', 128), new string('x', 128), new string('x', 128), new string('x', 128));

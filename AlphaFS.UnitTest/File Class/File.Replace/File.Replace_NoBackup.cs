@@ -40,15 +40,13 @@ namespace AlphaFS.UnitTest
 
       private void File_Replace_NoBackup(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var fileSrc = tempRoot.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextHelloWorld + ".txt";
             var fileDst = tempRoot.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
             var fileBackup = tempRoot.RandomFileFullPathNoExtension + "-Backup.txt";
 
-            Console.WriteLine("\nInput File Path: [{0}]", fileSrc);
+            Console.WriteLine("Input File Path: [{0}]", fileSrc);
 
 
             using (var stream = System.IO.File.CreateText(fileSrc))

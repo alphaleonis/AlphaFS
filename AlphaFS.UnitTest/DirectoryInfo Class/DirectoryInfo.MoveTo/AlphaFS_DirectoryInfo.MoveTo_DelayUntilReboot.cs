@@ -42,15 +42,13 @@ namespace AlphaFS.UnitTest
       
       private void AlphaFS_DirectoryInfo_MoveTo_DelayUntilReboot(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.Directory.FullName;
             var folderSrc = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(folder, "Source-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()));
             var pendingEntry = folderSrc.FullName;
 
-            Console.WriteLine("\nSrc Directory Path: [{0}]", pendingEntry);
+            Console.WriteLine("Src Directory Path: [{0}]", pendingEntry);
 
             UnitTestConstants.CreateDirectoriesAndFiles(pendingEntry, 1, false, false, true);
 

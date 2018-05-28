@@ -32,16 +32,14 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
       {
-         File_Move_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
-         File_Move_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(true);
+         AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
+         AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(true);
       }
 
 
-      private void File_Move_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(bool isNetwork)
+      private void AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var gotException = false;
 

@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
 
          var path = tempPath + "   ";
-         Console.WriteLine("\nInput File Path: [{0}]\n", path);
+         Console.WriteLine("Input File Path: [{0}]\n", path);
 
          Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(path), "The file does not exist, but is expected to.");
 

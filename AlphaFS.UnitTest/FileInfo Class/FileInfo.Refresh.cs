@@ -40,15 +40,13 @@ namespace AlphaFS.UnitTest
 
       private void FileInfo_Refresh(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var file = tempRoot.RandomFileFullPath;
             var fiSysIo = new System.IO.FileInfo(file + "-System.IO.txt");
             var fiAlphaFS = new Alphaleonis.Win32.Filesystem.FileInfo(file + "-AlphaFS.txt");
 
-            Console.WriteLine("\nSystem.IO Input File Path: [{0}]", fiSysIo.FullName);
+            Console.WriteLine("System.IO Input File Path: [{0}]", fiSysIo.FullName);
             Console.WriteLine("AlphaFS   Input File Path: [{0}]", fiAlphaFS.FullName);
 
 

@@ -33,22 +33,20 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
-         File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(false);
-         File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(true);
+         AlphaFS_File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(false);
+         AlphaFS_File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(true);
       }
 
 
-      private void File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
+      private void AlphaFS_File_Move_ThrowAlreadyExistsException_DestinationFileAlreadyExists(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var srcFile = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
 
             var dstFile = srcFile + "-Existing File";
 
-            Console.WriteLine("\nSrc File Path: [{0}]", srcFile);
+            Console.WriteLine("Src File Path: [{0}]", srcFile);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
             System.IO.File.Copy(srcFile.FullName, dstFile);

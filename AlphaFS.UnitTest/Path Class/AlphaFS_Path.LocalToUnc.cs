@@ -32,16 +32,8 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Path_LocalToUnc_Success()
       {
-         Path_LocalToUnc();
-      }
-      
-
-      private void Path_LocalToUnc()
-      {
          UnitTestConstants.PrintUnitTestHeader(false);
-         Console.WriteLine();
-
-
+         
          var sysDrive = UnitTestConstants.SysDrive;
          var sysRoot = UnitTestConstants.SysRoot;
          var backslash = Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;

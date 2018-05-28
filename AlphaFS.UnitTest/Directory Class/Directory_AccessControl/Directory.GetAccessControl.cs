@@ -59,7 +59,7 @@ namespace AlphaFS.UnitTest
             var alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
 
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
+            Console.WriteLine("Input Directory Path: [{0}]", tempPath);
             Console.WriteLine("\n\tSystem.IO rules found: [{0}]\n\tAlphaFS rules found  : [{1}]", sysIOaccessRules.Count, alphaFSaccessRules.Count);
 
             Assert.AreEqual(sysIOaccessRules.Count, alphaFSaccessRules.Count);

@@ -40,13 +40,11 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Exists_NonExistingDirectoryDoesNotExist(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.RandomDirectoryFullPath;
 
-            Console.WriteLine("\nInput Non-Existing Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Non-Existing Directory Path: [{0}]", folder);
 
             var shouldBe = false;
             var existSysIO = System.IO.Directory.Exists(folder);

@@ -40,16 +40,14 @@ namespace AlphaFS.UnitTest
 
       private void DirectoryInfo_MoveTo_FolderToEmptyFolder(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var testfolder = UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
 
             var folderSrc = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, testfolder));
             var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Destination Folder"));
             
-            Console.WriteLine("\nInput Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("\n\tMove folder to: [{0}]", folderDst.FullName);
 
 

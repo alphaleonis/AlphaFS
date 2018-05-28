@@ -36,7 +36,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(false);
 
          var host = UnitTestConstants.LocalHost;
-         Console.WriteLine("\nConnected to Host: [{0}]", host);
+         Console.WriteLine("Connected to Host: [{0}]", host);
 
 
          var count = 0;

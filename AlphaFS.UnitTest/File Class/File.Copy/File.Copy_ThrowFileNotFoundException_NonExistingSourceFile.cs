@@ -40,8 +40,6 @@ namespace AlphaFS.UnitTest
       private void File_Copy_ThrowFileNotFoundException_NonExistingSourceFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var gotException = false;
 

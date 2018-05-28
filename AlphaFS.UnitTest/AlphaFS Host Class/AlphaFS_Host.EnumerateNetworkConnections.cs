@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var networkConnection in Host.EnumerateNetworkConnections().OrderBy(networkConnection => networkConnection.NetworkInfo.Name))
          {
-            Console.WriteLine("\n#{0:000}\tNetwork: [{1}]", ++networkConnectionCount, networkConnection.NetworkInfo.Name);
+            Console.WriteLine("#{0:000}\tNetwork: [{1}]", ++networkConnectionCount, networkConnection.NetworkInfo.Name);
 
 
             UnitTestConstants.Dump(networkConnection, -21);

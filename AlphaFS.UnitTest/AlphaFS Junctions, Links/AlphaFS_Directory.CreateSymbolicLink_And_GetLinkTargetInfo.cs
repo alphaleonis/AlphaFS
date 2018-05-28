@@ -34,23 +34,21 @@ namespace AlphaFS.UnitTest
       {
          UnitTestAssert.IsElevated();
 
-         Directory_CreateSymbolicLink_And_GetLinkTargetInfo(false);
-         Directory_CreateSymbolicLink_And_GetLinkTargetInfo(true);
+         AlphaFS_Directory_CreateSymbolicLink_And_GetLinkTargetInfo(false);
+         AlphaFS_Directory_CreateSymbolicLink_And_GetLinkTargetInfo(true);
       }
 
       
-      private void Directory_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
+      private void AlphaFS_Directory_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folderLink = System.IO.Path.Combine(tempRoot.Directory.FullName, "FolderLink-ToDestinationFolder");
 
             var dirInfo = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "DestinationFolder"));
             dirInfo.Create();
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
+            Console.WriteLine("Input Directory Path: [{0}]", dirInfo.FullName);
             Console.WriteLine("Input Directory Link: [{0}]", folderLink);
 
 

@@ -41,13 +41,11 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Directory_GetChangeTime(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.SysRoot32) : UnitTestConstants.SysRoot32;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
             Assert.AreEqual(System.IO.Directory.GetCreationTime(folder), Alphaleonis.Win32.Filesystem.Directory.GetCreationTime(folder));

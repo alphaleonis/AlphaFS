@@ -55,7 +55,7 @@ namespace AlphaFS.UnitTest
          //UnitTestAssert.IsElevated(); // In User mode nothing is enumerated.
          UnitTestConstants.PrintUnitTestHeader(false);
          
-         Console.WriteLine("\nConnected to Share: [{0}\\{1}]", host, share);
+         Console.WriteLine("Connected to Share: [{0}\\{1}]", host, share);
          
 
          var count = 0;

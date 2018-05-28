@@ -23,6 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
+   /// <summary>This is a test class for all CRC Unit Tests.</summary>
    [TestClass]
    public partial class AlphaFS_CrcTest
    {

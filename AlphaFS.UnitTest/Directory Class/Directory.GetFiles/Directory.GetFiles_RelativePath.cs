@@ -41,16 +41,14 @@ namespace AlphaFS.UnitTest
 
       private void Directory_GetFiles_RelativePath(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = new System.IO.DirectoryInfo(tempRoot.RandomDirectoryFullPath);
 
             var currentDirectory = tempRoot.Directory.Parent.FullName;
             Environment.CurrentDirectory = currentDirectory;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", currentDirectory);
+            Console.WriteLine("Input Directory Path: [{0}]\n", currentDirectory);
 
             UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, 5, true, true, true);
 

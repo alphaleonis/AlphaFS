@@ -34,20 +34,18 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive_LocalAndNetwork_Success()
       {
-         Directory_CountFileSystemObjects_FilesOnly_Recursive(false);
-         Directory_CountFileSystemObjects_FilesOnly_Recursive(true);
+         AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive(false);
+         AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive(true);
       }
 
 
-      private void Directory_CountFileSystemObjects_FilesOnly_Recursive(bool isNetwork)
+      private void AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.RandomDirectoryFullPath;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
             const int maxFso = 10;

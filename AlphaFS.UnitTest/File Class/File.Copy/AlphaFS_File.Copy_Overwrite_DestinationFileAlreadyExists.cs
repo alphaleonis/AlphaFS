@@ -19,14 +19,12 @@ namespace AlphaFS.UnitTest
       
       private void AlphaFS_File_Copy_Overwrite_DestinationFileAlreadyExists(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var srcFile = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
             var dstFile = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("\nSrc File Path: [{0}]", srcFile);
+            Console.WriteLine("Src File Path: [{0}]", srcFile);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 

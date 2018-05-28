@@ -32,12 +32,6 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Path_GetRegularPath_LocalAndNetwork_Success()
       {
-         AlphaFS_Path_GetRegularPath();
-      }
-
-
-      private void AlphaFS_Path_GetRegularPath()
-      {
          UnitTestConstants.PrintUnitTestHeader();
 
          var pathCnt = 0;
@@ -47,7 +41,7 @@ namespace AlphaFS.UnitTest
          {
             string actual = null;
 
-            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+            Console.WriteLine("#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
 
             // AlphaFS
             try

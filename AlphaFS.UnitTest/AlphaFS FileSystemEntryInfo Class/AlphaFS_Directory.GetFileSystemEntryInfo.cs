@@ -45,10 +45,11 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
+         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
          var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath);
+
          UnitTestConstants.Dump(fsei, -19);
 
 

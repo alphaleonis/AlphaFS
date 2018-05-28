@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Directory.CreateDirectory/Directory.Delete and is intended to contain all Directory.CreateDirectory/Directory.Delete Unit Tests.</summary>
+   /// <summary>This is a test class for Directory and is intended to contain all CreateDirectory Unit Tests.</summary>
    [TestClass]
    public partial class Directory_CreateDirectoryTest
    {

@@ -40,13 +40,11 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Directory_GetProperties(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.Directory.FullName;
 
-            Console.WriteLine("\n\tAggregated properties of file system objects from Directory: [{0}]\n", folder);
+            Console.WriteLine("Aggregated properties of file system objects from Directory: [{0}]\n", folder);
 
             UnitTestConstants.CreateDirectoriesAndFiles(folder, 5, true, true, true);
 

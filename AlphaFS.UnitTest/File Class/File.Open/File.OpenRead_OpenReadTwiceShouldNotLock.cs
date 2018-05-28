@@ -40,13 +40,11 @@ namespace AlphaFS.UnitTest
 
       private void File_OpenRead_OpenReadTwiceShouldNotLock(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var filePath = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("\nInput File Path: [{0}]\n", filePath);
+            Console.WriteLine("Input File Path: [{0}]\n", filePath);
 
 
             using (System.IO.File.Create(filePath)) { }

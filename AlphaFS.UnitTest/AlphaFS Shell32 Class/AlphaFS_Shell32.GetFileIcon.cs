@@ -32,14 +32,14 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Shell32_GetFileIcon_LocalAndNetwork_Success()
       {
-         Shell32_GetFileIcon(false);
-         Shell32_GetFileIcon(true);
+         AlphaFS_Shell32_GetFileIcon(false);
+         AlphaFS_Shell32_GetFileIcon(true);
       }
 
 
 
 
-      private void Shell32_GetFileIcon(bool isNetwork)
+      private void AlphaFS_Shell32_GetFileIcon(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
@@ -47,8 +47,7 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             file = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.NotepadExe);
 
-
-         Console.WriteLine("\nInput File Path: {0}", file);
+         Console.WriteLine("Input File Path: {0}", file);
 
 
          var icon = IntPtr.Zero;

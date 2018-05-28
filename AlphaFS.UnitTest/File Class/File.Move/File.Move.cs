@@ -40,9 +40,7 @@ namespace AlphaFS.UnitTest
 
       private void File_Move(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             // Min: 1 byte, Max: 10485760 = 10 MB.
             var fileLength = new Random().Next(1, 10485760);
@@ -51,7 +49,7 @@ namespace AlphaFS.UnitTest
 
             var dstFile = System.IO.Path.Combine(tempRoot.Directory.FullName, srcFile.Name + "-Moved.File");
 
-            Console.WriteLine("\nSrc File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(srcFile.Length), srcFile.FullName);
+            Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(srcFile.Length), srcFile.FullName);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 

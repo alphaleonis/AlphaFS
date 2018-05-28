@@ -44,9 +44,7 @@ namespace AlphaFS.UnitTest
          // Issue #288: Directory.Exists on root drive problem has come back with recent updates
          
 
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (new TemporaryDirectory())
          {
             var sysDrive = UnitTestConstants.SysDrive + @"\";
             if (isNetwork)
@@ -68,7 +66,7 @@ namespace AlphaFS.UnitTest
 
             // C:randomName-exists
             var existingFolder2 = nonExistingFolder2 + "-exists";
-            System.IO.Directory.CreateDirectory(existingFolder1);
+            System.IO.Directory.CreateDirectory(existingFolder2);
 
 
 
@@ -76,6 +74,7 @@ namespace AlphaFS.UnitTest
             {
                nonExistingFolder1 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(nonExistingFolder1);
                nonExistingFolder2 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(nonExistingFolder2);
+
                existingFolder1 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(existingFolder1);
                existingFolder2 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(existingFolder2);
             }
@@ -98,7 +97,7 @@ namespace AlphaFS.UnitTest
 
             System.IO.Directory.SetCurrentDirectory(sysDrive);
 
-            Console.WriteLine("Current directory: " + System.IO.Directory.GetCurrentDirectory());
+            Console.WriteLine("\nCurrent directory: " + System.IO.Directory.GetCurrentDirectory());
 
 
             foreach (var path in paths)
@@ -106,12 +105,13 @@ namespace AlphaFS.UnitTest
                var sysIOshouldBe = path.Value[0];
                var alphaFSshouldBe = path.Value[1];
                var inputPath = path.Key;
+
                var existSysIO = System.IO.Directory.Exists(inputPath);
                var existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(inputPath);
 
 
-               Console.WriteLine("\nSystem.IO   (should be {0}):\t[{1}]\t\tdirectory= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputPath);
-               Console.WriteLine("AlphaFS     (should be {0}):\t[{1}]\t\tdirectory= {2}", alphaFSshouldBe.ToString().ToUpperInvariant(), existAlpha, inputPath);
+               Console.WriteLine("\n\tSystem.IO   (should be {0}):\t[{1}]\t\tdirectory= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputPath);
+               Console.WriteLine("\tAlphaFS     (should be {0}):\t[{1}]\t\tdirectory= {2}", alphaFSshouldBe.ToString().ToUpperInvariant(), existAlpha, inputPath);
 
 
                Assert.AreEqual(sysIOshouldBe, existSysIO);
@@ -120,6 +120,9 @@ namespace AlphaFS.UnitTest
 
                Assert.AreEqual(sysIOshouldBe, alphaFSshouldBe);
             }
+
+
+            System.IO.Directory.Delete(existingFolder1);
          }
 
          Console.WriteLine();

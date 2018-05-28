@@ -41,13 +41,11 @@ namespace AlphaFS.UnitTest
 
       private void Directory_EnumerateFiles(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.RandomDirectoryFullPath;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
 
             UnitTestConstants.CreateDirectoriesAndFiles(folder, 10, false, true, true);
 

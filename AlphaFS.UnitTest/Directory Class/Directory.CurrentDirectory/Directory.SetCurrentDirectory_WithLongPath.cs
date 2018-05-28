@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
 
-         Console.WriteLine("\n\tNo compare with System.IO possible because of: \"System.ArgumentException: Illegal characters in path.\"\n");
+         Console.WriteLine("\tNo compare with System.IO possible because of: \"System.ArgumentException: Illegal characters in path.\"\n");
 
 
          Console.WriteLine("\tAlphaFS Set Current Directory Path: [{0}]", tempPath);

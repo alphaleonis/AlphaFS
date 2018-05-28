@@ -35,7 +35,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(true);
 
-         Console.Write("\nEnumerating DFS Root from user domain: [{0}]\n", Alphaleonis.Win32.Network.NativeMethods.ComputerDomain);
+         Console.Write("Enumerating DFS Root from user domain: [{0}]\n", Alphaleonis.Win32.Network.NativeMethods.ComputerDomain);
 
          var cnt = 0;
          var noDomainConnection = true;

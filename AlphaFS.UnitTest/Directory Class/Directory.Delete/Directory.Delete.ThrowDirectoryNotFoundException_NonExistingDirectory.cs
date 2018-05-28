@@ -40,8 +40,6 @@ namespace AlphaFS.UnitTest
       private void Directory_Delete_ThrowDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var gotException = false;
 

@@ -44,7 +44,7 @@ namespace AlphaFS.UnitTest
                string expected = null;
                string actual = null;
 
-               Console.WriteLine("\n#{0:000}\tInput Path: [{1}]\tCombine with: [{2}]", ++pathCnt, path1, path2);
+               Console.WriteLine("#{0:000}\tInput Path: [{1}]\tCombine with: [{2}]", ++pathCnt, path1, path2);
 
 
                // System.IO
@@ -72,6 +72,7 @@ namespace AlphaFS.UnitTest
 
                   Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
                }
+
                Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
             }
          }

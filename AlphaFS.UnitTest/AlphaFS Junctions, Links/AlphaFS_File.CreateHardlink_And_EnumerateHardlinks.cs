@@ -33,15 +33,13 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_CreateHardlink_And_EnumerateHardlinks_Local_Success()
       {
-         File_CreateHardlink_And_EnumerateHardlinks(false);
+         AlphaFS_File_CreateHardlink_And_EnumerateHardlinks();
       }
 
 
-      private void File_CreateHardlink_And_EnumerateHardlinks(bool isNetwork)
+      private void AlphaFS_File_CreateHardlink_And_EnumerateHardlinks()
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         
-         using (var tempPath = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
+         using (var tempPath = new TemporaryDirectory())
          {
             var hardlinkFolder = System.IO.Path.Combine(tempPath.Directory.FullName, "Hardlinks");
             System.IO.Directory.CreateDirectory(hardlinkFolder);
@@ -73,7 +71,7 @@ namespace AlphaFS.UnitTest
             var cnt = 0;
             foreach (var hardLink in Alphaleonis.Win32.Filesystem.File.EnumerateHardlinks(file))
                Console.WriteLine("\t\t#{0:000}\tHardlink: [{1}]", ++cnt, hardLink);
-            
+
             Assert.AreEqual(numCreate + 1, cnt);
 
 

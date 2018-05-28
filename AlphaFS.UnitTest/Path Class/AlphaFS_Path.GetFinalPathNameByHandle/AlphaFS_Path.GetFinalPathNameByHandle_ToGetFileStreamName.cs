@@ -38,15 +38,7 @@ namespace AlphaFS.UnitTest
          // System.IO returns the full path.
 
 
-         AlphaFS_Path_GetFinalPathNameByHandle_ToGetFileStreamName();
-      }
-
-
-      private void AlphaFS_Path_GetFinalPathNameByHandle_ToGetFileStreamName()
-      {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-         using (var tempRoot = new TemporaryDirectory(UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory())
          {
             var file = tempRoot.RandomFileFullPath;
 

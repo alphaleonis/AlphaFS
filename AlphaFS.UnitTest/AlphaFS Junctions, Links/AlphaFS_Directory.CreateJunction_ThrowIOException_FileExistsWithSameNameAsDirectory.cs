@@ -33,9 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_CreateJunction_ThrowIOException_FileExistsWithSameNameAsDirectory_Local_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-         
-         using (var tempRoot = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory())
          {
             var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget");
             var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
