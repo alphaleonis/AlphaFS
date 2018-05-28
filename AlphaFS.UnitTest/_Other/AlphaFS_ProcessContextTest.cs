@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("IsAdmin         : [{0}]", isAdmin);
 
-         Console.WriteLine("IsElevated      : [{0}]", isElevated);
+         Console.WriteLine("IsElevatedProcess      : [{0}]", isElevated);
 
          Console.WriteLine("IsUacEnabled    : [{0}]", isUacEnabled);
 

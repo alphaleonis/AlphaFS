@@ -41,9 +41,6 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var gotException = false;
-
-
          const string colonText = @"\My:FilePath";
 
          var invalidPath = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath + @"\dev\test") + colonText;
@@ -51,21 +48,19 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Invalid Path: [{0}]", invalidPath);
 
 
+         Exception exception = null;
+
          try
          {
             Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(invalidPath, true, true);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(NotSupportedException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            exception = ex;
          }
+         
 
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+         ExceptionAssert.NotSupportedException(exception);
 
 
          Console.WriteLine();

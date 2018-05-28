@@ -56,7 +56,7 @@ namespace AlphaFS.UnitTest
 
 
          if (networkConnectionCount == 0)
-            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

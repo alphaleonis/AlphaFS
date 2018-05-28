@@ -39,28 +39,22 @@ namespace AlphaFS.UnitTest
 
       private void Directory_GetAccessControl(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.Combine(UnitTestConstants.TempPath, "Directory.GetAccessControl()-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters());
-
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-         try
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            System.IO.Directory.CreateDirectory(tempPath);
+            var folder = System.IO.Directory.CreateDirectory(tempRoot.RandomDirectoryFullPath).FullName;
 
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
+            
             var foundRules = false;
 
-            var sysIO = System.IO.File.GetAccessControl(tempPath);
+            var sysIO = System.IO.File.GetAccessControl(folder);
             var sysIOaccessRules = sysIO.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
 
-            var alphaFS = System.IO.File.GetAccessControl(tempPath);
+            var alphaFS = System.IO.File.GetAccessControl(folder);
             var alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
-
-
-            Console.WriteLine("Input Directory Path: [{0}]", tempPath);
+            
             Console.WriteLine("\n\tSystem.IO rules found: [{0}]\n\tAlphaFS rules found  : [{1}]", sysIOaccessRules.Count, alphaFSaccessRules.Count);
+
 
             Assert.AreEqual(sysIOaccessRules.Count, alphaFSaccessRules.Count);
 
@@ -75,16 +69,6 @@ namespace AlphaFS.UnitTest
             }
 
             Assert.IsTrue(foundRules);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            Assert.IsTrue(false);
-         }
-         finally
-         {
-            System.IO.Directory.Delete(tempPath, true);
-            Assert.IsFalse(System.IO.Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          }
 
          Console.WriteLine();

@@ -22,7 +22,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -45,7 +44,7 @@ namespace AlphaFS.UnitTest
          {
             var folder = System.IO.Directory.CreateDirectory(tempRoot.RandomDirectoryFullPath).FullName;
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
 
 
             var count = 0;

@@ -22,7 +22,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -50,7 +49,7 @@ namespace AlphaFS.UnitTest
             Alphaleonis.Win32.Filesystem.File.WriteAllLines(file, collection);
 
 
-            CollectionAssert.AreEquivalent(collection, System.IO.File.ReadAllLines(file));
+            CollectionAssert.AreEqual(collection, System.IO.File.ReadAllLines(file));
          }
 
          Console.WriteLine();

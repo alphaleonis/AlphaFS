@@ -27,14 +27,14 @@ namespace AlphaFS.UnitTest
 {
    public static class UnitTestAssert
    {
-      public static void IsElevated()
+      public static void IsElevatedProcess()
       {
          if (!Alphaleonis.Win32.Security.ProcessContext.IsElevatedProcess)
-            SetInconclusive("This unit test must be run elevated.");
+            Inconclusive("This unit test must be run elevated.");
       }
 
 
-      public static void SetInconclusive(string errorMessage)
+      public static void Inconclusive(string errorMessage)
       {
          Console.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0}{1}{0}", Environment.NewLine, errorMessage));
 
@@ -44,15 +44,15 @@ namespace AlphaFS.UnitTest
       }
 
 
-      public static void SetInconclusiveBecauseEnumerationIsEmpty()
+      public static void InconclusiveBecauseEnumerationIsEmpty()
       {
-         SetInconclusive("The enumeration returned an empty collection, which is not expected.");
+         Inconclusive("The enumeration returned an empty collection, which is not expected.");
       }
 
 
-      public static void SetInconclusiveBecauseFileNotFound(string fullPath)
+      public static void InconclusiveBecauseFileNotFound(string fullPath)
       {
-         SetInconclusive("The file system object was not found: " + fullPath);
+         Inconclusive("The file system object was not found: " + fullPath);
       }
    }
 }

@@ -39,35 +39,27 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Delete_ThrowDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempPath + @"\Non Existing Directory";
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
-
-
-         try
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            Alphaleonis.Win32.Filesystem.Directory.Delete(tempPath);
+            var folder = tempRoot.RandomDirectoryFullPath;
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
+
+
+            Exception exception = null;
+
+            try
+            {
+               Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+            }
+            catch (Exception ex)
+            {
+               exception = ex;
+            }
+            
+
+            ExceptionAssert.DirectoryNotFoundException(exception);
          }
-         catch (Exception ex)
-         {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-         }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
 
          Console.WriteLine();
       }

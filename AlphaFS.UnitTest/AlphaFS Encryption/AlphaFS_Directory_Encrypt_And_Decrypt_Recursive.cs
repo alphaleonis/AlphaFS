@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -62,7 +61,7 @@ namespace AlphaFS.UnitTest
             }
 
             if (cnt == 0)
-               UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+               UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
 
 
 
@@ -80,7 +79,7 @@ namespace AlphaFS.UnitTest
             }
 
             if (cnt == 0)
-               UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+               UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
          }
 
          Console.WriteLine();

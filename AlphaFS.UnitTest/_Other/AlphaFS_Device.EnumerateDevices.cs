@@ -56,7 +56,7 @@ namespace AlphaFS.UnitTest
          }
 
          if (classCnt == 0)
-            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
       }
 
 
