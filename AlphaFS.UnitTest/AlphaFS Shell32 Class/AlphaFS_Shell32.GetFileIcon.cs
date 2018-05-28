@@ -42,7 +42,7 @@ namespace AlphaFS.UnitTest
       private void Shell32_GetFileIcon(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
+         
          var file = UnitTestConstants.NotepadExe;
          if (isNetwork)
             file = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.NotepadExe);

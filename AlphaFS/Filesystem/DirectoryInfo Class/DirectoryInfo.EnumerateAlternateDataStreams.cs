@@ -32,6 +32,6 @@ namespace Alphaleonis.Win32.Filesystem
       public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams()
       {
          return File.EnumerateAlternateDataStreamsCore(Transaction, LongFullName, PathFormat.LongFullPath);
-      }    
+      }
    }
 }

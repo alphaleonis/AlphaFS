@@ -40,15 +40,13 @@ namespace AlphaFS.UnitTest
       private void Directory_GetFileSystemEntries(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var inputPath = UnitTestConstants.SysRoot;
          if (isNetwork)
             inputPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(inputPath);
 
 
-         Console.WriteLine("Input Directory Path: [{0}]\n", inputPath);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", inputPath);
 
 
          var systemIOCount = System.IO.Directory.GetFileSystemEntries(inputPath).Length;

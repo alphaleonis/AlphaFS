@@ -41,22 +41,15 @@ namespace AlphaFS.UnitTest
       private void File_Copy(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             // Min: 1 bytes, Max: 10485760 = 10 MB.
             var fileLength = new Random().Next(1, 10485760);
-            var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName, fileLength);
-            var fileCopy = rootDir.RandomFileFullPath;
+            var fileSource = UnitTestConstants.CreateFile(tempRoot.Directory.FullName, fileLength);
+            var fileCopy = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
+            Console.WriteLine("\nSrc File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
             Console.WriteLine("Dst File Path: [{0}]", fileCopy);
             
             Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The file does not exists, but is expected to.");

@@ -35,8 +35,8 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
          Console.WriteLine();
-         
-         var TempFolder = UnitTestConstants.TempFolder;
+
+         var tempFolder = UnitTestConstants.TempPath;
 
 
          #region Regular Drive Mapping
@@ -47,14 +47,14 @@ namespace AlphaFS.UnitTest
          var actionIsTrue = false;
          try
          {
-            Alphaleonis.Win32.Filesystem.Volume.DefineDosDevice(drive, TempFolder);
+            Alphaleonis.Win32.Filesystem.Volume.DefineDosDevice(drive, tempFolder);
             actionIsTrue = true;
          }
          catch
          {
          }
 
-         Console.WriteLine("Created Regular drive mapping (Should be True): [{0}]\nDrive letter: [{1}] now points to: [{2}]", actionIsTrue, drive, TempFolder);
+         Console.WriteLine("Created Regular drive mapping (Should be True): [{0}]\nDrive letter: [{1}] now points to: [{2}]", actionIsTrue, drive, tempFolder);
 
          Assert.IsTrue(actionIsTrue, "Regular drive mapping should have been created.");
 
@@ -105,14 +105,14 @@ namespace AlphaFS.UnitTest
             var createSymbolicLink = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.Volume.DefineDosDevice(drive, TempFolder, Alphaleonis.Win32.Filesystem.DosDeviceAttributes.RawTargetPath);
+               Alphaleonis.Win32.Filesystem.Volume.DefineDosDevice(drive, tempFolder, Alphaleonis.Win32.Filesystem.DosDeviceAttributes.RawTargetPath);
                createSymbolicLink = true;
             }
             catch
             {
             }
 
-            Console.WriteLine("\n\nCreated Symbolic link mapping (Should be True): [{0}]\nDrive letter: [{1}] now points to: [{2}]", createSymbolicLink, drive, TempFolder);
+            Console.WriteLine("\n\nCreated Symbolic link mapping (Should be True): [{0}]\nDrive letter: [{1}] now points to: [{2}]", createSymbolicLink, drive, tempFolder);
 
             Assert.IsTrue(createSymbolicLink);
 
@@ -144,7 +144,7 @@ namespace AlphaFS.UnitTest
             var removeSymbolicLink = false;
             try
             {
-               Alphaleonis.Win32.Filesystem.Volume.DeleteDosDevice(drive, TempFolder, true);
+               Alphaleonis.Win32.Filesystem.Volume.DeleteDosDevice(drive, tempFolder, true);
                removeSymbolicLink = true;
             }
             catch

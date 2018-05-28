@@ -21,7 +21,6 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
@@ -42,18 +41,12 @@ namespace AlphaFS.UnitTest
       private void File_AppendText_ThenReadAllLinesShouldReturnSameCollection(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
+            var file = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("\nInput File Path: [{0}]", file);
 
             var sample = new[] {UnitTestConstants.StreamArrayContent[0], UnitTestConstants.StreamArrayContent[1]};
 
@@ -71,7 +64,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\t" + collection[i]);
 
 
-            CollectionAssert.AreEqual(sample, collection);
+            CollectionAssert.AreEquivalent(sample, collection);
          }
 
          Console.WriteLine();

@@ -42,14 +42,18 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file = tempRoot.RandomFileFullPath;
+
             Console.WriteLine("\nInput File Path: [{0}]", file);
+
 
             Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file exists, but is expected not to.");
 
+
             using (System.IO.File.Create(file)) {}
+
 
             Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file does not exists, but is expected to.");
          }

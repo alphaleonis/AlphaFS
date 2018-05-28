@@ -41,15 +41,13 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
-         var tempPath = System.IO.Path.GetTempPath();
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempPath = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
          {
-            var hardlinkFolder = System.IO.Path.Combine(rootDir.Directory.FullName, "Hardlinks");
+            var hardlinkFolder = System.IO.Path.Combine(tempPath.Directory.FullName, "Hardlinks");
             System.IO.Directory.CreateDirectory(hardlinkFolder);
 
 
-            var file = System.IO.Path.Combine(rootDir.Directory.FullName, "OriginalFile.txt");
+            var file = System.IO.Path.Combine(tempPath.Directory.FullName, "OriginalFile.txt");
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
             // Create original file with text content.

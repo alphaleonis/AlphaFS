@@ -41,25 +41,17 @@ namespace AlphaFS.UnitTest
       private void Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-         
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
 
             Console.WriteLine("Input Directory Path: [{0}]", folder);
 
             System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.ReadOnly);
 
+
+            var gotException = false;
 
             try
             {
@@ -78,11 +70,10 @@ namespace AlphaFS.UnitTest
             { 
                System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.Normal);
             }
+
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
 
          Console.WriteLine();
       }

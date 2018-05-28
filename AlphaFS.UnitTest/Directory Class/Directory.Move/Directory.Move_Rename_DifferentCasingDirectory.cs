@@ -41,25 +41,18 @@ namespace AlphaFS.UnitTest
       private void Directory_Move_Rename_DifferentCasingDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
 
             var upperCaseFolderName = System.IO.Path.GetFileName(folderSrc.FullName).ToUpperInvariant();
 
             var destFolder = System.IO.Path.Combine(folderSrc.Parent.FullName, upperCaseFolderName);
 
-            Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folderSrc.FullName);
 
-            Console.WriteLine("\n\tRename folder: [{0}] to: [{1}]", folderSrc.Name, upperCaseFolderName);
+            Console.WriteLine("\tRename folder: [{0}] to: [{1}]", folderSrc.Name, upperCaseFolderName);
 
 
             Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, destFolder);

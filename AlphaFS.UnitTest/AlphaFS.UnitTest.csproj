@@ -146,6 +146,7 @@
     <Compile Include="AccessControlTest.cs" />
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_ThrowIOException_SegmentAlreadyUnlocked.cs" />
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_ThrowIOException_FilePortionIsLocked.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host.ConnectTo_Share_And_DisconnectFrom_Share.cs" />
     <Compile Include="AlphaFS_AlternateDataStreamsTest.cs" />
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStreamTest.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_ByHandleFileInfoTest.cs" />
@@ -187,12 +188,12 @@
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.GetServerStatistics.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateSessions.cs" />
-    <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.Copy_CopySymbolicLink.cs" />
+    <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.Copy_SymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction_ThrowIOException_FileExistsWithSameNameAsDirectory.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction_ThrowArgumentException_MappedDrive.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateJunction_ThrowArgumentException_UncPath.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_Directory.CreateSymbolicLink_ThrowIOException_FileExistsWithSameNameAsDirectory.cs" />
-    <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.Copy_CopySymbolicLink.cs" />
+    <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.Copy_SymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile.cs" />
     <Compile Include="AlphaFS ProcessContext Class\AlphaFS_ProcessContextTest.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetFileAssociation.cs" />
@@ -291,7 +292,7 @@
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Rename_DifferentCasingDirectory.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Rename.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_SameVolume.cs" />
-    <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_ToDifferentVolume_EmulateUsingCopyDelete.cs" />
+    <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_ToDifferentVolume_EmulateMoveUsingCopyDelete.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_ThrowDirectoryNotFoundException_NonExistingSourceDirectory.cs" />
     <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive.cs" />
     <Compile Include="AlphaFS Compression\AlphaFS_Directory.CompressDecompress.cs" />
@@ -344,7 +345,7 @@
     <Compile Include="TimestampsTest.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_NonExistingDirectory.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_AnalyzeDirectoryInfoSecurity.cs" />
-    <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\DirectoryInfo.MoveTo_MoveToEmptyFolder.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\DirectoryInfo.MoveTo_FolderToEmptyFolder.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\DirectoryInfo.MoveTo_Rename.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\AlphaFS_DirectoryInfo.MoveTo_DelayUntilReboot.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.ThrowPathTooLongException_FolderNameGreaterThan255Characters.cs" />
@@ -419,8 +420,8 @@
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateDomainDfsRoot.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateDfsRoot.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateDfsLinks.cs" />
-    <Compile Include="AlphaFS Host Class\AlphaFS_Host.ConnectToAndDisconnectFrom.cs" />
-    <Compile Include="AlphaFS Host Class\AlphaFS_Host.ConnectDriveAndDisconnectDrive.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host.ConnectTo_Ipc_And_DisconnectFrom_Ipc.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host.ConnectDrive_And_DisconnectDrive.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateDrives.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.GetHostShareFromPath.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.DriveConnection.cs" />

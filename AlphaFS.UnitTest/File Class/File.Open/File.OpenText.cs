@@ -41,17 +41,12 @@ namespace AlphaFS.UnitTest
       private void File_OpenText(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
-            Console.WriteLine("Input File Path: [{0}]\n", file);
+            var file = tempRoot.RandomFileFullPath;
+
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
             System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);

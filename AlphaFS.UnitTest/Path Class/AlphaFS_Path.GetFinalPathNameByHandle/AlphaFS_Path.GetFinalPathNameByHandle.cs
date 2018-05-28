@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         using (var tempRoot = new TemporaryDirectory(UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file = tempRoot.RandomDirectoryFullPath;
 

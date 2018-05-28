@@ -72,9 +72,6 @@ namespace AlphaFS.UnitTest
 
          if (count == 0)
             UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
-
-
-         Console.WriteLine();
       }
    }
 }

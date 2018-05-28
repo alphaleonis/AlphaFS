@@ -46,14 +46,19 @@ namespace AlphaFS.UnitTest
 
          var isTrue = Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Earlier);
          Console.WriteLine("\tOS Earlier           : [{0}]", isTrue);
+
          Assert.IsTrue(isTrue);
+
 
          isTrue = Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Windows2000);
          Console.WriteLine("\tWindows 2000         : [{0}]", isTrue);
+
          Assert.IsTrue(isTrue);
+
 
          isTrue = Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.WindowsXP);
          Console.WriteLine("\tWindows XP           : [{0}]", isTrue);
+
          Assert.IsTrue(isTrue);
 
 
@@ -72,7 +77,9 @@ namespace AlphaFS.UnitTest
 
 
          var isFalse = Alphaleonis.Win32.OperatingSystem.IsAtLeast(Alphaleonis.Win32.OperatingSystem.EnumOsName.Later);
+
          Console.WriteLine("\tOS Later             : [{0}]", isFalse);
+
          Assert.IsFalse(isFalse);
       }
    }

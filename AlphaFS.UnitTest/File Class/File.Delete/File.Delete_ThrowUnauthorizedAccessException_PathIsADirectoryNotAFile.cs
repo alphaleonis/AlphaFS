@@ -42,20 +42,17 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
+            var folder = tempRoot.RandomDirectoryFullPath;
+
             Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
             System.IO.Directory.CreateDirectory(folder);
 
 
             var gotException = false;
+
             try
             {
                Alphaleonis.Win32.Filesystem.File.Delete(folder);
@@ -68,6 +65,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
             }
+
 
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }

@@ -43,15 +43,9 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file = UnitTestConstants.NotepadExe;
-
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
@@ -66,9 +60,9 @@ namespace AlphaFS.UnitTest
             // We can not compare ChangeTime against .NET because it does not exist.
             // Creating a file and renaming it triggers ChangeTime, so test for that.
 
-            file = rootDir.RandomFileFullPath;
-            if (isNetwork) file = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(file);
-            Console.WriteLine("Input File Path: [{0}]\n", file);
+            file = tempRoot.RandomFileFullPath;
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+
 
             var fileInfo = new System.IO.FileInfo(file);
             using (fileInfo.Create()) { }

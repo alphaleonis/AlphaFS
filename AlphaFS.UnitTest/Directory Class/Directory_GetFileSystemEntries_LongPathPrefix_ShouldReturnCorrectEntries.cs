@@ -53,13 +53,14 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folderRoot = tempRoot.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]", folderRoot);
+            var folder = tempRoot.RandomDirectoryFullPath;
+
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
-            var longDir = System.IO.Path.Combine(folderRoot, new string('x', 128), new string('x', 128), new string('x', 128), new string('x', 128));
+            var longDir = System.IO.Path.Combine(folder, new string('x', 128), new string('x', 128), new string('x', 128), new string('x', 128));
 
             Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(longDir);
 

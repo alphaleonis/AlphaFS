@@ -32,12 +32,12 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Exists_WithLeadingOrTrailingSpace_LocalAndNetwork_Success()
       {
-         Directory_Exists_WithLeadingOrTrailingSpace(false);
-         Directory_Exists_WithLeadingOrTrailingSpace(true);
+         AlphaFS_Directory_Exists_WithLeadingOrTrailingSpace(false);
+         AlphaFS_Directory_Exists_WithLeadingOrTrailingSpace(true);
       }
 
 
-      private void Directory_Exists_WithLeadingOrTrailingSpace(bool isNetwork)
+      private void AlphaFS_Directory_Exists_WithLeadingOrTrailingSpace(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 

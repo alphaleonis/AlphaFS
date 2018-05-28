@@ -41,26 +41,18 @@ namespace AlphaFS.UnitTest
       private void Directory_Delete_ThrowUnauthorizedAccessException_DirectoryHasDenyPermission(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
 
             Console.WriteLine("Input Directory Path: [{0}]", folder);
 
+
             // Set DENY permission for current user.
             UnitTestConstants.FolderDenyPermission(true, folder.FullName);
-
+            
+            var gotException = false;
 
             try
             {
@@ -80,12 +72,11 @@ namespace AlphaFS.UnitTest
                // Remove DENY permission for current user.
                UnitTestConstants.FolderDenyPermission(false, folder.FullName);
             }
+
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-
+         
          Console.WriteLine();
       }
    }

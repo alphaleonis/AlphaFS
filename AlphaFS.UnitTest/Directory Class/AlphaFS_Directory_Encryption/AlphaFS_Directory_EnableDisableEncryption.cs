@@ -40,9 +40,10 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = System.IO.Directory.CreateDirectory(tempRoot.RandomDirectoryFullPath).FullName;
+
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
 
@@ -62,7 +63,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\t" + collection[i]);
             Console.WriteLine();
 
-            CollectionAssert.AreEqual(enabled, collection);
+            CollectionAssert.AreEquivalent(enabled, collection);
 
 
 
@@ -77,7 +78,7 @@ namespace AlphaFS.UnitTest
             for (int i = 0, l = collection.Length; i < l; i++)
                Console.WriteLine("\t" + collection[i]);
 
-            CollectionAssert.AreEqual(disabled, collection);
+            CollectionAssert.AreEquivalent(disabled, collection);
          }
 
          Console.WriteLine();

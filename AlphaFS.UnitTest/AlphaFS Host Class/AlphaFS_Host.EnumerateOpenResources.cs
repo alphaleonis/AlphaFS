@@ -32,34 +32,27 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateOpenResources_Local_Success()
       {
-         EnumerateOpenResources(UnitTestConstants.LocalHost);
-      }
-      
-
-      private void EnumerateOpenResources(string host)
-      {
          UnitTestAssert.IsElevated();
          UnitTestConstants.PrintUnitTestHeader(false);
 
+         var host = UnitTestConstants.LocalHost;
          Console.WriteLine("\nConnected to Host: [{0}]", host);
 
 
-         var cnt = 0;
+         var count = 0;
          foreach (var openResourceInfo in Alphaleonis.Win32.Network.Host.EnumerateOpenResources(host, null, null, false))
          {
             if (UnitTestConstants.Dump(openResourceInfo, -11))
             {
-               cnt++;
+               count++;
 
                Console.WriteLine();
             }
          }
 
 
-         if (cnt == 0)
+         if (count == 0)
             UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
-
-         Console.WriteLine();
       }
    }
 }

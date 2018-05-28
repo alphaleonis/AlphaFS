@@ -33,6 +33,7 @@ namespace AlphaFS.UnitTest
       public void Path_GetPathRoot_ThrowArgumentExceptionEmptyString_Success()
       {
          var gotException = false;
+
          try
          {
             Alphaleonis.Win32.Filesystem.Path.GetPathRoot(string.Empty);

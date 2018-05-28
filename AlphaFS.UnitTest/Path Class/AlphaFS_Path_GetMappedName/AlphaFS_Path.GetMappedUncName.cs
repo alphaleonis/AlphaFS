@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Path_GetMappedUncName()
       {
-         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder);
+         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath);
 
          using (var connection = new Alphaleonis.Win32.Network.DriveConnection(share))
          {
@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("\n\tGetMappedUncName: [{0}]", shareName);
 
-            Assert.AreEqual(share, shareName);
+            Assert.AreEqual(share, shareName + @"\");
          }
       }
    }

@@ -27,7 +27,7 @@ namespace AlphaFS.UnitTest
    /// <summary>Used to create a temporary directory that will be deleted once this instance is disposed.</summary>
    internal sealed class TemporaryDirectory : IDisposable
    {
-      public TemporaryDirectory(string prefix = null) : this(System.IO.Path.GetTempPath(), prefix) { }
+      public TemporaryDirectory(string prefix = null) : this(UnitTestConstants.TempPath, prefix) { }
 
 
       public TemporaryDirectory(string root, string prefix)
@@ -44,22 +44,33 @@ namespace AlphaFS.UnitTest
          Directory.Create();
       }
 
+
       public System.IO.DirectoryInfo Directory { get; private set; }
+
 
       public string RandomDirectoryFullPath
       {
          get { return System.IO.Path.Combine(Directory.FullName, "Directory-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()); }
       }
 
+
       public string RandomFileFullPath
       {
          get { return RandomFileFullPathNoExtension + ".txt"; }
       }
 
+
       public string RandomFileFullPathNoExtension
       {
          get { return System.IO.Path.Combine(Directory.FullName, "File-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()); }
       }
+
+
+      public override string ToString()
+      {
+         return Directory.FullName;
+      }
+
 
       #region Disposable Members
 
@@ -83,7 +94,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\nSystem.IO failed to delete TemporaryDirectory: [{0}]\nError: [{1}]", Directory.FullName, ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\nDelete TemporaryDirectory: [{0}]. Error: [{1}]", Directory.FullName, ex.Message.Replace(Environment.NewLine, string.Empty));
             Console.Write("Retry using AlphaFS... ");
 
             try
@@ -100,7 +111,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex2)
             {
-               Console.WriteLine("Failed to delete TemporaryDirectory.\nError: {0}", ex2.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("Failed to delete TemporaryDirectory. Error: {0}", ex2.Message.Replace(Environment.NewLine, string.Empty));
             }
          }
       }

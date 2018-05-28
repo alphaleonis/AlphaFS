@@ -42,14 +42,13 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = new System.IO.DirectoryInfo(tempRoot.RandomDirectoryFullPath);
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
+
+            Console.WriteLine("\nInput Directory Path: [{0}]\n", folder.FullName);
 
             UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, 5, true, true, true);
-
-            Environment.CurrentDirectory = tempRoot.Directory.Parent.FullName;
 
 
             var systemIOCollection = System.IO.Directory.GetDirectories(folder.FullName, "*", System.IO.SearchOption.AllDirectories);
@@ -57,7 +56,12 @@ namespace AlphaFS.UnitTest
             var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder.FullName, "*", System.IO.SearchOption.AllDirectories);
 
 
-            CollectionAssert.AreEqual(systemIOCollection, alphaFSCollection);
+            var folderCount = 0;
+            foreach (var fso in systemIOCollection)
+               Console.WriteLine("\t#{0:000}\t{1}", ++folderCount, fso);
+
+
+            CollectionAssert.AreEquivalent(systemIOCollection, alphaFSCollection);
          }
 
          Console.WriteLine();

@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
 
          const string colonText = @"\My:FilePath";
 
-         var invalidPath = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder + @"\dev\test") + colonText;
+         var invalidPath = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath + @"\dev\test") + colonText;
 
          Console.WriteLine("Invalid Path: [{0}]", invalidPath);
 

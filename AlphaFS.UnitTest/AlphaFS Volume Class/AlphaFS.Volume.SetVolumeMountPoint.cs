@@ -36,20 +36,15 @@ namespace AlphaFS.UnitTest
       {
          UnitTestAssert.IsElevated();
          UnitTestConstants.PrintUnitTestHeader(false);
-         
 
-         var tempPath = UnitTestConstants.TempFolder;
-         
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
          {
-            var dirInfo = System.IO.Directory.CreateDirectory(rootDir.RandomDirectoryFullPath);
+            var dirInfo = System.IO.Directory.CreateDirectory(tempRoot.RandomDirectoryFullPath);
 
             Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
 
-
             var guid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(UnitTestConstants.SysDrive);
-
-
+            
 
             Console.WriteLine("\nCreate mount point.");
 

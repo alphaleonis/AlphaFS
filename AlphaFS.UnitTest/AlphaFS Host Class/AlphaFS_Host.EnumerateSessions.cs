@@ -32,16 +32,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateSessions_Local_Success()
       {
-         var host = UnitTestConstants.LocalHost;
-         
-         EnumerateSessions(host);
-      }
-
-      
-      private void EnumerateSessions(string host)
-      {
          UnitTestConstants.PrintUnitTestHeader(false);
-         
+
+         var host = UnitTestConstants.LocalHost;
          Console.WriteLine("\nInput Host: [{0}]", host);
 
 
@@ -60,9 +53,6 @@ namespace AlphaFS.UnitTest
 
          if (sessionCount == 0)
             UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
-
-
-         Console.WriteLine();
       }
    }
 }

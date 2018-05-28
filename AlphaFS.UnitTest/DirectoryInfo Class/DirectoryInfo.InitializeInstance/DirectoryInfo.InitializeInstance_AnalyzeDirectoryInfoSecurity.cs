@@ -93,7 +93,7 @@ namespace AlphaFS.UnitTest
 
       private string GetTempDirectoryName()
       {
-         return System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+         return System.IO.Path.Combine(UnitTestConstants.TempPath, Guid.NewGuid().ToString("N"));
       }
 
 

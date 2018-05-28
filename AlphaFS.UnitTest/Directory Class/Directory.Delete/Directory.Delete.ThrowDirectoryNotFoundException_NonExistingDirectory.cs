@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var tempPath = UnitTestConstants.TempFolder + @"\Non Existing Directory";
+         var tempPath = UnitTestConstants.TempPath + @"\Non Existing Directory";
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 

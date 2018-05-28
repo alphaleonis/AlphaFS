@@ -31,29 +31,24 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_Copy_CopySymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink_LocalAndNetwork_Success()
+      public void AlphaFS_File_Copy_SymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink_LocalAndNetwork_Success()
       {
          UnitTestAssert.IsElevated();
 
-         File_Copy_CopySymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(false);
-         File_Copy_CopySymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(true);
+         AlphaFS_File_Copy_SymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(false);
+         AlphaFS_File_Copy_SymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(true);
       }
 
 
-      private void File_Copy_CopySymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(bool isNetwork)
+      private void AlphaFS_File_Copy_SymbolicLink_SourceIsASymbolicLink_TargetMustAlsoBeASymbolicLink(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var sourceFileLink = System.IO.Path.Combine(rootDir.Directory.FullName, "SourceFileLink-ToOriginalFile.txt");
+            var sourceFileLink = System.IO.Path.Combine(tempRoot.Directory.FullName, "SourceFileLink-ToOriginalFile.txt");
 
-            var fileInfo = new System.IO.FileInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "OriginalFile.txt"));
+            var fileInfo = new System.IO.FileInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "OriginalFile.txt"));
             using (fileInfo.CreateText()) { }
 
             Console.WriteLine("\nInput File Path: [{0}]", fileInfo.FullName);
@@ -62,7 +57,7 @@ namespace AlphaFS.UnitTest
             Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(sourceFileLink, fileInfo.FullName);
 
 
-            var destinationFileLink = System.IO.Path.Combine(rootDir.Directory.FullName, "DestinationFileLink-ToOriginalFile.txt");
+            var destinationFileLink = System.IO.Path.Combine(tempRoot.Directory.FullName, "DestinationFileLink-ToOriginalFile.txt");
 
             Alphaleonis.Win32.Filesystem.File.Copy(sourceFileLink, destinationFileLink, Alphaleonis.Win32.Filesystem.CopyOptions.CopySymbolicLink);
 

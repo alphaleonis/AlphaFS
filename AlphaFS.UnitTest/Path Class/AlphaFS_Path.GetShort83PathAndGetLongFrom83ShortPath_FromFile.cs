@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var myLongPath = System.IO.Path.Combine(UnitTestConstants.TempFolder, "My Long Data File Or Directory");
+         var myLongPath = System.IO.Path.Combine(UnitTestConstants.TempPath, "My Long Data File Or Directory");
          if (isNetwork)
             myLongPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(myLongPath);
 

@@ -33,6 +33,7 @@ namespace AlphaFS.UnitTest
       public void Path_GetFullPath_ThrowArgumentException_InvalidPath2_Success()
       {
          var gotException = false;
+
          try
          {
             Alphaleonis.Win32.Filesystem.Path.GetFullPath(@"\\\\.txt");

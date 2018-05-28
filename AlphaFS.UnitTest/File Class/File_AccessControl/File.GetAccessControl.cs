@@ -44,14 +44,12 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
+            var file = tempRoot.RandomFileFullPath;
+
+            Console.WriteLine("\nInput File Path: [{0}]", file);
+
 
             using (Alphaleonis.Win32.Filesystem.File.Create(file)) {}
 
@@ -64,8 +62,6 @@ namespace AlphaFS.UnitTest
             var alphaFS = Alphaleonis.Win32.Filesystem.File.GetAccessControl(file);
             var alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(NTAccount));
 
-
-            Console.WriteLine("\nInput File Path: [{0}]", file);
             Console.WriteLine("\n\tSystem.IO rules found: [{0}]\n\tAlphaFS rules found  : [{1}]", sysIOaccessRules.Count, alphaFSaccessRules.Count);
 
 

@@ -36,22 +36,15 @@ namespace AlphaFS.UnitTest
          Shell32Info_InitializeInstance(false);
          Shell32Info_InitializeInstance(true);
       }
-
-
-
+      
 
       private void Shell32Info_InitializeInstance(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
+            var file = tempRoot.RandomFileFullPath;
 
             var shell32Info = new Alphaleonis.Win32.Filesystem.Shell32Info(file);
             

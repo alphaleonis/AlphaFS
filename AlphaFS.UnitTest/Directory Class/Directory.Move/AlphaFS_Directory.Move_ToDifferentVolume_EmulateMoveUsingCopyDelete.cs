@@ -31,24 +31,25 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Move_ToDifferentVolume_EmulateMoveUsingCopyDelete_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete(false);
-         AlphaFS_Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete(true);
+         AlphaFS_Directory_Move_ToDifferentVolume_EmulateMoveUsingCopyDelete(false);
+         AlphaFS_Directory_Move_ToDifferentVolume_EmulateMoveUsingCopyDelete(true);
       }
 
 
-      private void AlphaFS_Directory_Move_ToDifferentVolume_EmulateUsingCopyDelete(bool isNetwork)
+      private void AlphaFS_Directory_Move_ToDifferentVolume_EmulateMoveUsingCopyDelete(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
+         
+         // Always use UnitTestConstants.TempPath
 
-         using (var rootDir = new TemporaryDirectory(UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var random = UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
-            var srcFolderName = System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder.") + random;
-            var destFolderName = System.IO.Path.Combine(rootDir.Directory.FullName, "Destination Folder.") + random;
+            var srcFolderName = System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder.") + random;
+            var destFolderName = System.IO.Path.Combine(tempRoot.Directory.FullName, "Destination Folder.") + random;
 
 
             var folderSrc = isNetwork

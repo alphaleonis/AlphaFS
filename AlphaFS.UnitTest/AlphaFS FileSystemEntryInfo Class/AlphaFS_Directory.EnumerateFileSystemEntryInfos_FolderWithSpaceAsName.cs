@@ -42,18 +42,19 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = tempRoot.Directory.FullName;
 
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
 
-            var maxFolder = 10;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, maxFolder / 2, true, true, false);
+            const int maxFso = 10;
+            const int expectedFso = 30;
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, maxFso, true, true, false);
 
 
-            for (var i = 0; i < maxFolder / 2; i++)
+            for (var i = 0; i < maxFso; i++)
             {
                var spaceFolder = folder + @"\" + new string(' ', i + 1) + @"\" + "no_void";
 
@@ -83,7 +84,7 @@ namespace AlphaFS.UnitTest
             }
 
 
-            Assert.AreEqual(maxFolder, countNamedFolders + countSpaceFolders);
+            Assert.AreEqual(expectedFso, countNamedFolders + countSpaceFolders);
          }
 
          Console.WriteLine();

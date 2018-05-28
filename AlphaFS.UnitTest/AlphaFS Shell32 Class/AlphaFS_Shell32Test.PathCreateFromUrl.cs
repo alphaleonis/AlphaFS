@@ -29,8 +29,6 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Shell32_PathCreateFromUrl()
       {
-         Console.WriteLine("Filesystem.Shell32.PathCreateFromUrl()");
-
          var urlPath = Alphaleonis.Win32.Filesystem.Shell32.UrlCreateFromPath(UnitTestConstants.AppData);
          var filePath = Alphaleonis.Win32.Filesystem.Shell32.PathCreateFromUrl(urlPath);
 

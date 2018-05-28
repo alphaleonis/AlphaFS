@@ -42,17 +42,12 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
+            var file = tempRoot.RandomFileFullPath;
             var fileInfo = new Alphaleonis.Win32.Filesystem.FileInfo(file + "-AlphaFS");
 
-            Console.WriteLine("\nAlphaFS Input File Path: [{0}]", fileInfo.FullName);
+            Console.WriteLine("\nInput File Path: [{0}]", fileInfo.FullName);
 
             using (fileInfo.Create())
             {

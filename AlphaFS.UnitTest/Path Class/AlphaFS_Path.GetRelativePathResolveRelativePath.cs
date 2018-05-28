@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
 
 
-         var tempPath = System.IO.Path.GetTempPath();
+         var tempPath = UnitTestConstants.TempPath;
          var sysDrive = UnitTestConstants.SysDrive;
 
          if (isNetwork)

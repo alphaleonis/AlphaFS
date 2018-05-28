@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file = tempRoot.RandomFileFullPath;
 
@@ -70,9 +70,10 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
                }
 
-               Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
                bfs.Unlock(0, 10);
+
+
+               Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
             }
          }
 

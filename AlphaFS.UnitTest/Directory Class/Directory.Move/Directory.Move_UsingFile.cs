@@ -40,10 +40,6 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Move_UsingFile(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
          // Change the drive letter to suit your environment.
          var destinationDriveLetter = "D";
          var destinationDrivePath = destinationDriveLetter + Alphaleonis.Win32.Filesystem.Path.VolumeSeparator +Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
@@ -53,17 +49,14 @@ namespace AlphaFS.UnitTest
             UnitTestAssert.SetInconclusive("This unit tests needs an additional drive: [" + destinationDrivePath + "]");
 
 
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             const string srcFileName = "Src file.log";
             const string dstFileName = "Dst file.log";
 
-            var srcFile = System.IO.Path.Combine(rootDir.Directory.FullName, srcFileName);
+            var srcFile = System.IO.Path.Combine(tempRoot.Directory.FullName, srcFileName);
 
             var dstFile = System.IO.Path.Combine(destinationDrivePath, dstFileName);
             if (isNetwork)

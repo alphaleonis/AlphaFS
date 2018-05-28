@@ -43,15 +43,16 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = tempRoot.RandomDirectoryFullPath;
+
             Console.WriteLine("\nInput Directory Path: [{0}]\n", folder);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, 10, false, false, false);
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, 10, true, true, false);
 
 
-            var sysIOCollection = System.IO.Directory.EnumerateDirectories(folder).Select(System.IO.Path.GetFileName).ToArray();
+            var sysIOCollection = System.IO.Directory.EnumerateFileSystemEntries(folder).Select(System.IO.Path.GetFileName).ToArray();
 
             var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.EnumerateFileIdBothDirectoryInfo(folder).ToArray();
 
@@ -59,9 +60,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\tAlphaFS   items enumerated: {0:N0}", alphaFSCollection.Length);
 
 
-            // Since System.IO does not have a EnumerateFileIdBothDirectoryInfo method, we can only compare the collection of folder names.
+            // Since System.IO does not have a EnumerateFileIdBothDirectoryInfo method, we can only compare the collection of fso names.
 
-            CollectionAssert.AreEqual(sysIOCollection, alphaFSCollection.Select(item => item.FileName).ToArray());
+            CollectionAssert.AreEquivalent(sysIOCollection, alphaFSCollection.Select(item => item.FileName).ToArray());
          }
 
          Console.WriteLine();

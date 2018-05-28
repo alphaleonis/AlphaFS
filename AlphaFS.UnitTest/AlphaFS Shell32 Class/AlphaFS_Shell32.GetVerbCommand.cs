@@ -36,24 +36,18 @@ namespace AlphaFS.UnitTest
          Shell32Info_GetVerbCommand(false);
          Shell32Info_GetVerbCommand(true);
       }
-
-
-
+      
 
       private void Shell32Info_GetVerbCommand(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
          // Assumption: Extention: .txt is associated with: C:\Windows\System32\notepad.exe
 
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
+            var file = tempRoot.RandomFileFullPath;
 
             using (System.IO.File.CreateText(file)) {}
             Console.WriteLine("\nInput File Path: [{0}]\n", file);

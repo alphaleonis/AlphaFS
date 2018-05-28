@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
@@ -42,9 +43,10 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = System.IO.Directory.CreateDirectory(tempRoot.RandomDirectoryFullPath).FullName;
+
             Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
 
@@ -63,25 +65,26 @@ namespace AlphaFS.UnitTest
                UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
             };
 
+
             foreach (var folderName in folders)
             {
                var newFolder = System.IO.Path.Combine(folder, folderName);
 
-               if (count++ % 2 == 0)
-                  System.IO.File.AppendAllText(newFolder, DateTime.Now.ToString());
-
-               else
-                  System.IO.File.AppendAllText(newFolder + "-uneven", DateTime.Now.ToString());
+               System.IO.File.AppendAllText(newFolder + (count++ % 2 == 0 ? string.Empty : "-uneven"), DateTime.Now.ToString(CultureInfo.CurrentCulture));
             }
 
 
-            foreach (var searchPattern in folders)
+            var folderCount = 0;
+
+            foreach (var folderResult in folders)
             {
-               var systemIOCollection = System.IO.Directory.GetFiles(folder, searchPattern, System.IO.SearchOption.AllDirectories);
+               var systemIOCollection = System.IO.Directory.GetFiles(folder, folderResult, System.IO.SearchOption.AllDirectories);
 
-               var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.GetFiles(folder, searchPattern, System.IO.SearchOption.AllDirectories);
+               var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.GetFiles(folder, folderResult, System.IO.SearchOption.AllDirectories);
 
-               CollectionAssert.AreEqual(systemIOCollection, alphaFSCollection);
+               Console.WriteLine("\t#{0:000}\t{1}", ++folderCount, folderResult);
+
+               CollectionAssert.AreEquivalent(systemIOCollection, alphaFSCollection);
             }
          }
 

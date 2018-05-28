@@ -42,11 +42,13 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            // Create an encrypted file to use for testing.
             var inputDir = System.IO.Path.Combine(tempRoot.Directory.FullName, "testDir");
+
             System.IO.Directory.CreateDirectory(inputDir);
+
+            // Create an encrypted file to use for testing.
             System.IO.File.WriteAllText(System.IO.Path.Combine(inputDir, "test.txt"), "Test file");
 
 

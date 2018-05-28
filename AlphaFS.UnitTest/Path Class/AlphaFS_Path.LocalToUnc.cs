@@ -64,9 +64,9 @@ namespace AlphaFS.UnitTest
             uncPrefix + hostName + backslash + System.IO.Path.GetFileName(sysRoot),
             uncLongPrefix + hostName + backslash + System.IO.Path.GetFileName(sysRoot),
 
-            sysRoot + backslash + "TempFolder" + backslash,
-            uncPrefix + hostName + backslash + System.IO.Path.GetFileName(sysRoot) + backslash + "TempFolder" + backslash,
-            uncLongPrefix + hostName + backslash + System.IO.Path.GetFileName(sysRoot) + backslash + "TempFolder" + backslash
+            sysRoot + backslash + "TempPath" + backslash,
+            uncPrefix + hostName + backslash + System.IO.Path.GetFileName(sysRoot) + backslash + "TempPath" + backslash,
+            uncLongPrefix + hostName + backslash + System.IO.Path.GetFileName(sysRoot) + backslash + "TempPath" + backslash
          };
 
 

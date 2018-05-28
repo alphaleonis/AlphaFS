@@ -43,20 +43,10 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
-            var file2 = rootDir.RandomFileFullPath;
-            if (isNetwork)
-            {
-               file = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(file);
-               file2 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(file2);
-            }
+            var file = tempRoot.RandomFileFullPath;
+            var file2 = tempRoot.RandomFileFullPath;
 
             using (System.IO.File.Create(file)) { }
             Thread.Sleep(1500);
@@ -64,7 +54,7 @@ namespace AlphaFS.UnitTest
 
 
             Console.WriteLine("\nInput File1 Path: [{0}]", file);
-            Console.WriteLine("\nInput File2 Path: [{0}]", file2);
+            Console.WriteLine("Input File2 Path: [{0}]", file2);
 
 
             Assert.AreNotEqual(System.IO.File.GetCreationTime(file), System.IO.File.GetCreationTime(file2));

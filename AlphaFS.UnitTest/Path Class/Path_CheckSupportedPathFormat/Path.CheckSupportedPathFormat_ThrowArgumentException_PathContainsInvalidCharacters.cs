@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
          var gotException = false;
 
 
-         var invalidPath = UnitTestConstants.TempFolder + @"\ThisIs<My>File";
+         var invalidPath = UnitTestConstants.TempPath + @"\ThisIs<My>File";
 
          Console.WriteLine("Invalid Path: [{0}]", invalidPath);
 

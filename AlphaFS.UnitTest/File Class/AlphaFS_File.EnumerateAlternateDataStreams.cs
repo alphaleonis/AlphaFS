@@ -21,7 +21,9 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -32,40 +34,39 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_EnumerateAlternateDataStreams_LocalAndNetwork_Success()
       {
-         File_EnumerateAlternateDataStreams(false);
-         File_EnumerateAlternateDataStreams(true);
+         AlphaFS_EnumerateAlternateDataStreams(false);
+         AlphaFS_EnumerateAlternateDataStreams(true);
       }
       
 
-      private void File_EnumerateAlternateDataStreams(bool isNetwork)
+      private void AlphaFS_EnumerateAlternateDataStreams(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("File-EnumerateAlternateDataStreams-" + System.IO.Path.GetRandomFileName());
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-         const int defaultStreamsFile = 1; // The default number of data streams for a file.
-
-         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
-         Console.WriteLine("\nA file is created and {0} streams are added.", UnitTestConstants.AllStreams.Length);
-
-
-         try
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
+            var file = tempRoot.RandomFileFullPathNoExtension;
+
+            Console.WriteLine("\nInput File Path: [{0}]", file);
+
+
+            Console.WriteLine("\nA file is created and {0} streams are added.", UnitTestConstants.AllStreams.Length.ToString(CultureInfo.CurrentCulture));
+            
             // Create file and add 10 characters to it, file is created in ANSI format.
-            System.IO.File.WriteAllText(tempPath, UnitTestConstants.TenNumbers);
+            System.IO.File.WriteAllText(file, UnitTestConstants.TenNumbers);
 
 
-            var fi = new Alphaleonis.Win32.Filesystem.FileInfo(tempPath);
+            var fi = new Alphaleonis.Win32.Filesystem.FileInfo(file);
 
+            const int defaultStreamsFile = 1; // The default number of data streams for a file.
             var currentNumberofStreams = fi.EnumerateAlternateDataStreams().Count();
 
+               
             Assert.AreEqual(defaultStreamsFile, currentNumberofStreams, "Total amount of default streams do not match.");
-            Assert.AreEqual(currentNumberofStreams, Alphaleonis.Win32.Filesystem.File.EnumerateAlternateDataStreams(tempPath).Count(), "Total amount of File.EnumerateAlternateDataStreams() streams do not match.");
+            Assert.AreEqual(currentNumberofStreams, Alphaleonis.Win32.Filesystem.File.EnumerateAlternateDataStreams(file).Count(), "Total amount of File.EnumerateAlternateDataStreams() streams do not match.");
 
 
-            var fileSize = Alphaleonis.Win32.Filesystem.File.GetSize(tempPath);
+            var fileSize = Alphaleonis.Win32.Filesystem.File.GetSize(file);
             Assert.AreEqual(UnitTestConstants.TenNumbers.Length, fileSize);
 
 
@@ -73,8 +74,8 @@ namespace AlphaFS.UnitTest
             // Because of the colon, you must supply a full path and use PathFormat.FullPath or PathFormat.LongFullPath,
             // to prevent a: "NotSupportedException: path is in an invalid format." exception.
 
-            var stream1Name = tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream;
-            var stream2Name = tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream2;
+            var stream1Name = file + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream;
+            var stream2Name = file + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream2;
 
             Alphaleonis.Win32.Filesystem.File.WriteAllLines(stream1Name, UnitTestConstants.StreamArrayContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
             Alphaleonis.Win32.Filesystem.File.WriteAllText(stream2Name, UnitTestConstants.StreamStringContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
@@ -82,8 +83,8 @@ namespace AlphaFS.UnitTest
 
 
 
-            var newNumberofStreams = Alphaleonis.Win32.Filesystem.File.EnumerateAlternateDataStreams(tempPath).Count();
-            Console.WriteLine("\n\nCurrent stream Count(): [{0}]", newNumberofStreams);
+            var newNumberofStreams = Alphaleonis.Win32.Filesystem.File.EnumerateAlternateDataStreams(file).Count();
+            Console.WriteLine("\n\nNew stream count: [{0}]", newNumberofStreams);
 
 
             // Enumerate all streams from the file.
@@ -103,10 +104,11 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\n\tStream name: [{0}]", streamName);
 
+
                // Because of the colon, you must supply a full path and use PathFormat.FullPath or PathFormat.LongFullPath,
                // to prevent a: "NotSupportedException: path is in an invalid format." exception.
 
-               foreach (var line in Alphaleonis.Win32.Filesystem.File.ReadAllLines(tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + streamName, Alphaleonis.Win32.Filesystem.PathFormat.FullPath))
+               foreach (var line in Alphaleonis.Win32.Filesystem.File.ReadAllLines(file + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + streamName, Alphaleonis.Win32.Filesystem.PathFormat.FullPath))
                   Console.WriteLine("\t\t{0}", line);
             }
 
@@ -128,17 +130,6 @@ namespace AlphaFS.UnitTest
 
             Assert.IsNull(fileInfo1.EntryInfo);
             Assert.IsNull(fileInfo2.EntryInfo);
-
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            Assert.IsTrue(false);
-         }
-         finally
-         {
-            System.IO.File.Delete(tempPath);
-            Assert.IsFalse(System.IO.File.Exists(tempPath), "Cleanup failed: File should have been removed.");
          }
 
          Console.WriteLine();

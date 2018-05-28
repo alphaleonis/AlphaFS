@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file = tempRoot.RandomFileFullPath;
 
@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
             System.IO.File.WriteAllBytes(file, bytes);
 
 
-            CollectionAssert.AreEqual(System.IO.File.ReadAllBytes(file), Alphaleonis.Win32.Filesystem.File.ReadAllBytes(file));
+            CollectionAssert.AreEquivalent(System.IO.File.ReadAllBytes(file), Alphaleonis.Win32.Filesystem.File.ReadAllBytes(file));
          }
 
          Console.WriteLine();

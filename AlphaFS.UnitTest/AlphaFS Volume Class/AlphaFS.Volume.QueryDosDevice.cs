@@ -47,7 +47,6 @@ namespace AlphaFS.UnitTest
          var deviceNameCount = 0;
 
          foreach (var deviceName in query)
-
             Console.WriteLine("\t#{0:000}\t{1}", ++deviceNameCount, deviceName);
       }
    }

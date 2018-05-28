@@ -34,20 +34,16 @@ namespace AlphaFS.UnitTest
       }
 
 
-
-
       private void Shell32_GetFileAssociation(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var inputPath = UnitTestConstants.SysRoot;
          if (isNetwork)
             inputPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(inputPath);
 
 
-         Console.WriteLine("Input Directory Path: [{0}]", inputPath);
+         Console.WriteLine("\nInput Directory Path: [{0}]", inputPath);
 
 
          var cnt = 0;

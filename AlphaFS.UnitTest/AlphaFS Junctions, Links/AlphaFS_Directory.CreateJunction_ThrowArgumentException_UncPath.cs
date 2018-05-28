@@ -35,17 +35,14 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         // UNC paths are not supported.
-
-         using (var rootDir = new TemporaryDirectory(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(System.IO.Path.GetTempPath()), MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath), MethodBase.GetCurrentMethod().Name))
          {
-            var target = rootDir.Directory.CreateSubdirectory("JunctionTarget");
-            var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
+            var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget");
+            var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
             var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
             var gotException = false;
-
             try
             {
                Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName);

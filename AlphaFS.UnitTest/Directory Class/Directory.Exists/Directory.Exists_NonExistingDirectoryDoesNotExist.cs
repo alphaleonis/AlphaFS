@@ -42,14 +42,16 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var folder = tempRoot.RandomDirectoryFullPath;
+
+            Console.WriteLine("\nInput Non-Existing Directory Path: [{0}]", folder);
 
             var shouldBe = false;
             var existSysIO = System.IO.Directory.Exists(folder);
             var existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(folder);
-            Console.WriteLine("\nInput Non-Existing Directory Path: [{0}]", folder);
+            
 
             Assert.AreEqual(shouldBe, existSysIO, "The result should be: " + shouldBe.ToString().ToUpperInvariant());
             Assert.AreEqual(existSysIO, existAlpha, "The results are not equal, but are expected to be.");

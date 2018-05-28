@@ -41,29 +41,21 @@ namespace AlphaFS.UnitTest
       private void File_Copy_ThrowUnauthorizedAccessException_DestinationFileIsReadOnly(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         var gotException = false;
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var srcFile = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-            var dstFile = rootDir.RandomFileFullPath;
+            var srcFile = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
+            var dstFile = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("Src File Path: [{0}]", srcFile);
+            Console.WriteLine("\nSrc File Path: [{0}]", srcFile);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 
             System.IO.File.Copy(srcFile.FullName, dstFile);
             System.IO.File.SetAttributes(dstFile, System.IO.FileAttributes.ReadOnly);
 
+
+            var gotException = false;
 
             try
             {
@@ -81,12 +73,11 @@ namespace AlphaFS.UnitTest
             {
                System.IO.File.SetAttributes(dstFile, System.IO.FileAttributes.Normal);
             }
+
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-
+         
          Console.WriteLine();
       }
    }

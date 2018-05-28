@@ -32,34 +32,23 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateShares_Local_Success()
       {
-         var host = UnitTestConstants.LocalHost;
-
-         EnumerateShares(host);
-      }
-
-      private void EnumerateShares(string host)
-      {
          UnitTestConstants.PrintUnitTestHeader(false);
-         
+
+         var host = UnitTestConstants.LocalHost;
          Console.WriteLine("\nInput Host: [{0}]", host);
 
 
-         var cnt = 0;
+         var count = 0;
          foreach (var shareInfo in Alphaleonis.Win32.Network.Host.EnumerateShares(host, true))
          {
-            //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
-
             if (UnitTestConstants.Dump(shareInfo, -18))
-               cnt++;
+               count++;
 
             Console.WriteLine();
          }
 
-         if (cnt == 0)
+         if (count == 0)
             UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
-
-
-         Console.WriteLine();
       }
    }
 }

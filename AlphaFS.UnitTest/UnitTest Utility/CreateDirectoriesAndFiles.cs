@@ -33,7 +33,8 @@ namespace AlphaFS.UnitTest
 
          for (var i = 0; i < max; i++)
          {
-            var file = System.IO.Path.Combine(rootPath, GetRandomFileNameWithDiacriticCharacters());
+            var fsoName = GetRandomFileNameWithDiacriticCharacters();
+            var file = System.IO.Path.Combine(rootPath, fsoName);
             var dir = file + "-" + i + "-dir";
             file = file + "-" + i + "-file.txt";
 
@@ -41,6 +42,9 @@ namespace AlphaFS.UnitTest
 
 
             System.IO.Directory.CreateDirectory(dir);
+
+            CreateFile(rootPath, fsoName, i, readOnly, hidden);
+
 
             if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
                System.IO.File.SetAttributes(dir, System.IO.FileAttributes.ReadOnly);
@@ -55,7 +59,7 @@ namespace AlphaFS.UnitTest
             // Every other folder.
             if (i % 2 == 0)
             {
-               CreateFile(dir, i, readOnly, hidden);
+               CreateFile(dir, null, i, readOnly, hidden);
 
 
                System.IO.File.WriteAllText(filePath, DateTime.Now.ToLongDateString());
@@ -82,13 +86,13 @@ namespace AlphaFS.UnitTest
 
       public static System.IO.FileInfo CreateFile(string rootFolder, int fileLength = 0)
       {
-         return CreateFile(rootFolder, 0, false, false, fileLength);
+         return CreateFile(rootFolder, null, 0, false, false, fileLength);
       }
 
 
-      public static System.IO.FileInfo CreateFile(string rootFolder, int count, bool readOnly, bool hidden, int fileLength = 0)
+      public static System.IO.FileInfo CreateFile(string rootFolder, string fileName, int count, bool readOnly, bool hidden, int fileLength = 0)
       {
-         var file = System.IO.Path.Combine(rootFolder, GetRandomFileNameWithDiacriticCharacters() + "-" + count + "-file");
+         var file = System.IO.Path.Combine(rootFolder, (!Alphaleonis.Utils.IsNullOrWhiteSpace(fileName) ? fileName : GetRandomFileNameWithDiacriticCharacters()) + "-" + count + "-file");
 
          using (var fs = System.IO.File.Create(file))
          {

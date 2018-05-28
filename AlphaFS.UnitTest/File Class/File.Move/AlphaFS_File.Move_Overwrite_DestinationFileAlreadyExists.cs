@@ -42,22 +42,20 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var fileSource = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-            var fileCopy = rootDir.RandomFileFullPath;
+            var fileSource = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
+            var fileCopy = tempRoot.RandomFileFullPath;
+
             Console.WriteLine("\nSource File Path: [{0}]", fileSource);
+
 
             // Copy it.
             System.IO.File.Copy(fileSource.FullName, fileCopy);
 
 
             var gotException = false;
+
             try
             {
                Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy);
@@ -76,6 +74,7 @@ namespace AlphaFS.UnitTest
                Assert.IsFalse(System.IO.File.Exists(fileSource.FullName), "The file does exists, but is expected not to.");
                Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
             }
+
 
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }

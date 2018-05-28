@@ -21,7 +21,9 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -32,56 +34,54 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_EnumerateAlternateDataStreams_LocalAndNetwork_Success()
       {
-         Directory_EnumerateAlternateDataStreams(false);
-         Directory_EnumerateAlternateDataStreams(true);
+         AlphaFS_Directory_EnumerateAlternateDataStreams(false);
+         AlphaFS_Directory_EnumerateAlternateDataStreams(true);
       }
 
-
-      private void Directory_EnumerateAlternateDataStreams(bool isNetwork)
+      private void AlphaFS_Directory_EnumerateAlternateDataStreams(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory-EnumerateAlternateDataStreams-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters());
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-         const int defaultStreamsDirectory = 0; // The default number of data streams for a folder.
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-         Console.WriteLine("\nA directory is created and {0} streams are added.", UnitTestConstants.AllStreams.Count());
-
-
-         try
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var di = new Alphaleonis.Win32.Filesystem.DirectoryInfo(tempPath);
+            var folder = tempRoot.RandomDirectoryFullPath;
+
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+
+
+            Console.WriteLine("\nA directory is created and {0} streams are added.", UnitTestConstants.AllStreams.Length.ToString(CultureInfo.CurrentCulture));
+            
+            var di = new Alphaleonis.Win32.Filesystem.DirectoryInfo(folder);
             di.Create();
 
+
+            const int defaultStreamsDirectory = 0; // The default number of data streams for a folder.
             var currentNumberofStreams = di.EnumerateAlternateDataStreams().Count();
 
             Assert.AreEqual(defaultStreamsDirectory, currentNumberofStreams, "Total amount of default streams do not match.");
-            Assert.AreEqual(currentNumberofStreams, Alphaleonis.Win32.Filesystem.Directory.EnumerateAlternateDataStreams(tempPath).Count(), "Total amount of Directory.EnumerateAlternateDataStreams() streams do not match.");
+            Assert.AreEqual(currentNumberofStreams, Alphaleonis.Win32.Filesystem.Directory.EnumerateAlternateDataStreams(folder).Count(), "Total amount of Directory.EnumerateAlternateDataStreams() streams do not match.");
 
 
             // Create alternate data streams.
             // Because of the colon, you must supply a full path and use PathFormat.FullPath or PathFormat.LongFullPath,
             // to prevent a: "NotSupportedException: path is in an invalid format." exception.
 
-            var stream1Name = tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream;
-            var stream2Name = tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream2;
+            var stream1Name = folder + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream;
+            var stream2Name = folder + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream2;
 
             Alphaleonis.Win32.Filesystem.File.WriteAllLines(stream1Name, UnitTestConstants.StreamArrayContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
             Alphaleonis.Win32.Filesystem.File.WriteAllText(stream2Name, UnitTestConstants.StreamStringContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
 
 
-            var newNumberofStreams = Alphaleonis.Win32.Filesystem.Directory.EnumerateAlternateDataStreams(tempPath).Count();
-            Console.WriteLine("\n\nCurrent stream Count(): [{0}]", newNumberofStreams);
+
+
+            var newNumberofStreams = Alphaleonis.Win32.Filesystem.Directory.EnumerateAlternateDataStreams(folder).Count();
+            Console.WriteLine("\n\nNew stream count: [{0}]", newNumberofStreams);
 
 
             // Enumerate all streams from the folder.
             foreach (var stream in di.EnumerateAlternateDataStreams())
-            {
                Assert.IsTrue(UnitTestConstants.Dump(stream, -10));
-            }
 
 
             // Show the contents of our streams.
@@ -90,12 +90,23 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\n\tStream name: [{0}]", streamName);
 
+               
                // Because of the colon, you must supply a full path and use PathFormat.FullPath or PathFormat.LongFullPath,
                // to prevent a: "NotSupportedException: path is in an invalid format." exception.
 
-               foreach (var line in Alphaleonis.Win32.Filesystem.File.ReadAllLines(tempPath + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + streamName, Alphaleonis.Win32.Filesystem.PathFormat.FullPath))
+               foreach (var line in Alphaleonis.Win32.Filesystem.File.ReadAllLines(folder + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + streamName, Alphaleonis.Win32.Filesystem.PathFormat.FullPath))
                   Console.WriteLine("\t\t{0}", line);
             }
+
+
+
+
+            // Show DirectoryInfo instance data of the streams.
+
+            var dirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(stream1Name, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
+
+            Console.WriteLine();
+            UnitTestConstants.Dump(dirInfo, -17);
 
 
 
@@ -114,16 +125,6 @@ namespace AlphaFS.UnitTest
 
             Assert.IsNull(fileInfo1.EntryInfo);
             Assert.IsNull(fileInfo2.EntryInfo);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            Assert.IsTrue(false);
-         }
-         finally
-         {
-            Alphaleonis.Win32.Filesystem.Directory.Delete(tempPath);
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          }
 
          Console.WriteLine();

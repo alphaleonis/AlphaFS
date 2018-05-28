@@ -43,23 +43,16 @@ namespace AlphaFS.UnitTest
       private void File_Create_WithFileSecurity(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var file = rootDir.RandomFileFullPath;
-            Console.WriteLine("\tInput File Path: [{0}]", file);
-            Console.WriteLine();
+            var file = tempRoot.RandomFileFullPath;
+
+            Console.WriteLine("\tInput File Path: [{0}]\n", file);
 
 
-            var pathExpected = rootDir.RandomFileFullPath;
-            var pathActual = rootDir.RandomFileFullPath;
+            var pathExpected = tempRoot.RandomFileFullPath;
+            var pathActual = tempRoot.RandomFileFullPath;
 
 
             var sid = new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null);

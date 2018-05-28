@@ -43,23 +43,17 @@ namespace AlphaFS.UnitTest
       private void Directory_CreateDirectory_WithDirectorySecurity(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
 
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\tInput Directory Path: [{0}]", folder);
-            Console.WriteLine();
+            var folder = tempRoot.RandomDirectoryFullPath;
+
+            Console.WriteLine("\tInput Directory Path: [{0}]\n", folder);
 
 
-            var pathExpected = rootDir.RandomDirectoryFullPath;
-            var pathActual = rootDir.RandomDirectoryFullPath;
+            var pathExpected = tempRoot.RandomDirectoryFullPath;
+            var pathActual = tempRoot.RandomDirectoryFullPath;
+            
 
             var sid = new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null);
             var expectedDirectorySecurity = new System.Security.AccessControl.DirectorySecurity();

@@ -21,50 +21,34 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
+using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
-   partial class FileTest
+   public partial class AlphaFS_HostTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void File_Open_Create_LocalAndNetwork_Success()
+      public void AlphaFS_Host_ConnectDrive_And_DisconnectDrive_Network_Success()
       {
-         File_Open_Create(false);
-         File_Open_Create(true);
-      }
-      
+         UnitTestConstants.PrintUnitTestHeader(true);
 
-      private void File_Open_Create(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         var drive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter(), Alphaleonis.Win32.Filesystem.Path.VolumeSeparatorChar, Alphaleonis.Win32.Filesystem.Path.DirectorySeparatorChar);
+         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath);
 
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
-         {
-            var file = tempRoot.RandomFileFullPath;
-
-            Console.WriteLine("\nInput File Path: [{0}]", file);
+         // An Exception is thrown for any error, so no Assert needed.
 
 
-            long fileLength;
-            var ten = UnitTestConstants.TenNumbers.Length;
+         Console.WriteLine("\nConnect drive [{0}] to [{1}]", drive, share);
 
-            using (var fs = Alphaleonis.Win32.Filesystem.File.Open(file, System.IO.FileMode.Create))
-            {
-               // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
+         Alphaleonis.Win32.Network.Host.ConnectDrive(drive, share);
 
-               fileLength = fs.Length;
-            }
 
-            Assert.IsTrue(System.IO.File.Exists(file), "The file does not exists, but is expected to.");
-            Assert.IsTrue(fileLength == ten, "The file is: {0} bytes, but is expected to be: {1} bytes.", fileLength, ten);
-         }
+         Console.WriteLine("\nDisconnect drive [{0}] from [{1}]", drive, share);
 
-         Console.WriteLine();
+         Alphaleonis.Win32.Network.Host.DisconnectDrive(drive);
       }
    }
 }

@@ -34,11 +34,11 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(true);
 
-         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder);
+         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath);
 
          using (var connection = new Alphaleonis.Win32.Network.DriveConnection(share))
          {
-            Console.WriteLine("\nUsing mapped drive [{0}] to [{1}]", connection.LocalName, share);
+            Console.WriteLine("\nMapped drive [{0}] to [{1}]", connection.LocalName, share);
 
             UnitTestConstants.Dump(connection, -9);
 

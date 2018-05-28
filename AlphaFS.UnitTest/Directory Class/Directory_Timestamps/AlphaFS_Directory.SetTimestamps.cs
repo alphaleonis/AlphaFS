@@ -44,17 +44,10 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-         var rnd = new Random();
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
-            var symlinkPath = System.IO.Path.Combine(rootDir.Directory.FullName, UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()) + "-symlink";
+            var folder = tempRoot.RandomDirectoryFullPath;
+            var symlinkPath = System.IO.Path.Combine(tempRoot.Directory.FullName, UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()) + "-symlink";
 
             Console.WriteLine("\nInput Directory Path: [{0}]", folder);
 
@@ -62,6 +55,8 @@ namespace AlphaFS.UnitTest
             System.IO.Directory.CreateDirectory(folder);
             Alphaleonis.Win32.Filesystem.Directory.CreateSymbolicLink(symlinkPath, folder);
 
+
+            var rnd = new Random();
 
             var creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
             var lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));

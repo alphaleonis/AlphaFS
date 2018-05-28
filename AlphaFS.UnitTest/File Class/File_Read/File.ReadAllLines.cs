@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using System.Reflection;
 
 namespace AlphaFS.UnitTest
@@ -39,16 +40,16 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
-         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder) : UnitTestConstants.TempFolder, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath, MethodBase.GetCurrentMethod().Name))
          {
             var file = tempRoot.RandomFileFullPath;
 
             Console.WriteLine("\nInput File Path: [{0}]", file);
 
-            System.IO.File.WriteAllLines(file, new[] {DateTime.Now.ToString(), DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString()});
+            System.IO.File.WriteAllLines(file, new[] {DateTime.Now.ToString(CultureInfo.CurrentCulture), DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString()});
 
 
-            CollectionAssert.AreEqual(System.IO.File.ReadAllLines(file), Alphaleonis.Win32.Filesystem.File.ReadAllLines(file));
+            CollectionAssert.AreEquivalent(System.IO.File.ReadAllLines(file), Alphaleonis.Win32.Filesystem.File.ReadAllLines(file));
          }
 
          Console.WriteLine();

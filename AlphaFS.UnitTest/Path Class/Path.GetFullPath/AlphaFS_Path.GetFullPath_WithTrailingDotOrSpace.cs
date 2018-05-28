@@ -40,8 +40,7 @@ namespace AlphaFS.UnitTest
       private void Path_GetFullPath_WithTrailingDotOrSpace(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-
+         
          const string characterDot = ".";
          const string characterSpace = " ";
          var tempPathDot = "Path-with-trailing-dot-" + characterDot;
