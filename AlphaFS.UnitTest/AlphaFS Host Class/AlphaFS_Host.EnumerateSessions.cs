@@ -24,26 +24,18 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_HostTest
+   public partial class EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void AlphaFS_Host_EnumerateSessions_Local_Success()
       {
-         var host = UnitTestConstants.LocalHost;
-         
-         EnumerateSessions(host);
-      }
-
-
-
-
-      private void EnumerateSessions(string host)
-      {
          UnitTestConstants.PrintUnitTestHeader(false);
-         
-         Console.WriteLine("\nInput Host: [{0}]", host);
+
+         var host = UnitTestConstants.LocalHost;
+         Console.WriteLine("Input Host: [{0}]", host);
 
 
          var sessionCount = 0;
@@ -60,10 +52,7 @@ namespace AlphaFS.UnitTest
 
 
          if (sessionCount == 0)
-            Assert.Inconclusive("No sessions enumerated, but it is expected. Try another server name if applicable.");
-
-
-         Console.WriteLine();
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

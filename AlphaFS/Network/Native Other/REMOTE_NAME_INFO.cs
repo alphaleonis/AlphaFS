@@ -31,13 +31,19 @@ namespace Alphaleonis.Win32.Network
       internal struct REMOTE_NAME_INFO
       {
          /// <summary>Identifies a network resource.</summary>
-         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")] [MarshalAs(UnmanagedType.LPWStr)] public string lpUniversalName;
+         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
+         [MarshalAs(UnmanagedType.LPWStr)]
+         public readonly string lpUniversalName;
 
          /// <summary>The name of a network connection.</summary>
-         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")] [MarshalAs(UnmanagedType.LPWStr)] public string lpConnectionName;
+         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
+         [MarshalAs(UnmanagedType.LPWStr)]
+         public readonly string lpConnectionName;
 
          /// <summary>The remaing path.</summary>
-         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")] [MarshalAs(UnmanagedType.LPWStr)] public string lpRemainingPath;
+         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
+         [MarshalAs(UnmanagedType.LPWStr)]
+         public readonly string lpRemainingPath;
       }
    }
 }

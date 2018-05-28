@@ -20,21 +20,19 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AlphaFS.UnitTest
 {
    public partial class AlphaFS_HostTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_Host_GetServerStatistics_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-
+         
          var serverStatistics = Alphaleonis.Win32.Network.Host.GetServerStatistics();
 
          UnitTestConstants.Dump(serverStatistics, -22);

@@ -26,25 +26,26 @@ using System.Net.NetworkInformation;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_HostTest
+   public partial class EnumerationTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_Host_EnumerateDfsLinks_Network_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(true);
-         Console.WriteLine();
 
 
          var cnt = 0;
          var noDomainConnection = true;
-         UnitTestConstants.StopWatcher(true);
          try
          {
             foreach (var dfsNamespace in Alphaleonis.Win32.Network.Host.EnumerateDomainDfsRoot())
             {
                noDomainConnection = false;
 
-               Console.Write("\n#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsNamespace);
+               Console.Write("#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsNamespace);
                var cnt2 = 0;
 
                try
@@ -75,9 +76,11 @@ namespace AlphaFS.UnitTest
 
 
          if (noDomainConnection)
-            Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
+            UnitTestAssert.SetInconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
+
          else if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+
 
          Console.WriteLine();
       }

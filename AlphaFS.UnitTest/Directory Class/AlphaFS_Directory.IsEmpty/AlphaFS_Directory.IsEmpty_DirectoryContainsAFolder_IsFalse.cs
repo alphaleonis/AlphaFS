@@ -33,25 +33,19 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_IsEmpty_DirectoryContainsAFolder_IsFalse_LocalAndNetwork_Success()
       {
-         Directory_IsEmpty_DirectoryContainsAFolder_IsFalse(false);
-         Directory_IsEmpty_DirectoryContainsAFolder_IsFalse(true);
+         AlphaFS_Directory_IsEmpty_DirectoryContainsAFolder_IsFalse(false);
+         AlphaFS_Directory_IsEmpty_DirectoryContainsAFolder_IsFalse(true);
       }
 
 
 
-      private void Directory_IsEmpty_DirectoryContainsAFolder_IsFalse(bool isNetwork)
+      private void AlphaFS_Directory_IsEmpty_DirectoryContainsAFolder_IsFalse(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Empty Folder"));
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
+            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Empty Folder"));
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
             // Create folder and test again.

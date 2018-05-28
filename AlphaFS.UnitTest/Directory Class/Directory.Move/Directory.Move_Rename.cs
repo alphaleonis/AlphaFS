@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_MoveTest
+   public partial class MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -40,22 +40,13 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Move_Rename(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Folder"));
-            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "Destination Folder"));
+            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Source Folder"));
+            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "Destination Folder"));
 
-            Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("\n\tRename folder: [{0}] to: [{1}]", folderSrc.Name, folderDst.Name);
+            Console.WriteLine("Input Directory Path: [{0}]\n", folderSrc.FullName);
+            Console.WriteLine("\tRename folder: [{0}] to: [{1}]", folderSrc.Name, folderDst.Name);
 
 
             Assert.IsTrue(folderSrc.Exists, "The source folder does not exist which was not expected.");

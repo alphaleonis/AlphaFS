@@ -24,9 +24,10 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_HostTest
+   public partial class EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void AlphaFS_Host_EnumerateOpenConnections_Local_Success()
@@ -36,9 +37,12 @@ namespace AlphaFS.UnitTest
 
          // Create an active connection to the "remote" host.
          var currentDir = System.IO.Directory.GetCurrentDirectory();
+
          System.IO.Directory.SetCurrentDirectory(Alphaleonis.Win32.Filesystem.Path.UncPrefix + host + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator + share);
 
+
          EnumerateOpenConnections(host, share);
+
 
          System.IO.Directory.SetCurrentDirectory(currentDir);
       }
@@ -48,28 +52,26 @@ namespace AlphaFS.UnitTest
 
       private void EnumerateOpenConnections(string host, string share)
       {
+         //UnitTestAssert.IsElevated(); // In User mode nothing is enumerated.
          UnitTestConstants.PrintUnitTestHeader(false);
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-         Console.WriteLine("\nConnected to Share: [{0}\\{1}]", host, share);
+         
+         Console.WriteLine("Connected to Share: [{0}\\{1}]", host, share);
          
 
-         var cnt = 0;
+         var count = 0;
          foreach (var openConnectionInfo in Alphaleonis.Win32.Network.Host.EnumerateOpenConnections(host, share, true))
          {
             if (UnitTestConstants.Dump(openConnectionInfo, -16))
-               cnt++;
+            {
+               count++;
 
-            Console.WriteLine();
+               Console.WriteLine();
+            }
          }
-         
 
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
 
-         Console.WriteLine();
+         if (count == 0)
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

@@ -40,7 +40,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var drive in drives)
          {
-            Console.WriteLine("\nLogical Drive: [{0}]", drive.Name);
+            Console.WriteLine("Logical Drive: [{0}]", drive.Name);
 
             UnitTestConstants.Dump(drive, -21);
 

@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_Directory_CopyTest
+   public partial class CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -32,16 +32,14 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
       {
-         Directory_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
-         Directory_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(true);
+         AlphaFS_Directory_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
+         AlphaFS_Directory_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(true);
       }
 
 
-      private void Directory_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(bool isNetwork)
+      private void AlphaFS_Directory_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var gotException = false;
 

@@ -29,7 +29,7 @@ using System.Threading;
 
 namespace AlphaFS.UnitTest
 {
-   partial class AlphaFS_FileSystemEntryInfoTest
+   public partial class EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -37,28 +37,23 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters_LocalAndNetwork_Success()
       {
-         Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters(false);
-         Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters(true);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters(false);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters(true);
       }
 
 
-      private void Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters(bool isNetwork)
+      private void AlphaFS_Directory_EnumerateFileSystemEntryInfos_EnumerateFiles_UsingDirectoryEnumerationFilters(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
+         
          var inputPath = UnitTestConstants.SysRoot;
          if (isNetwork)
             inputPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(inputPath);
 
-         Console.WriteLine("Input Directory Path: [{0}]", inputPath);
-         Console.WriteLine();
-
-
+         Console.WriteLine("Input Directory Path: [{0}]\n", inputPath);
+         
          Test_DirectoryEnumerationFilters(inputPath);
-
-
+         
          Console.WriteLine();
       }
 

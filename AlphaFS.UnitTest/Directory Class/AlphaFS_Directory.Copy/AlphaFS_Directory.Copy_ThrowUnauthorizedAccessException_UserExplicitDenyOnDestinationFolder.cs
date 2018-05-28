@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_Directory_CopyTest
+   public partial class CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -33,29 +33,17 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Copy_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder_LocalAndNetwork_Success()
       {
-         Directory_Copy_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(false);
-         Directory_Copy_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(true);
+         AlphaFS_Directory_Copy_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(false);
+         AlphaFS_Directory_Copy_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(true);
       }
       
 
-      private void Directory_Copy_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(bool isNetwork)
+      private void AlphaFS_Directory_Copy_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var gotException = false;
-
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Source Destination Folder"));
-            var dstFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Destination Folder"));
+            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Source Destination Folder"));
+            var dstFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Destination Folder"));
 
             Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
@@ -78,6 +66,8 @@ namespace AlphaFS.UnitTest
             dirSecurity.AddAccessRule(rule);
             dstFolder.SetAccessControl(dirSecurity);
 
+
+            var gotException = false;
 
             try
             {
@@ -102,8 +92,7 @@ namespace AlphaFS.UnitTest
 
             Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
-
-
+         
          Console.WriteLine();
       }
 

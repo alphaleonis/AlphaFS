@@ -25,18 +25,19 @@ using System.Net.NetworkInformation;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_HostTest
+   public partial class EnumerationTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_Host_EnumerateDfsRoot_Network_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(true);
-         Console.WriteLine();
 
 
          var cnt = 0;
          var noDomainConnection = true;
-         UnitTestConstants.StopWatcher(true);
 
          // Drill down to get servers from the first namespace retrieved.
 
@@ -46,7 +47,7 @@ namespace AlphaFS.UnitTest
             {
                noDomainConnection = false;
 
-               Console.Write("\n#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsName);
+               Console.Write("#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsName);
 
                try
                {
@@ -69,12 +70,12 @@ namespace AlphaFS.UnitTest
                {
                   Console.WriteLine("\n\tCaught (UNEXPECTED #1) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
                }
+
+               Console.WriteLine();
             }
 
-            Console.Write("\n{0}", UnitTestConstants.Reporter(true));
-
             if (cnt == 0)
-               Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+               UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
          }
          catch (NetworkInformationException ex)
          {
@@ -87,9 +88,13 @@ namespace AlphaFS.UnitTest
 
          
          if (noDomainConnection)
-            Assert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
+            UnitTestAssert.SetInconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
+
          else if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected.");
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+
+
+         Console.WriteLine();
       }
    }
 }

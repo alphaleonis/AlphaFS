@@ -34,27 +34,22 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_NonRecursive_LocalAndNetwork_Success()
       {
-         Directory_CountFileSystemObjects_FoldersOnly_NonRecursive(false);
-         Directory_CountFileSystemObjects_FoldersOnly_NonRecursive(true);
+         AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_NonRecursive(false);
+         AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_NonRecursive(true);
       }
 
 
-      private void Directory_CountFileSystemObjects_FoldersOnly_NonRecursive(bool isNetwork)
+      private void AlphaFS_Directory_CountFileSystemObjects_FoldersOnly_NonRecursive(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            var folder = tempRoot.RandomDirectoryFullPath;
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
             const int expectedFso = 10;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false, false, false);
+            const int maxFso = 10;
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, maxFso, false, false, false);
             
 
             var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Folders);

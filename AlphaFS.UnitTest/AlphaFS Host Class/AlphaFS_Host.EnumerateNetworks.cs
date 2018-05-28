@@ -26,8 +26,11 @@ using Alphaleonis.Win32.Network;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_HostTest
+   public partial class EnumerationTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_Host_EnumerateNetworks_Local_Success()
       {
@@ -38,7 +41,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var networkInfo in Host.EnumerateNetworks().OrderBy(network => network.Name))
          {
-            Console.WriteLine("\n#{0:000}\tNetwork: [{1}]", ++networkCount, networkInfo.Name);
+            Console.WriteLine("#{0:000}\tNetwork: [{1}]", ++networkCount, networkInfo.Name);
 
 
             UnitTestConstants.Dump(networkInfo, -21);
@@ -57,7 +60,7 @@ namespace AlphaFS.UnitTest
 
 
          if (networkCount == 0)
-            Assert.Inconclusive("No networks enumerated, but it is expected.");
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

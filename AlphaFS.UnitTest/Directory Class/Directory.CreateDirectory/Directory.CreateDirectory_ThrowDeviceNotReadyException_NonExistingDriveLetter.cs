@@ -44,7 +44,7 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+         Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
          var gotException = false;

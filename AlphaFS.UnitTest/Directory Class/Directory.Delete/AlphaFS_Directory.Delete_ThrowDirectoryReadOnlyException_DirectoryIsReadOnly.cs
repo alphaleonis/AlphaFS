@@ -25,7 +25,7 @@ using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   public partial class DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -33,33 +33,23 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly_LocalAndNetwork_Success()
       {
-         Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(false);
-         Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(true);
+         AlphaFS_Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(false);
+         AlphaFS_Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(true);
       }
 
 
-      private void Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(bool isNetwork)
+      private void AlphaFS_Directory_Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-         
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
 
             Console.WriteLine("Input Directory Path: [{0}]", folder);
 
             System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.ReadOnly);
 
+
+            var gotException = false;
 
             try
             {
@@ -78,11 +68,10 @@ namespace AlphaFS.UnitTest
             { 
                System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.Normal);
             }
+
+
+            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
 
          Console.WriteLine();
       }

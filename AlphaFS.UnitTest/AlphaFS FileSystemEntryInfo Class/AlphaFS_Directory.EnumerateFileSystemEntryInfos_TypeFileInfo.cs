@@ -24,7 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_FileSystemEntryInfoTest
+   public partial class EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -32,12 +32,12 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeFileInfo_LocalAndNetwork_Success()
       {
-         Directory_EnumerateFileSystemEntryInfos_TypeFileInfo(false);
-         Directory_EnumerateFileSystemEntryInfos_TypeFileInfo(true);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeFileInfo(false);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeFileInfo(true);
       }
 
 
-      private void Directory_EnumerateFileSystemEntryInfos_TypeFileInfo(bool isNetwork)
+      private void AlphaFS_Directory_EnumerateFileSystemEntryInfos_TypeFileInfo(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -45,15 +45,17 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
+         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
          var count = 0;
+
          foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileInfo>(tempPath, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files))
          {
             Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileInfo)));
             count++;
          }
+
 
          Assert.IsTrue(count > 0, "Nothing is enumerated, but it is expected.");
       }

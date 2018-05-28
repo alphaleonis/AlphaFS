@@ -33,19 +33,16 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_CreateJunction_ThrowArgumentException_UncPath_Netwerk_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
+         // Pass isNetwork to force Exception.
 
-         // UNC paths are not supported.
-
-         using (var rootDir = new TemporaryDirectory(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(System.IO.Path.GetTempPath()), MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(true))
          {
-            var target = rootDir.Directory.CreateSubdirectory("JunctionTarget");
-            var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
+            var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget");
+            var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
             var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
             var gotException = false;
-
             try
             {
                Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName);

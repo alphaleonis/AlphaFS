@@ -33,28 +33,22 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Compress_And_Decompress_LocalAndNetwork_Success()
       {
-         Directory_Compress_And_Decompress(false, false);
-         Directory_Compress_And_Decompress(true, false);
+         AlphaFS_Directory_Compress_And_Decompress(false, false);
+         AlphaFS_Directory_Compress_And_Decompress(true, false);
       }
 
 
-      private void Directory_Compress_And_Decompress(bool isNetwork, bool recursive)
+      private void AlphaFS_Directory_Compress_And_Decompress(bool isNetwork, bool recursive)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folderRoot = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]", folderRoot);
+            var folder = tempRoot.RandomDirectoryFullPath;
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
-            var folderAaa = System.IO.Path.Combine(folderRoot, "folder-aaa");
-            var folderBbb = System.IO.Path.Combine(folderRoot, "folder-bbb");
+            var folderAaa = System.IO.Path.Combine(folder, "folder-aaa");
+            var folderBbb = System.IO.Path.Combine(folder, "folder-bbb");
             var folderCcc = System.IO.Path.Combine(folderBbb, "folder-ccc");
             System.IO.Directory.CreateDirectory(folderAaa);
             System.IO.Directory.CreateDirectory(folderBbb);
@@ -63,18 +57,18 @@ namespace AlphaFS.UnitTest
 
             var fileAaa = System.IO.Path.Combine(folderAaa, "file-aaa.txt");
             var fileBbb = System.IO.Path.Combine(folderAaa, "file-bbb.txt");
-            var fileCcc = System.IO.Path.Combine(folderRoot, "file-ccc.txt");
-            var fileDdd = System.IO.Path.Combine(folderRoot, "file-ddd.txt");
+            var fileCcc = System.IO.Path.Combine(folder, "file-ccc.txt");
+            var fileDdd = System.IO.Path.Combine(folder, "file-ddd.txt");
             using (System.IO.File.CreateText(fileAaa)) { }
             using (System.IO.File.CreateText(fileBbb)) { }
             using (System.IO.File.CreateText(fileCcc)) { }
             using (System.IO.File.CreateText(fileDdd)) { }
 
 
-            Alphaleonis.Win32.Filesystem.Directory.Compress(folderRoot, recursive ? Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive : Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.None);
+            Alphaleonis.Win32.Filesystem.Directory.Compress(folder, recursive ? Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive : Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.None);
 
 
-            DirectoryAssert.IsCompressed(folderRoot);
+            DirectoryAssert.IsCompressed(folder);
             DirectoryAssert.IsCompressed(folderAaa);
             DirectoryAssert.IsCompressed(folderBbb);
             FileAssert.IsCompressed(fileCcc);
@@ -95,7 +89,7 @@ namespace AlphaFS.UnitTest
             }
 
 
-            Alphaleonis.Win32.Filesystem.Directory.Decompress(folderRoot, recursive ? Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive : Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.None);
+            Alphaleonis.Win32.Filesystem.Directory.Decompress(folder, recursive ? Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive : Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.None);
 
 
             if (recursive)

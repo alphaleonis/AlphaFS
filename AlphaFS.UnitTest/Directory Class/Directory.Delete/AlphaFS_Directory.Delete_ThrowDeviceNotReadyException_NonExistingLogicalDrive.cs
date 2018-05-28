@@ -24,24 +24,22 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   public partial class DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       
       [TestMethod]
-      public void Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive_LocalAndNetwork_Success()
       {
-         Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(false);
-         Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(true);
+         AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(false);
+         AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(true);
       }
 
 
-      private void Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(bool isNetwork)
+      private void AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var gotException = false;
 

@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_Directory_CopyTest
+   public partial class CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -32,17 +32,15 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory_LocalAndNetwork_Success()
       {
-         Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(false);
-         Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(true);
+         AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(false);
+         AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(true);
       }
 
 
-      private void Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
+      private void AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
+         
          var gotException = false;
          string exMessage = null;
 

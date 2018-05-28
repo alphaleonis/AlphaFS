@@ -40,8 +40,6 @@ namespace AlphaFS.UnitTest
       private void Directory_GetFileSystemEntries(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var inputPath = UnitTestConstants.SysRoot;
          if (isNetwork)

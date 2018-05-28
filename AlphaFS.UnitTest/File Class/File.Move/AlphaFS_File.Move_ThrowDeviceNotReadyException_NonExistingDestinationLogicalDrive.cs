@@ -24,7 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_MoveTest
+   public partial class MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -32,17 +32,15 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive_LocalAndNetwork_Success()
       {
-         File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(false);
-         File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(true);
+         AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(false);
+         AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(true);
       }
 
 
-      private void File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(bool isNetwork)
+      private void AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
+         
          var gotException = false;
 
 

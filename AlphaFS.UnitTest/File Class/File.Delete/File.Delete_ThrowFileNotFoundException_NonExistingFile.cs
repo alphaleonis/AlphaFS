@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_DeleteTest
+   public partial class DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -41,11 +41,11 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = System.IO.Path.GetTempPath() + "File.Delete-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
+         var tempPath = UnitTestConstants.TempPath + "File.Delete-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
-         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+         Console.WriteLine("Input File Path: [{0}]", tempPath);
 
 
          var gotException = false;

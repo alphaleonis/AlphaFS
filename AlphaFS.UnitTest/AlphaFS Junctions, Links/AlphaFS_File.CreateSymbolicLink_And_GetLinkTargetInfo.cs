@@ -32,31 +32,23 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo_LocalAndNetwork_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
+         UnitTestAssert.IsElevated();
 
-         File_CreateSymbolicLink_And_GetLinkTargetInfo(false);
-         File_CreateSymbolicLink_And_GetLinkTargetInfo(true);
+         AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo(false);
+         AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo(true);
       }
 
 
-      private void File_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
+      private void AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var fileLink = System.IO.Path.Combine(rootDir.Directory.FullName, "FileLink-ToOriginalFile.txt");
+            var fileLink = System.IO.Path.Combine(tempRoot.Directory.FullName, "FileLink-ToOriginalFile.txt");
 
-            var fileInfo = new System.IO.FileInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "OriginalFile.txt"));
+            var fileInfo = new System.IO.FileInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "OriginalFile.txt"));
             using (fileInfo.CreateText()) {}
 
-            Console.WriteLine("\nInput File Path: [{0}]", fileInfo.FullName);
+            Console.WriteLine("Input File Path: [{0}]", fileInfo.FullName);
             Console.WriteLine("Input File Link: [{0}]", fileLink);
             
 

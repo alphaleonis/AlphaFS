@@ -41,19 +41,13 @@ namespace AlphaFS.UnitTest
 
       private void File_OpenWrite(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file1 = rootDir.RandomFileFullPath;
-            var file2 = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput File1 Path: [{0}]", file1);
-            Console.WriteLine("\nInput File2 Path: [{0}]", file2);
+            var file1 = tempRoot.RandomFileFullPath;
+            var file2 = tempRoot.RandomFileFullPath;
+
+            Console.WriteLine("Input File1 Path: [{0}]", file1);
+            Console.WriteLine("Input File2 Path: [{0}]", file2);
 
 
             using (var stream = System.IO.File.OpenWrite(file1))

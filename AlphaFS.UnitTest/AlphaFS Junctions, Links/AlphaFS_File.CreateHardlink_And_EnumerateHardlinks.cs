@@ -33,26 +33,19 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_CreateHardlink_And_EnumerateHardlinks_Local_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-         File_CreateHardlink_And_EnumerateHardlinks(false);
+         AlphaFS_File_CreateHardlink_And_EnumerateHardlinks();
       }
 
 
-      private void File_CreateHardlink_And_EnumerateHardlinks(bool isNetwork)
+      private void AlphaFS_File_CreateHardlink_And_EnumerateHardlinks()
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         
-         var tempPath = System.IO.Path.GetTempPath();
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempPath = new TemporaryDirectory())
          {
-            var hardlinkFolder = System.IO.Path.Combine(rootDir.Directory.FullName, "Hardlinks");
+            var hardlinkFolder = System.IO.Path.Combine(tempPath.Directory.FullName, "Hardlinks");
             System.IO.Directory.CreateDirectory(hardlinkFolder);
 
 
-            var file = System.IO.Path.Combine(rootDir.Directory.FullName, "OriginalFile.txt");
+            var file = System.IO.Path.Combine(tempPath.Directory.FullName, "OriginalFile.txt");
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
             // Create original file with text content.
@@ -78,13 +71,12 @@ namespace AlphaFS.UnitTest
             var cnt = 0;
             foreach (var hardLink in Alphaleonis.Win32.Filesystem.File.EnumerateHardlinks(file))
                Console.WriteLine("\t\t#{0:000}\tHardlink: [{1}]", ++cnt, hardLink);
-            
+
             Assert.AreEqual(numCreate + 1, cnt);
 
 
             using (var stream = System.IO.File.OpenRead(file))
             {
-               UnitTestConstants.StopWatcher(true);
                var bhfi = Alphaleonis.Win32.Filesystem.File.GetFileInfoByHandle(stream.SafeFileHandle);
 
                Assert.AreEqual(numCreate + 1, bhfi.NumberOfLinks);

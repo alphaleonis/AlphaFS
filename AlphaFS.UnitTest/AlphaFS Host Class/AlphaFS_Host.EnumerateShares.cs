@@ -24,43 +24,31 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_HostTest
+   public partial class EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void AlphaFS_Host_EnumerateShares_Local_Success()
       {
-         var host = UnitTestConstants.LocalHost;
-
-         EnumerateShares(host);
-      }
-
-
-
-
-      private void EnumerateShares(string host)
-      {
          UnitTestConstants.PrintUnitTestHeader(false);
-         
-         Console.WriteLine("\nInput Host: [{0}]", host);
+
+         var host = UnitTestConstants.LocalHost;
+         Console.WriteLine("Input Host: [{0}]", host);
 
 
-         var cnt = 0;
+         var count = 0;
          foreach (var shareInfo in Alphaleonis.Win32.Network.Host.EnumerateShares(host, true))
          {
-            //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
-
             if (UnitTestConstants.Dump(shareInfo, -18))
-               cnt++;
+               count++;
 
             Console.WriteLine();
          }
 
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
-
-         Console.WriteLine();
+         if (count == 0)
+            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

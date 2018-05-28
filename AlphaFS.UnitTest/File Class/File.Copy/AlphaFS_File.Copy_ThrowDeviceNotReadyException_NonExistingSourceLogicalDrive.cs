@@ -24,7 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_CopyTest
+   public partial class CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -32,16 +32,14 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive_LocalAndNetwork_Success()
       {
-         File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
-         File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(true);
+         AlphaFS_File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(false);
+         AlphaFS_File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(true);
       }
 
 
-      private void File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(bool isNetwork)
+      private void AlphaFS_File_Copy_ThrowDeviceNotReadyException_NonExistingSourceLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
 
          var gotException = false;
 

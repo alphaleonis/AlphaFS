@@ -21,7 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
+using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -40,29 +40,27 @@ namespace AlphaFS.UnitTest
 
       private void Directory_GetFiles_AbsolutePath(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.SysRoot;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-
-
-         var systemIOFiles = System.IO.Directory.GetFiles(tempPath).OrderBy(path => path).ToArray();
-         var alphaFSFiles = Alphaleonis.Win32.Filesystem.Directory.GetFiles(tempPath).OrderBy(path => path).ToArray();
-
-         Assert.AreEqual(systemIOFiles.Length, alphaFSFiles.Length);
-
-         
-         var fileCount = 0;
-         for (var i = 0; i < systemIOFiles.Length; i++)
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            Console.WriteLine("\t#{0:000}\t{1}", ++fileCount, alphaFSFiles[i]);
+            var folder = new System.IO.DirectoryInfo(tempRoot.RandomDirectoryFullPath);
 
-            Assert.AreEqual(systemIOFiles[i], alphaFSFiles[i]);
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder.FullName);
+
+            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, 5, true, true, true);
+
+
+            var systemIOCollection = System.IO.Directory.GetFiles(folder.FullName, "*", System.IO.SearchOption.AllDirectories);
+
+            var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.GetFiles(folder.FullName, "*", System.IO.SearchOption.AllDirectories);
+
+
+            var fileCount = 0;
+            foreach (var fso in systemIOCollection)
+               Console.WriteLine("\t#{0:000}\t{1}", ++fileCount, fso);
+
+
+            CollectionAssert.AreEquivalent(systemIOCollection, alphaFSCollection);
          }
-
 
          Console.WriteLine();
       }

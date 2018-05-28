@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for BackupFileStream and is intended to contain all Host Unit Tests.</summary>
+   /// <summary>This is a test class for all Host class Unit Tests.</summary>
    [TestClass]
    public partial class AlphaFS_HostTest
    {

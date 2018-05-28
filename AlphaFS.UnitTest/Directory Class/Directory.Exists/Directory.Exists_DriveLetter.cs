@@ -24,7 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_ExistsTest
+   public partial class ExistsTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
          var existSysIO = System.IO.Directory.Exists(inputDrive);
          var existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(inputDrive);
 
-         Console.WriteLine("\nSystem.IO/AlphaFS (should be {0}):\t[{1}]\t\tdrive= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputDrive);
+         Console.WriteLine("System.IO/AlphaFS (should be {0}):\t[{1}]\t\tdrive= {2}", sysIOshouldBe.ToString().ToUpperInvariant(), existSysIO, inputDrive);
 
          Assert.AreEqual(sysIOshouldBe, existSysIO, "The result should be: " + sysIOshouldBe.ToString().ToUpperInvariant());
          Assert.AreEqual(existSysIO, existAlpha, "The results are not equal, but are expected to be.");

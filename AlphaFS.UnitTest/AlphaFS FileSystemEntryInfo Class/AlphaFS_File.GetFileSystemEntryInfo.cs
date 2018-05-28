@@ -32,25 +32,26 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_GetFileSystemEntryInfo_LocalAndNetwork_Success()
       {
-         File_GetFileSystemEntryInfo(false);
-         File_GetFileSystemEntryInfo(true);
+         AlphaFS_File_GetFileSystemEntryInfo(false);
+         AlphaFS_File_GetFileSystemEntryInfo(true);
       }
 
 
-      private void File_GetFileSystemEntryInfo(bool isNetwork)
+      private void AlphaFS_File_GetFileSystemEntryInfo(bool isNetwork)
       {
-         if (!System.IO.File.Exists(UnitTestConstants.NotepadExe))
-            Assert.Inconclusive("Test ignored because {0} was not found.", UnitTestConstants.NotepadExe);
+         var path = UnitTestConstants.NotepadExe;
+
+         if (!System.IO.File.Exists(path))
+            UnitTestAssert.SetInconclusiveBecauseFileNotFound(path);
 
 
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = UnitTestConstants.NotepadExe;
+         var tempPath = path;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
-
-         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+         Console.WriteLine("Input File Path: [{0}]", tempPath);
 
          var fsei = Alphaleonis.Win32.Filesystem.File.GetFileSystemEntryInfo(tempPath);
          UnitTestConstants.Dump(fsei, -19);
