@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -42,7 +41,7 @@ namespace AlphaFS.UnitTest
          {
             var file = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+            Console.WriteLine("Input File Path: [{0}]\n", file);
 
 
             string sysIoStreamName;

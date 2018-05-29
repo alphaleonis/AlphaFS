@@ -33,7 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateDrives_Network_Success()
       {
-         //UnitTestAssert.IsElevated(); // In User mode nothing is enumerated.
+         //UnitTestAssert.IsElevatedProcess(); // In User mode nothing is enumerated.
          UnitTestConstants.PrintUnitTestHeader(true);
          
 

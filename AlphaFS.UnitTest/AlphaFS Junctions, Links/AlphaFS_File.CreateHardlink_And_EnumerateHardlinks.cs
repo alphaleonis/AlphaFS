@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -46,7 +45,7 @@ namespace AlphaFS.UnitTest
 
 
             var file = System.IO.Path.Combine(tempPath.Directory.FullName, "OriginalFile.txt");
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+            Console.WriteLine("Input File Path: [{0}]\n", file);
 
             // Create original file with text content.
             System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);

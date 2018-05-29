@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -45,7 +44,7 @@ namespace AlphaFS.UnitTest
             var folder = tempRoot.RandomDirectoryFullPath;
             System.IO.Directory.CreateDirectory(folder);
 
-            Console.WriteLine("Input Existing Directory Path: [{0}]\n", folder);
+            Console.WriteLine("Input Existing Directory Path: [{0}]", folder);
 
             var shouldBe = true;
             var existSysIO = System.IO.Directory.Exists(folder);

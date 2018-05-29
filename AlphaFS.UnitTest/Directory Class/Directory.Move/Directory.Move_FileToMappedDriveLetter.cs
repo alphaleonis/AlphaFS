@@ -22,7 +22,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -44,13 +43,13 @@ namespace AlphaFS.UnitTest
             var srcFile = System.IO.Path.Combine(tempRoot.Directory.FullName, srcFileName);
 
 
-            var drive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter(), Alphaleonis.Win32.Filesystem.Path.VolumeSeparatorChar, Alphaleonis.Win32.Filesystem.Path.DirectorySeparatorChar);
+            var drive = string.Format(CultureInfo.InvariantCulture, @"{0}:\", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter());
             var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempRoot.Directory.Parent.FullName);
             var dstFile = System.IO.Path.Combine(drive, dstFileName);
 
             Alphaleonis.Win32.Network.Host.ConnectDrive(drive, share);
 
-            Console.WriteLine("\nMapped drive [{0}] to [{1}]\n", drive, share);
+            Console.WriteLine("Mapped drive [{0}] to [{1}]\n", drive, share);
             
 
             System.IO.File.AppendAllText(srcFile, new string('*', new Random().Next(1, 1024)));

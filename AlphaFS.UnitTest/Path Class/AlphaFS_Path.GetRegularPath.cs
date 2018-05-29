@@ -60,7 +60,10 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+
             Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
+
+            Console.WriteLine();
          }
 
 

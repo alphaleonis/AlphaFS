@@ -30,13 +30,13 @@ namespace AlphaFS.UnitTest
       public TemporaryDirectory() : this(false, null, null) { }
 
 
-      public TemporaryDirectory(string folderPrefix) : this(false, folderPrefix, null) { }
+      //public TemporaryDirectory(string folderPrefix) : this(false, folderPrefix, null) { }
 
 
       public TemporaryDirectory(bool isNetwork) : this(isNetwork, null, null) { }
 
       
-      public TemporaryDirectory(bool isNetwork, string folderPrefix) : this(isNetwork, folderPrefix, null) { }
+      //public TemporaryDirectory(bool isNetwork, string folderPrefix) : this(isNetwork, folderPrefix, null) { }
 
 
       public TemporaryDirectory(bool isNetwork, string folderPrefix, string root)
@@ -129,7 +129,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex2)
             {
-               Console.WriteLine("Delete TemporaryDirectory. Error: {0}", ex2.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("Delete failure TemporaryDirectory. Error: {0}", ex2.Message.Replace(Environment.NewLine, string.Empty));
             }
          }
       }

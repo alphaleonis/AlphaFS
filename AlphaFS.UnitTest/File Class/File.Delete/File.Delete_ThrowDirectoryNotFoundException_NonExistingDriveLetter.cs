@@ -47,24 +47,19 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Input File Path: [{0}]", folder);
 
 
-         var gotException = false;
+         Exception exception = null;
+
          try
          {
             Alphaleonis.Win32.Filesystem.File.Delete(folder);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
-
-            // Local: DirectoryNotFoundException.
-            // UNC: DeviceNotReadyException.
-
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            exception = ex;
          }
+         
 
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+         ExceptionAssert.DirectoryNotFoundException(exception);
 
          Console.WriteLine();
       }

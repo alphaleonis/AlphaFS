@@ -30,32 +30,40 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_ThrowFileNotFoundException_NonExistingFile_LocalAndNetwork_Success()
+      public void File_Delete_NonExistingFile_NoException_LocalAndNetwork_Success()
       {
-         File_Delete_ThrowFileNotFoundException_NonExistingFile(false);
-         File_Delete_ThrowFileNotFoundException_NonExistingFile(true);
+         File_Delete_NonExistingFile_NoException(false);
+         File_Delete_NonExistingFile_NoException(true);
       }
 
 
-      private void File_Delete_ThrowFileNotFoundException_NonExistingFile(bool isNetwork)
+      private void File_Delete_NonExistingFile_NoException(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.TempPath + "File.Delete-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("Input File Path: [{0}]", tempPath);
-
-
-         var gotException = false;
-         try
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            Alphaleonis.Win32.Filesystem.File.Delete(tempPath);
-         }
-         catch (Exception ex)
-         {
-            Assert.IsTrue(gotException, "An exception occurred, but is expected not to: " + ex.Message);
+            var file = tempRoot.RandomFileFullPath;
+
+            Console.WriteLine("Input File Path: [{0}]", file);
+
+
+            var gotException = false;
+
+            try
+            {
+               Alphaleonis.Win32.Filesystem.File.Delete(file);
+            }
+            catch (Exception ex)
+            {
+               var exType = ex.GetType();
+
+               gotException = true;
+
+               // Negate.
+               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", !gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            }
+
+
+            Assert.IsFalse(gotException, "The exception is not caught, but is expected to.");
          }
 
          Console.WriteLine();

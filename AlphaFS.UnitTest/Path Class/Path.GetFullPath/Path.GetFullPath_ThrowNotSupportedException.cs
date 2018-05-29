@@ -32,7 +32,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Path_GetFullPath_ThrowNotSupportedException_Success()
       {
-         var gotException = false;
+         UnitTestConstants.PrintUnitTestHeader(false);
+
+         Exception exception = null;
 
          try
          {
@@ -40,14 +42,11 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(NotSupportedException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            exception = ex;
          }
 
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+         ExceptionAssert.NotSupportedException(exception);
       }
    }
 }

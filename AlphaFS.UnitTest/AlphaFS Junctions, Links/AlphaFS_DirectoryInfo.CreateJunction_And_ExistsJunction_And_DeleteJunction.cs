@@ -21,7 +21,6 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -39,7 +38,7 @@ namespace AlphaFS.UnitTest
             var junction = System.IO.Path.Combine(toDelete.FullName, "MyJunctionPoint");
             var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget");
 
-            Console.WriteLine("\nInput Directory JunctionPoint  Path: [{0}]", junction);
+            Console.WriteLine("Input Directory JunctionPoint  Path: [{0}]", junction);
             Console.WriteLine("Input Directory JunctionTarget Path: [{0}]", target);
 
 

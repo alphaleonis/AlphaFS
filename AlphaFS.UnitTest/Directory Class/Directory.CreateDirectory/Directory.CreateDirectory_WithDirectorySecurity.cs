@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,7 +32,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_CreateDirectory_WithDirectorySecurity_LocalAndNetwork_Success()
       {
-         UnitTestAssert.IsElevated();
+         UnitTestAssert.IsElevatedProcess();
 
          Directory_CreateDirectory_WithDirectorySecurity(false);
          Directory_CreateDirectory_WithDirectorySecurity(true);

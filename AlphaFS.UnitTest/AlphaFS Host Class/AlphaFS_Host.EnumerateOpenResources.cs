@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateOpenResources_Local_Success()
       {
-         UnitTestAssert.IsElevated();
+         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
 
          var host = UnitTestConstants.LocalHost;
@@ -52,7 +52,7 @@ namespace AlphaFS.UnitTest
 
 
          if (count == 0)
-            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

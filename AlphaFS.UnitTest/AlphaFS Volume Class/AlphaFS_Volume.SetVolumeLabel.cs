@@ -32,11 +32,11 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Volume_SetVolumeLabel_Local_Success()
       {
-         UnitTestAssert.IsElevated();
+         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
          
          const string newLabel = "ÂĽpĥæƑŞ ŠëtVőlümèĻāßƩl() Ťest";
-         const string template = "\nSystem Drive: [{0}]\tCurrent Label: [{1}]";
+         const string template = "System Drive: [{0}]\tCurrent Label: [{1}]\n";
          var drive = UnitTestConstants.SysDrive;
 
 

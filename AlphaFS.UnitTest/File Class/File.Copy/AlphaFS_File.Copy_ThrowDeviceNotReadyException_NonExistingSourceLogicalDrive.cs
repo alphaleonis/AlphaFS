@@ -41,9 +41,6 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var gotException = false;
-
-
          var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
 
          var srcFolder = nonExistingDriveLetter + @":\NonExisting Source File";
@@ -59,21 +56,19 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Dst File Path: [{0}]", dstFolder);
 
 
+         Exception exception = null;
+
          try
          {
             Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, dstFolder);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            exception = ex;
          }
+         
 
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+         ExceptionAssert.DeviceNotReadyException(exception);
 
          Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The file exists, but is expected not to.");
 

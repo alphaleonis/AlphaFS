@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -97,7 +96,7 @@ namespace AlphaFS.UnitTest
 
             System.IO.Directory.SetCurrentDirectory(sysDrive);
 
-            Console.WriteLine("\nCurrent directory: " + System.IO.Directory.GetCurrentDirectory());
+            Console.WriteLine("Current directory: " + System.IO.Directory.GetCurrentDirectory());
 
 
             foreach (var path in paths)

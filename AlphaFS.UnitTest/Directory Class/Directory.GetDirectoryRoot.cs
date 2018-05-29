@@ -32,12 +32,6 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_GetDirectoryRoot_LocalAndNetwork_Success()
       {
-         Directory_GetDirectoryRoot();
-      }
-      
-
-      private void Directory_GetDirectoryRoot()
-      {
          UnitTestConstants.PrintUnitTestHeader();
          
          var pathCnt = 0;
@@ -82,6 +76,8 @@ namespace AlphaFS.UnitTest
             }
 
             Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
+
+            Console.WriteLine();
          }
 
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");

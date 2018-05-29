@@ -47,7 +47,6 @@ namespace AlphaFS.UnitTest
          var tempPathSpace = "Path-with-trailing-space-" + characterSpace;
 
 
-         Console.WriteLine();
          Console.WriteLine("Input Path (with dot)  : [{0}]", tempPathDot);
          Console.WriteLine("Input Path (with space): [{0}]", tempPathSpace);
 
