@@ -21,7 +21,6 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,15 +32,13 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_DirectoryInfo_CreateJunction_And_ExistsJunction_And_DeleteJunction_Local_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-         using (var rootDir = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory())
          {
-            var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
+            var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
             var junction = System.IO.Path.Combine(toDelete.FullName, "MyJunctionPoint");
-            var target = rootDir.Directory.CreateSubdirectory("JunctionTarget");
+            var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget");
 
-            Console.WriteLine("\nInput Directory JunctionPoint  Path: [{0}]", junction);
+            Console.WriteLine("Input Directory JunctionPoint  Path: [{0}]", junction);
             Console.WriteLine("Input Directory JunctionTarget Path: [{0}]", target);
 
 

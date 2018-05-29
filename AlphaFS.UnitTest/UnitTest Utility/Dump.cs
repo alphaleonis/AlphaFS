@@ -67,7 +67,7 @@ namespace AlphaFS.UnitTest
 
                   else if (propObjType.IsAssignableToAnyOf(typeof(Collection<string>), typeof(List<string>)))
                   {
-                     var propObj = (Collection<string>) value;
+                     var propObj = (Collection<string>)value;
 
                      if (null != propObj)
                      {
@@ -81,7 +81,7 @@ namespace AlphaFS.UnitTest
 
                   else if (propObjType.IsAssignableToAnyOf(typeof(Collection<int>), typeof(List<int>)))
                   {
-                     var propObj = (Collection<int>) value;
+                     var propObj = (Collection<int>)value;
 
                      if (null != propObj)
                      {

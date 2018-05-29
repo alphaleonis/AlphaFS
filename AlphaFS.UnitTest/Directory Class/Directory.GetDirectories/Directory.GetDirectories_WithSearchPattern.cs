@@ -21,8 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -41,54 +39,48 @@ namespace AlphaFS.UnitTest
 
       private void Directory_GetDirectories_WithSearchPattern(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = new System.IO.DirectoryInfo(rootDir.RandomDirectoryFullPath).FullName;
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            var folder = new System.IO.DirectoryInfo(tempRoot.RandomDirectoryFullPath).FullName;
+
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
 
 
-            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(folder, "a.txt"));
-            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(folder, "aa.txt"));
-            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(folder, "aba.txt"));
-            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(folder, "foo.txt"));
-            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(folder, "footxt"));
+            var count = 0;
+            var folders = new[]
+            {
+               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+            };
+
+            foreach (var folderName in folders)
+            {
+               var newFolder = System.IO.Path.Combine(folder, folderName);
+
+               System.IO.Directory.CreateDirectory(newFolder + (count++ % 2 == 0 ? string.Empty : "-uneven"));
+            }
 
 
-            var folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder, "foo.txt");
+            var folderCount = 0;
 
-            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(folder, "foo.txt"), StringComparer.InvariantCultureIgnoreCase));
-            Assert.IsFalse(folders.Contains(System.IO.Path.Combine(folder, "fooatxt"), StringComparer.InvariantCultureIgnoreCase));
+            foreach (var folderResult in folders)
+            { 
+               var systemIOCollection = System.IO.Directory.GetDirectories(folder, folderResult, System.IO.SearchOption.AllDirectories);
 
+               var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder, folderResult, System.IO.SearchOption.AllDirectories);
 
-            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder, "a?a.txt");
+               Console.WriteLine("\t#{0:000}\t{1}", ++folderCount, folderResult);
 
-            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(folder, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
-            Assert.IsFalse(folders.Contains(System.IO.Path.Combine(folder, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
-
-
-            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder, "a*.*");
-
-            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(folder, "a.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
-            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(folder, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
-            Assert.IsTrue(folders.Contains(System.IO.Path.Combine(folder, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
-
-
-            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder, "*.*");
-            var folders2 = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder);
-
-            Assert.IsTrue(folders.Length == folders2.Length, "*.* failed");
-
-
-            folders = Alphaleonis.Win32.Filesystem.Directory.GetDirectories(folder, "*.*.*");
-
-            Assert.IsTrue(folders.Length == folders2.Length, "*.* failed");
+               CollectionAssert.AreEquivalent(systemIOCollection, alphaFSCollection);
+            }
          }
 
          Console.WriteLine();

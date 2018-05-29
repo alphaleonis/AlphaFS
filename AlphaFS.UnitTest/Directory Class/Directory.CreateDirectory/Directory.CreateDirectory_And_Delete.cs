@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -40,18 +39,12 @@ namespace AlphaFS.UnitTest
 
       private void Directory_CreateDirectory_And_Delete(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = rootDir.Directory.FullName;
+            var folder = tempRoot.Directory.FullName;
+
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
+
 
             // Directory depth level.
             var level = new Random().Next(10, 500);
@@ -60,10 +53,6 @@ namespace AlphaFS.UnitTest
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
             folder += UnitTestConstants.EMspace;
 #endif
-
-            Console.WriteLine("\tInput Directory Path: [{0}]", folder);
-            Console.WriteLine();
-
 
             var root = folder;
 

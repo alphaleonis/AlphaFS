@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void ConnectTo(string remoteName)
       {
-         ConnectDisconnectCore(new ConnectDisconnectArguments { RemoteName = remoteName });
+         ConnectDisconnectCore(new ConnectDisconnectArguments {RemoteName = remoteName});
       }
 
       

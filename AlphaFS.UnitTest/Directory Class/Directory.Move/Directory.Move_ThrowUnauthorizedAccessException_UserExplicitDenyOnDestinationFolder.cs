@@ -21,11 +21,10 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_MoveTest
+   public partial class MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -40,22 +39,10 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Move_ThrowUnauthorizedAccessException_UserExplicitDenyOnDestinationFolder(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Destination Folder"));
-            var dstFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Destination Folder"));
+            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Destination Folder"));
+            var dstFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Destination Folder"));
 
             Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
@@ -79,17 +66,15 @@ namespace AlphaFS.UnitTest
             dstFolder.SetAccessControl(dirSecurity);
 
 
+            Exception exception = null;
+
             try
             {
                Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFolder.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(UnauthorizedAccessException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
             finally
             {
@@ -98,11 +83,10 @@ namespace AlphaFS.UnitTest
                dirSecurity.RemoveAccessRule(rule);
                dstFolder.SetAccessControl(dirSecurity);
             }
+            
 
-
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+            ExceptionAssert.UnauthorizedAccessException(exception);
          }
-
 
          Console.WriteLine();
       }

@@ -47,7 +47,6 @@ namespace AlphaFS.UnitTest
          var pDisk = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDiskInfo(sourceVolume);
 
 
-         Console.WriteLine();
          Console.WriteLine("#{0:000}\tInput Volume: [{1}]\t\t{2}\t\t{3}", ++volumeCount, sourceVolume, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
 
 

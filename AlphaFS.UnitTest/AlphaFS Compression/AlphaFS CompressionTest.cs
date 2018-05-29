@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Compression and is intended to contain all Compression Unit Tests.</summary>
+   /// <summary>This is a test class for all Compression Unit Tests.</summary>
    [TestClass]
    public partial class AlphaFS_CompressionTest
    {

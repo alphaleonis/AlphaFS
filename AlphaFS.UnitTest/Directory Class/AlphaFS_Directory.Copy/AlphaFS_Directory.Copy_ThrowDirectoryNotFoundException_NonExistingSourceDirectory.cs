@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_Directory_CopyTest
+   public partial class CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -32,21 +32,15 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory_LocalAndNetwork_Success()
       {
-         Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(false);
-         Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(true);
+         AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(false);
+         AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(true);
       }
 
 
-      private void Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
+      private void AlphaFS_Directory_Copy_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var gotException = false;
-         string exMessage = null;
-
-
+         
          var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source Folder";
          var dstFolder = UnitTestConstants.SysDrive + @"\NonExisting Destination Folder";
 
@@ -60,27 +54,24 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
 
 
+         Exception exception = null;
+         string exMessage = null;
+
          try
          {
             Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
+            exception = ex;
             exMessage = ex.Message;
-
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, exMessage);
          }
+         
 
+         ExceptionAssert.DirectoryNotFoundException(exception);
 
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-
-         Assert.IsNotNull(exMessage);
-
-         Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
+         if (null != exMessage)
+            Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
 
 
          Console.WriteLine();

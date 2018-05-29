@@ -27,131 +27,29 @@ namespace AlphaFS.UnitTest
 {
    public partial class AlphaFS_HostTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_Host_ConnectDrive_And_DisconnectDrive_Network_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(true);
-         Console.WriteLine();
+
+         var drive = string.Format(CultureInfo.InvariantCulture, "{0}:", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter());
+
+         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath);
+
+         // An Exception is thrown for any error, so no Assert needed.
 
 
-         #region Connect drive to share
+         Console.WriteLine("Connect drive [{0}] to [{1}]", drive, share);
 
-         var drive = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter(), Alphaleonis.Win32.Filesystem.Path.VolumeSeparatorChar, Alphaleonis.Win32.Filesystem.Path.DirectorySeparatorChar);
-         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempFolder);
-         bool connectOk;
-         Console.WriteLine("Connect using a designated drive: [{0}]", drive);
-         try
-         {
-            Alphaleonis.Win32.Network.Host.ConnectDrive(drive, share);
-
-            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]", drive, share);
-
-            connectOk = true;
-
-         }
-         catch (Exception ex)
-         {
-            connectOk = false;
-
-            Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Console.WriteLine("\nFailed ConnectDrive(): [{0}] to: [{1}]", drive, share);
-         }
-
-         Assert.IsTrue(connectOk);
-
-         #endregion // Connect drive to share
+         Alphaleonis.Win32.Network.Host.ConnectDrive(drive, share);
 
 
-         #region Disconnect drive from share
+         Console.WriteLine("\nDisconnect drive.");
 
-         var disconnectOk = false;
-
-         // We only need this for the unit test.
-         while (!disconnectOk)
-         {
-            try
-            {
-               Alphaleonis.Win32.Network.Host.DisconnectDrive(drive);
-
-               Console.WriteLine();
-               Console.WriteLine();
-               Console.WriteLine("DisconnectDrive(): [{0}] from: [{1}]", drive, share);
-               Console.WriteLine();
-
-               disconnectOk = true;
-
-            }
-            catch (Exception ex)
-            {
-               disconnectOk = false;
-               Console.WriteLine("Caught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-               Console.WriteLine("Failed DisconnectDrive(): [{0}] from: [{1}]", drive, share);
-            }
-         }
-
-         Assert.IsTrue(disconnectOk);
-
-         #endregion // Disconnect  drive from share
-
-
-
-
-         #region Connect last available drive to share
-
-         Console.WriteLine("\nConnect using the last available drive.");
-         drive = null;
-         try
-         {
-            drive = Alphaleonis.Win32.Network.Host.ConnectDrive(null, share);
-            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]", drive, share);
-
-            connectOk = true;
-
-         }
-         catch (Exception ex)
-         {
-            connectOk = false;
-
-            Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Console.WriteLine("\nFailed ConnectDrive(): [{0}] to: [{1}]", drive, share);
-         }
-
-         Assert.IsTrue(connectOk);
-
-         #endregion // Connect last available drive to share
-
-
-         #region Disconnect last available drive from share
-
-         disconnectOk = false;
-
-         // We only need this for the unit test.
-         while (!disconnectOk)
-         {
-            try
-            {
-               Alphaleonis.Win32.Network.Host.DisconnectDrive(drive);
-               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]", drive, share);
-
-               disconnectOk = true;
-
-            }
-            catch (Exception ex)
-            {
-               disconnectOk = false;
-
-               Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-               Console.WriteLine("\nFailed DisconnectDrive(): [{0}] from: [{1}]", drive, share);
-            }
-         }
-
-         Assert.IsTrue(disconnectOk);
-
-         #endregion // Disconnect last available drive from share
+         Alphaleonis.Win32.Network.Host.DisconnectDrive(drive);
       }
    }
 }

@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,9 +32,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Directory_CreateDirectory_WithDirectorySecurity_LocalAndNetwork_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
+         UnitTestAssert.IsElevatedProcess();
 
          Directory_CreateDirectory_WithDirectorySecurity(false);
          Directory_CreateDirectory_WithDirectorySecurity(true);
@@ -44,24 +41,16 @@ namespace AlphaFS.UnitTest
 
       private void Directory_CreateDirectory_WithDirectorySecurity(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\tInput Directory Path: [{0}]", folder);
-            Console.WriteLine();
+            var folder = tempRoot.RandomDirectoryFullPath;
+
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
 
 
-            var pathExpected = rootDir.RandomDirectoryFullPath;
-            var pathActual = rootDir.RandomDirectoryFullPath;
+            var pathExpected = tempRoot.RandomDirectoryFullPath;
+            var pathActual = tempRoot.RandomDirectoryFullPath;
+            
 
             var sid = new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null);
             var expectedDirectorySecurity = new System.Security.AccessControl.DirectorySecurity();

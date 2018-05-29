@@ -104,8 +104,21 @@ namespace Alphaleonis.Win32.Network
          if (!Utils.IsNullOrWhiteSpace(arguments.LocalName))
             arguments.LocalName = Path.RemoveTrailingDirectorySeparator(arguments.LocalName).ToUpperInvariant();
 
+         
+         // Add backslashes.
+         if (!Utils.IsNullOrWhiteSpace(arguments.RemoteName))
+         {
+            if (!arguments.RemoteName.StartsWith(Path.UncPrefix, StringComparison.Ordinal))
+               arguments.RemoteName = Path.UncPrefix + arguments.RemoteName;
 
-         #region Disconnect
+
+            // Always remove backslash.
+            if (!Utils.IsNullOrWhiteSpace(arguments.RemoteName))
+               arguments.RemoteName = Path.RemoveTrailingDirectorySeparator(arguments.RemoteName);
+         }
+
+         
+         // Disconnect
 
          if (arguments.IsDisconnect)
          {
@@ -119,27 +132,19 @@ namespace Alphaleonis.Win32.Network
             lastError = NativeMethods.WNetCancelConnection(target, arguments.UpdateProfile ? NativeMethods.Connect.UpdateProfile : NativeMethods.Connect.None, force);
 
             if (lastError != Win32Errors.NO_ERROR)
-               throw new NetworkInformationException((int)lastError);
+               throw new NetworkInformationException((int) lastError);
 
             return null;
          }
 
-         #endregion // Disconnect
-
-
-         #region Connect
+         
+         // Connect
 
          // arguments.LocalName is allowed to be null or empty.
-         //if (Utils.IsNullOrWhiteSpace(arguments.LocalName) && !arguments.IsDeviceMap)
-         //   throw new ArgumentNullException("localName");
 
          if (Utils.IsNullOrWhiteSpace(arguments.RemoteName) && !arguments.IsDeviceMap)
             throw new ArgumentNullException("arguments.RemoteName");
-
-         // Always remove backslash.
-         if (!Utils.IsNullOrWhiteSpace(arguments.RemoteName))
-            arguments.RemoteName = Path.RemoveTrailingDirectorySeparator(arguments.RemoteName);
-
+         
 
          // When supplied, use data from NetworkCredential instance.
          if (arguments.Credential != null)
@@ -182,7 +187,7 @@ namespace Alphaleonis.Win32.Network
 
          do
          {
-            buffer = new StringBuilder((int)bufferSize);
+            buffer = new StringBuilder((int) bufferSize);
 
             uint result;
             lastError = NativeMethods.WNetUseConnection(arguments.WinOwner, ref resource, arguments.Password, arguments.UserName, connect, buffer, out bufferSize, out result);
@@ -206,12 +211,10 @@ namespace Alphaleonis.Win32.Network
 
 
          if (lastError != Win32Errors.NO_ERROR)
-            throw new NetworkInformationException((int)lastError);
+            throw new NetworkInformationException((int) lastError);
 
 
          return arguments.IsDeviceMap ? buffer.ToString() : null;
-
-         #endregion // Connect
       }
       
 

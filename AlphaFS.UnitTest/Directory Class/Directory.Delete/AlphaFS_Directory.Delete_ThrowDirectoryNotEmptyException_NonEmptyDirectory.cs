@@ -21,40 +21,27 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   public partial class DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetwork_Success()
       {
-         Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(false);
-         Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(true);
+         AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(false);
+         AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(true);
       }
 
 
-      private void Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(bool isNetwork)
+      private void AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
+            var folder = tempRoot.RandomDirectoryFullPath;
             var file = System.IO.Path.Combine(folder, UnitTestConstants.GetRandomFileNameWithDiacriticCharacters());
 
             Console.WriteLine("Input Directory Path: [{0}]", folder);
@@ -65,6 +52,8 @@ namespace AlphaFS.UnitTest
             using (System.IO.File.Create(System.IO.Path.Combine(folder, file))) { }
 
 
+            Exception exception = null;
+
             try
             {
                Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
@@ -72,18 +61,13 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
+            
+
+            ExceptionAssert.DirectoryNotEmptyException(exception);
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-
+         
          Console.WriteLine();
       }
    }

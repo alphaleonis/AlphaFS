@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -40,17 +39,10 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Directory_ExportImportEncryptedDirectoryRaw(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             // Create an encrypted file to use for testing.
-            var inputDir = System.IO.Path.Combine(rootDir.Directory.FullName, "testDir");
+            var inputDir = System.IO.Path.Combine(tempRoot.Directory.FullName, "testDir");
             System.IO.Directory.CreateDirectory(inputDir);
             System.IO.File.WriteAllText(System.IO.Path.Combine(inputDir, "test.txt"), "Test file");
 
@@ -58,11 +50,11 @@ namespace AlphaFS.UnitTest
             Alphaleonis.Win32.Filesystem.Directory.Encrypt(inputDir, false);
 
 
-            Console.WriteLine("\nEncrypted Input Directory: [{0}]", inputDir);
+            Console.WriteLine("Encrypted Input Directory: [{0}]", inputDir);
 
 
             // Export the file using the method under test.
-            var exportedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "export.dat");
+            var exportedFile = System.IO.Path.Combine(tempRoot.Directory.FullName, "export.dat");
 
 
             using (var fs = System.IO.File.Create(exportedFile))
@@ -77,7 +69,7 @@ namespace AlphaFS.UnitTest
             
 
             // Import the directory again.
-            var importedDir = System.IO.Path.Combine(rootDir.Directory.FullName, "importDir");
+            var importedDir = System.IO.Path.Combine(tempRoot.Directory.FullName, "importDir");
 
 
             using (var fs = System.IO.File.OpenRead(exportedFile))

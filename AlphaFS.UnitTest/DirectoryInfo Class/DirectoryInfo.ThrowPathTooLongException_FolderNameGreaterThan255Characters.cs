@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -40,19 +39,11 @@ namespace AlphaFS.UnitTest
 
       private void DirectoryInfo_ThrowPathTooLongException_FolderNameGreaterThan255Characters(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = rootDir.Directory.FullName;
-
-
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            var folder = tempRoot.Directory.FullName;
+            
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
             // System.IO: 244, anything higher throws System.IO.PathTooLongException: The specified path, file name, or both are too long. The fully qualified file name must be less than 260 characters, and the directory name must be less than 248 characters.
@@ -66,23 +57,19 @@ namespace AlphaFS.UnitTest
             Console.WriteLine();
 
 
-            var gotException = false;
+            Exception exception = null;
 
             try
             {
-               // Fail.
-               var di1 = new Alphaleonis.Win32.Filesystem.DirectoryInfo(isNetwork ? unc : local);
+               var dirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(isNetwork ? unc : local);
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(System.IO.PathTooLongException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
+            
 
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+            ExceptionAssert.PathTooLongException(exception);
          }
 
          Console.WriteLine();

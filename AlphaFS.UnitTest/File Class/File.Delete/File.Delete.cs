@@ -21,11 +21,10 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_DeleteTest
+   public partial class DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -40,17 +39,11 @@ namespace AlphaFS.UnitTest
 
       private void File_Delete(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-            Console.WriteLine("\nInput File Path: [{0}]", file);
+            var file = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
+
+            Console.WriteLine("Input File Path: [{0}]", file);
             
 
             Alphaleonis.Win32.Filesystem.File.Delete(file.FullName);

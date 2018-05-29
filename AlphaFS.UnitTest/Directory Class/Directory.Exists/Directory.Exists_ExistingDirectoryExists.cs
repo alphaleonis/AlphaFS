@@ -21,11 +21,10 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_ExistsTest
+   public partial class ExistsTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -40,18 +39,12 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Exists_ExistingDirectoryExists(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
+            var folder = tempRoot.RandomDirectoryFullPath;
             System.IO.Directory.CreateDirectory(folder);
-            Console.WriteLine("\nInput Existing Directory Path: [{0}]\n", folder);
+
+            Console.WriteLine("Input Existing Directory Path: [{0}]", folder);
 
             var shouldBe = true;
             var existSysIO = System.IO.Directory.Exists(folder);

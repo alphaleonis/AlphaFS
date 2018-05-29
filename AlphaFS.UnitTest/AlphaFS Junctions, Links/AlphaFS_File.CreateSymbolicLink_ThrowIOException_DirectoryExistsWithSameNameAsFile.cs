@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -33,35 +32,25 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-         File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(false);
-         File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(true);
+         AlphaFS_File_File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(false);
+         AlphaFS_File_File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(true);
       }
 
 
-      private void File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
+      private void AlphaFS_File_File_CreateSymbolicLink_ThrowIOException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folderLink = System.IO.Path.Combine(rootDir.Directory.FullName, "FolderLink-ToDestinationFolder");
+            var folderLink = System.IO.Path.Combine(tempRoot.Directory.FullName, "FolderLink-ToDestinationFolder");
 
-            var dirInfo = new System.IO.DirectoryInfo(System.IO.Path.Combine(rootDir.Directory.FullName, "DestinationFolder"));
+            var dirInfo = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "DestinationFolder"));
             dirInfo.Create();
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", dirInfo.FullName);
+            Console.WriteLine("Input Directory Path: [{0}]", dirInfo.FullName);
             Console.WriteLine("Input Directory Link: [{0}]", folderLink);
 
 
-            var gotException = false;
+            Exception exception = null;
 
             try
             {
@@ -70,14 +59,11 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(System.IO.IOException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
+            
 
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+            ExceptionAssert.IOException(exception);
          }
 
          Console.WriteLine();

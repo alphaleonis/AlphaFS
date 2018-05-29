@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_DeleteTest
+   public partial class DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -44,32 +44,30 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
 
-         Console.WriteLine("\nInput File Path: [{0}]", folder);
+         Console.WriteLine("Input File Path: [{0}]", folder);
 
 
-         var gotException = false;
+         Exception exception = null;
+
          try
          {
             Alphaleonis.Win32.Filesystem.File.Delete(folder);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
-
-            // Local: DirectoryNotFoundException.
-            // UNC: IOException or DeviceNotReadyException.
-            // The latter occurs when a removable drive is already removed but there's still a cached reference.
-
-            gotException = exType == typeof(System.IO.IOException);
-
-            if (!gotException && isNetwork)
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
-
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            exception = ex;
          }
 
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+         // Local: IOException.
+         // UNC: IOException or DeviceNotReadyException.
+         // The latter occurs when a removable drive is already removed but there's still a cached reference.
+
+         //if (isNetwork)
+         //   ExceptionAssert.DeviceNotReadyException(exception);
+         //else
+            ExceptionAssert.IOException(exception);
+
 
          Console.WriteLine();
       }

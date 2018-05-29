@@ -20,12 +20,11 @@
  */
 
 using System;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_FileSystemEntryInfoTest
+   public partial class EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -33,32 +32,26 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName_LocalAndNetwork_Success()
       {
-         Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(false);
-         Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(true);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(false);
+         AlphaFS_Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(true);
       }
 
 
-      private void Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(bool isNetwork)
+      private void AlphaFS_Directory_EnumerateFileSystemEntryInfos_FolderWithSpaceAsName(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = rootDir.Directory.FullName;
+            var folder = tempRoot.Directory.FullName;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
-
-
-            var maxFolder = 10;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, maxFolder / 2, false, false, false);
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
 
 
-            for (var i = 0; i < maxFolder / 2; i++)
+            const int maxFso = 10;
+            const int expectedFso = 30;
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, maxFso, true, true, false);
+
+
+            for (var i = 0; i < maxFso; i++)
             {
                var spaceFolder = folder + @"\" + new string(' ', i + 1) + @"\" + "no_void";
 
@@ -88,7 +81,7 @@ namespace AlphaFS.UnitTest
             }
 
 
-            Assert.AreEqual(maxFolder, countNamedFolders + countSpaceFolders);
+            Assert.AreEqual(expectedFso, countNamedFolders + countSpaceFolders);
          }
 
          Console.WriteLine();

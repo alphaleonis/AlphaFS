@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,24 +32,18 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_GetSize_LocalAndNetwork_Success()
       {
-         File_GetSize(false);
-         File_GetSize(true);
+         AlphaFS_File_GetSize(false);
+         AlphaFS_File_GetSize(true);
       }
       
 
-      private void File_GetSize(bool isNetwork)
+      private void AlphaFS_File_GetSize(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]]", file);
+            var file = tempRoot.RandomFileFullPath;
+
+            Console.WriteLine("Input File Path: [{0}]", file);
 
             long streamLength;
             var ten = UnitTestConstants.TenNumbers.Length;

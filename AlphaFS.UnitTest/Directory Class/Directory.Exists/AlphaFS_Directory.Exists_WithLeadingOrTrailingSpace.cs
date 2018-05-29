@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_ExistsTest
+   public partial class ExistsTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -32,12 +32,12 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Exists_WithLeadingOrTrailingSpace_LocalAndNetwork_Success()
       {
-         Directory_Exists_WithLeadingOrTrailingSpace(false);
-         Directory_Exists_WithLeadingOrTrailingSpace(true);
+         AlphaFS_Directory_Exists_WithLeadingOrTrailingSpace(false);
+         AlphaFS_Directory_Exists_WithLeadingOrTrailingSpace(true);
       }
 
 
-      private void Directory_Exists_WithLeadingOrTrailingSpace(bool isNetwork)
+      private void AlphaFS_Directory_Exists_WithLeadingOrTrailingSpace(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
 
          var path = tempPath + "   ";
-         Console.WriteLine("\nInput Directory Path: [{0}]", path);
+         Console.WriteLine("Input Directory Path: [{0}]", path);
 
          Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(path), "The directory does not exist, but is expected to.");
 

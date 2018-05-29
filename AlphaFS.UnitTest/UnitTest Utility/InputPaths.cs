@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -74,11 +74,11 @@ namespace AlphaFS.UnitTest
          SysDrive + @"\a\b\",
          SysDrive + @"\a\b\c",
          SysDrive + @"\a\b\c\",
-         SysDrive + @"\a\b\c\f",
-         SysDrive + @"\a\b\c\f.",
-         SysDrive + @"\a\b\c\f.t",
-         SysDrive + @"\a\b\c\f.tx",
-         SysDrive + @"\a\b\c\f.txt",
+         SysDrive + @"\a\b\c\z",
+         SysDrive + @"\a\b\c\z.",
+         SysDrive + @"\a\b\c\z.t",
+         SysDrive + @"\a\b\c\z.tx",
+         SysDrive + @"\a\b\c\z.txt",
 
          Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + @"Program Files\Microsoft Office",
          Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
@@ -90,11 +90,11 @@ namespace AlphaFS.UnitTest
          Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\",
          Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c",
          Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\",
-         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\f",
-         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\f.",
-         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\f.t",
-         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
-         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z.",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z.t",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z.tx",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z.txt",
 
          Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share",
          Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\",

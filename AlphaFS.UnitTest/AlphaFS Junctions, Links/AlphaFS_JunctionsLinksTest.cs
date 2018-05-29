@@ -23,6 +23,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
+   /// <summary>This is a test class for all Junctions and Links Unit Tests.</summary>
+   /// 
    [TestClass]
    public partial class AlphaFS_JunctionsLinksTest
    {

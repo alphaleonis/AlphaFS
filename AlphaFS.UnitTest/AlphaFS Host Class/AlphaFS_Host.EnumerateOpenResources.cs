@@ -24,45 +24,35 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_HostTest
+   public partial class EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
+
 
       [TestMethod]
       public void AlphaFS_Host_EnumerateOpenResources_Local_Success()
       {
-         var host = UnitTestConstants.LocalHost;
-
-         EnumerateOpenResources(host);
-      }
-
-
-
-
-      private void EnumerateOpenResources(string host)
-      {
+         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-         Console.WriteLine("\nConnected to Host: [{0}]", host);
+         var host = UnitTestConstants.LocalHost;
+         Console.WriteLine("Connected to Host: [{0}]", host);
 
 
-         var cnt = 0;
+         var count = 0;
          foreach (var openResourceInfo in Alphaleonis.Win32.Network.Host.EnumerateOpenResources(host, null, null, false))
          {
             if (UnitTestConstants.Dump(openResourceInfo, -11))
-               cnt++;
+            {
+               count++;
 
-            Console.WriteLine();
+               Console.WriteLine();
+            }
          }
 
 
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing is enumerated, but it is expected. Try another server name if applicable.");
-
-         Console.WriteLine();
+         if (count == 0)
+            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

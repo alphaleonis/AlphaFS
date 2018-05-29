@@ -25,24 +25,25 @@ using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_HostTest
+   public partial class EnumerationTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_Host_EnumerateDrives_Network_Success()
       {
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-
+         //UnitTestAssert.IsElevatedProcess(); // In User mode nothing is enumerated.
          UnitTestConstants.PrintUnitTestHeader(true);
          
+
          var host = UnitTestConstants.LocalHost;
 
-         var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true).ToList();
+         var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true).ToArray();
 
          foreach (var driveInfo in drives)
          {
-            Console.WriteLine("\nHost Local Drive: [{0}]", driveInfo.Name);
+            Console.WriteLine("Host Local Drive: [{0}]", driveInfo.Name);
 
 
             UnitTestConstants.Dump(driveInfo, -21);
@@ -57,7 +58,7 @@ namespace AlphaFS.UnitTest
          }
 
 
-         Assert.IsTrue(drives.Count > 0, "Nothing is enumerated, but it is expected.");
+         Assert.IsTrue(drives.Length > 0, "Nothing is enumerated, but it is expected.");
 
 
          // \\localhost\C$

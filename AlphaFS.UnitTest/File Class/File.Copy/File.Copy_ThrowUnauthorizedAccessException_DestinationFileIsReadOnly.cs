@@ -20,12 +20,11 @@
  */
 
 using System;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_CopyTest
+   public partial class CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -40,22 +39,10 @@ namespace AlphaFS.UnitTest
 
       private void File_Copy_ThrowUnauthorizedAccessException_DestinationFileIsReadOnly(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         var gotException = false;
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFile = UnitTestConstants.CreateFile(rootDir.Directory.FullName);
-            var dstFile = rootDir.RandomFileFullPath;
+            var srcFile = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
+            var dstFile = tempRoot.RandomFileFullPath;
 
             Console.WriteLine("Src File Path: [{0}]", srcFile);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
@@ -65,28 +52,25 @@ namespace AlphaFS.UnitTest
             System.IO.File.SetAttributes(dstFile, System.IO.FileAttributes.ReadOnly);
 
 
+            Exception exception = null;
+
             try
             {
                Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile, true);
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(UnauthorizedAccessException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
             finally
             {
                System.IO.File.SetAttributes(dstFile, System.IO.FileAttributes.Normal);
             }
+            
+
+            ExceptionAssert.UnauthorizedAccessException(exception);
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-
+         
          Console.WriteLine();
       }
    }

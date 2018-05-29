@@ -35,10 +35,11 @@ namespace AlphaFS.UnitTest
       public const string EMspace = "\u3000";
 #endif
 
-      /// <summary>The Computer name.</summary>
-      public static readonly string TempFolder = Environment.GetEnvironmentVariable("Temp");
+      /// <summary>The path to the temporary folder, ending with a backslash.</summary>
+      public static readonly string TempPath = System.IO.Path.GetTempPath();
+
       public static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
-      public static readonly string SysRoot32 = System.IO.Path.Combine(SysRoot, "System32");
+      public static readonly string SysRoot32 = Environment.SystemDirectory;
       public static readonly string AppData = Environment.GetEnvironmentVariable("AppData");
       public static readonly string NotepadExe = System.IO.Path.Combine(SysRoot32, "notepad.exe");
 
@@ -48,7 +49,7 @@ namespace AlphaFS.UnitTest
       public const string TextHelloWorld = "Hëllõ Wørld!";
       public const string TextGoodbyeWorld = "Góödbyé Wôrld!";
       public const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
-      
+
       #endregion // Fields
    }
 }

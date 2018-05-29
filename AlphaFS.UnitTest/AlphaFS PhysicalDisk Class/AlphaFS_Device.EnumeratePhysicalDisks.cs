@@ -41,7 +41,6 @@ namespace AlphaFS.UnitTest
 
          foreach (var pDisk in pDrives)
          {
-            Console.WriteLine();
             Console.WriteLine("#{0:000}\tPhysical Disk: [{1}]\t\t{2}\t\t{3}", ++pDriveCount, pDisk.StorageDeviceInfo.DeviceNumber, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
 
             UnitTestConstants.Dump(pDisk, -24);

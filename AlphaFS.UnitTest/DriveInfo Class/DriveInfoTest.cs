@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for DriveInfo and is intended to contain all DriveInfo Unit Tests.</summary>
+   /// <summary>This is a test class for all DriveInfo class Unit Tests.</summary>
    [TestClass]
    public partial class DriveInfoTest
    {

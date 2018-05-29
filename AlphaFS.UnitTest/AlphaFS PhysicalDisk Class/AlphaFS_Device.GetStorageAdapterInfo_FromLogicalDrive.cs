@@ -32,12 +32,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Device_GetStorageAdapterInfo_FromLogicalDrive_Success()
       {
+         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
-
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Inconclusive();
-
-
+         
          var gotDisk = false;
          var driveCount = 0;
          
@@ -49,7 +46,6 @@ namespace AlphaFS.UnitTest
 
             var storageAdapterInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageAdapterInfo(drive.Name);
 
-            Console.WriteLine();
             Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, drive.Name, storageAdapterInfo.ToString());
 
             UnitTestConstants.Dump(storageAdapterInfo, -28);

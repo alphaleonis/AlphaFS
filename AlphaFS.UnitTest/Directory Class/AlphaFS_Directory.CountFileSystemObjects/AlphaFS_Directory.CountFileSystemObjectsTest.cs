@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for Directory and is intended to contain all Directory.CountFileSystemObjects Unit Tests.</summary>
+   /// <summary>This is a test class for Directory and is intended to contain all CountFileSystemObjects Unit Tests.</summary>
    [TestClass]
    public partial class AlphaFS_Directory_CountFileSystemObjectsTest
    {

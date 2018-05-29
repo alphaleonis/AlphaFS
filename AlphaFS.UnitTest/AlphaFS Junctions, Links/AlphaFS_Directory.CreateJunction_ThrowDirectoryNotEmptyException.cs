@@ -21,7 +21,6 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,24 +32,21 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_CreateJunction_ThrowDirectoryNotEmptyException_Local_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-         var tempPath = System.IO.Path.GetTempPath();
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory())
          {
-            var target = rootDir.Directory.CreateSubdirectory("JunctionTarget");
-            var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
+            var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget");
+            var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
             var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
             var dirInfo = new System.IO.DirectoryInfo(junction);
             dirInfo.Create();
+
             // Create an extra folder to trigger the DirectoryNotEmptyException.
             dirInfo.CreateSubdirectory("Extra Folder");
-            
 
-            var gotException = false;
+
+            Exception exception = null;
 
             try
             {
@@ -58,14 +54,11 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
 
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+            ExceptionAssert.DirectoryNotEmptyException(exception);
          }
       }
    }

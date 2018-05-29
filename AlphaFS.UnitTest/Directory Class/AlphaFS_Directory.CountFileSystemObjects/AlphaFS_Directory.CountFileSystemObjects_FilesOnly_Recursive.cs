@@ -22,7 +22,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Globalization;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -34,45 +33,34 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive_LocalAndNetwork_Success()
       {
-         Directory_CountFileSystemObjects_FilesOnly_Recursive(false);
-         Directory_CountFileSystemObjects_FilesOnly_Recursive(true);
+         AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive(false);
+         AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive(true);
       }
 
 
-      private void Directory_CountFileSystemObjects_FilesOnly_Recursive(bool isNetwork)
+      private void AlphaFS_Directory_CountFileSystemObjects_FilesOnly_Recursive(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         const int expectedFso = 10;
-         long fsoCount;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
+            var folder = tempRoot.RandomDirectoryFullPath;
 
             Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, expectedFso, false, false, false);
+            const int maxFso = 10;
+            const int expectedFso = 20;
+
+            UnitTestConstants.CreateDirectoriesAndFiles(folder, maxFso, false, false, false);
 
 
-            fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
+            var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
 
             Console.WriteLine("\n\tTotal file system objects = [{0}]", fsoCount);
+
+
+            Assert.AreEqual(expectedFso, fsoCount, string.Format(CultureInfo.InvariantCulture, "The number of file system objects are not equal, but are expected to."));
          }
-
-
-         Assert.AreEqual(expectedFso, fsoCount, string.Format(CultureInfo.InvariantCulture, "The number of file system objects are not equal, but are expected to."));
-
-
+         
          Console.WriteLine();
       }
    }

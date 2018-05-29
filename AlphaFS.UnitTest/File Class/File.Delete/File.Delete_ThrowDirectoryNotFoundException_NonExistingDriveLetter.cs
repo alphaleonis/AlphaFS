@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_DeleteTest
+   public partial class DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -44,27 +44,22 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
 
-         Console.WriteLine("\nInput File Path: [{0}]", folder);
+         Console.WriteLine("Input File Path: [{0}]", folder);
 
 
-         var gotException = false;
+         Exception exception = null;
+
          try
          {
             Alphaleonis.Win32.Filesystem.File.Delete(folder);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
-
-            // Local: DirectoryNotFoundException.
-            // UNC: DeviceNotReadyException.
-
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            exception = ex;
          }
+         
 
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+         ExceptionAssert.DirectoryNotFoundException(exception);
 
          Console.WriteLine();
       }

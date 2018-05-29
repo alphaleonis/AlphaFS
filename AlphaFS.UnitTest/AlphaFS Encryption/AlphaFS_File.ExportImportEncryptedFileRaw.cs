@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -29,37 +28,33 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
+
       [TestMethod]
       public void AlphaFS_File_ExportImportEncryptedFileRaw_RountripOfFile_FileContentsOfImportedFileMatchesTheOriginalFile_LocalAndNetwork_Success()
       {
-         File_ExportImportEncryptedFileRaw(false);
-         File_ExportImportEncryptedFileRaw(true);
+         AlphaFS_File_ExportImportEncryptedFileRaw(false);
+         AlphaFS_File_ExportImportEncryptedFileRaw(true);
       }
 
 
-      private void File_ExportImportEncryptedFileRaw(bool isNetwork)
+      private void AlphaFS_File_ExportImportEncryptedFileRaw(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             // Create an encrypted file to use for testing
-            var inputFile = System.IO.Path.Combine(rootDir.Directory.FullName, "test.txt");
+            var inputFile = System.IO.Path.Combine(tempRoot.Directory.FullName, "test.txt");
             System.IO.File.WriteAllText(inputFile, "Test file #1");
 
             Alphaleonis.Win32.Filesystem.File.Encrypt(inputFile);
-            Console.WriteLine("\nEncrypted Input File: [{0}]", inputFile);
+            Console.WriteLine("Encrypted Input File: [{0}]", inputFile);
 
 
             // Export the file using the method under test.
-            var exportedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "export.dat");
+            var exportedFile = System.IO.Path.Combine(tempRoot.Directory.FullName, "export.dat");
+
             using (var fs = System.IO.File.Create(exportedFile))
                Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw(inputFile, fs);
+
             Console.WriteLine("\nExported Input File: [{0}]", exportedFile);
 
 
@@ -69,9 +64,11 @@ namespace AlphaFS.UnitTest
 
 
             // Import the file again.
-            var importedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "import.txt");
+            var importedFile = System.IO.Path.Combine(tempRoot.Directory.FullName, "import.txt");
+
             using (var fs = System.IO.File.OpenRead(exportedFile))
                Alphaleonis.Win32.Filesystem.File.ImportEncryptedFileRaw(fs, importedFile);
+
             Console.WriteLine("\nImported Input File: [{0}]", importedFile);
 
 

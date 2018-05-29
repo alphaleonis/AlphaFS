@@ -34,31 +34,26 @@ namespace AlphaFS.UnitTest
       public void DriveInfo_GetDrives_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-
-
-         var driveCount = 0;
+      
+         
          var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToList();
 
          foreach (var drive in drives)
          {
-            Console.WriteLine();
-            Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++driveCount, drive.Name);
-            
+            Console.WriteLine("Logical Drive: [{0}]", drive.Name);
+
             UnitTestConstants.Dump(drive, -21);
 
 
             if (null != drive.DiskSpaceInfo)
                UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
-            
-            if (null != drive.VolumeInfo)
-               UnitTestConstants.Dump(drive.VolumeInfo, -26, true);
 
 
             Console.WriteLine();
          }
 
 
-         Assert.IsTrue(drives.Count > 0, "No logical drives enumerated, but it is expected.");
+         Assert.IsTrue(drives.Count > 0);
 
          Assert.AreEqual(drives[0].Name[0], UnitTestConstants.SysDrive[0]);
       }

@@ -24,27 +24,22 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_DeleteTest
+   public partial class DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       
       [TestMethod]
-      public void Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive_LocalAndNetwork_Success()
       {
-         Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(false);
-         Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(true);
+         AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(false);
+         AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(true);
       }
 
 
-      private void Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(bool isNetwork)
+      private void AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var gotException = false;
-
 
          var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
 
@@ -56,21 +51,19 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
+         Exception exception = null;
+
          try
          {
             Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            exception = ex;
          }
+         
 
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+         ExceptionAssert.DeviceNotReadyException(exception);
 
 
          Console.WriteLine();

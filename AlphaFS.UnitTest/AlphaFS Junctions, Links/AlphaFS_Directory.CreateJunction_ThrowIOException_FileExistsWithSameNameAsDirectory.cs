@@ -21,7 +21,6 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,13 +32,10 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_CreateJunction_ThrowIOException_FileExistsWithSameNameAsDirectory_Local_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-
-         using (var rootDir = new TemporaryDirectory(MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory())
          {
-            var target = rootDir.Directory.CreateSubdirectory("JunctionTarget");
-            var toDelete = rootDir.Directory.CreateSubdirectory("ToDelete");
+            var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget");
+            var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
             var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
@@ -47,7 +43,7 @@ namespace AlphaFS.UnitTest
             using (System.IO.File.CreateText(junction)) { }
 
 
-            var gotException = false;
+            Exception exception = null;
 
             try
             {
@@ -55,14 +51,11 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(System.IO.IOException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
 
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+            ExceptionAssert.IOException(exception);
          }
       }
    }

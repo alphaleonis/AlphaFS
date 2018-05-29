@@ -39,7 +39,6 @@ namespace AlphaFS.UnitTest
             var hash = crc32.ComputeHash(System.Text.Encoding.ASCII.GetBytes(text)).Aggregate(string.Empty, (current, b) => current + b.ToString("x2").ToLower());
 
             Console.WriteLine("Input text: {0}", text);
-
             Console.WriteLine("\n\tCRC32: {0}", hash);
 
             Assert.AreEqual("c193b48c", hash);

@@ -33,35 +33,42 @@ namespace AlphaFS.UnitTest
 
          for (var i = 0; i < max; i++)
          {
-            var file = System.IO.Path.Combine(rootPath, GetRandomFileNameWithDiacriticCharacters());
+            var fsoName = GetRandomFileNameWithDiacriticCharacters();
+            var file = System.IO.Path.Combine(rootPath, fsoName);
             var dir = file + "-" + i + "-dir";
-            file = file + "-" + i + "-file";
+            file = file + "-" + i + "-file.txt";
 
             folderCount++;
+
+
             System.IO.Directory.CreateDirectory(dir);
+
+            CreateFile(rootPath, fsoName, i, readOnly, hidden);
+
+
+            if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+               System.IO.File.SetAttributes(dir, System.IO.FileAttributes.ReadOnly);
+
+            if (hidden && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+               System.IO.File.SetAttributes(dir, System.IO.FileAttributes.Hidden);
+
 
             var filePath = System.IO.Path.Combine(dir, System.IO.Path.GetFileName(file));
 
 
-            // Every other folder is empty.
+            // Every other folder.
             if (i % 2 == 0)
             {
-               CreateFile(dir);
+               CreateFile(dir, null, i, readOnly, hidden);
 
-               System.IO.File.WriteAllText(filePath, TextGoodbyeWorld);
 
-               switch (new Random(max).Next(0, 2))
-               {
-                  case 1:
-                     if (readOnly)
-                        System.IO.File.SetAttributes(filePath, System.IO.FileAttributes.ReadOnly);
-                     break;
+               System.IO.File.WriteAllText(filePath, DateTime.Now.ToLongDateString());
 
-                  case 2:
-                     if (hidden)
-                        System.IO.File.SetAttributes(filePath, System.IO.FileAttributes.Hidden);
-                     break;
-               }
+               if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+                  System.IO.File.SetAttributes(filePath, System.IO.FileAttributes.ReadOnly);
+
+               if (hidden && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+                  System.IO.File.SetAttributes(filePath, System.IO.FileAttributes.Hidden);
             }
          }
 
@@ -74,6 +81,36 @@ namespace AlphaFS.UnitTest
 
 
          Assert.AreEqual(max, folderCount, "The number of folders does not equal the max folder-level, but is expected to.");
+      }
+
+
+      public static System.IO.FileInfo CreateFile(string rootFolder, int fileLength = 0)
+      {
+         return CreateFile(rootFolder, null, 0, false, false, fileLength);
+      }
+
+
+      public static System.IO.FileInfo CreateFile(string rootFolder, string fileName, int count, bool readOnly, bool hidden, int fileLength = 0)
+      {
+         var file = System.IO.Path.Combine(rootFolder, (!Alphaleonis.Utils.IsNullOrWhiteSpace(fileName) ? fileName : GetRandomFileNameWithDiacriticCharacters()) + "-" + count + "-file");
+
+         using (var fs = System.IO.File.Create(file))
+         {
+            if (fileLength <= 0)
+               fileLength = new Random().Next(0, 10485760);
+
+            fs.SetLength(fileLength);
+         }
+
+
+         if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+            System.IO.File.SetAttributes(file, System.IO.FileAttributes.ReadOnly);
+
+         if (hidden && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+            System.IO.File.SetAttributes(file, System.IO.FileAttributes.Hidden);
+
+
+         return new System.IO.FileInfo(file);
       }
    }
 }

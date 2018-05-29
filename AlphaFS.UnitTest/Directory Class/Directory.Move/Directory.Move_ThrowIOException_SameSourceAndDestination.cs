@@ -21,11 +21,10 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_MoveTest
+   public partial class MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -40,46 +39,30 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Move_ThrowIOException_SameSourceAndDestination(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var gotException = false;
-
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
+            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
             var dstFolder = srcFolder;
-
-
+            
             Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
 
-            
+
+            Exception exception = null;
+
             try
             {
                System.IO.Directory.Move(srcFolder.FullName, dstFolder.FullName);
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(System.IO.IOException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
+            
+
+            ExceptionAssert.IOException(exception);
          }
-
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-
+         
          Console.WriteLine();
       }
    }

@@ -32,44 +32,35 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile_LocalAndNetwork_Success()
       {
-         File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(false);
-         File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(true);
+         AlphaFS_File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(false);
+         AlphaFS_File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(true);
       }
 
 
-      private void File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
+      private void AlphaFS_File_GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile(bool isNetwork)
       {
-         var path = UnitTestConstants.SysRoot;
-
-         if (!System.IO.Directory.Exists(path))
-            Assert.Inconclusive("Test ignored because {0} was not found.", path);
-
-
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var tempPath = path;
+         var tempPath = UnitTestConstants.SysRoot;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+         
+         Console.WriteLine("Input File Path: [{0}]", tempPath);
 
 
-         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+         Exception exception = null;
 
-
-         var gotException = false;
          try
          {
             Alphaleonis.Win32.Filesystem.File.GetFileSystemEntryInfo(tempPath);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(System.IO.FileNotFoundException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            exception = ex;
          }
+         
 
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+         ExceptionAssert.FileNotFoundException(exception);
 
 
          Console.WriteLine();

@@ -45,7 +45,6 @@ namespace AlphaFS.UnitTest
 
             var storagePartitionInfo = Alphaleonis.Win32.Filesystem.Device.GetStoragePartitionInfo(drive.Name);
 
-            Console.WriteLine();
             Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, drive.Name, storagePartitionInfo.ToString());
 
             UnitTestConstants.Dump(storagePartitionInfo, -23);

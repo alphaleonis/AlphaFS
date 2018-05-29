@@ -29,9 +29,8 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Shell32_PathFileExists()
       {
-         Console.WriteLine("Filesystem.Shell32.PathFileExists()");
-
          var path = UnitTestConstants.SysRoot;
+
          Shell32_PathFileExists(path, true);
          Shell32_PathFileExists(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(path), true);
          Shell32_PathFileExists("BlaBlaBla", false);

@@ -21,11 +21,10 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_DeleteTest
+   public partial class DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -40,36 +39,28 @@ namespace AlphaFS.UnitTest
 
       private void File_Delete_ThrowUnauthorizedAccessException_PathIsADirectoryNotAFile(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = rootDir.RandomDirectoryFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            var folder = tempRoot.RandomDirectoryFullPath;
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
             System.IO.Directory.CreateDirectory(folder);
 
 
-            var gotException = false;
+            Exception exception = null;
+
             try
             {
                Alphaleonis.Win32.Filesystem.File.Delete(folder);
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(UnauthorizedAccessException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
+            
 
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+            ExceptionAssert.UnauthorizedAccessException(exception);
          }
 
          Console.WriteLine();

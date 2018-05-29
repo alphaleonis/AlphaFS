@@ -21,11 +21,10 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_Directory_CopyTest
+   public partial class CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -33,32 +32,23 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_Copy_Overwrite_DestinationFileAlreadyExists_LocalAndNetwork_Success()
       {
-         Directory_Copy_Overwrite_DestinationFileAlreadyExists(false);
-         Directory_Copy_Overwrite_DestinationFileAlreadyExists(true);
+         AlphaFS_Directory_Copy_Overwrite_DestinationFileAlreadyExists(false);
+         AlphaFS_Directory_Copy_Overwrite_DestinationFileAlreadyExists(true);
       }
 
 
-      private void Directory_Copy_Overwrite_DestinationFileAlreadyExists(bool isNetwork)
+      private void AlphaFS_Directory_Copy_Overwrite_DestinationFileAlreadyExists(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-         
-
-         var tempPath = UnitTestConstants.TempFolder;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Source Folder"));
-            var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(rootDir.Directory.FullName, "Existing Destination Folder"));
+            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
+            var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Destination Folder"));
 
             Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
 
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(1, 3), false, false, true);
+            UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, 1, false, false, true);
 
 
             Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
@@ -76,7 +66,7 @@ namespace AlphaFS.UnitTest
 
 
 
-            var gotException = false;
+            Exception exception = null;
 
             try
             {
@@ -84,15 +74,11 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException);
-
-               //Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
+            
 
-
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+            ExceptionAssert.AlreadyExistsException(exception);
 
             Assert.IsTrue(System.IO.Directory.Exists(folderDst.FullName), "The directory does not exist, but is expected to.");
             

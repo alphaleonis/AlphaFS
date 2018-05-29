@@ -24,7 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_MoveTest
+   public partial class MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -32,20 +32,15 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive_LocalAndNetwork_Success()
       {
-         File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(false);
-         File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(true);
+         AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(false);
+         AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(true);
       }
 
 
-      private void File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(bool isNetwork)
+      private void AlphaFS_File_Move_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var gotException = false;
-
-
+         
          var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
 
          var srcFile = UnitTestConstants.SysDrive + @"\NonExisting Source File";
@@ -61,21 +56,19 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 
+         Exception exception = null;
+
          try
          {
             Alphaleonis.Win32.Filesystem.File.Move(srcFile, dstFile);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            exception = ex;
          }
+         
 
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+         ExceptionAssert.DeviceNotReadyException(exception);
 
          Assert.IsFalse(System.IO.Directory.Exists(dstFile), "The file exists, but is expected not to.");
 

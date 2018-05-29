@@ -44,7 +44,6 @@ namespace AlphaFS.UnitTest
          var pDisk = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDiskInfo(devicePath);
 
 
-         Console.WriteLine();
          Console.WriteLine("#{0:000}\tInput Device Path: [{1}]\t\t{2}\t\t{3}", ++deviceCount, devicePath, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
 
 

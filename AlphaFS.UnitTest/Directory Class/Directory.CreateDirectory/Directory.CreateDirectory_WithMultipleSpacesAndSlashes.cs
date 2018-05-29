@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -40,16 +39,9 @@ namespace AlphaFS.UnitTest
 
       private void Directory_CreateDirectory_WithMultipleSpacesAndSlashes(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = rootDir.Directory.FullName;
+            var folder = tempRoot.Directory.FullName;
             var subFolders = new[]
             {
                @"f�lder1",
@@ -62,7 +54,7 @@ namespace AlphaFS.UnitTest
 
             var fullPath = folder + @"\" + subFolders[0] + subFolders[1] + subFolders[2] + subFolders[3] + subFolders[4];
 
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", fullPath);
+            Console.WriteLine("Input Directory Path: [{0}]\n", fullPath);
 
 
             Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(fullPath);

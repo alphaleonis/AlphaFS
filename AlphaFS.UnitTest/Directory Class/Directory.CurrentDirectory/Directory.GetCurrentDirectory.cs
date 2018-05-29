@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
          var sysIoCurrPath = System.IO.Directory.GetCurrentDirectory();
          var alphaFSCurrPath = Alphaleonis.Win32.Filesystem.Directory.GetCurrentDirectory();
 
-         Console.WriteLine("\n\tSystem.IO Current Directory Path: [{0}]", sysIoCurrPath);
+         Console.WriteLine("\tSystem.IO Current Directory Path: [{0}]", sysIoCurrPath);
          Console.WriteLine("\tAlphaFS   Current Directory Path: [{0}]", alphaFSCurrPath);
 
          Assert.AreEqual(sysIoCurrPath, alphaFSCurrPath, "The current directories do not match, but are expected to.");

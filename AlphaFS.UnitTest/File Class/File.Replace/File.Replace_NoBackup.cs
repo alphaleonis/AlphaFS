@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -37,21 +36,16 @@ namespace AlphaFS.UnitTest
          File_Replace_NoBackup(true);
       }
 
+
       private void File_Replace_NoBackup(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = System.IO.Path.GetTempPath();
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-
-
-         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var fileSrc = rootDir.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextHelloWorld + ".txt";
-            var fileDst = rootDir.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
-            var fileBackup = rootDir.RandomFileFullPathNoExtension + "-Backup.txt";
-            Console.WriteLine("\nInput File Path: [{0}]", fileSrc);
+            var fileSrc = tempRoot.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextHelloWorld + ".txt";
+            var fileDst = tempRoot.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
+            var fileBackup = tempRoot.RandomFileFullPathNoExtension + "-Backup.txt";
+
+            Console.WriteLine("Input File Path: [{0}]", fileSrc);
 
 
             using (var stream = System.IO.File.CreateText(fileSrc))

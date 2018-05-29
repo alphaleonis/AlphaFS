@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class File_CopyTest
+   public partial class CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -40,11 +40,6 @@ namespace AlphaFS.UnitTest
       private void File_Copy_ThrowFileNotFoundException_NonExistingSourceFile(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var gotException = false;
-
 
          var srcFile = UnitTestConstants.SysDrive + @"\NonExisting Source File";
          var dstFile = UnitTestConstants.SysDrive + @"\NonExisting Destination File";
@@ -54,21 +49,19 @@ namespace AlphaFS.UnitTest
 
 
 
+         Exception exception = null;
+
          try
          {
             Alphaleonis.Win32.Filesystem.File.Copy(srcFile, dstFile);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(System.IO.FileNotFoundException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            exception = ex;
          }
+         
 
-
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+         ExceptionAssert.FileNotFoundException(exception);
 
          Assert.IsFalse(System.IO.Directory.Exists(dstFile), "The file exists, but is expected not to.");
 

@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class Directory_MoveTest
+   public partial class MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -40,13 +40,7 @@ namespace AlphaFS.UnitTest
       private void Directory_Move_ThrowDirectoryNotFoundException_NonExistingSourceDirectory(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         Console.WriteLine();
-
-
-         var gotException = false;
-         string exMessage = null;
-
-
+         
          var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source Folder";
          var dstFolder = UnitTestConstants.SysDrive + @"\NonExisting Destination Folder";
 
@@ -60,27 +54,24 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
 
 
+         Exception exception = null;
+         string exMessage = null;
+
          try
          {
             Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, dstFolder);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
+            exception = ex;
             exMessage = ex.Message;
-
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, exMessage);
          }
+         
 
+         ExceptionAssert.DirectoryNotFoundException(exception);
 
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
-
-
-         Assert.IsNotNull(exMessage);
-            
-         Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
+         if (null != exMessage)
+            Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
          
 
          Console.WriteLine();
