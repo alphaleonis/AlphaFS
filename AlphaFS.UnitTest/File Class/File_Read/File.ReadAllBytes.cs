@@ -43,13 +43,11 @@ namespace AlphaFS.UnitTest
             var file = tempRoot.RandomTxtFileFullPath;
 
             Console.WriteLine("Input File Path: [{0}]", file);
-
-
+            
             var bytes = Encoding.UTF8.GetBytes(new string('X', new Random(DateTime.Now.Millisecond).Next(0, 999)));
 
             System.IO.File.WriteAllBytes(file, bytes);
-
-
+            
             CollectionAssert.AreEqual(System.IO.File.ReadAllBytes(file), Alphaleonis.Win32.Filesystem.File.ReadAllBytes(file));
          }
 

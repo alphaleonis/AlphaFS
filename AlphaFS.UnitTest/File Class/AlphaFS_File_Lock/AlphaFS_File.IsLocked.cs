@@ -41,16 +41,14 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomTxtFileFullPath;
-            var fi = new System.IO.FileInfo(file);
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
+            using (file.CreateText())
+               Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.IsLocked(file.FullName), "The file is not locked, but is expected to.");
 
-            using (fi.CreateText())
-               Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is not locked, but is expected to.");
-
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.IsLocked(fi.FullName), "The file is locked, but is expected not to.");
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.IsLocked(file.FullName), "The file is locked, but is expected not to.");
          }
 
          Console.WriteLine();

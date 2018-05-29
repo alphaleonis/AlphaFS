@@ -30,29 +30,22 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Exists_LocalAndNetwork_Success()
+      public void File_Exists_ExistingFile_LocalAndNetwork_Success()
       {
-         File_Exists(false);
-         File_Exists(true);
+         File_Exists_ExistingFile(false);
+         File_Exists_ExistingFile(true);
       }
       
 
-      private void File_Exists(bool isNetwork)
+      private void File_Exists_ExistingFile(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomTxtFileFullPath;
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
-
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file exists, but is expected not to.");
-
-
-            using (System.IO.File.Create(file)) {}
-
-
-            Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file does not exists, but is expected to.");
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(file.FullName), "The file does not exists, but is expected to.");
          }
 
          Console.WriteLine();

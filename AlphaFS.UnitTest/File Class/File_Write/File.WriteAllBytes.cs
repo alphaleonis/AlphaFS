@@ -45,11 +45,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input File Path: [{0}]", file);
             
             var bytes = Encoding.UTF8.GetBytes(new string('X', new Random(DateTime.Now.Millisecond).Next(0, 999)));
-
-
+            
             Alphaleonis.Win32.Filesystem.File.WriteAllBytes(file, bytes);
             
-
             CollectionAssert.AreEqual(bytes, System.IO.File.ReadAllBytes(file));
          }
 

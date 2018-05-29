@@ -44,11 +44,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input File Path: [{0}]", file);
 
             var collection = new[] {DateTime.Now.ToString(CultureInfo.CurrentCulture), DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString()}.ToString();
-
-
+            
             Alphaleonis.Win32.Filesystem.File.WriteAllText(file, collection);
-
-
+            
             Assert.AreEqual(collection, System.IO.File.ReadAllText(file));
          }
 

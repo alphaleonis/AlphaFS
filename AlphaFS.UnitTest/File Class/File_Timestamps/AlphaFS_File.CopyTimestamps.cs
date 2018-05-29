@@ -42,29 +42,29 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomTxtFileFullPath;
-            var file2 = tempRoot.RandomTxtFileFullPath;
-
-            using (System.IO.File.Create(file)) { }
+            var file1 = tempRoot.CreateRandomFile();
             Thread.Sleep(1500);
-            using (System.IO.File.Create(file2)) { }
+            var file2 = tempRoot.CreateRandomFile();
+            
+            Console.WriteLine("Input File1 Path: [{0}]", file1.FullName);
+            Console.WriteLine("Input File2 Path: [{0}]", file2.FullName);
 
 
-            Console.WriteLine("Input File1 Path: [{0}]", file);
-            Console.WriteLine("Input File2 Path: [{0}]", file2);
+            Assert.AreNotEqual(System.IO.File.GetCreationTime(file1.FullName), System.IO.File.GetCreationTime(file2.FullName));
+
+            Assert.AreNotEqual(System.IO.File.GetLastAccessTime(file1.FullName), System.IO.File.GetLastAccessTime(file2.FullName));
+
+            Assert.AreNotEqual(System.IO.File.GetLastWriteTime(file1.FullName), System.IO.File.GetLastWriteTime(file2.FullName));
 
 
-            Assert.AreNotEqual(System.IO.File.GetCreationTime(file), System.IO.File.GetCreationTime(file2));
-            Assert.AreNotEqual(System.IO.File.GetLastAccessTime(file), System.IO.File.GetLastAccessTime(file2));
-            Assert.AreNotEqual(System.IO.File.GetLastWriteTime(file), System.IO.File.GetLastWriteTime(file2));
+            Alphaleonis.Win32.Filesystem.File.CopyTimestamps(file1.FullName, file2.FullName);
 
 
-            Alphaleonis.Win32.Filesystem.File.CopyTimestamps(file, file2);
+            Assert.AreEqual(System.IO.File.GetCreationTime(file1.FullName), System.IO.File.GetCreationTime(file2.FullName));
 
+            Assert.AreEqual(System.IO.File.GetLastAccessTime(file1.FullName), System.IO.File.GetLastAccessTime(file2.FullName));
 
-            Assert.AreEqual(System.IO.File.GetCreationTime(file), System.IO.File.GetCreationTime(file2));
-            Assert.AreEqual(System.IO.File.GetLastAccessTime(file), System.IO.File.GetLastAccessTime(file2));
-            Assert.AreEqual(System.IO.File.GetLastWriteTime(file), System.IO.File.GetLastWriteTime(file2));
+            Assert.AreEqual(System.IO.File.GetLastWriteTime(file1.FullName), System.IO.File.GetLastWriteTime(file2.FullName));
          }
 
          Console.WriteLine();

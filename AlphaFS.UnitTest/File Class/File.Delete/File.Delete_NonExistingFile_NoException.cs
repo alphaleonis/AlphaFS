@@ -45,25 +45,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("Input File Path: [{0}]", file);
 
-
-            var gotException = false;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.File.Delete(file);
-            }
-            catch (Exception ex)
-            {
-               var exType = ex.GetType();
-
-               gotException = true;
-
-               // Negate.
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", !gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
-            }
-
-
-            Assert.IsFalse(gotException, "The exception is not caught, but is expected to.");
+            Alphaleonis.Win32.Filesystem.File.Delete(file);
          }
 
          Console.WriteLine();

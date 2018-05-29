@@ -46,7 +46,6 @@ namespace AlphaFS.UnitTest
 
             System.IO.File.WriteAllLines(file, new[] {DateTime.Now.ToString(CultureInfo.CurrentCulture), DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString()});
 
-
             CollectionAssert.AreEqual(System.IO.File.ReadLines(file).ToArray(), Alphaleonis.Win32.Filesystem.File.ReadLines(file).ToArray());
          }
 

@@ -41,8 +41,8 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            // Min: 1 byte, Max: 10485760 = 10 MB.
-            var fileLength = new Random().Next(1, 10485760);
+            // Min: 1 byte, Max: 1048576 = 1 MB.
+            var fileLength = new Random().Next(1, 1048576);
 
             var srcFile = UnitTestConstants.CreateFile(tempRoot.Directory.FullName, fileLength);
 

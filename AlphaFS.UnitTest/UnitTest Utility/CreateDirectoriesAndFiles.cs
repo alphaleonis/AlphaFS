@@ -97,7 +97,7 @@ namespace AlphaFS.UnitTest
          using (var fs = System.IO.File.Create(file))
          {
             if (fileLength <= 0)
-               fileLength = new Random().Next(0, 10485760);
+               fileLength = new Random().Next(0, 1048576);
 
             fs.SetLength(fileLength);
          }

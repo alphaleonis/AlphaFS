@@ -50,17 +50,19 @@ namespace AlphaFS.UnitTest
             System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);
 
 
-            var sysIoStreamText = string.Empty;
-            var alphaStreamText = string.Empty;
-
+            var sysIOStreamText = string.Empty;
+            
             using (var stream = System.IO.File.OpenRead(file))
             {
                var b = new byte[15];
                var temp = new UTF8Encoding(true);
 
                while (stream.Read(b, 0, b.Length) > 0)
-                  sysIoStreamText += temp.GetString(b);
+                  sysIOStreamText += temp.GetString(b);
             }
+
+
+            var alphaFSStreamText = string.Empty;
 
             using (var stream = Alphaleonis.Win32.Filesystem.File.OpenRead(file))
             {
@@ -68,14 +70,15 @@ namespace AlphaFS.UnitTest
                var temp = new UTF8Encoding(true);
 
                while (stream.Read(b, 0, b.Length) > 0)
-                  alphaStreamText += temp.GetString(b);
+                  alphaFSStreamText += temp.GetString(b);
             }
 
-            Console.WriteLine("\tSystem IO: " + sysIoStreamText);
-            Console.WriteLine("\tAlphaFS  : " + alphaStreamText);
+
+            Console.WriteLine("\tSystem IO: " + sysIOStreamText);
+            Console.WriteLine("\tAlphaFS  : " + alphaFSStreamText);
 
 
-            Assert.AreEqual(sysIoStreamText, alphaStreamText, "The content of the two files is not equal, but is expected to.");
+            Assert.AreEqual(sysIOStreamText, alphaFSStreamText, "The content of the two files is not equal, but is expected to.");
          }
 
          Console.WriteLine();

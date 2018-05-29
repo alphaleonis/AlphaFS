@@ -44,15 +44,13 @@ namespace AlphaFS.UnitTest
 
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomTxtFileFullPath;
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]\n", file);
+            Console.WriteLine("Input File Path: [{0}]\n", file.FullName);
 
-            using (System.IO.File.CreateText(file)) {}
+
+            var shell32Info = Alphaleonis.Win32.Filesystem.Shell32.GetShell32Info(file.FullName);
             
-            var shell32Info = Alphaleonis.Win32.Filesystem.Shell32.GetShell32Info(file);
-
-
 
             var cmd = "open";
             var result = shell32Info.GetVerbCommand(cmd);
@@ -60,9 +58,7 @@ namespace AlphaFS.UnitTest
 
 
             Assert.IsTrue(result.StartsWith(UnitTestConstants.NotepadExe, StringComparison.OrdinalIgnoreCase));
-
-
-
+            
 
             cmd = "print";
             result = shell32Info.GetVerbCommand(cmd);

@@ -41,16 +41,12 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomTxtFileFullPath;
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
-
-
-            var fileInfo = new System.IO.FileInfo(file);
-            using (fileInfo.Create()) { }
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
 
-            var fid = Alphaleonis.Win32.Filesystem.File.GetFileIdInfo(fileInfo.FullName);
+            var fid = Alphaleonis.Win32.Filesystem.File.GetFileIdInfo(file.FullName);
 
             Console.WriteLine("\n\tToString(): {0}", fid);
 

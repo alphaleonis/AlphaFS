@@ -55,6 +55,7 @@ namespace AlphaFS.UnitTest
                stream.Write(info, 0, info.Length);
             }
 
+
             using (var stream = Alphaleonis.Win32.Filesystem.File.OpenWrite(file2))
             {
                var info = new UTF8Encoding(true).GetBytes(UnitTestConstants.TextHelloWorld);

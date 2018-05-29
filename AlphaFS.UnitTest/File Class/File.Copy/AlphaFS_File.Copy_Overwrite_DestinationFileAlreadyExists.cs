@@ -20,29 +20,26 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFile = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
-            var dstFile = tempRoot.RandomTxtFileFullPath;
+            var srcFile = tempRoot.CreateRandomFile();
+            var dstFile = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Src File Path: [{0}]", srcFile);
-            Console.WriteLine("Dst File Path: [{0}]", dstFile);
+            Console.WriteLine("Src File Path: [{0}]", srcFile.FullName);
+            Console.WriteLine("Dst File Path: [{0}]", dstFile.FullName);
 
 
-            System.IO.File.Copy(srcFile.FullName, dstFile);
-
-            ExceptionAssert.IOException(() => System.IO.File.Copy(srcFile.FullName, dstFile));
+            ExceptionAssert.IOException(() => System.IO.File.Copy(srcFile.FullName, dstFile.FullName));
             
-            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile));
+            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile.FullName));
             
 
-            Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile, true);
+            Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile.FullName, true);
 
 
             Assert.IsTrue(System.IO.File.Exists(srcFile.FullName), "The file does not exists, but is expected to.");
 
-            Assert.IsTrue(System.IO.File.Exists(dstFile), "The file does not exists, but is expected to.");
+            Assert.IsTrue(System.IO.File.Exists(dstFile.FullName), "The file does not exists, but is expected to.");
          }
-
-
+         
          Console.WriteLine();
       }
    }

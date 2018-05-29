@@ -42,49 +42,42 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            // Min: 1 bytes, Max: 10485760 = 10 MB.
-            var fileLength = new Random().Next(1, 10485760);
-            var fileSource = UnitTestConstants.CreateFile(tempRoot.Directory.FullName, fileLength);
-            var fileCopy = tempRoot.RandomTxtFileFullPath;
+            var fileSource = tempRoot.CreateRandomFile();
+            var fileCopy = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
-            Console.WriteLine("Dst File Path: [{0}]", fileCopy);
+            Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileSource.Length), fileSource.FullName);
+            Console.WriteLine("Dst File Path: [{0}]", fileCopy.FullName);
 
-            Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The file does not exists, but is expected to.");
-
-
-            
             
             // Allow copy to overwrite an existing file.
             const Alphaleonis.Win32.Filesystem.CopyOptions copyOptions = Alphaleonis.Win32.Filesystem.CopyOptions.None;
 
+
             // The copy progress handler.
             var callback = new Alphaleonis.Win32.Filesystem.CopyMoveProgressRoutine(FileCopyProgressHandler);
+
 
             Console.WriteLine();
 
 
             // You can pass any piece of data to userProgressData. This data can be accessed from the callback method.
             // Specify file length for assertion.
-            var userProgressData = fileLength;
+            var userProgressData = fileSource.Length;
 
 
-            var copyResult = Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy, copyOptions, callback, userProgressData);
+            var copyResult = Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy.FullName, copyOptions, callback, userProgressData);
 
             UnitTestConstants.Dump(copyResult, -18);
 
 
-            Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
+            Assert.IsTrue(System.IO.File.Exists(fileCopy.FullName), "The file does not exists, but is expected to.");
 
 
-            var fileLen = new System.IO.FileInfo(fileCopy).Length;
-
-            Assert.AreEqual(fileLength, fileLen, "The file copy is: {0} bytes, but is expected to be: {1} bytes.", fileLen, fileLength);
+            Assert.AreEqual(fileSource.Length, fileCopy.Length, "The file sizes do no match, but are expected to.");
 
             Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The original file does not exist, but is expected to.");
          }
-
-
+         
          Console.WriteLine();
       }
 

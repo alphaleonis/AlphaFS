@@ -27,17 +27,13 @@ namespace AlphaFS.UnitTest
    /// <summary>Used to create a temporary directory that will be deleted once this instance is disposed.</summary>
    internal sealed class TemporaryDirectory : IDisposable
    {
+      #region Constructors
+
       public TemporaryDirectory() : this(false, null, null) { }
-
-
-      //public TemporaryDirectory(string folderPrefix) : this(false, folderPrefix, null) { }
-
+      
 
       public TemporaryDirectory(bool isNetwork) : this(isNetwork, null, null) { }
-
       
-      //public TemporaryDirectory(bool isNetwork, string folderPrefix) : this(isNetwork, folderPrefix, null) { }
-
 
       public TemporaryDirectory(bool isNetwork, string folderPrefix, string root)
       {
@@ -62,6 +58,10 @@ namespace AlphaFS.UnitTest
          Directory.Create();
       }
 
+      #endregion // Constructors
+
+
+      #region Properties
 
       public System.IO.DirectoryInfo Directory { get; private set; }
 
@@ -76,18 +76,18 @@ namespace AlphaFS.UnitTest
       /// <summary>Returns the full path to a non-existing file with a random name, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\File_wqáánmvh.txt".</summary>
       public string RandomTxtFileFullPath
       {
-         get { return System.IO.Path.Combine(Directory.FullName, "File_" + System.IO.Path.GetFileNameWithoutExtension(RandomFileName)) + ".txt"; }
+         get { return RandomFileNoExtensionFullPath + ".txt"; }
       }
 
 
       /// <summary>Returns the full path to a non-existing file with a random name and without an extension, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\File_wqáánmvh".</summary>
       public string RandomFileNoExtensionFullPath
       {
-         get { return System.IO.Path.GetFileNameWithoutExtension(System.IO.Path.Combine(Directory.FullName, "File_" + RandomFileName)); }
+         get { return System.IO.Path.Combine(Directory.FullName, "File_" + System.IO.Path.GetFileNameWithoutExtension(RandomFileName)); }
       }
 
 
-      /// <summary>Returns a random folder or file name, such as: "wqáánmvh".</summary>
+      /// <summary>Returns a random folder or file name, such as: "wqáánmvh.z03".</summary>
       public string RandomFileName
       {
          get { return UnitTestConstants.GetRandomFileName(); }
@@ -99,14 +99,32 @@ namespace AlphaFS.UnitTest
          return Directory.FullName;
       }
 
+      #endregion // Properties
 
 
+      #region Methods
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory.</summary>
       public System.IO.DirectoryInfo CreateRandomDirectory()
       {
          return System.IO.Directory.CreateDirectory(RandomDirectoryFullPath);
       }
+
+
+      /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file.</summary>
+      public System.IO.FileInfo CreateRandomFile()
+      {
+         var fileName = RandomTxtFileFullPath;
+
+         // File size is min 1 bytes, max 1 MB.
+
+         using (var fs = System.IO.File.Create(fileName))
+            fs.SetLength(new Random(DateTime.Now.Millisecond).Next(0, 1048576));
+
+         return new System.IO.FileInfo(fileName);
+      }
+
+      #endregion // Methods
 
 
       #region Disposable Members
@@ -116,11 +134,13 @@ namespace AlphaFS.UnitTest
          Dispose(false);
       }
 
+
       public void Dispose()
       {
          Dispose(true);
          GC.SuppressFinalize(this);
       }
+
 
       private void Dispose(bool isDisposing)
       {

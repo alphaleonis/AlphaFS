@@ -43,36 +43,39 @@ namespace AlphaFS.UnitTest
          // Issue #288: Directory.Exists on root drive problem has come back with recent updates
          
 
-         using (new TemporaryDirectory())
+         using (var tempRoot = new TemporaryDirectory())
          {
+            System.IO.Directory.SetCurrentDirectory(tempRoot.Directory.FullName);
+
+
             var sysDrive = UnitTestConstants.SysDrive + @"\";
             if (isNetwork)
                sysDrive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(sysDrive);
 
 
-            var randomName = UnitTestConstants.GetRandomFileName();
+            var randomName = tempRoot.RandomFileName;
 
             // C:\randomName
-            var nonExistingFolder1 = UnitTestConstants.SysDrive + @"\" + randomName;
+            var NonExistingFolder1 = UnitTestConstants.SysDrive + @"\" + randomName;
 
             // C:randomName
-            var nonExistingFolder2 = UnitTestConstants.SysDrive + randomName;
+            var NonExistingFolder2 = UnitTestConstants.SysDrive + randomName;
 
 
             // C:\randomName-exists
-            var existingFolder1 = nonExistingFolder1 + "-exists";
+            var existingFolder1 = NonExistingFolder1 + "-exists";
             System.IO.Directory.CreateDirectory(existingFolder1);
 
             // C:randomName-exists
-            var existingFolder2 = nonExistingFolder2 + "-exists";
+            var existingFolder2 = NonExistingFolder2 + "-exists";
             System.IO.Directory.CreateDirectory(existingFolder2);
 
 
 
             if (isNetwork)
             {
-               nonExistingFolder1 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(nonExistingFolder1);
-               nonExistingFolder2 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(nonExistingFolder2);
+               NonExistingFolder1 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(NonExistingFolder1);
+               NonExistingFolder2 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(NonExistingFolder2);
 
                existingFolder1 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(existingFolder1);
                existingFolder2 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(existingFolder2);
@@ -82,10 +85,10 @@ namespace AlphaFS.UnitTest
             // Some use cases.
             var paths = new Dictionary<string, List<bool>>
             {
-               {nonExistingFolder1, new List<bool> {false, false}},
-               {nonExistingFolder2, new List<bool> {false, false}},
-               {nonExistingFolder1 + @"\", new List<bool> {false, false}},
-               {nonExistingFolder2 + @"\", new List<bool> {false, false}},
+               {NonExistingFolder1, new List<bool> {false, false}},
+               {NonExistingFolder2, new List<bool> {false, false}},
+               {NonExistingFolder1 + @"\", new List<bool> {false, false}},
+               {NonExistingFolder2 + @"\", new List<bool> {false, false}},
 
                {existingFolder1, new List<bool> {true, true}},
                {existingFolder2, new List<bool> {!isNetwork, !isNetwork}},
@@ -122,6 +125,9 @@ namespace AlphaFS.UnitTest
 
 
             System.IO.Directory.Delete(existingFolder1);
+
+            if (System.IO.Directory.Exists(existingFolder2))
+               System.IO.Directory.Delete(existingFolder2);
          }
 
          Console.WriteLine();
