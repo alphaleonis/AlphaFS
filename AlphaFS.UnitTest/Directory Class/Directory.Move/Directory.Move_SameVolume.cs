@@ -41,14 +41,12 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
-            var dstFolder = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "Destination Folder"));
+            var srcFolder = tempRoot.CreateRandomDirectoryStructure(new Random().Next(5, 15), true);
+            var dstFolder = tempRoot.RandomDirectoryFullPath;
 
             Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
-            Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
-
-            tempRoot.CreateRandomDirectoryStructure(srcFolder.FullName, new Random().Next(5, 15), false, false, true);
-
+            Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
+            
 
             var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
 
@@ -60,11 +58,11 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
 
-            var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFolder.FullName, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
+            var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFolder, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
 
             UnitTestConstants.Dump(moveResult, -18);
 
-            props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(dstFolder.FullName, dirEnumOptions);
+            props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(dstFolder, dirEnumOptions);
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");

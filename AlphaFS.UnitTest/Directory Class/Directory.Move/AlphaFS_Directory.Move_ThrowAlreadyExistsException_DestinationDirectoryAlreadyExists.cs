@@ -41,20 +41,17 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
-            var dstFfolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Destination Folder"));
+            var srcFolder = tempRoot.CreateRandomDirectoryStructure();
+            var dstFfolder = tempRoot.CreateRandomDirectory();
 
             Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", dstFfolder.FullName);
             
-            tempRoot.CreateRandomDirectoryStructure(srcFolder.FullName, 1, false, false, true);
-
             ExceptionAssert.IOException(() => System.IO.Directory.Move(srcFolder.FullName, dstFfolder.FullName));
 
             ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFfolder.FullName));
          }
-
-
+         
          Console.WriteLine();
       }
    }

@@ -41,14 +41,12 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Source Destination Folder"));
-            var dstFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Destination Folder"));
+            var srcFolder = tempRoot.CreateRandomDirectoryStructure();
+            var dstFolder = tempRoot.CreateRandomDirectory();
 
             Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
-
-            tempRoot.CreateRandomDirectoryStructure(srcFolder.FullName, 1, false, false, true);
-
+            
 
             var user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
 

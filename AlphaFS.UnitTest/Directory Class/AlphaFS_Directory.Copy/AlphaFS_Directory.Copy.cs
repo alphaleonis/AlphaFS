@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folderSrc = tempRoot.CreateRandomDirectoryStructure("Source Folder", 10, false, false, true);
+            var folderSrc = tempRoot.CreateRandomDirectoryStructure(5, true);
             var folderDst = tempRoot.RandomDirectoryFullPath;
             
             Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);

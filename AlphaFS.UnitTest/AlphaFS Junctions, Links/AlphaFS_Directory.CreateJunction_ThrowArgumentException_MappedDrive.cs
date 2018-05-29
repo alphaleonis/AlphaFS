@@ -33,20 +33,24 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Directory_CreateJunction_ThrowArgumentException_MappedDrive_Netwerk_Success()
       {
          using (var tempRoot = new TemporaryDirectory())
-         using (var connection = new Alphaleonis.Win32.Network.DriveConnection(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath)))
          {
-            var mappedPath = connection.LocalName + @"\" + tempRoot.RandomFileName;
-            
-            Console.WriteLine("Mapped drive [{0}] to [{1}]", connection.LocalName, connection.Share);
+            var folder = tempRoot.CreateRandomDirectory();
 
-            var target = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(mappedPath);
+            using (var connection = new Alphaleonis.Win32.Network.DriveConnection(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder.FullName)))
+            {
+               var mappedPath = connection.LocalName + @"\" + tempRoot.RandomFileName;
 
-            var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
+               Console.WriteLine("Mapped drive [{0}] to [{1}]", connection.LocalName, connection.Share);
 
-            var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
+               var target = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(mappedPath);
+
+               var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
+
+               var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
-            ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName));
+               ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName));
+            }
          }
       }
    }

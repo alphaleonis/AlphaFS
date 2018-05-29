@@ -45,6 +45,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
             
+
             // Encrypt.
             Alphaleonis.Win32.Filesystem.Directory.Encrypt(folder.FullName, true);
 

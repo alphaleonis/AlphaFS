@@ -42,14 +42,12 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.Directory.FullName;
+            var folder = tempRoot.CreateRandomDirectoryStructure(5, true, true, true);
 
-            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder.FullName);
+            
 
-            tempRoot.CreateRandomDirectoryStructure(folder, 5, true, true, true);
-
-
-            foreach (var dir in System.IO.Directory.EnumerateDirectories(folder, "*", System.IO.SearchOption.AllDirectories))
+            foreach (var dir in System.IO.Directory.EnumerateDirectories(folder.FullName, "*", System.IO.SearchOption.AllDirectories))
             {
                // Assume inheritance is enabled by default.
 

@@ -41,14 +41,12 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.Directory.FullName;
+            var folder = tempRoot.CreateRandomDirectoryStructure(5, true, true, true);
 
             Console.WriteLine("Aggregated properties of file system objects from Directory: [{0}]\n", folder);
 
-            tempRoot.CreateRandomDirectoryStructure(folder, 5, true, true, true);
 
-
-            var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folder, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
+            var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folder.FullName, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
 
 
             var total = props["Total"];

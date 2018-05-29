@@ -42,14 +42,13 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.CreateRandomDirectory();
-
-            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
-
             const int expectedFso = 10;
             const int maxFso = 10;
             const int expectedSubfolders = expectedFso * expectedFso + expectedFso;
-            tempRoot.CreateRandomDirectoryStructure(folder.FullName, maxFso, false, false, true);
+
+            var folder = tempRoot.CreateRandomDirectoryStructure(maxFso, true);
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
             var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder.FullName, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Folders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);

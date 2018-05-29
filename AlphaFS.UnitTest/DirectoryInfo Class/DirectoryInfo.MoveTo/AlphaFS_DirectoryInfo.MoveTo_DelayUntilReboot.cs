@@ -43,23 +43,21 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.Directory.FullName;
-            var folderSrc = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(folder, "Source-" + UnitTestConstants.GetRandomFileName()));
-            var pendingEntry = folderSrc.FullName;
+            var folder = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(tempRoot.RandomDirectoryFullPath);
+
+            var pendingEntry = folder.FullName;
 
             Console.WriteLine("Src Directory Path: [{0}]", pendingEntry);
-
-            tempRoot.CreateRandomDirectoryStructure(pendingEntry, 1, false, false, true);
 
 
             if (isNetwork)
                // Trigger DelayUntilReboot.
-               ExceptionAssert.ArgumentException(() => folderSrc.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot));
+               ExceptionAssert.ArgumentException(() => folder.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot));
             
             else
             {
                // Trigger DelayUntilReboot.
-               folderSrc.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot);
+               folder.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot);
 
 
                // Verify DelayUntilReboot in registry.

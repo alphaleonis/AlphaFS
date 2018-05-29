@@ -30,13 +30,10 @@ namespace AlphaFS.UnitTest
    {
       #region Constructors
 
-      public TemporaryDirectory() : this(false, null, null) { }
+      public TemporaryDirectory() : this(false) { }
       
 
-      public TemporaryDirectory(bool isNetwork) : this(isNetwork, null, null) { }
-      
-
-      public TemporaryDirectory(bool isNetwork, string folderPrefix, string root)
+      public TemporaryDirectory(bool isNetwork, string folderPrefix = null, string root = null)
       {
          if (Alphaleonis.Utils.IsNullOrWhiteSpace(folderPrefix))
             folderPrefix = "AlphaFS.TempRoot";
@@ -106,10 +103,11 @@ namespace AlphaFS.UnitTest
       #region Methods
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with hidden and/or read-only attributes set.</summary>
-      public System.IO.DirectoryInfo CreateDirectory(string folderFullPath, bool readOnly, bool hidden)
+      public System.IO.DirectoryInfo CreateDirectory(string folderFullPath, bool readOnly = false, bool hidden = false)
       {
          var dirInfo = System.IO.Directory.CreateDirectory(!Alphaleonis.Utils.IsNullOrWhiteSpace(folderFullPath) ? folderFullPath : RandomDirectoryFullPath);
-         
+
+
          if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
             dirInfo.Attributes |= System.IO.FileAttributes.ReadOnly;
          
@@ -123,27 +121,25 @@ namespace AlphaFS.UnitTest
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory.</summary>
       public System.IO.DirectoryInfo CreateRandomDirectory()
       {
-         return CreateDirectory(null, false, false);
+         return CreateDirectory(null);
       }
       
 
       /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file, possibly with hidden and/or read-only attributes set.</summary>
-      public System.IO.FileInfo CreateFile(string fileFullPath, bool readOnly, bool hidden)
+      public System.IO.FileInfo CreateFile(string fileFullPath, bool readOnly = false, bool hidden = false)
       {
          var fileInfo = new System.IO.FileInfo(!Alphaleonis.Utils.IsNullOrWhiteSpace(fileFullPath) ? fileFullPath : RandomTxtFileFullPath);
 
          // File size is min 0 bytes, max 1 MB.
          using (var fs = fileInfo.Create())
             fs.SetLength(new Random(DateTime.UtcNow.Millisecond).Next(0, 1048576));
-
-
+         
          if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
             fileInfo.Attributes |= System.IO.FileAttributes.ReadOnly;
 
          if (hidden && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
             fileInfo.Attributes |= System.IO.FileAttributes.Hidden;
-
-
+         
          return fileInfo;
       }
 
@@ -151,19 +147,25 @@ namespace AlphaFS.UnitTest
       /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file.</summary>
       public System.IO.FileInfo CreateRandomFile()
       {
-         return CreateFile(null, false, false);
+         return CreateFile(null);
       }
 
 
       public System.IO.DirectoryInfo CreateRandomDirectoryStructure(int max = 1, string rootPath = null)
       {
-         return CreateRandomDirectoryStructure(rootPath, max, false, false, false);
+         return CreateRandomDirectoryStructure(rootPath, max, false);
       }
 
 
-      public System.IO.DirectoryInfo CreateRandomDirectoryStructure(string rootPath, int max, bool readOnly, bool hidden, bool recurse)
+      public System.IO.DirectoryInfo CreateRandomDirectoryStructure(int max, bool recurse, bool readOnly = false, bool hidden = false)
       {
-         var dirInfo = CreateDirectory(System.IO.Path.Combine(Directory.FullName, !Alphaleonis.Utils.IsNullOrWhiteSpace(rootPath) ? rootPath : RandomDirectoryFullPath), readOnly, hidden);
+         return CreateRandomDirectoryStructure(null, max, recurse, readOnly, hidden);
+      }
+
+
+      public System.IO.DirectoryInfo CreateRandomDirectoryStructure(string rootPath, int max, bool recurse, bool readOnly = false, bool hidden = false)
+      {
+         var dirInfo = CreateDirectory(rootPath, readOnly, hidden);
 
          var folderCount = 0;
          
@@ -185,7 +187,7 @@ namespace AlphaFS.UnitTest
          if (recurse)
          {
             foreach (var folder in System.IO.Directory.EnumerateDirectories(dirInfo.FullName))
-               CreateRandomDirectoryStructure(folder, max, readOnly, hidden, false);
+               CreateRandomDirectoryStructure(folder, max, false, readOnly, hidden);
          }
 
 
