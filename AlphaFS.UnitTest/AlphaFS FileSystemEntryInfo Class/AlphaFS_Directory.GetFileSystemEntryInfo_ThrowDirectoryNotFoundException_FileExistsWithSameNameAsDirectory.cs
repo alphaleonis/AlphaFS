@@ -54,21 +54,19 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Input Directory Path: [{0}]", tempPath);
 
 
-         var gotException = false;
+         Exception exception = null;
+
          try
          {
             Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath);
          }
          catch (Exception ex)
          {
-            var exType = ex.GetType();
-
-            gotException = exType == typeof(System.IO.DirectoryNotFoundException);
-
-            Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+            exception = ex;
          }
+         
 
-         Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+         ExceptionAssert.DirectoryNotFoundException(exception);
 
 
          Console.WriteLine();

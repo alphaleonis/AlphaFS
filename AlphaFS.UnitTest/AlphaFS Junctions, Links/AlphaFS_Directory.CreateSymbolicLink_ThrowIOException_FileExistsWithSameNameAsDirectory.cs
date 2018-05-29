@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -51,7 +50,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input Directory Link: [{0}]", folderLink);
 
 
-            var gotException = false;
+            Exception exception = null;
 
             try
             {
@@ -60,14 +59,11 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(System.IO.IOException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
             
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+            ExceptionAssert.IOException(exception);
          }
 
          Console.WriteLine();

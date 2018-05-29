@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -49,8 +48,9 @@ namespace AlphaFS.UnitTest
 
             // Set DENY permission for current user.
             UnitTestConstants.FolderDenyPermission(true, folder.FullName);
-            
-            var gotException = false;
+
+
+            Exception exception = null;
 
             try
             {
@@ -59,20 +59,16 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(UnauthorizedAccessException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
             finally
             {
                // Remove DENY permission for current user.
                UnitTestConstants.FolderDenyPermission(false, folder.FullName);
             }
+            
 
-
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+            ExceptionAssert.UnauthorizedAccessException(exception);
          }
          
          Console.WriteLine();

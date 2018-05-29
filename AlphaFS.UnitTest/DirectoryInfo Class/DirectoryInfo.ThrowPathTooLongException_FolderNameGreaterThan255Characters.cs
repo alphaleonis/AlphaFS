@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -58,23 +57,19 @@ namespace AlphaFS.UnitTest
             Console.WriteLine();
 
 
-            var gotException = false;
+            Exception exception = null;
 
             try
             {
-               // Fail.
-               var di1 = new Alphaleonis.Win32.Filesystem.DirectoryInfo(isNetwork ? unc : local);
+               var dirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(isNetwork ? unc : local);
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(System.IO.PathTooLongException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
+            
 
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+            ExceptionAssert.PathTooLongException(exception);
          }
 
          Console.WriteLine();

@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Reflection;
 using System.Security.AccessControl;
 using System.Security.Principal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

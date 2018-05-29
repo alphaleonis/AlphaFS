@@ -143,6 +143,7 @@
     <Compile Include="..\AlphaFS\AssemblyVersionInfo.cs">
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="File Class\File.Delete\File.Delete_NonExistingFile_NoException.cs" />
     <Compile Include="File Class\FileTest.cs" />
     <Compile Include="Path Class\PathTest.cs" />
     <Compile Include="UnitTest Utility\CreateDirectoriesAndFiles.cs" />
@@ -298,7 +299,6 @@
     <Compile Include="File Class\File.Delete\AlphaFS_File.Delete_ThrowFileReadOnlyException_ReadOnlyFile.cs" />
     <Compile Include="File Class\File.Delete\File.Delete.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_ThrowDirectoryNotFoundException_NonExistingDriveLetter.cs" />
-    <Compile Include="File Class\File.Delete\File.Delete_ThrowFileNotFoundException_NonExistingFile.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_ThrowIOExceptionOrDeviceNotReadyException_NonExistingDriveLetter.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_ThrowUnauthorizedAccessException_PathIsADirectoryNotAFile.cs" />
     <Compile Include="File Class\File_Timestamps\File_Timestamps_CompareTimestamps_NonExistingFile.cs" />

@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -46,7 +45,7 @@ namespace AlphaFS.UnitTest
             var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "Destination Folder"));
 
             Console.WriteLine("Input Directory Path: [{0}]\n", folderSrc.FullName);
-            Console.WriteLine("\tRename folder: [{0}] to: [{1}]", folderSrc.Name, folderDst.Name);
+            Console.WriteLine("\tRename folder [{0}] to [{1}]", folderSrc.Name, folderDst.Name);
 
 
             Assert.IsTrue(folderSrc.Exists, "The source folder does not exist which was not expected.");

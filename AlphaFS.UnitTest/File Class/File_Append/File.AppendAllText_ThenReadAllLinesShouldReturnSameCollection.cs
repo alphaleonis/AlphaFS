@@ -21,7 +21,6 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -59,7 +58,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\t" + collection[i]);
 
 
-            CollectionAssert.AreEquivalent(sample, collection);
+            CollectionAssert.AreEqual(sample, collection);
          }
 
          Console.WriteLine();

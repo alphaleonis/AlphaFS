@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 using Microsoft.Win32;
 
 namespace AlphaFS.UnitTest
@@ -53,9 +52,8 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.CreateDirectoriesAndFiles(pendingEntry, 1, false, false, true);
 
 
-            var gotException = false;
+            Exception exception = null;
             
-
             try
             {
                // Trigger DelayUntilReboot.
@@ -64,18 +62,12 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(ArgumentException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
 
 
-
-
             if (isNetwork)
-               Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+               ExceptionAssert.ArgumentException(exception);
 
             else
             {

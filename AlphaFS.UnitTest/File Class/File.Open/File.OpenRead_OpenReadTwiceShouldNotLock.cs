@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -44,7 +43,7 @@ namespace AlphaFS.UnitTest
          {
             var filePath = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("Input File Path: [{0}]\n", filePath);
+            Console.WriteLine("Input File Path: [{0}]", filePath);
 
 
             using (System.IO.File.Create(filePath)) { }

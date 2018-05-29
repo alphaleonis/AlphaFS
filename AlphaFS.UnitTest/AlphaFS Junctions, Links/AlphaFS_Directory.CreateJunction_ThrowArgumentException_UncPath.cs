@@ -21,7 +21,6 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Reflection;
 
 namespace AlphaFS.UnitTest
 {
@@ -42,21 +41,19 @@ namespace AlphaFS.UnitTest
             var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
-            var gotException = false;
+            Exception exception = null;
+
             try
             {
                Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName);
             }
             catch (Exception ex)
             {
-               var exType = ex.GetType();
-
-               gotException = exType == typeof(ArgumentException);
-
-               Console.WriteLine("\n\tCaught {0} Exception: [{1}] {2}", gotException ? "EXPECTED" : "UNEXPECTED", exType.Name, ex.Message);
+               exception = ex;
             }
 
-            Assert.IsTrue(gotException, "The exception is not caught, but is expected to.");
+
+            ExceptionAssert.ArgumentException(exception);
          }
       }
    }
