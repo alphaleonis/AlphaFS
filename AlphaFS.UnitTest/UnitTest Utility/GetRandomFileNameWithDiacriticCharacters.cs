@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
       {
          var randomFileName = System.IO.Path.GetRandomFileName();
 
-         switch (new Random(DateTime.Now.Millisecond).Next(1, 3))
+         switch (new Random(DateTime.UtcNow.Millisecond).Next(1, 3))
          {
             case 1:
                return randomFileName.Replace("a", "ä").Replace("e", "ë").Replace("i", "ï").Replace("o", "ö").Replace("u", "ü");

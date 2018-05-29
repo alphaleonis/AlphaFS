@@ -41,12 +41,11 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            // Min: 1 byte, Max: 1048576 = 1 MB.
-            var fileLength = new Random().Next(1, 1048576);
-
-            var srcFile = UnitTestConstants.CreateFile(tempRoot.Directory.FullName, fileLength);
+            var srcFile = tempRoot.CreateRandomFile();
 
             var dstFile = System.IO.Path.Combine(tempRoot.Directory.FullName, srcFile.Name + "-Moved.File");
+
+            var fileLength = srcFile.Length;
 
             Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(srcFile.Length), srcFile.FullName);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);

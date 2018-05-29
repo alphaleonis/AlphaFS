@@ -47,8 +47,8 @@ namespace AlphaFS.UnitTest
 
 
             const int maxFso = 10;
-            const int expectedFso = 30;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, maxFso, true, true, false);
+            const int expectedFso = 25;
+            tempRoot.CreateRandomDirectoryStructure(folder, maxFso, true, true, false);
 
 
             for (var i = 0; i < maxFso; i++)

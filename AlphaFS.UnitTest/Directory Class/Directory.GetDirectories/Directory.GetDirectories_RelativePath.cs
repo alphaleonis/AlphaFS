@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("Input Directory Path: [{0}]\n", currentDirectory);
             
-            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, 5, true, true, true);
+            tempRoot.CreateRandomDirectoryStructure(folder.FullName, 5, true, true, true);
 
 
             var relativeFolder = folder.Parent.Name + @"\" + folder.Name;

@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("Input Directory Path: [{0}]", folder);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, 5, false, false, true);
+            tempRoot.CreateRandomDirectoryStructure(folder, 5, false, false, true);
 
 
             foreach (var fullPath in System.IO.Directory.EnumerateFileSystemEntries(folder, "*", System.IO.SearchOption.AllDirectories))

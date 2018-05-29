@@ -20,12 +20,37 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for all AlternateDataStreamInfo class Unit Tests.</summary>
-   [TestClass]
-   public partial class AlphaFS_AlternateDataStreamsTest
+   public partial class DeleteTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
+      [TestMethod]
+      public void File_Delete_ExistingFile_LocalAndNetwork_Success()
+      {
+         File_Delete_ExistingFile(false);
+         File_Delete_ExistingFile(true);
+      }
+
+
+      private void File_Delete_ExistingFile(bool isNetwork)
+      {
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
+         {
+            var file = tempRoot.CreateRandomFile();
+
+            Console.WriteLine("Input File Path: [{0}]", file);
+            
+            Alphaleonis.Win32.Filesystem.File.Delete(file.FullName);
+
+            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file.FullName), "The file exists, but is expected not to.");
+         }
+
+         Console.WriteLine();
+      }
    }
 }

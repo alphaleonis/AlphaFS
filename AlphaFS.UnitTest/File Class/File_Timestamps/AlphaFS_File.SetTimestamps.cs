@@ -43,7 +43,8 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
+            var file = tempRoot.CreateRandomFile();
+
             var symlinkPath = System.IO.Path.Combine(tempRoot.Directory.FullName, UnitTestConstants.GetRandomFileName()) + "-symlink";
 
             Console.WriteLine("Input File Path: [{0}]", file);

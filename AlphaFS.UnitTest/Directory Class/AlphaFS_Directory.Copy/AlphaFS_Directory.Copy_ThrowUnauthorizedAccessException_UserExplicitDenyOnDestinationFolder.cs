@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(srcFolder.FullName, 1, false, false, true);
+            tempRoot.CreateRandomDirectoryStructure(srcFolder.FullName, 1, false, false, true);
 
 
             var user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');

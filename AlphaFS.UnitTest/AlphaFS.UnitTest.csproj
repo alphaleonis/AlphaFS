@@ -143,10 +143,10 @@
     <Compile Include="..\AlphaFS\AssemblyVersionInfo.cs">
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_NonExistingFile_NoException.cs" />
     <Compile Include="File Class\FileTest.cs" />
     <Compile Include="Path Class\PathTest.cs" />
-    <Compile Include="UnitTest Utility\CreateDirectoriesAndFiles.cs" />
     <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
     <Compile Include="UnitTest Utility\Dump.cs" />
     <Compile Include="UnitTest Utility\ExceptionAssert.cs" />
@@ -167,7 +167,6 @@
     <Compile Include="AlphaFS Encryption\AlphaFS_Directory.ExportImportEncryptedDirectoryRaw.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_EncryptionTest.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.ConnectTo_Share_And_DisconnectFrom_Share.cs" />
-    <Compile Include="UnitTests\AlphaFS_AlternateDataStreamsTest.cs" />
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStreamTest.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_ByHandleFileInfoTest.cs" />
     <Compile Include="AlphaFS Compression\AlphaFS CompressionTest.cs" />
@@ -199,7 +198,6 @@
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File.GetFileSystemEntryInfo_ThrowFileNotFoundException_DirectoryExistsWithSameNameAsFile.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_FileSystemEntryInfoTest.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File.GetFileSystemEntryInfo.cs" />
-    <Compile Include="UnitTests\AlphaFS_Device.EnumerateDevices.cs" />
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_InitializeInstance.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateNetworkConnections.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateNetworks.cs" />
@@ -220,19 +218,19 @@
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.PathCreateFromUrl.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.PathFileExists.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test..cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.GetUniqueVolumeNameForPath.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_VolumeTest.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.GetDriveType.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.GetDriveNameForNtDeviceName.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.GetXxx.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.QueryDosDevice.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.EnumerateVolumeMountPoints.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.SetVolumeLabel.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.IsSameVolume.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.GetVolumeLabel.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.GetDriveFormat.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.EnumerateVolumes.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetUniqueVolumeNameForPath.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_VolumeTest.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetDriveType.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetDriveNameForNtDeviceName.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetXxx.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.QueryDosDevice.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.EnumerateVolumeMountPoints.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.SetVolumeLabel.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.IsSameVolume.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetVolumeLabel.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetDriveFormat.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.EnumerateVolumes.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_WithProgress.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ThrowAlreadyExistsException_DestinationFileAlreadyExists.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ThrowDeviceNotReadyException_NonExistingDestinationLogicalDrive.cs" />
@@ -297,7 +295,7 @@
     <Compile Include="File Class\File_Attributes\File.SetAttributes.cs" />
     <Compile Include="File Class\File_Attributes\File.GetAttributes.cs" />
     <Compile Include="File Class\File.Delete\AlphaFS_File.Delete_ThrowFileReadOnlyException_ReadOnlyFile.cs" />
-    <Compile Include="File Class\File.Delete\File.Delete.cs" />
+    <Compile Include="File Class\File.Delete\File.Delete_ExistingFile.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_ThrowDirectoryNotFoundException_NonExistingDriveLetter.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_ThrowIOExceptionOrDeviceNotReadyException_NonExistingDriveLetter.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_ThrowUnauthorizedAccessException_PathIsADirectoryNotAFile.cs" />
@@ -372,9 +370,9 @@
     <Compile Include="DirectoryInfo Class\DirectoryInfo.Attributes.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.Refresh.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfoTest.cs" />
-    <Compile Include="DriveInfo Class\DriveInfo.GetDrives.cs" />
-    <Compile Include="DriveInfo Class\DriveInfo.InitializeInstance.cs" />
-    <Compile Include="DriveInfo Class\DriveInfoTest.cs" />
+    <Compile Include="AlphaFS Device Class\DriveInfo Class\DriveInfo.GetDrives.cs" />
+    <Compile Include="AlphaFS Device Class\DriveInfo Class\DriveInfo.InitializeInstance.cs" />
+    <Compile Include="AlphaFS Device Class\DriveInfo Class\DriveInfoTest.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_File.GetHash.cs" />
     <Compile Include="File Class\AlphaFS_File_Lock\AlphaFS_File.GetProcessForFileLock_NoLockReturnsNull.cs" />
     <Compile Include="File Class\AlphaFS_File_Lock\AlphaFS_File.GetProcessForFileLock.cs" />
@@ -468,8 +466,8 @@
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_ExistingDirectory.cs" />
     <Compile Include="Path Class\AlphaFS_Path_IsUncPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.SetVolumeMountPoint.cs" />
-    <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.GetVolumeInfo.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.SetVolumeMountPoint.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetVolumeInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\AlphaFS.snk">

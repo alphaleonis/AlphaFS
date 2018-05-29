@@ -41,12 +41,9 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.CreateRandomDirectory();
+            var folder = tempRoot.CreateRandomDirectoryStructure();
 
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
-
-            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, 1, false, false, false);
-
             
             // Encrypt.
             Alphaleonis.Win32.Filesystem.Directory.Encrypt(folder.FullName, true);

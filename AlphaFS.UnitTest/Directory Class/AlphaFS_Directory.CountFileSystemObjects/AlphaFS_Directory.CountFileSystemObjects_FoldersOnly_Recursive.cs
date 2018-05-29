@@ -49,15 +49,15 @@ namespace AlphaFS.UnitTest
             const int expectedFso = 10;
             const int maxFso = 10;
             const int expectedSubfolders = expectedFso * expectedFso + expectedFso;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, maxFso, false, false, true);
+            tempRoot.CreateRandomDirectoryStructure(folder.FullName, maxFso, false, false, true);
 
 
             var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder.FullName, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Folders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
-            
+
+
+            Console.WriteLine("\n\tTotal file system objects: [{0}]", fsoCount);
 
             Assert.AreEqual(expectedSubfolders, fsoCount, string.Format(CultureInfo.InvariantCulture, "The number of file system objects: {0} is not equal than expected: {1}", expectedSubfolders, fsoCount));
-
-            Console.WriteLine("\n\tTotal file system objects = [{0}]", fsoCount);
          }
 
          Console.WriteLine();

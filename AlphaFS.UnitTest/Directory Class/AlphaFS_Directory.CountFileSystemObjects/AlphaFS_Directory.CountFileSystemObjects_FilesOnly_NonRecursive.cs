@@ -42,18 +42,18 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.CreateRandomDirectory();
+            const int expectedFso = 5;
+            const int maxFso = 10;
+
+            var folder = tempRoot.CreateRandomDirectoryStructure(maxFso);
 
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
-
-            const int expectedFso = 10;
-            const int maxFso = 10;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, maxFso, false, false, false);
 
 
             var fsoCount = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder.FullName, "*", Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files);
 
-            Console.WriteLine("\n\tTotal file system objects = [{0}]", fsoCount);
+
+            Console.WriteLine("\n\tTotal file system objects: [{0}]", fsoCount);
 
             Assert.AreEqual(expectedFso, fsoCount, string.Format(CultureInfo.InvariantCulture, "The number of file system objects: {0} is not equal than expected: {1}", expectedFso, fsoCount));
          }

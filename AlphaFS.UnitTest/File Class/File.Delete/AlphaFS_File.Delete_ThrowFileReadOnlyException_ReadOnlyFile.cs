@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
+            var file = tempRoot.CreateRandomFile();
 
             Console.WriteLine("Input File Path: [{0}]", file);
 

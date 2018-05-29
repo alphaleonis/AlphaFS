@@ -44,7 +44,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("Input File Path: [{0}]", file);
             
-            var bytes = Encoding.UTF8.GetBytes(new string('X', new Random(DateTime.Now.Millisecond).Next(0, 999)));
+            var bytes = Encoding.UTF8.GetBytes(new string('X', new Random(DateTime.UtcNow.Millisecond).Next(0, 999)));
 
             System.IO.File.WriteAllBytes(file, bytes);
             

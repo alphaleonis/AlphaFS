@@ -41,17 +41,15 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFile = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
-            var dstFile = srcFile + "-Existing File";
+            var srcFile = tempRoot.CreateRandomFile();
+            var dstFile = tempRoot.CreateRandomFile();
 
             Console.WriteLine("Src File Path: [{0}]", srcFile);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
-            System.IO.File.Copy(srcFile.FullName, dstFile);
-            
-            ExceptionAssert.IOException(() => System.IO.File.Copy(srcFile.FullName, dstFile));
+            ExceptionAssert.IOException(() => System.IO.File.Copy(srcFile.FullName, dstFile.FullName));
 
-            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile));
+            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile.FullName));
          }
          
          Console.WriteLine();

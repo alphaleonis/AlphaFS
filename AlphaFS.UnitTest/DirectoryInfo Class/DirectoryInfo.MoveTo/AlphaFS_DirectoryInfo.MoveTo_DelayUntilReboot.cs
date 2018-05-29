@@ -49,7 +49,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("Src Directory Path: [{0}]", pendingEntry);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(pendingEntry, 1, false, false, true);
+            tempRoot.CreateRandomDirectoryStructure(pendingEntry, 1, false, false, true);
 
 
             if (isNetwork)

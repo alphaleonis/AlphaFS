@@ -56,7 +56,7 @@ namespace AlphaFS.UnitTest
             const Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions enumOptionsFile = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.ContinueOnException;
 
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, maxDepth, false, false, true);
+            tempRoot.CreateRandomDirectoryStructure(folder.FullName, maxDepth, false, false, true);
 
             var dirs0 = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder.FullName, searchPattern, enumOptionsFolder);
             var files0 = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder.FullName, searchPattern, enumOptionsFile);
