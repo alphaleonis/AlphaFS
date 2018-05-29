@@ -42,18 +42,18 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = System.IO.Directory.CreateDirectory(tempRoot.RandomDirectoryFullPath).FullName;
+            var folder = tempRoot.CreateRandomDirectory();
 
-            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder.FullName);
 
 
-            var deskTopIni = System.IO.Path.Combine(folder, "Desktop.ini");
+            var deskTopIni = System.IO.Path.Combine(folder.FullName, "Desktop.ini");
             var enabled = new[] {"[Encryption]", "Disable=0"};
             var disabled = new[] {"[Encryption]", "Disable=1"};
 
 
             // Enable.
-            Alphaleonis.Win32.Filesystem.Directory.EnableEncryption(folder);
+            Alphaleonis.Win32.Filesystem.Directory.EnableEncryption(folder.FullName);
             
 
             // Read Desktop.ini file.
@@ -69,7 +69,7 @@ namespace AlphaFS.UnitTest
 
 
             // Disable.
-            Alphaleonis.Win32.Filesystem.Directory.DisableEncryption(folder);
+            Alphaleonis.Win32.Filesystem.Directory.DisableEncryption(folder.FullName);
 
 
             // Read Desktop.ini file.

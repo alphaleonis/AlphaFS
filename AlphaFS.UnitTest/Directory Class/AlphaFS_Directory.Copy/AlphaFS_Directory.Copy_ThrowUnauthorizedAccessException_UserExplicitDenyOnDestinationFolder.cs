@@ -66,15 +66,9 @@ namespace AlphaFS.UnitTest
             dstFolder.SetAccessControl(dirSecurity);
 
 
-            Exception exception = null;
-
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
+               ExceptionAssert.UnauthorizedAccessException(() => Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName));
             }
             finally
             {
@@ -83,9 +77,6 @@ namespace AlphaFS.UnitTest
                dirSecurity.RemoveAccessRule(rule);
                dstFolder.SetAccessControl(dirSecurity);
             }
-            
-
-            ExceptionAssert.UnauthorizedAccessException(exception);
          }
          
          Console.WriteLine();

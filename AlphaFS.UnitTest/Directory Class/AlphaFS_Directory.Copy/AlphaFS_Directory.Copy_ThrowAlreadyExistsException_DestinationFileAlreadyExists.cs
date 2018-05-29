@@ -54,22 +54,9 @@ namespace AlphaFS.UnitTest
             // 1st Copy action.
             Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName);
 
-
-            Exception exception = null;
-
-            try
-            {
-               // 2nd Copy action.
-               Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-
-
-            ExceptionAssert.AlreadyExistsException(exception);
-
+            
+            // 2nd Copy action.
+            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName));
          }
 
          Console.WriteLine();

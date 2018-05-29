@@ -37,23 +37,13 @@ namespace AlphaFS.UnitTest
          using (var tempRoot = new TemporaryDirectory(true))
          {
             var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget");
+
             var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
+
             var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-
-
-            ExceptionAssert.ArgumentException(exception);
+            ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName));
          }
       }
    }

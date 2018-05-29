@@ -30,26 +30,13 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_GetFullPath_ThrowArgumentException_InvalidPath1_Success()
+      public void Path_GetFullPath_ThrowArgumentException_InvalidLocalPath2_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         Exception exception = null;
+         ExceptionAssert.ArgumentException(() => System.IO.Path.GetFullPath(@"\\\\.txt"));
 
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\?test.txt");
-            //Path.GetFullPath(UnitTestConstants.SysDrive + @"\*test.txt");
-            //Path.GetFullPath(UnitTestConstants.SysDrive + @"\\test.txt");
-            //Path.GetFullPath(UnitTestConstants.SysDrive + @"\/test.txt");
-         }
-         catch (Exception ex)
-         {
-            exception = ex;
-         }
-         
-
-         ExceptionAssert.ArgumentException(exception);
+         ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(@"\\\\.txt"));
       }
    }
 }

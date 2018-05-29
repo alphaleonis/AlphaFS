@@ -42,32 +42,23 @@ namespace AlphaFS.UnitTest
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var fileSource = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
-            var fileCopy = tempRoot.RandomFileFullPath;
+            var fileCopy = tempRoot.RandomTxtFileFullPath;
 
             Console.WriteLine("Source File Path: [{0}]", fileSource);
 
 
             System.IO.File.Copy(fileSource.FullName, fileCopy);
 
+            ExceptionAssert.IOException(() => System.IO.File.Move(fileSource.FullName, fileCopy));
 
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
+            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy));
             
-
-            ExceptionAssert.AlreadyExistsException(exception);
-
 
             Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);
 
+
             Assert.IsFalse(System.IO.File.Exists(fileSource.FullName), "The file does exists, but is expected not to.");
+
             Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
          }
 

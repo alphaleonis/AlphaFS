@@ -24,29 +24,37 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class PathTest
+   public partial class ExistsTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Path_GetFullPath_ThrowArgumentException_InvalidPath2_Success()
+      public void Directory_Exists_NonExistingDirectory_LocalAndNetwork_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
+         Directory_Exists_NonExistingDirectory(false);
+         Directory_Exists_NonExistingDirectory(true);
+      }
 
-         Exception exception = null;
 
-         try
+      private void Directory_Exists_NonExistingDirectory(bool isNetwork)
+      {
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            Alphaleonis.Win32.Filesystem.Path.GetFullPath(@"\\\\.txt");
-         }
-         catch (Exception ex)
-         {
-            exception = ex;
+            var folder = tempRoot.RandomDirectoryFullPath;
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
+
+            var existsSysIO = System.IO.Directory.Exists(folder);
+
+            var existsAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(folder);
+
+
+            Assert.AreEqual(existsSysIO, existsAlpha);
          }
 
 
-         ExceptionAssert.ArgumentException(exception);
+         Console.WriteLine();
       }
    }
 }

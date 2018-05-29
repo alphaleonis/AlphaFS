@@ -59,7 +59,7 @@ namespace AlphaFS.UnitTest
 
             for (var i = 0; i < numCreate; i++)
             {
-               var newfile = System.IO.Path.Combine(hardlinkFolder, i + "-Hardlink-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters() + ".txt");
+               var newfile = System.IO.Path.Combine(hardlinkFolder, i + "-Hardlink-" + UnitTestConstants.GetRandomFileName() + ".txt");
 
                Alphaleonis.Win32.Filesystem.File.CreateHardlink(newfile, file);
 

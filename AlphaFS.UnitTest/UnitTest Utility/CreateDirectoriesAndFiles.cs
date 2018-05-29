@@ -33,7 +33,7 @@ namespace AlphaFS.UnitTest
 
          for (var i = 0; i < max; i++)
          {
-            var fsoName = GetRandomFileNameWithDiacriticCharacters();
+            var fsoName = GetRandomFileName();
             var file = System.IO.Path.Combine(rootPath, fsoName);
             var dir = file + "-" + i + "-dir";
             file = file + "-" + i + "-file.txt";
@@ -92,7 +92,7 @@ namespace AlphaFS.UnitTest
 
       public static System.IO.FileInfo CreateFile(string rootFolder, string fileName, int count, bool readOnly, bool hidden, int fileLength = 0)
       {
-         var file = System.IO.Path.Combine(rootFolder, (!Alphaleonis.Utils.IsNullOrWhiteSpace(fileName) ? fileName : GetRandomFileNameWithDiacriticCharacters()) + "-" + count + "-file");
+         var file = System.IO.Path.Combine(rootFolder, (!Alphaleonis.Utils.IsNullOrWhiteSpace(fileName) ? fileName : GetRandomFileName()) + "-" + count + "-file");
 
          using (var fs = System.IO.File.Create(file))
          {

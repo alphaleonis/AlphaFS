@@ -53,22 +53,8 @@ namespace AlphaFS.UnitTest
          
          Console.WriteLine("Input Directory Path: [{0}]", tempPath);
 
-
-         Exception exception = null;
-
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath);
-         }
-         catch (Exception ex)
-         {
-            exception = ex;
-         }
+         ExceptionAssert.DirectoryNotFoundException(() => Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath));
          
-
-         ExceptionAssert.DirectoryNotFoundException(exception);
-
-
          Console.WriteLine();
       }
    }

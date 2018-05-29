@@ -27,91 +27,109 @@ namespace AlphaFS.UnitTest
 {
    public static class ExceptionAssert
    {
-      public static void AlreadyExistsException(Exception exception)
+      public static void AlreadyExistsException(Action action, string findString = null)
       {
-         IsExpected(exception, typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException));
+         TestException(action, typeof(Alphaleonis.Win32.Filesystem.AlreadyExistsException), findString);
       }
 
 
-      public static void ArgumentException(Exception exception)
+      public static void ArgumentException(Action action, string findString = null)
       {
-         IsExpected(exception, typeof(ArgumentException));
-      }
-
-
-      public static void DeviceNotReadyException(Exception exception)
-      {
-         IsExpected(exception, typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException));
-      }
-      
-
-      public static void DirectoryNotEmptyException(Exception exception)
-      {
-         IsExpected(exception, typeof(Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException));
-      }
-
-
-      public static void DirectoryNotFoundException(Exception exception)
-      {
-         IsExpected(exception, typeof(System.IO.DirectoryNotFoundException));
-      }
-
-
-      public static void DirectoryReadOnlyException(Exception exception)
-      {
-         IsExpected(exception, typeof(Alphaleonis.Win32.Filesystem.DirectoryReadOnlyException));
+         TestException(action, typeof(ArgumentException), findString);
       }
 
       
-      public static void FileNotFoundException(Exception exception)
+      public static void DeviceNotReadyException(Action action, string findString = null)
       {
-         IsExpected(exception, typeof(System.IO.FileNotFoundException));
-      }
-
-      
-      public static void FileReadOnlyException(Exception exception)
-      {
-         IsExpected(exception, typeof(Alphaleonis.Win32.Filesystem.FileReadOnlyException));
+         TestException(action, typeof(Alphaleonis.Win32.Filesystem.DeviceNotReadyException), findString);
       }
 
 
-      public static void IOException(Exception exception)
+      public static void DirectoryNotEmptyException(Action action, string findString = null)
       {
-         IsExpected(exception, typeof(System.IO.IOException));
+         TestException(action, typeof(Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException), findString);
       }
 
 
-      public static void NotSupportedException(Exception exception)
+      public static void DirectoryNotFoundException(Action action, string findString = null)
       {
-         IsExpected(exception, typeof(NotSupportedException));
+         TestException(action, typeof(System.IO.DirectoryNotFoundException), findString);
       }
-      
 
-      public static void PathTooLongException(Exception exception)
+
+      public static void DirectoryReadOnlyException(Action action, string findString = null)
       {
-         IsExpected(exception, typeof(System.IO.PathTooLongException));
+         TestException(action, typeof(Alphaleonis.Win32.Filesystem.DirectoryReadOnlyException), findString);
       }
       
 
-      public static void UnauthorizedAccessException(Exception exception)
+      public static void FileNotFoundException(Action action, string findString = null)
       {
-         IsExpected(exception, typeof(UnauthorizedAccessException));
+         TestException(action, typeof(System.IO.FileNotFoundException), findString);
+      }
+
+
+      public static void FileReadOnlyException(Action action, string findString = null)
+      {
+         TestException(action, typeof(Alphaleonis.Win32.Filesystem.FileReadOnlyException), findString);
+      }
+
+
+      public static void IOException(Action action, string findString = null)
+      {
+         TestException(action, typeof(System.IO.IOException), findString);
+      }
+
+
+      public static void NotSupportedException(Action action, string findString = null)
+      {
+         TestException(action, typeof(NotSupportedException), findString);
+      }
+
+
+      public static void PathTooLongException(Action action, string findString = null)
+      {
+         TestException(action, typeof(System.IO.PathTooLongException), findString);
+      }
+
+
+      public static void UnauthorizedAccessException(Action action, string findString = null)
+      {
+         TestException(action, typeof(UnauthorizedAccessException), findString);
       }
       
 
-
-
-      public static void IsExpected(Exception exception, Type expectedException)
+      private static void TestException(Action action, Type expectedException, string findString = null)
       {
+         Exception exception = null;
+         var message = string.Empty;
+
+         try
+         {
+            action();
+         }
+         catch (Exception ex)
+         {
+            exception = ex;
+            message = ex.Message;
+         }
+         
+
          var gotException = null != exception && exception.GetType() == expectedException;
 
 
-         Console.WriteLine("\n\t[{0}]{1} {2}: {3}", MethodBase.GetCurrentMethod().Name,
+         if (null != exception)
+            Console.WriteLine("\n\t[{0}]{1} {2}: {3}", MethodBase.GetCurrentMethod().Name,
 
-            gotException ? string.Empty : " Caught unexpected", gotException ? expectedException.Name : exception.GetType().Name, exception.Message);
+               gotException ? string.Empty : " Caught unexpected",
+               gotException ? expectedException.Name : exception.GetType().Name, message.Trim());
 
 
          Assert.IsTrue(gotException, "The {0} is not caught, but is expected to.", expectedException.Name);
+
+
+         if (gotException && !Alphaleonis.Utils.IsNullOrWhiteSpace(findString))
+            Assert.IsTrue(message.Contains(findString), "The findString is not found in the exception message, but is expected to.");
       }
    }
 }

@@ -44,7 +44,7 @@ namespace AlphaFS.UnitTest
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.Directory.FullName;
-            var folderSrc = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(folder, "Source-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()));
+            var folderSrc = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(folder, "Source-" + UnitTestConstants.GetRandomFileName()));
             var pendingEntry = folderSrc.FullName;
 
             Console.WriteLine("Src Directory Path: [{0}]", pendingEntry);
@@ -52,25 +52,16 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.CreateDirectoriesAndFiles(pendingEntry, 1, false, false, true);
 
 
-            Exception exception = null;
-            
-            try
-            {
-               // Trigger DelayUntilReboot.
-
-               folderSrc.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-
-
             if (isNetwork)
-               ExceptionAssert.ArgumentException(exception);
-
+               // Trigger DelayUntilReboot.
+               ExceptionAssert.ArgumentException(() => folderSrc.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot));
+            
             else
             {
+               // Trigger DelayUntilReboot.
+               folderSrc.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot);
+
+
                // Verify DelayUntilReboot in registry.
 
                var pendingList = (string[]) Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager", "PendingFileRenameOperations", null);

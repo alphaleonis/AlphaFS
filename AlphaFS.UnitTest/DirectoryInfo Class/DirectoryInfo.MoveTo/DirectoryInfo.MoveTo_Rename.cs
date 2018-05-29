@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var newFolderName = UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
+            var newFolderName = UnitTestConstants.GetRandomFileName();
 
             var folderSrc = new Alphaleonis.Win32.Filesystem.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "Source Folder"));
             var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, newFolderName));

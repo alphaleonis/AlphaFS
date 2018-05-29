@@ -26,42 +26,25 @@ namespace AlphaFS.UnitTest
    /// <summary>Containts static variables, used by unit tests.</summary>
    public static partial class UnitTestConstants
    {
-      public static string GetRandomFileNameWithDiacriticCharacters()
+      /// <summary>Returns a random folder name or file name, possibly with diacritic characters.</summary>
+      public static string GetRandomFileName()
       {
          var randomFileName = System.IO.Path.GetRandomFileName();
 
-         switch (new Random().Next(0, 4))
+         switch (new Random(DateTime.Now.Millisecond).Next(1, 3))
          {
-            case 0:
-               break;
-
             case 1:
-               randomFileName = randomFileName.Replace("a", "ä");
-               randomFileName = randomFileName.Replace("e", "ë");
-               randomFileName = randomFileName.Replace("i", "ï");
-               randomFileName = randomFileName.Replace("o", "ö");
-               randomFileName = randomFileName.Replace("u", "ü");
-               break;
+               return randomFileName.Replace("a", "ä").Replace("e", "ë").Replace("i", "ï").Replace("o", "ö").Replace("u", "ü");
 
             case 2:
-               randomFileName = randomFileName.Replace("a", "á");
-               randomFileName = randomFileName.Replace("e", "é");
-               randomFileName = randomFileName.Replace("i", "í");
-               randomFileName = randomFileName.Replace("o", "ó");
-               randomFileName = randomFileName.Replace("u", "ú");
-               break;
+               return randomFileName.Replace("a", "á").Replace("e", "é").Replace("i", "í").Replace("o", "ó").Replace("u", "ú");
 
             case 3:
-               randomFileName = randomFileName.Replace("a", "â");
-               randomFileName = randomFileName.Replace("e", "ê");
-               randomFileName = randomFileName.Replace("i", "î");
-               randomFileName = randomFileName.Replace("o", "ô");
-               randomFileName = randomFileName.Replace("u", "û");
-               break;
+               return randomFileName.Replace("a", "â").Replace("e", "ê").Replace("i", "î").Replace("o", "ô").Replace("u", "û");
+
+            default:
+               return randomFileName;
          }
-
-
-         return randomFileName;
       }
    }
 }

@@ -44,7 +44,7 @@ namespace AlphaFS.UnitTest
             // Min: 1 bytes, Max: 10485760 = 10 MB.
             var fileLength = new Random().Next(1, 10485760);
             var fileSource = UnitTestConstants.CreateFile(tempRoot.Directory.FullName, fileLength);
-            var fileCopy = tempRoot.RandomFileFullPath;
+            var fileCopy = tempRoot.RandomTxtFileFullPath;
 
             Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
             Console.WriteLine("Dst File Path: [{0}]", fileCopy);

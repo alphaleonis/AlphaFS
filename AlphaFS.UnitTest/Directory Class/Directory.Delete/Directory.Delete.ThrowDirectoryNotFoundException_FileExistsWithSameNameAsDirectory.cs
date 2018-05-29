@@ -41,26 +41,18 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.RandomTxtFileFullPath;
 
             Console.WriteLine("Input File Path: [{0}]", file);
 
             using (System.IO.File.Create(file)) { }
 
 
-            Exception exception = null;
+            ExceptionAssert.IOException(() => System.IO.Directory.Delete(file));
+            
 
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.Delete(file);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-
-
-            ExceptionAssert.DirectoryNotFoundException(exception);
+            // 2018-05-29 BUG: Throws wrong Exception.
+            ExceptionAssert.DirectoryNotFoundException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(file));
          }
          
          Console.WriteLine();

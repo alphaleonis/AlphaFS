@@ -46,19 +46,7 @@ namespace AlphaFS.UnitTest
             dirInfo.CreateSubdirectory("Extra Folder");
 
 
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-
-
-            ExceptionAssert.DirectoryNotEmptyException(exception);
+            ExceptionAssert.DirectoryNotEmptyException(() => Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName));
          }
       }
    }

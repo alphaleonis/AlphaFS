@@ -49,20 +49,9 @@ namespace AlphaFS.UnitTest
             
             UnitTestConstants.CreateDirectoriesAndFiles(srcFolder.FullName, 1, false, false, true);
 
+            ExceptionAssert.IOException(() => System.IO.Directory.Move(srcFolder.FullName, dstFfolder.FullName));
 
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFfolder.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-            
-
-            ExceptionAssert.AlreadyExistsException(exception);
+            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFfolder.FullName));
          }
 
 

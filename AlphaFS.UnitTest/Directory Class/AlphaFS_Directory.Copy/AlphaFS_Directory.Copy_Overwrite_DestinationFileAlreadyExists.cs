@@ -64,21 +64,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
 
-
-
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-            
-
-            ExceptionAssert.AlreadyExistsException(exception);
+            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName));
 
             Assert.IsTrue(System.IO.Directory.Exists(folderDst.FullName), "The directory does not exist, but is expected to.");
             
@@ -103,8 +89,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(sourceTotalFiles, copyResult.TotalFiles, "The number of total files does not match, but is expected to.");
             Assert.AreEqual(sourceTotalSize, copyResult.TotalBytes, "The total file size does not match, but is expected to.");
          }
-
-
+         
          Console.WriteLine();
       }
    }

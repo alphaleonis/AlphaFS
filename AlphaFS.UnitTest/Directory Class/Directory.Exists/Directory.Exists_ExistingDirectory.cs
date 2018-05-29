@@ -30,28 +30,27 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Exists_ExistingDirectoryExists_Success()
+      public void Directory_Exists_ExistingDirectory_LocalAndNetwork_Success()
       {
-         Directory_Exists_ExistingDirectoryExists(false);
-         Directory_Exists_ExistingDirectoryExists(true);
+         Directory_Exists_ExistingDirectory(false);
+         Directory_Exists_ExistingDirectory(true);
       }
 
 
-      private void Directory_Exists_ExistingDirectoryExists(bool isNetwork)
+      private void Directory_Exists_ExistingDirectory(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.RandomDirectoryFullPath;
-            System.IO.Directory.CreateDirectory(folder);
+            var folder = tempRoot.CreateRandomDirectory();
 
-            Console.WriteLine("Input Existing Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
-            var shouldBe = true;
-            var existSysIO = System.IO.Directory.Exists(folder);
-            var existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(folder);
+            var existsSysIO = System.IO.Directory.Exists(folder.FullName);
 
-            Assert.AreEqual(shouldBe, existSysIO, "The result should be: " + shouldBe.ToString().ToUpperInvariant());
-            Assert.AreEqual(existSysIO, existAlpha, "The results are not equal, but are expected to be.");
+            var existsAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(folder.FullName);
+
+
+            Assert.AreEqual(existsSysIO, existsAlpha);
          }
 
 

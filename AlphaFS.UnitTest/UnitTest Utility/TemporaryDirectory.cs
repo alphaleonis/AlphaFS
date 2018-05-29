@@ -55,7 +55,7 @@ namespace AlphaFS.UnitTest
 
          do
          {
-            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, folderPrefix + "." + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters().Substring(0, 6)));
+            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, folderPrefix + "." + UnitTestConstants.GetRandomFileName().Substring(0, 6)));
 
          } while (Directory.Exists);
 
@@ -66,27 +66,46 @@ namespace AlphaFS.UnitTest
       public System.IO.DirectoryInfo Directory { get; private set; }
 
 
+      /// <summary>Returns the full path to a non-existing directory with a random name, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\Directory_wqáánmvh.z03".</summary>
       public string RandomDirectoryFullPath
       {
-         get { return System.IO.Path.Combine(Directory.FullName, "Directory-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()); }
+         get { return System.IO.Path.Combine(Directory.FullName, "Directory_" + RandomFileName); }
       }
 
 
-      public string RandomFileFullPath
+      /// <summary>Returns the full path to a non-existing file with a random name, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\File_wqáánmvh.txt".</summary>
+      public string RandomTxtFileFullPath
       {
-         get { return RandomFileFullPathNoExtension + ".txt"; }
+         get { return System.IO.Path.Combine(Directory.FullName, "File_" + System.IO.Path.GetFileNameWithoutExtension(RandomFileName)) + ".txt"; }
       }
 
 
-      public string RandomFileFullPathNoExtension
+      /// <summary>Returns the full path to a non-existing file with a random name and without an extension, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\File_wqáánmvh".</summary>
+      public string RandomFileNoExtensionFullPath
       {
-         get { return System.IO.Path.Combine(Directory.FullName, "File-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()); }
+         get { return System.IO.Path.GetFileNameWithoutExtension(System.IO.Path.Combine(Directory.FullName, "File_" + RandomFileName)); }
+      }
+
+
+      /// <summary>Returns a random folder or file name, such as: "wqáánmvh".</summary>
+      public string RandomFileName
+      {
+         get { return UnitTestConstants.GetRandomFileName(); }
       }
 
 
       public override string ToString()
       {
          return Directory.FullName;
+      }
+
+
+
+
+      /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory.</summary>
+      public System.IO.DirectoryInfo CreateRandomDirectory()
+      {
+         return System.IO.Directory.CreateDirectory(RandomDirectoryFullPath);
       }
 
 

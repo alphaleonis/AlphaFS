@@ -40,7 +40,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         var tempPath = UnitTestConstants.SysDrive + @"\nonExistingFolder-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
+         var tempPath = UnitTestConstants.SysDrive + @"\nonExistingFolder-" + UnitTestConstants.GetRandomFileName();
 
          Console.WriteLine("Input Directory Path: [{0}]", tempPath);
 

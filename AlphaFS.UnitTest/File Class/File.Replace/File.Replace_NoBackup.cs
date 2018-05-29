@@ -41,9 +41,9 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var fileSrc = tempRoot.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextHelloWorld + ".txt";
-            var fileDst = tempRoot.RandomFileFullPathNoExtension + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
-            var fileBackup = tempRoot.RandomFileFullPathNoExtension + "-Backup.txt";
+            var fileSrc = tempRoot.RandomFileNoExtensionFullPath + "-" + UnitTestConstants.TextHelloWorld + ".txt";
+            var fileDst = tempRoot.RandomFileNoExtensionFullPath + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
+            var fileBackup = tempRoot.RandomFileNoExtensionFullPath + "-Backup.txt";
 
             Console.WriteLine("Input File Path: [{0}]", fileSrc);
 

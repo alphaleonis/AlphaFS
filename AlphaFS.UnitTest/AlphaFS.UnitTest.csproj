@@ -271,8 +271,8 @@
     <Compile Include="_Other\EnumerationTest.cs" />
     <Compile Include="Directory Class\Directory.Exists\Directory.Exists_UseCases.cs" />
     <Compile Include="Directory Class\Directory.Exists\Directory.Exists_DriveLetter.cs" />
-    <Compile Include="Directory Class\Directory.Exists\Directory.Exists_NonExistingDirectoryDoesNotExist.cs" />
-    <Compile Include="Directory Class\Directory.Exists\Directory.Exists_ExistingDirectoryExists.cs" />
+    <Compile Include="Directory Class\Directory.Exists\Directory.Exists_NonExistingDirectory.cs" />
+    <Compile Include="Directory Class\Directory.Exists\Directory.Exists_ExistingDirectory.cs" />
     <Compile Include="_Other\ExistsTest.cs" />
     <Compile Include="Directory Class\Directory.GetDirectories\Directory.GetDirectories_RelativePath.cs" />
     <Compile Include="Directory Class\Directory.GetDirectories\Directory.GetDirectories_AbsolutePath.cs" />
@@ -343,7 +343,7 @@
     <Compile Include="Path Class\AlphaFS_Path_GetMappedName\AlphaFS_Path.GetMappedConnectionName.cs" />
     <Compile Include="Path Class\AlphaFS_Path.GetShort83PathAndGetLongFrom83ShortPath_FromFile.cs" />
     <Compile Include="Path Class\Path.Combine.cs" />
-    <Compile Include="Path Class\AlphaFS_Path.AddRemoveTrailingDirectorySeparator.cs" />
+    <Compile Include="Path Class\AlphaFS_Path_TrailingDirectorySeparator.cs" />
     <Compile Include="Path Class\AlphaFS_Path.GetLongPath.cs" />
     <Compile Include="Path Class\Path.GetDirectoryName\AlphaFS_Path.GetDirectoryNameWithoutRoot.cs" />
     <Compile Include="Path Class\Path.GetDirectoryName\AlphaFS_Path.GetSuffixedDirectoryNameWithoutRoot.cs" />
@@ -357,8 +357,8 @@
     <Compile Include="Path Class\Path.GetFileName\Path.GetFileName.cs" />
     <Compile Include="Path Class\Path.GetFullPath\AlphaFS_Path.GetFullPath_WithTrailingDotOrSpace.cs" />
     <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_ThrowNotSupportedException.cs" />
-    <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_ThrowArgumentException_InvalidPath2.cs" />
-    <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_ThrowArgumentException_InvalidPath1.cs" />
+    <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_ThrowArgumentException_InvalidLocalPath2.cs" />
+    <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_ThrowArgumentException_InvalidLocalPath1.cs" />
     <Compile Include="Path Class\Path.IsPathRooted\Path.IsPathRooted_NullOrEmpty.cs" />
     <Compile Include="_Other\TimestampsTest.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_NonExistingDirectory.cs" />

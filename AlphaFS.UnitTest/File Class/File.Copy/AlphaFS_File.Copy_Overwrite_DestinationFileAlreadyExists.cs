@@ -21,7 +21,7 @@ namespace AlphaFS.UnitTest
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var srcFile = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
-            var dstFile = tempRoot.RandomFileFullPath;
+            var dstFile = tempRoot.RandomTxtFileFullPath;
 
             Console.WriteLine("Src File Path: [{0}]", srcFile);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
@@ -29,21 +29,10 @@ namespace AlphaFS.UnitTest
 
             System.IO.File.Copy(srcFile.FullName, dstFile);
 
-
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
+            ExceptionAssert.IOException(() => System.IO.File.Copy(srcFile.FullName, dstFile));
             
-
-            ExceptionAssert.AlreadyExistsException(exception);
-
+            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile));
+            
 
             Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile, true);
 

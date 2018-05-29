@@ -42,7 +42,7 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.RandomTxtFileFullPath;
 
             Console.WriteLine("Input File Path: [{0}]", file);
 
@@ -51,21 +51,9 @@ namespace AlphaFS.UnitTest
 
             using (var bfs = new Alphaleonis.Win32.Filesystem.BackupFileStream(file, System.IO.FileMode.Open))
             {
-               Exception exception = null;
+               bfs.ReadStreamInfo();
 
-               try
-               {
-                  bfs.ReadStreamInfo();
-
-                  bfs.Unlock(0, 10);
-               }
-               catch (Exception ex)
-               {
-                  exception = ex;
-               }
-
-
-               ExceptionAssert.IOException(exception);
+               ExceptionAssert.IOException(() => bfs.Unlock(0, 10));
             }
          }
 
