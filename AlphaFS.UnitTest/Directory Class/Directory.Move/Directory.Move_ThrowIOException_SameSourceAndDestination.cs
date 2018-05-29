@@ -48,19 +48,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
 
 
-            Exception exception = null;
+            ExceptionAssert.IOException(() => System.IO.Directory.Move(srcFolder.FullName, dstFolder.FullName));
 
-            try
-            {
-               System.IO.Directory.Move(srcFolder.FullName, dstFolder.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-            
-
-            ExceptionAssert.IOException(exception);
+            ExceptionAssert.IOException(() => Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFolder.FullName));
          }
          
          Console.WriteLine();

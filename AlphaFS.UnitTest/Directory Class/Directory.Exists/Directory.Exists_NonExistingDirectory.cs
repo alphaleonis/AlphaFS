@@ -20,12 +20,41 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace AlphaFS.UnitTest
 {
-   /// <summary>This is a test class for all AlternateDataStreamInfo class Unit Tests.</summary>
-   [TestClass]
-   public partial class AlphaFS_AlternateDataStreamsTest
+   public partial class ExistsTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
+      [TestMethod]
+      public void Directory_Exists_NonExistingDirectory_LocalAndNetwork_Success()
+      {
+         Directory_Exists_NonExistingDirectory(false);
+         Directory_Exists_NonExistingDirectory(true);
+      }
+
+
+      private void Directory_Exists_NonExistingDirectory(bool isNetwork)
+      {
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
+         {
+            var folder = tempRoot.RandomDirectoryFullPath;
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
+
+            var existsSysIO = System.IO.Directory.Exists(folder);
+
+            var existsAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(folder);
+
+
+            Assert.AreEqual(existsSysIO, existsAlpha);
+         }
+
+
+         Console.WriteLine();
+      }
    }
 }

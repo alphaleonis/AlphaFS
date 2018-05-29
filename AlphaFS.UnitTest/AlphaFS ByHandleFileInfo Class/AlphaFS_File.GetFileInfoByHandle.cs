@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
 
 namespace AlphaFS.UnitTest
 {
@@ -41,32 +42,25 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
-
-            var fileInfo = new System.IO.FileInfo(file);
-
-            using (var stream = fileInfo.OpenWrite())
+            
+            using (var fs = file.Open(FileMode.Open))
             {
-               var size = new Random().Next(0, 999);
-
-               stream.Write(new byte[size], 0, size);
-
-
-               var bhfi = Alphaleonis.Win32.Filesystem.File.GetFileInfoByHandle(stream.SafeFileHandle);
+               var bhfi = Alphaleonis.Win32.Filesystem.File.GetFileInfoByHandle(fs.SafeFileHandle);
 
 
                Assert.IsTrue(UnitTestConstants.Dump(bhfi, -18));
                
-               Assert.AreEqual(fileInfo.CreationTimeUtc, bhfi.CreationTimeUtc);
+               Assert.AreEqual(file.CreationTimeUtc, bhfi.CreationTimeUtc);
 
-               Assert.AreEqual(fileInfo.LastAccessTimeUtc, bhfi.LastAccessTimeUtc);
+               Assert.AreEqual(file.LastAccessTimeUtc, bhfi.LastAccessTimeUtc);
 
-               Assert.AreEqual(fileInfo.LastWriteTimeUtc, bhfi.LastWriteTimeUtc);
+               Assert.AreEqual(file.LastWriteTimeUtc, bhfi.LastWriteTimeUtc);
 
-               Assert.AreEqual(fileInfo.Length, bhfi.FileSize);
+               Assert.AreEqual(file.Length, bhfi.FileSize);
             }
          }
 

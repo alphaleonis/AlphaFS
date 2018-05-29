@@ -46,27 +46,13 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("Input File Path: [{0}]", folder);
 
+         ExceptionAssert.IOException(() => System.IO.File.Delete(folder));
 
-         Exception exception = null;
-
-         try
-         {
-            Alphaleonis.Win32.Filesystem.File.Delete(folder);
-         }
-         catch (Exception ex)
-         {
-            exception = ex;
-         }
-
+         ExceptionAssert.IOException(() => Alphaleonis.Win32.Filesystem.File.Delete(folder));
 
          // Local: IOException.
          // UNC: IOException or DeviceNotReadyException.
          // The latter occurs when a removable drive is already removed but there's still a cached reference.
-
-         //if (isNetwork)
-         //   ExceptionAssert.DeviceNotReadyException(exception);
-         //else
-            ExceptionAssert.IOException(exception);
 
 
          Console.WriteLine();

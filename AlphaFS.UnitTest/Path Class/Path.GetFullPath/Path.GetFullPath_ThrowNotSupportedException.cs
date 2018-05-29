@@ -20,7 +20,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AlphaFS.UnitTest
 {
@@ -34,19 +33,9 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         Exception exception = null;
+         ExceptionAssert.NotSupportedException(() => System.IO.Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt"));
 
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt");
-         }
-         catch (Exception ex)
-         {
-            exception = ex;
-         }
-
-
-         ExceptionAssert.NotSupportedException(exception);
+         ExceptionAssert.NotSupportedException(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt"));
       }
    }
 }

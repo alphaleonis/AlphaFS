@@ -41,14 +41,12 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Source Destination Folder"));
-            var dstFolder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Destination Folder"));
+            var srcFolder = tempRoot.CreateRandomDirectoryStructure();
+            var dstFolder = tempRoot.CreateRandomDirectory();
 
             Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", dstFolder.FullName);
-
-            UnitTestConstants.CreateDirectoriesAndFiles(srcFolder.FullName, 1, false, false, true);
-
+            
 
             var user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
 
@@ -66,15 +64,9 @@ namespace AlphaFS.UnitTest
             dstFolder.SetAccessControl(dirSecurity);
 
 
-            Exception exception = null;
-
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
+               ExceptionAssert.UnauthorizedAccessException(() => Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder.FullName, dstFolder.FullName));
             }
             finally
             {
@@ -83,9 +75,6 @@ namespace AlphaFS.UnitTest
                dirSecurity.RemoveAccessRule(rule);
                dstFolder.SetAccessControl(dirSecurity);
             }
-            
-
-            ExceptionAssert.UnauthorizedAccessException(exception);
          }
          
          Console.WriteLine();

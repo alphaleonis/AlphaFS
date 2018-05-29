@@ -20,7 +20,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AlphaFS.UnitTest
 {
@@ -34,19 +33,9 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         Exception exception = null;
+         ExceptionAssert.ArgumentException(() => System.IO.Path.GetPathRoot(string.Empty));
 
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Path.GetPathRoot(string.Empty);
-         }
-         catch (Exception ex)
-         {
-            exception = ex;
-         }
-
-
-         ExceptionAssert.ArgumentException(exception);
+         ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Path.GetPathRoot(string.Empty));
       }
    }
 }

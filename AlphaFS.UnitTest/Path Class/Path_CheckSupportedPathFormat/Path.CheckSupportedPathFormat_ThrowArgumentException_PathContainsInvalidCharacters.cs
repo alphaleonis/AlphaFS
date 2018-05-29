@@ -44,23 +44,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("Invalid Path: [{0}]", invalidPath);
 
-
-         Exception exception = null;
-
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(invalidPath, true, true);
-         }
-         catch (Exception ex)
-         {
-            exception = ex;
-         }
-         
-
-         ExceptionAssert.ArgumentException(exception);
-
-
-         Console.WriteLine();
+         ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(invalidPath, true, true));
       }
    }
 }

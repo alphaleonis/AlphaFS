@@ -46,22 +46,9 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("Input File Path: [{0}]", folder);
 
+         ExceptionAssert.DirectoryNotFoundException(() => System.IO.File.Delete(folder));
 
-         Exception exception = null;
-
-         try
-         {
-            Alphaleonis.Win32.Filesystem.File.Delete(folder);
-         }
-         catch (Exception ex)
-         {
-            exception = ex;
-         }
-         
-
-         ExceptionAssert.DirectoryNotFoundException(exception);
-
-         Console.WriteLine();
+         ExceptionAssert.DirectoryNotFoundException(() => Alphaleonis.Win32.Filesystem.File.Delete(folder));
       }
    }
 }

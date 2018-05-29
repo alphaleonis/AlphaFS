@@ -41,22 +41,20 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Source Folder"));
-
-            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
-
-
             const int maxDepth = 10;
             const int totalDirectories = maxDepth * maxDepth + maxDepth;            // maxDepth = 10: 110 directories and 110 files.
             const int emptyDirectories = maxDepth * maxDepth / 2;                   // 50 empty directories.
             const int remainingDirectories = totalDirectories - emptyDirectories;   // 60 remaining directories.
+            
+            var folder = tempRoot.CreateRandomDirectoryStructure(maxDepth, true);
+
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
+            
 
             var searchPattern = Alphaleonis.Win32.Filesystem.Path.WildcardStarMatchAll;
             const Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions enumOptionsFolder = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Folders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.ContinueOnException;
             const Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions enumOptionsFile = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Files | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.ContinueOnException;
-
-
-            UnitTestConstants.CreateDirectoriesAndFiles(folder.FullName, maxDepth, false, false, true);
+            
 
             var dirs0 = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder.FullName, searchPattern, enumOptionsFolder);
             var files0 = Alphaleonis.Win32.Filesystem.Directory.CountFileSystemObjects(folder.FullName, searchPattern, enumOptionsFile);

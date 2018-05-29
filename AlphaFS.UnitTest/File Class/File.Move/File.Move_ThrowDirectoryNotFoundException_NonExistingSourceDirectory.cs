@@ -54,25 +54,11 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Dst File Path: [{0}]", dstFolder);
 
 
-         Exception exception = null;
-         string exMessage = null;
-
-         try
-         {
-            Alphaleonis.Win32.Filesystem.File.Move(srcFolder, dstFolder);
-         }
-         catch (Exception ex)
-         {
-            exception = ex;
-            exMessage = ex.Message;
-         }
-         
-
-         ExceptionAssert.DirectoryNotFoundException(exception);
+         ExceptionAssert.FileNotFoundException(() => System.IO.File.Move(srcFolder, dstFolder), srcFolder);
 
 
-         if (null != exMessage)
-            Assert.IsTrue(exMessage.Contains(srcFolder), "The source directory is not mentioned in the exception message, but is expected to.");
+         // 2018-05-29 BUG: Throws wrong Exception.
+         ExceptionAssert.DirectoryNotFoundException(() => Alphaleonis.Win32.Filesystem.File.Move(srcFolder, dstFolder), srcFolder);
 
 
          Console.WriteLine();

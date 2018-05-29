@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
@@ -40,28 +39,25 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
-            System.IO.File.WriteAllLines(file, new[] {DateTime.Now.ToString(CultureInfo.CurrentCulture), DateTime.Now.ToLongDateString(), DateTime.Now.ToLongTimeString()});
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
             
             // Encrypt file.
-            Alphaleonis.Win32.Filesystem.File.Encrypt(file);
+            Alphaleonis.Win32.Filesystem.File.Encrypt(file.FullName);
             
-            Assert.IsTrue((System.IO.File.GetAttributes(file) & System.IO.FileAttributes.Encrypted) != 0, "The file is not encrypted, but it is expected.");
+            FileAssert.IsEncrypted(file.FullName);
 
-            Assert.AreEqual(Alphaleonis.Win32.Filesystem.FileEncryptionStatus.Encrypted, Alphaleonis.Win32.Filesystem.File.GetEncryptionStatus(file), "The file is not encrypted, but it is expected.");
+            Assert.AreEqual(Alphaleonis.Win32.Filesystem.FileEncryptionStatus.Encrypted, Alphaleonis.Win32.Filesystem.File.GetEncryptionStatus(file.FullName), "The file is not encrypted, but it is expected.");
 
-
-            
             
             // Decrypt file.
-            Alphaleonis.Win32.Filesystem.File.Decrypt(file);
-            
-            Assert.IsTrue((System.IO.File.GetAttributes(file) & System.IO.FileAttributes.Encrypted) == 0, "The file is encrypted, but it is not expected.");
+            Alphaleonis.Win32.Filesystem.File.Decrypt(file.FullName);
 
-            Assert.AreNotEqual(Alphaleonis.Win32.Filesystem.FileEncryptionStatus.Encrypted, Alphaleonis.Win32.Filesystem.File.GetEncryptionStatus(file), "The file is encrypted, but it is not expected.");
+            FileAssert.IsNotEncrypted(file.FullName);
+
+            Assert.AreNotEqual(Alphaleonis.Win32.Filesystem.FileEncryptionStatus.Encrypted, Alphaleonis.Win32.Filesystem.File.GetEncryptionStatus(file.FullName), "The file is encrypted, but it is not expected.");
 
          }
 

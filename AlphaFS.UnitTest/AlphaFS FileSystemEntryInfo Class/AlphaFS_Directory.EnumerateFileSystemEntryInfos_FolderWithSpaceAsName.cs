@@ -41,29 +41,26 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.Directory.FullName;
+            const int maxFso = 5;
+            const int expectedFso = 12;
 
-            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
-
-
-            const int maxFso = 10;
-            const int expectedFso = 30;
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, maxFso, true, true, false);
-
+            var folder = tempRoot.CreateRandomDirectoryStructure(maxFso, false, true, true);
+            
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder.FullName);
+            
 
             for (var i = 0; i < maxFso; i++)
             {
-               var spaceFolder = folder + @"\" + new string(' ', i + 1) + @"\" + "no_void";
+               var spaceFolder = folder.FullName + @"\" + new string(' ', i + 1) + @"\" + "no_void";
 
                Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(spaceFolder, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
             }
-
-
+            
 
             var countNamedFolders = 0;
             var countSpaceFolders = 0;
 
-            foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemInfo>(folder))
+            foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemInfo>(folder.FullName))
             {
                var path = fsei.FullName;
 

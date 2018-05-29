@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -24,38 +24,19 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class ExistsTest
+   public partial class PathTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void File_Exists_LocalAndNetwork_Success()
+      public void Path_GetFullPath_ThrowArgumentException_InvalidLocalPath2_Success()
       {
-         File_Exists(false);
-         File_Exists(true);
-      }
-      
+         UnitTestConstants.PrintUnitTestHeader(false);
 
-      private void File_Exists(bool isNetwork)
-      {
-         using (var tempRoot = new TemporaryDirectory(isNetwork))
-         {
-            var file = tempRoot.RandomFileFullPath;
+         ExceptionAssert.ArgumentException(() => System.IO.Path.GetFullPath(@"\\\\.txt"));
 
-            Console.WriteLine("Input File Path: [{0}]", file);
-
-
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file exists, but is expected not to.");
-
-
-            using (System.IO.File.Create(file)) {}
-
-
-            Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(file), "The file does not exists, but is expected to.");
-         }
-
-         Console.WriteLine();
+         ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(@"\\\\.txt"));
       }
    }
 }

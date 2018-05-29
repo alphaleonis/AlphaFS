@@ -39,19 +39,16 @@ namespace AlphaFS.UnitTest
 
          using (var tempRoot = new TemporaryDirectory())
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]\n", file);
-
+            Console.WriteLine("Input File Path: [{0}]\n", file.FullName);
 
             string sysIoStreamName;
-
-            using (var fs = System.IO.File.Create(file))
+            using (var fs = file.Create())
                sysIoStreamName = fs.Name;
-            Assert.AreEqual(sysIoStreamName, file);
             
 
-            using (var fs = Alphaleonis.Win32.Filesystem.File.Create(file))
+            using (var fs = Alphaleonis.Win32.Filesystem.File.Create(file.FullName))
             {
                var fileStreamName = Alphaleonis.Win32.Filesystem.Path.GetFinalPathNameByHandle(fs.SafeFileHandle);
 

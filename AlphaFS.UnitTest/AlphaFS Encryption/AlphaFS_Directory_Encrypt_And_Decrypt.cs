@@ -41,20 +41,18 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.RandomDirectoryFullPath;
+            var folder = tempRoot.CreateRandomDirectoryStructure();
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, 1, false, false, false);
-            
 
             // Encrypt root folder only.
-            Alphaleonis.Win32.Filesystem.Directory.Encrypt(folder);
+            Alphaleonis.Win32.Filesystem.Directory.Encrypt(folder.FullName);
 
 
             // Verify that the contents of the folder are still decrypted.
             var cnt = 0;
-            foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemEntryInfo>(folder, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive))
+            foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemEntryInfo>(folder.FullName, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive))
             {
                cnt++;
                Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Encrypted) == 0, "It is expected that the file system object is decrypted, but it is not.");
@@ -65,15 +63,15 @@ namespace AlphaFS.UnitTest
 
 
             // Encrypt entire folder for decrypt test.
-            Alphaleonis.Win32.Filesystem.Directory.Encrypt(folder, true);
+            Alphaleonis.Win32.Filesystem.Directory.Encrypt(folder.FullName, true);
 
             // Decrypt root folder only.
-            Alphaleonis.Win32.Filesystem.Directory.Decrypt(folder);
+            Alphaleonis.Win32.Filesystem.Directory.Decrypt(folder.FullName);
 
 
             // Verify that the contents of the folder are still encrypted.
             cnt = 0;
-            foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemEntryInfo>(folder, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive))
+            foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemEntryInfo>(folder.FullName, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive))
             {
                cnt++;
                Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Encrypted) != 0, "It is expected that the file system object is encrypted, but it is not.");

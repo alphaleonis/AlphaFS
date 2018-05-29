@@ -47,25 +47,23 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
 
-
          Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
-         Exception exception = null;
+         if (isNetwork)
+         {
+            ExceptionAssert.IOException(() => System.IO.Directory.Delete(folder));
 
-         try
-         {
-            Alphaleonis.Win32.Filesystem.Directory.Delete(folder);
+            ExceptionAssert.DeviceNotReadyException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder));
          }
-         catch (Exception ex)
+
+         else
          {
-            exception = ex;
+            ExceptionAssert.DirectoryNotFoundException(() => System.IO.Directory.Delete(folder));
+
+            ExceptionAssert.DeviceNotReadyException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder));
          }
          
-
-         ExceptionAssert.DeviceNotReadyException(exception);
-
-
          Console.WriteLine();
       }
    }

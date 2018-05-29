@@ -50,20 +50,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input Directory Link: [{0}]", folderLink);
 
 
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(folderLink, dirInfo.FullName);
-
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-            
-
-            ExceptionAssert.IOException(exception);
+            ExceptionAssert.IOException(() => Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(folderLink, dirInfo.FullName));
          }
 
          Console.WriteLine();
