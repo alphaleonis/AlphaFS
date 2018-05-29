@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -30,30 +30,23 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Exists_ExistingDirectoryExists_Success()
+      public void File_Exists_ExistingFile_LocalAndNetwork_Success()
       {
-         Directory_Exists_ExistingDirectoryExists(false);
-         Directory_Exists_ExistingDirectoryExists(true);
+         File_Exists_ExistingFile(false);
+         File_Exists_ExistingFile(true);
       }
+      
 
-
-      private void Directory_Exists_ExistingDirectoryExists(bool isNetwork)
+      private void File_Exists_ExistingFile(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.RandomDirectoryFullPath;
-            System.IO.Directory.CreateDirectory(folder);
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input Existing Directory Path: [{0}]", folder);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
-            var shouldBe = true;
-            var existSysIO = System.IO.Directory.Exists(folder);
-            var existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(folder);
-
-            Assert.AreEqual(shouldBe, existSysIO, "The result should be: " + shouldBe.ToString().ToUpperInvariant());
-            Assert.AreEqual(existSysIO, existAlpha, "The results are not equal, but are expected to be.");
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(file.FullName), "The file does not exists, but is expected to.");
          }
-
 
          Console.WriteLine();
       }

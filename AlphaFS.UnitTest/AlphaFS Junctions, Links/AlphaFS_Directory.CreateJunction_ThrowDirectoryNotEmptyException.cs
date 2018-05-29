@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -35,7 +34,9 @@ namespace AlphaFS.UnitTest
          using (var tempRoot = new TemporaryDirectory())
          {
             var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget");
+
             var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
+
             var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
@@ -46,19 +47,7 @@ namespace AlphaFS.UnitTest
             dirInfo.CreateSubdirectory("Extra Folder");
 
 
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-
-
-            ExceptionAssert.DirectoryNotEmptyException(exception);
+            ExceptionAssert.DirectoryNotEmptyException(() => Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName));
          }
       }
    }

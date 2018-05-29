@@ -41,34 +41,27 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFile = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
-            var dstFile = tempRoot.RandomFileFullPath;
+            var srcFile = tempRoot.CreateRandomFile();
+            var dstFile = tempRoot.RandomTxtFileFullPath;
 
-            Console.WriteLine("Src File Path: [{0}]", srcFile);
+            Console.WriteLine("Src File Path: [{0}]", srcFile.FullName);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 
             System.IO.File.Copy(srcFile.FullName, dstFile);
             System.IO.File.SetAttributes(dstFile, System.IO.FileAttributes.ReadOnly);
-
-
-            Exception exception = null;
+            
 
             try
             {
-               Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile, true);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
+               ExceptionAssert.UnauthorizedAccessException(() => System.IO.File.Copy(srcFile.FullName, dstFile, true));
+
+               ExceptionAssert.UnauthorizedAccessException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile, true));
             }
             finally
             {
                System.IO.File.SetAttributes(dstFile, System.IO.FileAttributes.Normal);
             }
-            
-
-            ExceptionAssert.UnauthorizedAccessException(exception);
          }
          
          Console.WriteLine();

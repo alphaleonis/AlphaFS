@@ -43,26 +43,19 @@ namespace AlphaFS.UnitTest
 
          using (var tempRoot = new TemporaryDirectory())
          {
-            var random = UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
-            var srcFolderName = System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder.") + random;
-            var destFolderName = System.IO.Path.Combine(tempRoot.Directory.FullName, "Destination Folder.") + random;
-
-
             var folderSrc = isNetwork
-               ? System.IO.Directory.CreateDirectory(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolderName))
-               : System.IO.Directory.CreateDirectory(System.IO.Path.Combine(srcFolderName));
+               ? tempRoot.CreateRandomDirectoryStructure(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempRoot.RandomDirectoryFullPath), new Random().Next(5, 15), true)
+               : tempRoot.CreateRandomDirectoryStructure(new Random().Next(5, 15), true);
 
             var folderDst = !isNetwork
-               ? new System.IO.DirectoryInfo(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(destFolderName))
-               : new System.IO.DirectoryInfo(destFolderName);
+               ? new System.IO.DirectoryInfo(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempRoot.RandomDirectoryFullPath)).FullName
+               : tempRoot.RandomDirectoryFullPath;
 
 
             Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), false, false, true);
-
-
+            
             var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
 
             var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderSrc.FullName, dirEnumOptions);
@@ -75,11 +68,11 @@ namespace AlphaFS.UnitTest
 
 
 
-            var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
+            var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
 
             UnitTestConstants.Dump(moveResult, -18);
 
-            props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
+            props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst, dirEnumOptions);
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files do not match.");
             Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match.");
@@ -97,7 +90,6 @@ namespace AlphaFS.UnitTest
 
             Assert.IsFalse(System.IO.Directory.Exists(folderSrc.FullName), "The original folder exists, but is expected not to.");
          }
-
 
          Console.WriteLine();
       }

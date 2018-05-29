@@ -35,8 +35,8 @@ namespace AlphaFS.UnitTest
       public static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
 
 
-      public static readonly string MyStream = "ӍƔŞtrëƛɱ-" + GetRandomFileNameWithDiacriticCharacters();
-      public static readonly string MyStream2 = "myStreamTWO-" + GetRandomFileNameWithDiacriticCharacters();
+      public static readonly string MyStream = "ӍƔŞtrëƛɱ-" + GetRandomFileName();
+      public static readonly string MyStream2 = "myStreamTWO-" + GetRandomFileName();
       public static readonly string[] AllStreams = {MyStream, MyStream2};
       public static readonly string StreamStringContent = "(1) Computer: [" + LocalHost + "]" + "\tHello there, " + Environment.UserName;
       public static readonly string[] StreamArrayContent =

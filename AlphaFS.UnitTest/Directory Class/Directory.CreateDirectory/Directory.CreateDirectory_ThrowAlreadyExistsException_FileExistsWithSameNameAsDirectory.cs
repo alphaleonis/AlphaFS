@@ -41,27 +41,13 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
-            using (System.IO.File.Create(file)) { }
+            ExceptionAssert.IOException(() => System.IO.Directory.CreateDirectory(file.FullName));
 
-
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(file);
-
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-
-            
-            ExceptionAssert.AlreadyExistsException(exception);
+            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(file.FullName));
          }
 
          Console.WriteLine();

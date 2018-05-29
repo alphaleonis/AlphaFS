@@ -30,22 +30,21 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Delete_LocalAndNetwork_Success()
+      public void File_Delete_ExistingFile_LocalAndNetwork_Success()
       {
-         File_Delete(false);
-         File_Delete(true);
+         File_Delete_ExistingFile(false);
+         File_Delete_ExistingFile(true);
       }
 
 
-      private void File_Delete(bool isNetwork)
+      private void File_Delete_ExistingFile(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = UnitTestConstants.CreateFile(tempRoot.Directory.FullName);
+            var file = tempRoot.CreateRandomFile();
 
             Console.WriteLine("Input File Path: [{0}]", file);
             
-
             Alphaleonis.Win32.Filesystem.File.Delete(file.FullName);
 
             Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file.FullName), "The file exists, but is expected not to.");

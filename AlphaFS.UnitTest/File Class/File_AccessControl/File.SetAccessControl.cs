@@ -45,19 +45,19 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
 
-            using (System.IO.File.Create(file)) {}
-
-            var sysIO = System.IO.File.GetAccessControl(file);
+            var sysIO = System.IO.File.GetAccessControl(file.FullName);
             var sysIOaccessRules = sysIO.GetAccessRules(true, true, typeof(NTAccount));
 
-            var alphaFS = Alphaleonis.Win32.Filesystem.File.GetAccessControl(file);
+
+            var alphaFS = Alphaleonis.Win32.Filesystem.File.GetAccessControl(file.FullName);
             var alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(NTAccount));
             
+
             Console.WriteLine("\n\tSystem.IO rules found: [{0}]\n\tAlphaFS rules found  : [{1}]", sysIOaccessRules.Count, alphaFSaccessRules.Count);
 
 
@@ -73,12 +73,12 @@ namespace AlphaFS.UnitTest
             // and second parameter removes the existing inherited permissions 
             Console.WriteLine("\n\tRemove inherited properties and persist it.");
             alphaFS.SetAccessRuleProtection(true, false);
-            Alphaleonis.Win32.Filesystem.File.SetAccessControl(file, alphaFS, AccessControlSections.Access);
+            Alphaleonis.Win32.Filesystem.File.SetAccessControl(file.FullName, alphaFS, AccessControlSections.Access);
 
 
             // Re-read, using instance methods.
-            var sysIOfi = new System.IO.FileInfo(file);
-            var alphaFSfi = new Alphaleonis.Win32.Filesystem.FileInfo(file);
+            var sysIOfi = new System.IO.FileInfo(file.FullName);
+            var alphaFSfi = new Alphaleonis.Win32.Filesystem.FileInfo(file.FullName);
 
             sysIO = sysIOfi.GetAccessControl(AccessControlSections.Access);
             alphaFS = alphaFSfi.GetAccessControl(AccessControlSections.Access);
@@ -90,13 +90,13 @@ namespace AlphaFS.UnitTest
             // Restore inherited properties.
             Console.WriteLine("\n\tRestore inherited properties and persist it.");
             alphaFS.SetAccessRuleProtection(false, true);
-            Alphaleonis.Win32.Filesystem.File.SetAccessControl(file, alphaFS, AccessControlSections.Access);
+            Alphaleonis.Win32.Filesystem.File.SetAccessControl(file.FullName, alphaFS, AccessControlSections.Access);
 
 
             // Re-read.
-            sysIO = System.IO.File.GetAccessControl(file, AccessControlSections.Access);
-            alphaFS = Alphaleonis.Win32.Filesystem.File.GetAccessControl(file, AccessControlSections.Access);
-
+            sysIO = System.IO.File.GetAccessControl(file.FullName, AccessControlSections.Access);
+            alphaFS = Alphaleonis.Win32.Filesystem.File.GetAccessControl(file.FullName, AccessControlSections.Access);
+            
             // Sanity check.
             UnitTestConstants.TestAccessRules(sysIO, alphaFS);
          }

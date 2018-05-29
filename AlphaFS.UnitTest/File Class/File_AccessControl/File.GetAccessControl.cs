@@ -43,21 +43,20 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
-
-
-            using (Alphaleonis.Win32.Filesystem.File.Create(file)) {}
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
 
             var foundRules = false;
 
-            var sysIO = System.IO.File.GetAccessControl(file);
+            var sysIO = System.IO.File.GetAccessControl(file.FullName);
             var sysIOaccessRules = sysIO.GetAccessRules(true, true, typeof(NTAccount));
 
-            var alphaFS = Alphaleonis.Win32.Filesystem.File.GetAccessControl(file);
+
+            var alphaFS = Alphaleonis.Win32.Filesystem.File.GetAccessControl(file.FullName);
             var alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(NTAccount));
+
 
             Console.WriteLine("\n\tSystem.IO rules found: [{0}]\n\tAlphaFS rules found  : [{1}]", sysIOaccessRules.Count, alphaFSaccessRules.Count);
 

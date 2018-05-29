@@ -43,14 +43,13 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.RandomDirectoryFullPath;
-            var symlinkPath = System.IO.Path.Combine(tempRoot.Directory.FullName, UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()) + "-symlink";
+            var folder = tempRoot.CreateRandomDirectory();
+            var symlinkPath = System.IO.Path.Combine(tempRoot.Directory.FullName, UnitTestConstants.GetRandomFileName()) + "-symlink";
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
-            System.IO.Directory.CreateDirectory(folder);
-            Alphaleonis.Win32.Filesystem.Directory.CreateSymbolicLink(symlinkPath, folder);
+            Alphaleonis.Win32.Filesystem.Directory.CreateSymbolicLink(symlinkPath, folder.FullName);
 
 
             var rnd = new Random();
@@ -60,12 +59,12 @@ namespace AlphaFS.UnitTest
             var lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
 
 
-            Alphaleonis.Win32.Filesystem.Directory.SetTimestamps(folder, creationTime, lastAccessTime, lastWriteTime);
+            Alphaleonis.Win32.Filesystem.Directory.SetTimestamps(folder.FullName, creationTime, lastAccessTime, lastWriteTime);
 
 
-            Assert.AreEqual(System.IO.Directory.GetCreationTime(folder), creationTime);
-            Assert.AreEqual(System.IO.Directory.GetLastAccessTime(folder), lastAccessTime);
-            Assert.AreEqual(System.IO.Directory.GetLastWriteTime(folder), lastWriteTime);
+            Assert.AreEqual(System.IO.Directory.GetCreationTime(folder.FullName), creationTime);
+            Assert.AreEqual(System.IO.Directory.GetLastAccessTime(folder.FullName), lastAccessTime);
+            Assert.AreEqual(System.IO.Directory.GetLastWriteTime(folder.FullName), lastWriteTime);
 
 
             // SymbolicLink
@@ -80,12 +79,12 @@ namespace AlphaFS.UnitTest
             lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
 
 
-            Alphaleonis.Win32.Filesystem.Directory.SetTimestampsUtc(folder, creationTime, lastAccessTime, lastWriteTime);
+            Alphaleonis.Win32.Filesystem.Directory.SetTimestampsUtc(folder.FullName, creationTime, lastAccessTime, lastWriteTime);
 
 
-            Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(folder), creationTime);
-            Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(folder), lastAccessTime);
-            Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(folder), lastWriteTime);
+            Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(folder.FullName), creationTime);
+            Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(folder.FullName), lastAccessTime);
+            Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(folder.FullName), lastWriteTime);
 
 
             // SymbolicLink

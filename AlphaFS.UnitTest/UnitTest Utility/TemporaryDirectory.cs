@@ -19,32 +19,26 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis;
 using System;
+using System.Globalization;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
    /// <summary>Used to create a temporary directory that will be deleted once this instance is disposed.</summary>
    internal sealed class TemporaryDirectory : IDisposable
    {
-      public TemporaryDirectory() : this(false, null, null) { }
+      #region Constructors
 
-
-      //public TemporaryDirectory(string folderPrefix) : this(false, folderPrefix, null) { }
-
-
-      public TemporaryDirectory(bool isNetwork) : this(isNetwork, null, null) { }
-
+      public TemporaryDirectory() : this(false) { }
       
-      //public TemporaryDirectory(bool isNetwork, string folderPrefix) : this(isNetwork, folderPrefix, null) { }
 
-
-      public TemporaryDirectory(bool isNetwork, string folderPrefix, string root)
+      public TemporaryDirectory(bool isNetwork, string folderPrefix = null, string root = null)
       {
-         if (Utils.IsNullOrWhiteSpace(folderPrefix))
+         if (Alphaleonis.Utils.IsNullOrWhiteSpace(folderPrefix))
             folderPrefix = "AlphaFS.TempRoot";
 
-         if (Utils.IsNullOrWhiteSpace(root))
+         if (Alphaleonis.Utils.IsNullOrWhiteSpace(root))
             root = UnitTestConstants.TempPath;
 
          if (isNetwork)
@@ -55,32 +49,46 @@ namespace AlphaFS.UnitTest
 
          do
          {
-            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, folderPrefix + "." + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters().Substring(0, 6)));
+            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, folderPrefix + "." + UnitTestConstants.GetRandomFileName().Substring(0, 6)));
 
          } while (Directory.Exists);
 
          Directory.Create();
       }
 
+      #endregion // Constructors
+
+
+      #region Properties
 
       public System.IO.DirectoryInfo Directory { get; private set; }
 
 
+      /// <summary>Returns the full path to a non-existing directory with a random name, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\Directory_wqáánmvh.z03".</summary>
       public string RandomDirectoryFullPath
       {
-         get { return System.IO.Path.Combine(Directory.FullName, "Directory-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()); }
+         get { return System.IO.Path.Combine(Directory.FullName, "Directory_" + RandomFileName); }
       }
 
 
-      public string RandomFileFullPath
+      /// <summary>Returns the full path to a non-existing file with a random name, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\File_wqáánmvh.txt".</summary>
+      public string RandomTxtFileFullPath
       {
-         get { return RandomFileFullPathNoExtension + ".txt"; }
+         get { return RandomFileNoExtensionFullPath + ".txt"; }
       }
 
 
-      public string RandomFileFullPathNoExtension
+      /// <summary>Returns the full path to a non-existing file with a random name and without an extension, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\File_wqáánmvh".</summary>
+      public string RandomFileNoExtensionFullPath
       {
-         get { return System.IO.Path.Combine(Directory.FullName, "File-" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters()); }
+         get { return System.IO.Path.Combine(Directory.FullName, "File_" + System.IO.Path.GetFileNameWithoutExtension(RandomFileName)); }
+      }
+
+
+      /// <summary>Returns a random folder or file name, such as: "wqáánmvh.z03".</summary>
+      public string RandomFileName
+      {
+         get { return UnitTestConstants.GetRandomFileName(); }
       }
 
 
@@ -88,6 +96,107 @@ namespace AlphaFS.UnitTest
       {
          return Directory.FullName;
       }
+
+      #endregion // Properties
+
+
+      #region Methods
+
+      /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with hidden and/or read-only attributes set.</summary>
+      public System.IO.DirectoryInfo CreateDirectory(string folderFullPath, bool readOnly = false, bool hidden = false)
+      {
+         var dirInfo = System.IO.Directory.CreateDirectory(!Alphaleonis.Utils.IsNullOrWhiteSpace(folderFullPath) ? folderFullPath : RandomDirectoryFullPath);
+
+
+         if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+            dirInfo.Attributes |= System.IO.FileAttributes.ReadOnly;
+         
+         if (hidden && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+            dirInfo.Attributes |= System.IO.FileAttributes.Hidden;
+         
+         return dirInfo;
+      }
+
+
+      /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory.</summary>
+      public System.IO.DirectoryInfo CreateRandomDirectory()
+      {
+         return CreateDirectory(null);
+      }
+      
+
+      /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file, possibly with hidden and/or read-only attributes set.</summary>
+      public System.IO.FileInfo CreateFile(string fileFullPath, bool readOnly = false, bool hidden = false)
+      {
+         var fileInfo = new System.IO.FileInfo(!Alphaleonis.Utils.IsNullOrWhiteSpace(fileFullPath) ? fileFullPath : RandomTxtFileFullPath);
+
+         // File size is min 0 bytes, max 1 MB.
+         using (var fs = fileInfo.Create())
+            fs.SetLength(new Random(DateTime.UtcNow.Millisecond).Next(0, 1048576));
+         
+         if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+            fileInfo.Attributes |= System.IO.FileAttributes.ReadOnly;
+
+         if (hidden && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+            fileInfo.Attributes |= System.IO.FileAttributes.Hidden;
+         
+         return fileInfo;
+      }
+
+
+      /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file.</summary>
+      public System.IO.FileInfo CreateRandomFile()
+      {
+         return CreateFile(null);
+      }
+
+
+      public System.IO.DirectoryInfo CreateRandomDirectoryStructure(int max = 1, string rootPath = null)
+      {
+         return CreateRandomDirectoryStructure(rootPath, max, false);
+      }
+
+
+      public System.IO.DirectoryInfo CreateRandomDirectoryStructure(int max, bool recurse, bool readOnly = false, bool hidden = false)
+      {
+         return CreateRandomDirectoryStructure(null, max, recurse, readOnly, hidden);
+      }
+
+
+      public System.IO.DirectoryInfo CreateRandomDirectoryStructure(string rootPath, int max, bool recurse, bool readOnly = false, bool hidden = false)
+      {
+         var dirInfo = CreateDirectory(rootPath, readOnly, hidden);
+
+         var folderCount = 0;
+         
+
+         for (var fsoCount = 0; fsoCount < max; fsoCount++)
+         {
+            folderCount++;
+
+            var fsoName = System.IO.Path.GetFileNameWithoutExtension(RandomFileName) + "-" + fsoCount;
+            
+            // Always create folder.
+            var di = CreateDirectory(System.IO.Path.Combine(dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "{0}_directory", fsoName)), readOnly, hidden);
+
+            // Create file, every other iteration.
+            CreateFile(System.IO.Path.Combine(fsoCount % 2 == 0 ? di.FullName : dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "{0}_file.txt", fsoName)), readOnly, hidden);
+         }
+
+
+         if (recurse)
+         {
+            foreach (var folder in System.IO.Directory.EnumerateDirectories(dirInfo.FullName))
+               CreateRandomDirectoryStructure(folder, max, false, readOnly, hidden);
+         }
+
+
+         Assert.AreEqual(max, folderCount, "The number of folders does not equal the max folder-level, but is expected to.");
+
+         return dirInfo;
+      }
+
+      #endregion // Methods
 
 
       #region Disposable Members
@@ -97,11 +206,13 @@ namespace AlphaFS.UnitTest
          Dispose(false);
       }
 
+
       public void Dispose()
       {
          Dispose(true);
          GC.SuppressFinalize(this);
       }
+
 
       private void Dispose(bool isDisposing)
       {

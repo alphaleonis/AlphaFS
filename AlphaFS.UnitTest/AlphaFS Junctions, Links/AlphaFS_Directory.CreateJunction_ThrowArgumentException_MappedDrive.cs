@@ -33,35 +33,24 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Directory_CreateJunction_ThrowArgumentException_MappedDrive_Netwerk_Success()
       {
          using (var tempRoot = new TemporaryDirectory())
-         using (var connection = new Alphaleonis.Win32.Network.DriveConnection(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath)))
          {
-            var mappedPath = connection.LocalName + @"\" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
+            var folder = tempRoot.CreateRandomDirectory();
 
-            Console.WriteLine("Mapped drive [{0}] to [{1}]", connection.LocalName, connection.Share);
-
-
-            var target = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(mappedPath);
-            var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
-            var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
-
-
-            Exception exception = null;
-
-            try
+            using (var connection = new Alphaleonis.Win32.Network.DriveConnection(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder.FullName)))
             {
-               Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-            finally
-            {
-               target.Delete();
-            }
+               var mappedPath = connection.LocalName + @"\" + tempRoot.RandomFileName;
+
+               Console.WriteLine("Mapped drive [{0}] to [{1}]", connection.LocalName, connection.Share);
+
+               var target = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(mappedPath);
+
+               var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
+
+               var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
-            ExceptionAssert.ArgumentException(exception);
+               ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName));
+            }
          }
       }
    }

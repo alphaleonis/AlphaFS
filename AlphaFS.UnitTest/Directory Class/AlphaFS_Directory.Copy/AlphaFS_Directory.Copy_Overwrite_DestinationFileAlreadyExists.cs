@@ -41,17 +41,14 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folderSrc = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
-            var folderDst = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Destination Folder"));
+            var folderSrc = tempRoot.CreateRandomDirectoryStructure();
+            var folderDst = tempRoot.RandomDirectoryFullPath;
 
             Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst);
+            
 
-
-            UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, 1, false, false, true);
-
-
-            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
+            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst);
 
 
             var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
@@ -64,33 +61,19 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
 
+            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst));
 
-
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-            
-
-            ExceptionAssert.AlreadyExistsException(exception);
-
-            Assert.IsTrue(System.IO.Directory.Exists(folderDst.FullName), "The directory does not exist, but is expected to.");
+            Assert.IsTrue(System.IO.Directory.Exists(folderDst), "The directory does not exist, but is expected to.");
             
 
             
 
             // Overwrite using CopyOptions.None
 
-            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst.FullName, Alphaleonis.Win32.Filesystem.CopyOptions.None);
+            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.None);
 
 
-            props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst.FullName, dirEnumOptions);
+            props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst, dirEnumOptions);
             Assert.AreEqual(sourceTotal, props["Total"], "The number of total file system objects does not match, but is expected to.");
             Assert.AreEqual(sourceTotalFiles, props["File"], "The number of total files does not match, but is expected to.");
             Assert.AreEqual(sourceTotalSize, props["Size"], "The total file size does not match, but is expected to.");
@@ -103,8 +86,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(sourceTotalFiles, copyResult.TotalFiles, "The number of total files does not match, but is expected to.");
             Assert.AreEqual(sourceTotalSize, copyResult.TotalBytes, "The total file size does not match, but is expected to.");
          }
-
-
+         
          Console.WriteLine();
       }
    }

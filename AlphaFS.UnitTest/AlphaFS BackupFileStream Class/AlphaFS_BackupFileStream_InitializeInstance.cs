@@ -42,14 +42,12 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
-
-            System.IO.File.WriteAllText(file, DateTime.Now.ToString(CultureInfo.CurrentCulture));
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
 
-            using (var bfs = new Alphaleonis.Win32.Filesystem.BackupFileStream(file, System.IO.FileMode.Open))
+            using (var bfs = new Alphaleonis.Win32.Filesystem.BackupFileStream(file.FullName, System.IO.FileMode.Open))
             {
                UnitTestConstants.Dump(bfs.ReadStreamInfo(), -10);
 

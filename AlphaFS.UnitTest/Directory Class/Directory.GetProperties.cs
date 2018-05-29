@@ -41,14 +41,12 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.Directory.FullName;
+            var folder = tempRoot.CreateRandomDirectoryStructure(5, true, true, true);
 
             Console.WriteLine("Aggregated properties of file system objects from Directory: [{0}]\n", folder);
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, 5, true, true, true);
 
-
-            var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folder, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
+            var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folder.FullName, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
 
 
             var total = props["Total"];
@@ -60,9 +58,9 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\t\t#{0:000}\t{1, -17} = [{2}]", ++cnt, key, props[key]);
 
 
-            Assert.AreEqual(96, total, "The number of file system objects does not match, but it is expected.");
+            Assert.AreEqual(60, total, "The number of file system objects does not match, but it is expected.");
 
-            Assert.AreEqual(66, file, "The number of files does not match, but it is expected.");
+            Assert.AreEqual(30, file, "The number of files does not match, but it is expected.");
 
             Assert.AreNotEqual(0, size, "The total file system objects size is zero, which is not expected.");
          }

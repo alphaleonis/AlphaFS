@@ -53,7 +53,7 @@
 
 //         using (var rootDir = new TemporaryDirectory(tempPath, MethodBase.GetCurrentMethod().Name))
 //         {
-//            var file = rootDir.RandomFileFullPath;
+//            var file = rootDir.RandomTxtFileFullPath;
 //            Console.WriteLine("\nInput File Path: [{0}]", file);
 
 

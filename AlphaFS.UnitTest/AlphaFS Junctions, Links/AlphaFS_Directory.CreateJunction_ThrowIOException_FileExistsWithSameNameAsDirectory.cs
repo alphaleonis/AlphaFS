@@ -35,27 +35,16 @@ namespace AlphaFS.UnitTest
          using (var tempRoot = new TemporaryDirectory())
          {
             var target = tempRoot.Directory.CreateSubdirectory("JunctionTarget");
-            var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
-            var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
+            var toDelete = tempRoot.Directory.CreateSubdirectory("ToDelete");
+
+            var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
             // Create a file with the same name as the junction to trigger the IOException.
             using (System.IO.File.CreateText(junction)) { }
 
 
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName);
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-
-
-            ExceptionAssert.IOException(exception);
+            ExceptionAssert.IOException(() => Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName));
          }
       }
    }
