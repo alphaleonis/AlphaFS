@@ -52,7 +52,7 @@ namespace AlphaFS.UnitTest
 
 
          if (sessionCount == 0)
-            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

@@ -62,7 +62,7 @@ namespace AlphaFS.UnitTest
             }
 
             if (cnt == 0)
-               UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+               UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
 
 
             // Encrypt entire folder for decrypt test.
@@ -81,7 +81,7 @@ namespace AlphaFS.UnitTest
             }
 
             if (cnt == 0)
-               UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+               UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
          }
 
          Console.WriteLine();

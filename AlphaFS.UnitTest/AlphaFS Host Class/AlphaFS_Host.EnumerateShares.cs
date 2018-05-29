@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
          }
 
          if (count == 0)
-            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

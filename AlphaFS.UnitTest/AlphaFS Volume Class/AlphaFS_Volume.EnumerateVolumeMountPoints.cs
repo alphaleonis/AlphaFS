@@ -33,7 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Volume_EnumerateVolumeMountPoints_Local_Success()
       {
-         UnitTestAssert.IsElevated();
+         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
          
          var cnt = 0;
@@ -70,7 +70,7 @@ namespace AlphaFS.UnitTest
 
 
          if (cnt == 0)
-            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

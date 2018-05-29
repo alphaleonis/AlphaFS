@@ -35,7 +35,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void File_SetAccessControl_LocalAndNetwork_Success()
       {
-         UnitTestAssert.IsElevated();
+         UnitTestAssert.IsElevatedProcess();
 
          File_SetAccessControl(false);
          File_SetAccessControl(true);

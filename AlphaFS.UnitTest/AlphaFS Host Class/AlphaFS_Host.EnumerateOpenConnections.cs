@@ -52,7 +52,7 @@ namespace AlphaFS.UnitTest
 
       private void EnumerateOpenConnections(string host, string share)
       {
-         //UnitTestAssert.IsElevated(); // In User mode nothing is enumerated.
+         //UnitTestAssert.IsElevatedProcess(); // In User mode nothing is enumerated.
          UnitTestConstants.PrintUnitTestHeader(false);
          
          Console.WriteLine("Connected to Share: [{0}\\{1}]", host, share);
@@ -71,7 +71,7 @@ namespace AlphaFS.UnitTest
 
 
          if (count == 0)
-            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

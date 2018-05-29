@@ -75,7 +75,7 @@ namespace AlphaFS.UnitTest
             }
 
             if (cnt == 0)
-               UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+               UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
          }
          catch (NetworkInformationException ex)
          {
@@ -88,10 +88,10 @@ namespace AlphaFS.UnitTest
 
          
          if (noDomainConnection)
-            UnitTestAssert.SetInconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
+            UnitTestAssert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
 
          else if (cnt == 0)
-            UnitTestAssert.SetInconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
 
 
          Console.WriteLine();

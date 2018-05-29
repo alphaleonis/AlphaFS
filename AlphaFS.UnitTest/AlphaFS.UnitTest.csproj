@@ -145,6 +145,20 @@
     </Compile>
     <Compile Include="File Class\FileTest.cs" />
     <Compile Include="Path Class\PathTest.cs" />
+    <Compile Include="UnitTest Utility\CreateDirectoriesAndFiles.cs" />
+    <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
+    <Compile Include="UnitTest Utility\Dump.cs" />
+    <Compile Include="UnitTest Utility\ExceptionAssert.cs" />
+    <Compile Include="UnitTest Utility\FileAssert.cs" />
+    <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
+    <Compile Include="UnitTest Utility\GetRandomFileNameWithDiacriticCharacters.cs" />
+    <Compile Include="UnitTest Utility\InputPaths.cs" />
+    <Compile Include="UnitTest Utility\PrintUnitTestHeader.cs" />
+    <Compile Include="UnitTest Utility\StringToByteArray.cs" />
+    <Compile Include="UnitTest Utility\TemporaryDirectory.cs" />
+    <Compile Include="UnitTest Utility\TestAccessRules.cs" />
+    <Compile Include="UnitTest Utility\UnitTestAssert.cs" />
+    <Compile Include="UnitTest Utility\UnitTestConstants.cs" />
     <Compile Include="_Other\AccessControlTest.cs" />
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_ThrowIOException_SegmentAlreadyUnlocked.cs" />
     <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_ThrowIOException_FilePortionIsLocked.cs" />
@@ -450,24 +464,11 @@
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetFileIcon.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetVerbCommand.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.InitializeInstance.cs" />
-    <Compile Include="UnitTest Utility\InputPaths.cs" />
-    <Compile Include="UnitTest Utility\GetRandomFileNameWithDiacriticCharacters.cs" />
-    <Compile Include="UnitTest Utility\FolderDenyPermission.cs" />
-    <Compile Include="UnitTest Utility\StringToByteArray.cs" />
-    <Compile Include="UnitTest Utility\PrintUnitTestHeader.cs" />
-    <Compile Include="UnitTest Utility\UnitTestAssert.cs" />
-    <Compile Include="UnitTest Utility\Dump.cs" />
-    <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
-    <Compile Include="UnitTest Utility\FileAssert.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.UrlIs.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_ExistingDirectory.cs" />
     <Compile Include="Path Class\AlphaFS_Path_IsUncPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest Utility\CreateDirectoriesAndFiles.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.SetVolumeMountPoint.cs" />
-    <Compile Include="UnitTest Utility\TestAccessRules.cs" />
-    <Compile Include="UnitTest Utility\UnitTestConstants.cs" />
-    <Compile Include="UnitTest Utility\TemporaryDirectory.cs" />
     <Compile Include="AlphaFS Volume Class\AlphaFS_Volume.GetVolumeInfo.cs" />
   </ItemGroup>
   <ItemGroup>
