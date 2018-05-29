@@ -49,16 +49,16 @@ namespace AlphaFS.UnitTest
             var count = 0;
             var folders = new[]
             {
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
             };
 
             foreach (var folderName in folders)

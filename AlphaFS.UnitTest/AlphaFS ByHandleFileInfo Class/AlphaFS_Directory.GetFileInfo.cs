@@ -41,23 +41,21 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.RandomDirectoryFullPath;
+            var folder = tempRoot.CreateRandomDirectory();
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder);
-
-            var dirInfo = System.IO.Directory.CreateDirectory(folder);
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
-            var bhfi = Alphaleonis.Win32.Filesystem.Directory.GetFileInfoByHandle(folder);
+            var bhfi = Alphaleonis.Win32.Filesystem.Directory.GetFileInfoByHandle(folder.FullName);
 
 
             Assert.IsTrue(UnitTestConstants.Dump(bhfi, -18));
             
-            Assert.AreEqual(dirInfo.CreationTimeUtc, bhfi.CreationTimeUtc);
+            Assert.AreEqual(folder.CreationTimeUtc, bhfi.CreationTimeUtc);
 
-            Assert.AreEqual(dirInfo.LastAccessTimeUtc, bhfi.LastAccessTimeUtc);
+            Assert.AreEqual(folder.LastAccessTimeUtc, bhfi.LastAccessTimeUtc);
 
-            Assert.AreEqual(dirInfo.LastWriteTimeUtc, bhfi.LastWriteTimeUtc);
+            Assert.AreEqual(folder.LastWriteTimeUtc, bhfi.LastWriteTimeUtc);
 
          }
 

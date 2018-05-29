@@ -44,15 +44,14 @@ namespace AlphaFS.UnitTest
 
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
-            var fi = new System.IO.FileInfo(file);
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
 
-            using (fi.CreateText())
+            using (file.CreateText())
             {
-               var processes = Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(fi.FullName);
+               var processes = Alphaleonis.Win32.Filesystem.File.GetProcessForFileLock(file.FullName);
                var processesFound = processes.Count;
 
                Console.WriteLine("\n\tProcesses found: [{0}]", processesFound);

@@ -43,13 +43,13 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.RandomTxtFileFullPath;
 
             Console.WriteLine("Input File Path: [{0}]\n", file);
 
 
-            var pathExpected = tempRoot.RandomFileFullPath;
-            var pathActual = tempRoot.RandomFileFullPath;
+            var pathExpected = tempRoot.RandomTxtFileFullPath;
+            var pathActual = tempRoot.RandomTxtFileFullPath;
 
 
             var sid = new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null);

@@ -41,25 +41,15 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
-            long streamLength;
-            var ten = UnitTestConstants.TenNumbers.Length;
+            var fileLength = Alphaleonis.Win32.Filesystem.File.GetSize(file.FullName);
 
-            using (var fs = System.IO.File.Create(file))
-            {
-               // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
-
-               streamLength = fs.Length;
-            }
-
-
-            var fileLength = Alphaleonis.Win32.Filesystem.File.GetSize(file);
-
-            Assert.IsTrue(fileLength == ten && fileLength == streamLength, "File should be [{0}] bytes in size.", ten);
+            Console.WriteLine("\n\tFile sizes: [{0}] vs [{1}]", file.Length, fileLength);
+            
+            Assert.AreEqual(file.Length, fileLength, "The file sizes do not match, but are expected to.");
          }
 
          Console.WriteLine();

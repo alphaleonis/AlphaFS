@@ -28,19 +28,22 @@ namespace AlphaFS.UnitTest
 {
    public partial class EnumerationTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
       [TestMethod]
       public void AlphaFS_Device_EnumerateDevices_Local_Success()
       {
          Console.WriteLine("\nMSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.");
          Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
 
-         Device_EnumerateDevices(false);
+         AlphaFS_Device_EnumerateDevices();
       }
 
 
-      private void Device_EnumerateDevices(bool isNetwork)
+      private void AlphaFS_Device_EnumerateDevices()
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         UnitTestConstants.PrintUnitTestHeader(false);
 
          var tempPath = UnitTestConstants.LocalHost;
          var classCnt = 0;

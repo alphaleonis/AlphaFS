@@ -46,26 +46,10 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input Directory Path: [{0}]", folder);
 
             System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.ReadOnly);
-
-
-            Exception exception = null;
-
-            try
-            {
-               Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName);
-
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
-            }
-            finally
-            { 
-               System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.Normal);
-            }
             
+            ExceptionAssert.IOException(() => System.IO.Directory.Delete(folder.FullName));
 
-            ExceptionAssert.DirectoryReadOnlyException(exception);
+            ExceptionAssert.DirectoryReadOnlyException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName));
          }
 
          Console.WriteLine();

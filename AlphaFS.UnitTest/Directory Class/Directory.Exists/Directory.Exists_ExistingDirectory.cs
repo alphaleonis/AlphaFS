@@ -24,32 +24,37 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class PathTest
+   public partial class ExistsTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Path_GetFullPath_ThrowArgumentException_InvalidPath1_Success()
+      public void Directory_Exists_ExistingDirectory_LocalAndNetwork_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
+         Directory_Exists_ExistingDirectory(false);
+         Directory_Exists_ExistingDirectory(true);
+      }
 
-         Exception exception = null;
 
-         try
+      private void Directory_Exists_ExistingDirectory(bool isNetwork)
+      {
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\?test.txt");
-            //Path.GetFullPath(UnitTestConstants.SysDrive + @"\*test.txt");
-            //Path.GetFullPath(UnitTestConstants.SysDrive + @"\\test.txt");
-            //Path.GetFullPath(UnitTestConstants.SysDrive + @"\/test.txt");
-         }
-         catch (Exception ex)
-         {
-            exception = ex;
-         }
-         
+            var folder = tempRoot.CreateRandomDirectory();
 
-         ExceptionAssert.ArgumentException(exception);
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
+
+            var existsSysIO = System.IO.Directory.Exists(folder.FullName);
+
+            var existsAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(folder.FullName);
+
+
+            Assert.AreEqual(existsSysIO, existsAlpha);
+         }
+
+
+         Console.WriteLine();
       }
    }
 }

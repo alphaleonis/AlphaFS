@@ -42,30 +42,30 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = System.IO.Directory.CreateDirectory(tempRoot.RandomDirectoryFullPath).FullName;
+            var folder = tempRoot.CreateRandomDirectory();
 
-            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder.FullName);
 
 
             var count = 0;
             var folders = new[]
             {
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
-               UnitTestConstants.GetRandomFileNameWithDiacriticCharacters(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
+               UnitTestConstants.GetRandomFileName(),
             };
 
 
             foreach (var folderName in folders)
             {
-               var newFolder = System.IO.Path.Combine(folder, folderName);
+               var newFolder = System.IO.Path.Combine(folder.FullName, folderName);
 
                System.IO.File.AppendAllText(newFolder + (count++ % 2 == 0 ? string.Empty : "-uneven"), DateTime.Now.ToString(CultureInfo.CurrentCulture));
             }
@@ -75,9 +75,9 @@ namespace AlphaFS.UnitTest
 
             foreach (var folderResult in folders)
             {
-               var systemIOCollection = System.IO.Directory.GetFiles(folder, folderResult, System.IO.SearchOption.AllDirectories);
+               var systemIOCollection = System.IO.Directory.GetFiles(folder.FullName, folderResult, System.IO.SearchOption.AllDirectories);
 
-               var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.GetFiles(folder, folderResult, System.IO.SearchOption.AllDirectories);
+               var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.GetFiles(folder.FullName, folderResult, System.IO.SearchOption.AllDirectories);
 
                Console.WriteLine("\t#{0:000}\t{1}", ++folderCount, folderResult);
 

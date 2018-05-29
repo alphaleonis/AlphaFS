@@ -56,22 +56,21 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Dst File Path: [{0}]", dstFolder);
 
 
-         Exception exception = null;
-
-         try
+         if (isNetwork)
          {
-            Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, dstFolder);
-         }
-         catch (Exception ex)
-         {
-            exception = ex;
-         }
-         
+            ExceptionAssert.IOException(() => System.IO.File.Copy(srcFolder, dstFolder));
 
-         ExceptionAssert.DeviceNotReadyException(exception);
+            ExceptionAssert.DeviceNotReadyException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, dstFolder));
+         }
+
+         else
+         {
+            ExceptionAssert.DirectoryNotFoundException(() => System.IO.File.Copy(srcFolder, dstFolder));
+
+            ExceptionAssert.DeviceNotReadyException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, dstFolder));
+         }
 
          Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The file exists, but is expected not to.");
-
 
          Console.WriteLine();
       }

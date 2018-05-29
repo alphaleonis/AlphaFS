@@ -48,27 +48,21 @@ namespace AlphaFS.UnitTest
 
             // Set DENY permission for current user.
             UnitTestConstants.FolderDenyPermission(true, folder.FullName);
-
-
-            Exception exception = null;
+            
 
             try
             {
-               Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName);
+               ExceptionAssert.IOException(() => System.IO.Directory.Delete(folder.FullName));
 
-            }
-            catch (Exception ex)
-            {
-               exception = ex;
+
+               // 2018-05-29 BUG: Throws wrong Exception.
+               ExceptionAssert.UnauthorizedAccessException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName));
             }
             finally
             {
                // Remove DENY permission for current user.
                UnitTestConstants.FolderDenyPermission(false, folder.FullName);
             }
-            
-
-            ExceptionAssert.UnauthorizedAccessException(exception);
          }
          
          Console.WriteLine();

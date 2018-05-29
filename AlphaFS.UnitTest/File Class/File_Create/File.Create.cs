@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.RandomTxtFileFullPath;
 
 #if NET35
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
@@ -62,7 +62,9 @@ namespace AlphaFS.UnitTest
                fileLength = fs.Length;
             }
 
+
             Assert.IsTrue(System.IO.File.Exists(file), "File should exist.");
+
             Assert.IsTrue(fileLength == ten, "The file is: {0} bytes, but is expected to be: {1} bytes.", fileLength, ten);
          }
 

@@ -41,31 +41,24 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            // Min: 1 bytes, Max: 10485760 = 10 MB.
-            var fileLength = new Random().Next(1, 10485760);
-            var fileSource = UnitTestConstants.CreateFile(tempRoot.Directory.FullName, fileLength);
-            var fileCopy = tempRoot.RandomFileFullPath;
+            var fileSource = tempRoot.CreateRandomFile();
+            var fileCopy = tempRoot.RandomTxtFileFullPath;
 
-            Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
+            Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileSource.Length), fileSource.FullName);
             Console.WriteLine("Dst File Path: [{0}]", fileCopy);
             
-            Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The file does not exists, but is expected to.");
-
 
             Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy);
             
 
             Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
-            
 
-            var fileLen = new System.IO.FileInfo(fileCopy).Length;
-            
-            Assert.AreEqual(fileLength, fileLen, "The file copy is: {0} bytes, but is expected to be: {1} bytes.", fileLen, fileLength);
-            
+
+            Assert.AreEqual(fileSource.Length, new System.IO.FileInfo(fileCopy).Length, "The file sizes do no match, but are expected to.");
+
             Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The original file does not exist, but is expected to.");
          }
-
-
+         
          Console.WriteLine();
       }
    }

@@ -42,18 +42,14 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.RandomDirectoryFullPath;
+            var folder = tempRoot.CreateRandomDirectoryStructure(5, true, true, true);
 
-            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder.FullName);
+            
+            var sysIOCollection = System.IO.Directory.EnumerateFiles(folder.FullName, "*", System.IO.SearchOption.AllDirectories).ToArray();
 
-            UnitTestConstants.CreateDirectoriesAndFiles(folder, 10, false, true, true);
-
-
-            var sysIOCollection = System.IO.Directory.EnumerateFiles(folder, "*", System.IO.SearchOption.AllDirectories).ToArray();
-
-            var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.EnumerateFiles(folder, "*", System.IO.SearchOption.AllDirectories).ToArray();
-
-
+            var alphaFSCollection = Alphaleonis.Win32.Filesystem.Directory.EnumerateFiles(folder.FullName, "*", System.IO.SearchOption.AllDirectories).ToArray();
+            
             Console.WriteLine("\tSystem.IO files enumerated: {0:N0}", sysIOCollection.Length);
             Console.WriteLine("\tAlphaFS   files enumerated: {0:N0}", alphaFSCollection.Length);
 

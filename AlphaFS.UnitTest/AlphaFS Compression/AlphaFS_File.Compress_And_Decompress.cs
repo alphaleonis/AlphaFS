@@ -41,18 +41,19 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileFullPath;
+            var file = tempRoot.CreateRandomFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
-
-            using (System.IO.File.CreateText(file)) { }
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
 
-            Alphaleonis.Win32.Filesystem.File.Compress(file);
-            FileAssert.IsCompressed(file);
+            Alphaleonis.Win32.Filesystem.File.Compress(file.FullName);
 
-            Alphaleonis.Win32.Filesystem.File.Decompress(file);
-            FileAssert.IsNotCompressed(file);
+            FileAssert.IsCompressed(file.FullName);
+
+
+            Alphaleonis.Win32.Filesystem.File.Decompress(file.FullName);
+
+            FileAssert.IsNotCompressed(file.FullName);
          }
 
          Console.WriteLine();

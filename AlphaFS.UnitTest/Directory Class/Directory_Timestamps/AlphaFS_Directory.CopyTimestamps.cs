@@ -42,29 +42,28 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder1 = tempRoot.RandomDirectoryFullPath;
-            var folder2 = tempRoot.RandomDirectoryFullPath;
+            var folder1 = tempRoot.CreateRandomDirectory();
 
-            System.IO.Directory.CreateDirectory(folder1);
             Thread.Sleep(1500);
-            System.IO.Directory.CreateDirectory(folder2);
+
+            var folder2 = tempRoot.CreateRandomDirectory();
+            
+
+            Console.WriteLine("Input Directory1 Path: [{0}]", folder1.FullName);
+            Console.WriteLine("Input Directory2 Path: [{0}]", folder2.FullName);
 
 
-            Console.WriteLine("Input Directory1 Path: [{0}]", folder1);
-            Console.WriteLine("Input Directory2 Path: [{0}]", folder2);
+            Assert.AreNotEqual(System.IO.Directory.GetCreationTime(folder1.FullName), System.IO.Directory.GetCreationTime(folder2.FullName));
+            Assert.AreNotEqual(System.IO.Directory.GetLastAccessTime(folder1.FullName), System.IO.Directory.GetLastAccessTime(folder2.FullName));
+            Assert.AreNotEqual(System.IO.Directory.GetLastWriteTime(folder1.FullName), System.IO.Directory.GetLastWriteTime(folder2.FullName));
 
 
-            Assert.AreNotEqual(System.IO.Directory.GetCreationTime(folder1), System.IO.Directory.GetCreationTime(folder2));
-            Assert.AreNotEqual(System.IO.Directory.GetLastAccessTime(folder1), System.IO.Directory.GetLastAccessTime(folder2));
-            Assert.AreNotEqual(System.IO.Directory.GetLastWriteTime(folder1), System.IO.Directory.GetLastWriteTime(folder2));
+            Alphaleonis.Win32.Filesystem.Directory.CopyTimestamps(folder1.FullName, folder2.FullName);
 
 
-            Alphaleonis.Win32.Filesystem.Directory.CopyTimestamps(folder1, folder2);
-
-
-            Assert.AreEqual(System.IO.Directory.GetCreationTime(folder1), System.IO.Directory.GetCreationTime(folder2));
-            Assert.AreEqual(System.IO.Directory.GetLastAccessTime(folder1), System.IO.Directory.GetLastAccessTime(folder2));
-            Assert.AreEqual(System.IO.Directory.GetLastWriteTime(folder1), System.IO.Directory.GetLastWriteTime(folder2));
+            Assert.AreEqual(System.IO.Directory.GetCreationTime(folder1.FullName), System.IO.Directory.GetCreationTime(folder2.FullName));
+            Assert.AreEqual(System.IO.Directory.GetLastAccessTime(folder1.FullName), System.IO.Directory.GetLastAccessTime(folder2.FullName));
+            Assert.AreEqual(System.IO.Directory.GetLastWriteTime(folder1.FullName), System.IO.Directory.GetLastWriteTime(folder2.FullName));
          }
 
          Console.WriteLine();

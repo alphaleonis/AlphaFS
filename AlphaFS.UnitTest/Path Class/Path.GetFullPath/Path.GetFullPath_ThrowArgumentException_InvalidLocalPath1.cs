@@ -24,38 +24,23 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class ExistsTest
+   public partial class PathTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Exists_NonExistingDirectoryDoesNotExist_Success()
+      public void Path_GetFullPath_ThrowArgumentException_InvalidLocalPath1_Success()
       {
-         Directory_Exists_NonExistingDirectoryDoesNotExist(false);
-         Directory_Exists_NonExistingDirectoryDoesNotExist(true);
-      }
+         UnitTestConstants.PrintUnitTestHeader(false);
 
+         ExceptionAssert.ArgumentException(() => System.IO.Path.GetFullPath(UnitTestConstants.SysDrive + @"\?test.txt"));
 
-      private void Directory_Exists_NonExistingDirectoryDoesNotExist(bool isNetwork)
-      {
-         using (var tempRoot = new TemporaryDirectory(isNetwork))
-         {
-            var folder = tempRoot.RandomDirectoryFullPath;
+         ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\?test.txt"));
 
-            Console.WriteLine("Input Non-Existing Directory Path: [{0}]", folder);
-
-            var shouldBe = false;
-            var existSysIO = System.IO.Directory.Exists(folder);
-            var existAlpha = Alphaleonis.Win32.Filesystem.Directory.Exists(folder);
-            
-
-            Assert.AreEqual(shouldBe, existSysIO, "The result should be: " + shouldBe.ToString().ToUpperInvariant());
-            Assert.AreEqual(existSysIO, existAlpha, "The results are not equal, but are expected to be.");
-         }
-
-
-         Console.WriteLine();
+         // @"\*test.txt");
+         // @"\\test.txt");
+         // @"\/test.txt");
       }
    }
 }

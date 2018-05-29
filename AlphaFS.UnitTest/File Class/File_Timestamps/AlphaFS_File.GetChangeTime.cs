@@ -42,41 +42,42 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = UnitTestConstants.NotepadExe;
+            var notepadFile = UnitTestConstants.NotepadExe;
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]", notepadFile);
 
 
-            Assert.AreEqual(System.IO.File.GetCreationTime(file), Alphaleonis.Win32.Filesystem.File.GetCreationTime(file));
-            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(file), Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(file));
-            Assert.AreEqual(System.IO.File.GetLastAccessTime(file), Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(file));
-            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(file), Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(file));
-            Assert.AreEqual(System.IO.File.GetLastWriteTime(file), Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(file));
-            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(file), Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(file));
+            Assert.AreEqual(System.IO.File.GetCreationTime(notepadFile), Alphaleonis.Win32.Filesystem.File.GetCreationTime(notepadFile));
+            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(notepadFile), Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(notepadFile));
+
+            Assert.AreEqual(System.IO.File.GetLastAccessTime(notepadFile), Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(notepadFile));
+            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(notepadFile), Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(notepadFile));
+
+            Assert.AreEqual(System.IO.File.GetLastWriteTime(notepadFile), Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(notepadFile));
+            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(notepadFile), Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(notepadFile));
 
 
             // We can not compare ChangeTime against .NET because it does not exist.
             // Creating a file and renaming it triggers ChangeTime, so test for that.
 
-            file = tempRoot.RandomFileFullPath;
-            Console.WriteLine("Input File Path: [{0}]\n", file);
+            var file = tempRoot.CreateRandomFile();
+            Console.WriteLine("Input File Path: [{0}]\n", file.FullName);
 
 
-            var fileInfo = new System.IO.FileInfo(file);
-            using (fileInfo.Create()) { }
-            var fileName = fileInfo.Name;
+            var fileName = file.Name;
 
 
-            var changeTimeActual = Alphaleonis.Win32.Filesystem.File.GetChangeTime(file);
-            var changeTimeUtcActual = Alphaleonis.Win32.Filesystem.File.GetChangeTimeUtc(file);
+            var changeTimeActual = Alphaleonis.Win32.Filesystem.File.GetChangeTime(file.FullName);
+
+            var changeTimeUtcActual = Alphaleonis.Win32.Filesystem.File.GetChangeTimeUtc(file.FullName);
 
 
             // Sleep for three seconds.
             var delay = 3;
 
-            fileInfo.MoveTo(fileInfo.FullName.Replace(fileName, fileName + "-Renamed"));
+            file.MoveTo(file.FullName.Replace(fileName, fileName + "-Renamed"));
             Thread.Sleep(delay * 1000);
-            fileInfo.MoveTo(fileInfo.FullName.Replace(fileName + "-Renamed", fileName));
+            file.MoveTo(file.FullName.Replace(fileName + "-Renamed", fileName));
 
 
             var newChangeTime = changeTimeActual.AddSeconds(3);
