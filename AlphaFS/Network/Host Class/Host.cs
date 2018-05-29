@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32.Network
          // Add backslashes.
          if (!Utils.IsNullOrWhiteSpace(arguments.RemoteName))
          {
-            if (!arguments.RemoteName.StartsWith(Path.UncPrefix))
+            if (!arguments.RemoteName.StartsWith(Path.UncPrefix, StringComparison.Ordinal))
                arguments.RemoteName = Path.UncPrefix + arguments.RemoteName;
 
 

@@ -36,7 +36,7 @@ namespace AlphaFS.UnitTest
          {
             var file = tempRoot.RandomDirectoryFullPath;
 
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+            Console.WriteLine("Input File Path: [{0}]\n", file);
 
 
             var longTempStream = Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + file;

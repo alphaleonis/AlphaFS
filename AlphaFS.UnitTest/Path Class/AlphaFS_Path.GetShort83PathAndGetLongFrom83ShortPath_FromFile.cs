@@ -68,7 +68,7 @@ namespace AlphaFS.UnitTest
 
          var longFrom83Path = Alphaleonis.Win32.Filesystem.Path.GetLongFrom83ShortPath(short83Path);
 
-         Console.WriteLine("Long path from 8.3 path: [{0}]{1}", longFrom83Path);
+         Console.WriteLine("Long path from 8.3 path: [{0}]", longFrom83Path);
 
          Assert.IsTrue(longFrom83Path.Equals(myLongPath));
 

@@ -33,6 +33,8 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Path_IsPathRooted_LocalAndNetwork_Success()
       {
+         UnitTestConstants.PrintUnitTestHeader();
+
          foreach (var path in UnitTestConstants.InputPaths)
          {
             var action = Alphaleonis.Win32.Filesystem.Path.IsPathRooted(path);

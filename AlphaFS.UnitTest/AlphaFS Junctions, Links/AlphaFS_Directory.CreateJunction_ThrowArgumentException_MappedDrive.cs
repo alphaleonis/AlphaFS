@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
          {
             var mappedPath = connection.LocalName + @"\" + UnitTestConstants.GetRandomFileNameWithDiacriticCharacters();
 
-            Console.WriteLine("\nMapped drive [{0}] to [{1}]", connection.LocalName, connection.Share);
+            Console.WriteLine("Mapped drive [{0}] to [{1}]", connection.LocalName, connection.Share);
 
 
             var target = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(mappedPath);

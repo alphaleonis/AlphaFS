@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
             var fileSource = UnitTestConstants.CreateFile(tempRoot.Directory.FullName, fileLength);
             var fileCopy = tempRoot.RandomFileFullPath;
 
-            Console.WriteLine("Src File Path: [{0:N0} ({1}) [{2}]", fileLength, Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
+            Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileLength), fileSource);
             Console.WriteLine("Dst File Path: [{0}]", fileCopy);
 
             Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The file does not exists, but is expected to.");

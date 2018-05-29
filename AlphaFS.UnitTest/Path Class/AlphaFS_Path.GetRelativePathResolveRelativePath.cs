@@ -201,7 +201,6 @@ namespace AlphaFS.UnitTest
                Assert.AreEqual(current, absolute, "The absolute paths do not match, but are expected to.");
             }
 
-            Console.WriteLine();
 
             Assert.AreEqual(shouldBeSelected, relative, "The relative paths do not match, but are expected to.");
 

@@ -44,7 +44,7 @@ namespace AlphaFS.UnitTest
          {
             var file = UnitTestConstants.NotepadExe;
 
-            Console.WriteLine("Input File Path: [{0}]\n", file);
+            Console.WriteLine("Input File Path: [{0}]", file);
 
 
             Assert.AreEqual(System.IO.File.GetCreationTime(file), Alphaleonis.Win32.Filesystem.File.GetCreationTime(file));
@@ -59,7 +59,7 @@ namespace AlphaFS.UnitTest
             // Creating a file and renaming it triggers ChangeTime, so test for that.
 
             file = tempRoot.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+            Console.WriteLine("Input File Path: [{0}]\n", file);
 
 
             var fileInfo = new System.IO.FileInfo(file);

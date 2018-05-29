@@ -49,7 +49,7 @@ namespace AlphaFS.UnitTest
 
             Alphaleonis.Win32.Network.Host.ConnectDrive(drive, share);
 
-            Console.WriteLine("\nMapped drive [{0}] to [{1}]\n", drive, share);
+            Console.WriteLine("Mapped drive [{0}] to [{1}]\n", drive, share);
             
 
             System.IO.File.AppendAllText(srcFile, new string('*', new Random().Next(1, 1024)));
