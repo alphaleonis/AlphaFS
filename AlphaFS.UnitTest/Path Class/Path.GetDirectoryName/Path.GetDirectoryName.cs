@@ -77,6 +77,8 @@ namespace AlphaFS.UnitTest
             }
 
             Console.WriteLine("\t    AlphaFS   : [{0}]", actual ?? "null");
+
+            Console.WriteLine();
          }
 
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");

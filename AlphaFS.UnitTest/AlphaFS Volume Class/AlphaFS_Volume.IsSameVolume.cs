@@ -33,9 +33,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Volume_IsSameVolume()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-         Console.WriteLine();
-
-
+         
          var file1 = System.IO.Path.GetTempFileName();
          var file2 = System.IO.Path.GetTempFileName();
          var fileTmp = file2;

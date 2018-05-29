@@ -58,7 +58,7 @@ namespace AlphaFS.UnitTest
                : new System.IO.DirectoryInfo(destFolderName);
 
 
-            Console.WriteLine("\nSrc Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", folderDst.FullName);
 
             UnitTestConstants.CreateDirectoriesAndFiles(folderSrc.FullName, new Random().Next(5, 15), false, false, true);

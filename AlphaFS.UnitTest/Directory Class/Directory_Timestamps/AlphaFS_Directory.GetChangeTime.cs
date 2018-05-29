@@ -64,7 +64,7 @@ namespace AlphaFS.UnitTest
 
             folder = tempRoot.RandomDirectoryFullPath;
 
-            Console.WriteLine("\nInput Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
             var dirInfo = new System.IO.DirectoryInfo(folder);
