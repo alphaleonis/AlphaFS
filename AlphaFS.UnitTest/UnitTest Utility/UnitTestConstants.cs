@@ -27,30 +27,6 @@ namespace AlphaFS.UnitTest
    /// <summary>Containts static variables, used by unit tests.</summary>
    public static partial class UnitTestConstants
    {
-#if NET35
-      public const string EMspace = "\u3000";
-#endif
-
-      /// <summary>The path to the temporary folder, ending with a backslash.</summary>
-      public static readonly string TempPath = System.IO.Path.GetTempPath();
-
-      public static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
-      public static readonly string SysRoot32 = Environment.SystemDirectory;
-      public static readonly string AppData = Environment.GetEnvironmentVariable("AppData");
-      public static readonly string NotepadExe = System.IO.Path.Combine(SysRoot32, "notepad.exe");
-
-      public const string TextTrue = "IsTrue";
-      public const string TextFalse = "IsFalse";
-      public const string TenNumbers = "0123456789";
-      public const string TextHelloWorld = "Hëllõ Wørld!";
-      public const string TextGoodbyeWorld = "Góödbyé Wôrld!";
-      public const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
-
-
-      /// <summary>The Computer name.</summary>
-      public static readonly string LocalHost = Environment.MachineName;
-
-
       /// <summary>The Computer system drive. For example "C:".</summary>
       public static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
 
@@ -59,7 +35,7 @@ namespace AlphaFS.UnitTest
       {
          "(1) Nikolai Tesla: \"Today's scientists have substituted mathematics for experiments, and they wander off through equation after equation, and eventually build a structure which has no relation to reality.\"",
          "(2) The quick brown fox jumps over the lazy dog.",
-         "(3) " + TextHelloWorld + " " + TextUnicode
+         "(3) " + System.IO.Path.GetRandomFileName()
       };
 
 
@@ -112,39 +88,39 @@ namespace AlphaFS.UnitTest
          Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z.tx",
          Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z.txt",
 
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\f",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\fi",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\fil",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.e",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.ex",
-         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.ext",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\d",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\d2",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\d2\",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\d2\f",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\d2\fi",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\d2\fil",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\d2\file",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\d2\file.",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\d2\file.e",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\d2\file.ex",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + Environment.MachineName + @"\Share\d1\d2\file.ext",
 
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\f",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\fi",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\fil",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.e",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.ex",
-         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.ext"
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\d",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\d2",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\d2\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\d2\f",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\d2\fi",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\d2\fil",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\d2\file",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\d2\file.",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\d2\file.e",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\d2\file.ex",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + Environment.MachineName + @"\Share\d1\d2\file.ext"
       };
    }
 }

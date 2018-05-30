@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace AlphaFS.UnitTest
@@ -44,21 +45,23 @@ namespace AlphaFS.UnitTest
          {
             var file1 = tempRoot.RandomTxtFileFullPath;
             var file2 = tempRoot.RandomTxtFileFullPath;
+            var text = DateTime.Now.ToString(CultureInfo.CurrentCulture);
 
             Console.WriteLine("Input File1 Path: [{0}]", file1);
             Console.WriteLine("Input File2 Path: [{0}]", file2);
-
+            Console.WriteLine("Text            : [{0}]", text);
+            
 
             using (var stream = System.IO.File.OpenWrite(file1))
             {
-               var info = new UTF8Encoding(true).GetBytes(UnitTestConstants.TextHelloWorld);
+               var info = new UTF8Encoding(true).GetBytes(text);
                stream.Write(info, 0, info.Length);
             }
 
 
             using (var stream = Alphaleonis.Win32.Filesystem.File.OpenWrite(file2))
             {
-               var info = new UTF8Encoding(true).GetBytes(UnitTestConstants.TextHelloWorld);
+               var info = new UTF8Encoding(true).GetBytes(text);
                stream.Write(info, 0, info.Length);
             }
 

@@ -35,7 +35,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(false);
          
          var sysDrive = UnitTestConstants.SysDrive;
-         var sysRoot = UnitTestConstants.SysRoot;
+         var windowsFolder = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
          var backslash = Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
          var hostName = Environment.MachineName + backslash + sysDrive[0] + Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator;
          var uncPrefix = Alphaleonis.Win32.Filesystem.Path.UncPrefix;
@@ -52,13 +52,13 @@ namespace AlphaFS.UnitTest
             uncPrefix + hostName + backslash,
             uncLongPrefix + hostName + backslash,
 
-            sysRoot,
-            uncPrefix + hostName + backslash + System.IO.Path.GetFileName(sysRoot),
-            uncLongPrefix + hostName + backslash + System.IO.Path.GetFileName(sysRoot),
+            windowsFolder,
+            uncPrefix + hostName + backslash + System.IO.Path.GetFileName(windowsFolder),
+            uncLongPrefix + hostName + backslash + System.IO.Path.GetFileName(windowsFolder),
 
-            sysRoot + backslash + "TempPath" + backslash,
-            uncPrefix + hostName + backslash + System.IO.Path.GetFileName(sysRoot) + backslash + "TempPath" + backslash,
-            uncLongPrefix + hostName + backslash + System.IO.Path.GetFileName(sysRoot) + backslash + "TempPath" + backslash
+            windowsFolder + backslash + "TempPath" + backslash,
+            uncPrefix + hostName + backslash + System.IO.Path.GetFileName(windowsFolder) + backslash + "TempPath" + backslash,
+            uncLongPrefix + hostName + backslash + System.IO.Path.GetFileName(windowsFolder) + backslash + "TempPath" + backslash
          };
 
 

@@ -39,7 +39,7 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Directory_GetFileSystemEntryInfo_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(bool isNetwork)
       {
-         var path = UnitTestConstants.NotepadExe;
+         var path = System.IO.Path.Combine(Environment.SystemDirectory, "notepad.exe");
 
          if (!System.IO.File.Exists(path))
             UnitTestAssert.InconclusiveBecauseFileNotFound(path);

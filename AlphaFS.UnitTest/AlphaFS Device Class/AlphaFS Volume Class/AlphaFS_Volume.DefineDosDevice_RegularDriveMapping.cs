@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.CreateDirectory();
-            var drive = string.Format(CultureInfo.InvariantCulture, @"{0}:\", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter());
+            var drive = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + ":";
 
             Assert.IsFalse(System.IO.Directory.Exists(drive), "The drive exists, but it is expected not to.");
 

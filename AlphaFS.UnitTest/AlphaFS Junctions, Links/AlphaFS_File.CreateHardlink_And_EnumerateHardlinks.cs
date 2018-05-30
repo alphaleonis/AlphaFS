@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -48,7 +49,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input File Path: [{0}]\n", file);
 
             // Create original file with text content.
-            System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);
+            System.IO.File.WriteAllText(file, DateTime.Now.ToString(CultureInfo.CurrentCulture));
 
 
             // Create a random number of hardlinks to the original file.

@@ -51,11 +51,12 @@ namespace AlphaFS.UnitTest
             var myStream2 = "myStreamTWO-" + tempRoot.RandomString;
             var allStreams = new[] {myStream, myStream2};
             var streamStringContent = "(1) Computer: [" + Environment.MachineName + "]" + "\tHello there, " + Environment.UserName;
+            var tenNumbers = "0123456789";
 
             Console.WriteLine("\nA file is created and {0} streams are added.", allStreams.Length.ToString(CultureInfo.CurrentCulture));
             
             // Create file and add 10 characters to it, file is created in ANSI format.
-            System.IO.File.WriteAllText(file, UnitTestConstants.TenNumbers);
+            System.IO.File.WriteAllText(file, tenNumbers);
 
 
             var fi = new Alphaleonis.Win32.Filesystem.FileInfo(file);
@@ -69,7 +70,7 @@ namespace AlphaFS.UnitTest
 
 
             var fileSize = Alphaleonis.Win32.Filesystem.File.GetSize(file);
-            Assert.AreEqual(UnitTestConstants.TenNumbers.Length, fileSize);
+            Assert.AreEqual(tenNumbers.Length, fileSize);
 
 
             // Create alternate data streams.

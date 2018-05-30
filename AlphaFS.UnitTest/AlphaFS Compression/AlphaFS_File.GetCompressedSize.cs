@@ -47,7 +47,8 @@ namespace AlphaFS.UnitTest
 
 
             long streamLength;
-            var thousand = 100 * UnitTestConstants.TenNumbers.Length;
+            var tenNumbers = "0123456789";
+            var thousand = 100 * tenNumbers.Length;
             var compressedSize = 4096;
 
 
@@ -58,7 +59,7 @@ namespace AlphaFS.UnitTest
                // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
 
                for (var count = 0; count < thousand; count ++)
-                  fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, UnitTestConstants.TenNumbers.Length);
+                  fs.Write(UnitTestConstants.StringToByteArray(tenNumbers), 0, tenNumbers.Length);
 
                streamLength = fs.Length;
             }

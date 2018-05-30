@@ -42,7 +42,7 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var notepadFile = UnitTestConstants.NotepadExe;
+            var notepadFile = System.IO.Path.Combine(Environment.SystemDirectory, "notepad.exe");
 
             Console.WriteLine("Input File Path: [{0}]", notepadFile);
 

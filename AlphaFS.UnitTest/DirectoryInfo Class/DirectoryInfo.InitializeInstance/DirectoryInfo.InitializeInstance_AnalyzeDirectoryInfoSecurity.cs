@@ -19,8 +19,8 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
 namespace AlphaFS.UnitTest
@@ -31,48 +31,76 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AnalyzeDirectoryInfoSecurity_Local_ShouldNotExist()
+      public void AnalyzeDirectoryInfoSecurity_ShouldNotExist_LocalAndNetwork()
       {
-         var testDir = GetTempDirectoryName();
-
-         SetSecuritySystem(testDir);
-
-         var dirsec = new System.IO.DirectoryInfo(testDir + @"\inherited").GetAccessControl();
-         var accessRules = dirsec.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
-
-         Assert.IsFalse(HasLocalAces(accessRules), "local access rules found.");
+         AnalyzeDirectoryInfoSecurity_ShouldNotExist(false);
+         AnalyzeDirectoryInfoSecurity_ShouldNotExist(true);
+      }
 
 
-         testDir = GetTempDirectoryName();
-         SetSecurityAlpha(testDir);
+      private void AnalyzeDirectoryInfoSecurity_ShouldNotExist(bool isNetwork)
+      {
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
+         {
+            var folder = tempRoot.CreateDirectory();
 
-         dirsec = new Alphaleonis.Win32.Filesystem.DirectoryInfo(testDir + @"\inherited").GetAccessControl();
-         accessRules = dirsec.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
-         Assert.IsFalse(HasLocalAces(accessRules), "local access rules found.");
+
+            SetSecuritySystem(folder.FullName);
+
+            var dirsec = new System.IO.DirectoryInfo(folder.FullName + @"\inherited").GetAccessControl();
+
+            var accessRules = dirsec.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
+
+            UnitTestConstants.Dump(dirsec, -23);
+
+            Assert.IsFalse(HasLocalAces(accessRules), "Local access rules are found, but it is not expected.");
+
+            
+
+
+            folder = tempRoot.CreateDirectory();
+
+            Console.WriteLine("\nInput Directory Path: [{0}]", folder.FullName);
+
+            SetSecurityAlpha(folder.FullName);
+
+            dirsec = new Alphaleonis.Win32.Filesystem.DirectoryInfo(folder.FullName + @"\inherited").GetAccessControl();
+
+            accessRules = dirsec.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
+
+            UnitTestConstants.Dump(dirsec, -23);
+
+            Assert.IsFalse(HasLocalAces(accessRules), "Local access rules are found, but it is not expected.");
+         }
+
+         Console.WriteLine();
       }
 
       
-      private void SetSecurityAlpha(string directory)
+      private static void SetSecurityAlpha(string directory)
       {
          if (System.IO.Directory.Exists(directory))
             System.IO.Directory.Delete(directory, true);
 
-         System.IO.Directory.CreateDirectory(directory);
-         System.IO.Directory.CreateDirectory(System.IO.Path.Combine(directory, "inherited"));
+         Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(directory);
+         Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(System.IO.Path.Combine(directory, "inherited"));
 
 
          var testDirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(directory);
 
          var ds = testDirInfo.GetAccessControl(System.Security.AccessControl.AccessControlSections.Access);
+
          ds.SetAccessRuleProtection(true, false);
+
          ds.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.InheritanceFlags.ContainerInherit | System.Security.AccessControl.InheritanceFlags.ObjectInherit, System.Security.AccessControl.PropagationFlags.None, System.Security.AccessControl.AccessControlType.Allow));
 
          testDirInfo.SetAccessControl(ds);
       }
 
 
-      private void SetSecuritySystem(string directory)
+      private static void SetSecuritySystem(string directory)
       {
          if (System.IO.Directory.Exists(directory))
             System.IO.Directory.Delete(directory, true);
@@ -84,20 +112,16 @@ namespace AlphaFS.UnitTest
          var testDirInfo = new System.IO.DirectoryInfo(directory);
 
          var ds = testDirInfo.GetAccessControl(System.Security.AccessControl.AccessControlSections.Access);
+
          ds.SetAccessRuleProtection(true, false);
+
          ds.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.InheritanceFlags.ContainerInherit | System.Security.AccessControl.InheritanceFlags.ObjectInherit, System.Security.AccessControl.PropagationFlags.None, System.Security.AccessControl.AccessControlType.Allow));
 
          testDirInfo.SetAccessControl(ds);
       }
       
 
-      private string GetTempDirectoryName()
-      {
-         return System.IO.Path.Combine(UnitTestConstants.TempPath, Guid.NewGuid().ToString("N"));
-      }
-
-
-      private bool HasLocalAces(System.Security.AccessControl.AuthorizationRuleCollection rules)
+      private static bool HasLocalAces(System.Security.AccessControl.AuthorizationRuleCollection rules)
       {
          return null != rules.Cast<System.Security.AccessControl.AccessRule>().FirstOrDefault(a => !a.IsInherited);
       }

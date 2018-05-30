@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
-         var inputPath = UnitTestConstants.SysRoot;
+         var inputPath = Environment.SystemDirectory;
          if (isNetwork)
             inputPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(inputPath);
 

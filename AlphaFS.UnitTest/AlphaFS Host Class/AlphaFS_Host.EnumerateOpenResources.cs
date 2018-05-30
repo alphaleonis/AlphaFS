@@ -35,7 +35,7 @@ namespace AlphaFS.UnitTest
          UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         var host = UnitTestConstants.LocalHost;
+         var host = Environment.MachineName;
          Console.WriteLine("Connected to Host: [{0}]", host);
 
 
