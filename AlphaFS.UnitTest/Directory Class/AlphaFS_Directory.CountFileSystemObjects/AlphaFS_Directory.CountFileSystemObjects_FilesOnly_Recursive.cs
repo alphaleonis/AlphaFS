@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             const int expectedFso = 10;
-            var folder = tempRoot.CreateRandomDirectoryStructure(expectedFso);
+            var folder = tempRoot.CreateTree(expectedFso);
 
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
             

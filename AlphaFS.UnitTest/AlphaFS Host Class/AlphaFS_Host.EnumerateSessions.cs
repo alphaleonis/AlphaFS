@@ -34,7 +34,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         var host = UnitTestConstants.LocalHost;
+         var host = Environment.MachineName;
          Console.WriteLine("Input Host: [{0}]", host);
 
 

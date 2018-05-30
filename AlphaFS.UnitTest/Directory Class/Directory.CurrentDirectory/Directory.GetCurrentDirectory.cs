@@ -42,7 +42,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
          // #1
-         var tempPath = UnitTestConstants.AppData;
+         var tempPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
@@ -60,7 +60,7 @@ namespace AlphaFS.UnitTest
          
 
          // #2
-         tempPath = UnitTestConstants.SysRoot;
+         tempPath = Environment.SystemDirectory;
          if (isNetwork)
             tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 

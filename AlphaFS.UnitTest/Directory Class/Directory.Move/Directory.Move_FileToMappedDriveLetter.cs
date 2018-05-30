@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
             var srcFile = System.IO.Path.Combine(tempRoot.Directory.FullName, srcFileName);
 
 
-            var drive = string.Format(CultureInfo.InvariantCulture, @"{0}:\", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter());
+            var drive = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\";
             var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempRoot.Directory.Parent.FullName);
             var dstFile = System.IO.Path.Combine(drive, dstFileName);
 

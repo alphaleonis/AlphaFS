@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(true);
          
 
-         var host = UnitTestConstants.LocalHost;
+         var host = Environment.MachineName;
 
          var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true).ToArray();
 

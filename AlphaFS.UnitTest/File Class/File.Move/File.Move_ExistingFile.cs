@@ -30,18 +30,18 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Move_LocalAndNetwork_Success()
+      public void File_Move_ExistingFile_LocalAndNetwork_Success()
       {
-         File_Move(false);
-         File_Move(true);
+         File_Move_ExistingFile(false);
+         File_Move_ExistingFile(true);
       }
 
 
-      private void File_Move(bool isNetwork)
+      private void File_Move_ExistingFile(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFile = tempRoot.CreateRandomFile();
+            var srcFile = tempRoot.CreateFile();
 
             var dstFile = System.IO.Path.Combine(tempRoot.Directory.FullName, srcFile.Name + "-Moved.File");
 

@@ -44,18 +44,20 @@ namespace AlphaFS.UnitTest
          {
             var file1 = tempRoot.RandomTxtFileFullPath;
             var file2 = tempRoot.RandomTxtFileFullPath;
+            var text = System.IO.Path.GetRandomFileName();
 
             Console.WriteLine("Input File1 Path: [{0}]", file1);
             Console.WriteLine("Input File2 Path: [{0}]", file2);
-
+            Console.WriteLine("Text            : [{0}]", text);
 
             using (var stream = System.IO.File.CreateText(file1))
-               stream.Write(UnitTestConstants.TextHelloWorld);
+               stream.Write(text);
 
 
             using (var stream = Alphaleonis.Win32.Filesystem.File.CreateText(file2))
             {
-               stream.Write(UnitTestConstants.TextHelloWorld);
+               stream.Write(text);
+
                Assert.AreEqual(stream.Encoding, Encoding.UTF8, "The text encoding is not equal, but is expected to.");
             }
 

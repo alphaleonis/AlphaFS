@@ -42,14 +42,17 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
          var neDir = "Non-Existing Directory";
-         var sys32 = UnitTestConstants.SysRoot32 + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
+
+         var windowsFolder = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+         var system32Folder = Environment.SystemDirectory + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
 
 
-         var fullPath = System.IO.Path.Combine(UnitTestConstants.SysRoot32, neDir);
+         var fullPath = System.IO.Path.Combine(Environment.SystemDirectory, neDir);
          if (isNetwork)
          {
             fullPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(fullPath);
-            sys32 = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(sys32);
+            windowsFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(windowsFolder);
+            system32Folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(system32Folder);
          }
 
          var suffixedDirectoryName = Alphaleonis.Win32.Filesystem.Path.GetSuffixedDirectoryName(fullPath);
@@ -57,13 +60,13 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Full Path               : " + fullPath);
          Console.WriteLine("GetSuffixedDirectoryName: " + suffixedDirectoryName);
          
-         Assert.IsTrue(suffixedDirectoryName.Equals(sys32, StringComparison.OrdinalIgnoreCase));
+         Assert.IsTrue(suffixedDirectoryName.Equals(system32Folder, StringComparison.OrdinalIgnoreCase));
 
 
 
 
          fullPath = System.IO.Path.Combine(fullPath, "Non-Existing file.txt");
-         neDir = System.IO.Path.Combine(UnitTestConstants.SysRoot32, neDir) + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
+         neDir = System.IO.Path.Combine(Environment.SystemDirectory, neDir) + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
          if (isNetwork)
          {
             fullPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(fullPath);
@@ -80,7 +83,7 @@ namespace AlphaFS.UnitTest
 
 
 
-         fullPath = UnitTestConstants.SysRoot;
+         fullPath = Environment.SystemDirectory;
          if (isNetwork)
             fullPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(fullPath);
 
@@ -89,7 +92,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nFull Path               : " + fullPath);
          Console.WriteLine("GetSuffixedDirectoryName: " + suffixedDirectoryName);
 
-         Assert.AreEqual(null, suffixedDirectoryName);
+         Assert.AreEqual(windowsFolder, suffixedDirectoryName.TrimEnd(Alphaleonis.Win32.Filesystem.Path.DirectorySeparatorChar));
 
 
 

@@ -63,7 +63,7 @@ namespace AlphaFS.UnitTest
 
 
          // Local Path.
-         uncPath = Alphaleonis.Win32.Filesystem.Path.GetLongPath(UnitTestConstants.SysRoot + folderWithspaces);
+         uncPath = Alphaleonis.Win32.Filesystem.Path.GetLongPath(Environment.SystemDirectory + folderWithspaces);
          hostAndShare = Host.GetHostShareFromPath(uncPath);
          Console.WriteLine("Input local path: [{0}]", uncPath);
          Console.WriteLine("\tResult == null: {0}", null == hostAndShare);
@@ -115,7 +115,7 @@ namespace AlphaFS.UnitTest
 
 
          // Network Path as long path.
-         uncPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.SysRoot + folderWithspaces, Alphaleonis.Win32.Filesystem.GetFullPathOptions.AsLongPath);
+         uncPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(Environment.SystemDirectory + folderWithspaces, Alphaleonis.Win32.Filesystem.GetFullPathOptions.AsLongPath);
          hostAndShare = Host.GetHostShareFromPath(uncPath);
          Console.WriteLine("Input UNC path: [{0}]", uncPath);
          Console.WriteLine("\tHost : [{0}]", hostAndShare[0]);

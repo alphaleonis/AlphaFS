@@ -30,18 +30,18 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Copy_LocalAndNetwork_Success()
+      public void File_Copy_ExistingFile_LocalAndNetwork_Success()
       {
-         File_Copy(false);
-         File_Copy(true);
+         File_Copy_ExistingFile(false);
+         File_Copy_ExistingFile(true);
       }
 
 
-      private void File_Copy(bool isNetwork)
+      private void File_Copy_ExistingFile(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var fileSource = tempRoot.CreateRandomFile();
+            var fileSource = tempRoot.CreateFileRandomizedAttributes();
             var fileCopy = tempRoot.RandomTxtFileFullPath;
 
             Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileSource.Length), fileSource.FullName);

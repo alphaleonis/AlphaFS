@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateOpenConnections_Local_Success()
       {
-         var host = UnitTestConstants.LocalHost;
+         var host = Environment.MachineName;
          var share = UnitTestConstants.SysDrive[0] + Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator;
 
          // Create an active connection to the "remote" host.
