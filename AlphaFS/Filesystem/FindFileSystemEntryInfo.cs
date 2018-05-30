@@ -297,10 +297,10 @@ namespace Alphaleonis.Win32.Filesystem
                ThrowPossibleException((uint) lastError, pathLp);
             }
 
-            // When the handle is null and we are still here, it means the ErrorHandler is active, preventing the Exception from being thrown.
+            //// When the handle is null and we are still here, it means the ErrorHandler is active, preventing the Exception from being thrown.
 
-            if (null != handle)
-               VerifyInstanceType(win32FindData);
+            //if (null != handle)
+            //   VerifyInstanceType(win32FindData);
          }
 
 
@@ -546,12 +546,19 @@ namespace Alphaleonis.Win32.Filesystem
             if (!IsDirectory)
             {
                using (var handle = FindFirstFile(InputPath, out win32FindData))
+               {
+                  // When the handle is null and we are still here, it means the ErrorHandler is active, preventing the Exception from being thrown.
+
+                  if (null != handle)
+                     VerifyInstanceType(win32FindData);
+
 
                   return null == handle
 
                      ? (T) (object) null
 
                      : NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, null, null, InputPath, win32FindData);
+               }
 
             }
 
