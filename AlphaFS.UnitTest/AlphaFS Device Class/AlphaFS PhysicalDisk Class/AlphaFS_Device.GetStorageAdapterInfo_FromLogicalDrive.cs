@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var drive in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
          {
-            if (drive.DriveType == System.IO.DriveType.Network)
+            if (drive.DriveType == System.IO.DriveType.NoRootDirectory || drive.DriveType == System.IO.DriveType.Network)
                continue;
 
             var storageAdapterInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageAdapterInfo(drive.Name);
