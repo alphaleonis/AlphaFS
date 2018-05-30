@@ -45,19 +45,20 @@ namespace AlphaFS.UnitTest
 
 #if NET35
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-            file += UnitTestConstants.EMspace;
+            file += "\u3000"; // EMspace
 #endif
 
             Console.WriteLine("Input File Path: [{0}]\n", file);
 
 
             long fileLength;
-            var ten = UnitTestConstants.TenNumbers.Length;
+            var tenNumbers = "0123456789";
+            var ten = tenNumbers.Length;
 
             using (var fs = Alphaleonis.Win32.Filesystem.File.Create(file))
             {
                // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
+               fs.Write(UnitTestConstants.StringToByteArray(tenNumbers), 0, ten);
 
                fileLength = fs.Length;
             }

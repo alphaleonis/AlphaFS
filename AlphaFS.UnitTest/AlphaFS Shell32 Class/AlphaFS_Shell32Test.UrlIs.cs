@@ -19,8 +19,8 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
@@ -29,26 +29,13 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Shell32_UrlIs()
       {
-         var urlPath = Alphaleonis.Win32.Filesystem.Shell32.UrlCreateFromPath(UnitTestConstants.AppData);
+         var urlPath = Alphaleonis.Win32.Filesystem.Shell32.UrlCreateFromPath(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
+
          var filePath = Alphaleonis.Win32.Filesystem.Shell32.PathCreateFromUrlAlloc(urlPath);
 
-         var isFileUrl1 = Alphaleonis.Win32.Filesystem.Shell32.UrlIsFileUrl(urlPath);
-         var isFileUrl2 = Alphaleonis.Win32.Filesystem.Shell32.UrlIsFileUrl(filePath);
-         var isNoHistory = Alphaleonis.Win32.Filesystem.Shell32.UrlIs(filePath, Alphaleonis.Win32.Filesystem.Shell32.UrlType.IsNoHistory);
-         var isOpaque = Alphaleonis.Win32.Filesystem.Shell32.UrlIs(filePath, Alphaleonis.Win32.Filesystem.Shell32.UrlType.IsOpaque);
+         Assert.IsTrue(Alphaleonis.Win32.Filesystem.Shell32.UrlIsFileUrl(urlPath));
 
-         Console.WriteLine("\n\tDirectory: [{0}]", UnitTestConstants.AppData);
-         Console.WriteLine("\n\tShell32.UrlCreateFromPath()      == IsFileUrl == [{0}] : {1}\t\t[{2}]", UnitTestConstants.TextTrue, isFileUrl1, urlPath);
-         Console.WriteLine("\n\tShell32.PathCreateFromUrlAlloc() == IsFileUrl == [{0}]: {1}\t\t[{2}]", UnitTestConstants.TextFalse, isFileUrl2, filePath);
-
-         Console.WriteLine("\n\tShell32.UrlIsFileUrl()   == [{0}]: {1}\t\t[{2}]", UnitTestConstants.TextTrue, isFileUrl1, urlPath);
-         Console.WriteLine("\n\tShell32.UrlIsNoHistory() == [{0}]: {1}\t\t[{2}]", UnitTestConstants.TextTrue, isNoHistory, urlPath);
-         Console.WriteLine("\n\tShell32.UrlIsOpaque()    == [{0}]: {1}\t\t[{2}]", UnitTestConstants.TextTrue, isOpaque, urlPath);
-         
-
-         Assert.IsTrue(isFileUrl1);
-
-         Assert.IsTrue(isFileUrl2 == false);
+         Assert.IsFalse(Alphaleonis.Win32.Filesystem.Shell32.UrlIsFileUrl(filePath));
       }
    }
 }

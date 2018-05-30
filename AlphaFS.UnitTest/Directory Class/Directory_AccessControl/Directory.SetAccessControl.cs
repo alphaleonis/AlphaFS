@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.CreateRandomDirectory();
+            var folder = tempRoot.CreateDirectory();
 
             var sysIO = System.IO.Directory.GetAccessControl(folder.FullName);
             var sysIOaccessRules = sysIO.GetAccessRules(true, true, typeof(NTAccount));

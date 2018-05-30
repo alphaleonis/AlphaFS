@@ -29,39 +29,26 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Shell32_PathFileExists()
       {
-         var path = UnitTestConstants.SysRoot;
+         var path = Environment.SystemDirectory;
 
          Shell32_PathFileExists(path, true);
+
          Shell32_PathFileExists(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(path), true);
+
          Shell32_PathFileExists("BlaBlaBla", false);
-         Shell32_PathFileExists(System.IO.Path.Combine(UnitTestConstants.SysRoot, "BlaBlaBla"), false);
 
-         var cnt = 0;
-         foreach (var file in System.IO.Directory.EnumerateFiles(UnitTestConstants.SysRoot))
-         {
-            var fileExists = Alphaleonis.Win32.Filesystem.Shell32.PathFileExists(file);
-
-            Console.WriteLine("\t#{0:000}\tShell32.PathFileExists() == [{1}]: {2}\t\t[{3}]", ++cnt, UnitTestConstants.TextTrue, fileExists, file);
+         Shell32_PathFileExists(System.IO.Path.Combine(Environment.SystemDirectory, "BlaBlaBla"), false);
 
 
-            Assert.IsTrue(fileExists);
-         }
+         foreach (var file in System.IO.Directory.EnumerateFiles(path))
 
-         Console.WriteLine();
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Shell32.PathFileExists(file));
       }
 
-
-
-
-      private void Shell32_PathFileExists(string path, bool doesExist)
+      
+      private static void Shell32_PathFileExists(string path, bool doesExist)
       {
-         Console.WriteLine("\n\tPath: [{0}]\n", path);
-
          var fileExists = Alphaleonis.Win32.Filesystem.Shell32.PathFileExists(path);
-         Console.WriteLine("\t\tShell32.PathFileExists() == [{0}]: {1}\t\t[{2}]", doesExist ? UnitTestConstants.TextTrue : UnitTestConstants.TextFalse, doesExist == fileExists, path);
-         Console.WriteLine("\t\tFile.Exists()            == [{0}]: {1}\t\t[{2}]", doesExist ? UnitTestConstants.TextTrue : UnitTestConstants.TextFalse, doesExist == System.IO.File.Exists(path), path);
-         Console.WriteLine("\t\tDirectory.Exists()       == [{0}]: {1}\t\t[{2}]", doesExist ? UnitTestConstants.TextTrue : UnitTestConstants.TextFalse, doesExist == System.IO.Directory.Exists(path), path);
-
 
          if (doesExist)
             Assert.IsTrue(fileExists);

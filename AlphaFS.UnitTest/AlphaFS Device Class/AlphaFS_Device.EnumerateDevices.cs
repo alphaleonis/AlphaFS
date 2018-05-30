@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         var tempPath = UnitTestConstants.LocalHost;
+         var tempPath = Environment.MachineName;
          var classCnt = 0;
 
          foreach (var deviceClass in EnumMemberToList<Alphaleonis.Win32.Filesystem.DeviceGuid>())

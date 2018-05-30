@@ -44,7 +44,7 @@ namespace AlphaFS.UnitTest
 
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.CreateRandomFile();
+            var file = tempRoot.CreateFile();
 
             Console.WriteLine("Input File Path: [{0}]\n", file.FullName);
 
@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\tMethod: Shell32Info.GetVerbCommand(\"{0}\")  == [{1}]", cmd, result);
 
 
-            Assert.IsTrue(result.StartsWith(UnitTestConstants.NotepadExe, StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(result.StartsWith(System.IO.Path.Combine(Environment.SystemDirectory, "notepad.exe"), StringComparison.OrdinalIgnoreCase));
             
 
             cmd = "print";
@@ -65,7 +65,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\tMethod: Shell32Info.GetVerbCommand(\"{0}\") == [{1}]\n", cmd, result);
 
 
-            Assert.IsTrue(result.StartsWith(UnitTestConstants.NotepadExe, StringComparison.OrdinalIgnoreCase));
+            Assert.IsTrue(result.StartsWith(System.IO.Path.Combine(Environment.SystemDirectory, "notepad.exe"), StringComparison.OrdinalIgnoreCase));
          }
       }
    }

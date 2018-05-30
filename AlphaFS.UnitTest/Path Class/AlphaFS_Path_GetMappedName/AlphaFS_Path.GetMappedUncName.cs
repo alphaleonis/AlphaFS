@@ -32,24 +32,26 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Path_GetMappedUncName()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath);
-
-         using (var connection = new Alphaleonis.Win32.Network.DriveConnection(share))
+         using (var tempRoot = new TemporaryDirectory(true))
          {
-            var driveName = connection.LocalName;
+            // Randomly test the share where the local folder possibly has the read-only and/or hidden attributes set.
 
-            Console.WriteLine("Mapped drive letter [{0}] to [{1}]", driveName, share);
+            var folder = tempRoot.CreateDirectoryRandomizedAttributes();
 
-            UnitTestConstants.Dump(connection, -9);
-            
 
-            var shareName = Alphaleonis.Win32.Filesystem.Path.GetMappedUncName(driveName);
+            using (var connection = new Alphaleonis.Win32.Network.DriveConnection(folder.FullName))
+            {
+               var driveName = connection.LocalName;
 
-            Console.WriteLine("\n\tGetMappedUncName: [{0}]", shareName);
+               Console.WriteLine("Mapped drive letter [{0}] to [{1}]", driveName, folder.FullName);
 
-            Assert.AreEqual(share, shareName + @"\");
+               UnitTestConstants.Dump(connection, -9);
+
+
+               var connectionName = Alphaleonis.Win32.Filesystem.Path.GetMappedUncName(driveName);
+
+               Assert.AreEqual(folder.FullName, connectionName);
+            }
          }
       }
    }

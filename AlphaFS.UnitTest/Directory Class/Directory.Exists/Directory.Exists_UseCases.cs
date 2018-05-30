@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
                sysDrive = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(sysDrive);
 
 
-            var randomName = tempRoot.RandomFileName;
+            var randomName = tempRoot.RandomDirectoryName;
 
             // C:\randomName
             var NonExistingFolder1 = UnitTestConstants.SysDrive + @"\" + randomName;

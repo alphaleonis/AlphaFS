@@ -34,19 +34,23 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(true);
 
-         var share = UnitTestConstants.LocalHost;
+         var share = Environment.MachineName;
 
          // An Exception is thrown for any error, so no Assert needed.
 
 
-         Console.WriteLine("Connect to Computer: [{0}]", share);
+         try
+         {
+            Console.WriteLine("Connect to Computer: [{0}]", share);
 
-         Alphaleonis.Win32.Network.Host.ConnectTo(share);
+            Alphaleonis.Win32.Network.Host.ConnectTo(share);
+         }
+         finally
+         {
+            Console.WriteLine("\nDisconnect from Computer.");
 
-
-         Console.WriteLine("\nDisconnect Computer.");
-
-         Alphaleonis.Win32.Network.Host.DisconnectFrom(share);
+            Alphaleonis.Win32.Network.Host.DisconnectFrom(share);
+         }
       }
    }
 }

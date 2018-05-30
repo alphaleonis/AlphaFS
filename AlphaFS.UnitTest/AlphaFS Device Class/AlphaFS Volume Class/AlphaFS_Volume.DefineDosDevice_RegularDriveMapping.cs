@@ -21,54 +21,60 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AccessControlTest
+   public partial class AlphaFS_VolumeTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_GetAccessControl_LocalAndNetwork_Success()
+      public void AlphaFS_Volume_DefineDosDevice_RegularDriveMapping_Local_Success()
       {
-         Directory_GetAccessControl(false);
-         Directory_GetAccessControl(true);
+         AlphaFS_Volume_DefineDosDevice_RegularDriveMapping(false);
+         AlphaFS_Volume_DefineDosDevice_RegularDriveMapping(true);
       }
 
 
-      private void Directory_GetAccessControl(bool isNetwork)
+      private void AlphaFS_Volume_DefineDosDevice_RegularDriveMapping(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.CreateDirectory();
+            var drive = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + ":";
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
-            
-            var foundRules = false;
-
-            var sysIO = System.IO.File.GetAccessControl(folder.FullName);
-            var sysIOaccessRules = sysIO.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
-
-            var alphaFS = System.IO.File.GetAccessControl(folder.FullName);
-            var alphaFSaccessRules = alphaFS.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
-            
-            Console.WriteLine("\n\tSystem.IO rules found: [{0}]\n\tAlphaFS rules found  : [{1}]", sysIOaccessRules.Count, alphaFSaccessRules.Count);
+            Assert.IsFalse(System.IO.Directory.Exists(drive), "The drive exists, but it is expected not to.");
 
 
-            Assert.AreEqual(sysIOaccessRules.Count, alphaFSaccessRules.Count);
-
-
-            foreach (var far in alphaFSaccessRules)
+            try
             {
-               UnitTestConstants.Dump(far, -17);
+               Alphaleonis.Win32.Filesystem.Volume.DefineDosDevice(drive, folder.FullName);
 
-               UnitTestConstants.TestAccessRules(sysIO, alphaFS);
+               Assert.IsTrue(System.IO.Directory.Exists(drive), "The drive does not exists, but it is expected to.");
 
-               foundRules = true;
+
+               var dirInfoSysIO = new System.IO.DriveInfo(drive);
+
+               var dirInfoAlphaFS = new Alphaleonis.Win32.Filesystem.DriveInfo(drive);
+               
+               UnitTestConstants.Dump(dirInfoSysIO, -21);
+               UnitTestConstants.Dump(dirInfoAlphaFS, -21);
+
+
+               Assert.AreEqual(dirInfoSysIO.Name, dirInfoAlphaFS.Name);
+
+               Assert.AreEqual(dirInfoSysIO.DriveType, dirInfoAlphaFS.DriveType);
+               
+               Assert.AreEqual(dirInfoSysIO.TotalSize, dirInfoAlphaFS.TotalSize);
             }
+            finally
+            {
+               Alphaleonis.Win32.Filesystem.Volume.DeleteDosDevice(drive);
 
-            Assert.IsTrue(foundRules);
+               Assert.IsFalse(System.IO.Directory.Exists(drive), "The drive exists, but it is expected not to.");
+            }
          }
 
          Console.WriteLine();

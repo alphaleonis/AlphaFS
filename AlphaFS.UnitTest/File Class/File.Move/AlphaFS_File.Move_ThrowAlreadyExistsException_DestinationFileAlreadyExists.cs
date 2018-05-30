@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFile = tempRoot.CreateRandomFile();
+            var srcFile = tempRoot.CreateFile();
 
             var dstFile = srcFile + "-Existing File";
 
