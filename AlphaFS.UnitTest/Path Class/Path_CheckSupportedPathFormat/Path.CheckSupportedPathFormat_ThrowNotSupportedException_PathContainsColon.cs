@@ -39,16 +39,15 @@ namespace AlphaFS.UnitTest
 
       private void Path_CheckSupportedPathFormat_ThrowNotSupportedException_PathContainsColon(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
+         {
+            var folder = tempRoot.Directory.FullName + @"\My:FilePath";
 
-         const string colonText = @"\My:FilePath";
+            Console.WriteLine("Input Path: [{0}]", folder);
 
-         var invalidPath = (isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath) : UnitTestConstants.TempPath + @"\dev\test") + colonText;
-
-         Console.WriteLine("Invalid Path: [{0}]", invalidPath);
-
-         ExceptionAssert.NotSupportedException(() => Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(invalidPath, true, true));
-
+            ExceptionAssert.NotSupportedException(() => Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(folder, true, true));
+         }
+         
          Console.WriteLine();
       }
    }

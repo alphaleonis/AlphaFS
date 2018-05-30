@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
             const int maxFso = 100;
             const int expectedFso = 2 * maxFso;
 
-            var folder = tempRoot.CreateRandomDirectoryStructure(maxFso);
+            var folder = tempRoot.CreateTree(maxFso);
 
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
             

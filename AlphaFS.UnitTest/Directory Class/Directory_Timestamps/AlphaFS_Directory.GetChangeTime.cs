@@ -42,7 +42,7 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.SysRoot32) : UnitTestConstants.SysRoot32;
+            var folder = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(Environment.SystemDirectory) : Environment.SystemDirectory;
 
             Console.WriteLine("Input Directory Path: [{0}]", folder);
 

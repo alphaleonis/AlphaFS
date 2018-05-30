@@ -41,31 +41,32 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var newFolderName = UnitTestConstants.GetRandomFileName();
+            var newFolderName = "Rename_to_" + tempRoot.RandomDirectoryName;
 
-            var folderSrc = new Alphaleonis.Win32.Filesystem.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, "Source Folder"));
-            var folderDst = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, newFolderName));
+            var dirInfoAlphaFS = new Alphaleonis.Win32.Filesystem.DirectoryInfo(tempRoot.RandomDirectoryFullPath);
 
-            Console.WriteLine("Input Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("\n\tRename folder to: [{0}]", folderDst.Name);
+            var dirInfoSystemIO = new System.IO.DirectoryInfo(System.IO.Path.Combine(tempRoot.Directory.FullName, newFolderName));
+
+            Console.WriteLine("Input Directory Path: [{0}]", dirInfoAlphaFS.FullName);
+            Console.WriteLine("\n\tRename folder to: [{0}]", dirInfoSystemIO.Name);
 
 
             // Create folder.
-            folderSrc.Create();
+            dirInfoAlphaFS.Create();
 
 
             // Rename folder.
-            folderSrc.MoveTo(folderDst.FullName);
+            dirInfoAlphaFS.MoveTo(dirInfoSystemIO.FullName);
 
 
-            folderSrc.Refresh();
-            folderDst.Refresh();
+            dirInfoAlphaFS.Refresh();
+            dirInfoSystemIO.Refresh();
 
 
-            Assert.IsTrue(folderSrc.Exists, "It is expected that the source exists, but is does not.");
-            Assert.AreEqual(folderSrc.Parent.FullName, folderDst.Parent.FullName);
+            Assert.IsTrue(dirInfoAlphaFS.Exists, "It is expected that the source exists, but is does not.");
+
+            Assert.AreEqual(dirInfoAlphaFS.Parent.FullName, dirInfoSystemIO.Parent.FullName);
          }
-
 
          Console.WriteLine();
       }

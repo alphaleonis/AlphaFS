@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace AlphaFS.UnitTest
@@ -47,7 +48,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input File Path: [{0}]\n", file);
 
 
-            System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);
+            System.IO.File.WriteAllText(file, DateTime.Now.ToString(CultureInfo.CurrentCulture));
 
 
             var sysIOStreamText = string.Empty;

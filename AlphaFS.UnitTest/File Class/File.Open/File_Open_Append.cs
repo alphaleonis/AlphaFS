@@ -47,7 +47,8 @@ namespace AlphaFS.UnitTest
 
 
             long fileLength;
-            var ten = UnitTestConstants.TenNumbers.Length;
+            var tenNumbers = "0123456789";
+            var ten = tenNumbers.Length;
 
 
 
@@ -55,7 +56,7 @@ namespace AlphaFS.UnitTest
             using (var fs = Alphaleonis.Win32.Filesystem.File.Open(file, System.IO.FileMode.Create))
             {
                // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
+               fs.Write(UnitTestConstants.StringToByteArray(tenNumbers), 0, ten);
 
                fileLength = fs.Length;
             }
@@ -68,7 +69,7 @@ namespace AlphaFS.UnitTest
             using (var fs = Alphaleonis.Win32.Filesystem.File.Open(file, System.IO.FileMode.Append))
             {
                // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
+               fs.Write(UnitTestConstants.StringToByteArray(tenNumbers), 0, ten);
 
                fileLength = fs.Length;
             }

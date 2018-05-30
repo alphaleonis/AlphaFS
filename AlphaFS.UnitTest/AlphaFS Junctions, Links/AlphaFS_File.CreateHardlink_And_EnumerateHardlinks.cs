@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -38,17 +39,17 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_File_CreateHardlink_And_EnumerateHardlinks()
       {
-         using (var tempPath = new TemporaryDirectory())
+         using (var tempRoot = new TemporaryDirectory())
          {
-            var hardlinkFolder = System.IO.Path.Combine(tempPath.Directory.FullName, "Hardlinks");
+            var hardlinkFolder = System.IO.Path.Combine(tempRoot.Directory.FullName, "Hardlinks");
             System.IO.Directory.CreateDirectory(hardlinkFolder);
 
 
-            var file = System.IO.Path.Combine(tempPath.Directory.FullName, "OriginalFile.txt");
+            var file = System.IO.Path.Combine(tempRoot.Directory.FullName, "OriginalFile.txt");
             Console.WriteLine("Input File Path: [{0}]\n", file);
 
             // Create original file with text content.
-            System.IO.File.WriteAllText(file, UnitTestConstants.TextHelloWorld);
+            System.IO.File.WriteAllText(file, DateTime.Now.ToString(CultureInfo.CurrentCulture));
 
 
             // Create a random number of hardlinks to the original file.
@@ -59,7 +60,7 @@ namespace AlphaFS.UnitTest
 
             for (var i = 0; i < numCreate; i++)
             {
-               var newfile = System.IO.Path.Combine(hardlinkFolder, i + "-Hardlink-" + UnitTestConstants.GetRandomFileName() + ".txt");
+               var newfile = System.IO.Path.Combine(hardlinkFolder, i + "-Hardlink-" + tempRoot.RandomTxtFileName);
 
                Alphaleonis.Win32.Filesystem.File.CreateHardlink(newfile, file);
 

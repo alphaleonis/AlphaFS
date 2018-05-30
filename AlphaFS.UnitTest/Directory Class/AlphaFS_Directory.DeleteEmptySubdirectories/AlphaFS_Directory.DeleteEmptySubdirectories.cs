@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
             const int emptyDirectories = maxDepth * maxDepth / 2;                   // 50 empty directories.
             const int remainingDirectories = totalDirectories - emptyDirectories;   // 60 remaining directories.
             
-            var folder = tempRoot.CreateRandomDirectoryStructure(maxDepth, true);
+            var folder = tempRoot.CreateRecursiveTree(maxDepth);
 
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
             

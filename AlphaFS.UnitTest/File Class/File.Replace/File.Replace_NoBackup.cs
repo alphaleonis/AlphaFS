@@ -41,29 +41,34 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var fileSrc = tempRoot.RandomFileNoExtensionFullPath + "-" + UnitTestConstants.TextHelloWorld + ".txt";
-            var fileDst = tempRoot.RandomFileNoExtensionFullPath + "-" + UnitTestConstants.TextGoodbyeWorld + ".txt";
-            var fileBackup = tempRoot.RandomFileNoExtensionFullPath + "-Backup.txt";
+            var fileSrc = tempRoot.RandomTxtFileFullPath;
+            var fileDst = tempRoot.RandomTxtFileFullPath;
+            var fileBackup = tempRoot.RandomTxtFileFullPath + "-Backup.txt";
+            var text = System.IO.Path.GetRandomFileName();
 
-            Console.WriteLine("Input File Path: [{0}]", fileSrc);
+            Console.WriteLine("Src    File Path: [{0}]", fileSrc);
+            Console.WriteLine("Dst    File Path: [{0}]", fileDst);
+            Console.WriteLine("Backup File Path: [{0}]", fileBackup);
+            Console.WriteLine("Text            : [{0}]", text);
 
 
             using (var stream = System.IO.File.CreateText(fileSrc))
-               stream.Write(UnitTestConstants.TextHelloWorld);
+               stream.Write(text);
 
             using (var stream = System.IO.File.CreateText(fileDst))
-               stream.Write(UnitTestConstants.TextGoodbyeWorld);
+               stream.Write(text);
 
 
             Alphaleonis.Win32.Filesystem.File.Replace(fileSrc, fileDst, null);
 
 
             Assert.IsFalse(System.IO.File.Exists(fileSrc), "The file exists, but is expected not to.");
+
             Assert.IsTrue(System.IO.File.Exists(fileDst), "The file does not exist, but is expected to.");
+
             Assert.IsFalse(System.IO.File.Exists(fileBackup), "The file exists, but is expected not to.");
 
-
-            Assert.AreEqual(UnitTestConstants.TextHelloWorld, Alphaleonis.Win32.Filesystem.File.ReadAllText(fileDst), "The texts do not match, but are expected to.");
+            Assert.AreEqual(text, Alphaleonis.Win32.Filesystem.File.ReadAllText(fileDst), "The texts do not match, but are expected to.");
          }
 
          Console.WriteLine();

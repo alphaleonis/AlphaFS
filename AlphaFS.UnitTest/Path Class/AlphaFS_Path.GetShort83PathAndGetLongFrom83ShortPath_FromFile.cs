@@ -44,36 +44,32 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Path_GetShort83PathAndGetLongFrom83ShortPath_FromFile(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
+         {
+            var folder = System.IO.Path.Combine(tempRoot.Directory.FullName, "My Long Data File Or Directory");
+            
+            string short83Path;
 
-         var myLongPath = System.IO.Path.Combine(UnitTestConstants.TempPath, "My Long Data File Or Directory");
-         if (isNetwork)
-            myLongPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(myLongPath);
-
-
-         string short83Path;
-
-         using (System.IO.File.Create(myLongPath))
-            short83Path = Alphaleonis.Win32.Filesystem.Path.GetShort83Path(myLongPath);
+            using (System.IO.File.Create(folder))
+               short83Path = Alphaleonis.Win32.Filesystem.Path.GetShort83Path(folder);
 
 
-         Console.WriteLine("Short 8.3 File Path: [{0}]", short83Path);
+            Console.WriteLine("Short 8.3 File Path: [{0}]", short83Path);
+            
+            Assert.IsTrue(!short83Path.Equals(folder));
 
-
-         Assert.IsTrue(!short83Path.Equals(myLongPath));
-
-         Assert.IsTrue(short83Path.EndsWith(@"~1"));
+            Assert.IsTrue(short83Path.EndsWith(@"~1"));
 
 
 
-         var longFrom83Path = Alphaleonis.Win32.Filesystem.Path.GetLongFrom83ShortPath(short83Path);
+            var longFrom83Path = Alphaleonis.Win32.Filesystem.Path.GetLongFrom83ShortPath(short83Path);
 
-         Console.WriteLine("Long path from 8.3 path: [{0}]", longFrom83Path);
+            Console.WriteLine("Long path from 8.3 path: [{0}]", longFrom83Path);
 
-         Assert.IsTrue(longFrom83Path.Equals(myLongPath));
+            Assert.IsTrue(longFrom83Path.Equals(folder));
 
-         Assert.IsFalse(longFrom83Path.EndsWith(@"~1"));
-
+            Assert.IsFalse(longFrom83Path.EndsWith(@"~1"));
+         }
 
          Console.WriteLine();
       }

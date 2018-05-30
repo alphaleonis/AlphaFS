@@ -38,40 +38,39 @@ namespace AlphaFS.UnitTest
 
       private void CompareTimestamps_NonExistingDirectory()
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
+         using (var tempRoot = new TemporaryDirectory())
+         {
+            var folder = tempRoot.RandomDirectoryFullPath;
 
-         var tempPath = UnitTestConstants.SysDrive + @"\NonExistingFolder-" + UnitTestConstants.GetRandomFileName();
-
-         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
-
-
-         Assert.IsFalse(System.IO.Directory.Exists(tempPath));
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
-         var newDateTime = new DateTime(1601, 1, 1);
-         var newDateTimeLocaltime = new DateTime(1601, 1, 1).ToLocalTime();
+            var newDateTime = new DateTime(1601, 1, 1);
+            var newDateTimeLocaltime = new DateTime(1601, 1, 1).ToLocalTime();
+
+            UnitTestConstants.Dump(newDateTime, -11);
+            UnitTestConstants.Dump(newDateTimeLocaltime, -11);
+            
+
+            Assert.AreEqual(newDateTime, System.IO.Directory.GetCreationTimeUtc(folder));
+            Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.Directory.GetCreationTimeUtc(folder));
+            
+            Assert.AreEqual(newDateTime, System.IO.Directory.GetLastAccessTimeUtc(folder));
+            Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.Directory.GetLastAccessTimeUtc(folder));
+            
+            Assert.AreEqual(newDateTime, System.IO.Directory.GetLastWriteTimeUtc(folder));
+            Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.Directory.GetLastWriteTimeUtc(folder));
 
 
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.Directory.GetCreationTime(tempPath));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.Directory.GetCreationTime(tempPath));
+            Assert.AreEqual(newDateTimeLocaltime, System.IO.Directory.GetCreationTime(folder));
+            Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.Directory.GetCreationTime(folder));
 
-         Assert.AreEqual(newDateTime, System.IO.Directory.GetCreationTimeUtc(tempPath));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.Directory.GetCreationTimeUtc(tempPath));
+            Assert.AreEqual(newDateTimeLocaltime, System.IO.Directory.GetLastAccessTime(folder));
+            Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.Directory.GetLastAccessTime(folder));
 
-
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.Directory.GetLastAccessTime(tempPath));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.Directory.GetLastAccessTime(tempPath));
-
-         Assert.AreEqual(newDateTime, System.IO.Directory.GetLastAccessTimeUtc(tempPath));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.Directory.GetLastAccessTimeUtc(tempPath));
-
-
-         Assert.AreEqual(newDateTimeLocaltime, System.IO.Directory.GetLastWriteTime(tempPath));
-         Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.Directory.GetLastWriteTime(tempPath));
-
-         Assert.AreEqual(newDateTime, System.IO.Directory.GetLastWriteTimeUtc(tempPath));
-         Assert.AreEqual(newDateTime, Alphaleonis.Win32.Filesystem.Directory.GetLastWriteTimeUtc(tempPath));
-
+            Assert.AreEqual(newDateTimeLocaltime, System.IO.Directory.GetLastWriteTime(folder));
+            Assert.AreEqual(newDateTimeLocaltime, Alphaleonis.Win32.Filesystem.Directory.GetLastWriteTime(folder));
+         }
 
          Console.WriteLine();
       }

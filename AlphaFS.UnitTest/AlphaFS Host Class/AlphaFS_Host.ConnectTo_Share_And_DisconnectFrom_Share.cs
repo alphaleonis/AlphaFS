@@ -32,21 +32,28 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_ConnectTo_Share_And_DisconnectFrom_Share_Network_Success()
       {
-         UnitTestConstants.PrintUnitTestHeader(true);
+         using (var tempRoot = new TemporaryDirectory(true))
+         {
+            // Randomly test the share where the local folder possibly has the read-only and/or hidden attributes set.
 
-         var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(UnitTestConstants.TempPath);
-
-         // An Exception is thrown for any error, so no Assert needed.
-
-
-         Console.WriteLine("Connect to share: [{0}]", share);
-
-         Alphaleonis.Win32.Network.Host.ConnectTo(share);
+            var folder = tempRoot.CreateDirectoryRandomizedAttributes();
 
 
-         Console.WriteLine("\nDisconnect from share.");
+            // An Exception is thrown for any error, so no Assert needed.
 
-         Alphaleonis.Win32.Network.Host.DisconnectFrom(share);
+            try
+            {
+               Console.WriteLine("Connect to share: [{0}]", folder.FullName);
+
+               Alphaleonis.Win32.Network.Host.ConnectTo(folder.FullName);
+            }
+            finally
+            {
+               Console.WriteLine("\nDisconnect from share.");
+
+               Alphaleonis.Win32.Network.Host.DisconnectFrom(folder.FullName);
+            }
+         }
       }
    }
 }

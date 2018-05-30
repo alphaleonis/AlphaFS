@@ -105,7 +105,6 @@ namespace Alphaleonis.Win32.Network
             arguments.LocalName = Path.RemoveTrailingDirectorySeparator(arguments.LocalName).ToUpperInvariant();
 
          
-         // Add backslashes.
          if (!Utils.IsNullOrWhiteSpace(arguments.RemoteName))
          {
             if (!arguments.RemoteName.StartsWith(Path.UncPrefix, StringComparison.Ordinal))

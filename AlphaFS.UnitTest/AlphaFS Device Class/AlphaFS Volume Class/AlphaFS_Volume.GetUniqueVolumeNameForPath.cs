@@ -40,7 +40,9 @@ namespace AlphaFS.UnitTest
          
          foreach (var drive in System.IO.DriveInfo.GetDrives())
          {
-            if (drive.DriveType == System.IO.DriveType.Network)
+            // Skip mapped drives and network drives.
+
+            if (drive.DriveType == System.IO.DriveType.NoRootDirectory || drive.DriveType == System.IO.DriveType.Network)
                continue;
 
 

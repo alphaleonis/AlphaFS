@@ -19,8 +19,8 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
@@ -29,23 +29,15 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Shell32_PathCreateFromUrl()
       {
-         var urlPath = Alphaleonis.Win32.Filesystem.Shell32.UrlCreateFromPath(UnitTestConstants.AppData);
+         var folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+         var urlPath = Alphaleonis.Win32.Filesystem.Shell32.UrlCreateFromPath(folder);
+
          var filePath = Alphaleonis.Win32.Filesystem.Shell32.PathCreateFromUrl(urlPath);
 
-         Console.WriteLine("\n\tDirectory                  : [{0}]", UnitTestConstants.AppData);
-         Console.WriteLine("\n\tShell32.UrlCreateFromPath(): [{0}]", urlPath);
-         Console.WriteLine("\n\tShell32.PathCreateFromUrl() == [{0}]\n", filePath);
+         Assert.IsTrue(urlPath.StartsWith("file:///"));
 
-         var startsWith = urlPath.StartsWith("file:///");
-         var equalsAppData = filePath.Equals(UnitTestConstants.AppData);
-
-         Console.WriteLine("\n\turlPath.StartsWith(\"file:///\") == [{0}]: {1}", UnitTestConstants.TextTrue, startsWith);
-         Console.WriteLine("\n\tfilePath.Equals(AppData)       == [{0}]: {1}\n", UnitTestConstants.TextTrue, equalsAppData);
-
-
-         Assert.IsTrue(startsWith);
-
-         Assert.IsTrue(equalsAppData);
+         Assert.IsTrue(filePath.Equals(folder));
       }
    }
 }

@@ -32,6 +32,7 @@ namespace AlphaFS.UnitTest
             throw new AssertFailedException(string.Format(CultureInfo.CurrentCulture, "The file: [{0}] does not exist, but is expected to.", filePath));
       }
 
+
       public static void AreEqual(string expectedFilePath, string actualFilePath)
       {
          var position = 0;
@@ -50,6 +51,7 @@ namespace AlphaFS.UnitTest
             position++;
          }
       }
+
 
       public static void AreNotEqual(string expectedFilePath, string actualFilePath)
       {
@@ -72,11 +74,13 @@ namespace AlphaFS.UnitTest
          throw new AssertFailedException(string.Format(CultureInfo.CurrentCulture, "The files: [{0}] and \"{1}\" are equal but are not expected to be.", expectedFilePath, actualFilePath));
       }
 
+
       public static void IsEncrypted(string filePath)
       {
          if ((System.IO.File.GetAttributes(filePath) & System.IO.FileAttributes.Encrypted) == 0)
             throw new AssertFailedException(string.Format(CultureInfo.CurrentCulture, "The file: [{0}] is not encrypted, but is expected to.", filePath));
       }
+
 
       public static void IsNotEncrypted(string filePath)
       {
@@ -84,11 +88,13 @@ namespace AlphaFS.UnitTest
             throw new AssertFailedException(string.Format(CultureInfo.CurrentCulture, "The file: [{0}] is encrypted, but is expected not to.", filePath));
       }
 
+
       public static void IsCompressed(string filePath)
       {
          if ((System.IO.File.GetAttributes(filePath) & System.IO.FileAttributes.Compressed) == 0)
             throw new AssertFailedException(string.Format(CultureInfo.CurrentCulture, "The file: [{0}] is not compressed, but is expected to.", filePath));
       }
+
 
       public static void IsNotCompressed(string filePath)
       {

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -42,15 +42,21 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomFileNoExtensionFullPath;
+            var file = tempRoot.RandomTxtFileFullPath;
 
             Console.WriteLine("Input File Path: [{0}]", file);
 
 
-            Console.WriteLine("\nA file is created and {0} streams are added.", UnitTestConstants.AllStreams.Length.ToString(CultureInfo.CurrentCulture));
+            var myStream = "ӍƔŞtrëƛɱ-" + tempRoot.RandomString;
+            var myStream2 = "myStreamTWO-" + tempRoot.RandomString;
+            var allStreams = new[] {myStream, myStream2};
+            var streamStringContent = "(1) Computer: [" + Environment.MachineName + "]" + "\tHello there, " + Environment.UserName;
+            var tenNumbers = "0123456789";
+
+            Console.WriteLine("\nA file is created and {0} streams are added.", allStreams.Length.ToString(CultureInfo.CurrentCulture));
             
             // Create file and add 10 characters to it, file is created in ANSI format.
-            System.IO.File.WriteAllText(file, UnitTestConstants.TenNumbers);
+            System.IO.File.WriteAllText(file, tenNumbers);
 
 
             var fi = new Alphaleonis.Win32.Filesystem.FileInfo(file);
@@ -64,18 +70,18 @@ namespace AlphaFS.UnitTest
 
 
             var fileSize = Alphaleonis.Win32.Filesystem.File.GetSize(file);
-            Assert.AreEqual(UnitTestConstants.TenNumbers.Length, fileSize);
+            Assert.AreEqual(tenNumbers.Length, fileSize);
 
 
             // Create alternate data streams.
             // Because of the colon, you must supply a full path and use PathFormat.FullPath or PathFormat.LongFullPath,
             // to prevent a: "NotSupportedException: path is in an invalid format." exception.
 
-            var stream1Name = file + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream;
-            var stream2Name = file + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + UnitTestConstants.MyStream2;
+            var stream1Name = file + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + myStream;
+            var stream2Name = file + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + myStream2;
 
             Alphaleonis.Win32.Filesystem.File.WriteAllLines(stream1Name, UnitTestConstants.StreamArrayContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
-            Alphaleonis.Win32.Filesystem.File.WriteAllText(stream2Name, UnitTestConstants.StreamStringContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
+            Alphaleonis.Win32.Filesystem.File.WriteAllText(stream2Name, streamStringContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
             
 
 
@@ -97,7 +103,7 @@ namespace AlphaFS.UnitTest
 
             // Show the contents of our streams.
             Console.WriteLine();
-            foreach (var streamName in UnitTestConstants.AllStreams)
+            foreach (var streamName in allStreams)
             {
                Console.WriteLine("\n\tStream name: [{0}]", streamName);
 
@@ -122,8 +128,8 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(fileInfo2, -17);
 
 
-            Assert.AreEqual(UnitTestConstants.MyStream, fileInfo1.Name);
-            Assert.AreEqual(UnitTestConstants.MyStream2, fileInfo2.Name);
+            Assert.AreEqual(myStream, fileInfo1.Name);
+            Assert.AreEqual(myStream2, fileInfo2.Name);
 
             Assert.IsNull(fileInfo1.EntryInfo);
             Assert.IsNull(fileInfo2.EntryInfo);

@@ -44,12 +44,10 @@ namespace AlphaFS.UnitTest
             var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
 
             Console.WriteLine("Input Directory Path: [{0}]", folder);
-
-
-            // Set DENY permission for current user.
-            UnitTestConstants.FolderDenyPermission(true, folder.FullName);
             
-
+            // Set DENY permission for current user.
+            tempRoot.SetDirectoryDenyPermission(true, folder.FullName);
+            
             try
             {
                ExceptionAssert.IOException(() => System.IO.Directory.Delete(folder.FullName));
@@ -61,7 +59,7 @@ namespace AlphaFS.UnitTest
             finally
             {
                // Remove DENY permission for current user.
-               UnitTestConstants.FolderDenyPermission(false, folder.FullName);
+               tempRoot.SetDirectoryDenyPermission(false, folder.FullName);
             }
          }
          
