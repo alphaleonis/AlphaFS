@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.CreateRandomDirectoryStructure(5, true, true, true);
+            var folder = tempRoot.CreateRecursiveRandomizedAttributesTree(5);
 
             Console.WriteLine("Aggregated properties of file system objects from Directory: [{0}]\n", folder);
 

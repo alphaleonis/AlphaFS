@@ -21,48 +21,62 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DeleteTest
+   public partial class AlphaFS_VolumeTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void Directory_Delete_ThrowUnauthorizedAccessException_DirectoryHasDenyPermission_LocalAndNetwork_Success()
+      public void AlphaFS_Volume_DefineDosDevice_RegularDriveMapping_Local_Success()
       {
-         Directory_Delete_ThrowUnauthorizedAccessException_DirectoryHasDenyPermission(false);
-         Directory_Delete_ThrowUnauthorizedAccessException_DirectoryHasDenyPermission(true);
+         AlphaFS_Volume_DefineDosDevice_RegularDriveMapping(false);
+         AlphaFS_Volume_DefineDosDevice_RegularDriveMapping(true);
       }
 
 
-      private void Directory_Delete_ThrowUnauthorizedAccessException_DirectoryHasDenyPermission(bool isNetwork)
+      private void AlphaFS_Volume_DefineDosDevice_RegularDriveMapping(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = System.IO.Directory.CreateDirectory(System.IO.Path.Combine(tempRoot.Directory.FullName, "Existing Source Folder"));
+            var folder = tempRoot.CreateDirectory();
+            var drive = string.Format(CultureInfo.InvariantCulture, @"{0}:\", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter());
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder);
-            
-            // Set DENY permission for current user.
-            tempRoot.SetDirectoryDenyPermission(true, folder.FullName);
-            
+            Assert.IsFalse(System.IO.Directory.Exists(drive), "The drive exists, but it is expected not to.");
+
+
             try
             {
-               ExceptionAssert.IOException(() => System.IO.Directory.Delete(folder.FullName));
+               Alphaleonis.Win32.Filesystem.Volume.DefineDosDevice(drive, folder.FullName);
+
+               Assert.IsTrue(System.IO.Directory.Exists(drive), "The drive does not exists, but it is expected to.");
 
 
-               // 2018-05-29 BUG: Throws wrong Exception.
-               ExceptionAssert.UnauthorizedAccessException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName));
+               var dirInfoSysIO = new System.IO.DriveInfo(drive);
+
+               var dirInfoAlphaFS = new Alphaleonis.Win32.Filesystem.DriveInfo(drive);
+               
+               UnitTestConstants.Dump(dirInfoSysIO, -21);
+               UnitTestConstants.Dump(dirInfoAlphaFS, -21);
+
+
+               Assert.AreEqual(dirInfoSysIO.Name, dirInfoAlphaFS.Name);
+
+               Assert.AreEqual(dirInfoSysIO.DriveType, dirInfoAlphaFS.DriveType);
+               
+               Assert.AreEqual(dirInfoSysIO.TotalSize, dirInfoAlphaFS.TotalSize);
             }
             finally
             {
-               // Remove DENY permission for current user.
-               tempRoot.SetDirectoryDenyPermission(false, folder.FullName);
+               Alphaleonis.Win32.Filesystem.Volume.DeleteDosDevice(drive);
+
+               Assert.IsFalse(System.IO.Directory.Exists(drive), "The drive exists, but it is expected not to.");
             }
          }
-         
+
          Console.WriteLine();
       }
    }

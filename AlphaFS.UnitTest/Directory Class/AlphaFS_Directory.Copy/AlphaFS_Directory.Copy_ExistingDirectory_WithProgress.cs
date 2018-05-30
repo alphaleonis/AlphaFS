@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,23 +31,23 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Copy_ExistingDirectory_WithProgress_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_Copy(false);
-         AlphaFS_Directory_Copy(true);
+         AlphaFS_Directory_Copy_ExistingDirectory_WithProgress(false);
+         AlphaFS_Directory_Copy_ExistingDirectory_WithProgress(true);
       }
 
 
-      private void AlphaFS_Directory_Copy(bool isNetwork)
+      private void AlphaFS_Directory_Copy_ExistingDirectory_WithProgress(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folderSrc = tempRoot.CreateRandomDirectoryStructure(5, true);
+            var folderSrc = tempRoot.CreateRecursiveTree(5);
             var folderDst = tempRoot.RandomDirectoryFullPath;
-            
+
             Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", folderDst);
-
+            
 
             var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
 
@@ -55,11 +56,17 @@ namespace AlphaFS.UnitTest
             var sourceTotal = props["Total"];
             var sourceTotalFiles = props["File"];
             var sourceTotalSize = props["Size"];
-            
-            Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
-            
 
-            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.FailIfExists);
+            Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
+
+
+            // The copy progress handler.
+            var callback = new Alphaleonis.Win32.Filesystem.CopyMoveProgressRoutine(FolderCopyProgressHandler);
+
+            Console.WriteLine();
+
+
+            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.FailIfExists, callback, null);
 
             UnitTestConstants.Dump(copyResult, -18);
 
@@ -86,6 +93,28 @@ namespace AlphaFS.UnitTest
 
 
          Console.WriteLine();
+      }
+
+
+      private static Alphaleonis.Win32.Filesystem.CopyMoveProgressResult FolderCopyProgressHandler(long totalFileSize, long totalBytesTransferred, long streamSize,
+         long streamBytesTransferred, int streamNumber, Alphaleonis.Win32.Filesystem.CopyMoveProgressCallbackReason callbackReason, object userData)
+      {
+         if (callbackReason == Alphaleonis.Win32.Filesystem.CopyMoveProgressCallbackReason.StreamSwitch)
+
+            Assert.AreEqual(0, totalBytesTransferred);
+
+
+         else
+         {
+            var pct = Convert.ToDouble(totalBytesTransferred, CultureInfo.InvariantCulture) / totalFileSize * 100;
+
+            Console.WriteLine("\tCallback: Copied: [{0}%] --> [{1:N0}] bytes.", pct.ToString("N2", CultureInfo.CurrentCulture), totalBytesTransferred);
+
+            Assert.IsTrue(totalBytesTransferred > 0);
+         }
+
+
+         return Alphaleonis.Win32.Filesystem.CopyMoveProgressResult.Continue;
       }
    }
 }

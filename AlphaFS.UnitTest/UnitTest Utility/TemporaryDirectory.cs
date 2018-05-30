@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -21,6 +21,7 @@
 
 using System;
 using System.Globalization;
+using System.Security.AccessControl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -44,12 +45,13 @@ namespace AlphaFS.UnitTest
          if (isNetwork)
             root = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(root);
 
+
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
 
          do
          {
-            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, folderPrefix + "." + UnitTestConstants.GetRandomFileName().Substring(0, 6)));
+            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, folderPrefix + "." + RandomString));
 
          } while (Directory.Exists);
 
@@ -64,31 +66,206 @@ namespace AlphaFS.UnitTest
       public System.IO.DirectoryInfo Directory { get; private set; }
 
 
-      /// <summary>Returns the full path to a non-existing directory with a random name, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\Directory_wq��nmvh.z03".</summary>
+      /// <summary>Returns a random directory name, such as: "Directory_wqáánmvh".</summary>
+      public string RandomDirectoryName
+      {
+         get { return string.Format(CultureInfo.InvariantCulture, "Directory.{0}", RandomString); }
+      }
+
+
+      /// <summary>Returns the full path to a non-existing file with a random name, such as: "File_wqáánmvh.txt".</summary>
+      public string RandomTxtFileName
+      {
+         get { return string.Format(CultureInfo.InvariantCulture, "File_{0}.txt", RandomString); }
+      }
+
+
+      /// <summary>Returns the full path to a non-existing directory with a random name, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\Directory_wqáánmvh.z03".</summary>
       public string RandomDirectoryFullPath
       {
-         get { return System.IO.Path.Combine(Directory.FullName, "Directory_" + RandomFileName); }
+         get { return System.IO.Path.Combine(Directory.FullName, RandomDirectoryName); }
       }
 
 
-      /// <summary>Returns the full path to a non-existing file with a random name, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\File_wq��nmvh.txt".</summary>
+      /// <summary>Returns the full path to a non-existing file with a random name, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\File_wqáánmvh.txt".</summary>
       public string RandomTxtFileFullPath
       {
-         get { return RandomFileNoExtensionFullPath + ".txt"; }
+         get { return System.IO.Path.Combine(Directory.FullName, RandomTxtFileName); }
       }
 
 
-      /// <summary>Returns the full path to a non-existing file with a random name and without an extension, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\File_wq��nmvh".</summary>
+      /// <summary>Returns the full path to a non-existing file with a random name and without an extension, such as: "C:\Users\UserName\AppData\Local\Temp\AlphaFS.TempRoot.lpqdzf\File_wqáánmvh".</summary>
       public string RandomFileNoExtensionFullPath
       {
-         get { return System.IO.Path.Combine(Directory.FullName, "File_" + System.IO.Path.GetFileNameWithoutExtension(RandomFileName)); }
+         get { return System.IO.Path.Combine(Directory.FullName, System.IO.Path.GetFileNameWithoutExtension(RandomTxtFileName)); }
+      }
+      
+      
+      /// <summary>Returns a random string of 8 characters in length, possibly with diacritic characters.</summary>
+      public string RandomString
+      {
+         get
+         {
+            var randomFileName = System.IO.Path.GetFileNameWithoutExtension(System.IO.Path.GetRandomFileName());
+
+            switch (new Random(DateTime.UtcNow.Millisecond).Next(1, 3))
+            {
+               case 1:
+                  return randomFileName.Replace("a", "ä").Replace("e", "ë").Replace("i", "ï").Replace("o", "ö").Replace("u", "ü");
+
+               case 2:
+                  return randomFileName.Replace("a", "á").Replace("e", "é").Replace("i", "í").Replace("o", "ó").Replace("u", "ú");
+
+               case 3:
+                  return randomFileName.Replace("a", "â").Replace("e", "ê").Replace("i", "î").Replace("o", "ô").Replace("u", "û");
+
+               default:
+                  return randomFileName;
+            }
+         }
+      }
+      
+      #endregion // Properties
+
+
+      #region Methods
+      
+      /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory.</summary>
+      public System.IO.DirectoryInfo CreateDirectory()
+      {
+         return CreateDirectory(null);
       }
 
 
-      /// <summary>Returns a random folder or file name, such as: "wq��nmvh.z03".</summary>
-      public string RandomFileName
+      /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with hidden and/or read-only attributes set.</summary>
+      public System.IO.DirectoryInfo CreateDirectoryRandomizedAttributes()
       {
-         get { return UnitTestConstants.GetRandomFileName(); }
+         return CreateDirectory(null, true, true);
+      }
+
+
+
+
+      /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file.</summary>
+      public System.IO.FileInfo CreateFile()
+      {
+         return CreateFile(null);
+      }
+
+
+      /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing file, possibly with hidden and/or read-only attributes set.</summary>
+      public System.IO.FileInfo CreateFileRandomizedAttributes()
+      {
+         return CreateFile(null, true, true);
+      }
+
+
+
+
+      /// <summary>Creates a directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>
+      public System.IO.DirectoryInfo CreateTree(int level = 1)
+      {
+         return CreateTreeCore(null, level, false, false, false);
+      }
+
+
+      /// <summary>Creates a recursive directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>      
+      public System.IO.DirectoryInfo CreateRecursiveTree(int level = 1)
+      {
+         return CreateTreeCore(null, level, true, false, false);
+      }
+
+
+      /// <summary>Creates a recursive directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>
+      public System.IO.DirectoryInfo CreateRecursiveTree(int level, string rootFullPath)
+      {
+         return CreateTreeCore(rootFullPath, level, true, false, false);
+      }
+
+
+      /// <summary>Creates a directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>
+      public System.IO.DirectoryInfo CreateRandomizedAttributesTree(int level = 1)
+      {
+         return CreateTreeCore(null, level, false, true, true);
+      }
+
+
+      /// <summary>Creates a recursive directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>
+      public System.IO.DirectoryInfo CreateRecursiveRandomizedAttributesTree(int level = 1)
+      {
+         return CreateTreeCore(null, level, true, true, true);
+      }
+      
+      
+      /// <summary>Creates an, optional recursive, directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size and possibly with hidden and/or read-only attributes set.</summary>
+      private System.IO.DirectoryInfo CreateTreeCore(string rootFullPath, int level, bool recurse, bool readOnly, bool hidden)
+      {
+         var dirInfo = CreateDirectory(rootFullPath, readOnly, hidden);
+
+         var folderCount = 0;
+
+
+         for (var fsoCount = 0; fsoCount < level; fsoCount++)
+         {
+            folderCount++;
+
+            var fsoName = RandomString + "-" + fsoCount;
+
+            // Always create folder.
+            var di = CreateDirectory(System.IO.Path.Combine(dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "Directory_{0}_directory", fsoName)), readOnly, hidden);
+
+            // Create file, every other iteration.
+            CreateFile(System.IO.Path.Combine(fsoCount % 2 == 0 ? di.FullName : dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "File_{0}_file.txt", fsoName)), readOnly, hidden);
+         }
+
+
+         if (recurse)
+         {
+            foreach (var folder in System.IO.Directory.EnumerateDirectories(dirInfo.FullName))
+               CreateTreeCore(folder, level, false, readOnly, hidden);
+         }
+
+
+         Assert.AreEqual(level, folderCount, "The number of folders does not equal the level folder-level, but is expected to.");
+
+         return dirInfo;
+      }
+
+
+      /// <summary> Enables or disables deny access for the current User.</summary>
+      public void SetDirectoryDenyPermission(bool enable, string folderFullPath)
+      {
+         // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
+         // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
+         // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
+         // ║ Propagation ║ none        ║ none                          ║ none                   ║ none             ║ InheritOnly           ║ InheritOnly ║ InheritOnly ║
+         // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
+         // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
+
+         var user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
+
+         var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
+
+         DirectorySecurity dirSecurity;
+
+         var dirInfo = CreateDirectory(folderFullPath);
+
+
+         // Set DENY for current User.
+         if (enable)
+         {
+            dirSecurity = dirInfo.GetAccessControl();
+            dirSecurity.AddAccessRule(rule);
+            dirInfo.SetAccessControl(dirSecurity);
+         }
+
+         // Remove DENY for current User.
+         else
+         {
+            dirSecurity = dirInfo.GetAccessControl();
+            dirSecurity.RemoveAccessRule(rule);
+            dirInfo.SetAccessControl(dirSecurity);
+         }
       }
 
 
@@ -97,106 +274,47 @@ namespace AlphaFS.UnitTest
          return Directory.FullName;
       }
 
-      #endregion // Properties
+      #endregion // Methods
 
 
-      #region Methods
+      #region Private Members
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with hidden and/or read-only attributes set.</summary>
-      public System.IO.DirectoryInfo CreateDirectory(string folderFullPath, bool readOnly = false, bool hidden = false)
+      private System.IO.DirectoryInfo CreateDirectory(string folderFullPath, bool readOnly = false, bool hidden = false)
       {
          var dirInfo = System.IO.Directory.CreateDirectory(!Alphaleonis.Utils.IsNullOrWhiteSpace(folderFullPath) ? folderFullPath : RandomDirectoryFullPath);
 
+         SetAttributes(dirInfo, readOnly, hidden);
 
-         if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
-            dirInfo.Attributes |= System.IO.FileAttributes.ReadOnly;
-         
-         if (hidden && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
-            dirInfo.Attributes |= System.IO.FileAttributes.Hidden;
-         
          return dirInfo;
       }
 
 
-      /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory.</summary>
-      public System.IO.DirectoryInfo CreateRandomDirectory()
-      {
-         return CreateDirectory(null);
-      }
-      
-
       /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file, possibly with hidden and/or read-only attributes set.</summary>
-      public System.IO.FileInfo CreateFile(string fileFullPath, bool readOnly = false, bool hidden = false)
+      private System.IO.FileInfo CreateFile(string fileFullPath, bool readOnly = false, bool hidden = false)
       {
          var fileInfo = new System.IO.FileInfo(!Alphaleonis.Utils.IsNullOrWhiteSpace(fileFullPath) ? fileFullPath : RandomTxtFileFullPath);
 
-         // File size is min 0 bytes, max 1 MB.
+         // File size is min 0 bytes, level 1 MB.
          using (var fs = fileInfo.Create())
             fs.SetLength(new Random(DateTime.UtcNow.Millisecond).Next(0, 1048576));
-         
-         if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
-            fileInfo.Attributes |= System.IO.FileAttributes.ReadOnly;
 
-         if (hidden && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
-            fileInfo.Attributes |= System.IO.FileAttributes.Hidden;
-         
+         SetAttributes(fileInfo, readOnly, hidden);
+
          return fileInfo;
       }
 
 
-      /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file.</summary>
-      public System.IO.FileInfo CreateRandomFile()
+      private static void SetAttributes(System.IO.FileSystemInfo fsi, bool readOnly = false, bool hidden = false)
       {
-         return CreateFile(null);
+         if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+            fsi.Attributes |= System.IO.FileAttributes.ReadOnly;
+
+         if (hidden && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+            fsi.Attributes |= System.IO.FileAttributes.Hidden;
       }
 
-
-      public System.IO.DirectoryInfo CreateRandomDirectoryStructure(int max = 1, string rootPath = null)
-      {
-         return CreateRandomDirectoryStructure(rootPath, max, false);
-      }
-
-
-      public System.IO.DirectoryInfo CreateRandomDirectoryStructure(int max, bool recurse, bool readOnly = false, bool hidden = false)
-      {
-         return CreateRandomDirectoryStructure(null, max, recurse, readOnly, hidden);
-      }
-
-
-      public System.IO.DirectoryInfo CreateRandomDirectoryStructure(string rootPath, int max, bool recurse, bool readOnly = false, bool hidden = false)
-      {
-         var dirInfo = CreateDirectory(rootPath, readOnly, hidden);
-
-         var folderCount = 0;
-         
-
-         for (var fsoCount = 0; fsoCount < max; fsoCount++)
-         {
-            folderCount++;
-
-            var fsoName = System.IO.Path.GetFileNameWithoutExtension(RandomFileName) + "-" + fsoCount;
-            
-            // Always create folder.
-            var di = CreateDirectory(System.IO.Path.Combine(dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "{0}_directory", fsoName)), readOnly, hidden);
-
-            // Create file, every other iteration.
-            CreateFile(System.IO.Path.Combine(fsoCount % 2 == 0 ? di.FullName : dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "{0}_file.txt", fsoName)), readOnly, hidden);
-         }
-
-
-         if (recurse)
-         {
-            foreach (var folder in System.IO.Directory.EnumerateDirectories(dirInfo.FullName))
-               CreateRandomDirectoryStructure(folder, max, false, readOnly, hidden);
-         }
-
-
-         Assert.AreEqual(max, folderCount, "The number of folders does not equal the max folder-level, but is expected to.");
-
-         return dirInfo;
-      }
-
-      #endregion // Methods
+      #endregion Private Members
 
 
       #region Disposable Members

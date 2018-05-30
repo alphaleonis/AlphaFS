@@ -43,13 +43,9 @@ namespace AlphaFS.UnitTest
 
          using (var tempRoot = new TemporaryDirectory())
          {
-            var folderSrc = isNetwork
-               ? tempRoot.CreateRandomDirectoryStructure(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempRoot.RandomDirectoryFullPath), new Random().Next(5, 15), true)
-               : tempRoot.CreateRandomDirectoryStructure(new Random().Next(5, 15), true);
+            var folderSrc = isNetwork ? tempRoot.CreateRecursiveTree(5, Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempRoot.RandomDirectoryFullPath)) : tempRoot.CreateRecursiveTree(5);
 
-            var folderDst = !isNetwork
-               ? new System.IO.DirectoryInfo(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempRoot.RandomDirectoryFullPath)).FullName
-               : tempRoot.RandomDirectoryFullPath;
+            var folderDst = !isNetwork ? new System.IO.DirectoryInfo(Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempRoot.RandomDirectoryFullPath)).FullName : tempRoot.RandomDirectoryFullPath;
 
 
             Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);

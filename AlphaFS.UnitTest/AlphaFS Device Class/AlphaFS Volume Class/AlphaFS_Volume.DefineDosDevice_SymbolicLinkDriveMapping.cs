@@ -21,37 +21,51 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_FileIdInfoTest
+   public partial class AlphaFS_VolumeTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_GetFileIdInfo_LocalAndNetwork_Success()
+      public void AlphaFS_Volume_DefineDosDevice_SymbolicLinkDriveMapping_Local_Success()
       {
-         AlphaFS_Directory_GetFileIdInfo(false);
-         AlphaFS_Directory_GetFileIdInfo(true);
+         AlphaFS_Volume_DefineDosDevice_SymbolicLinkDriveMapping(false);
+         AlphaFS_Volume_DefineDosDevice_SymbolicLinkDriveMapping(true);
       }
 
 
-      private void AlphaFS_Directory_GetFileIdInfo(bool isNetwork)
+      [TestMethod]
+      public void AlphaFS_Volume_DefineDosDevice_SymbolicLinkDriveMapping(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var folder = tempRoot.CreateDirectory();
+            var drive = string.Format(CultureInfo.InvariantCulture, @"{0}:\", Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter(true));
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
-
-
-            var fid = Alphaleonis.Win32.Filesystem.Directory.GetFileIdInfo(folder.FullName);
-
-            Console.WriteLine("\n\tToString(): {0}", fid);
+            Assert.IsFalse(System.IO.Directory.Exists(drive), "The drive exists, but it is expected not to.");
 
 
-            Assert.IsNotNull(fid);
+            try
+            {
+               Alphaleonis.Win32.Filesystem.Volume.DefineDosDevice(drive, folder.FullName, Alphaleonis.Win32.Filesystem.DosDeviceAttributes.RawTargetPath);
+
+
+               // Remove Symbolic Link, no exact match: fail.
+
+               ExceptionAssert.FileNotFoundException(() => Alphaleonis.Win32.Filesystem.Volume.DeleteDosDevice(drive, folder.FullName));
+            }
+            finally
+            {
+               // Remove Symbolic Link, exact match: success.
+
+               Alphaleonis.Win32.Filesystem.Volume.DeleteDosDevice(drive, folder.FullName, true);
+
+               Assert.IsFalse(System.IO.Directory.Exists(drive), "The drive exists, but it is expected not to.");
+            }
          }
 
          Console.WriteLine();

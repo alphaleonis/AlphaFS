@@ -20,17 +20,13 @@
  */
 
 using System;
+using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
    /// <summary>Containts static variables, used by unit tests.</summary>
    public static partial class UnitTestConstants
    {
-      #region Fields
-
-      public const string Local = @"LOCAL";
-      public const string Network = @"NETWORK";
-
 #if NET35
       public const string EMspace = "\u3000";
 #endif
@@ -50,6 +46,105 @@ namespace AlphaFS.UnitTest
       public const string TextGoodbyeWorld = "Góödbyé Wôrld!";
       public const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
 
-      #endregion // Fields
+
+      /// <summary>The Computer name.</summary>
+      public static readonly string LocalHost = Environment.MachineName;
+
+
+      /// <summary>The Computer system drive. For example "C:".</summary>
+      public static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
+
+
+      public static readonly string[] StreamArrayContent =
+      {
+         "(1) Nikolai Tesla: \"Today's scientists have substituted mathematics for experiments, and they wander off through equation after equation, and eventually build a structure which has no relation to reality.\"",
+         "(2) The quick brown fox jumps over the lazy dog.",
+         "(3) " + TextHelloWorld + " " + TextUnicode
+      };
+
+
+      public static readonly string[] InputPaths =
+      {
+         @".",
+         @".zip",
+
+         SysDrive + @"\\test.txt",
+         SysDrive + @"\/test.txt",
+
+         System.IO.Path.DirectorySeparatorChar.ToString(),
+         System.IO.Path.DirectorySeparatorChar + @"Program Files\Microsoft Office",
+
+         Alphaleonis.Win32.Filesystem.Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
+         Alphaleonis.Win32.Filesystem.Path.VolumePrefix +
+         @"{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}\Program Files\notepad.exe",
+
+         "dir1/dir2/dir3/",
+
+         @"Program Files\Microsoft Office",
+         SysDrive[0].ToString(CultureInfo.InvariantCulture),
+         SysDrive,
+         SysDrive + @"\",
+         SysDrive + @"\a",
+         SysDrive + @"\a\",
+         SysDrive + @"\a\b",
+         SysDrive + @"\a\b\",
+         SysDrive + @"\a\b\c",
+         SysDrive + @"\a\b\c\",
+         SysDrive + @"\a\b\c\z",
+         SysDrive + @"\a\b\c\z.",
+         SysDrive + @"\a\b\c\z.t",
+         SysDrive + @"\a\b\c\z.tx",
+         SysDrive + @"\a\b\c\z.txt",
+
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + @"Program Files\Microsoft Office",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive,
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z.",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z.t",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z.tx",
+         Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + SysDrive + @"\a\b\c\z.txt",
+
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\f",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\fi",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\fil",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.e",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.ex",
+         Alphaleonis.Win32.Filesystem.Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.ext",
+
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\f",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\fi",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\fil",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.e",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.ex",
+         Alphaleonis.Win32.Filesystem.Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.ext"
+      };
    }
 }

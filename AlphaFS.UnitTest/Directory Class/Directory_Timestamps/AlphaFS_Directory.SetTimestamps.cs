@@ -43,10 +43,12 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.CreateRandomDirectory();
-            var symlinkPath = System.IO.Path.Combine(tempRoot.Directory.FullName, UnitTestConstants.GetRandomFileName()) + "-symlink";
+            var folder = tempRoot.CreateDirectory();
+
+            var symlinkPath = System.IO.Path.Combine(tempRoot.Directory.FullName, tempRoot.RandomString) + "_symlink";
 
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
+            Console.WriteLine("Input SymLink Path  : [{0}]", symlinkPath);
 
 
             Alphaleonis.Win32.Filesystem.Directory.CreateSymbolicLink(symlinkPath, folder.FullName);

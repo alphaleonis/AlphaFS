@@ -31,19 +31,19 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_Copy_WithProgress_LocalAndNetwork_Success()
+      public void AlphaFS_File_Copy_ExistingFile_WithProgress_LocalAndNetwork_Success()
       {
-         AlphaFS_File_Copy_WithProgress(false);
-         AlphaFS_File_Copy_WithProgress(true);
+         AlphaFS_File_Copy_ExistingFile_WithProgress(false);
+         AlphaFS_File_Copy_ExistingFile_WithProgress(true);
       }
       
 
-      private void AlphaFS_File_Copy_WithProgress(bool isNetwork)
+      private void AlphaFS_File_Copy_ExistingFile_WithProgress(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var fileSource = tempRoot.CreateRandomFile();
-            var fileCopy = tempRoot.CreateRandomFile();
+            var fileSource = tempRoot.CreateFile();
+            var fileCopy = tempRoot.CreateFile();
 
             Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileSource.Length), fileSource.FullName);
             Console.WriteLine("Dst File Path: [{0}]", fileCopy.FullName);

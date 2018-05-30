@@ -50,7 +50,10 @@ namespace AlphaFS.UnitTest
 
             Console.Write("#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveName);
 
-            if (logicalDrive.DriveType == System.IO.DriveType.CDRom)
+            
+            // Skip mapped drives and CDRom drives.
+
+            if (logicalDrive.DriveType == System.IO.DriveType.NoRootDirectory || logicalDrive.DriveType == System.IO.DriveType.CDRom)
             {
                Console.WriteLine();
                continue;

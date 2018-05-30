@@ -60,7 +60,7 @@ namespace AlphaFS.UnitTest
             // We can not compare ChangeTime against .NET because it does not exist.
             // Creating a file and renaming it triggers ChangeTime, so test for that.
 
-            var file = tempRoot.CreateRandomFile();
+            var file = tempRoot.CreateFile();
             Console.WriteLine("Input File Path: [{0}]\n", file.FullName);
 
 
