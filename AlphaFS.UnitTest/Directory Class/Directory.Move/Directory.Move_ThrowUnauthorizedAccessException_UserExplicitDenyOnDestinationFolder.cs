@@ -66,7 +66,7 @@ namespace AlphaFS.UnitTest
 
             try
             {
-               ExceptionAssert.UnauthorizedAccessException(() => Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFolder.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting));
+               UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFolder.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting));
             }
             finally
             {

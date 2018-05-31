@@ -56,9 +56,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 
-         ExceptionAssert.FileNotFoundException(() => System.IO.File.Move(srcFile, dstFile));
+         UnitTestAssert.ThrowsException<System.IO.FileNotFoundException>(() => System.IO.File.Move(srcFile, dstFile));
 
-         ExceptionAssert.DeviceNotReadyException(() => Alphaleonis.Win32.Filesystem.File.Move(srcFile, dstFile));
+         UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.File.Move(srcFile, dstFile));
 
          Assert.IsFalse(System.IO.Directory.Exists(dstFile), "The file exists, but is expected not to.");
 

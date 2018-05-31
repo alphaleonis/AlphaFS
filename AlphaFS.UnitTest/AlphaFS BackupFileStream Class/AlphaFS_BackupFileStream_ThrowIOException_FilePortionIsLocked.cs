@@ -54,7 +54,7 @@ namespace AlphaFS.UnitTest
 
                   bfs.Lock(0, 10);
 
-                  ExceptionAssert.IOException(() => bfs.Lock(0, 10));
+                  UnitTestAssert.ThrowsException<System.IO.IOException>(() => bfs.Lock(0, 10));
                }
                finally
                {

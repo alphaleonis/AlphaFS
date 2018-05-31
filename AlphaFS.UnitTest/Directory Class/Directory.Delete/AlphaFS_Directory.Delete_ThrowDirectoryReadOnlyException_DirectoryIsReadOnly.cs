@@ -47,9 +47,9 @@ namespace AlphaFS.UnitTest
 
             System.IO.File.SetAttributes(folder.FullName, System.IO.FileAttributes.ReadOnly);
             
-            ExceptionAssert.IOException(() => System.IO.Directory.Delete(folder.FullName));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.Delete(folder.FullName));
 
-            ExceptionAssert.DirectoryReadOnlyException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DirectoryReadOnlyException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName));
          }
 
          Console.WriteLine();

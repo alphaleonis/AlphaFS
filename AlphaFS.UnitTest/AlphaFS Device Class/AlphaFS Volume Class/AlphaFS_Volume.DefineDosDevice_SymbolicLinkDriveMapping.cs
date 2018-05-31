@@ -55,8 +55,8 @@ namespace AlphaFS.UnitTest
 
 
                // Remove Symbolic Link, no exact match: fail.
-
-               ExceptionAssert.FileNotFoundException(() => Alphaleonis.Win32.Filesystem.Volume.DeleteDosDevice(drive, folder.FullName));
+               
+               UnitTestAssert.ThrowsException<System.IO.FileNotFoundException>(() => Alphaleonis.Win32.Filesystem.Volume.DeleteDosDevice(drive, folder.FullName));
             }
             finally
             {

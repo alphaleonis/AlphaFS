@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
             var junction = System.IO.Path.Combine(toDelete.FullName, "JunctionPoint");
 
 
-            ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName));
+            UnitTestAssert.ThrowsException<ArgumentException>(() => Alphaleonis.Win32.Filesystem.Directory.CreateJunction(junction, target.FullName));
          }
       }
    }

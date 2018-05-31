@@ -56,7 +56,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
 
 
-         ExceptionAssert.DeviceNotReadyException(() => Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder));
+         UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder));
 
          Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The directory exists, but is expected not to.");
          

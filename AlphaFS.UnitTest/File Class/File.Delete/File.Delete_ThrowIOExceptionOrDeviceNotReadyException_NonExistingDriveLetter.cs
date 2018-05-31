@@ -46,9 +46,9 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("Input File Path: [{0}]", folder);
 
-         ExceptionAssert.IOException(() => System.IO.File.Delete(folder));
+         UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.File.Delete(folder));
 
-         ExceptionAssert.IOException(() => Alphaleonis.Win32.Filesystem.File.Delete(folder));
+         UnitTestAssert.ThrowsException<System.IO.IOException>(() => Alphaleonis.Win32.Filesystem.File.Delete(folder));
 
          // Local: IOException.
          // UNC: IOException or DeviceNotReadyException.

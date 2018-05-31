@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -33,9 +34,9 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         ExceptionAssert.NotSupportedException(() => System.IO.Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt"));
+         UnitTestAssert.ThrowsException<NotSupportedException>(() => System.IO.Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt"));
 
-         ExceptionAssert.NotSupportedException(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt"));
+         UnitTestAssert.ThrowsException<NotSupportedException>(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt"));
       }
    }
 }

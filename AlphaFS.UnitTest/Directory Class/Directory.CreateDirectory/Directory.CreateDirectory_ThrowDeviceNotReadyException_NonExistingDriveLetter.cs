@@ -47,9 +47,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Input Directory Path: [{0}]", folder);
 
 
-         ExceptionAssert.IOException(() => System.IO.Directory.CreateDirectory(folder));
+         UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.CreateDirectory(folder));
 
-         ExceptionAssert.IOException(() => Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder));
+         UnitTestAssert.ThrowsException<System.IO.IOException>(() => Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder));
          
          // Local: IOException.
          // UNC: IOException or DeviceNotReadyException.

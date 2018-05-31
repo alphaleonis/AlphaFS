@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
             action();
             
             // 2nd Copy action.
-            ExceptionAssert.AlreadyExistsException(() => action());
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.AlreadyExistsException>(() => action());
          }
 
          Console.WriteLine();

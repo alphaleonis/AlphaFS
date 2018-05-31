@@ -45,9 +45,9 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
-            ExceptionAssert.UnauthorizedAccessException(() => System.IO.File.Delete(folder.FullName));
+            UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => System.IO.File.Delete(folder.FullName));
 
-            ExceptionAssert.UnauthorizedAccessException(() => Alphaleonis.Win32.Filesystem.File.Delete(folder.FullName));
+            UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.File.Delete(folder.FullName));
          }
 
          Console.WriteLine();
