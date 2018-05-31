@@ -54,9 +54,9 @@ namespace AlphaFS.UnitTest
 
             try
             {
-               ExceptionAssert.UnauthorizedAccessException(() => System.IO.File.Copy(srcFile.FullName, dstFile, true));
+               UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => System.IO.File.Copy(srcFile.FullName, dstFile, true));
 
-               ExceptionAssert.UnauthorizedAccessException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile, true));
+               UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile, true));
             }
             finally
             {

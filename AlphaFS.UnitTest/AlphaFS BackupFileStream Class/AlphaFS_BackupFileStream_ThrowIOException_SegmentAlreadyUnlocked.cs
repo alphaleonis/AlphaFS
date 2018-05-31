@@ -51,7 +51,7 @@ namespace AlphaFS.UnitTest
             {
                bfs.ReadStreamInfo();
 
-               ExceptionAssert.IOException(() => bfs.Unlock(0, 10));
+               UnitTestAssert.ThrowsException<System.IO.IOException>(() => bfs.Unlock(0, 10));
             }
          }
 

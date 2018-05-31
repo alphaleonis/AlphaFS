@@ -47,9 +47,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Source File Path: [{0}]", fileSource.FullName);
 
 
-            ExceptionAssert.IOException(() => System.IO.File.Move(fileSource.FullName, fileCopy.FullName));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.File.Move(fileSource.FullName, fileCopy.FullName));
 
-            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy.FullName));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.AlreadyExistsException>(() => Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy.FullName));
             
 
             Alphaleonis.Win32.Filesystem.File.Move(fileSource.FullName, fileCopy.FullName, Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting);

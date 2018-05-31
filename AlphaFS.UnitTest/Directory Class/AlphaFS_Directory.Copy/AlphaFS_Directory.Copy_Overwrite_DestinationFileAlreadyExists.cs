@@ -61,7 +61,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
 
-            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.AlreadyExistsException>(() => Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst));
 
             Assert.IsTrue(System.IO.Directory.Exists(folderDst), "The directory does not exist, but is expected to.");
             

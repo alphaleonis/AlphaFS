@@ -47,9 +47,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Src Directory Path: [{0}]", srcFolder.FullName);
             Console.WriteLine("Dst Directory Path: [{0}]", dstFfolder.FullName);
             
-            ExceptionAssert.IOException(() => System.IO.Directory.Move(srcFolder.FullName, dstFfolder.FullName));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.Move(srcFolder.FullName, dstFfolder.FullName));
 
-            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFfolder.FullName));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.AlreadyExistsException>(() => Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder.FullName, dstFfolder.FullName));
          }
          
          Console.WriteLine();

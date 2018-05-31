@@ -34,9 +34,9 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         ExceptionAssert.ArgumentException(() => System.IO.Path.GetFullPath(@"\\\\.txt"));
+         UnitTestAssert.ThrowsException<ArgumentException>(() => System.IO.Path.GetFullPath(@"\\\\.txt"));
 
-         ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(@"\\\\.txt"));
+         UnitTestAssert.ThrowsException<ArgumentException>(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(@"\\\\.txt"));
       }
    }
 }

@@ -54,7 +54,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
          
 
-         ExceptionAssert.DirectoryNotFoundException(() => Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder), srcFolder);
+         UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => Alphaleonis.Win32.Filesystem.Directory.Copy(srcFolder, dstFolder), srcFolder);
 
          Console.WriteLine();
       }

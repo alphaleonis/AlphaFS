@@ -38,7 +38,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("Input Path: [{0}]", folder);
 
-            ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(folder, true, true));
+            UnitTestAssert.ThrowsException<ArgumentException>(() => Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(folder, true, true));
          }
       }
    }
