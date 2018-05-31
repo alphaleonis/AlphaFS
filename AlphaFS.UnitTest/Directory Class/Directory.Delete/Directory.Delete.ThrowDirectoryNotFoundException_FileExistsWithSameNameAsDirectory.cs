@@ -46,11 +46,11 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
 
-            ExceptionAssert.IOException(() => System.IO.Directory.Delete(file.FullName));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.Delete(file.FullName));
             
 
             // 2018-05-29 BUG: Throws wrong Exception.
-            ExceptionAssert.DirectoryNotFoundException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(file.FullName));
+            UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(file.FullName));
          }
          
          Console.WriteLine();

@@ -50,9 +50,9 @@ namespace AlphaFS.UnitTest
 
             System.IO.File.Copy(srcFile.FullName, dstFile);
             
-            ExceptionAssert.IOException(() => System.IO.File.Move(srcFile.FullName, dstFile));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.File.Move(srcFile.FullName, dstFile));
 
-            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.File.Move(srcFile.FullName, dstFile));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.AlreadyExistsException>(() => Alphaleonis.Win32.Filesystem.File.Move(srcFile.FullName, dstFile));
          }
          
          Console.WriteLine();

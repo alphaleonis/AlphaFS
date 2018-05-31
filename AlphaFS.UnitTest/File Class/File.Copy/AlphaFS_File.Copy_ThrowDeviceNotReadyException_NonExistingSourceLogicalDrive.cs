@@ -58,16 +58,16 @@ namespace AlphaFS.UnitTest
 
          if (isNetwork)
          {
-            ExceptionAssert.IOException(() => System.IO.File.Copy(srcFolder, dstFolder));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.File.Copy(srcFolder, dstFolder));
 
-            ExceptionAssert.DeviceNotReadyException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, dstFolder));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, dstFolder));
          }
 
          else
          {
-            ExceptionAssert.DirectoryNotFoundException(() => System.IO.File.Copy(srcFolder, dstFolder));
+            UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => System.IO.File.Copy(srcFolder, dstFolder));
 
-            ExceptionAssert.DeviceNotReadyException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, dstFolder));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, dstFolder));
          }
 
          Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The file exists, but is expected not to.");

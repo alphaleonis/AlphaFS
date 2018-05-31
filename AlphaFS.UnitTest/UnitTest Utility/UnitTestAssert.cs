@@ -21,6 +21,7 @@
 
 using System;
 using System.Globalization;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -33,7 +34,7 @@ namespace AlphaFS.UnitTest
             Inconclusive("This unit test must be run elevated.");
       }
 
-
+      
       public static void Inconclusive(string errorMessage)
       {
          Console.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0}{1}{0}", Environment.NewLine, errorMessage));
@@ -53,6 +54,41 @@ namespace AlphaFS.UnitTest
       public static void InconclusiveBecauseFileNotFound(string fullPath)
       {
          Inconclusive("The file system object was not found: " + fullPath);
+      }
+
+
+      public static void ThrowsException<T>(Action action, string findString = null)
+      {
+         Exception exception = null;
+         var message = string.Empty;
+         var expectedException = typeof(T);
+
+         try
+         {
+            action();
+         }
+         catch (Exception ex)
+         {
+            exception = ex;
+            message = ex.Message;
+         }
+
+
+         var gotException = null != exception && exception.GetType() == expectedException;
+
+
+         if (null != exception)
+            Console.WriteLine("\n\t[{0}]{1} {2}: {3}", MethodBase.GetCurrentMethod().Name,
+
+               gotException ? string.Empty : " Caught unexpected",
+               gotException ? expectedException.Name : exception.GetType().Name, message.Trim());
+
+
+         Assert.IsTrue(gotException, "The {0} is not caught, but is expected to.", expectedException.Name);
+
+
+         if (gotException && !Alphaleonis.Utils.IsNullOrWhiteSpace(findString))
+            Assert.IsTrue(message.Contains(findString), "The findString is not found in the exception message, but is expected to.");
       }
    }
 }

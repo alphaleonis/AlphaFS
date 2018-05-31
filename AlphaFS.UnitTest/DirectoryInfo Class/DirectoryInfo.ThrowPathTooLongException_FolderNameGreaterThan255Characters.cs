@@ -57,9 +57,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine();
 
 
-            ExceptionAssert.PathTooLongException(() => new System.IO.DirectoryInfo(isNetwork ? unc : local));
+            UnitTestAssert.ThrowsException<System.IO.PathTooLongException>(() => new System.IO.DirectoryInfo(isNetwork ? unc : local));
 
-            ExceptionAssert.PathTooLongException(() => new Alphaleonis.Win32.Filesystem.DirectoryInfo(isNetwork ? unc : local));
+            UnitTestAssert.ThrowsException<System.IO.PathTooLongException>(() => new Alphaleonis.Win32.Filesystem.DirectoryInfo(isNetwork ? unc : local));
          }
 
          Console.WriteLine();

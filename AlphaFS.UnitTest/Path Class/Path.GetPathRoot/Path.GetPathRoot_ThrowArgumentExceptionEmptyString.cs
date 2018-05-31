@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -33,9 +34,9 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         ExceptionAssert.ArgumentException(() => System.IO.Path.GetPathRoot(string.Empty));
-
-         ExceptionAssert.ArgumentException(() => Alphaleonis.Win32.Filesystem.Path.GetPathRoot(string.Empty));
+         UnitTestAssert.ThrowsException<ArgumentException>(() => System.IO.Path.GetPathRoot(string.Empty));
+         
+         UnitTestAssert.ThrowsException<ArgumentException>(() => Alphaleonis.Win32.Filesystem.Path.GetPathRoot(string.Empty));
       }
    }
 }

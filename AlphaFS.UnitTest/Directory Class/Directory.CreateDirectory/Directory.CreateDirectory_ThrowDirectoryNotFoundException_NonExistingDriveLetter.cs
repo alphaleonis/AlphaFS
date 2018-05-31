@@ -46,9 +46,9 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("Input Directory Path: [{0}]", folder);
 
-         ExceptionAssert.DirectoryNotFoundException(() => System.IO.Directory.CreateDirectory(folder));
+         UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => System.IO.Directory.CreateDirectory(folder));
 
-         ExceptionAssert.DirectoryNotFoundException(() => Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder));
+         UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder));
 
          Console.WriteLine();
       }

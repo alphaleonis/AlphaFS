@@ -27,9 +27,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Dst File Path: [{0}]", dstFile.FullName);
 
 
-            ExceptionAssert.IOException(() => System.IO.File.Copy(srcFile.FullName, dstFile.FullName));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.File.Copy(srcFile.FullName, dstFile.FullName));
             
-            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile.FullName));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.AlreadyExistsException>(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile.FullName));
             
 
             Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile.FullName, true);

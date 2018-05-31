@@ -52,16 +52,16 @@ namespace AlphaFS.UnitTest
 
          if (isNetwork)
          {
-            ExceptionAssert.IOException(() => System.IO.Directory.Delete(folder));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.Delete(folder));
 
-            ExceptionAssert.DeviceNotReadyException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder));
          }
 
          else
          {
-            ExceptionAssert.DirectoryNotFoundException(() => System.IO.Directory.Delete(folder));
+            UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => System.IO.Directory.Delete(folder));
 
-            ExceptionAssert.DeviceNotReadyException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder));
          }
          
          Console.WriteLine();

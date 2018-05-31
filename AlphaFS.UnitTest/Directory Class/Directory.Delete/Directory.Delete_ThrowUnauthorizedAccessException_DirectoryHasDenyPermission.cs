@@ -50,11 +50,11 @@ namespace AlphaFS.UnitTest
             
             try
             {
-               ExceptionAssert.IOException(() => System.IO.Directory.Delete(folder.FullName));
+               UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.Delete(folder.FullName));
 
 
                // 2018-05-29 BUG: Throws wrong Exception.
-               ExceptionAssert.UnauthorizedAccessException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName));
+               UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName));
             }
             finally
             {

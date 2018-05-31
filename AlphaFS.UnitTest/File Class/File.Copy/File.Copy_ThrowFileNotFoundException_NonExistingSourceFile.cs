@@ -48,9 +48,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 
-         ExceptionAssert.FileNotFoundException(() => System.IO.File.Copy(srcFile, dstFile));
+         UnitTestAssert.ThrowsException<System.IO.FileNotFoundException>(() => System.IO.File.Copy(srcFile, dstFile));
 
-         ExceptionAssert.FileNotFoundException(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile, dstFile));
+         UnitTestAssert.ThrowsException<System.IO.FileNotFoundException>(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile, dstFile));
 
          Console.WriteLine();
       }

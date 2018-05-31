@@ -45,9 +45,9 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
-            ExceptionAssert.IOException(() => System.IO.Directory.CreateDirectory(file.FullName));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.CreateDirectory(file.FullName));
 
-            ExceptionAssert.AlreadyExistsException(() => Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(file.FullName));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.AlreadyExistsException>(() => Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(file.FullName));
          }
 
          Console.WriteLine();

@@ -50,9 +50,9 @@ namespace AlphaFS.UnitTest
 
             using (System.IO.File.Create(System.IO.Path.Combine(folder.FullName, file))) { }
 
-            ExceptionAssert.IOException(() => System.IO.Directory.Delete(folder.FullName));
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.Delete(folder.FullName));
 
-            ExceptionAssert.DirectoryNotEmptyException(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName));
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName));
          }
          
          Console.WriteLine();
