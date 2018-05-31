@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class File
+   public static partial class File
    {
       /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file.</summary>
       /// <param name="path">The path to the file to enumerate streams of.</param>

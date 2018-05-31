@@ -247,11 +247,18 @@ namespace Alphaleonis.Win32.Filesystem
       private void Reset()
       {
          if (_initGetSpaceInfo)
-            FreeBytesAvailable = TotalNumberOfBytes = TotalNumberOfFreeBytes = 0;
+         {
+            FreeBytesAvailable = 0;
+            TotalNumberOfBytes = 0;
+            TotalNumberOfFreeBytes = 0;
+         }
+
 
          if (_initGetClusterInfo)
          {
-            BytesPerSector = NumberOfFreeClusters = SectorsPerCluster = 0;
+            BytesPerSector = 0;
+            NumberOfFreeClusters = 0;
+            SectorsPerCluster = 0;
             TotalNumberOfClusters = 0;
          }
       }

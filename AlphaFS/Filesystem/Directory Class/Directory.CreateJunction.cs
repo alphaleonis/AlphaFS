@@ -28,7 +28,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>[AlphaFS] Creates an NTFS directory junction(similar to CMD command: "MKLINK /J")
       /// <remarks>

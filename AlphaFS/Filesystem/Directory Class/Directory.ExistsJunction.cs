@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory junction on disk.
       /// <returns>

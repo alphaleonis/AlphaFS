@@ -28,7 +28,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class File
+   public static partial class File
    {
       #region Obsolete
 

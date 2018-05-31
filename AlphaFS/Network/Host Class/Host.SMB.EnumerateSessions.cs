@@ -27,7 +27,7 @@ using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>[AlphaFS] Enumerates sessions established on the local host.</summary>
       /// <returns>An <see cref="IEnumerable{SessionInfo}"/> collection from the local host.</returns>

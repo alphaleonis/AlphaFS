@@ -26,7 +26,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
       /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>

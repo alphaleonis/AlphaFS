@@ -30,7 +30,7 @@ using System.Security.AccessControl;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       #region .NET
 

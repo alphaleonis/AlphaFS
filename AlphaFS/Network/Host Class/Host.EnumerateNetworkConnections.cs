@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   public partial class Host
+   public static partial class Host
    {
       /// <summary>[AlphaFS] Returns an enumerable collection of defined network connections on the local host.</summary>
       /// <returns>An <see cref="IEnumerable{NetworkConnectionInfo}"/> collection of defined network connections on the local host.</returns>

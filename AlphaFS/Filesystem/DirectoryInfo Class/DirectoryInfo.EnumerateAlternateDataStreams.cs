@@ -24,7 +24,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class DirectoryInfo
+   public sealed partial class DirectoryInfo
    {
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</summary>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</returns>

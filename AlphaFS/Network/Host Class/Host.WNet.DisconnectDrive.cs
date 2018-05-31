@@ -23,7 +23,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>Cancels an existing network connection. You can also call the function to remove remembered network connections that are not currently connected.</summary>
       /// <param name="localName">The name of a local device to be disconnected, such as "F:".</param>

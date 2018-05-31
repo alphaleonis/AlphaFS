@@ -249,6 +249,7 @@
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateLogicalDrives.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
     <Compile Include="Device\Device.OpenPhysicalDrive.cs" />
+    <Compile Include="Filesystem\File Class\File.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\File Class\File.FileAttributeLogic.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.GetFileId.cs" />
