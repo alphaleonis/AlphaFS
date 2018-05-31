@@ -30,50 +30,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Gets the connection name of the locally mapped drive.</summary>
-      /// <returns>The server and share as: \\servername\sharename.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="PathTooLongException"/>
-      /// <exception cref="NetworkInformationException"/>
-      /// <param name="path">The local path with drive name.</param>
-      [SecurityCritical]
-      public static string GetMappedConnectionName(string path)
-      {
-         return Host.GetRemoteNameInfoCore(path, true).lpConnectionName;
-      }
-
-
-
-
-      /// <summary>[AlphaFS] Gets the network share name from the locally mapped path.</summary>
-      /// <returns>The network share connection name of <paramref name="path"/>.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="PathTooLongException"/>
-      /// <exception cref="NetworkInformationException"/>
-      /// <param name="path">The local path with drive name.</param>
-      [SecurityCritical]
-      public static string GetMappedUncName(string path)
-      {
-         return Host.GetRemoteNameInfoCore(path, true).lpUniversalName;
-      }
-
-
-
-
-      /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path.</summary>
-      /// <returns><see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
-      /// <param name="path">The path to check.</param>
-      [SecurityCritical]
-      public static bool IsUncPath(string path)
-      {
-         return IsUncPathCore(path, false, true);
-      }
-
-
-
-
       /// <summary>[AlphaFS] Converts a local path to a network share path.  
       ///   <para>A Local path, e.g.: "C:\Windows" or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
       ///   <para>If a logical drive points to a network share path (mapped drive), the share path will be returned without a trailing <see cref="DirectorySeparator"/> character.</para>
@@ -154,29 +110,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Internal Methods
-
-      /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path, optionally skip invalid path character check.</summary>
-      /// <returns><see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
-      /// <param name="path">The path to check.</param>
-      /// <param name="isRegularPath">When <see langword="true"/> indicates that <paramref name="path"/> is already in regular path format.</param>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
-      [SecurityCritical]
-      internal static bool IsUncPathCore(string path, bool isRegularPath, bool checkInvalidPathChars)
-      {
-         if (!isRegularPath)
-            path = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None, false);
-
-         else if (checkInvalidPathChars)
-            CheckInvalidPathChars(path, false, false);
 
 
-         Uri uri;
-         return Uri.TryCreate(path, UriKind.Absolute, out uri) && uri.IsUnc;
-      }
-
-
-      /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it in a long path format and the ability to add or remove a trailing backslash.
+      /// <summary>Converts a local path to a network share path, optionally returning it in a long path format and the ability to add or remove a trailing backslash.
       ///   <para>A Local path, e.g.: "C:\Windows" or "C:\Windows\" will be returned as: "\\localhost\C$\Windows".</para>
       ///   <para>If a logical drive points to a network share path (mapped drive), the share path will be returned without a trailing <see cref="DirectorySeparator"/> character.</para>
       /// </summary>
@@ -258,7 +194,5 @@ namespace Alphaleonis.Win32.Filesystem
 
          return getAsLongPath ? GetLongPathCore(returnUncPath, fullPathOptions) : GetRegularPathCore(returnUncPath, fullPathOptions, false);
       }
-
-      #endregion // Internal Methods
    }
 }

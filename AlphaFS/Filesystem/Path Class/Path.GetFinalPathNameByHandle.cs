@@ -45,6 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
          return GetFinalPathNameByHandleCore(handle, FinalPathFormats.None);
       }
 
+
       /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.</summary>
       /// <returns>The final path as a string.</returns>
       /// <remarks>
@@ -58,6 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetFinalPathNameByHandleCore(handle, finalPath);
       }
+
 
       /// <summary>Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.</summary>
       /// <returns>The final path as a string.</returns>
@@ -194,6 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
             }
          }
+
          return string.Empty;
       }
    }

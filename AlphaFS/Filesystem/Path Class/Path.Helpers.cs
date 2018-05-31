@@ -30,95 +30,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      #region HasExtension (.NET)
-
-      /// <summary>Determines whether a path includes a file name extension.</summary>
-      /// <returns><see langword="true"/> if the characters that follow the last directory separator (\\ or /) or volume separator (:) in the path include a period (.) followed by one or more characters; otherwise, <see langword="false"/>.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <param name="path">The path to search for an extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
-      [SecurityCritical]
-      public static bool HasExtension(string path)
-      {
-         return System.IO.Path.HasExtension(path);
-      }
-
-      #endregion // HasExtension (.NET)
-
-      #region IsPathRooted
-
-      #region .NET
-
-      /// <summary>Gets a value indicating whether the specified path string contains absolute or relative path information.</summary>
-      /// <returns><see langword="true"/> if <paramref name="path"/> contains a root; otherwise, <see langword="false"/>.</returns>
-      /// <remarks>
-      ///   The IsPathRooted method returns <see langword="true"/> if the first character is a directory separator character such as
-      ///   <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>).
-      ///   For example, it returns true for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir".
-      ///   It returns <see langword="false"/> for path strings such as "MyDir".
-      /// </remarks>
-      /// <remarks>This method does not verify that the path or file name exists.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
-      [SecurityCritical]
-      public static bool IsPathRooted(string path)
-      {
-         return IsPathRooted(path, true);
-      }
-
-      #endregion // .NET
-
-      /// <summary>[AlphaFS] Gets a value indicating whether the specified path string contains absolute or relative path information.</summary>
-      /// <returns><see langword="true"/> if <paramref name="path"/> contains a root; otherwise, <see langword="false"/>.</returns>
-      /// <remarks>
-      ///   The IsPathRooted method returns true if the first character is a directory separator character such as
-      ///   <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>).
-      ///   For example, it returns <see langword="true"/> for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir".
-      ///   It returns <see langword="false"/> for path strings such as "MyDir".
-      /// </remarks>
-      /// <remarks>This method does not verify that the path or file name exists.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
-      [SecurityCritical]
-      public static bool IsPathRooted(string path, bool checkInvalidPathChars)
-      {
-         if (path != null)
-         {
-            if (checkInvalidPathChars)
-               CheckInvalidPathChars(path, false, true);
-
-            var length = path.Length;
-
-            if (length >= 1 && IsDVsc(path[0], false) ||
-                length >= 2 && IsDVsc(path[1], true))
-               return true;
-         }
-
-         return false;
-      }
-
-      #endregion // IsPathRooted
-
-      #region IsValidName
-
-      /// <summary>[AlphaFS] Check if file or folder name has any invalid characters.</summary>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="name">File or folder name.</param>
-      /// <returns><see langword="true"/> if name contains any invalid characters. Otherwise <see langword="false"/></returns>
-      public static bool IsValidName(string name)
-      {
-         if (name == null)
-            throw new ArgumentNullException("name");
-
-         return name.IndexOfAny(GetInvalidFileNameChars()) < 0;
-      }
-
-      #endregion // IsValidName
-
-      #region Internal Methods
-
       internal static void CheckInvalidUncPath(string path)
       {
          // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." which is the current directory.
@@ -130,6 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNC_Path_Should_Match_Format, "path");
          }
       }
+
 
       /// <summary>Checks that the given path format is supported.</summary>
       /// <exception cref="ArgumentException"/>
@@ -160,6 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (checkInvalidPathChars)
             CheckInvalidPathChars(path, checkAdditional, false);
       }
+
 
       /// <summary>Checks that the path contains only valid path-characters.</summary>
       /// <exception cref="ArgumentException"/>
@@ -208,7 +121,64 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
       }
-      
+
+
+      [SecurityCritical]
+      internal static string GetCleanExceptionPath(string path)
+      {
+         return GetRegularPathCore(path, GetFullPathOptions.None, true).TrimEnd(DirectorySeparatorChar, WildcardStarMatchAllChar);
+      }
+
+
+      /// <summary>Gets the path as a long full path.</summary>
+      /// <returns>The path as an extended length path.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to convert.</param>
+      /// <param name="pathFormat">The path format to use.</param>
+      /// <param name="options">Options for controlling the operation. Note that on .NET 3.5 the TrimEnd option has no effect.</param>
+      [SecurityCritical]
+      internal static string GetExtendedLengthPathCore(KernelTransaction transaction, string path, PathFormat pathFormat, GetFullPathOptions options)
+      {
+         if (null == path)
+            return null;
+
+
+         switch (pathFormat)
+         {
+            case PathFormat.LongFullPath:
+               if (options != GetFullPathOptions.None)
+               {
+                  // If pathFormat equals LongFullPath it is possible that the trailing backslashg ('\') is not added or removed.
+                  // Prevent that.
+
+                  options &= ~GetFullPathOptions.CheckAdditional;
+                  options &= ~GetFullPathOptions.CheckInvalidPathChars;
+                  options &= ~GetFullPathOptions.FullCheck;
+                  options &= ~GetFullPathOptions.TrimEnd;
+
+                  path = ApplyFullPathOptions(path, options);
+               }
+
+               return path;
+
+
+            case PathFormat.FullPath:
+               return GetLongPathCore(path, GetFullPathOptions.None);
+
+            case PathFormat.RelativePath:
+#if NET35
+               // .NET 3.5 the TrimEnd option has no effect.
+               options = options & ~GetFullPathOptions.TrimEnd;
+#endif
+               return GetFullPathCore(transaction, path, GetFullPathOptions.AsLongPath | options);
+
+            default:
+               throw new ArgumentException("Invalid value: " + pathFormat, "pathFormat");
+         }
+      }
+
 
       [SecurityCritical]
       internal static int GetRootLength(string path, bool checkInvalidPathChars)
@@ -240,6 +210,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          return index;
       }
+
 
       /// <summary>Check if <paramref name="c"/> is a directory- and/or volume-separator character.</summary>
       /// <returns><see langword="true"/> if <paramref name="c"/> is a separator character.</returns>
@@ -582,21 +553,5 @@ namespace Alphaleonis.Win32.Filesystem
 
          return newBuffer.ToString();
       }
-
-
-      //// Input to this method should already be fullpath. This method will ensure that we append 
-      //// the trailing slash only when appropriate and when thisDirOnly is specified append a "." 
-      //// at the end of the path to indicate that the demand is only for the fullpath and not 
-      //// everything underneath it.
-      //internal static string GetDemandDir(string fullPath, bool thisDirOnly)
-      //{
-      //   var endWithSeparator = fullPath.EndsWith(DirectorySeparator, StringComparison.Ordinal) || fullPath.EndsWith(AltDirectorySeparator, StringComparison.Ordinal);
-
-      //   return thisDirOnly
-      //      ? (endWithSeparator ? fullPath + CurrentDirectoryPrefix : fullPath + DirectorySeparator + CurrentDirectoryPrefix)
-      //      : (!endWithSeparator ? fullPath + DirectorySeparator : fullPath);
-      //}
-
-      #endregion // Internal Methods
    }
 }

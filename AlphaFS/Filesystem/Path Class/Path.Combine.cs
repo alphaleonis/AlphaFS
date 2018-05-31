@@ -38,6 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CombineCore(true, paths);
       }
 
+
       /// <summary>Combines an array of strings into a path.</summary>
       /// <returns>The combined paths.</returns>
       /// <remarks>
@@ -55,11 +56,12 @@ namespace Alphaleonis.Win32.Filesystem
          if (paths == null)
             throw new ArgumentNullException("paths");
 
-         int capacity = 0;
-         int num = 0;
+         var capacity = 0;
+         var num = 0;
+
          for (int index = 0, l = paths.Length; index < l; ++index)
          {
-            if (paths[index] == null)
+            if (null == paths[index])
                throw new ArgumentNullException("paths");
 
             if (paths[index].Length != 0)
@@ -69,18 +71,22 @@ namespace Alphaleonis.Win32.Filesystem
                   num = index;
                   capacity = paths[index].Length;
                }
+
                else
                   capacity += paths[index].Length;
 
-               char ch = paths[index][paths[index].Length - 1];
+
+               var ch = paths[index][paths[index].Length - 1];
 
                if (!IsDVsc(ch, null))
                   ++capacity;
             }
          }
 
+
          var buffer = new StringBuilder(capacity);
-         for (int index = num; index < paths.Length; ++index)
+
+         for (var index = num; index < paths.Length; ++index)
          {
             if (paths[index].Length != 0)
             {
@@ -89,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                else
                {
-                  char ch = buffer[buffer.Length - 1];
+                  var ch = buffer[buffer.Length - 1];
 
                   if (!IsDVsc(ch, null))
                      buffer.Append(DirectorySeparatorChar);
