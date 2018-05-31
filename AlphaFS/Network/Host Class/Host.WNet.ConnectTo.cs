@@ -26,7 +26,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>Creates a connection to a network resource.</summary>
       /// <exception cref="NetworkInformationException"/>

@@ -27,7 +27,7 @@ using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>Enumerates open resources from the local host.</summary>
       /// <returns><see cref="IEnumerable{OpenResourceInfo}"/> open resources from the local host.</returns>

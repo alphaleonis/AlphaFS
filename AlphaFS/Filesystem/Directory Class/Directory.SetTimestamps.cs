@@ -24,7 +24,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>[AlphaFS] Sets all the date and time stamps for the specified directory, at once.</summary>
       /// <param name="path">The directory for which to set the dates and times information.</param>

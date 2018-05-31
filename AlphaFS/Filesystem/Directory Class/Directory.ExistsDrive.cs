@@ -23,7 +23,7 @@ using System.IO;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>[AlphaFS] Checks the specified <paramref name="path"/> for local or network drives, such as: "C:" and "\\server\c$".</summary>
       public static bool ExistsDrive(string path, bool throwIfDriveNotExists)

@@ -26,7 +26,7 @@ using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>[AlphaFS] Retrieves <see cref="ServerStatisticsInfo"/> operating statistics for the Server service from the local host.</summary>
       /// <returns>A <see cref="ServerStatisticsInfo"/> instance.</returns>

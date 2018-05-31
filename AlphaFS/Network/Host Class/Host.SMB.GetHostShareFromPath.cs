@@ -26,7 +26,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>Gets the host and share path name for the given <paramref name="uncPath"/>.</summary>
       /// <param name="uncPath">The share in the format: \\host\share.</param>

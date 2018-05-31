@@ -26,7 +26,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   public partial class Host
+   public static partial class Host
    {
       /// <summary>[AlphaFS] Retrieves a network based on a specified network connection ID.</summary>
       /// <param name="networkConnectionID">A <see cref="Guid"/> that specifies the network connection ID.</param>

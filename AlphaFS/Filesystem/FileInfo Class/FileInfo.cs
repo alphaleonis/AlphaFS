@@ -31,6 +31,9 @@ namespace Alphaleonis.Win32.Filesystem
    [SerializableAttribute]
    public sealed partial class FileInfo : FileSystemInfo
    {
+      private string _name;
+
+
       #region Constructors
 
       #region .NET
@@ -212,7 +215,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private string _name;
       /// <summary>Gets the name of the file.</summary>
       /// <value>The name of the file.</value>
       /// <remarks>
