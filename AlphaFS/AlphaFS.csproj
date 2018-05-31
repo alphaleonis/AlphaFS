@@ -362,6 +362,34 @@
     <Compile Include="Filesystem\Path Class\Path.IsLogicalDrive.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DirectoryEnumerationFilters.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\EncryptedFileRawMode.cs" />
+    <Compile Include="Filesystem\Path Class\Path.ChangeExtension.cs" />
+    <Compile Include="Filesystem\Path Class\Path.AddTrailingDirectorySeparator.cs" />
+    <Compile Include="Filesystem\Path Class\Path.IsUncPath.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetMappedUncName.cs" />
+    <Compile Include="Filesystem\Path Class\Path.IsValidName.cs" />
+    <Compile Include="Filesystem\Path Class\Path.IsPathRooted.cs" />
+    <Compile Include="Filesystem\Path Class\Path.HasExtension.cs" />
+    <Compile Include="Filesystem\Path Class\Path.IsLongPath.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetShort83Path.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetRegularPath.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetLongFrom83ShortPath.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetLongPath.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetSuffixedDirectoryName.cs" />
+    <Compile Include="Filesystem\Path Class\Path.RemoveTrailingDirectorySeparator.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetTempFileName.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetRandomFileName.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetDirectoryName.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetDirectoryNameWithoutRoot.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetExtension.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetFileName.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetFileNameWithoutExtension.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetInvalidFileNameChars.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetInvalidPathChars.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetRelativePath.cs" />
+    <Compile Include="Filesystem\Path Class\Path.IsLogicalDrive.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetMappedConnectionName.cs" />
+    <Compile Include="Filesystem\Structures And Enumerations\DirectoryEnumerationFilters.cs" />
+    <Compile Include="Filesystem\Structures And Enumerations\EncryptedFileRawMode.cs" />
     <Compile Include="Filesystem\Native Other\FINDEX_SEARCH_OPS.cs" />
     <Compile Include="Filesystem\Native Other\STREAM_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\PartitionStyle.cs" />
@@ -493,8 +521,8 @@
     <Compile Include="Filesystem\Native Other\REPARSE_DATA_BUFFER.cs" />
     <Compile Include="Filesystem\Native Other\WIN32_FIND_STREAM_DATA.cs" />
     <Compile Include="Filesystem\Path Class\Path.cs" />
-    <Compile Include="Filesystem\Path Class\Path.ValidationAndChecks.cs" />
-    <Compile Include="Filesystem\Path Class\Path.GetComponents.cs" />
+    <Compile Include="Filesystem\Path Class\Path.Helpers.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetPathRoot.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetFinalPathNameByHandle.cs" />
     <Compile Include="Filesystem\Path Class\Path.Combine.cs" />
     <Compile Include="Filesystem\Path Class\Path.Constants.cs" />
@@ -505,6 +533,9 @@
     <Compile Include="Filesystem\Path Class\Path.Temporary.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\SPDRP.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\StorageMediaType.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetSuffixedDirectoryNameWithoutRoot.cs" />
+    <Compile Include="Filesystem\Path Class\Path.LocalToUnc.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetTempPath.cs" />
     <Compile Include="Safe Handles\SafeTokenHandle.cs" />
     <Compile Include="Safe Handles\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Safe Handles\SafeEncryptedFileRawHandle.cs" />
@@ -709,7 +740,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
