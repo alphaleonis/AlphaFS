@@ -28,7 +28,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>Enumerates the DFS Links from a DFS namespace.</summary>
       /// <returns><see cref="IEnumerable{DfsInfo}"/> of DFS namespaces.</returns>

@@ -26,7 +26,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <exception cref="ArgumentException"/>

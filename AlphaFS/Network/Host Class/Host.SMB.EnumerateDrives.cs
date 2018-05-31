@@ -29,7 +29,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>Enumerates drives from the local host.</summary>
       /// <returns><see cref="IEnumerable{String}"/> drives from the local host.</returns>

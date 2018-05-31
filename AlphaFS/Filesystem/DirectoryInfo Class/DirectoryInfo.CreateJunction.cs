@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class DirectoryInfo
+   public sealed partial class DirectoryInfo
    {
       /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").
       /// <remarks>

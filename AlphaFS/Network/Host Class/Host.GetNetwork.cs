@@ -26,7 +26,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>[AlphaFS] Rretrieves a network based on a supplied network ID from the local host.</summary>
       /// <returns>A <see cref="NetworkInfo"/> instance from the local host, as specified by <paramref name="networkID"/>.</returns>

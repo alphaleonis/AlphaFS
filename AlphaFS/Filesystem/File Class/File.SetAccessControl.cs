@@ -29,7 +29,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class File
+   public static partial class File
    {
       /// <summary>Applies access control list (ACL) entries described by a <see cref="FileSecurity"/> FileSecurity object to the specified file.</summary>
       /// <exception cref="ArgumentNullException"/>

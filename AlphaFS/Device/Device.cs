@@ -267,7 +267,7 @@ namespace Alphaleonis.Win32.Filesystem
             safeBuffer.Close();
 
 
-         switch ((uint)lastError)
+         switch ((uint) lastError)
          {
             case Win32Errors.ERROR_MORE_DATA:
             case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
@@ -289,8 +289,6 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static void InvokeIoControlUnknownSize<T>(SafeFileHandle handle, uint controlCode, T input, uint increment = 128)
       {
-         //byte[] output;
-         //uint bytesReturned;
          var inputSize = (uint) Marshal.SizeOf(input);
          var outputLength = increment;
 
@@ -312,25 +310,16 @@ namespace Alphaleonis.Win32.Filesystem
                      break;
 
                   default:
-                     NativeError.ThrowException(lastError);
+                     if (lastError != Win32Errors.ERROR_SUCCESS)
+                        NativeError.ThrowException(lastError);
                      break;
                }
             }
+
             else
                break;
 
          } while (true);
-
-
-         // 2017-06-28: Disabled; results are currently not used.
-
-         //// Return the result.
-         //if (output.Length == bytesReturned)
-         //   return output;
-
-         //var res = new byte[bytesReturned];
-         //Array.Copy(output, res, bytesReturned);
-         //return res;
       }
 
       #endregion // Private Helpers
@@ -511,10 +500,13 @@ namespace Alphaleonis.Win32.Filesystem
                      if (safeBuffer.Capacity < bytesReturned)
                         safeBuffer.Close();
                      break;
-               }
 
-               if (lastError != Win32Errors.ERROR_SUCCESS)
-                  NativeError.ThrowException(lastError, reparsePath);
+
+                  default:
+                     if (lastError != Win32Errors.ERROR_SUCCESS)
+                        NativeError.ThrowException(lastError, reparsePath);
+                     break;
+               }
             }
 
             else

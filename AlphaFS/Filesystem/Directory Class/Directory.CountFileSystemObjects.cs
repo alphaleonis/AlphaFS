@@ -26,7 +26,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <returns>The counted number of file system objects.</returns>
