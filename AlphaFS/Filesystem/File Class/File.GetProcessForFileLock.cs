@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class File
+   public static partial class File
    {
       /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
       /// <para>&#160;</para>

@@ -26,7 +26,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class File
+   public static partial class File
    {
       /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
       /// <returns>Returns <see langword="true"/> if the specified file is in use (locked); otherwise, <see langword="false"/></returns>

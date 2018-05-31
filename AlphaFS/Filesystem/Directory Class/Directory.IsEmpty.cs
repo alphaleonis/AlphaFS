@@ -24,7 +24,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>[AlphaFS] Determines whether the given directory is empty; i.e. it contains no files and no subdirectories.</summary>
       /// <returns>

@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
       /// <returns>If <paramref name="localName"/> is <see langword="null"/> or <c>string.Empty</c>, returns the last available drive letter, <see langword="null"/> otherwise.</returns>

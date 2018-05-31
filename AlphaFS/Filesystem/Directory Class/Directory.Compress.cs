@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <remarks>This will only compress the root items (non recursive).</remarks>

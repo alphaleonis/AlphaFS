@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -20,19 +20,12 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
-using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public sealed partial class DirectoryInfo
+   /// <summary>Provides static methods for the creation, copying, deletion, moving, and opening of a single file, and aids in the creation of FileStream objects.</summary>
+   public static partial class File
    {
-      /// <summary>[AlphaFS] Gets the unique identifier for the directory. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
-      /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a directory can change over time.</remarks>
-      [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-      [SecurityCritical]
-      public FileIdInfo GetFileId()
-      {
-         return File.GetFileIdInfoCore(Transaction, LongFullName, PathFormat.LongFullPath);
-      }
+      // This file only exists for the documentation.
    }
 }

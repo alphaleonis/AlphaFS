@@ -27,7 +27,7 @@ using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
       /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>

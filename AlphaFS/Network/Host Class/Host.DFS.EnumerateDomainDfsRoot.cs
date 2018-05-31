@@ -31,7 +31,7 @@ using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>Enumerates the DFS namespaces from the domain.</summary>
       /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from the domain.</returns>

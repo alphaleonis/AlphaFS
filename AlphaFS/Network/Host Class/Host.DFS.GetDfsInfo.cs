@@ -27,7 +27,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   partial class Host
+   public static partial class Host
    {
       /// <summary>Gets information about a specified DFS root or link in a DFS namespace.</summary>
       /// <returns>A <see cref="DfsInfo"/> instance.</returns>

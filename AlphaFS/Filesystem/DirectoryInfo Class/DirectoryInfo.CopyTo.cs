@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class DirectoryInfo
+   public sealed partial class DirectoryInfo
    {
       // .NET: Directory class does not contain the Copy() method.
       // Mimic .NET File.CopyTo() methods.

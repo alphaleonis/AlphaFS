@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class DirectoryInfo
+   public sealed partial class DirectoryInfo
    {
       /// <summary>[AlphaFS] Removes the directory junction.
       /// <para>&#160;</para>

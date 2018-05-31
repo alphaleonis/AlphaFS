@@ -29,7 +29,7 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>
       /// Gets the current working directory of the application.

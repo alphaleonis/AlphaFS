@@ -27,7 +27,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
       /// <exception cref="ArgumentException"/>

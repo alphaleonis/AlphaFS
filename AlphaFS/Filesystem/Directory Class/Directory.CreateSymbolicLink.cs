@@ -26,7 +26,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       /// <summary>[AlphaFS] Creates a symbolic link  to a directory (similar to CMD command: "MKLINK /D").
       /// <para>&#160;</para>

@@ -27,7 +27,7 @@ using SearchOption = System.IO.SearchOption;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class Directory
+   public static partial class Directory
    {
       // Since Directory.GetDirectories() is less efficient than Directory.EnumerateDirectories(),
       // only .NET and AlphaFS Transactional methods are implemented. No additional overloaded methods.
