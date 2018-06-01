@@ -828,7 +828,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (isSingleFileAction)
                // We take an extra hit by getting the file size for a single file Copy or Move action.
-               cmr.TotalBytes = GetSizeCore(transaction, null, destinationPathLp, PathFormat.LongFullPath);
+               cmr.TotalBytes = GetSizeCore(transaction, null, destinationPathLp, false, PathFormat.LongFullPath);
             
 
             if (preserveDates)

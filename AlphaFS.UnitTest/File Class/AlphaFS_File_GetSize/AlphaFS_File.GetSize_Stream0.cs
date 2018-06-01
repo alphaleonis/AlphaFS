@@ -30,24 +30,25 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_GetSize_LocalAndNetwork_Success()
+      public void AlphaFS_File_GetSize_Stream0_LocalAndNetwork_Success()
       {
-         AlphaFS_File_GetSize(false);
-         AlphaFS_File_GetSize(true);
+         AlphaFS_File_GetSize_Stream0(false);
+         AlphaFS_File_GetSize_Stream0(true);
       }
       
 
-      private void AlphaFS_File_GetSize(bool isNetwork)
+      private void AlphaFS_File_GetSize_Stream0(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
             var file = tempRoot.CreateFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file.FullName);
+            Console.WriteLine("Input File Path: [{0}]\n", file.FullName);
 
             var fileLength = Alphaleonis.Win32.Filesystem.File.GetSize(file.FullName);
 
-            Console.WriteLine("\n\tFile sizes: [{0}] vs [{1}]", file.Length, fileLength);
+            Console.WriteLine("\tSystem.IO File size: {0}", file.Length);
+            Console.WriteLine("\tAlphaFS   File size: {0}", fileLength);
             
             Assert.AreEqual(file.Length, fileLength, "The file sizes do not match, but are expected to.");
          }

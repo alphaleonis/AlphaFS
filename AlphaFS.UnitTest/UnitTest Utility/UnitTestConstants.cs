@@ -35,7 +35,7 @@ namespace AlphaFS.UnitTest
       {
          "(1) Nikolai Tesla: \"Today's scientists have substituted mathematics for experiments, and they wander off through equation after equation, and eventually build a structure which has no relation to reality.\"",
          "(2) The quick brown fox jumps over the lazy dog.",
-         "(3) " + System.IO.Path.GetRandomFileName()
+         "(3) Computer: [" + Environment.MachineName + "]" + "\tHello there, " + Environment.UserName
       };
 
 

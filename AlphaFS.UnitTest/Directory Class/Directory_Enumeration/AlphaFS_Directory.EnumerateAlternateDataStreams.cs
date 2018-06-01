@@ -64,12 +64,14 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(currentNumberofStreams, Alphaleonis.Win32.Filesystem.Directory.EnumerateAlternateDataStreams(folder).Count(), "Total amount of Directory.EnumerateAlternateDataStreams() streams do not match.");
 
 
+            var stream1Name = folder + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + myStream;
+            var stream2Name = folder + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + myStream2;
+
+
             // Create alternate data streams.
             // Because of the colon, you must supply a full path and use PathFormat.FullPath or PathFormat.LongFullPath,
             // to prevent a: "NotSupportedException: path is in an invalid format." exception.
 
-            var stream1Name = folder + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + myStream;
-            var stream2Name = folder + Alphaleonis.Win32.Filesystem.Path.StreamSeparator + myStream2;
 
             Alphaleonis.Win32.Filesystem.File.WriteAllLines(stream1Name, UnitTestConstants.StreamArrayContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
             Alphaleonis.Win32.Filesystem.File.WriteAllText(stream2Name, streamStringContent, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
