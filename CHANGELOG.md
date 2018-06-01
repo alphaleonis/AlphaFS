@@ -10,6 +10,7 @@ Version 2.2.2  (2018-XX-XX)
 - Issue #436: `Directory.GetFiles()` with relative path  (Thx stellarbear)
 - Issue #437: Fixed `PathTooLongException` for boundary case of directory name length in `Path.NormalizePath`  (Thx okrushelnitsky)
 - Issue #444: Exception when moving or renaming a folder after updating from 2.1.3 to 2.2.1  (Thx mlaily)
+- Issue #441: `InvalidOperationException` on `Directory.EnumerateFileSystemEntries()`
 
 ### Improvements
 

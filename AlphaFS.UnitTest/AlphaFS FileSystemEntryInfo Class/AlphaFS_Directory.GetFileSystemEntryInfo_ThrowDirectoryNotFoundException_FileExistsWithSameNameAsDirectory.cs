@@ -39,22 +39,15 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Directory_GetFileSystemEntryInfo_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(bool isNetwork)
       {
-         var path = System.IO.Path.Combine(Environment.SystemDirectory, "notepad.exe");
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
+         {
+            var folder = tempRoot.CreateFileRandomizedAttributes();
 
-         if (!System.IO.File.Exists(path))
-            UnitTestAssert.InconclusiveBecauseFileNotFound(path);
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
+            UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(folder.FullName));
+         }
 
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var tempPath = path;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
-         
-         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
-         
-         UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath));
-         
          Console.WriteLine();
       }
    }
