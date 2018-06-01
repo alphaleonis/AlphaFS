@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_GetPathRoot_ThrowArgumentExceptionEmptyString_Success()
+      public void Path_GetPathRoot_ThrowsArgumentExceptionEmptyString_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
