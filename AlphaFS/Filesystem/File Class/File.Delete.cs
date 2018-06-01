@@ -153,7 +153,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void DeleteFileCore(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
          if (null == path)
-            throw new ArgumentNullException(nameof(path));
+            throw new ArgumentNullException("path");
 
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);
