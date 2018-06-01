@@ -153,10 +153,12 @@
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfoTest.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_RegularDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.GetTotalSize.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_NullAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_NullAsPath_ThrowsArgumentNullException.cs" />
+    <Compile Include="File Class\AlphaFS_File_GetSize\AlphaFS_File.GetSize_AllStreams.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptySourceFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptyDestFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_NullDestFileNameAsPath_ThrowsArgumentNullException.cs" />
@@ -439,7 +441,7 @@
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.CreateHardlink_And_EnumerateHardlinks.cs" />
     <Compile Include="AlphaFS Compression\AlphaFS_File.Compress_And_Decompress.cs" />
     <Compile Include="AlphaFS Compression\AlphaFS_File.GetCompressedSize.cs" />
-    <Compile Include="File Class\AlphaFS_File.GetSize.cs" />
+    <Compile Include="File Class\AlphaFS_File_GetSize\AlphaFS_File.GetSize_Stream0.cs" />
     <Compile Include="File Class\AlphaFS_File.EnumerateAlternateDataStreams.cs" />
     <Compile Include="File Class\File_Create\File.Create.cs" />
     <Compile Include="File Class\File.Open\File_Open_Append.cs" />

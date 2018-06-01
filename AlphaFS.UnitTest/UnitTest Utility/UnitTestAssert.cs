@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
       
       public static void Inconclusive(string errorMessage)
       {
-         Console.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0}{1}{0}", Environment.NewLine, errorMessage));
+         Console.WriteLine("{0}{1}{0}", Environment.NewLine, errorMessage);
 
          Assert.Inconclusive(errorMessage);
 
