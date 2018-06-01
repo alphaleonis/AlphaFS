@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Path_CheckSupportedPathFormat_ThrowsNotSupportedException_PathContainsColon_LocalAndNetwork_Success()
+      public void AlphaFS_Path_CheckSupportedPathFormat_PathContainsColon_ThrowsNotSupportedException_LocalAndNetwork_Success()
       {
-         Path_CheckSupportedPathFormat_ThrowsNotSupportedException_PathContainsColon(false);
-         Path_CheckSupportedPathFormat_ThrowsNotSupportedException_PathContainsColon(true);
+         AlphaFS_Path_CheckSupportedPathFormat_PathContainsColon(false);
+         AlphaFS_Path_CheckSupportedPathFormat_PathContainsColon(true);
       }
 
 
-      private void Path_CheckSupportedPathFormat_ThrowsNotSupportedException_PathContainsColon(bool isNetwork)
+      private void AlphaFS_Path_CheckSupportedPathFormat_PathContainsColon(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

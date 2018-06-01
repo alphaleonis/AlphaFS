@@ -309,7 +309,7 @@
     <Compile Include="File Class\File.Delete\File.Delete_ExistingFile.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_NonExistingDriveLetter_ThrowsDirectoryNotFoundException.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_NonExistingDriveLetter_ThrowsIOExceptionOrDeviceNotReadyException.cs" />
-    <Compile Include="File Class\File.Delete\File.PathIsADirectoryNotAFile_ThrowsUnauthorizedAccessException.cs" />
+    <Compile Include="File Class\File.Delete\File.Delete_PathIsADirectoryNotAFile_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="File Class\File_Timestamps\File_Timestamps_CompareTimestamps_NonExistingFile.cs" />
     <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_NonExistingSourceLogicalDrive_ThrowsDeviceNotReadyException.cs" />
     <Compile Include="UnitTests\MoveTest.cs" />
@@ -365,9 +365,9 @@
     <Compile Include="Path Class\Path.GetFileNameWithoutExtension\Path.GetFileNameWithoutExtension.cs" />
     <Compile Include="Path Class\Path.GetFileName\Path.GetFileName.cs" />
     <Compile Include="Path Class\Path.GetFullPath\AlphaFS_Path.GetFullPath_WithTrailingDotOrSpace.cs" />
-    <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_ThrowNotSupportedException.cs" />
-    <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_ThrowArgumentException_InvalidLocalPath2.cs" />
-    <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_ThrowArgumentException_InvalidLocalPath1.cs" />
+    <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_InvalidPath_ThrowsNotSupportedException.cs" />
+    <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_InvalidLocalPath2_ThrowsArgumentException.cs" />
+    <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_InvalidLocalPath1_ThrowsArgumentException_Success.cs" />
     <Compile Include="Path Class\Path.IsPathRooted\Path.IsPathRooted_NullOrEmpty.cs" />
     <Compile Include="UnitTests\TimestampsTest.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_NonExistingDirectory.cs" />
@@ -461,9 +461,9 @@
     <Compile Include="Directory Class\Directory_GetFileSystemEntries_LongPathPrefix_ShouldReturnCorrectEntries.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_JunctionsLinksTest.cs" />
     <Compile Include="UnitTests\AlphaFS_OperatingSystemTest.cs" />
-    <Compile Include="Path Class\Path_CheckSupportedPathFormat\Path.CheckSupportedPathFormat_ThrowArgumentException_PathContainsInvalidCharacters.cs" />
-    <Compile Include="Path Class\Path_CheckSupportedPathFormat\Path.CheckSupportedPathFormat_ThrowArgumentException_PathStartsWithColon.cs" />
-    <Compile Include="Path Class\Path_CheckSupportedPathFormat\Path.CheckSupportedPathFormat_ThrowNotSupportedException_PathContainsColon.cs" />
+    <Compile Include="Path Class\AlphaFS_Path.CheckSupportedPathFormat\AlphaFS_Path.CheckSupportedPathFormat_PathContainsInvalidCharacters_ThrowsArgumentException.cs" />
+    <Compile Include="Path Class\AlphaFS_Path.CheckSupportedPathFormat\AlphaFS_Path.CheckSupportedPathFormat_PathStartsWithColon.cs" />
+    <Compile Include="Path Class\AlphaFS_Path.CheckSupportedPathFormat\AlphaFS_Path.CheckSupportedPathFormat_PathContainsColon_ThrowsNotSupportedException.cs" />
     <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath.cs" />
     <Compile Include="Path Class\AlphaFS_Path.LocalToUnc.cs" />
     <Compile Include="Path Class\AlphaFS_Path.GetRelativePathResolveRelativePath.cs" />

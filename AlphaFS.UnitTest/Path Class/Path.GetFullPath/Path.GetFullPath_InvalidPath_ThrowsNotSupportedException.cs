@@ -19,8 +19,8 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
@@ -30,13 +30,13 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_GetFullPath_ThrowsArgumentException_InvalidLocalPath2_Success()
+      public void Path_GetFullPath_InvalidPath_ThrowsNotSupportedException_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         UnitTestAssert.ThrowsException<ArgumentException>(() => System.IO.Path.GetFullPath(@"\\\\.txt"));
+         UnitTestAssert.ThrowsException<NotSupportedException>(() => System.IO.Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt"));
 
-         UnitTestAssert.ThrowsException<ArgumentException>(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(@"\\\\.txt"));
+         UnitTestAssert.ThrowsException<NotSupportedException>(() => Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt"));
       }
    }
 }

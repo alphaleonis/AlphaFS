@@ -30,16 +30,21 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Path_CheckSupportedPathFormat_ThrowsArgumentException_PathContainsInvalidCharacters_Local_Success()
+      public void AlphaFS_Path_CheckSupportedPathFormat_PathStartsWithColon_ThrowsArgumentException_Local_Success()
       {
-         using (var tempRoot = new TemporaryDirectory())
-         {
-            var folder = tempRoot.Directory.FullName + @"\ThisIs<My>File";
+         AlphaFS_Path_CheckSupportedPathFormat_PathStartsWithColon();
+      }
 
-            Console.WriteLine("Input Path: [{0}]", folder);
 
-            UnitTestAssert.ThrowsException<ArgumentException>(() => Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(folder, true, true));
-         }
+      private void AlphaFS_Path_CheckSupportedPathFormat_PathStartsWithColon()
+      {
+         UnitTestConstants.PrintUnitTestHeader(false);
+
+         const string invalidPath = @":AAAAAAAAAA";
+
+         Console.WriteLine("Input Path: [{0}]", invalidPath);
+         
+         UnitTestAssert.ThrowsException<ArgumentException>(() => Alphaleonis.Win32.Filesystem.Path.CheckSupportedPathFormat(invalidPath, true, true));
       }
    }
 }
