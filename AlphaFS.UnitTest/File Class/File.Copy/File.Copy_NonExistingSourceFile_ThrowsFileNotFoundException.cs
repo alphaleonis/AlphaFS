@@ -39,18 +39,18 @@ namespace AlphaFS.UnitTest
 
       private void File_Copy_NonExistingSourceFile_ThrowsFileNotFoundException(bool isNetwork)
       {
-         using (var tempRoot = new TemporaryDirectory())
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var srcFile = tempRoot.CreateFileRandomizedAttributes();
-            var dstFile = tempRoot.CreateFileRandomizedAttributes();
+            var srcFile = tempRoot.RandomTxtFileName;
+            var dstFile = tempRoot.RandomTxtFileName;
 
-            Console.WriteLine("Src File Path: [{0}]", srcFile.FullName);
-            Console.WriteLine("Dst File Path: [{0}]", dstFile.FullName);
+            Console.WriteLine("Src File Path: [{0}]", srcFile);
+            Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 
-            UnitTestAssert.ThrowsException<System.IO.FileNotFoundException>(() => System.IO.File.Copy(srcFile.FullName, dstFile.FullName));
+            UnitTestAssert.ThrowsException<System.IO.FileNotFoundException>(() => System.IO.File.Copy(srcFile, dstFile));
 
-            UnitTestAssert.ThrowsException<System.IO.FileNotFoundException>(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile.FullName, dstFile.FullName));
+            UnitTestAssert.ThrowsException<System.IO.FileNotFoundException>(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFile, dstFile));
          }
 
          Console.WriteLine();

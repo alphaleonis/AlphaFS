@@ -133,28 +133,28 @@ namespace AlphaFS.UnitTest
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory.</summary>
       public System.IO.DirectoryInfo CreateDirectory()
       {
-         return CreateDirectory(null);
+         return CreateDirectoryCore(null);
       }
 
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory.</summary>
       public System.IO.DirectoryInfo CreateDirectory(string directoryNameSuffix)
       {
-         return CreateDirectory(Directory.FullName + directoryNameSuffix, false, false);
+         return CreateDirectoryCore(Directory.FullName + directoryNameSuffix);
       }
 
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with read-only and/or hidden attributes set.</summary>
       public System.IO.DirectoryInfo CreateDirectoryRandomizedAttributes()
       {
-         return CreateDirectory(null, true, true);
+         return CreateDirectoryCore(null, true, true);
       }
 
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with read-only and/or hidden attributes set.</summary>
       public System.IO.DirectoryInfo CreateDirectoryRandomizedAttributes(string directoryNameSuffix)
       {
-         return CreateDirectory(Directory.FullName + directoryNameSuffix, true, true);
+         return CreateDirectoryCore(Directory.FullName + directoryNameSuffix, true, true);
       }
 
 
@@ -163,14 +163,14 @@ namespace AlphaFS.UnitTest
       /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file.</summary>
       public System.IO.FileInfo CreateFile()
       {
-         return CreateFile(null);
+         return CreateFileCore(null);
       }
 
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing file, possibly with read-only and/or hidden attributes set.</summary>
       public System.IO.FileInfo CreateFileRandomizedAttributes()
       {
-         return CreateFile(null, true, true);
+         return CreateFileCore(null, true, true);
       }
 
 
@@ -179,21 +179,21 @@ namespace AlphaFS.UnitTest
       /// <summary>Creates a directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>
       public System.IO.DirectoryInfo CreateTree(int level = 1)
       {
-         return CreateTreeCore(null, level, false, false, false);
+         return CreateTreeCore(null, level);
       }
 
 
       /// <summary>Creates a recursive directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>      
       public System.IO.DirectoryInfo CreateRecursiveTree(int level = 1)
       {
-         return CreateTreeCore(null, level, true, false, false);
+         return CreateTreeCore(null, level, true);
       }
 
 
       /// <summary>Creates a recursive directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>
       public System.IO.DirectoryInfo CreateRecursiveTree(int level, string rootFullPath)
       {
-         return CreateTreeCore(rootFullPath, level, true, false, false);
+         return CreateTreeCore(rootFullPath, level, true);
       }
 
 
@@ -212,9 +212,9 @@ namespace AlphaFS.UnitTest
       
       
       /// <summary>Creates an, optional recursive, directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size and possibly with read-only and/or hidden attributes set.</summary>
-      private System.IO.DirectoryInfo CreateTreeCore(string rootFullPath, int level, bool recurse, bool readOnly, bool hidden)
+      private System.IO.DirectoryInfo CreateTreeCore(string rootFullPath, int level = 1, bool recurse = false, bool readOnly = false, bool hidden = false)
       {
-         var dirInfo = CreateDirectory(rootFullPath, readOnly, hidden);
+         var dirInfo = CreateDirectoryCore(rootFullPath, readOnly, hidden);
 
          var folderCount = 0;
 
@@ -226,10 +226,10 @@ namespace AlphaFS.UnitTest
             var fsoName = RandomString + "-" + fsoCount;
 
             // Always create folder.
-            var di = CreateDirectory(System.IO.Path.Combine(dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "Directory_{0}_directory", fsoName)), readOnly, hidden);
+            var di = CreateDirectoryCore(System.IO.Path.Combine(dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "Directory_{0}_directory", fsoName)), readOnly, hidden);
 
             // Create file, every other iteration.
-            CreateFile(System.IO.Path.Combine(fsoCount % 2 == 0 ? di.FullName : dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "File_{0}_file.txt", fsoName)), readOnly, hidden);
+            CreateFileCore(System.IO.Path.Combine(fsoCount % 2 == 0 ? di.FullName : dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "File_{0}_file.txt", fsoName)), readOnly, hidden);
          }
 
 
@@ -262,7 +262,7 @@ namespace AlphaFS.UnitTest
 
          DirectorySecurity dirSecurity;
 
-         var dirInfo = CreateDirectory(folderFullPath, false, false);
+         var dirInfo = CreateDirectoryCore(folderFullPath);
 
 
          // Set DENY for current User.
@@ -298,7 +298,7 @@ namespace AlphaFS.UnitTest
 
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with read-only and/or hidden attributes set.</summary>
-      private System.IO.DirectoryInfo CreateDirectory(string folderFullPath, bool readOnly, bool hidden)
+      private System.IO.DirectoryInfo CreateDirectoryCore(string folderFullPath, bool readOnly = false, bool hidden = false)
       {
          var dirInfo = System.IO.Directory.CreateDirectory(!Alphaleonis.Utils.IsNullOrWhiteSpace(folderFullPath) ? folderFullPath : RandomDirectoryFullPath);
 
@@ -309,7 +309,7 @@ namespace AlphaFS.UnitTest
 
 
       /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file, possibly with read-only and/or hidden attributes set.</summary>
-      private System.IO.FileInfo CreateFile(string fileFullPath, bool readOnly = false, bool hidden = false)
+      private System.IO.FileInfo CreateFileCore(string fileFullPath, bool readOnly = false, bool hidden = false)
       {
          var fileInfo = new System.IO.FileInfo(!Alphaleonis.Utils.IsNullOrWhiteSpace(fileFullPath) ? fileFullPath : RandomTxtFileFullPath);
 
