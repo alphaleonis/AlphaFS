@@ -42,11 +42,11 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder1 = tempRoot.CreateDirectory();
+            var folder1 = tempRoot.CreateDirectoryRandomizedAttributes();
 
             Thread.Sleep(1500);
 
-            var folder2 = tempRoot.CreateDirectory();
+            var folder2 = tempRoot.CreateDirectoryRandomizedAttributes();
             
 
             Console.WriteLine("Input Directory1 Path: [{0}]", folder1.FullName);
@@ -56,9 +56,13 @@ namespace AlphaFS.UnitTest
             Assert.AreNotEqual(System.IO.Directory.GetCreationTime(folder1.FullName), System.IO.Directory.GetCreationTime(folder2.FullName));
             Assert.AreNotEqual(System.IO.Directory.GetLastAccessTime(folder1.FullName), System.IO.Directory.GetLastAccessTime(folder2.FullName));
             Assert.AreNotEqual(System.IO.Directory.GetLastWriteTime(folder1.FullName), System.IO.Directory.GetLastWriteTime(folder2.FullName));
-
+            
 
             Alphaleonis.Win32.Filesystem.Directory.CopyTimestamps(folder1.FullName, folder2.FullName);
+
+
+            UnitTestConstants.Dump(folder1, -17);
+            UnitTestConstants.Dump(folder2, -17);
 
 
             Assert.AreEqual(System.IO.Directory.GetCreationTime(folder1.FullName), System.IO.Directory.GetCreationTime(folder2.FullName));

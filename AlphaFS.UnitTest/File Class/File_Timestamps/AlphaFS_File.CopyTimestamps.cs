@@ -42,28 +42,31 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file1 = tempRoot.CreateFile();
+            var file1 = tempRoot.CreateFileRandomizedAttributes();
+
             Thread.Sleep(1500);
-            var file2 = tempRoot.CreateFile();
+
+            var file2 = tempRoot.CreateFileRandomizedAttributes();
             
+
             Console.WriteLine("Input File1 Path: [{0}]", file1.FullName);
             Console.WriteLine("Input File2 Path: [{0}]", file2.FullName);
 
 
             Assert.AreNotEqual(System.IO.File.GetCreationTime(file1.FullName), System.IO.File.GetCreationTime(file2.FullName));
-
             Assert.AreNotEqual(System.IO.File.GetLastAccessTime(file1.FullName), System.IO.File.GetLastAccessTime(file2.FullName));
-
             Assert.AreNotEqual(System.IO.File.GetLastWriteTime(file1.FullName), System.IO.File.GetLastWriteTime(file2.FullName));
 
 
             Alphaleonis.Win32.Filesystem.File.CopyTimestamps(file1.FullName, file2.FullName);
 
 
+            UnitTestConstants.Dump(file1, -17);
+            UnitTestConstants.Dump(file2, -17);
+
+
             Assert.AreEqual(System.IO.File.GetCreationTime(file1.FullName), System.IO.File.GetCreationTime(file2.FullName));
-
             Assert.AreEqual(System.IO.File.GetLastAccessTime(file1.FullName), System.IO.File.GetLastAccessTime(file2.FullName));
-
             Assert.AreEqual(System.IO.File.GetLastWriteTime(file1.FullName), System.IO.File.GetLastWriteTime(file2.FullName));
          }
 
