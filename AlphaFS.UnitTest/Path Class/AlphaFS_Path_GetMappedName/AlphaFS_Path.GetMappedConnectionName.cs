@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Path_GetMappedConnectionName()
+      public void AlphaFS_Path_GetMappedConnectionName_Success()
       {
          using (var tempRoot = new TemporaryDirectory(true))
          {

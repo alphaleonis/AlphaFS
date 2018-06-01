@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_ThrowsDirectoryNotEmptyException_NonEmptyDirectory_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(false);
-         AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(true);
+         AlphaFS_Directory_Delete_ThrowsDirectoryNotEmptyException_NonEmptyDirectory(false);
+         AlphaFS_Directory_Delete_ThrowsDirectoryNotEmptyException_NonEmptyDirectory(true);
       }
 
 
-      private void AlphaFS_Directory_Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory(bool isNetwork)
+      private void AlphaFS_Directory_Delete_ThrowsDirectoryNotEmptyException_NonEmptyDirectory(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

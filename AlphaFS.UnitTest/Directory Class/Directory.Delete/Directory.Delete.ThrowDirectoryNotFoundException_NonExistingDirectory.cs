@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_ThrowDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
+      public void Directory_Delete_ThrowsDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
       {
-         Directory_Delete_ThrowDirectoryNotFoundException_NonExistingDirectory(false);
-         Directory_Delete_ThrowDirectoryNotFoundException_NonExistingDirectory(true);
+         Directory_Delete_ThrowsDirectoryNotFoundException_NonExistingDirectory(false);
+         Directory_Delete_ThrowsDirectoryNotFoundException_NonExistingDirectory(true);
       }
 
 
-      private void Directory_Delete_ThrowDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
+      private void Directory_Delete_ThrowsDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

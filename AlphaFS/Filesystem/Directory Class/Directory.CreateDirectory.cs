@@ -689,6 +689,10 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (pathFormat != PathFormat.LongFullPath)
          {
+            if (null == path)
+               throw new ArgumentNullException("path");
+
+
             Path.CheckSupportedPathFormat(path, true, true);
             Path.CheckSupportedPathFormat(templatePath, true, true);
 

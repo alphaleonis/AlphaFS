@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
+      public void Directory_Delete_ThrowsDirectoryNotFoundException_FileExistsWithSameNameAsDirectory_LocalAndNetwork_Success()
       {
-         Directory_Delete_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(false);
-         Directory_Delete_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(true);
+         Directory_Delete_ThrowsDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(false);
+         Directory_Delete_ThrowsDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(true);
       }
 
 
-      private void Directory_Delete_ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(bool isNetwork)
+      private void Directory_Delete_ThrowsDirectoryNotFoundException_FileExistsWithSameNameAsDirectory(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
