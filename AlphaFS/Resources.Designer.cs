@@ -61,6 +61,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Argument must be a drive letter from a-z, a volume GUID or device path..
+        /// </summary>
+        internal static string Argument_must_be_DriveLetter_or_VolumeGuid_or_DevicePath {
+            get {
+                return ResourceManager.GetString("Argument_must_be_DriveLetter_or_VolumeGuid_or_DevicePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buffer is not large enough for the requested operation..
         /// </summary>
         internal static string Buffer_Not_Large_Enough {
@@ -247,6 +256,24 @@ namespace Alphaleonis.Win32 {
         internal static string InvalidDriveLetterArgument {
             get {
                 return ResourceManager.GetString("InvalidDriveLetterArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument must be a drive letter: &quot;C&quot;, &quot;C:&quot;  or RootDir: &quot;C:\&quot;.
+        /// </summary>
+        internal static string InvalidLogicalDriveArgument {
+            get {
+                return ResourceManager.GetString("InvalidLogicalDriveArgument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Argument must be a drive letter: &quot;C&quot;, &quot;C:\&quot; or Volume GUID..
+        /// </summary>
+        internal static string InvalidLogicalDriveVolumeArgument {
+            get {
+                return ResourceManager.GetString("InvalidLogicalDriveVolumeArgument", resourceCulture);
             }
         }
         

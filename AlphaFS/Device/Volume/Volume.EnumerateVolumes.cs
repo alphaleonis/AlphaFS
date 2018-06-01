@@ -19,9 +19,7 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
@@ -30,34 +28,33 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Volume
    {
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="String"/> volumes on the computer.</summary>
-      /// <returns>An enumerable collection of <see cref="String"/> volume names on the computer.</returns>
-      [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="string"/> volumes on the computer.</summary>
+      /// <returns>An enumerable collection of <see cref="string"/> volume names on the computer.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumes()
       {
-         var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
+         var buffer = new StringBuilder(50);
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (var handle = NativeMethods.FindFirstVolume(buffer, (uint)buffer.Capacity))
+         using (var handle = NativeMethods.FindFirstVolume(buffer, (uint) buffer.Capacity))
          {
             var lastError = Marshal.GetLastWin32Error();
 
-            var throwException = lastError != Win32Errors.ERROR_NO_MORE_FILES && lastError != Win32Errors.ERROR_PATH_NOT_FOUND;
+            var throwException = lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_NO_MORE_FILES && lastError != Win32Errors.ERROR_MORE_DATA;
 
-            if (!NativeMethods.IsValidHandle(handle, lastError, String.Empty, throwException))
+            if (!NativeMethods.IsValidHandle(handle, lastError, string.Empty, throwException))
                yield break;
 
             yield return buffer.ToString();
 
 
-            while (NativeMethods.FindNextVolume(handle, buffer, (uint)buffer.Capacity))
+            while (NativeMethods.FindNextVolume(handle, buffer, (uint) buffer.Capacity))
             {
                lastError = Marshal.GetLastWin32Error();
 
-               throwException = lastError != Win32Errors.ERROR_NO_MORE_FILES && lastError != Win32Errors.ERROR_PATH_NOT_FOUND && lastError != Win32Errors.ERROR_MORE_DATA;
+               throwException = lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_NO_MORE_FILES && lastError != Win32Errors.ERROR_MORE_DATA;
 
-               if (!NativeMethods.IsValidHandle(handle, lastError, String.Empty, throwException))
+               if (!NativeMethods.IsValidHandle(handle, lastError, string.Empty, throwException))
                   yield break;
 
                yield return buffer.ToString();

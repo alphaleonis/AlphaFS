@@ -20,9 +20,11 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 
 namespace Alphaleonis
 {
@@ -41,6 +43,25 @@ namespace Alphaleonis
          var attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
 
          return attributes.Length > 0 ? attributes[0].Description : enumValueString;
+      }
+
+
+      [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
+      public static T[] EnumToArray<T>()
+      {
+         var enumType = typeof(T);
+
+         // Can't use generic type constraints on value types, so have to do check like this.
+         if (enumType.BaseType != typeof(Enum))
+            throw new ArgumentException("T must be of type System.Enum", "T");
+
+
+         var enumValArray = Enum.GetValues(enumType).Cast<T>().ToArray();
+         var enumValList = new List<T>(enumValArray.Length);
+
+         enumValList.AddRange(enumValArray.Select(val => (T) Enum.Parse(enumType, val.ToString())));
+
+         return enumValList.ToArray();
       }
 
 

@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
       public static string GetDriveNameForNtDeviceName(string deviceName)
       {
-         return (from drive in Directory.EnumerateLogicalDrivesCore(false, false)
+         return (from drive in DriveInfo.EnumerateLogicalDrivesCore(false, false).OrderBy(driveName => driveName).Select(driveName => new DriveInfo(driveName))
 
             where drive.DosDeviceName.Equals(deviceName, StringComparison.OrdinalIgnoreCase)
 

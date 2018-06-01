@@ -30,12 +30,13 @@ using System.Text;
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
-   {  
+   {
       /// <summary>Defines, redefines, or deletes MS-DOS device names.</summary>
       /// <returns>
       /// If the function succeeds, the return value is nonzero.
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
+      /// <remarks>SMB does not support volume management functions. For CsvFs, a new name will not be replicated to the other nodes on the cluster.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
@@ -43,11 +44,13 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool DefineDosDevice(DosDeviceAttributes dwFlags, [MarshalAs(UnmanagedType.LPWStr)] string lpDeviceName, [MarshalAs(UnmanagedType.LPWStr)] string lpTargetPath);
 
+
       /// <summary>Deletes a drive letter or mounted folder.</summary>
       /// <returns>
       /// If the function succeeds, the return value is nonzero.
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
+      /// <remarks>SMB does not support volume management functions. For CsvFs, a new mount point will not be replicated to the other nodes on the cluster.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
@@ -55,33 +58,39 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool DeleteVolumeMountPoint([MarshalAs(UnmanagedType.LPWStr)] string lpszVolumeMountPoint);
 
+
       /// <summary>Retrieves the name of a volume on a computer. FindFirstVolume is used to begin scanning the volumes of a computer.</summary>
       /// <returns>
       /// If the function succeeds, the return value is a search handle used in a subsequent call to the FindNextVolume and FindVolumeClose functions.
       /// If the function fails to find any volumes, the return value is the INVALID_HANDLE_VALUE error code. To get extended error information, call GetLastError.
       /// </returns>
+      /// <remarks>SMB does not support volume management functions.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstVolumeW"), SuppressUnmanagedCodeSecurity]
       internal static extern SafeFindVolumeHandle FindFirstVolume(StringBuilder lpszVolumeName, [MarshalAs(UnmanagedType.U4)] uint cchBufferLength);
 
+
       /// <summary>Retrieves the name of a mounted folder on the specified volume. FindFirstVolumeMountPoint is used to begin scanning the mounted folders on a volume.</summary>
       /// <returns>
       /// If the function succeeds, the return value is a search handle used in a subsequent call to the FindNextVolumeMountPoint and FindVolumeMountPointClose functions.
       /// If the function fails to find a mounted folder on the volume, the return value is the INVALID_HANDLE_VALUE error code.
       /// </returns>
+      /// <remarks>SMB does not support volume management functions. CsvFS does not support adding mount point on a CSV volume. ReFS does not index mount points.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstVolumeMountPointW"), SuppressUnmanagedCodeSecurity]
       internal static extern SafeFindVolumeMountPointHandle FindFirstVolumeMountPoint([MarshalAs(UnmanagedType.LPWStr)] string lpszRootPathName, StringBuilder lpszVolumeMountPoint, [MarshalAs(UnmanagedType.U4)] uint cchBufferLength);
 
+
       /// <summary>Continues a volume search started by a call to the FindFirstVolume function. FindNextVolume finds one volume per call.</summary>
       /// <returns>
       /// If the function succeeds, the return value is nonzero.
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
+      /// <remarks>SMB does not support volume management functions.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
@@ -89,67 +98,70 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool FindNextVolume(SafeFindVolumeHandle hFindVolume, StringBuilder lpszVolumeName, [MarshalAs(UnmanagedType.U4)] uint cchBufferLength);
 
+
       /// <summary>Continues a mounted folder search started by a call to the FindFirstVolumeMountPoint function. FindNextVolumeMountPoint finds one mounted folder per call.</summary>
       /// <returns>
       /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError. If no more mounted folders can be found, the GetLastError function returns the ERROR_NO_MORE_FILES error code.
+      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// If no more mounted folders can be found, the GetLastError function returns the ERROR_NO_MORE_FILES error code.
       /// In that case, close the search with the FindVolumeMountPointClose function.
       /// </returns>
-      /// <remarks>Minimum supported client: Windows XP</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003</remarks>
+      /// <remarks>SMB does not support volume management functions. CsvFS does not support adding mount point on a CSV volume. ReFS does not index mount points.</remarks>
+      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindNextVolumeMountPointW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool FindNextVolumeMountPoint(SafeFindVolumeMountPointHandle hFindVolume, StringBuilder lpszVolumeName, [MarshalAs(UnmanagedType.U4)] uint cchBufferLength);
 
-      /// <summary>Closes the specified volume search handle.</summary>
-      /// <remarks>
-      ///   <para>SetLastError is set to <see langword="false"/>.</para>
-      ///   Minimum supported client: Windows XP [desktop apps only]. Minimum supported server: Windows Server 2003 [desktop apps only].
-      /// </remarks>
+
+      /// <summary>Closes the specified volume search handle. The FindFirstVolume and FindNextVolume functions use this search handle to locate volumes.</summary>
       /// <returns>
-      ///   If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. To get extended error
-      ///   information, call GetLastError.
+      /// If the function succeeds, the return value is nonzero.
+      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
+      /// <remarks>SMB does not support volume management functions.</remarks>
+      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool FindVolumeClose(IntPtr hFindVolume);
 
+
       /// <summary>Closes the specified mounted folder search handle.</summary>
-      /// <remarks>
-      ///   <para>SetLastError is set to <see langword="false"/>.</para>
-      ///   <para>Minimum supported client: Windows XP</para>
-      ///   <para>Minimum supported server: Windows Server 2003</para>
-      /// </remarks>
       /// <returns>
       ///   If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. To get extended error
       ///   information, call GetLastError.
       /// </returns>
+      /// <remarks>SMB does not support volume management functions. CsvFS does not support adding mount point on a CSV volume.</remarks>
+      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool FindVolumeMountPointClose(IntPtr hFindVolume);
 
+
       /// <summary>
       ///   Determines whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.
-      ///   <para>To determine whether a drive is a USB-type drive, call <see cref="SetupDiGetDeviceRegistryProperty"/> and specify the
-      ///   SPDRP_REMOVAL_POLICY property.</para>
+      ///   <para>To determine whether a drive is a USB-type drive, SetupDiGetDeviceRegistryProperty and specify the SPDRP_REMOVAL_POLICY property.</para>
       /// </summary>
+      /// <returns>
+      ///   <para>The return value specifies the type of drive, see <see cref="DriveType"/>.</para>
+      ///   <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// </returns>
       /// <remarks>
       ///   <para>SMB does not support volume management functions.</para>
       ///   <para>Minimum supported client: Windows XP [desktop apps only]</para>
       ///   <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
       /// <param name="lpRootPathName">Full pathname of the root file.</param>
-      /// <returns>
-      ///   <para>The return value specifies the type of drive, see <see cref="DriveType"/>.</para>
-      ///   <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
-      /// </returns>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetDriveTypeW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern DriveType GetDriveType([MarshalAs(UnmanagedType.LPWStr)] string lpRootPathName);
+
 
       /// <summary>
       ///   Retrieves a bitmask representing the currently available disk drives.
@@ -169,6 +181,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint GetLogicalDrives();
 
+
       /// <summary>Retrieves information about the file system and volume associated with the specified root directory.</summary>
       /// <returns>
       /// If all the requested information is retrieved, the return value is nonzero.
@@ -181,6 +194,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetVolumeInformationW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetVolumeInformation([MarshalAs(UnmanagedType.LPWStr)] string lpRootPathName, StringBuilder lpVolumeNameBuffer, [MarshalAs(UnmanagedType.U4)] uint nVolumeNameSize, [MarshalAs(UnmanagedType.U4)] out uint lpVolumeSerialNumber, [MarshalAs(UnmanagedType.U4)] out int lpMaximumComponentLength, [MarshalAs(UnmanagedType.U4)] out VOLUME_INFO_FLAGS lpFileSystemAttributes, StringBuilder lpFileSystemNameBuffer, [MarshalAs(UnmanagedType.U4)] uint nFileSystemNameSize);
+
 
       /// <summary>Retrieves information about the file system and volume associated with the specified file.</summary>
       /// <returns>
@@ -196,6 +210,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetVolumeInformationByHandle(SafeFileHandle hFile, StringBuilder lpVolumeNameBuffer, [MarshalAs(UnmanagedType.U4)] uint nVolumeNameSize, [MarshalAs(UnmanagedType.U4)] out uint lpVolumeSerialNumber, [MarshalAs(UnmanagedType.U4)] out int lpMaximumComponentLength, out VOLUME_INFO_FLAGS lpFileSystemAttributes, StringBuilder lpFileSystemNameBuffer, [MarshalAs(UnmanagedType.U4)] uint nFileSystemNameSize);
 
+
       /// <summary>Retrieves a volume GUID path for the volume that is associated with the specified volume mount point (drive letter, volume GUID path, or mounted folder).</summary>
       /// <returns>
       /// If the function succeeds, the return value is nonzero.
@@ -210,6 +225,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetVolumeNameForVolumeMountPointW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetVolumeNameForVolumeMountPoint([MarshalAs(UnmanagedType.LPWStr)] string lpszVolumeMountPoint, StringBuilder lpszVolumeName, [MarshalAs(UnmanagedType.U4)] uint cchBufferLength);
+
 
       /// <summary>Retrieves the volume mount point where the specified path is mounted.</summary>
       /// <remarks>
@@ -232,6 +248,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetVolumePathName([MarshalAs(UnmanagedType.LPWStr)] string lpszFileName, StringBuilder lpszVolumePathName, [MarshalAs(UnmanagedType.U4)] uint cchBufferLength);
 
+
       /// <summary>Retrieves a list of drive letters and mounted folder paths for the specified volume.</summary>
       /// <remarks>Minimum supported client: Windows XP.</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003.</remarks>
@@ -243,6 +260,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetVolumePathNamesForVolumeNameW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetVolumePathNamesForVolumeName([MarshalAs(UnmanagedType.LPWStr)] string lpszVolumeName, char[] lpszVolumePathNames, [MarshalAs(UnmanagedType.U4)] uint cchBuferLength, [MarshalAs(UnmanagedType.U4)] out uint lpcchReturnLength);
+
 
       /// <summary>Sets the label of a file system volume.</summary>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only].</remarks>
@@ -257,6 +275,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool SetVolumeLabel([MarshalAs(UnmanagedType.LPWStr)] string lpRootPathName, [MarshalAs(UnmanagedType.LPWStr)] string lpVolumeName);
 
+
       /// <summary>Associates a volume with a drive letter or a directory on another volume.</summary>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only].</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only].</remarks>
@@ -268,6 +287,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SetVolumeMountPointW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool SetVolumeMountPoint([MarshalAs(UnmanagedType.LPWStr)] string lpszVolumeMountPoint, [MarshalAs(UnmanagedType.LPWStr)] string lpszVolumeName);
+
 
       /// <summary>Retrieves information about MS-DOS device names.</summary>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only].</remarks>

@@ -26,7 +26,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Volume
    {
-      /// <summary>[AlphaFS] Gets the name of the file system, such as NTFS or FAT32.</summary>
+      /// <summary>[AlphaFS] Gets the name of the file system, such as: "NTFS" or "FAT32".</summary>
       /// <remarks>Use DriveFormat to determine what formatting a drive uses.</remarks>
       /// <param name="drivePath">
       ///   A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\".

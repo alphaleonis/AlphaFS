@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
                   if (!success)
                      NativeError.ThrowException(lastError, path);
 
-                  return new FileIdInfo(safeBuffer.PtrToStructure<NativeMethods.FILE_ID_INFO>(0));
+                  return new FileIdInfo(safeBuffer.PtrToStructure<NativeMethods.FILE_ID_INFO>());
                }
             }
 

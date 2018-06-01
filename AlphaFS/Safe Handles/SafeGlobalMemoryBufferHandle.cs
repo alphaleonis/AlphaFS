@@ -80,7 +80,12 @@ namespace Alphaleonis.Win32
       /// </returns>
       protected override bool ReleaseHandle()
       {
-         Marshal.FreeHGlobal(handle);
+         if (handle != IntPtr.Zero)
+         {
+            Marshal.FreeHGlobal(handle);
+            handle = IntPtr.Zero;
+         }
+
          return true;
       }
    }

@@ -42,3 +42,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Scope = "member", Target = "Alphaleonis.Win32.Filesystem.NotSameDeviceException.#.cctor()")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "Dir", Scope = "resource", Target = "Alphaleonis.Win32.Resources.resources")]
 
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Name", Scope = "type", Target = "Alphaleonis.Win32.Filesystem.NativeMethods+PARTITION_INFORMATION_GPT")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Name", Scope = "type", Target = "Alphaleonis.Win32.Filesystem.NativeMethods+PARTITION_INFORMATION_EX")]

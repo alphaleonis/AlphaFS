@@ -143,6 +143,14 @@
     <Compile Include="..\AlphaFS\AssemblyVersionInfo.cs">
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.EnumeratePhysicalDisks.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_FromDevicePath.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_FromLogicalDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_FromVolume.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageAdapterInfo_FromLogicalDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageDeviceInfo_FromLogicalDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStoragePartitionInfo_FromLogicalDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfoTest.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_RegularDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetTotalSize.cs" />

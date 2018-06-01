@@ -27,35 +27,22 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>Specifies control options that filter the device information elements that are added to the device information set.</summary>
       [Flags]
-      internal enum SetupDiGetClassDevsExFlags
+      internal enum DEVICE_INFORMATION_FLAGS
       {
-         /// <summary>DIGCF_DEFAULT
-         /// <para>Return only the device that is associated with the system default device interface, if one is set, for the specified device interface classes.</para>
-         /// </summary>
-         Default = 1, // only valid with DIGCF_DEVICEINTERFACE
+         /// <summary>Return only the device that is associated with the system default device interface, if one is set, for the specified device interface classes.</summary>
+         DIGCF_DEFAULT = 1, // Only valid with DIGCF_DEVICEINTERFACE
 
-         /// <summary>DIGCF_PRESENT
-         /// <para>Return only devices that are currently present.</para>
-         /// </summary>
-         Present = 2,
+         /// <summary>Return only devices that are currently present.</summary>
+         DIGCF_PRESENT = 2,
 
-         /// <summary>DIGCF_ALLCLASSES
-         /// <para>Return a list of installed devices for the specified device setup classes or device interface classes.</para>
-         /// </summary>
-         AllClasses = 4,
+         /// <summary>Return a list of installed devices for the specified device setup classes or device interface classes.</summary>
+         DIGCF_ALLCLASSES = 4,
 
-         /// <summary>DIGCF_PROFILE
-         /// <para>Return only devices that are a part of the current hardware profile.</para>
-         /// </summary>
-         Profile = 8,
+         /// <summary>Return only devices that are a part of the current hardware profile.</summary>
+         DIGCF_PROFILE = 8,
 
-         /// <summary>DIGCF_DEVICEINTERFACE
-         /// <para>
-         /// Return devices that support device interfaces for the specified device interface classes.
-         /// This flag must be set in the Flags parameter if the Enumerator parameter specifies a Device Instance ID. 
-         /// </para>
-         /// </summary>
-         DeviceInterface = 16
+         /// <summary>Return devices that support device interfaces for the specified device interface classes. This flag must be set in the Flags parameter if the Enumerator parameter specifies a Device Instance ID.</summary>
+         DIGCF_DEVICEINTERFACE = 16
       }
    }
 }

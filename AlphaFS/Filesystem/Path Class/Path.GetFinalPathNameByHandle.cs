@@ -157,8 +157,12 @@ namespace Alphaleonis.Win32.Filesystem
                   var file = GetFileName(dosPath, true);
 
                   if (!Utils.IsNullOrWhiteSpace(file))
-                     foreach (var drive in Directory.EnumerateLogicalDrivesCore(false, false).Select(drv => drv.Name).Where(drv => driveLetter.Equals(RemoveTrailingDirectorySeparator(drv), StringComparison.OrdinalIgnoreCase)))
-                        return CombineCore(false, Volume.GetUniqueVolumeNameForPath(drive), GetSuffixedDirectoryNameWithoutRootCore(null, dosPath), file);
+
+                     foreach (var drive in DriveInfo.EnumerateLogicalDrivesCore(false, false)
+
+                        .Where(drv => driveLetter.Equals(RemoveTrailingDirectorySeparator(drv), StringComparison.OrdinalIgnoreCase)))
+
+                        return CombineCore(false, Volume.GetVolumeGuid(drive), GetSuffixedDirectoryNameWithoutRootCore(null, dosPath), file);
                }
 
                break;
@@ -182,7 +186,7 @@ namespace Alphaleonis.Win32.Filesystem
             return string.Empty;
 
 
-         foreach (var drive in Directory.EnumerateLogicalDrivesCore(false, false).Select(drv => drv.Name))
+         foreach (var drive in DriveInfo.EnumerateLogicalDrivesCore(false, false))
          {
             try
             {

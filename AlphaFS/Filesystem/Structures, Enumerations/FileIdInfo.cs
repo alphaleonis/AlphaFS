@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
          value = 0;
 
          for (var i = 0; i < count; i++)
-            value |= (long) fileId[startIndex + i] << (8 * i);
+            value |= (long)fileId[startIndex + i] << (8 * i);
       }
 
 
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!(obj is FileIdInfo))
             throw new ArgumentException("Object must be of type FileIdInfo");
 
-         return CompareTo((FileIdInfo) obj);
+         return CompareTo((FileIdInfo)obj);
       }
 
 
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns><see langword="true"/> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <see langword="false"/>.</returns>
       public override bool Equals(object obj)
       {
-         return obj is FileIdInfo && Equals((FileIdInfo) obj);
+         return obj is FileIdInfo && Equals((FileIdInfo)obj);
       }
 
 
@@ -170,7 +170,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             // _fileIdHighPart is 0 on NTFS and should be often 0 on ReFS, thus ignore it.
 
-            return (int) _fileIdLowPart ^ ((int) (_fileIdLowPart >> 32) | (int) _volumeSerialNumber);
+            return (int)_fileIdLowPart ^ ((int)(_fileIdLowPart >> 32) | (int)_volumeSerialNumber);
          }
       }
 
@@ -185,13 +185,13 @@ namespace Alphaleonis.Win32.Filesystem
 
             return string.Format(CultureInfo.InvariantCulture, "{0}-{1}-{2} : {3}-{4}-{5}",
 
-               ((uint) (_volumeSerialNumber >> 32)).ToString("X", CultureInfo.InvariantCulture),
-               ((ushort) (_volumeSerialNumber >> 16)).ToString("X", CultureInfo.InvariantCulture),
-               ((ushort) _volumeSerialNumber).ToString("X", CultureInfo.InvariantCulture),
+               ((uint)(_volumeSerialNumber >> 32)).ToString("X", CultureInfo.InvariantCulture),
+               ((ushort)(_volumeSerialNumber >> 16)).ToString("X", CultureInfo.InvariantCulture),
+               ((ushort)_volumeSerialNumber).ToString("X", CultureInfo.InvariantCulture),
 
                _fileIdHighPart.ToString("X", CultureInfo.InvariantCulture),
-               ((uint) (_fileIdLowPart >> 32)).ToString("X", CultureInfo.InvariantCulture),
-               ((uint) _fileIdLowPart).ToString("X", CultureInfo.InvariantCulture));
+               ((uint)(_fileIdLowPart >> 32)).ToString("X", CultureInfo.InvariantCulture),
+               ((uint)_fileIdLowPart).ToString("X", CultureInfo.InvariantCulture));
          }
       }
    }

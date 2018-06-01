@@ -52,9 +52,12 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("deviceName");
 
 
-         var devName = QueryDosDeviceCore(deviceName, false).ToArray()[0];
+         var devName = QueryDosDeviceCore(deviceName, false).ToArray();
 
-         return !Utils.IsNullOrWhiteSpace(devName) ? devName : null;
+         if (null == devName || devName.Length == 0)
+            return null;
+
+         return !Utils.IsNullOrWhiteSpace(devName[0]) ? devName[0] : null;
       }
 
 
@@ -81,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
                yield break;
             }
 
-            
+
             if (deviceName.StartsWith(Path.VolumePrefix, StringComparison.OrdinalIgnoreCase))
 
                deviceName = deviceName.Substring(Path.LongPathPrefix.Length);
@@ -116,6 +119,12 @@ namespace Alphaleonis.Win32.Filesystem
                      case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
                         bufferSize *= 2;
                         continue;
+                        
+
+                     case Win32Errors.ERROR_BAD_PATHNAME:
+                        // \\server\C$
+                        yield break;
+
 
                      default:
                         NativeError.ThrowException(lastError, deviceName);

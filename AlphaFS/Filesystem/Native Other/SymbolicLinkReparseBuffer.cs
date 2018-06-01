@@ -28,12 +28,23 @@ namespace Alphaleonis.Win32.Filesystem
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct SymbolicLinkReparseBuffer
       {
-         public ushort SubstituteNameOffset;
-         public ushort SubstituteNameLength;
-         public ushort PrintNameOffset;
-         public ushort PrintNameLength;
-         public SymbolicLinkType Flags;
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)] public byte[] data;
+         /// <summary>Offset, in bytes, of the substitute name string in the PathBuffer array.</summary>
+         [MarshalAs(UnmanagedType.U2)] public readonly ushort SubstituteNameOffset;
+
+         /// <summary>Length, in bytes, of the substitute name string. If this string is null-terminated, SubstituteNameLength does not include space for the null character.</summary>
+         [MarshalAs(UnmanagedType.U2)] public readonly ushort SubstituteNameLength;
+
+         /// <summary>Offset, in bytes, of the print name string in the PathBuffer array.</summary>
+         [MarshalAs(UnmanagedType.U2)] public readonly ushort PrintNameOffset;
+
+         /// <summary>Length, in bytes, of the print name string. If this string is null-terminated, PrintNameLength does not include space for the null character. </summary>
+         [MarshalAs(UnmanagedType.U2)] public readonly ushort PrintNameLength;
+
+         [MarshalAs(UnmanagedType.U4)] public readonly SymbolicLinkType Flags;
+
+         /// <summary>A buffer containing the unicode-encoded path string. The path string contains the substitute name string and print name string.</summary>
+         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1)]
+         public readonly byte[] data;
       }
    }
 }

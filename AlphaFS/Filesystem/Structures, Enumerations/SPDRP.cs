@@ -19,12 +19,14 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
       /// <summary>Flags for SetupDiGetDeviceRegistryProperty().</summary>
-      internal enum SetupDiGetDeviceRegistryPropertyEnum
+      internal enum SPDRP
       {
          /// <summary>SPDRP_DEVICEDESC
          /// <para>Represents a description of a device instance.</para>
@@ -57,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
          Class = 7,
 
          /// <summary>SPDRP_CLASSGUID
-         /// <para>Represents the <see cref="System.Guid"/> of the device setup class that a device instance belongs to.</para>
+         /// <para>Represents the <see cref="Guid"/> of the device setup class that a device instance belongs to.</para>
          /// </summary>
          ClassGuid = 8,
 
@@ -91,9 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// </summary>
          PhysicalDeviceObjectName = 14,
 
-         ///// <summary>SPDRP_CAPABILITIES
-         //// <para>Represents the capabilities of a device instance.</para>
-         //// </summary>
+         ///// <summary>SPDRP_CAPABILITIES - Represents the capabilities of a device instance.</summary>
          //Capabilities = 15,
 
          ///// <summary>SPDRP_UI_NUMBER - Represents a number for the device instance that can be displayed in a user interface item.</summary>
@@ -161,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
          LocationPaths = 35,
 
          /// <summary>SPDRP_BASE_CONTAINERID
-         /// <para>Represents the <see cref="System.Guid"/> value of the base container identifier (ID) .The Windows Plug and Play (PnP) manager assigns this value to the device node (devnode).</para>
+         /// <para>Represents the <see cref="Guid"/> value of the base container identifier (ID) .The Windows Plug and Play (PnP) manager assigns this value to the device node (devnode).</para>
          /// </summary>
          BaseContainerId = 36
       }
