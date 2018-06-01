@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_GetFullPath_ThrowArgumentException_InvalidLocalPath1_Success()
+      public void Path_GetFullPath_ThrowsArgumentException_InvalidLocalPath1_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 

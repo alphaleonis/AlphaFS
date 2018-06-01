@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Path_CheckSupportedPathFormat_ThrowArgumentException_PathContainsInvalidCharacters_Local_Success()
+      public void AlphaFS_Path_CheckSupportedPathFormat_ThrowsArgumentException_PathContainsInvalidCharacters_Local_Success()
       {
          using (var tempRoot = new TemporaryDirectory())
          {

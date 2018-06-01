@@ -124,12 +124,12 @@ namespace AlphaFS.UnitTest
             }
          }
       }
-      
+
       #endregion // Properties
 
 
       #region Methods
-      
+
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory.</summary>
       public System.IO.DirectoryInfo CreateDirectory()
       {
@@ -137,10 +137,24 @@ namespace AlphaFS.UnitTest
       }
 
 
+      /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory.</summary>
+      public System.IO.DirectoryInfo CreateDirectory(string directoryNameSuffix)
+      {
+         return CreateDirectory(Directory.FullName + directoryNameSuffix, false, false);
+      }
+
+
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with read-only and/or hidden attributes set.</summary>
       public System.IO.DirectoryInfo CreateDirectoryRandomizedAttributes()
       {
          return CreateDirectory(null, true, true);
+      }
+
+
+      /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with read-only and/or hidden attributes set.</summary>
+      public System.IO.DirectoryInfo CreateDirectoryRandomizedAttributes(string directoryNameSuffix)
+      {
+         return CreateDirectory(Directory.FullName + directoryNameSuffix, true, true);
       }
 
 
@@ -248,7 +262,7 @@ namespace AlphaFS.UnitTest
 
          DirectorySecurity dirSecurity;
 
-         var dirInfo = CreateDirectory(folderFullPath);
+         var dirInfo = CreateDirectory(folderFullPath, false, false);
 
 
          // Set DENY for current User.
@@ -284,7 +298,7 @@ namespace AlphaFS.UnitTest
 
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with read-only and/or hidden attributes set.</summary>
-      private System.IO.DirectoryInfo CreateDirectory(string folderFullPath, bool readOnly = false, bool hidden = false)
+      private System.IO.DirectoryInfo CreateDirectory(string folderFullPath, bool readOnly, bool hidden)
       {
          var dirInfo = System.IO.Directory.CreateDirectory(!Alphaleonis.Utils.IsNullOrWhiteSpace(folderFullPath) ? folderFullPath : RandomDirectoryFullPath);
 

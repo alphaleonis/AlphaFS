@@ -272,6 +272,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (null == fsEntryInfo)
          {
+            if (null == path)
+               throw new ArgumentNullException(nameof(path));
+
+
             // MSDN: .NET 3.5+: DirectoryNotFoundException:
             // Path does not exist or could not be found.
             // Path refers to a file instead of a directory.

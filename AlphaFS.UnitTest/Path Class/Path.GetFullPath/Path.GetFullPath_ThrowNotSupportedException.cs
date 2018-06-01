@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_GetFullPath_ThrowNotSupportedException_Success()
+      public void Path_GetFullPath_ThrowsNotSupportedException_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 

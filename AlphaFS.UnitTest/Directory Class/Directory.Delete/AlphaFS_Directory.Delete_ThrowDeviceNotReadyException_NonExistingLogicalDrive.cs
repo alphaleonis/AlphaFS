@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
       
       [TestMethod]
-      public void AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_ThrowsDeviceNotReadyException_NonExistingLogicalDrive_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(false);
-         AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(true);
+         AlphaFS_Directory_Delete_ThrowsDeviceNotReadyException_NonExistingLogicalDrive(false);
+         AlphaFS_Directory_Delete_ThrowsDeviceNotReadyException_NonExistingLogicalDrive(true);
       }
 
 
-      private void AlphaFS_Directory_Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive(bool isNetwork)
+      private void AlphaFS_Directory_Delete_ThrowsDeviceNotReadyException_NonExistingLogicalDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 

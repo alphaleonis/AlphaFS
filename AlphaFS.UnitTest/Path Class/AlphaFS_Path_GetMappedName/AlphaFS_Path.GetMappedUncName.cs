@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Path_GetMappedUncName()
+      public void AlphaFS_Path_GetMappedUncName_Success()
       {
          using (var tempRoot = new TemporaryDirectory(true))
          {

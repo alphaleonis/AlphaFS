@@ -30,13 +30,13 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Path_CheckSupportedPathFormat_ThrowArgumentException_PathStartsWithColon_Local_Success()
+      public void AlphaFS_Path_CheckSupportedPathFormat_ThrowsArgumentException_PathStartsWithColon_Local_Success()
       {
-         Path_CheckSupportedPathFormat_ThrowArgumentException_PathStartsWithColon();
+         Path_CheckSupportedPathFormat_ThrowsArgumentException_PathStartsWithColon();
       }
 
 
-      private void Path_CheckSupportedPathFormat_ThrowArgumentException_PathStartsWithColon()
+      private void Path_CheckSupportedPathFormat_ThrowsArgumentException_PathStartsWithColon()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 

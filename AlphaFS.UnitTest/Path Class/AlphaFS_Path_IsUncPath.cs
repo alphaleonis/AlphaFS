@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Path_IsUncPath()
+      public void AlphaFS_Path_IsUncPath_Success()
       {
          UnitTestConstants.PrintUnitTestHeader();
 
