@@ -39,26 +39,23 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Directory_GetFileSystemEntryInfo(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
+         {
+            var folder = tempRoot.CreateDirectoryRandomizedAttributes();
 
-         var tempPath = Environment.SystemDirectory;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
-         Console.WriteLine("Input Directory Path: [{0}]", tempPath);
+            var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(folder.FullName);
 
-
-         var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(tempPath);
-
-         UnitTestConstants.Dump(fsei, -19);
+            UnitTestConstants.Dump(fsei, -19);
 
 
-         Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));
+            Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));
 
-         Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Directory) != 0, "The Directory attribute is not found, but is expected.");
+            Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Directory) != 0, "The Directory attribute is not found, but is expected.");
 
-         Assert.AreEqual(tempPath, fsei.FullPath, "The paths are not equal, but are expected to be.");
-         
+            Assert.AreEqual(folder.FullName, fsei.FullPath, "The paths are not equal, but are expected to be.");
+         }
 
          Console.WriteLine();
       }
