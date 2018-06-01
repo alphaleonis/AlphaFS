@@ -39,27 +39,23 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_File_GetFileSystemEntryInfo(bool isNetwork)
       {
-         var path = System.IO.Path.Combine(Environment.SystemDirectory, "notepad.exe");
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
+         {
+            var file = tempRoot.CreateFileRandomizedAttributes();
 
-         if (!System.IO.File.Exists(path))
-            UnitTestAssert.InconclusiveBecauseFileNotFound(path);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
+            var fsei = Alphaleonis.Win32.Filesystem.File.GetFileSystemEntryInfo(file.FullName);
 
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+            UnitTestConstants.Dump(fsei, -19);
 
-         var tempPath = path;
-         if (isNetwork)
-            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+            Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));
 
-         Console.WriteLine("Input File Path: [{0}]", tempPath);
+            Assert.IsTrue(fsei.Attributes != System.IO.FileAttributes.Directory, "The directory attribute is found, but is not expected.");
 
-         var fsei = Alphaleonis.Win32.Filesystem.File.GetFileSystemEntryInfo(tempPath);
-         UnitTestConstants.Dump(fsei, -19);
-         
-         Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));
-         Assert.IsTrue(fsei.Attributes != System.IO.FileAttributes.Directory, "The directory attribute is found, but is not expected.");
-         Assert.AreEqual(tempPath, fsei.FullPath, "The paths are not equal, but are expected to be.");
-         
+            Assert.AreEqual(file.FullName, fsei.FullPath, "The paths are not equal, but are expected to be.");
+         }
+
          Console.WriteLine();
       }
    }

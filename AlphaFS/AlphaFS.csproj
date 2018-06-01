@@ -331,6 +331,8 @@
     <Compile Include="Filesystem\Native Other\DISK_PARTITION_INFO.cs" />
     <Compile Include="Filesystem\Native Other\DiskInt13Union.cs" />
     <Compile Include="Filesystem\Native Other\EfiPartitionAttributes.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetRelativePath.cs" />
+    <Compile Include="Filesystem\Path Class\Path.IsLogicalDrive.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DetectionType.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DEVICE_INFORMATION_FLAGS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DiskPartitionType.cs" />
@@ -358,8 +360,6 @@
     <Compile Include="Filesystem\Native Other\DRIVE_LAYOUT_INFORMATION_EX.cs" />
     <Compile Include="Filesystem\Native Other\VOLUME_DISK_EXTENTS.cs" />
     <Compile Include="Filesystem\Native Other\PARTITION_INFORMATION_MBR.cs" />
-    <Compile Include="Filesystem\Path Class\Path.GetRelativePath.cs" />
-    <Compile Include="Filesystem\Path Class\Path.IsLogicalDrive.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DirectoryEnumerationFilters.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\EncryptedFileRawMode.cs" />
     <Compile Include="Filesystem\Path Class\Path.ChangeExtension.cs" />
@@ -385,11 +385,7 @@
     <Compile Include="Filesystem\Path Class\Path.GetFileNameWithoutExtension.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetInvalidFileNameChars.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetInvalidPathChars.cs" />
-    <Compile Include="Filesystem\Path Class\Path.GetRelativePath.cs" />
-    <Compile Include="Filesystem\Path Class\Path.IsLogicalDrive.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetMappedConnectionName.cs" />
-    <Compile Include="Filesystem\Structures And Enumerations\DirectoryEnumerationFilters.cs" />
-    <Compile Include="Filesystem\Structures And Enumerations\EncryptedFileRawMode.cs" />
     <Compile Include="Filesystem\Native Other\FINDEX_SEARCH_OPS.cs" />
     <Compile Include="Filesystem\Native Other\STREAM_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\PartitionStyle.cs" />
@@ -527,10 +523,6 @@
     <Compile Include="Filesystem\Path Class\Path.Combine.cs" />
     <Compile Include="Filesystem\Path Class\Path.Constants.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetFullPath.cs" />
-    <Compile Include="Filesystem\Path Class\Path.SeparatorManipulation.cs" />
-    <Compile Include="Filesystem\Path Class\Path.UncPaths.cs" />
-    <Compile Include="Filesystem\Path Class\Path.ShortLongConversions.cs" />
-    <Compile Include="Filesystem\Path Class\Path.Temporary.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\SPDRP.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\StorageMediaType.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetSuffixedDirectoryNameWithoutRoot.cs" />
@@ -740,7 +732,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
