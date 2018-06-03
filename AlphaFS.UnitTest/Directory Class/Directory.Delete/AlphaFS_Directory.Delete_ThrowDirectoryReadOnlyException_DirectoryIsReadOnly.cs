@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Delete_ThrowsDirectoryReadOnlyException_DirectoryIsReadOnly_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_DirectoryIsReadOnly_ThrowsDirectoryReadOnlyException_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_Delete_ThrowsDirectoryReadOnlyException_DirectoryIsReadOnly(false);
-         AlphaFS_Directory_Delete_ThrowsDirectoryReadOnlyException_DirectoryIsReadOnly(true);
+         AlphaFS_Directory_Delete_DirectoryIsReadOnly_ThrowsDirectoryReadOnlyException(false);
+         AlphaFS_Directory_Delete_DirectoryIsReadOnly_ThrowsDirectoryReadOnlyException(true);
       }
 
 
-      private void AlphaFS_Directory_Delete_ThrowsDirectoryReadOnlyException_DirectoryIsReadOnly(bool isNetwork)
+      private void AlphaFS_Directory_Delete_DirectoryIsReadOnly_ThrowsDirectoryReadOnlyException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

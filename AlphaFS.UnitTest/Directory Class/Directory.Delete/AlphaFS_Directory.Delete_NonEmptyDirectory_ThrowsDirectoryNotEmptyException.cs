@@ -30,26 +30,31 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_ThrowsDirectoryNotFoundException_NonExistingDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_NonEmptyDirectory_ThrowsDirectoryNotEmptyException_LocalAndNetwork_Success()
       {
-         Directory_Delete_ThrowsDirectoryNotFoundException_NonExistingDirectory(false);
-         Directory_Delete_ThrowsDirectoryNotFoundException_NonExistingDirectory(true);
+         AlphaFS_Directory_Delete_NonEmptyDirectory_ThrowsDirectoryNotEmptyException(false);
+         AlphaFS_Directory_Delete_NonEmptyDirectory_ThrowsDirectoryNotEmptyException(true);
       }
 
 
-      private void Directory_Delete_ThrowsDirectoryNotFoundException_NonExistingDirectory(bool isNetwork)
+      private void AlphaFS_Directory_Delete_NonEmptyDirectory_ThrowsDirectoryNotEmptyException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.RandomDirectoryFullPath;
+            var folder = tempRoot.CreateDirectory();
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder);
+            var file = System.IO.Path.Combine(folder.FullName, tempRoot.RandomTxtFileName);
 
-            UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => System.IO.Directory.Delete(folder));
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
+            Console.WriteLine("Input File Path     : [{0}]", file);
 
-            UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder));
+            using (System.IO.File.Create(System.IO.Path.Combine(folder.FullName, file))) { }
+
+            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.Delete(folder.FullName));
+
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DirectoryNotEmptyException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName));
          }
-
+         
          Console.WriteLine();
       }
    }

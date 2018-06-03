@@ -31,6 +31,9 @@ namespace AlphaFS.UnitTest
       public static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
 
 
+      public const int OneMebibyte = 1048576;
+
+
       public static readonly string[] StreamArrayContent =
       {
          "(1) Nikolai Tesla: \"Today's scientists have substituted mathematics for experiments, and they wander off through equation after equation, and eventually build a structure which has no relation to reality.\"",

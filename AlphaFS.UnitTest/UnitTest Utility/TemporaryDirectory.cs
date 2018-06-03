@@ -176,35 +176,35 @@ namespace AlphaFS.UnitTest
 
 
 
-      /// <summary>Creates a directory structure of <param name="level"/> populated with subdirectories and files of random size.</summary>
+      /// <summary>Creates a directory structure populated with subdirectories and files of random size.</summary>
       public System.IO.DirectoryInfo CreateTree(int level = 1)
       {
          return CreateTreeCore(null, level);
       }
 
 
-      /// <summary>Creates a recursive directory structure of <param name="level"/> populated with subdirectories and files of random size.</summary>      
+      /// <summary>Creates a recursive directory structure populated with subdirectories and files of random size.</summary>      
       public System.IO.DirectoryInfo CreateRecursiveTree(int level = 1)
       {
          return CreateTreeCore(null, level, true);
       }
 
 
-      /// <summary>Creates a recursive directory structure of <param name="level"/> populated with subdirectories and files of random size.</summary>
+      /// <summary>Creates a recursive directory structure populated with subdirectories and files of random size.</summary>
       public System.IO.DirectoryInfo CreateRecursiveTree(int level, string rootFullPath)
       {
          return CreateTreeCore(rootFullPath, level, true);
       }
 
 
-      /// <summary>Creates a directory structure of <param name="level"/> populated with subdirectories and files of random size and possibly with read-only and/or hidden attributes set.</summary>
+      /// <summary>Creates a directory structure populated with subdirectories and files of random size and possibly with read-only and/or hidden attributes set.</summary>
       public System.IO.DirectoryInfo CreateRandomizedAttributesTree(int level = 1)
       {
          return CreateTreeCore(null, level, false, true, true);
       }
 
 
-      /// <summary>Creates a recursive directory structure of <param name="level"/> populated with subdirectories and files of random size and possibly with read-only and/or hidden attributes set.</summary>
+      /// <summary>Creates a recursive directory structure populated with subdirectories and files of random size and possibly with read-only and/or hidden attributes set.</summary>
       public System.IO.DirectoryInfo CreateRecursiveRandomizedAttributesTree(int level = 1)
       {
          return CreateTreeCore(null, level, true, true, true);
@@ -240,7 +240,7 @@ namespace AlphaFS.UnitTest
          }
 
 
-         Assert.AreEqual(level, folderCount, "The number of folders does not equal the level folder-level, but is expected to.");
+         Assert.AreEqual(level, folderCount, "The number of folders does not equal level argument, but is expected to.");
 
          return dirInfo;
       }
@@ -313,9 +313,8 @@ namespace AlphaFS.UnitTest
       {
          var fileInfo = new System.IO.FileInfo(!Alphaleonis.Utils.IsNullOrWhiteSpace(fileFullPath) ? fileFullPath : RandomTxtFileFullPath);
 
-         // File size: min 0 bytes, max 1 MB.
          using (var fs = fileInfo.Create())
-            fs.SetLength(new Random(DateTime.UtcNow.Millisecond).Next(0, 1048576));
+            fs.SetLength(new Random(DateTime.UtcNow.Millisecond).Next(0, UnitTestConstants.OneMebibyte));
 
          SetAttributes(fileInfo, readOnly, hidden);
 

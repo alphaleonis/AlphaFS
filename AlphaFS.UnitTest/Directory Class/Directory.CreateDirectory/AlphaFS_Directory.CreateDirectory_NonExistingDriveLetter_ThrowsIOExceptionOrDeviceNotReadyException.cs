@@ -45,15 +45,21 @@ namespace AlphaFS.UnitTest
             folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
 
          Console.WriteLine("Input Directory Path: [{0}]", folder);
-
-
+         
          UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.CreateDirectory(folder));
 
-         UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder));
-         
+
          // Local: IOException.
          // UNC: IOException or DeviceNotReadyException.
          // The latter occurs when a removable drive is already removed but there's still a cached reference.
+
+         var caught = UnitTestAssert.TestException<System.IO.IOException>(() => Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder));
+
+         if (!caught)
+            caught = UnitTestAssert.TestException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(folder));
+
+
+         Assert.IsTrue(caught);
 
          Console.WriteLine();
       }

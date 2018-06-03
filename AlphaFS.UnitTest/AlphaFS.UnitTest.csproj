@@ -145,7 +145,8 @@
     </Compile>
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_RegularDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.GetTotalSize.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_NoStreamsOnRootFolder.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_WithStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_NullAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
@@ -194,13 +195,14 @@
     <Compile Include="AlphaFS Crc Class\AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_File.GetFileInfoByHandle.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_FileIdInfoTest.cs" />
+    <Compile Include="UnitTests\SizeTest.cs" />
     <Compile Include="UnitTests\DeleteTest.cs" />
-    <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_ThrowDeviceNotReadyException_NonExistingLogicalDrive.cs" />
-    <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_ThrowDirectoryNotEmptyException_NonEmptyDirectory.cs" />
+    <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_NonExistingLogicalDrive_ThrowsDeviceNotReadyException.cs" />
+    <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_NonEmptyDirectory_ThrowsDirectoryNotEmptyException.cs" />
     <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Directory_Delete_DirectoryHasDenyPermission_ThrowsUnauthorizedAccessException.cs" />
-    <Compile Include="Directory Class\Directory.Delete\Directory.Delete.ThrowDirectoryNotFoundException_FileExistsWithSameNameAsDirectory.cs" />
-    <Compile Include="Directory Class\Directory.Delete\Directory.Delete.ThrowDirectoryNotFoundException_NonExistingDirectory.cs" />
+    <Compile Include="Directory Class\Directory.Delete\Directory.Delete.DirectoryIsReadOnly_ThrowsDirectoryReadOnlyException.cs" />
+    <Compile Include="Directory Class\Directory.Delete\Directory.Delete.NonExistingDirectory_ThrowsDirectoryNotFoundException.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeFileInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeDirectoryInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo.cs" />
@@ -318,7 +320,7 @@
     <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_Overwrite_DestinationDirectoryAlreadyExists.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_UserExplicitDenyOnDestinationFolder_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_DestinationDirectoryAlreadyExists_ThrowsAlreadyExistsException.cs" />
-    <Compile Include="Directory Class\Directory.Move\Directory.Move_FileToMappedDriveLetter.cs" />
+    <Compile Include="Directory Class\Directory.Move\AlphaFS_Directory.Move_FileToMappedDriveLetter.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Rename_DifferentCasingDirectory.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_Rename.cs" />
     <Compile Include="Directory Class\Directory.Move\Directory.Move_SameVolume.cs" />

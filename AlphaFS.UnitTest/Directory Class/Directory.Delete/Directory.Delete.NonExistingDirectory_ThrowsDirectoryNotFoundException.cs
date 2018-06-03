@@ -28,42 +28,28 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      
+
       [TestMethod]
-      public void AlphaFS_Directory_Delete_ThrowsDeviceNotReadyException_NonExistingLogicalDrive_LocalAndNetwork_Success()
+      public void Directory_Delete_NonExistingDirectory_ThrowsDirectoryNotFoundException_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_Delete_ThrowsDeviceNotReadyException_NonExistingLogicalDrive(false);
-         AlphaFS_Directory_Delete_ThrowsDeviceNotReadyException_NonExistingLogicalDrive(true);
+         Directory_Delete_NonExistingDirectory_ThrowsDirectoryNotFoundException(false);
+         Directory_Delete_NonExistingDirectory_ThrowsDirectoryNotFoundException(true);
       }
 
 
-      private void AlphaFS_Directory_Delete_ThrowsDeviceNotReadyException_NonExistingLogicalDrive(bool isNetwork)
+      private void Directory_Delete_NonExistingDirectory_ThrowsDirectoryNotFoundException(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
-
-         var folder = nonExistingDriveLetter + @":\NonExisting Source Folder";
-         if (isNetwork)
-            folder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(folder);
-
-         Console.WriteLine("Input Directory Path: [{0}]", folder);
-
-
-         if (isNetwork)
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            UnitTestAssert.ThrowsException<System.IO.IOException>(() => System.IO.Directory.Delete(folder));
+            var folder = tempRoot.RandomDirectoryFullPath;
 
-            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder));
-         }
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
-         else
-         {
             UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => System.IO.Directory.Delete(folder));
 
-            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder));
+            UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => Alphaleonis.Win32.Filesystem.Directory.Delete(folder));
          }
-         
+
          Console.WriteLine();
       }
    }

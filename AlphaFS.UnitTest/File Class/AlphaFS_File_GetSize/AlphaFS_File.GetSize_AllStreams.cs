@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   partial class FileTest
+   partial class SizeTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
          {
             var file = tempRoot.CreateFile();
 
-            Console.WriteLine("Input File Path: [{0}] [{1}]\n", Alphaleonis.Utils.UnitSizeToText(file.Length), file);
+            Console.WriteLine("Input File Path: [{0:N0} bytes ({1})] [{2}]\n", file.Length, Alphaleonis.Utils.UnitSizeToText(file.Length), file.FullName);
 
 
             var totalStreams = new Random(DateTime.UtcNow.Millisecond).Next(0, 10);
@@ -51,14 +51,13 @@ namespace AlphaFS.UnitTest
 
             for (var i = 0; i < totalStreams; i++)
             {
-               var streamName = file + ":" + i.ToString() +"myStream";
+               var streamName = file.FullName + ":myStream" + i;
 
-               // File size: min 0 bytes, max 10 (!) MB.
-               var streamText = new string('X', new Random(DateTime.UtcNow.Millisecond).Next(0, 10485760));
+               var streamText = new string('X', new Random(DateTime.UtcNow.Millisecond).Next(0, 5 * UnitTestConstants.OneMebibyte));
 
                allStreamsSize += streamText.Length;
 
-               Console.WriteLine("\tAdd stream: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(allStreamsSize), streamName);
+               Console.WriteLine("\tAdd stream: [{0:N0} bytes ({1})] [{2}]", streamText.Length, Alphaleonis.Utils.UnitSizeToText(streamText.Length), streamName);
 
 
                // Create alternate data streams.
@@ -71,7 +70,7 @@ namespace AlphaFS.UnitTest
 
             var totalFileSize = Alphaleonis.Win32.Filesystem.File.GetSize(file.FullName, true);
 
-            Console.WriteLine("\nTotal File size + {0} streams: [{1}]", totalStreams, Alphaleonis.Utils.UnitSizeToText(totalFileSize));
+            Console.WriteLine("\n\tTotal File size + {0} streams: [{1:N0} bytes ({2})]", totalStreams, totalFileSize, Alphaleonis.Utils.UnitSizeToText(totalFileSize));
 
             Assert.AreEqual(file.Length + allStreamsSize, totalFileSize, "The file sizes do not match, but it is expected.");
          }
