@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
@@ -48,6 +49,7 @@ namespace AlphaFS.UnitTest
 
             var totalStreams = new Random(DateTime.UtcNow.Millisecond).Next(0, 10);
             var allStreamsSize = 0;
+            var streamsCount = 0;
 
             for (var i = 0; i < totalStreams; i++)
             {
@@ -56,6 +58,7 @@ namespace AlphaFS.UnitTest
                var streamText = new string('X', new Random(DateTime.UtcNow.Millisecond).Next(0, 5 * UnitTestConstants.OneMebibyte));
 
                allStreamsSize += streamText.Length;
+               streamsCount++;
 
                Console.WriteLine("\tAdd stream: [{0:N0} bytes ({1})] [{2}]", streamText.Length, Alphaleonis.Utils.UnitSizeToText(streamText.Length), streamName);
 
@@ -66,13 +69,16 @@ namespace AlphaFS.UnitTest
 
                Alphaleonis.Win32.Filesystem.File.WriteAllText(streamName, streamText, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
             }
-            
 
-            var totalFileSize = Alphaleonis.Win32.Filesystem.File.GetSize(file.FullName, true);
 
-            Console.WriteLine("\n\tTotal File size + {0} streams: [{1:N0} bytes ({2})]", totalStreams, totalFileSize, Alphaleonis.Utils.UnitSizeToText(totalFileSize));
+            Console.WriteLine("\n\tTotal added Stream count: [{0}] size: [{1:N0} bytes ({2})]", streamsCount, allStreamsSize, Alphaleonis.Utils.UnitSizeToText(allStreamsSize));
 
-            Assert.AreEqual(file.Length + allStreamsSize, totalFileSize, "The file sizes do not match, but it is expected.");
+
+            var fileSizeWithStreams = Alphaleonis.Win32.Filesystem.File.GetSize(file.FullName, true);
+
+            Console.WriteLine("\n\tTotal File size + {0} streams: [{1:N0} bytes ({2})]", streamsCount, fileSizeWithStreams, Alphaleonis.Utils.UnitSizeToText(fileSizeWithStreams));
+
+            Assert.AreEqual(file.Length + allStreamsSize, fileSizeWithStreams, "The file sizes do not match, but it is expected.");
          }
 
          Console.WriteLine();

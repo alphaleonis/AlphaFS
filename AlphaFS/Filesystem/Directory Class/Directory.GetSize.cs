@@ -20,13 +20,11 @@
  */
 
 using System.Collections.ObjectModel;
-using Microsoft.Win32.SafeHandles;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.AccessControl;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -136,53 +134,14 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         var streamSizes = new Collection<long> {File.GetSizeAllStreamsCore(transaction, pathLp, PathFormat.LongFullPath)};
+         var streamSizes = new Collection<long> {File.FindAllStreamsNative(transaction, pathLp)};
          
 
          foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, pathLp, Path.WildcardStarMatchAll,
 
             recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.SkipReparsePoints, null, PathFormat.LongFullPath))
          {
-            using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
-            using (var safeHandle = null == transaction
-
-               // FindFirstStreamW() / FindFirstStreamTransactedW()
-               // 2018-01-15: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-
-               ? NativeMethods.FindFirstStreamW(fsei.LongFullPath, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0)
-               : NativeMethods.FindFirstStreamTransactedW(fsei.LongFullPath, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
-            {
-               var lastError = Marshal.GetLastWin32Error();
-
-               if (lastError == Win32Errors.ERROR_HANDLE_EOF)
-               {
-                  if (!fsei.IsDirectory)
-                     streamSizes.Add(fsei.FileSize);
-
-                  continue;
-               }
-
-               if (!NativeMethods.IsValidHandle(safeHandle, false))
-                  NativeError.ThrowException(lastError, pathLp);
-
-
-               while (true)
-               {
-                  streamSizes.Add(buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0).StreamSize);
-
-                  var success = NativeMethods.FindNextStreamW(safeHandle, buffer);
-
-                  lastError = Marshal.GetLastWin32Error();
-
-                  if (!success)
-                  {
-                     if (lastError == Win32Errors.ERROR_HANDLE_EOF)
-                        break;
-
-                     NativeError.ThrowException(lastError, pathLp);
-                  }
-               }
-            }
+            streamSizes.Add(File.FindAllStreamsNative(transaction, fsei.LongFullPath));
          }
 
 

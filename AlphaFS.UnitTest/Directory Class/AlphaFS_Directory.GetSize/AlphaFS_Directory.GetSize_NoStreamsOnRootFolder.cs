@@ -61,26 +61,26 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal Directory size ({0}recursive): [{1:N0} bytes ({2})]\n", recurse ? string.Empty : "non-", folderSize, Alphaleonis.Utils.UnitSizeToText(folderSize));
 
 
-            var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folder.FullName, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
+            var folderProps = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folder.FullName, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
 
             var count = 0;
-            foreach (var key in props.Keys)
-               Console.WriteLine("\t\t#{0:000}\t{1, -17} = [{2}]", ++count, key, props[key]);
+            foreach (var key in folderProps.Keys)
+               Console.WriteLine("\t\t#{0:000}\t{1, -17} = [{2}]", ++count, key, folderProps[key]);
 
 
-            Assert.AreEqual(10, props["Total"], "The number of file system objects does not match, but it is expected.");
+            Assert.AreEqual(10, folderProps["Total"]);
 
-            Assert.AreEqual(props["Total"], props["Directory"] + props["File"], "The number of file system objects does not match, but it is expected.");
+            Assert.AreEqual(5, folderProps["Directory"]);
 
-            Assert.AreEqual(5, props["Directory"], "The number of folders does not match, but it is expected.");
+            Assert.AreEqual(5, folderProps["File"]);
 
-            Assert.AreEqual(5, props["File"], "The number of files does not match, but it is expected.");
+            Assert.AreNotEqual(0, folderSize);
 
 
             if (recurse)
-               Assert.AreEqual(props["Size"], folderSize, "The total folder size does not match, but it is expected.");
+               Assert.AreEqual(folderProps["Size"], folderSize);
             else
-               Assert.AreNotEqual(props["Size"], folderSize, "The total folder size matches, but it is not expected.");
+               Assert.AreNotEqual(folderProps["Size"], folderSize);
          }
 
          Console.WriteLine();

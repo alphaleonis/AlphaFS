@@ -136,12 +136,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>Retrieves the size of the specified file.
-      /// <remarks>Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.
-      /// </remarks>
-      /// </summary>
+      /// <summary>Retrieves the size of the specified file.</summary>
       /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
-      /// <exception/>
+      /// <remarks>Use either <paramref name="path"/> or <paramref name="safeFileHandle"/>, not both.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="safeFileHandle">The <see cref="SafeFileHandle"/> to the file.</param>
       /// <param name="path">The path to the file.</param>
@@ -183,10 +180,9 @@ namespace Alphaleonis.Win32.Filesystem
          return fileSize;
       }
 
-      
-      /// <summary>Retrieves the size of all alternate data streams.</summary>
+
+      /// <summary>Retrieves the size of all alternate data streams of the specified directory or file.</summary>
       /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
-      /// <exception/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -195,30 +191,26 @@ namespace Alphaleonis.Win32.Filesystem
       internal static long GetSizeAllStreamsCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         
+         return FindAllStreamsNative(transaction, pathLp);
+      }
 
+
+      internal static long FindAllStreamsNative(KernelTransaction transaction, string pathLp)
+      {
          var streamSizes = new Collection<long>();
 
-
          using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
-         using (var safeHandle = null == transaction
-
-            // FindFirstStreamW() / FindFirstStreamTransactedW()
-            // 2018-01-15: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-
-            ? NativeMethods.FindFirstStreamW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0)
-            : NativeMethods.FindFirstStreamTransactedW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
+         using (var safeFindFileHandle = FindFirstStreamNative(transaction, pathLp, buffer))
          {
-            var lastError = Marshal.GetLastWin32Error();
-
-            if (NativeMethods.IsValidHandle(safeHandle, false))
-            {
+            if (null != safeFindFileHandle)
                while (true)
                {
                   streamSizes.Add(buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0).StreamSize);
 
-                  var success = NativeMethods.FindNextStreamW(safeHandle, buffer);
+                  var success = NativeMethods.FindNextStreamW(safeFindFileHandle, buffer);
 
-                  lastError = Marshal.GetLastWin32Error();
+                  var lastError = Marshal.GetLastWin32Error();
 
                   if (!success)
                   {
@@ -228,11 +220,25 @@ namespace Alphaleonis.Win32.Filesystem
                      NativeError.ThrowException(lastError, pathLp);
                   }
                }
-            }
          }
-
-
+         
          return streamSizes.Sum();
+      }
+
+
+      internal static SafeFindFileHandle FindFirstStreamNative(KernelTransaction transaction, string pathLp, SafeGlobalMemoryBufferHandle buffer)
+      {
+         var safeFindFileHandle = null == transaction
+
+            // FindFirstStreamW() / FindFirstStreamTransactedW()
+            // 2018-01-15: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+
+            ? NativeMethods.FindFirstStreamW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0)
+            : NativeMethods.FindFirstStreamTransactedW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle);
+
+         var lastError = Marshal.GetLastWin32Error();
+
+         return NativeMethods.IsValidHandle(safeFindFileHandle, false) ? safeFindFileHandle : null;
       }
    }
 }

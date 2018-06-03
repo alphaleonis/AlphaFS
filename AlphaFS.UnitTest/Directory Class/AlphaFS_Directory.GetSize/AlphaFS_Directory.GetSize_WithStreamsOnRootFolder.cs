@@ -47,31 +47,35 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
-            var totalFolderSizeNoStreamsOnRootFolder = Alphaleonis.Win32.Filesystem.Directory.GetSize(folder.FullName, true);
+            var folderSize = Alphaleonis.Win32.Filesystem.Directory.GetSize(folder.FullName, true);
 
-            Console.WriteLine("\n\tTotal Directory size: [{0:N0} bytes ({1})]\n", totalFolderSizeNoStreamsOnRootFolder, Alphaleonis.Utils.UnitSizeToText(totalFolderSizeNoStreamsOnRootFolder));
-
-
-            var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folder.FullName, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
-
-            Assert.AreEqual(10, props["Total"], "The number of file system objects does not match, but it is expected.");
-            Assert.AreEqual(props["Total"], props["Directory"] + props["File"], "The number of file system objects does not match, but it is expected.");
-            Assert.AreEqual(5, props["Directory"], "The number of folders does not match, but it is expected.");
-            Assert.AreEqual(5, props["File"], "The number of files does not match, but it is expected.");
-            Assert.AreNotEqual(0, props["Size"], "The total file system objects size is zero, which is not expected.");
+            Console.WriteLine("\n\tTotal Directory size: [{0:N0} bytes ({1})]\n", folderSize, Alphaleonis.Utils.UnitSizeToText(folderSize));
 
 
+            var folderProps = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folder.FullName, Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive);
+
+            Assert.AreEqual(10, folderProps["Total"]);
+
+            Assert.AreEqual(5, folderProps["Directory"]);
+
+            Assert.AreEqual(5, folderProps["File"]);
+
+            Assert.AreEqual(folderProps["Size"], folderSize);
+
+            Assert.AreNotEqual(0, folderSize);
+            
 
 
-            var totalStreams = new Random(DateTime.UtcNow.Millisecond).Next(1, 9);
+
+            var streamsCount = new Random(DateTime.UtcNow.Millisecond).Next(1, 9);
 
             var allStreamsSize = 0;
 
-            for (var i = 0; i < totalStreams; i++)
+            for (var i = 0; i < streamsCount; i++)
             {
                var streamName = folder.FullName + ":myStream" + i;
 
-               var streamText = new string((char)totalStreams, new Random(DateTime.UtcNow.Millisecond).Next(0, 5 * UnitTestConstants.OneMebibyte));
+               var streamText = new string((char) streamsCount, new Random(DateTime.UtcNow.Millisecond).Next(0, 5 * UnitTestConstants.OneMebibyte));
 
                allStreamsSize += streamText.Length;
 
@@ -88,14 +92,14 @@ namespace AlphaFS.UnitTest
 
             var streams = Alphaleonis.Win32.Filesystem.Directory.EnumerateAlternateDataStreams(folder.FullName).ToArray();
 
-            Console.WriteLine("\n\tTotal Stream count: [{0}] size: [{1:N0} bytes ({2})]", streams.Length, allStreamsSize, Alphaleonis.Utils.UnitSizeToText(allStreamsSize));
+            Console.WriteLine("\n\tTotal added Stream count: [{0}] size: [{1:N0} bytes ({2})]", streams.Length, allStreamsSize, Alphaleonis.Utils.UnitSizeToText(allStreamsSize));
 
 
-            var totalFolderSizeWithStreamsOnRootFolder = Alphaleonis.Win32.Filesystem.Directory.GetSize(folder.FullName, true);
+            var folderSizeWithStreams = Alphaleonis.Win32.Filesystem.Directory.GetSize(folder.FullName, true);
 
-            Console.WriteLine("\n\tTotal Directory size + {0} streams: [{1:N0} bytes ({2})]", totalStreams, totalFolderSizeWithStreamsOnRootFolder, Alphaleonis.Utils.UnitSizeToText(totalFolderSizeWithStreamsOnRootFolder));
+            Console.WriteLine("\n\tTotal Directory size + {0} streams: [{1:N0} bytes ({2})]", streamsCount, folderSizeWithStreams, Alphaleonis.Utils.UnitSizeToText(folderSizeWithStreams));
 
-            Assert.AreEqual(totalFolderSizeNoStreamsOnRootFolder + allStreamsSize, totalFolderSizeWithStreamsOnRootFolder, "The total folder size does not match, but it is expected.");
+            Assert.AreEqual(folderSize + allStreamsSize, folderSizeWithStreams, "The total folder size does not match, but it is expected.");
          }
 
          Console.WriteLine();
