@@ -135,50 +135,13 @@ namespace Alphaleonis.Win32.Filesystem
       internal static long GetSizeCore(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
       {
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
-         
-         var streamSizes = new Collection<long>();
-         
 
-         using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
-         using (var safeHandle = null == transaction
-
-            // FindFirstStreamW() / FindFirstStreamTransactedW()
-            // 2018-01-15: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-
-            ? NativeMethods.FindFirstStreamW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0)
-            : NativeMethods.FindFirstStreamTransactedW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
-         {
-            var lastError = Marshal.GetLastWin32Error();
-            
-            if (NativeMethods.IsValidHandle(safeHandle, false))
-            {
-               while (true)
-               {
-                  streamSizes.Add(buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0).StreamSize);
-
-                  var success = NativeMethods.FindNextStreamW(safeHandle, buffer);
-
-                  lastError = Marshal.GetLastWin32Error();
-
-                  if (!success)
-                  {
-                     if (lastError == Win32Errors.ERROR_HANDLE_EOF)
-                        break;
-
-                     NativeError.ThrowException(lastError, pathLp);
-                  }
-               }
-            }
-         }
+         var streamSizes = new Collection<long> {File.GetSizeAllStreamsCore(transaction, pathLp, PathFormat.LongFullPath)};
          
 
-         var options = DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.SkipReparsePoints;
+         foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, pathLp, Path.WildcardStarMatchAll,
 
-         if (recursive)
-            options |= DirectoryEnumerationOptions.Recursive;
-
-
-         foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, pathLp, Path.WildcardStarMatchAll, null, options, null, PathFormat.LongFullPath))
+            recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.SkipReparsePoints, null, PathFormat.LongFullPath))
          {
             using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
             using (var safeHandle = null == transaction

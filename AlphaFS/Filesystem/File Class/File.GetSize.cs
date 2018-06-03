@@ -151,21 +151,17 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static long GetSizeCore(KernelTransaction transaction, SafeFileHandle safeFileHandle, string path, bool sizeOfAllStreams, PathFormat pathFormat)
       {
-         var pathLp = path;
+         if (sizeOfAllStreams)
+            return GetSizeAllStreamsCore(transaction, path, pathFormat);
+
+
+         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
          
          var callerHandle = null != safeFileHandle;
+
          if (!callerHandle)
-         {
-            pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
-
             safeFileHandle = CreateFileCore(transaction, pathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, false, PathFormat.LongFullPath);
-         }
-
-
-         if (sizeOfAllStreams)
-            return GetSizeAllStreamsCore(transaction, pathLp, pathFormat);
-
-
+         
          long fileSize;
 
          try

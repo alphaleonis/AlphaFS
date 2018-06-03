@@ -63,7 +63,7 @@ namespace AlphaFS.UnitTest
 
 
 
-            var totalStreams = new Random(DateTime.UtcNow.Millisecond).Next(0, 9);
+            var totalStreams = new Random(DateTime.UtcNow.Millisecond).Next(1, 9);
 
             var allStreamsSize = 0;
 
