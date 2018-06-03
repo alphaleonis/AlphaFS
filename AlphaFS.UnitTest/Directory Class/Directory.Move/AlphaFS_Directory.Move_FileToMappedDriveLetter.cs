@@ -31,21 +31,24 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Move_FileToMappedDriveLetter_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Move_FileToMappedDriveLetter_LocalAndNetwork_Success()
       {
          // Do not pass isNetwork, as to always use UnitTestConstants.TempPath
 
          using (var tempRoot = new TemporaryDirectory())
          {
-            const string srcFileName = "Src file.log";
-            const string dstFileName = "Dst file.log";
+            var srcFileName = "Src file.log";
+            var dstFileName = "Dst file.log";
 
             var srcFile = System.IO.Path.Combine(tempRoot.Directory.FullName, srcFileName);
 
 
             var drive = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\";
-            var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempRoot.Directory.Parent.FullName);
+
+            var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempRoot.CreateDirectory().FullName);
+
             var dstFile = System.IO.Path.Combine(drive, dstFileName);
+
 
             Alphaleonis.Win32.Network.Host.ConnectDrive(drive, share);
 
@@ -60,8 +63,6 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 
-
-
             var cmr = Alphaleonis.Win32.Filesystem.Directory.Move(srcFile, dstFile, options);
 
             UnitTestConstants.Dump(cmr, -18);
@@ -72,7 +73,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(System.IO.File.Exists(dstFile));
 
             Assert.AreEqual(new System.IO.FileInfo(srcFile).Length, new System.IO.FileInfo(dstFile).Length);
-            
+
 
             Assert.IsTrue(cmr.IsCopy);
             Assert.IsTrue(cmr.IsEmulatedMove);
@@ -83,9 +84,6 @@ namespace AlphaFS.UnitTest
             Assert.IsFalse(cmr.IsCanceled);
             Assert.AreEqual(0, cmr.TotalFolders);
             Assert.AreEqual(1, cmr.TotalFiles);
-
-
-            System.IO.File.Delete(dstFile);
 
 
             Alphaleonis.Win32.Network.Host.DisconnectDrive(drive);

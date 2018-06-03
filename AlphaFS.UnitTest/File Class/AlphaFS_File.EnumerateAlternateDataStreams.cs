@@ -33,12 +33,12 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_EnumerateAlternateDataStreams_LocalAndNetwork_Success()
       {
-         AlphaFS_EnumerateAlternateDataStreams(false);
-         AlphaFS_EnumerateAlternateDataStreams(true);
+         AlphaFS_File_EnumerateAlternateDataStreams(false);
+         AlphaFS_File_EnumerateAlternateDataStreams(true);
       }
       
 
-      private void AlphaFS_EnumerateAlternateDataStreams(bool isNetwork)
+      private void AlphaFS_File_EnumerateAlternateDataStreams(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -66,7 +66,7 @@ namespace AlphaFS.UnitTest
 
                
             Assert.AreEqual(defaultStreamsFile, currentNumberofStreams, "Total amount of default streams do not match.");
-            Assert.AreEqual(currentNumberofStreams, Alphaleonis.Win32.Filesystem.File.EnumerateAlternateDataStreams(file).Count(), "Total amount of File.EnumerateAlternateDataStreams() streams do not match.");
+            Assert.AreEqual(currentNumberofStreams, Alphaleonis.Win32.Filesystem.File.EnumerateAlternateDataStreams(file).Count(), "Total amount of streams do not match.");
 
 
             var fileSize = Alphaleonis.Win32.Filesystem.File.GetSize(file);

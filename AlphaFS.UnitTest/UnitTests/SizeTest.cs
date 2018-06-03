@@ -1,4 +1,4 @@
-﻿/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/*  Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -20,40 +20,12 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace AlphaFS.UnitTest
 {
-   partial class SizeTest
+   /// <summary>This is a test class for all Size Unit Tests.</summary>
+   [TestClass]
+   public partial class SizeTest
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_File_GetSize_Stream0_LocalAndNetwork_Success()
-      {
-         AlphaFS_File_GetSize_Stream0(false);
-         AlphaFS_File_GetSize_Stream0(true);
-      }
-      
-
-      private void AlphaFS_File_GetSize_Stream0(bool isNetwork)
-      {
-         using (var tempRoot = new TemporaryDirectory(isNetwork))
-         {
-            var file = tempRoot.CreateFile();
-
-            Console.WriteLine("Input File Path: [{0}]\n", file.FullName);
-
-            var fileLength = Alphaleonis.Win32.Filesystem.File.GetSize(file.FullName);
-
-            Console.WriteLine("\tSystem.IO File size: {0:N0} bytes ({1})", file.Length, Alphaleonis.Utils.UnitSizeToText(file.Length));
-            Console.WriteLine("\tAlphaFS   File size: {0:N0} bytes ({1})", fileLength, Alphaleonis.Utils.UnitSizeToText(fileLength));
-            
-            Assert.AreEqual(file.Length, fileLength, "The file sizes do not match, but are expected to.");
-         }
-
-         Console.WriteLine();
-      }
    }
 }

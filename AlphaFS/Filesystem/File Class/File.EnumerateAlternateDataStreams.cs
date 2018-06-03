@@ -80,66 +80,25 @@ namespace Alphaleonis.Win32.Filesystem
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
-
-         using (var safeHandle = null == transaction
-
-            // FindFirstStreamW() / FindFirstStreamTransactedW()
-            // 2018-01-15: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-
-            ? NativeMethods.FindFirstStreamW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0)
-            : NativeMethods.FindFirstStreamTransactedW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
+         using (var safeFindFileHandle = FindFirstStreamNative(transaction, pathLp, buffer))
          {
-            var lastError = Marshal.GetLastWin32Error();
-            var reachedEOF = lastError == Win32Errors.ERROR_HANDLE_EOF;
-
-
-            if (!NativeMethods.IsValidHandle(safeHandle, false))
-            {
-               if (reachedEOF)
-                  yield break;
-
-               NativeError.ThrowException(lastError, pathLp);
-            }
-
-
-            while (true)
-            {
-               yield return new AlternateDataStreamInfo(pathLp, buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0));
-
-               var success = NativeMethods.FindNextStreamW(safeHandle, buffer);
-
-               lastError = Marshal.GetLastWin32Error();
-               if (!success)
+            if (null != safeFindFileHandle)
+               while (true)
                {
-                  if (lastError == Win32Errors.ERROR_HANDLE_EOF)
-                     break;
+                  yield return new AlternateDataStreamInfo(pathLp, buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0));
 
-                  NativeError.ThrowException(lastError, pathLp);
+                  var success = NativeMethods.FindNextStreamW(safeFindFileHandle, buffer);
+
+                  var lastError = Marshal.GetLastWin32Error();
+
+                  if (!success)
+                  {
+                     if (lastError == Win32Errors.ERROR_HANDLE_EOF)
+                        break;
+
+                     NativeError.ThrowException(lastError, pathLp);
+                  }
                }
-            }
-         }
-      }
-
-      
-      internal static SafeFindFileHandle FindFirstStreamNative(KernelTransaction transaction, string pathLp, SafeGlobalMemoryBufferHandle buffer)
-      {
-         var safeHandle = null == transaction
-
-            // FindFirstStreamW() / FindFirstStreamTransactedW()
-            // 2018-01-15: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-
-            ? NativeMethods.FindFirstStreamW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0)
-            : NativeMethods.FindFirstStreamTransactedW(pathLp, NativeMethods.STREAM_INFO_LEVELS.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle);
-         {
-            var lastError = Marshal.GetLastWin32Error();
-
-            if (lastError == Win32Errors.ERROR_HANDLE_EOF)
-               return null;
-
-            if (!NativeMethods.IsValidHandle(safeHandle, false))
-               NativeError.ThrowException(lastError, pathLp);
-
-            return safeHandle;
          }
       }
    }

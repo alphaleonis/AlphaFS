@@ -247,6 +247,7 @@
     <Compile Include="Filesystem\Directory Class\Directory.ExistsDrive.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateLogicalDrives.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetSize.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
     <Compile Include="Device\Device.OpenPhysicalDrive.cs" />
     <Compile Include="Filesystem\File Class\File.cs" />
@@ -732,7 +733,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
