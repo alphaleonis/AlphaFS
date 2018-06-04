@@ -1,6 +1,21 @@
 Changelog
 =========
 
+
+Version 2.3  (2018-XX-XX)
+-------------
+
+### Improvements
+
+- Issue #451: Add overloaded method for `File.GetSize` to retrieve the size of all streams.  
+- Issue #454: Add method `Directory.GetSize` to return the size of all alternate data streams of the specified directory and its files.
+- Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
+
+### Breaking Changes
+
+- Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
+
+
 Version 2.2.2  (2018-XX-XX)
 -------------
 
@@ -15,8 +30,6 @@ Version 2.2.2  (2018-XX-XX)
 ### Improvements
 
 - Issue #149: Split unit-tests.
-- Issue #451: Add overloaded method for `File.GetSize` to retrieve the size of all streams.  
-- Issue #454: Add method `Directory.GetSize` to return the size of all alternate data streams of the specified directory and its files.
 - Because of bug fixes, the correct source-/destination folder is now shown in exceptions thrown from Directory/File.Copy/Move methods, instead of always showing the source folder path.
 - Improved some unit tests that would fail when a removable drive is already removed but there's still a cached reference.
 
