@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
-            var folderSize = Alphaleonis.Win32.Filesystem.Directory.GetSize(folder.FullName, true);
+            var folderSize = Alphaleonis.Win32.Filesystem.Directory.GetSize(folder.FullName, true, true);
 
             Console.WriteLine("\n\tTotal Directory size: [{0:N0} bytes ({1})]\n", folderSize, Alphaleonis.Utils.UnitSizeToText(folderSize));
 
@@ -95,7 +95,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal added Stream count: [{0}] size: [{1:N0} bytes ({2})]", streams.Length, allStreamsSize, Alphaleonis.Utils.UnitSizeToText(allStreamsSize));
 
 
-            var folderSizeWithStreams = Alphaleonis.Win32.Filesystem.Directory.GetSize(folder.FullName, true);
+            var folderSizeWithStreams = Alphaleonis.Win32.Filesystem.Directory.GetSize(folder.FullName, true, true);
 
             Console.WriteLine("\n\tTotal Directory size + {0} streams: [{1:N0} bytes ({2})]", streamsCount, folderSizeWithStreams, Alphaleonis.Utils.UnitSizeToText(folderSizeWithStreams));
 
