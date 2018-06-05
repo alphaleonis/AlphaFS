@@ -38,14 +38,14 @@ namespace AlphaFS.UnitTest
          var driveCount = 0;
          
 
-         foreach (var drive in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
+         foreach (var driveInfo in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
          {
-            if (drive.DriveType == System.IO.DriveType.NoRootDirectory || drive.DriveType == System.IO.DriveType.Network)
+            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory || driveInfo.DriveType == System.IO.DriveType.Network)
                continue;
 
-            var storageDeviceInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageDeviceInfo(drive.Name);
+            var storageDeviceInfo = Alphaleonis.Win32.Filesystem.Device.GetStorageDeviceInfo(driveInfo.Name);
 
-            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, drive.Name, storageDeviceInfo.ToString());
+            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storageDeviceInfo.ToString());
 
             UnitTestConstants.Dump(storageDeviceInfo, -17);
 
@@ -53,14 +53,14 @@ namespace AlphaFS.UnitTest
             Assert.IsNotNull(storageDeviceInfo);
 
 
-            if (drive.DriveType == System.IO.DriveType.Fixed)
+            if (driveInfo.DriveType == System.IO.DriveType.Fixed)
             {
                gotDisk = true;
                Assert.AreEqual(Alphaleonis.Win32.Filesystem.StorageDeviceType.Disk, storageDeviceInfo.DeviceType);
             }
 
 
-            if (drive.DriveType == System.IO.DriveType.CDRom)
+            if (driveInfo.DriveType == System.IO.DriveType.CDRom)
                Assert.AreEqual(Alphaleonis.Win32.Filesystem.StorageDeviceType.CDRom, storageDeviceInfo.DeviceType);
 
 

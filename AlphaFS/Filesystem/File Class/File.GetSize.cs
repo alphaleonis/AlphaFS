@@ -212,6 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastError")]
       [SecurityCritical]
       internal static SafeFindFileHandle FindFirstStreamNative(KernelTransaction transaction, string pathLp, SafeGlobalMemoryBufferHandle buffer)
       {

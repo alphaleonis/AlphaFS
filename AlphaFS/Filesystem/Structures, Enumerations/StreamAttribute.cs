@@ -19,24 +19,28 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>WIN32_STREAM_ID Attributes of data to facilitate cross-operating system transfer.</summary>
-   public enum StreamAttributes
+   /// <summary>Attributes of data to facilitate cross-operating system transfer. This member can be one or more of the following values.</summary>
+   [SuppressMessage("Microsoft.Design", "CA1027:MarkEnumsWithFlags")]
+   [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+   public enum StreamAttribute
    {
       /// <summary>This backup stream has no special attributes.</summary>
-      None = NativeMethods.STREAM_ATTRIBUTES.NONE,
+      None = NativeMethods.STREAM_ATTRIBUTE.NONE,
 
       /// <summary>Attribute set if the stream contains data that is modified when read. Allows the backup application to know that verification of data will fail.</summary>
-      ModifiedWhenRead = NativeMethods.STREAM_ATTRIBUTES.STREAM_MODIFIED_WHEN_READ,
+      ModifiedWhenRead = NativeMethods.STREAM_ATTRIBUTE.STREAM_MODIFIED_WHEN_READ,
 
       /// <summary>The backup stream contains security information. This attribute applies only to backup stream of type <see cref="StreamId.BackupSecurityData"/>.</summary>
-      ContainsSecurity = NativeMethods.STREAM_ATTRIBUTES.STREAM_CONTAINS_SECURITY,
+      ContainsSecurity = NativeMethods.STREAM_ATTRIBUTE.STREAM_CONTAINS_SECURITY,
 
       /// <summary>Reserved.</summary>
-      ContainsProperties = NativeMethods.STREAM_ATTRIBUTES.STREAM_CONTAINS_PROPERTIES,
+      ContainsProperties = NativeMethods.STREAM_ATTRIBUTE.STREAM_CONTAINS_PROPERTIES,
 
       /// <summary>The backup stream is part of a sparse file stream. This attribute applies only to backup stream of type <see cref="StreamId.BackupData"/>, <see cref="StreamId.BackupAlternateData"/>, and <see cref="StreamId.BackupSparseBlock"/>.</summary>
-      SparseAttribute = NativeMethods.STREAM_ATTRIBUTES.STREAM_SPARSE_ATTRIBUTE
+      SparseAttribute = NativeMethods.STREAM_ATTRIBUTE.STREAM_SPARSE_ATTRIBUTE
    }
 }

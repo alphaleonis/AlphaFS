@@ -38,14 +38,14 @@ namespace AlphaFS.UnitTest
          var driveCount = 0;
          
 
-         foreach (var drive in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
+         foreach (var driveInfo in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
          {
-            if (drive.DriveType == System.IO.DriveType.NoRootDirectory || drive.DriveType == System.IO.DriveType.Network)
+            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory || driveInfo.DriveType == System.IO.DriveType.Network)
                continue;
 
-            var storagePartitionInfo = Alphaleonis.Win32.Filesystem.Device.GetStoragePartitionInfo(drive.Name);
+            var storagePartitionInfo = Alphaleonis.Win32.Filesystem.Device.GetStoragePartitionInfo(driveInfo.Name);
 
-            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, drive.Name, storagePartitionInfo.ToString());
+            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storagePartitionInfo.ToString());
 
             UnitTestConstants.Dump(storagePartitionInfo, -23);
 

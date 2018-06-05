@@ -302,6 +302,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>SHFILEINFO structure, contains information about a file system object.</summary>
+      [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
+      [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       public struct FileInfo
       {

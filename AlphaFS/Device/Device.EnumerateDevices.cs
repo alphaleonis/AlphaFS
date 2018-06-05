@@ -22,6 +22,7 @@
 using Alphaleonis.Win32.Network;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
@@ -178,6 +179,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastError")]
       private static string GetDeviceBusReportedDeviceDescription(SafeHandle safeHandle, NativeMethods.SP_DEVINFO_DATA infoData)
       {
          if (!OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows7))

@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>Attributes of data to facilitate cross-operating system transfer.</summary>
          [MarshalAs(UnmanagedType.U4)]
-         public readonly STREAM_ATTRIBUTES dwStreamAttributes;
+         public readonly STREAM_ATTRIBUTE dwStreamAttribute;
 
          /// <summary>Size of data, in bytes.</summary>
          [MarshalAs(UnmanagedType.U8)]

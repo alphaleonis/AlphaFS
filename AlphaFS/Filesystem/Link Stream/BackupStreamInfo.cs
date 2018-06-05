@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       private readonly long _streamSize;
       private readonly string _streamName;
       private readonly StreamId _streamId;
-      private readonly StreamAttributes _streamAttributes;
+      private readonly StreamAttribute _streamAttribute;
 
       #endregion // Fields
 
@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          _streamName = name;
          _streamSize = (long) streamId.Size;
-         _streamAttributes = (StreamAttributes) streamId.dwStreamAttributes;
+         _streamAttribute = (StreamAttribute) streamId.dwStreamAttribute;
          _streamId = (StreamId) streamId.dwStreamId;
       }
 
@@ -79,9 +79,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the attributes of the data to facilitate cross-operating system transfer.</summary>
       /// <value>Attributes of the data to facilitate cross-operating system transfer.</value>
-      public StreamAttributes Attributes
+      public StreamAttribute Attribute
       {
-         get { return _streamAttributes; }
+         get { return _streamAttribute; }
       }
 
       #endregion // Public Properties

@@ -372,7 +372,7 @@
     <Compile Include="Filesystem\Native Other\STORAGE_PROPERTY_ID.cs" />
     <Compile Include="Filesystem\Native Other\STORAGE_PROPERTY_QUERY.cs" />
     <Compile Include="Filesystem\Native Other\STORAGE_QUERY_TYPE.cs" />
-    <Compile Include="Filesystem\Native Other\STREAM_ATTRIBUTES.cs" />
+    <Compile Include="Filesystem\Native Other\STREAM_ATTRIBUTE.cs" />
     <Compile Include="Filesystem\Native Other\STREAM_ID.cs" />
     <Compile Include="Filesystem\Native Other\STREAM_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Native Other\SymbolicLinkReparseBuffer.cs" />
@@ -544,7 +544,7 @@
     <Compile Include="Filesystem\Structures, Enumerations\StorageBusType.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\StorageDeviceType.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\StorageMediaType.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\StreamAttributes.cs" />
+    <Compile Include="Filesystem\Structures, Enumerations\StreamAttribute.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\StreamId.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\SymbolicLinkTarget.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\SymbolicLinkType.cs" />
@@ -735,7 +735,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
