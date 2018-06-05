@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>Length of the name of the alternative data stream, in bytes.</summary>
          [MarshalAs(UnmanagedType.U4)]
-         public readonly uint dwStreamNameSize;         
+         public readonly uint dwStreamNameSize;
       }
    }
 }
