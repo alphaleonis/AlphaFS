@@ -28,25 +28,23 @@ using System.Text;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Contains Shell32 information about a file.</summary>
-   [SerializableAttribute]
+   [Serializable]
    [SecurityCritical]
    public sealed class Shell32Info
    {
       #region Constructors
 
-      /// <summary>Initializes a Shell32Info instance.
-      /// <remarks>Shell32 is limited to MAX_PATH length.</remarks>
+      /// <summary>Initializes a Shell32Info instance.</summary>
+      /// <remarks>Shell32 is limited to <c>MAX_PATH</c> length.</remarks>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      /// </summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       public Shell32Info(string fileName) : this(fileName, PathFormat.RelativePath)
       {
       }
 
-      /// <summary>Initializes a Shell32Info instance.
-      /// <remarks>Shell32 is limited to MAX_PATH length.</remarks>
+      /// <summary>Initializes a Shell32Info instance.</summary>
+      /// <remarks>Shell32 is limited to <c>MAX_PATH</c> length.</remarks>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      /// </summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       public Shell32Info(string fileName, PathFormat pathFormat)
@@ -54,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(fileName))
             throw new ArgumentNullException("fileName");
 
-         // Shell32 is limited to MAX_PATH length.
+         // Shell32 is limited to <c>MAX_PATH</c> length.
          // Get a full path of regular format.
 
          FullPath = Path.GetExtendedLengthPathCore(null, fileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);

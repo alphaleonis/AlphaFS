@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The absolute path to check.</param>
-      /// <param name="isRegularPath"><see langword="true"/> indicates the path is already a regular path.</param>
+      /// <param name="isRegularPath"><c>true</c> indicates the path is already a regular path.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       internal static bool IsLogicalDriveCore(string path, bool isRegularPath, PathFormat pathFormat)
       {

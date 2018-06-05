@@ -30,8 +30,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns the directory information for the specified path string.</summary>
       /// <returns>
-      ///   <para>Directory information for <paramref name="path"/>, or <see langword="null"/> if <paramref name="path"/> denotes a root directory or is
-      ///   <see langword="null"/>.</para>
+      ///   <para>Directory information for <paramref name="path"/>, or <c>null</c> if <paramref name="path"/> denotes a root directory or is
+      ///   <c>null</c>.</para>
       ///   <para>Returns <see cref="string.Empty"/> if <paramref name="path"/> does not contain directory information.</para>
       /// </returns>
       /// <exception cref="ArgumentException"/>
@@ -47,12 +47,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns the directory information for the specified path string.</summary>
       /// <returns>
-      ///   Directory information for <paramref name="path"/>, or <see langword="null"/> if <paramref name="path"/> denotes a root directory or is
-      ///   <see langword="null"/>. Returns <see cref="string.Empty"/> if <paramref name="path"/> does not contain directory information.
+      ///   Directory information for <paramref name="path"/>, or <c>null</c> if <paramref name="path"/> denotes a root directory or is
+      ///   <c>null</c>. Returns <see cref="string.Empty"/> if <paramref name="path"/> does not contain directory information.
       /// </returns>
       /// <exception cref="ArgumentException"/>
       /// <param name="path">The path of a file or directory.</param>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
       public static string GetDirectoryName(string path, bool checkInvalidPathChars)
       {

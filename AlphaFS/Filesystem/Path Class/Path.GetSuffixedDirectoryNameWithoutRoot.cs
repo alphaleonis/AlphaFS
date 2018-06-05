@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
       ///   <para>The directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
-      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> is <see langword="null"/>.</para>
+      ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> is <c>null</c>.</para>
       /// </returns>
       /// <param name="path">The path.</param>
       [SecurityCritical]
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
       ///   <para>The directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
-      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> is <see langword="null"/>.</para>
+      ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> is <c>null</c>.</para>
       /// </returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
       ///   <para>The directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
-      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> is <see langword="null"/>.</para>
+      ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> is <c>null</c>.</para>
       /// </returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>

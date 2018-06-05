@@ -28,7 +28,7 @@ using System.Security;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides properties and instance methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="FileStream"/> objects. This class cannot be inherited.</summary>
-   [SerializableAttribute]
+   [Serializable]
    public sealed partial class FileInfo : FileSystemInfo
    {
       private string _name;
@@ -122,9 +122,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets a value indicating whether the file exists.</summary>
-      /// <value><see langword="true"/> if the file exists; otherwise, <see langword="false"/>.</value>
+      /// <value><c>true</c> if the file exists; otherwise, <c>false</c>.</value>
       /// <remarks>
-      ///   <para>The <see cref="Exists"/> property returns <see langword="false"/> if any error occurs while trying to determine if the specified file exists.</para>
+      ///   <para>The <see cref="Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
       ///   <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
       ///   <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
       /// </remarks>
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets or sets a value that determines if the current file is read only.</summary>
-      /// <value><see langword="true"/> if the current file is read only; otherwise, <see langword="false"/>.</value>
+      /// <value><c>true</c> if the current file is read only; otherwise, <c>false</c>.</value>
       /// <remarks>
       ///   <para>Use the IsReadOnly property to quickly determine or change whether the current file is read only.</para>
       ///   <para>When first called, FileInfo calls Refresh and caches information about the file.</para>

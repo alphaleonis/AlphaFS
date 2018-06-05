@@ -33,6 +33,8 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void File_Copy_EmptySourceFileNameAsPath_ThrowsArgumentException_Success()
       {
+         UnitTestAssert.ThrowsException<ArgumentException>(() => System.IO.File.Copy(string.Empty, "destination.txt"));
+
          UnitTestAssert.ThrowsException<ArgumentException>(() => Alphaleonis.Win32.Filesystem.File.Copy(string.Empty, "destination.txt"));
       }
    }

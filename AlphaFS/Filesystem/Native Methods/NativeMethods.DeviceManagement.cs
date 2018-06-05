@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</para>
       ///   <para>You cannot access remote machines when running on these versions of Windows.</para>
       ///   <para>&#160;</para>
-      ///   <para>SetLastError is set to <see langword="false"/>.</para>
+      ///   <para>SetLastError is set to <c>false</c>.</para>
       /// </remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
@@ -167,7 +167,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
       ///   <para>&#160;</para>
-      ///   <para>SetLastError is set to <see langword="false"/>.</para>
+      ///   <para>SetLastError is set to <c>false</c>.</para>
       /// </remarks>
       /// </summary>
       /// <returns>

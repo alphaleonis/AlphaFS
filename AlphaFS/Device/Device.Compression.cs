@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
-      /// <param name="compress"><see langword="true"/> = compress, <see langword="false"/> = decompress</param>
+      /// <param name="compress"><c>true</c> = compress, <c>false</c> = decompress</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       internal static void ToggleCompressionCore(KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)

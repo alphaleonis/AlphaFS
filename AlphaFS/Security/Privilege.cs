@@ -314,7 +314,7 @@ namespace Alphaleonis.Win32.Security
 
       /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
       /// <param name="other">An object to compare with this object.</param>
-      /// <returns><see langword="true"/> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <see langword="false"/>.</returns>
+      /// <returns><c>true</c> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <c>false</c>.</returns>
       public bool Equals(Privilege other)
       {
          return null != other && _name.Equals(other._name, StringComparison.OrdinalIgnoreCase) &&
@@ -325,7 +325,7 @@ namespace Alphaleonis.Win32.Security
 
       /// <summary>Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>.</summary>
       /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="System.Object"/>.</param>
-      /// <returns><see langword="true"/> if the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>; otherwise, <see langword="false"/>.</returns>
+      /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>; otherwise, <c>false</c>.</returns>
       /// <exception cref="NullReferenceException"/>
       public override bool Equals(object obj)
       {

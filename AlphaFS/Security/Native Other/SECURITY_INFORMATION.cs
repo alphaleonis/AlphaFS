@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Security
    [Flags]
    internal enum SECURITY_INFORMATION : uint
    {
-      /// <summary></summary>
+      /// <summary>None</summary>
       None = 0,
 
       /// <summary>OWNER_SECURITY_INFORMATION (0x00000001) - The owner identifier of the object is being referenced.</summary>

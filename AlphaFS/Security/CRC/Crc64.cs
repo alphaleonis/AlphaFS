@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Security
       {
       }
 
-      /// <summary>Initializes a new instance of <see cref="Crc64"/></summary>
+      /// <summary>Initializes a new instance of <see cref="Crc64"/>.</summary>
       /// <param name="polynomial">The polynomial.</param>
       /// <param name="seed">The seed.</param>
       private Crc64(ulong polynomial, ulong seed)

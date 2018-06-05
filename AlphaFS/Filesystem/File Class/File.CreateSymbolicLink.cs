@@ -32,9 +32,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Obsolete
 
-      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.
-      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
-      /// </summary>
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.</summary>
+      /// <remarks>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
@@ -50,9 +49,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.
-      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
-      /// </summary>
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.</summary>
+      /// <remarks>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
@@ -69,9 +67,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.
-      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
-      /// </summary>
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.</summary>
+      /// <remarks>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
@@ -88,9 +85,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.
-      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
-      /// </summary>
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.</summary>
+      /// <remarks>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
@@ -110,15 +106,15 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Obsolete
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
       /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
       /// <para>Symbolic links are reparse points.</para>
       /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
-      /// <para>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
-      /// </remarks></summary>
+      /// <para>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="IOException"/>
@@ -133,15 +129,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
       /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
       /// <para>Symbolic links are reparse points.</para>
       /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
-      /// <para>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
-      /// </remarks></summary>
+      /// <para>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="IOException"/>
@@ -157,15 +153,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
       /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
       /// <para>Symbolic links are reparse points.</para>
       /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
-      /// <para>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
-      /// </remarks></summary>
+      /// <para>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="IOException"/>
@@ -181,15 +177,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file as a transacted operation.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
       /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
       /// <para>Symbolic links are reparse points.</para>
       /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
-      /// <para>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
-      /// </remarks></summary>
+      /// <para>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="IOException"/>
@@ -206,15 +202,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file or directory as a transacted operation.
+      /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK") to a file or directory as a transacted operation.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Symbolic links can point to a non-existent target.</para>
       /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
       /// <para>Symbolic links are reparse points.</para>
       /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
-      /// <para>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
-      /// </remarks></summary>
+      /// <para>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="IOException"/>

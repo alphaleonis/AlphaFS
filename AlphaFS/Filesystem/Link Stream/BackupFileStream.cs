@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
       /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
       /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
-      /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <see langword="null"/>.</param>
+      /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <c>null</c>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security) : this(File.CreateFileCore(null, path, attributes, security, mode, access, share, true, false, PathFormat.RelativePath), access)
@@ -171,7 +171,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
       /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
       /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
-      /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <see langword="null"/>.</param>
+      /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <c>null</c>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security) : this(File.CreateFileCore(transaction, path, attributes, security, mode, access, share, true, false, PathFormat.RelativePath), access)
@@ -239,21 +239,21 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets a value indicating whether the current stream supports reading.</summary>
-      /// <returns><see langword="true"/> if the stream supports reading, <see langword="false"/> otherwise.</returns>
+      /// <returns><c>true</c> if the stream supports reading, <c>false</c> otherwise.</returns>
       public override bool CanRead
       {
          get { return _canRead; }
       }
 
       /// <summary>Gets a value indicating whether the current stream supports seeking.</summary>        
-      /// <returns>This method always returns <see langword="false"/>.</returns>
+      /// <returns>This method always returns <c>false</c>.</returns>
       public override bool CanSeek
       {
          get { return false; }
       }
 
       /// <summary>Gets a value indicating whether the current stream supports writing.</summary>
-      /// <returns><see langword="true"/> if the stream supports writing, <see langword="false"/> otherwise.</returns>
+      /// <returns><c>true</c> if the stream supports writing, <c>false</c> otherwise.</returns>
       public override bool CanWrite
       {
          get { return _canWrite; }
@@ -373,7 +373,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream.</param>
       /// <param name="count">The number of bytes to be written to the current stream.</param>
       /// <param name="processSecurity">Specifies whether the function will restore the access-control list (ACL) data for the file or directory. 
-      /// If this is <see langword="true"/> you need to specify <see cref="FileSystemRights.TakeOwnership"/> and <see cref="FileSystemRights.ChangePermissions"/> access when 
+      /// If this is <c>true</c> you need to specify <see cref="FileSystemRights.TakeOwnership"/> and <see cref="FileSystemRights.ChangePermissions"/> access when 
       /// opening the file or directory handle. If the handle does not have those access rights, the operating system denies 
       /// access to the ACL data, and ACL data restoration will not occur.</param>
       /// <exception cref="ArgumentException"/>
@@ -561,7 +561,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Reads a stream header from the current <see cref="BackupFileStream"/>.</summary>
-      /// <returns>The stream header read from the current <see cref="BackupFileStream"/>, or <see langword="null"/> if the end-of-file 
+      /// <returns>The stream header read from the current <see cref="BackupFileStream"/>, or <c>null</c> if the end-of-file 
       /// was reached before the required number of bytes of a header could be read.</returns>
       /// <exception cref="IOException"/>
       /// <remarks>The stream must be positioned at where an actual header starts for the returned object to represent valid 
@@ -620,7 +620,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Releases the unmanaged resources used by the <see cref="System.IO.Stream"/> and optionally releases the managed resources.</summary>
-      /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+      /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       protected override void Dispose(bool disposing)
       {

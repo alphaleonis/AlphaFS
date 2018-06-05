@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets the root directory information of the specified path.</summary>
       /// <returns>
       ///   Returns the root directory of <paramref name="path"/>, such as "C:\",
-      ///   or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/>,
+      ///   or <c>null</c> if <paramref name="path"/> is <c>null</c>,
       ///   or an empty string if <paramref name="path"/> does not contain root directory information.
       /// </returns>
       /// <exception cref="ArgumentException"/>
@@ -48,12 +48,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the root directory information of the specified path.</summary>
       /// <returns>
       ///   Returns the root directory of <paramref name="path"/>, such as "C:\",
-      ///   or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/>,
+      ///   or <c>null</c> if <paramref name="path"/> is <c>null</c>,
       ///   or an empty string if <paramref name="path"/> does not contain root directory information.
       /// </returns>
       /// <exception cref="ArgumentException"/>
       /// <param name="path">The path from which to obtain root directory information.</param>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
       public static string GetPathRoot(string path, bool checkInvalidPathChars)
       {

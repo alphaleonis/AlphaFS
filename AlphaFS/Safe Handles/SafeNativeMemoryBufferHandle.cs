@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32
 
 
       /// <summary>Initializes a new instance of the <see cref="SafeNativeMemoryBufferHandle"/> class, specifying the allocated capacity of the memory block.</summary>
-      /// <param name="callerHandle"><see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).</param>
+      /// <param name="callerHandle"><c>true</c> to reliably release the handle during the finalization phase; <c>false</c> to prevent reliable release (not recommended).</param>
       protected SafeNativeMemoryBufferHandle(bool callerHandle) : base(callerHandle)
       {
       }

@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Initializes a DeviceInfo class.</summary>
-      /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       [SecurityCritical]
       public DeviceInfo(string host)
       {

@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This method basically returns the shortest string returned by <see cref="EnumerateVolumePathNames"/></remarks>
       /// <param name="volumeName">A volume <see cref="Guid"/> path: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</param>
       /// <returns>
-      ///   The shortest display name for the specified volume found, or <see langword="null"/> if no display names were found.
+      ///   The shortest display name for the specified volume found, or <c>null</c> if no display names were found.
       /// </returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]

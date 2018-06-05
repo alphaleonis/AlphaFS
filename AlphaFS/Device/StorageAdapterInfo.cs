@@ -62,15 +62,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Properties
 
-      /// <summary>When <see langword="true"/>, the storage adapter supports synchronous transfers as a way of speeding up I/O.</summary>
+      /// <summary>When <c>true</c>, the storage adapter supports synchronous transfers as a way of speeding up I/O.</summary>
       public bool AcceleratedTransfer { get; internal set; }
 
 
-      /// <summary>When <see langword="true"/>, the storage adapter scans down for BIOS devices, that is, the storage adapter begins scanning with the highest device number rather than the lowest.</summary>
+      /// <summary>When <c>true</c>, the storage adapter scans down for BIOS devices, that is, the storage adapter begins scanning with the highest device number rather than the lowest.</summary>
       public bool AdapterScansDown { get; internal set; }
 
 
-      /// <summary>When <see langword="true"/>, the storage adapter uses programmed I/O (PIO).</summary>
+      /// <summary>When <c>true</c>, the storage adapter uses programmed I/O (PIO).</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pio")]
       public bool AdapterUsesPio { get; internal set; }
 
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
       public Version BusVersion { get; internal set; }
 
 
-      /// <summary>When <see langword="true"/>, the storage adapter supports SCSI tagged queuing and/or per-logical-unit internal queues, or the non-SCSI equivalent.</summary>
+      /// <summary>When <c>true</c>, the storage adapter supports SCSI tagged queuing and/or per-logical-unit internal queues, or the non-SCSI equivalent.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Queueing")]
       public bool CommandQueueing { get; internal set; }
 
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
       /// <param name="obj">Another object to compare to.</param>
-      /// <returns><see langword="true"/> if the specified Object is equal to the current Object; otherwise, <see langword="false"/>.</returns>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
       public override bool Equals(object obj)
       {
          if (null == obj || GetType() != obj.GetType())

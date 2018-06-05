@@ -28,11 +28,11 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      /// <summary>[AlphaFS] Deletes an NTFS directory junction.
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -48,11 +48,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Deletes an NTFS directory junction.
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -69,11 +69,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Deletes an NTFS directory junction.
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -83,18 +83,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
-      /// <param name="removeDirectory">When <see langword="true"/>, also removes the directory and all its contents.</param>
+      /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
       public static void DeleteJunction(string junctionPath, bool removeDirectory)
       {
          DeleteJunctionCore(null, null, junctionPath, removeDirectory, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Deletes an NTFS directory junction.
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
-      /// <param name="removeDirectory">When <see langword="true"/>, also removes the directory and all its contents.</param>
+      /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       public static void DeleteJunction(string junctionPath, bool removeDirectory, PathFormat pathFormat)
       {
@@ -114,11 +114,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Deletes an NTFS directory junction.
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -135,11 +135,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Deletes an NTFS directory junction.
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -157,11 +157,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Deletes an NTFS directory junction.
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -172,18 +172,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
-      /// <param name="removeDirectory">When <see langword="true"/>, also removes the directory and all its contents.</param>
+      /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
       public static void DeleteJunction(KernelTransaction transaction, string junctionPath, bool removeDirectory)
       {
          DeleteJunctionCore(transaction, null, junctionPath, removeDirectory, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Deletes an NTFS directory junction.
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -194,7 +194,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
-      /// <param name="removeDirectory">When <see langword="true"/>, also removes the directory and all its contents.</param>
+      /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       public static void DeleteJunction(KernelTransaction transaction, string junctionPath, bool removeDirectory, PathFormat pathFormat)
       {
@@ -204,11 +204,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Deletes an NTFS directory junction.
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -220,7 +220,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="fsEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fsEntryInfo"/> or <paramref name="junctionPath"/>, not both.</param>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
-      /// <param name="removeDirectory">When <see langword="true"/>, also removes the directory and all its contents.</param>
+      /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       internal static void DeleteJunctionCore(KernelTransaction transaction, FileSystemEntryInfo fsEntryInfo, string junctionPath, bool removeDirectory, PathFormat pathFormat)

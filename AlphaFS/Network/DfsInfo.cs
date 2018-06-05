@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Network
    /// <summary>Contains information about a Distributed File System (DFS) root or link. This class cannot be inherited.
    /// <para>This structure contains the name, status, GUID, time-out, number of targets, and information about each target of the root or link.</para>
    /// </summary>
-   [SerializableAttribute]
+   [Serializable]
    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
    public sealed class DfsInfo
    {

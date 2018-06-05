@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Checks if the directory has permission inheritance enabled.</summary>
       /// <param name="path">The full path to the directory to check.</param>
-      /// <returns><see langword="true"/> if permission inheritance is enabled, <see langword="false"/> if permission inheritance is disabled.</returns>
+      /// <returns><c>true</c> if permission inheritance is enabled, <c>false</c> if permission inheritance is disabled.</returns>
       public static bool HasInheritedPermissions(string path)
       {
          return HasInheritedPermissions(path, PathFormat.RelativePath);
@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Checks if the directory has permission inheritance enabled.</summary>
-      /// <returns><see langword="true"/> if permission inheritance is enabled, <see langword="false"/> if permission inheritance is disabled.</returns>
+      /// <returns><c>true</c> if permission inheritance is enabled, <c>false</c> if permission inheritance is disabled.</returns>
       /// <param name="path">The full path to the directory to check.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       public static bool HasInheritedPermissions(string path, PathFormat pathFormat)

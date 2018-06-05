@@ -42,15 +42,15 @@ namespace Alphaleonis.Win32.Network
       /// <exception cref="NetworkInformationException"/>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       /// <param name="userName">
-      ///   The user name for making the connection. If <paramref name="userName"/> is <see langword="null"/>, the function uses the default
+      ///   The user name for making the connection. If <paramref name="userName"/> is <c>null</c>, the function uses the default
       ///   user name. (The user context for the process provides the default user name)
       /// </param>
       /// <param name="password">
-      ///   The password to be used for making the network connection. If <paramref name="password"/> is <see langword="null"/>, the function
+      ///   The password to be used for making the network connection. If <paramref name="password"/> is <c>null</c>, the function
       ///   uses the current default password associated with the user specified by <paramref name="userName"/>.
       /// </param>
-      /// <param name="prompt"><see langword="true"/> always pops-up an authentication dialog box.</param>
-      /// <param name="updateProfile"><see langword="true"/> successful network resource connections will be saved.</param>
+      /// <param name="prompt"><c>true</c> always pops-up an authentication dialog box.</param>
+      /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">
       ///   When the operating system prompts for a credential, the credential should be saved by the credential manager when true.
       /// </param>
@@ -72,8 +72,8 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Creates a connection to a network resource.</summary>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       /// <param name="credentials">An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
-      /// <param name="prompt"><see langword="true"/> always pops-up an authentication dialog box.</param>
-      /// <param name="updateProfile"><see langword="true"/> successful network resource connections will be saved.</param>
+      /// <param name="prompt"><c>true</c> always pops-up an authentication dialog box.</param>
+      /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
       ///
       /// <exception cref="NetworkInformationException"/>
@@ -96,15 +96,15 @@ namespace Alphaleonis.Win32.Network
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       /// <param name="userName">
-      ///   The user name for making the connection. If <paramref name="userName"/> is <see langword="null"/>, the function uses the default
+      ///   The user name for making the connection. If <paramref name="userName"/> is <c>null</c>, the function uses the default
       ///   user name. (The user context for the process provides the default user name)
       /// </param>
       /// <param name="password">
-      ///   The password to be used for making the network connection. If <paramref name="password"/> is <see langword="null"/>, the function
+      ///   The password to be used for making the network connection. If <paramref name="password"/> is <c>null</c>, the function
       ///   uses the current default password associated with the user specified by <paramref name="userName"/>.
       /// </param>
-      /// <param name="prompt"><see langword="true"/> always pops-up an authentication dialog box.</param>
-      /// <param name="updateProfile"><see langword="true"/> successful network resource connections will be saved.</param>
+      /// <param name="prompt"><c>true</c> always pops-up an authentication dialog box.</param>
+      /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
       [SecurityCritical]
       public static void ConnectTo(IntPtr winOwner, string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
@@ -127,8 +127,8 @@ namespace Alphaleonis.Win32.Network
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       /// <param name="credentials">An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
-      /// <param name="prompt"><see langword="true"/> always pops-up an authentication dialog box.</param>
-      /// <param name="updateProfile"><see langword="true"/> successful network resource connections will be saved.</param>
+      /// <param name="prompt"><c>true</c> always pops-up an authentication dialog box.</param>
+      /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
       [SecurityCritical]
       public static void ConnectTo(IntPtr winOwner, string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)

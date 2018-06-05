@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Access token, Communications device, Console input, Console screen buffer, Event, File, File mapping, I/O completion port,
       ///   Job, Mailslot, Memory resource notification, Mutex, Named pipe, Pipe, Process, Semaphore, Thread, Transaction, Waitable
       ///   timer.</para>
-      ///   <para>SetLastError is set to <see langword="false"/>.</para>
+      ///   <para>SetLastError is set to <c>false</c>.</para>
       ///   <para>Minimum supported client: Windows 2000 Professional [desktop apps | Windows Store apps]</para>
       ///   <para>Minimum supported server: Windows 2000 Server [desktop apps | Windows Store apps]</para>
       /// </remarks>

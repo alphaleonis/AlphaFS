@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>Contains stream data.</summary>
       [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode)]
-      [SerializableAttribute]
+      [Serializable]
       internal struct WIN32_STREAM_ID
       {
          /// <summary>Type of stream data.</summary>

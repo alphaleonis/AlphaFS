@@ -30,6 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
       /// <summary>[AlphaFS] Retrieves file information for the specified file.</summary>
+      /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
       /// <param name="path">The path to the file.</param>
       [SecurityCritical]
@@ -40,6 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves file information for the specified file.</summary>
+      /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -51,6 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves file information for the specified file.</summary>
+      /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
@@ -62,6 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves file information for the specified file.</summary>
+      /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
@@ -76,8 +80,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves file information for the specified <see cref="SafeFileHandle"/>.</summary>
-      /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the open file or directory from which to retrieve the information.</param>
       /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
+      /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
+      /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the open file or directory from which to retrieve the information.</param>
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandle(SafeFileHandle handle)
       {
@@ -97,6 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves file information for the specified file.</summary>
+      /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
@@ -105,6 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static ByHandleFileInfo GetFileInfoByHandleCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          using (var handle = CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
+
             return GetFileInfoByHandle(handle);
       }
    }

@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
       /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
-      /// <returns>Returns <see langword="true"/> if the specified file is in use (locked); otherwise, <see langword="false"/></returns>
+      /// <returns>Returns <c>true</c> if the specified file is in use (locked); otherwise, <c>false</c></returns>
       /// <exception cref="IOException"/>
       /// <exception cref="Exception"/>
       /// <param name="path">The file to check.</param>
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
-      /// <returns>Returns <see langword="true"/> if the specified file is in use (locked); otherwise, <see langword="false"/></returns>
+      /// <returns>Returns <c>true</c> if the specified file is in use (locked); otherwise, <c>false</c></returns>
       /// <exception cref="FileNotFoundException"></exception>
       /// <exception cref="IOException"/>
       /// <exception cref="Exception"/>
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
-      /// <returns>Returns <see langword="true"/> if the specified file is in use (locked); otherwise, <see langword="false"/></returns>
+      /// <returns>Returns <c>true</c> if the specified file is in use (locked); otherwise, <c>false</c></returns>
       /// <exception cref="FileNotFoundException"></exception>
       /// <exception cref="IOException"/>
       /// <exception cref="Exception"/>
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
-      /// <returns>Returns <see langword="true"/> if the specified file is in use (locked); otherwise, <see langword="false"/></returns>
+      /// <returns>Returns <c>true</c> if the specified file is in use (locked); otherwise, <c>false</c></returns>
       /// <exception cref="FileNotFoundException"></exception>
       /// <exception cref="IOException"/>
       /// <exception cref="Exception"/>
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
-      /// <returns>Returns <see langword="true"/> if the specified file is in use (locked); otherwise, <see langword="false"/></returns>
+      /// <returns>Returns <c>true</c> if the specified file is in use (locked); otherwise, <c>false</c></returns>
       /// <exception cref="FileNotFoundException"></exception>
       /// <exception cref="IOException"/>
       /// <exception cref="Exception"/>

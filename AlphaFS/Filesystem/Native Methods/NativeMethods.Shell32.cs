@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Path
 
       /// <summary>Determines whether a path to a file system object such as a file or folder is valid.</summary>
-      /// <returns><see langword="true"/> if the file exists; otherwise, <see langword="false"/>. Call GetLastError for extended error information.</returns>
+      /// <returns><c>true</c> if the file exists; otherwise, <c>false</c>. Call GetLastError for extended error information.</returns>
       /// <remarks>
       /// This function tests the validity of the path.
       /// A path specified by Universal Naming Convention (UNC) is limited to a file only; that is, \\server\share\file is permitted.
@@ -163,9 +163,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Tests whether a URL is a specified type.</summary>
       /// <returns>
       /// Type: BOOL
-      /// For all but one of the URL types, UrlIs returns <see langword="true"/> if the URL is the specified type, <see langword="true"/> otherwise.
+      /// For all but one of the URL types, UrlIs returns <c>true</c> if the URL is the specified type, <c>true</c> otherwise.
       /// If UrlIs is set to <see cref="Shell32.UrlType.IsAppliable"/>, UrlIs will attempt to determine the URL scheme.
-      /// If the function is able to determine a scheme, it returns <see langword="true"/>, or <see langword="false"/>.
+      /// If the function is able to determine a scheme, it returns <c>true</c>, or <c>false</c>.
       /// </returns>
       /// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>

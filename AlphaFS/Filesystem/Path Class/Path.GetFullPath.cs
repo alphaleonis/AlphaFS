@@ -273,7 +273,7 @@ namespace Alphaleonis.Win32.Filesystem
          return GetFullPathCore(transaction, path, options);
       }
 
-      /// <summary>Applies the <seealso cref="GetFullPathOptions"/> to <paramref name="path"/></summary>
+      /// <summary>Applies the <seealso cref="GetFullPathOptions"/> to <paramref name="path"/>.</summary>
       /// <returns><paramref name="path"/> with applied <paramref name="options"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
