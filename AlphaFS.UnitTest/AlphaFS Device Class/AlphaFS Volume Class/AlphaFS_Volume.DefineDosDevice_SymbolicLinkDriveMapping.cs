@@ -38,8 +38,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      [TestMethod]
-      public void AlphaFS_Volume_DefineDosDevice_SymbolicLinkDriveMapping(bool isNetwork)
+      private void AlphaFS_Volume_DefineDosDevice_SymbolicLinkDriveMapping(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -67,6 +66,7 @@ namespace AlphaFS.UnitTest
                Assert.IsFalse(System.IO.Directory.Exists(drive), "The drive exists, but it is expected not to.");
             }
          }
+
 
          Console.WriteLine();
       }

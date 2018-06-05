@@ -38,15 +38,15 @@ namespace AlphaFS.UnitTest
          
          var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToList();
 
-         foreach (var drive in drives)
+         foreach (var driveInfo in drives)
          {
-            Console.WriteLine("Logical Drive: [{0}]", drive.Name);
+            Console.WriteLine("Logical Drive: [{0}]", driveInfo.Name);
 
-            UnitTestConstants.Dump(drive, -21);
+            UnitTestConstants.Dump(driveInfo, -21);
 
 
-            if (null != drive.DiskSpaceInfo)
-               UnitTestConstants.Dump(drive.DiskSpaceInfo, -26, true);
+            if (null != driveInfo.DiskSpaceInfo)
+               UnitTestConstants.Dump(driveInfo.DiskSpaceInfo, -26, true);
 
 
             Console.WriteLine();

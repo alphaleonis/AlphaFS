@@ -19,9 +19,11 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The type of the data contained in the backup stream.</summary>
+   /// <summary>The type of the data contained in the backup stream. This member can be one of the following values.</summary>
    public enum StreamId
    {
       /// <summary>This indicates an error.</summary>
@@ -33,6 +35,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Extended attribute data. This corresponds to the NTFS $EA stream type.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ea")]
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ea")]
       BackupEaData = NativeMethods.STREAM_ID.BACKUP_EA_DATA,
 
 
@@ -66,6 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Transactional NTFS (TxF) data stream.</summary>
       /// <remarks>Windows Server 2003 and Windows XP:  This value is not supported.</remarks>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Txfs")]
       BackupTxfsData = NativeMethods.STREAM_ID.BACKUP_TXFS_DATA
    }
 }

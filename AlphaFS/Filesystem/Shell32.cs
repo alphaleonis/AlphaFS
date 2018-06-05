@@ -302,10 +302,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>SHFILEINFO structure, contains information about a file system object.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Sh")]
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sh")]
-      [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
       [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
+      [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       public struct FileInfo
       {
@@ -638,7 +636,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static string PathCreateFromUrlAlloc(string urlPath)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
+            throw new PlatformNotSupportedException(new Win32Exception((int)Win32Errors.ERROR_OLD_WIN_VERSION).Message);
 
 
          if (urlPath == null)

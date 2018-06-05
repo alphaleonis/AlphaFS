@@ -329,7 +329,7 @@
     <Compile Include="Filesystem\Structures, Enumerations\EncryptedFileRawMode.cs" />
     <Compile Include="Filesystem\Native Other\FINDEX_SEARCH_OPS.cs" />
     <Compile Include="Filesystem\Native Other\STREAM_INFO_LEVELS.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\StreamAttributes.cs" />
+    <Compile Include="Filesystem\Structures, Enumerations\StreamAttribute.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\StreamId.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\PathFormat.cs" />
     <Compile Include="Filesystem\Exceptions\NotSameDeviceException.cs" />
@@ -372,7 +372,7 @@
     <Compile Include="Filesystem\Structures, Enumerations\ErrorMode.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\ReparsePointTag.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\SetupDiGetDeviceRegistryPropertyEnum.cs" />
-    <Compile Include="Filesystem\Native Other\STREAM_ATTRIBUTES.cs" />
+    <Compile Include="Filesystem\Native Other\STREAM_ATTRIBUTE.cs" />
     <Compile Include="Filesystem\Native Other\STREAM_ID.cs" />
     <Compile Include="Filesystem\Native Other\VOLUME_INFO_FLAGS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\CopyOptions.cs" />
@@ -671,7 +671,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

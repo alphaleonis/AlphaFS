@@ -23,8 +23,8 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>WIN32_STREAM_ID Attributes of data to facilitate cross-operating system transfer.</summary>
-      internal enum STREAM_ATTRIBUTES
+      /// <summary>WIN32_STREAM_ID structure attributes of data to facilitate cross-operating system transfer. This member can be one or more of the following values.</summary>
+      internal enum STREAM_ATTRIBUTE
       {
          /// <summary>This backup stream has no special attributes.</summary>
          NONE = 0,
