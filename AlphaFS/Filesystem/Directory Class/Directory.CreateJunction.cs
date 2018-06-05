@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      /// <summary>[AlphaFS] Creates an NTFS directory junction(similar to CMD command: "MKLINK /J")
+      /// <summary>[AlphaFS] Creates an NTFS directory junction (similar to CMD command: "MKLINK /J")
       /// <remarks>
       /// <para>&#160;</para>
       /// <para>The directory must be empty and reside on a local volume.</para>
@@ -203,7 +203,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Creates an NTFS directory junction(similar to CMD command: "MKLINK /J")
+      /// <summary>[AlphaFS] Creates an NTFS directory junction (similar to CMD command: "MKLINK /J")
       /// <remarks>
       /// <para>&#160;</para>
       /// <para>The directory must be empty and reside on a local volume.</para>
