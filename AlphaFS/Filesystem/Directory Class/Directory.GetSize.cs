@@ -23,7 +23,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -36,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path)
       {
-         return GetSizeCore(null, path, false, PathFormat.RelativePath);
+         return GetSizeCore(null, path, false, false, PathFormat.RelativePath);
       }
 
 
@@ -47,33 +46,58 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path, PathFormat pathFormat)
       {
-         return GetSizeCore(null, path, false, pathFormat);
+         return GetSizeCore(null, path, false, false, pathFormat);
       }
 
 
       /// <summary>[AlphaFS] Retrieves the size of all alternate data streams of the specified directory and it files.</summary>
       /// <param name="path">The path to the directory.</param>
+      /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
+      /// <returns>The size of all alternate data streams of the specified directory and its files.</returns>
+      [SecurityCritical]
+      public static long GetSize(string path, bool sizeOfAllStreams)
+      {
+         return GetSizeCore(null, path, sizeOfAllStreams, false, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Retrieves the size of all alternate data streams of the specified directory and it files.</summary>
+      /// <param name="path">The path to the directory.</param>
+      /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>The size of all alternate data streams of the specified directory and its files.</returns>
+      [SecurityCritical]
+      public static long GetSize(string path, bool sizeOfAllStreams, PathFormat pathFormat)
+      {
+         return GetSizeCore(null, path, sizeOfAllStreams, false, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Retrieves the size of all alternate data streams of the specified directory and it files.</summary>
+      /// <param name="path">The path to the directory.</param>
+      /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
       /// <param name="recursive"><c>true</c> to include subdirectories.</param>
       /// <returns>The size of all alternate data streams of the specified directory and its files.</returns>
       [SecurityCritical]
-      public static long GetSize(string path, bool recursive)
+      public static long GetSize(string path, bool sizeOfAllStreams, bool recursive)
       {
-         return GetSizeCore(null, path, recursive, PathFormat.RelativePath);
+         return GetSizeCore(null, path, sizeOfAllStreams, recursive, PathFormat.RelativePath);
       }
 
 
       /// <summary>[AlphaFS] Retrieves the size of all alternate data streams of the specified directory and it files.</summary>
       /// <param name="path">The path to the directory.</param>
+      /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
       /// <param name="recursive"><c>true</c> to include subdirectories.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The size of all alternate data streams of the specified directory and its files.</returns>
       [SecurityCritical]
-      public static long GetSize(string path, bool recursive, PathFormat pathFormat)
+      public static long GetSize(string path, bool sizeOfAllStreams, bool recursive, PathFormat pathFormat)
       {
-         return GetSizeCore(null, path, recursive, pathFormat);
+         return GetSizeCore(null, path, sizeOfAllStreams, recursive, pathFormat);
       }
-
-
+            
+      
       /// <summary>[AlphaFS] Retrieves the size of all alternate data streams of the specified directory and it files.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
@@ -81,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path)
       {
-         return GetSizeCore(transaction, path, false, PathFormat.RelativePath);
+         return GetSizeCore(transaction, path, false, false, PathFormat.RelativePath);
       }
 
 
@@ -93,55 +117,98 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetSizeCore(transaction, path, false, pathFormat);
+         return GetSizeCore(transaction, path, false, false, pathFormat);
       }
 
 
       /// <summary>[AlphaFS] Retrieves the size of all alternate data streams of the specified directory and it files.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
+      /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
+      /// <returns>The size of all alternate data streams of the specified directory and its files.</returns>
+      [SecurityCritical]
+      public static long GetSizeTransacted(KernelTransaction transaction, string path, bool sizeOfAllStreams)
+      {
+         return GetSizeCore(transaction, path, sizeOfAllStreams, false, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Retrieves the size of all alternate data streams of the specified directory and it files.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the directory.</param>
+      /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>The size of all alternate data streams of the specified directory and its files.</returns>
+      [SecurityCritical]
+      public static long GetSizeTransacted(KernelTransaction transaction, string path, bool sizeOfAllStreams, PathFormat pathFormat)
+      {
+         return GetSizeCore(transaction, path, sizeOfAllStreams, false, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Retrieves the size of all alternate data streams of the specified directory and it files.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the directory.</param>
+      /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
       /// <param name="recursive"><c>true</c> to include subdirectories.</param>
       /// <returns>The size of all alternate data streams of the specified directory and its files.</returns>
       [SecurityCritical]
-      public static long GetSizeTransacted(KernelTransaction transaction, string path, bool recursive)
+      public static long GetSizeTransacted(KernelTransaction transaction, string path, bool sizeOfAllStreams, bool recursive)
       {
-         return GetSizeCore(transaction, path, recursive, PathFormat.RelativePath);
+         return GetSizeCore(transaction, path, sizeOfAllStreams, recursive, PathFormat.RelativePath);
       }
 
 
       /// <summary>[AlphaFS] Retrieves the size of all alternate data streams of the specified directory and it files.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
+      /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
       /// <param name="recursive"><c>true</c> to include subdirectories.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The size of all alternate data streams of the specified directory and its files.</returns>
       [SecurityCritical]
-      public static long GetSizeTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
+      public static long GetSizeTransacted(KernelTransaction transaction, string path, bool sizeOfAllStreams, bool recursive, PathFormat pathFormat)
       {
-         return GetSizeCore(transaction, path, recursive, pathFormat);
+         return GetSizeCore(transaction, path, sizeOfAllStreams, recursive, pathFormat);
       }
+
+
 
 
       /// <summary>[AlphaFS] Retrieves the size of all alternate data streams of the specified directory and it files.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
+      /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
       /// <param name="recursive"><c>true</c> to include subdirectories.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The size of all alternate data streams of the specified directory and its files.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static long GetSizeCore(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
+      internal static long GetSizeCore(KernelTransaction transaction, string path, bool sizeOfAllStreams, bool recursive, PathFormat pathFormat)
       {
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         var streamSizes = new Collection<long> {File.FindAllStreamsNative(transaction, pathLp)};
-         
+         var streamSizes = new Collection<long>();
+
+         // Get the size of all streams of the folder.
+         if (sizeOfAllStreams)
+            streamSizes.Add(File.FindAllStreamsNative(transaction, pathLp));
+
 
          foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, pathLp, Path.WildcardStarMatchAll,
 
             recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly, DirectoryEnumerationOptions.SkipReparsePoints, null, PathFormat.LongFullPath))
          {
-            streamSizes.Add(File.FindAllStreamsNative(transaction, fsei.LongFullPath));
+            // Although tempting, AlphaFS does not use the fsei.FileSize property.
+            //
+            // https://blogs.msdn.microsoft.com/oldnewthing/20111226-00/?p=8813/
+            // "The directory-enumeration functions report the last-updated metadata, which may not correspond to the actual metadata if the directory entry is stale. 
+
+
+            if (sizeOfAllStreams)
+               streamSizes.Add(File.FindAllStreamsNative(transaction, fsei.LongFullPath));
+
+            else if (!fsei.IsDirectory)
+               streamSizes.Add(File.GetSizeCore(transaction, null, fsei.LongFullPath, false, PathFormat.LongFullPath));
          }
 
 

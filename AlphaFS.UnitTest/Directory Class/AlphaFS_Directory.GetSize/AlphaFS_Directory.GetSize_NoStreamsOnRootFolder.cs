@@ -56,7 +56,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
-            var folderSize = Alphaleonis.Win32.Filesystem.Directory.GetSize(folder.FullName, recurse);
+            var folderSize = Alphaleonis.Win32.Filesystem.Directory.GetSize(folder.FullName, false, recurse);
 
             Console.WriteLine("\n\tTotal Directory size ({0}recursive): [{1:N0} bytes ({2})]\n", recurse ? string.Empty : "non-", folderSize, Alphaleonis.Utils.UnitSizeToText(folderSize));
 
