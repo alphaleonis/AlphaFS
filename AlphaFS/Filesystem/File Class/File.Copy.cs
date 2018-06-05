@@ -1052,11 +1052,11 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void ValidateAndUpdatePathsAndOptions(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, PathFormat pathFormat,
          out string sourcePathLp, out string destinationPathLp, out bool isCopy, out bool emulateMove, out bool delayUntilReboot, out bool deleteOnStartup)
       {
-         if (sourcePath == string.Empty)
-            throw new ArgumentException("sourcePath");
+         if (string.IsNullOrEmpty(sourcePath))
+            throw new ArgumentException("Empty sourcePath name is not legal.");
 
-         if (destinationPath == string.Empty)
-            throw new ArgumentException("destinationPath");
+         if (string.IsNullOrEmpty(destinationPath))
+            throw new ArgumentException("Empty destinationPath name is not legal.");
 
 
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.

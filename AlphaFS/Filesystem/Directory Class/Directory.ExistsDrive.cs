@@ -25,23 +25,16 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      /// <summary>[AlphaFS] Checks the specified <paramref name="path"/> for local or network drives, such as: "C:" and "\\server\c$".</summary>
-      public static bool ExistsDrive(string path, bool throwIfDriveNotExists)
+      /// <summary>[AlphaFS] Checks if specified <paramref name="path"/> is a local- or network drive.</summary>
+      /// <returns><c>true</c> if the  drive exists, <c>false</c> otherwise.</returns>
+      public static bool ExistsDrive(string path)
       {
-         return ExistsDriveOrFolderOrFile(null, path, false, (int) Win32Errors.NO_ERROR, throwIfDriveNotExists, false);
+         return ExistsDriveOrFolderOrFile(null, path, false, (int) Win32Errors.NO_ERROR, false, false);
       }
 
 
-      /// <summary>[AlphaFS] Checks the specified <paramref name="path"/> for local or network drives, such as: "C:" and "\\server\c$".</summary>
-      public static bool ExistsDrive(KernelTransaction transaction, string path, bool throwIfDriveNotExists)
-      {
-         return ExistsDriveOrFolderOrFile(transaction, path, false, (int) Win32Errors.NO_ERROR, throwIfDriveNotExists, false);
-      }
-
-
-
-
-      /// <summary>[AlphaFS] Checks the specified <paramref name="path"/> for local or network drives, such as: "C:" and "\\server\c$".</summary>
+      /// <summary>[AlphaFS] Checks if specified <paramref name="path"/> is a local- or network drive.</summary>
+      /// <returns><c>true</c> if the  drive exists, <c>false</c> otherwise.</returns>
       internal static bool ExistsDriveOrFolderOrFile(KernelTransaction transaction, string path, bool isFolder, int lastError, bool throwIfDriveNotExists, bool throwIfFolderOrFileNotExists)
       {
          if (Utils.IsNullOrWhiteSpace(path))
