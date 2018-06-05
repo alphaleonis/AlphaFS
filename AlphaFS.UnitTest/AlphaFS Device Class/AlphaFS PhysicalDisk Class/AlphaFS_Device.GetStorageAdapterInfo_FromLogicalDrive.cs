@@ -54,6 +54,9 @@ namespace AlphaFS.UnitTest
             Assert.IsNotNull(storageAdapterInfo);
 
             gotDisk = true;
+
+
+            Console.WriteLine();
          }
 
 

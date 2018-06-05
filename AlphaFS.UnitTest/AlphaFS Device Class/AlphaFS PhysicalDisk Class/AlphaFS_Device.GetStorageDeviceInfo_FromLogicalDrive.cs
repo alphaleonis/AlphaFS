@@ -62,6 +62,9 @@ namespace AlphaFS.UnitTest
 
             if (drive.DriveType == System.IO.DriveType.CDRom)
                Assert.AreEqual(Alphaleonis.Win32.Filesystem.StorageDeviceType.CDRom, storageDeviceInfo.DeviceType);
+
+
+            Console.WriteLine();
          }
 
 

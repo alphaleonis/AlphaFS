@@ -30,24 +30,19 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetPhysicalDiskInfo_FromVolume_Success()
+      public void AlphaFS_Device_GetPhysicalDiskInfo_LogicalDriveFromSystemDrive_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
+         
 
-
-         var volumeCount = 0;
+         var driveCount = 0;
 
          // Use lowercase drive letter because .Contains() is case sensitive by default.
-         var sourceDrive = UnitTestConstants.SysDrive.ToLowerInvariant();
+         var sourceDrive = UnitTestConstants.SysDrive.ToLowerInvariant() + System.IO.Path.DirectorySeparatorChar;
 
-         // Use uppercase volume guid because .Contains() is case sensitive by default.
-         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive).ToUpperInvariant();
+         var pDisk = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDiskInfo(sourceDrive);
 
-
-         var pDisk = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDiskInfo(sourceVolume);
-
-
-         Console.WriteLine("#{0:000}\tInput Volume: [{1}]\t\t{2}\t\t{3}", ++volumeCount, sourceVolume, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
+         Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}\t\t{3}", ++driveCount, sourceDrive, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
 
 
          UnitTestConstants.Dump(pDisk, -24);
@@ -61,9 +56,9 @@ namespace AlphaFS.UnitTest
          Assert.IsNotNull(pDisk);
 
 
-         Assert.IsNotNull(pDisk.VolumeGuids);
-         //Assert.IsTrue(pDisk.VolumeGuids.Contains(sourceVolume));
-         Assert.IsTrue(pDisk.ContainsVolume(sourceVolume));
+         Assert.IsNotNull(pDisk.LogicalDrives);
+         //Assert.IsTrue(pDisk.LogicalDrives.Contains(sourceDrive));
+         Assert.IsTrue(pDisk.ContainsVolume(sourceDrive));
       }
    }
 }
