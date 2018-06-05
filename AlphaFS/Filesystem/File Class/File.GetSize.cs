@@ -33,8 +33,8 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
       /// <summary>[AlphaFS] Retrieves the size of the specified file.</summary>
+      /// <returns>The file size, in bytes.</returns>
       /// <param name="path">The path to the file.</param>
-      /// <returns>The file size, in bytes.</returns>      
       [SecurityCritical]
       public static long GetSize(string path)
       {
@@ -43,9 +43,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves the size of the specified file.</summary>
+      /// <returns>The file size, in bytes.</returns>
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The file size, in bytes.</returns>      
       [SecurityCritical]
       public static long GetSize(string path, PathFormat pathFormat)
       {
@@ -54,9 +54,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves the size of the specified file.</summary>
+      /// <returns>The file size of the first or all streams, in bytes.</returns>
       /// <param name="path">The path to the file.</param>
       /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
-      /// <returns>The file size, in bytes.</returns>      
       [SecurityCritical]
       public static long GetSize(string path, bool sizeOfAllStreams)
       {
@@ -65,33 +65,33 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves the size of the specified file.</summary>
+      /// <returns>The file size of the first or all streams, in bytes.</returns>
       /// <param name="path">The path to the file.</param>
       /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The file size, in bytes.</returns>      
       [SecurityCritical]
       public static long GetSize(string path, bool sizeOfAllStreams, PathFormat pathFormat)
       {
          return GetSizeCore(null, null, path, sizeOfAllStreams, pathFormat);
       }
-      
+
 
       /// <summary>[AlphaFS] Retrieves the size of the specified file.</summary>
+      /// <returns>The file size, in bytes.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
-      /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path)
       {
          return GetSizeCore(transaction, null, path, false, PathFormat.RelativePath);
       }
 
-      
+
       /// <summary>[AlphaFS] Retrieves the size of the specified file.</summary>
+      /// <returns>The file size, in bytes.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
@@ -100,10 +100,10 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves the size of the specified file.</summary>
+      /// <returns>The file size of the first or all streams, in bytes.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
-      /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path, bool sizeOfAllStreams)
       {
@@ -112,11 +112,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves the size of the specified file.</summary>
+      /// <returns>The file size of the first or all streams, in bytes.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path, bool sizeOfAllStreams, PathFormat pathFormat)
       {
@@ -125,8 +125,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves the size of the specified file.</summary>
+      /// <returns>The file size, in bytes.</returns>
       /// <param name="handle">The <see cref="SafeFileHandle"/> to the file.</param>
-      /// <returns>The file size, in bytes.</returns>      
       [SecurityCritical]
       public static long GetSize(SafeFileHandle handle)
       {
@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Retrieves the size of the specified file.</summary>
-      /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
+      /// <returns>The file size of the first or all streams, in bytes.</returns>
       /// <remarks>Use either <paramref name="path"/> or <paramref name="safeFileHandle"/>, not both.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="safeFileHandle">The <see cref="SafeFileHandle"/> to the file.</param>
@@ -148,12 +148,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static long GetSizeCore(KernelTransaction transaction, SafeFileHandle safeFileHandle, string path, bool sizeOfAllStreams, PathFormat pathFormat)
       {
-         if (sizeOfAllStreams)
-            return GetSizeAllStreamsCore(transaction, path, pathFormat);
-
-
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
-         
+
+         if (sizeOfAllStreams)
+            return FindAllStreamsCore(transaction, pathLp);
+
+
          var callerHandle = null != safeFileHandle;
 
          if (!callerHandle)
@@ -181,22 +181,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Retrieves the size of all alternate data streams of the specified directory or file.</summary>
-      /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static long GetSizeAllStreamsCore(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
-         
-         return FindAllStreamsNative(transaction, pathLp);
-      }
-
-
-      internal static long FindAllStreamsNative(KernelTransaction transaction, string pathLp)
+      internal static long FindAllStreamsCore(KernelTransaction transaction, string pathLp)
       {
          var streamSizes = new Collection<long>();
 
@@ -226,6 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      [SecurityCritical]
       internal static SafeFindFileHandle FindFirstStreamNative(KernelTransaction transaction, string pathLp, SafeGlobalMemoryBufferHandle buffer)
       {
          var safeFindFileHandle = null == transaction

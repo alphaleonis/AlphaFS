@@ -75,6 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file or directory to enumerate streams of.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>An enumeration of <see cref="AlternateDataStreamInfo"/> instances.</returns>
+      [SecurityCritical]
       internal static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
