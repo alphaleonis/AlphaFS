@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
       /// <remarks>
-      ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.</para>
+      ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <c>false</c>.</para>
       ///   <para>Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.</para>
       /// </remarks>
       /// <exception cref="ArgumentException"/>
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="recursive"><see langword="true"/> to delete this directory, its subdirectories, and all files; otherwise, <see langword="false"/>.</param>
+      /// <param name="recursive"><c>true</c> to delete this directory, its subdirectories, and all files; otherwise, <c>false</c>.</param>
       [SecurityCritical]
       public void Delete(bool recursive)
       {
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
       /// <remarks>
-      ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.</para>
+      ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <c>false</c>.</para>
       ///   <para>Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.</para>
       /// </remarks>
       /// <exception cref="ArgumentException"/>
@@ -75,8 +75,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="recursive"><see langword="true"/> to delete this directory, its subdirectories, and all files; otherwise, <see langword="false"/>.</param>
-      /// <param name="ignoreReadOnly"><see langword="true"/> ignores read only attribute of files and directories.</param>
+      /// <param name="recursive"><c>true</c> to delete this directory, its subdirectories, and all files; otherwise, <c>false</c>.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> ignores read only attribute of files and directories.</param>
       [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly)
       {
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
       /// <remarks>
-      ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.</para>
+      ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <c>false</c>.</para>
       ///   <para>Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.</para>
       /// </remarks>
       /// <exception cref="ArgumentException"/>
@@ -95,9 +95,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="recursive"><see langword="true"/> to delete this directory, its subdirectories, and all files; otherwise, <see langword="false"/>.</param>
-      /// <param name="ignoreReadOnly"><see langword="true"/> ignores read only attribute of files and directories.</param>
-      /// <param name="continueOnNotFound">When <see langword="true"/> does not throw an <see cref="DirectoryNotFoundException"/> when the directory does not exist.</param>
+      /// <param name="recursive"><c>true</c> to delete this directory, its subdirectories, and all files; otherwise, <c>false</c>.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> ignores read only attribute of files and directories.</param>
+      /// <param name="continueOnNotFound">When <c>true</c> does not throw an <see cref="DirectoryNotFoundException"/> when the directory does not exist.</param>
       [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly, bool continueOnNotFound)
       {

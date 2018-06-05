@@ -28,6 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>      
+      /// <returns>Returns <c>true</c> if the specified file is in use (locked); otherwise, <c>false</c></returns>
       [SecurityCritical]
       public bool IsLocked()
       {

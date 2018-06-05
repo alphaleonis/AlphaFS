@@ -43,9 +43,9 @@ namespace Alphaleonis.Win32.Network
       /// <param name="localName">The name of a local device to be disconnected, such as "F:".</param>
       /// <param name="force">
       ///   Specifies whether the disconnection should occur if there are open files or jobs on the connection.
-      ///   If this parameter is <see langword="false"/>, the function fails if there are open files or jobs.
+      ///   If this parameter is <c>false</c>, the function fails if there are open files or jobs.
       /// </param>
-      /// <param name="updateProfile"><see langword="true"/> successful removal of network resource connections will be saved.</param>
+      /// <param name="updateProfile"><c>true</c> successful removal of network resource connections will be saved.</param>
       [SecurityCritical]
       public static void DisconnectDrive(string localName, bool force, bool updateProfile)
       {

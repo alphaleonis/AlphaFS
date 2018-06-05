@@ -31,13 +31,11 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
-      /// <para>&#160;</para>
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.</summary>
       /// <returns>
-      /// <para>Returns null when no processes found that are locking the file specified by <paramref name="filePath"/>.</para>
-      /// <para>Returns a list of processes locking the file specified by <paramref name="filePath"/>.</para>
+      /// <c>null</c> when no processes found that are locking the file specified by <paramref name="filePath"/>.
+      /// A list of processes locking the file specified by <paramref name="filePath"/>.
       /// </returns>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
@@ -50,13 +48,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
-      /// <para>&#160;</para>
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.</summary>
       /// <returns>
-      /// <para>Returns null when no processes found that are locking the file specified by <paramref name="filePath"/>.</para>
-      /// <para>Returns a list of processes locking the file specified by <paramref name="filePath"/>.</para>
+      /// <c>null</c> when no processes found that are locking the file specified by <paramref name="filePath"/>.
+      /// A list of processes locking the file specified by <paramref name="filePath"/>.
       /// </returns>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
@@ -70,13 +66,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
-      /// <para>&#160;</para>
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.</summary>
       /// <returns>
-      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
-      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// <c>null</c> when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.
+      /// A list of processes locking the file(s) specified by <paramref name="filePaths"/>.
       /// </returns>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
@@ -89,13 +83,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
-      /// <para>&#160;</para>
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.</summary>
       /// <returns>
-      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
-      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// <c>null</c> when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.
+      /// A list of processes locking the file(s) specified by <paramref name="filePaths"/>.
       /// </returns>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
@@ -109,13 +101,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
-      /// <para>&#160;</para>
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.</summary>
       /// <returns>
-      /// <para>Returns null when no processes found that are locking the file specified by <paramref name="filePath"/>.</para>
-      /// <para>Returns a list of processes locking the file specified by <paramref name="filePath"/>.</para>
+      /// <c>null</c> when no processes found that are locking the file specified by <paramref name="filePath"/>.
+      /// A list of processes locking the file specified by <paramref name="filePath"/>.
       /// </returns>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
@@ -129,13 +119,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.
-      /// <para>&#160;</para>
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the files specified by <paramref name="filePath"/>.</summary>
       /// <returns>
-      /// <para>Returns null when no processes found that are locking the file specified by <paramref name="filePath"/>.</para>
-      /// <para>Returns a list of processes locking the file specified by <paramref name="filePath"/>.</para>
+      /// <c>null</c> when no processes found that are locking the file specified by <paramref name="filePath"/>.
+      /// A list of processes locking the file specified by <paramref name="filePath"/>.
       /// </returns>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
@@ -150,13 +138,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
-      /// <para>&#160;</para>
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.</summary>
       /// <returns>
-      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
-      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// <c>null</c> when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.
+      /// A list of processes locking the file(s) specified by <paramref name="filePaths"/>.
       /// </returns>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
@@ -170,13 +156,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
-      /// <para>&#160;</para>
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.</summary>
       /// <returns>
-      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
-      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// <c>null</c> when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.
+      /// A list of processes locking the file(s) specified by <paramref name="filePaths"/>.
       /// </returns>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>
@@ -193,13 +177,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.
-      /// <para>&#160;</para>
+      /// <summary>[AlphaFS] Gets a list of processes that have a lock on the file(s) specified by <paramref name="filePaths"/>.</summary>
       /// <returns>
-      /// <para>Returns null when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.</para>
-      /// <para>Returns a list of processes locking the file(s) specified by <paramref name="filePaths"/>.</para>
+      /// <c>null</c> when no processes found that are locking the file(s) specified by <paramref name="filePaths"/>.
+      /// A list of processes locking the file(s) specified by <paramref name="filePaths"/>.
       /// </returns>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentOutOfRangeException"/>

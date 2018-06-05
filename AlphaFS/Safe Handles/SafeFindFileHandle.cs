@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Initializes a new instance of the <see cref="SafeFindFileHandle"/> class.</summary>
       /// <param name="handle">The handle.</param>
-      /// <param name="callerHandle"><see langword="true"/> to reliably release the handle during the finalization phase; <see langword="false"/> to prevent reliable release (not recommended).</param>
+      /// <param name="callerHandle"><c>true</c> to reliably release the handle during the finalization phase; <c>false</c> to prevent reliable release (not recommended).</param>
       public SafeFindFileHandle(IntPtr handle, bool callerHandle) : base(callerHandle)
       {
          SetHandle(handle);
@@ -45,8 +45,8 @@ namespace Alphaleonis.Win32.Filesystem
       
       /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
       /// <returns>
-      /// <see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure,
-      /// <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
+      /// <c>true</c> if the handle is released successfully; otherwise, in the event of a catastrophic failure,
+      /// <c>false</c>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
       /// </returns>
       protected override bool ReleaseHandle()
       {

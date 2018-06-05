@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Check if file or folder name has any invalid characters.</summary>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="name">File or folder name.</param>
-      /// <returns><see langword="true"/> if name contains any invalid characters. Otherwise <see langword="false"/></returns>
+      /// <returns><c>true</c> if name contains any invalid characters. Otherwise <c>false</c></returns>
       public static bool IsValidName(string name)
       {
          if (name == null)

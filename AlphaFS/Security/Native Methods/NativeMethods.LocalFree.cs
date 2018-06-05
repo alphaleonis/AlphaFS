@@ -30,10 +30,10 @@ namespace Alphaleonis.Win32.Security
    {
       /// <summary>Frees the specified local memory object and invalidates its handle.</summary>
       /// <returns>
-      /// If the function succeeds, the return value is <see langword="null"/>.
+      /// If the function succeeds, the return value is <c>null</c>.
       /// If the function fails, the return value is equal to a handle to the local memory object. To get extended error information, call GetLastError.
       /// </returns>
-      /// <remarks>SetLastError is set to <see langword="false"/>.</remarks>
+      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
       /// <remarks>
       /// Note  The local functions have greater overhead and provide fewer features than other memory management functions.
       /// New applications should use the heap functions unless documentation states that a local function should be used.

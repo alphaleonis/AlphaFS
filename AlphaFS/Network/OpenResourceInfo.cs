@@ -26,7 +26,7 @@ using Alphaleonis.Win32.Filesystem;
 namespace Alphaleonis.Win32.Network
 {
    /// <summary>Contains the identification number and other pertinent information about files, devices, and pipes. This class cannot be inherited.</summary>
-   [SerializableAttribute]
+   [Serializable]
    public sealed class OpenResourceInfo
    {
       #region Constructor

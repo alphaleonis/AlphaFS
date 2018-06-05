@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Retrieves the short path form, or the regular long form of the specified <paramref name="path"/>.</summary>
-      /// <returns>If <paramref name="getShort"/> is <see langword="true"/>, a path of the 8.3 form otherwise the regular long form.</returns>
+      /// <returns>If <paramref name="getShort"/> is <c>true</c>, a path of the 8.3 form otherwise the regular long form.</returns>
       /// <remarks>
       ///   <para>Will fail on NTFS volumes with disabled 8.3 name generation.</para>
       ///   <para>The path must actually exist to be able to get the short- or long path name.</para>
@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">An existing path to a folder or file.</param>
-      /// <param name="getShort"><see langword="true"/> to retrieve the short path form, <see langword="false"/> to retrieve the regular long form from the 8.3 <paramref name="path"/>.</param>
+      /// <param name="getShort"><c>true</c> to retrieve the short path form, <c>false</c> to retrieve the regular long form from the 8.3 <paramref name="path"/>.</param>
       [SecurityCritical]
       private static string GetLongShort83PathCore(KernelTransaction transaction, string path, bool getShort)
       {

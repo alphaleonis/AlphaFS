@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
-      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
+      /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
 
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
+      /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
 
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]

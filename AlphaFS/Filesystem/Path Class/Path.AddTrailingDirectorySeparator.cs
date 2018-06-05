@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Path
    {
       /// <summary>[AlphaFS] Adds a trailing <see cref="DirectorySeparatorChar"/> character to the string, when absent.</summary>
-      /// <returns>A text string with a trailing <see cref="DirectorySeparatorChar"/> character. The function returns <see langword="null"/> when <paramref name="path"/> is <see langword="null"/>.</returns>
+      /// <returns>A text string with a trailing <see cref="DirectorySeparatorChar"/> character. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
       /// <param name="path">A text string to which the trailing <see cref="DirectorySeparatorChar"/> is to be added, when absent.</param>
       [SecurityCritical]
       public static string AddTrailingDirectorySeparator(string path)
@@ -38,9 +38,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Adds a trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character to the string, when absent.</summary>
-      /// <returns>A text string with a trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character. The function returns <see langword="null"/> when <paramref name="path"/> is <see langword="null"/>.</returns>
+      /// <returns>A text string with a trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
       /// <param name="path">A text string to which the trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> is to be added, when absent.</param>
-      /// <param name="addAlternateSeparator">If <see langword="true"/> the <see cref="AltDirectorySeparatorChar"/> character will be added instead.</param>
+      /// <param name="addAlternateSeparator">If <c>true</c> the <see cref="AltDirectorySeparatorChar"/> character will be added instead.</param>
       [SecurityCritical]
       public static string AddTrailingDirectorySeparator(string path, bool addAlternateSeparator)
       {

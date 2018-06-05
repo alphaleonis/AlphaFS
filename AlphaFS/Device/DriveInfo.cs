@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets a value indicating whether a drive is ready.</summary>
-      /// <returns><see langword="true"/> if the drive is ready; otherwise, <see langword="false"/>.</returns>
+      /// <returns><c>true</c> if the drive is ready; otherwise, <c>false</c>.</returns>
       /// <remarks>
       /// IsReady indicates whether a drive is ready. For example, it indicates whether a CD is in a CD drive or whether
       /// a removable storage device is ready for read/write operations. If you do not test whether a drive is ready, and
@@ -180,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The volume label.</returns>
       /// <remarks>
       /// The label length is determined by the operating system. For example, NTFS allows a volume label
-      /// to be up to 32 characters long. Note that <see langword="null"/> is a valid VolumeLabel.
+      /// to be up to 32 characters long. Note that <c>null</c> is a valid VolumeLabel.
       /// </remarks>
       public string VolumeLabel
       {
@@ -292,7 +292,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets an available drive letter on the local system.</summary>
-      /// <param name="getLastAvailable">When <see langword="true"/> get the last available drive letter. When <see langword="false"/> gets the first available drive letter.</param>
+      /// <param name="getLastAvailable">When <c>true</c> get the last available drive letter. When <c>false</c> gets the first available drive letter.</param>
       /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
       /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
       /// <exception cref="ArgumentOutOfRangeException">No drive letters available.</exception>

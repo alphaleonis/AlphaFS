@@ -26,7 +26,7 @@ using System.Globalization;
 namespace Alphaleonis.Win32.Network
 {
    /// <summary>Contains information about Server Message Block (SMB) shares. This class cannot be inherited.</summary>
-   [SerializableAttribute]
+   [Serializable]
    public sealed class ShareInfo
    {
       #region Constructor

@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="drivePath">
       ///   A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\".
       /// </param>
-      /// <returns>The name of the file system on the specified drive or <see langword="null"/>  on failure or if not available.</returns>
+      /// <returns>The name of the file system on the specified drive or <c>null</c>  on failure or if not available.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       public static string GetDriveFormat(string drivePath)

@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public sealed partial class DirectoryInfo
    {
-      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").
+      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
       /// <para>&#160;</para>
       /// <para>The directory must be empty and reside on a local volume.</para>
@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
       /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
       /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").
+      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
       /// <para>&#160;</para>
       /// <para>The directory must be empty and reside on a local volume.</para>
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
       /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
       /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").
+      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
       /// <para>&#160;</para>
       /// <para>The directory must be empty and reside on a local volume.</para>
@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
       /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
       /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="junctionPath">The path of the junction point to create.</param>
-      /// <param name="overwrite"><see langword="true"/> to overwrite an existing junction point. The directory is removed and recreated.</param>
+      /// <param name="overwrite"><c>true</c> to overwrite an existing junction point. The directory is removed and recreated.</param>
       [SecurityCritical]
       public void CreateJunction(string junctionPath, bool overwrite)
       {
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").
+      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
       /// <para>&#160;</para>
       /// <para>The directory must be empty and reside on a local volume.</para>
@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
       /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
       /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -132,7 +132,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="junctionPath">The path of the junction point to create.</param>
-      /// <param name="overwrite"><see langword="true"/> to overwrite an existing junction point. The directory is removed and recreated.</param>
+      /// <param name="overwrite"><c>true</c> to overwrite an existing junction point. The directory is removed and recreated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public void CreateJunction(string junctionPath, bool overwrite, PathFormat pathFormat)
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").
+      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
       /// <para>&#160;</para>
       /// <para>The directory must be empty and reside on a local volume.</para>
@@ -153,7 +153,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
       /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
       /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -162,8 +162,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="junctionPath">The path of the junction point to create.</param>
-      /// <param name="overwrite"><see langword="true"/> to overwrite an existing junction point. The directory is removed and recreated.</param>
-      /// <param name="copyTargetTimestamps"><see langword="true"/> to copy the target date and time stamps to the directory junction.</param>
+      /// <param name="overwrite"><c>true</c> to overwrite an existing junction point. The directory is removed and recreated.</param>
+      /// <param name="copyTargetTimestamps"><c>true</c> to copy the target date and time stamps to the directory junction.</param>
       [SecurityCritical]
       public void CreateJunction(string junctionPath, bool overwrite, bool copyTargetTimestamps)
       {
@@ -173,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").
+      /// <summary>[AlphaFS] Converts the <see cref="DirectoryInfo"/> instance into a directory junction instance (similar to CMD command: "MKLINK /J").</summary>
       /// <remarks>
       /// <para>&#160;</para>
       /// <para>The directory must be empty and reside on a local volume.</para>
@@ -183,7 +183,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>MSDN: A junction (also called a soft link) differs from a hard link in that the storage objects it references are separate directories,</para>
       /// <para>and a junction can link directories located on different local volumes on the same computer.</para>
       /// <para>Otherwise, junctions operate identically to hard links. Junctions are implemented through reparse points.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -192,8 +192,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="junctionPath">The path of the junction point to create.</param>
-      /// <param name="overwrite"><see langword="true"/> to overwrite an existing junction point. The directory is removed and recreated.</param>
-      /// <param name="copyTargetTimestamps"><see langword="true"/> to copy the target date and time stamps to the directory junction.</param>
+      /// <param name="overwrite"><c>true</c> to overwrite an existing junction point. The directory is removed and recreated.</param>
+      /// <param name="copyTargetTimestamps"><c>true</c> to copy the target date and time stamps to the directory junction.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public void CreateJunction(string junctionPath, bool overwrite, bool copyTargetTimestamps, PathFormat pathFormat)

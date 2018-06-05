@@ -78,8 +78,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationFileName">The name of the file being replaced.</param>
       /// <param name="destinationBackupFileName">The name of the backup file.</param>
       /// <param name="ignoreMetadataErrors">
-      ///   <see langword="true"/> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the
-      ///   replacement file; otherwise, <see langword="false"/>.
+      ///   <c>true</c> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the
+      ///   replacement file; otherwise, <c>false</c>.
       /// </param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
@@ -109,8 +109,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationFileName">The name of the file being replaced.</param>
       /// <param name="destinationBackupFileName">The name of the backup file.</param>
       /// <param name="ignoreMetadataErrors">
-      ///   <see langword="true"/> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the
-      ///   replacement file; otherwise, <see langword="false"/>.
+      ///   <c>true</c> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the
+      ///   replacement file; otherwise, <c>false</c>.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
@@ -144,8 +144,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationFileName">The name of the file being replaced.</param>
       /// <param name="destinationBackupFileName">The name of the backup file.</param>
       /// <param name="ignoreMetadataErrors">
-      ///   <see langword="true"/> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the
-      ///   replacement file; otherwise, <see langword="false"/>.
+      ///   <c>true</c> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the
+      ///   replacement file; otherwise, <c>false</c>.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]

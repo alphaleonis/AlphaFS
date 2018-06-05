@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to decrypt.</param>
-      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt the directory.</param>
+      /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void Decrypt(string path, bool recursive, PathFormat pathFormat)
@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to decrypt.</param>
-      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt the directory.</param>
+      /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt the directory.</param>
       [SecurityCritical]
       public static void Decrypt(string path, bool recursive)
       {
@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to encrypt.</param>
-      /// <param name="recursive"><see langword="true"/> to encrypt the directory recursively. <see langword="false"/> only encrypt the directory.</param>
+      /// <param name="recursive"><c>true</c> to encrypt the directory recursively. <c>false</c> only encrypt the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void Encrypt(string path, bool recursive, PathFormat pathFormat)
@@ -156,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to encrypt.</param>
-      /// <param name="recursive"><see langword="true"/> to encrypt the directory recursively. <see langword="false"/> only encrypt the directory.</param>
+      /// <param name="recursive"><c>true</c> to encrypt the directory recursively. <c>false</c> only encrypt the directory.</param>
       [SecurityCritical]
       public static void Encrypt(string path, bool recursive)
       {
@@ -258,7 +258,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
-      /// <param name="enable"><see langword="true"/> enabled encryption, <see langword="false"/> disables encryption.</param>
+      /// <param name="enable"><c>true</c> enabled encryption, <c>false</c> disables encryption.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       internal static void EnableDisableEncryptionCore(string path, bool enable, PathFormat pathFormat)
@@ -288,8 +288,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">A path that describes a directory to encrypt.</param>
-      /// <param name="encrypt"><see langword="true"/> encrypt, <see langword="false"/> decrypt.</param>
-      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <param name="encrypt"><c>true</c> encrypt, <c>false</c> decrypt.</param>
+      /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt files and directories in the root of <paramref name="path"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       internal static void EncryptDecryptDirectoryCore(string path, bool encrypt, bool recursive, PathFormat pathFormat)

@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="isDefine">
-      ///   <see langword="true"/> defines a new MS-DOS device. <see langword="false"/> deletes a previously defined MS-DOS device.
+      ///   <c>true</c> defines a new MS-DOS device. <c>false</c> deletes a previously defined MS-DOS device.
       /// </param>
       /// <param name="deviceName">
       ///   An MS-DOS device name string specifying the device the function is defining, redefining, or deleting.
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   default.
       /// </param>
       /// <param name="exactMatch">
-      ///   Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <see langword="true"/>,
+      ///   Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <c>true</c>,
       ///   <paramref name="targetPath"/> must be the same path used to create the mapping.
       /// </param>
       [SecurityCritical]
