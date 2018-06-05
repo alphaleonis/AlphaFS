@@ -434,7 +434,7 @@
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.CreateSymbolicLink_And_GetLinkTargetInfo.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.CreateHardlink_And_EnumerateHardlinks.cs" />
     <Compile Include="AlphaFS Compression\AlphaFS_File.Compress_And_Decompress.cs" />
-    <Compile Include="AlphaFS Compression\AlphaFS_File.GetCompressedSize.cs" />
+    <Compile Include="File Class\AlphaFS_File_GetSize\AlphaFS_File.GetCompressedSize.cs" />
     <Compile Include="File Class\AlphaFS_File_GetSize\AlphaFS_File.GetSize_Stream0.cs" />
     <Compile Include="File Class\AlphaFS_File.EnumerateAlternateDataStreams.cs" />
     <Compile Include="File Class\File_Create\File.Create.cs" />

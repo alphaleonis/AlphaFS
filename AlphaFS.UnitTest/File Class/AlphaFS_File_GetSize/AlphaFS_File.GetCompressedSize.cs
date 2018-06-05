@@ -24,7 +24,7 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   partial class AlphaFS_CompressionTest
+   partial class SizeTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
          {
             var file = tempRoot.RandomTxtFileFullPath;
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("Input File Path: [{0}]\n", file);
 
 
             long streamLength;
@@ -64,6 +64,8 @@ namespace AlphaFS.UnitTest
                streamLength = fs.Length;
             }
 
+            Console.WriteLine("\tFile size (uncompressed): {0:N0} bytes ({1})", streamLength, Alphaleonis.Utils.UnitSizeToText(streamLength));
+
 
             // Compress file.
             // Size on disk: 4,00 KB (4.096 bytes)
@@ -72,7 +74,10 @@ namespace AlphaFS.UnitTest
 
             var fileLength = Alphaleonis.Win32.Filesystem.File.GetCompressedSize(file);
 
-            Assert.IsTrue(fileLength == compressedSize && fileLength != streamLength, "File should be [{0}] bytes in size.", compressedSize);
+            Console.WriteLine("\tFile size (compressed)  : {0:N0} bytes ({1})", fileLength, Alphaleonis.Utils.UnitSizeToText(fileLength));
+
+
+            Assert.IsTrue(fileLength == compressedSize && fileLength != streamLength, "File should be [{0:N0}] bytes in size.", compressedSize);
          }
 
          Console.WriteLine();
