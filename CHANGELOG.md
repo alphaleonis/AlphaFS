@@ -1,7 +1,6 @@
 Changelog
 =========
 
-
 Version 2.3  (2018-XX-XX)
 -------------
 
@@ -19,7 +18,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
 
 
-Version 2.2.2  (2018-XX-XX)
+Version 2.2.2  (2018-06-05)
 -------------
 
 ### Bugs Fixed
