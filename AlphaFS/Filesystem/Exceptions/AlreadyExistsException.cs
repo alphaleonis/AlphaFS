@@ -28,8 +28,7 @@ using System.Runtime.Serialization;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>[AlphaFS] The exception that is thrown when an attempt to create a file or directory that already exists was made.
-   /// <para>&#160;</para>
-   /// <para>Both <see cref="Win32Errors.ERROR_ALREADY_EXISTS"/> and <see cref="Win32Errors.ERROR_FILE_EXISTS"/> can cause this Exception.</para>
+   /// Both <c>ERROR_ALREADY_EXISTS</c> and <c>ERROR_FILE_EXISTS</c> can cause this Exception.
    /// </summary>
    [Serializable]
    public class AlreadyExistsException : System.IO.IOException
@@ -45,8 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="AlreadyExistsException"/> class.
-      /// <para>&#160;</para>
-      /// <para>Both <see cref="Win32Errors.ERROR_ALREADY_EXISTS"/> and <see cref="Win32Errors.ERROR_FILE_EXISTS"/> can cause this Exception.</para>
+      /// Both <c>ERROR_ALREADY_EXISTS</c> and <c>ERROR_FILE_EXISTS</c> can cause this Exception.
       /// </summary>
       /// <param name="message">The custom error message..</param>
       public AlreadyExistsException(string message) : base(message, ErrorCode)

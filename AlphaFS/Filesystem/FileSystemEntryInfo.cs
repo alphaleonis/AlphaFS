@@ -42,7 +42,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>Returns the <see cref="FullPath"/> of the <see cref="FileSystemEntryInfo"/> instance.</summary>
+      /// <summary>Returns the <see cref="FullPath"/> of the FileSystemEntryInfo instance.</summary>
+      /// <returns>Returns the <see cref="FullPath"/> of the FileSystemEntryInfo instance.</returns>
       public override string ToString()
       {
          return FullPath;
@@ -53,9 +54,10 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>The instance 8.3 version of the filename.</summary>
-      /// <remarks>This property is always empty when <see cref="NativeMethods.FINDEX_INFO_LEVELS.Basic"/> is used.</remarks>
       public string AlternateFileName
       {
+         // This property is always empty when NativeMethods.FINDEX_INFO_LEVELS.Basic is used.
+
          get { return Win32FindData.cAlternateFileName; }
       }
 

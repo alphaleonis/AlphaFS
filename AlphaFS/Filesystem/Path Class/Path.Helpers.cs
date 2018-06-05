@@ -78,8 +78,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">A path to the file or directory.</param>
-      /// <param name="checkAdditional"><see langword="true"/> also checks for ? and * characters.</param>
-      /// <param name="allowEmpty">When <see langword="false"/>, throws an <see cref="ArgumentException"/>.</param>
+      /// <param name="checkAdditional"><c>true</c> also checks for ? and * characters.</param>
+      /// <param name="allowEmpty">When <c>false</c>, throws an <see cref="ArgumentException"/>.</param>
       [SecurityCritical]
       private static void CheckInvalidPathChars(string path, bool checkAdditional, bool allowEmpty)
       {
@@ -213,13 +213,13 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Check if <paramref name="c"/> is a directory- and/or volume-separator character.</summary>
-      /// <returns><see langword="true"/> if <paramref name="c"/> is a separator character.</returns>
+      /// <returns><c>true</c> if <paramref name="c"/> is a separator character.</returns>
       /// <param name="c">The character to check.</param>
       /// <param name="checkSeparatorChar">
-      ///   If <see langword="null"/>, checks for all separator characters: <see cref="DirectorySeparatorChar"/>,
+      ///   If <c>null</c>, checks for all separator characters: <see cref="DirectorySeparatorChar"/>,
       ///   <see cref="AltDirectorySeparatorChar"/> and <see cref="VolumeSeparatorChar"/>
-      ///   If <see langword="false"/>, only checks for: <see cref="DirectorySeparatorChar"/> and <see cref="AltDirectorySeparatorChar"/>
-      ///   If <see langword="true"/> only checks for: <see cref="VolumeSeparatorChar"/>
+      ///   If <c>false</c>, only checks for: <see cref="DirectorySeparatorChar"/> and <see cref="AltDirectorySeparatorChar"/>
+      ///   If <c>true</c> only checks for: <see cref="VolumeSeparatorChar"/>
       /// </param>
       [SecurityCritical]
       internal static bool IsDVsc(char c, bool? checkSeparatorChar)

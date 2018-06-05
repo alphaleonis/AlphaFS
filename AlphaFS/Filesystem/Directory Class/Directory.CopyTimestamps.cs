@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This method uses BackupSemantics flag to get Timestamp changed for directories.</remarks>
       /// <param name="sourcePath">The source directory to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination directory to set the date and time stamps.</param>
-      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the directory linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
+      /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the directory linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath, bool modifyReparsePoint)
       {
@@ -121,7 +121,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This method uses BackupSemantics flag to get Timestamp changed for directories.</remarks>
       /// <param name="sourcePath">The source directory to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination directory to set the date and time stamps.</param>
-      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the directory linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
+      /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the directory linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)
@@ -162,7 +162,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination directory to set the date and time stamps.</param>
-      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the directory linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
+      /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the directory linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool modifyReparsePoint)
       {
@@ -175,7 +175,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination directory to set the date and time stamps.</param>
-      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the directory linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
+      /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the directory linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)

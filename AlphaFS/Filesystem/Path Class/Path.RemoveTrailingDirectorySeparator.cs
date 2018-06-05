@@ -26,7 +26,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Path
    {
       /// <summary>[AlphaFS] Removes the trailing <see cref="DirectorySeparatorChar"/> character from the string, when present.</summary>
-      /// <returns>A text string where the trailing <see cref="DirectorySeparatorChar"/> character has been removed. The function returns <see langword="null"/> when <paramref name="path"/> is <see langword="null"/>.</returns>
+      /// <returns>A text string where the trailing <see cref="DirectorySeparatorChar"/> character has been removed. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
       /// <param name="path">A text string from which the trailing <see cref="DirectorySeparatorChar"/> is to be removed, when present.</param>
       [SecurityCritical]
       public static string RemoveTrailingDirectorySeparator(string path)
@@ -36,9 +36,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Removes the trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character from the string, when present.</summary>
-      /// <returns>A text string where the trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character has been removed. The function returns <see langword="null"/> when <paramref name="path"/> is <see langword="null"/>.</returns>
+      /// <returns>A text string where the trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character has been removed. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
       /// <param name="path">A text string from which the trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> is to be removed, when present.</param>
-      /// <param name="removeAlternateSeparator">If <see langword="true"/> the trailing <see cref="AltDirectorySeparatorChar"/> character will be removed instead.</param>
+      /// <param name="removeAlternateSeparator">If <c>true</c> the trailing <see cref="AltDirectorySeparatorChar"/> character will be removed instead.</param>
       [SecurityCritical]
       public static string RemoveTrailingDirectorySeparator(string path, bool removeAlternateSeparator)
       {

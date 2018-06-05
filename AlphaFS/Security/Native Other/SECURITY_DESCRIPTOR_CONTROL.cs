@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Security
    [Flags]
    internal enum SECURITY_DESCRIPTOR_CONTROL
    {
-      /// <summary></summary>
+      /// <summary>None</summary>
       None = 0,
 
       /// <summary>SE_OWNER_DEFAULTED (0x0001) - Indicates an SD with a default owner security identifier (SID). You can use this bit to find all of the objects that have default owner permissions set.</summary>

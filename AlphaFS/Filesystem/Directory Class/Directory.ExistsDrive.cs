@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.IO;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -26,10 +27,33 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       /// <summary>[AlphaFS] Checks if specified <paramref name="path"/> is a local- or network drive.</summary>
+      /// <param name="path">The path to check, such as: "C:" or "\\server\c$".</param>
       /// <returns><c>true</c> if the  drive exists, <c>false</c> otherwise.</returns>
       public static bool ExistsDrive(string path)
       {
          return ExistsDriveOrFolderOrFile(null, path, false, (int) Win32Errors.NO_ERROR, false, false);
+      }
+
+
+      /// <summary>[AlphaFS] Checks if specified <paramref name="path"/> is a local- or network drive.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to check, such as: "C:" or "\\server\c$".</param>
+      /// <returns><c>true</c> if the  drive exists, <c>false</c> otherwise.</returns>
+      public static bool ExistsDrive(KernelTransaction transaction, string path)
+      {
+         return ExistsDriveOrFolderOrFile(transaction, path, false, (int) Win32Errors.NO_ERROR, false, false);
+      }
+
+
+      /// <summary>[AlphaFS] Checks if specified <paramref name="path"/> is a local- or network drive.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to check, such as: "C:" or "\\server\c$".</param>
+      /// <param name="throwIfDriveNotExists">Throws DeviceNotReadyException when drive is not found.</param>
+      /// <returns><c>true</c> if the  drive exists, <c>false</c> otherwise.</returns>
+      [Obsolete("This function will be removed.")]
+      public static bool ExistsDrive(KernelTransaction transaction, string path, bool throwIfDriveNotExists)
+      {
+         return ExistsDriveOrFolderOrFile(transaction, path, false, (int) Win32Errors.NO_ERROR, throwIfDriveNotExists, false);
       }
 
 
@@ -46,12 +70,12 @@ namespace Alphaleonis.Win32.Filesystem
          var driveExists = null != drive && File.ExistsCore(transaction, true, drive, PathFormat.FullPath);
 
          var regularPath = Path.GetCleanExceptionPath(path);
-         
+
 
          if (!driveExists && throwIfDriveNotExists || lastError == Win32Errors.ERROR_NOT_READY)
             throw new DeviceNotReadyException(drive, true);
 
-         
+
          throwIfFolderOrFileNotExists = throwIfFolderOrFileNotExists && lastError != Win32Errors.NO_ERROR;
 
          if (throwIfFolderOrFileNotExists)

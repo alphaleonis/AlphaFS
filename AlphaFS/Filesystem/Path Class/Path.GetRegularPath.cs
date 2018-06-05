@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path.</param>
       /// <param name="options">Options for controlling the full path retrieval.</param>
-      /// <param name="allowEmpty">When <see langword="false"/>, throws an <see cref="ArgumentException"/>.</param>
+      /// <param name="allowEmpty">When <c>false</c>, throws an <see cref="ArgumentException"/>.</param>
       [SecurityCritical]
       internal static string GetRegularPathCore(string path, GetFullPathOptions options, bool allowEmpty)
       {

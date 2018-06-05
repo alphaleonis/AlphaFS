@@ -28,8 +28,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Determines whether the given directory is empty; i.e. it contains no files and no subdirectories.</summary>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> when the directory contains no file system objects.</para>
-      ///   <para>Returns <see langword="false"/> when directory contains at least one file system object.</para>
+      ///   <para>Returns <c>true</c> when the directory contains no file system objects.</para>
+      ///   <para>Returns <c>false</c> when directory contains at least one file system object.</para>
       /// </returns>
       /// <param name="directoryPath">The path to the directory.</param>
       [SecurityCritical]
@@ -41,8 +41,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines whether the given directory is empty; i.e. it contains no files and no subdirectories.</summary>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> when the directory contains no file system objects.</para>
-      ///   <para>Returns <see langword="false"/> when directory contains at least one file system object.</para>
+      ///   <para>Returns <c>true</c> when the directory contains no file system objects.</para>
+      ///   <para>Returns <c>false</c> when directory contains at least one file system object.</para>
       /// </returns>
       /// <param name="directoryPath">The path to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -55,8 +55,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines whether the given directory is empty; i.e. it contains no files and no subdirectories.</summary>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> when the directory contains no file system objects.</para>
-      ///   <para>Returns <see langword="false"/> when directory contains at least one file system object.</para>
+      ///   <para>Returns <c>true</c> when the directory contains no file system objects.</para>
+      ///   <para>Returns <c>false</c> when directory contains at least one file system object.</para>
       /// </returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="directoryPath">The path to the directory.</param>
@@ -69,8 +69,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines whether the given directory is empty; i.e. it contains no files and no subdirectories.</summary>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> when the directory contains no file system objects.</para>
-      ///   <para>Returns <see langword="false"/> when directory contains at least one file system object.</para>
+      ///   <para>Returns <c>true</c> when the directory contains no file system objects.</para>
+      ///   <para>Returns <c>false</c> when directory contains at least one file system object.</para>
       /// </returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="directoryPath">The path to the directory.</param>
@@ -86,8 +86,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines whether the given directory is empty; i.e. it contains no files and no subdirectories.</summary>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> when the directory contains no file system objects.</para>
-      ///   <para>Returns <see langword="false"/> when directory contains at least one file system object.</para>
+      ///   <para>Returns <c>true</c> when the directory contains no file system objects.</para>
+      ///   <para>Returns <c>false</c> when directory contains at least one file system object.</para>
       /// </returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="directoryPath">The path to the directory.</param>

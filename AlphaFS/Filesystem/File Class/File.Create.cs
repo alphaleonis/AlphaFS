@@ -300,7 +300,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileShare">A <see cref="FileShare"/> constant that determines how the file or directory will be shared by processes.</param>
       /// <param name="checkPath">.</param>
       /// <param name="continueOnException">
-      ///    <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       /// <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>

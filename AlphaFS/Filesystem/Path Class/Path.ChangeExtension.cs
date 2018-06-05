@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The modified path information.</returns>
       /// <exception cref="ArgumentException"/>
       /// <param name="path">The path information to modify. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
-      /// <param name="extension">The new extension (with or without a leading period). Specify <see langword="null"/> to remove an existing extension from path.</param>
+      /// <param name="extension">The new extension (with or without a leading period). Specify <c>null</c> to remove an existing extension from path.</param>
       [SecurityCritical]
       public static string ChangeExtension(string path, string extension)
       {

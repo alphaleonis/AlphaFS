@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <returns>On successful conversion a UNC path is returned.
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
-      ///   <para>If <paramref name="localPath"/> is an empty string or <see langword="null"/>, <see langword="null"/> is returned.</para>
+      ///   <para>If <paramref name="localPath"/> is an empty string or <c>null</c>, <c>null</c> is returned.</para>
       /// </returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="PathTooLongException"/>
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <returns>On successful conversion a UNC path is returned.
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
-      ///   <para>If <paramref name="localPath"/> is an empty string or <see langword="null"/>, <see langword="null"/> is returned.</para>
+      ///   <para>If <paramref name="localPath"/> is an empty string or <c>null</c>, <c>null</c> is returned.</para>
       /// </returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="PathTooLongException"/>
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <returns>On successful conversion a UNC path is returned.
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
-      ///   <para>If <paramref name="localPath"/> is an empty string or <see langword="null"/>, <see langword="null"/> is returned.</para>
+      ///   <para>If <paramref name="localPath"/> is an empty string or <c>null</c>, <c>null</c> is returned.</para>
       /// </returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="PathTooLongException"/>
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <returns>On successful conversion a UNC path is returned.
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
-      ///   <para>If <paramref name="localPath"/> is an empty string or <see langword="null"/>, <see langword="null"/> is returned.</para>
+      ///   <para>If <paramref name="localPath"/> is an empty string or <c>null</c>, <c>null</c> is returned.</para>
       /// </returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="PathTooLongException"/>
@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <returns>On successful conversion a UNC path is returned.
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
-      ///   <para>If <paramref name="localPath"/> is an empty string or <see langword="null"/>, <see langword="null"/> is returned.</para>
+      ///   <para>If <paramref name="localPath"/> is an empty string or <c>null</c>, <c>null</c> is returned.</para>
       /// </returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="PathTooLongException"/>

@@ -82,11 +82,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the label of a file system volume.</summary>
       /// <param name="volumePath">
       ///   <para>A path to a volume. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\"</para>
-      ///   <para>If this parameter is <see langword="null"/>, the function uses the current drive.</para>
+      ///   <para>If this parameter is <c>null</c>, the function uses the current drive.</para>
       /// </param>
       /// <param name="volumeName">
       ///   <para>A name for the volume.</para>
-      ///   <para>If this parameter is <see langword="null"/>, the function deletes any existing label</para>
+      ///   <para>If this parameter is <c>null</c>, the function deletes any existing label</para>
       ///   <para>from the specified volume and does not assign a new label.</para>
       /// </param>
       [SecurityCritical]

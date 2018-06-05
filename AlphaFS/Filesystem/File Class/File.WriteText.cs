@@ -972,8 +972,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isAppend"><see langword="true"/> for file Append, <see langword="false"/> for file Write.</param>
-      /// <param name="addNewLine"><see langword="true"/> to add a line terminator, <see langword="false"/> to ommit the line terminator.</param>
+      /// <param name="isAppend"><c>true</c> for file Append, <c>false</c> for file Write.</param>
+      /// <param name="addNewLine"><c>true</c> to add a line terminator, <c>false</c> to ommit the line terminator.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]
       [SecurityCritical]

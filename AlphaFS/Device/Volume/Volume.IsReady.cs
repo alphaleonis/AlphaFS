@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="drivePath">
       ///   A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\".
       /// </param>
-      /// <returns><see langword="true"/> if <paramref name="drivePath"/> is ready; otherwise, <see langword="false"/>.</returns>
+      /// <returns><c>true</c> if <paramref name="drivePath"/> is ready; otherwise, <c>false</c>.</returns>
       [SecurityCritical]
       public static bool IsReady(string drivePath)
       {

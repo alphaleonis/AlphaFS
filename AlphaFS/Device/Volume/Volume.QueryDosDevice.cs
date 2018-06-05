@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <param name="deviceName">An MS-DOS device name string specifying the target of the query, such as: "C:", "D:" or "\\?\Volume{GUID}".</param>
-      /// <param name="sort"><see langword="true"/> to sort the list with MS-DOS device names.</param>
+      /// <param name="sort"><c>true</c> to sort the list with MS-DOS device names.</param>
       [SecurityCritical]
       internal static IEnumerable<string> QueryDosDeviceCore(string deviceName, bool sort)
       {

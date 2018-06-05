@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Initializes a new instance of the <see cref="FindFileSystemEntryInfo"/> class.</summary>
       /// <param name="transaction">The NTFS Kernel transaction, if used.</param>
-      /// <param name="isFolder">if set to <see langword="true"/> the path is a folder.</param>
+      /// <param name="isFolder">if set to <c>true</c> the path is a folder.</param>
       /// <param name="path">The path.</param>
       /// <param name="searchPattern">The wildcard search pattern.</param>
       /// <param name="options">The enumeration options.</param>
@@ -148,30 +148,30 @@ namespace Alphaleonis.Win32.Filesystem
       #region Properties
 
       /// <summary>Gets or sets the ability to return the object as a <see cref="FileSystemInfo"/> instance.</summary>
-      /// <value><see langword="true"/> returns the object as a <see cref="FileSystemInfo"/> instance.</value>
+      /// <value><c>true</c> returns the object as a <see cref="FileSystemInfo"/> instance.</value>
       public bool AsFileSystemInfo { get; private set; }
 
 
       /// <summary>Gets or sets the ability to return the full path in long full path format.</summary>
-      /// <value><see langword="true"/> returns the full path in long full path format, <see langword="false"/> returns the full path in regular path format.</value>
+      /// <value><c>true</c> returns the full path in long full path format, <c>false</c> returns the full path in regular path format.</value>
       public bool AsLongPath { get; private set; }
 
 
       /// <summary>Gets or sets the ability to return the object instance as a <see cref="string"/>.</summary>
-      /// <value><see langword="true"/> returns the full path of the object as a <see cref="string"/></value>
+      /// <value><c>true</c> returns the full path of the object as a <see cref="string"/></value>
       public bool AsString { get; private set; }
 
 
       /// <summary>Gets or sets the ability to skip on access errors.</summary>
-      /// <value><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as ACLs protected directories or non-accessible reparse points.</value>
+      /// <value><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as ACLs protected directories or non-accessible reparse points.</value>
       public bool ContinueOnException { get; private set; }
 
 
       /// <summary>Gets the file system object type.</summary>
       /// <value>
-      /// <see langword="null"/> = Return files and directories.
-      /// <see langword="true"/> = Return only directories.
-      /// <see langword="false"/> = Return only files.
+      /// <c>null</c> = Return files and directories.
+      /// <c>true</c> = Return only directories.
+      /// <c>false</c> = Return only files.
       /// </value>
       public bool? FileSystemObjectType { get; private set; }
 
@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       
       /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FINDEX_INFO_LEVELS"/> to use.</summary>
-      /// <value><see langword="true"/> indicates a folder object, <see langword="false"/> indicates a file object.</value>
+      /// <value><c>true</c> indicates a folder object, <c>false</c> indicates a file object.</value>
       public bool IsDirectory { get; private set; }
 
 
@@ -211,7 +211,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Specifies whether the search should include only the current directory or should include all subdirectories.</summary>
-      /// <value><see langword="true"/> to include all subdirectories.</value>
+      /// <value><c>true</c> to include all subdirectories.</value>
       public bool Recursive { get; private set; }
 
 
@@ -236,7 +236,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary><see langword="true"/> skips ReparsePoints, <see langword="false"/> will follow ReparsePoints.</summary>
+      /// <summary><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</summary>
       public bool SkipReparsePoints { get; private set; }
 
 
@@ -529,7 +529,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>
       /// <para>The return type is based on C# inference. Possible return types are:</para>
       /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="DirectoryInfo"/> or <see cref="FileInfo"/>), <see cref="FileSystemEntryInfo"/> instance</para>
-      /// <para>or null in case an Exception is raised and <see cref="ContinueOnException"/> is <see langword="true"/>.</para>
+      /// <para>or null in case an Exception is raised and <see cref="ContinueOnException"/> is <c>true</c>.</para>
       /// </returns>
       [SecurityCritical]
       public T Get<T>()
