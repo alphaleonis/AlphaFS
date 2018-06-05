@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the
       ///   <paramref name="path"/> parameter before checking whether the directory exists.</para>
-      ///   <para>The Exists method returns <see langword="false"/> if any error occurs while trying to
+      ///   <para>The Exists method returns <c>false</c> if any error occurs while trying to
       ///   determine if the specified file exists.</para>
       ///   <para>This can occur in situations that raise exceptions such as passing a file name with
       ///   invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the
@@ -45,9 +45,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <param name="path">The file to check.</param>
       /// <returns>
-      ///   Returns <see langword="true"/> if the caller has the required permissions and
+      ///   Returns <c>true</c> if the caller has the required permissions and
       ///   <paramref name="path"/> contains the name of an existing file; otherwise,
-      ///   <see langword="false"/>
+      ///   <c>false</c>
       /// </returns>
       [SecurityCritical]
       public static bool Exists(string path)
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the
       ///   <paramref name="path"/> parameter before checking whether the directory exists.</para>
-      ///   <para>The Exists method returns <see langword="false"/> if any error occurs while trying to
+      ///   <para>The Exists method returns <c>false</c> if any error occurs while trying to
       ///   determine if the specified file exists.</para>
       ///   <para>This can occur in situations that raise exceptions such as passing a file name with
       ///   invalid characters or too many characters,</para>
@@ -75,9 +75,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to check.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> if the caller has the required permissions and
+      ///   <para>Returns <c>true</c> if the caller has the required permissions and
       ///   <paramref name="path"/> contains the name of an existing file; otherwise,
-      ///   <see langword="false"/></para>
+      ///   <c>false</c></para>
       /// </returns>
       [SecurityCritical]
       public static bool Exists(string path, PathFormat pathFormat)
@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the
       ///   <paramref name="path"/> parameter before checking whether the directory exists.</para>
-      ///   <para>The Exists method returns <see langword="false"/> if any error occurs while trying to
+      ///   <para>The Exists method returns <c>false</c> if any error occurs while trying to
       ///   determine if the specified file exists.</para>
       ///   <para>This can occur in situations that raise exceptions such as passing a file name with
       ///   invalid characters or too many characters,</para>
@@ -110,9 +110,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to check.</param>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> if the caller has the required permissions</para>
+      ///   <para>Returns <c>true</c> if the caller has the required permissions</para>
       ///   <para>and <paramref name="path"/> contains the name of an existing file; otherwise,
-      ///   <see langword="false"/></para>
+      ///   <c>false</c></para>
       /// </returns>
       [SecurityCritical]
       public static bool ExistsTransacted(KernelTransaction transaction, string path)
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the
       ///   <paramref name="path"/> parameter before checking whether the directory exists.</para>
-      ///   <para>The Exists method returns <see langword="false"/> if any error occurs while trying to
+      ///   <para>The Exists method returns <c>false</c> if any error occurs while trying to
       ///   determine if the specified file exists.</para>
       ///   <para>This can occur in situations that raise exceptions such as passing a file name with
       ///   invalid characters or too many characters,</para>
@@ -144,9 +144,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to check.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> if the caller has the required permissions</para>
+      ///   <para>Returns <c>true</c> if the caller has the required permissions</para>
       ///   <para>and <paramref name="path"/> contains the name of an existing file; otherwise,
-      ///   <see langword="false"/></para>
+      ///   <c>false</c></para>
       /// </returns>
       [SecurityCritical]
       public static bool ExistsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether
       ///   the directory exists.</para>
-      ///   <para>The Exists method returns <see langword="false"/> if any error occurs while trying to determine if the specified file
+      ///   <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file
       ///   exists.</para>
       ///   <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
       ///   </para>
@@ -180,8 +180,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to check.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> if the caller has the required permissions</para>
-      ///   <para>and <paramref name="path"/> contains the name of an existing file or directory; otherwise, <see langword="false"/></para>
+      ///   <para>Returns <c>true</c> if the caller has the required permissions</para>
+      ///   <para>and <paramref name="path"/> contains the name of an existing file or directory; otherwise, <c>false</c></para>
       /// </returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]

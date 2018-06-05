@@ -179,13 +179,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Gets a value indicating whether the file or directory exists.
       /// </summary>
       /// <remarks>
-      ///   <para>The <see cref="Exists"/> property returns <see langword="false"/> if any error occurs while trying to determine if the
+      ///   <para>The <see cref="Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the
       ///   specified file or directory exists.</para>
       ///   <para>This can occur in situations that raise exceptions such as passing a directory- or file name with invalid characters or too
       ///   many characters,</para>
       ///   <para>a failing or missing disk, or if the caller does not have permission to read the file or directory.</para>
       /// </remarks>
-      /// <value><see langword="true"/> if the file or directory exists; otherwise, <see langword="false"/>.</value>
+      /// <value><c>true</c> if the file or directory exists; otherwise, <c>false</c>.</value>
       public abstract bool Exists { get; }
 
 
@@ -443,7 +443,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
       /// <param name="obj">Another object to compare to.</param>
-      /// <returns><see langword="true"/> if the specified Object is equal to the current Object; otherwise, <see langword="false"/>.</returns>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
       public override bool Equals(object obj)
       {
          if (obj == null || GetType() != obj.GetType())

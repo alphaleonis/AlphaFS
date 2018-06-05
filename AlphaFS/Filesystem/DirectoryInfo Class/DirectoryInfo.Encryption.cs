@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt files and directories in the root of the directory.</param>
+      /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt files and directories in the root of the directory.</param>
       [SecurityCritical]
       public void Decrypt(bool recursive)
       {
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region DisableEncryption
 
       /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
-      /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
+      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=0"</remarks>
       [SecurityCritical]
       public void DisableEncryption()
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnableEncryption
 
       /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
-      /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
+      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=1"</remarks>
       [SecurityCritical]
       public void EnableEncryption()
@@ -112,7 +112,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="recursive"><see langword="true"/> to encrypt the directory recursively. <see langword="false"/> only encrypt files and directories in the root of the directory.</param>
+      /// <param name="recursive"><c>true</c> to encrypt the directory recursively. <c>false</c> only encrypt files and directories in the root of the directory.</param>
       [SecurityCritical]
       public void Encrypt(bool recursive)
       {

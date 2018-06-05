@@ -52,7 +52,7 @@ namespace Alphaleonis
 
 
       /// <summary>Indicates whether a specified string is null, empty, or consists only of white-space characters.</summary>
-      /// <returns><see langword="true"/> if the <paramref name="value"/> parameter is null or <see cref="string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
+      /// <returns><c>true</c> if the <paramref name="value"/> parameter is null or <see cref="string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
       /// <param name="value">The string to test.</param>
       public static bool IsNullOrWhiteSpace(string value)
       {

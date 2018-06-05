@@ -26,6 +26,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       /// <summary>[AlphaFS] Gets the unique identifier for a directory. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
+      /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a directory can change over time.</remarks>
       /// <param name="path">The path to the directory.</param>
       [SecurityCritical]
@@ -36,6 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the unique identifier for a directory. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
+      /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a directory can change over time.</remarks>
       /// <param name="path">The path to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -49,6 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the unique identifier for a directory. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
+      /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a directory can change over time.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
@@ -60,6 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the unique identifier for a directory. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
+      /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a directory can change over time.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>

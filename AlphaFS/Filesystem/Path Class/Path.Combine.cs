@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will not check <paramref name="paths"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will not check <paramref name="paths"/> for invalid path characters.</param>
       /// <param name="paths">An array of parts of the path.</param>
       [SecurityCritical]
       internal static string CombineCore(bool checkInvalidPathChars, params string[] paths)

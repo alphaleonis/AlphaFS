@@ -173,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Tranlates DosDevicePath, Volume GUID. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".</summary>
       /// <returns>A translated dos path.</returns>
       /// <param name="dosDevice">A DosDevicePath, for example: \Device\HarddiskVolumeX\path\filename.ext.</param>
-      /// <param name="deviceReplacement">Alternate path/device text, usually <c>string.Empty</c> or <see langword="null"/>.</param>
+      /// <param name="deviceReplacement">Alternate path/device text, usually <c>string.Empty</c> or <c>null</c>.</param>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       private static string DosDeviceToDosPath(string dosDevice, string deviceReplacement)

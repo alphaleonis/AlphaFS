@@ -29,12 +29,12 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Gets a value indicating whether the specified path string contains absolute or relative path information.</summary>
-      /// <returns><see langword="true"/> if <paramref name="path"/> contains a root; otherwise, <see langword="false"/>.</returns>
+      /// <returns><c>true</c> if <paramref name="path"/> contains a root; otherwise, <c>false</c>.</returns>
       /// <remarks>
-      ///   The IsPathRooted method returns <see langword="true"/> if the first character is a directory separator character such as
+      ///   The IsPathRooted method returns <c>true</c> if the first character is a directory separator character such as
       ///   <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>).
       ///   For example, it returns true for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir".
-      ///   It returns <see langword="false"/> for path strings such as "MyDir".
+      ///   It returns <c>false</c> for path strings such as "MyDir".
       /// </remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
       /// <exception cref="ArgumentException"/>
@@ -50,18 +50,18 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets a value indicating whether the specified path string contains absolute or relative path information.</summary>
-      /// <returns><see langword="true"/> if <paramref name="path"/> contains a root; otherwise, <see langword="false"/>.</returns>
+      /// <returns><c>true</c> if <paramref name="path"/> contains a root; otherwise, <c>false</c>.</returns>
       /// <remarks>
       ///   The IsPathRooted method returns true if the first character is a directory separator character such as
       ///   <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>).
-      ///   For example, it returns <see langword="true"/> for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir".
-      ///   It returns <see langword="false"/> for path strings such as "MyDir".
+      ///   For example, it returns <c>true</c> for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir".
+      ///   It returns <c>false</c> for path strings such as "MyDir".
       /// </remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
       public static bool IsPathRooted(string path, bool checkInvalidPathChars)
       {

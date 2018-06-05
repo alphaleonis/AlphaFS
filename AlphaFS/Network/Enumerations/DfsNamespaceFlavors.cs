@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Network
       [Flags]
       internal enum DfsNamespaceFlavors
       {
-         /// <summary></summary>
+         /// <summary>Unknown</summary>
          Unknown = 0,
 
          /// <summary>DFS_VOLUME_FLAVOR_STANDALONE

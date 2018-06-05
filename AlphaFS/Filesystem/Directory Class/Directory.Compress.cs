@@ -331,7 +331,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
-      /// <param name="compress"><see langword="true"/> compress, when <see langword="false"/> decompress.</param>
+      /// <param name="compress"><c>true</c> compress, when <c>false</c> decompress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       internal static void CompressDecompressCore(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions? options, DirectoryEnumerationFilters filters, bool compress, PathFormat pathFormat)

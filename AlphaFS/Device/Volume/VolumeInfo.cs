@@ -29,7 +29,7 @@ using System.Text;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Contains information about a filesystem Volume.</summary>
-   [SerializableAttribute]
+   [Serializable]
    [SecurityCritical]
    public sealed class VolumeInfo
    {
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a VolumeInfo instance.</summary>
       /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: "\\server\share".</param>
       /// <param name="refresh">Refreshes the state of the object.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public VolumeInfo(string driveName, bool refresh, bool continueOnException) : this(driveName)
       {
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a VolumeInfo instance.</summary>
       /// <param name="volumeHandle">An instance to a <see cref="SafeFileHandle"/> handle.</param>
       /// <param name="refresh">Refreshes the state of the object.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public VolumeInfo(SafeFileHandle volumeHandle, bool refresh, bool continueOnException) : this(volumeHandle)
       {

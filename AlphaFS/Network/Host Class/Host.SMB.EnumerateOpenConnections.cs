@@ -44,10 +44,10 @@ namespace Alphaleonis.Win32.Network
       /// <returns><see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException">
-      ///   <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///   <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
       ///   <para>such as unavailable resources.</para>
       /// </param>
       [SecurityCritical]
@@ -63,9 +63,9 @@ namespace Alphaleonis.Win32.Network
       /// <returns><see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       internal static IEnumerable<OpenConnectionInfo> EnumerateOpenConnectionsCore(string host, string share, bool continueOnException)
       {

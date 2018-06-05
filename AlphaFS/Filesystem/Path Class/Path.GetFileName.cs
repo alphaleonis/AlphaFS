@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <exception cref="ArgumentException"/>
       /// <param name="path">The path string from which to obtain the file name and extension.</param>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       public static string GetFileName(string path, bool checkInvalidPathChars)
       {

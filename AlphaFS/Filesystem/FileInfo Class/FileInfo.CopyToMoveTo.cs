@@ -31,15 +31,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Copies an existing file to a new file, disallowing the overwriting of an existing file.
+      /// <summary>Copies an existing file to a new file, disallowing the overwriting of an existing file.</summary>
       /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <remarks>
       ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -57,14 +55,13 @@ namespace Alphaleonis.Win32.Filesystem
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
-      /// <summary>Copies an existing file to a new file, allowing the overwriting of an existing file.
+      /// <summary>Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
+      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <remarks>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -73,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="overwrite"><see langword="true"/> to allow an existing file to be overwritten; otherwise, <see langword="false"/>.</param>
+      /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; otherwise, <c>false</c>.</param>
       [SecurityCritical]
       public FileInfo CopyTo(string destinationPath, bool overwrite)
       {
@@ -88,14 +85,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, disallowing the overwriting of an existing file.
+      /// <summary>[AlphaFS] Copies an existing file to a new file, disallowing the overwriting of an existing file.</summary>
+      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <remarks>
       ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -116,14 +112,13 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file.
+      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
+      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <remarks>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -132,7 +127,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="overwrite"><see langword="true"/> to allow an existing file to be overwritten; otherwise, <see langword="false"/>.</param>
+      /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; otherwise, <c>false</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public FileInfo CopyTo(string destinationPath, bool overwrite, PathFormat pathFormat)
@@ -145,15 +140,14 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
+      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -172,15 +166,14 @@ namespace Alphaleonis.Win32.Filesystem
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
+      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -202,15 +195,14 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
+      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -220,7 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       [SecurityCritical]
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
@@ -230,15 +222,14 @@ namespace Alphaleonis.Win32.Filesystem
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
+      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -248,7 +239,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
@@ -261,16 +252,15 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -280,8 +270,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
@@ -291,15 +281,14 @@ namespace Alphaleonis.Win32.Filesystem
          return cmr;
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -309,8 +298,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
@@ -323,16 +312,15 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -342,9 +330,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
@@ -354,16 +342,15 @@ namespace Alphaleonis.Win32.Filesystem
          return cmr;
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -373,9 +360,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
@@ -395,16 +382,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Moves a specified file to a new location, providing the option to specify a new file name.
+      /// <summary>Moves a specified file to a new location, providing the option to specify a new file name.</summary>
+      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
       /// <remarks>
       ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -426,17 +412,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
-      /// <returns><para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para></returns>
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
+      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved.</returns>
       /// <remarks>
       ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -457,17 +441,15 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.
-      /// <returns><para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para></returns>
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.</summary>
+      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved.</returns>
       /// <remarks>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -476,7 +458,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
       public FileInfo MoveTo(string destinationPath, MoveOptions moveOptions)
       {
@@ -486,17 +468,15 @@ namespace Alphaleonis.Win32.Filesystem
          return null != destinationPathLp ? new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath) : null;
       }
 
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.
-      /// <returns><para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para></returns>
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.</summary>
+      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved.</returns>
       /// <remarks>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -505,7 +485,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public FileInfo MoveTo(string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
@@ -519,16 +499,16 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -537,9 +517,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
       public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
@@ -553,16 +533,15 @@ namespace Alphaleonis.Win32.Filesystem
          return cmr;
       }
 
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.</summary>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -571,9 +550,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
@@ -595,20 +574,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>Copy/move an existing file to a new file, allowing the overwriting of an existing file.
+      /// <summary>Copy/move an existing file to a new file, allowing the overwriting of an existing file.</summary>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       /// <param name="destinationPath"><para>A full path string to the destination directory</para></param>
-      /// <param name="copyOptions"><para>This parameter can be <see langword="null"/>. Use <see cref="CopyOptions"/> to specify how the file is to be copied.</para></param>
-      /// <param name="moveOptions"><para>This parameter can be <see langword="null"/>. Use <see cref="MoveOptions"/> that specify how the file is to be moved.</para></param>
-      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
-      /// <param name="progressHandler"><para>This parameter can be <see langword="null"/>. A callback function that is called each time another portion of the file has been copied.</para></param>
-      /// <param name="userProgressData"><para>This parameter can be <see langword="null"/>. The argument to be passed to the callback function.</para></param>
+      /// <param name="copyOptions"><para>This parameter can be <c>null</c>. Use <see cref="CopyOptions"/> to specify how the file is to be copied.</para></param>
+      /// <param name="moveOptions"><para>This parameter can be <c>null</c>. Use <see cref="MoveOptions"/> that specify how the file is to be moved.</para></param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="progressHandler"><para>This parameter can be <c>null</c>. A callback function that is called each time another portion of the file has been copied.</para></param>
+      /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
       /// <param name="longFullPath">[out] Returns the retrieved long full path.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <exception cref="ArgumentException"/>

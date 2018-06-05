@@ -29,11 +29,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Determines whether the given path refers to an existing directory on disk.</summary>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> if <paramref name="path"/> refers to an existing directory.</para>
-      ///   <para>Returns <see langword="false"/> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      ///   <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
+      ///   <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
       /// </returns>
       /// <remarks>
-      ///   The Exists method returns <see langword="false"/> if any error occurs while trying to determine if the specified file exists.
+      ///   The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.
       ///   This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
       ///   a failing or missing disk, or if the caller does not have permission to read the file.
       /// </remarks>
@@ -50,11 +50,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> if <paramref name="path"/> refers to an existing directory.</para>
-      ///   <para>Returns <see langword="false"/> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      ///   <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
+      ///   <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
       /// </returns>
       /// <remarks>
-      ///   The Exists method returns <see langword="false"/> if any error occurs while trying to determine if the specified file exists.
+      ///   The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.
       ///   This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
       ///   a failing or missing disk, or if the caller does not have permission to read the file.
       /// </remarks>
@@ -70,11 +70,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> if <paramref name="path"/> refers to an existing directory.</para>
-      ///   <para>Returns <see langword="false"/> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      ///   <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
+      ///   <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
       /// </returns>
       /// <remarks>
-      ///   The Exists method returns <see langword="false"/> if any error occurs while trying to determine if the specified file exists.
+      ///   The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.
       ///   This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
       ///   a failing or missing disk, or if the caller does not have permission to read the file.
       /// </remarks>
@@ -88,11 +88,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
       /// <returns>
-      ///   <para>Returns <see langword="true"/> if <paramref name="path"/> refers to an existing directory.</para>
-      ///   <para>Returns <see langword="false"/> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      ///   <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
+      ///   <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
       /// </returns>
       /// <remarks>
-      ///   The Exists method returns <see langword="false"/> if any error occurs while trying to determine if the specified file exists.
+      ///   The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.
       ///   This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
       ///   a failing or missing disk, or if the caller does not have permission to read the file.
       /// </remarks>

@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Volume
    {
       /// <summary>[AlphaFS] Retrieves the Win32 Device name from the Volume name.</summary>
-      /// <returns>The Win32 Device name from the Volume name, for example: "\Device\HarddiskVolume2",  or <see langword="null"/> on error or if unavailable.</returns>
+      /// <returns>The Win32 Device name from the Volume name, for example: "\Device\HarddiskVolume2",  or <c>null</c> on error or if unavailable.</returns>
       /// <remarks>This is the same method as <see cref="Volume.QueryDosDevice"/>.</remarks>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="FileNotFoundException"/>

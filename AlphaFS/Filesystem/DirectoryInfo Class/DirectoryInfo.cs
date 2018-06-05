@@ -113,13 +113,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets a value indicating whether the directory exists.</summary>
       /// <remarks>
-      ///   <para>The <see cref="Exists"/> property returns <see langword="false"/> if any error occurs while trying to determine if the
+      ///   <para>The <see cref="Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the
       ///   specified directory exists.</para>
       ///   <para>This can occur in situations that raise exceptions such as passing a directory name with invalid characters or too many
       ///   characters,</para>
       ///   <para>a failing or missing disk, or if the caller does not have permission to read the directory.</para>
       /// </remarks>
-      /// <value><see langword="true"/> if the directory exists; otherwise, <see langword="false"/>.</value>
+      /// <value><c>true</c> if the directory exists; otherwise, <c>false</c>.</value>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       public override bool Exists
       {

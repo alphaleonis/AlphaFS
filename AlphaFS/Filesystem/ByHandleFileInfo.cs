@@ -26,7 +26,7 @@ using System.Security;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Contains information that the GetFileInformationByHandle function retrieves.</summary>
-   [SerializableAttribute]
+   [Serializable]
    [SecurityCritical]
    public sealed class ByHandleFileInfo
    {

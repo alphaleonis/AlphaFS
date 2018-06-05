@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</summary>
          public IntPtr WinOwner;
 
-         /// <summary>The name of a local device to be redirected, such as "F:". When <see cref="LocalName"/> is <see langword="null"/> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</summary>
+         /// <summary>The name of a local device to be redirected, such as "F:". When <see cref="LocalName"/> is <c>null</c> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</summary>
          public string LocalName;
 
          /// <summary>A network resource to connect to/disconnect from, for example: \\server or \\server\share. The string can be up to <see cref="Filesystem.NativeMethods.MaxPath"/> characters in length.</summary>
@@ -66,31 +66,31 @@ namespace Alphaleonis.Win32.Network
          /// <summary>A <see cref="NetworkCredential"/> instance. Use either this or the combination of <see cref="UserName"/> and <see cref="Password"/>.</summary>
          public NetworkCredential Credential;
 
-         /// <summary>The user name for making the connection. If <see cref="UserName"/> is <see langword="null"/>, the function uses the default user name. (The user context for the process provides the default user name)</summary>
+         /// <summary>The user name for making the connection. If <see cref="UserName"/> is <c>null</c>, the function uses the default user name. (The user context for the process provides the default user name)</summary>
          public string UserName;
 
-         /// <summary>The password to be used for making the network connection. If <see cref="Password"/> is <see langword="null"/>, the function uses the current default password associated with the user specified by <see cref="UserName"/>.</summary>
+         /// <summary>The password to be used for making the network connection. If <see cref="Password"/> is <c>null</c>, the function uses the current default password associated with the user specified by <see cref="UserName"/>.</summary>
          public string Password;
 
-         /// <summary><see langword="true"/> always pops-up an authentication dialog box.</summary>
+         /// <summary><c>true</c> always pops-up an authentication dialog box.</summary>
          public bool Prompt;
 
-         /// <summary><see langword="true"/> successful network resource connections will be saved.</summary>
+         /// <summary><c>true</c> successful network resource connections will be saved.</summary>
          public bool UpdateProfile;
 
          /// <summary>When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</summary>
          public bool SaveCredentials;
 
-         /// <summary><see langword="true"/> indicates that the operation concerns a drive mapping.</summary>
+         /// <summary><c>true</c> indicates that the operation concerns a drive mapping.</summary>
          public bool IsDeviceMap;
 
-         /// <summary><see langword="true"/> indicates that the operation needs to disconnect from the network resource, otherwise connect.</summary>
+         /// <summary><c>true</c> indicates that the operation needs to disconnect from the network resource, otherwise connect.</summary>
          public bool IsDisconnect;
       }
 
 
       /// <summary>Connects to/disconnects from a network resource. The function can redirect a local device to a network resource.</summary>
-      /// <returns>If <see cref="ConnectDisconnectArguments.LocalName"/> is <see langword="null"/> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
+      /// <returns>If <see cref="ConnectDisconnectArguments.LocalName"/> is <c>null</c> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="arguments">The <see cref="ConnectDisconnectArguments"/>.</param>
@@ -286,7 +286,7 @@ namespace Alphaleonis.Win32.Network
       /// <exception cref="PathTooLongException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="path">The local path with drive name.</param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       internal static NativeMethods.REMOTE_NAME_INFO GetRemoteNameInfoCore(string path, bool continueOnException)
       {

@@ -46,8 +46,8 @@ namespace Alphaleonis.Win32.Network
          [MarshalAs(UnmanagedType.U4)] public readonly ResourceUsage dwUsage;
 
          /// <summary>If the <see cref="dwScope"/> member is equal to <see cref="ResourceScope.Connected"/> or <see cref="ResourceScope.Remembered"/>,
-         /// this member is a pointer to a <see langword="null"/>-terminated character string that specifies the name of a local device.
-         /// This member is <see langword="null"/> if the connection does not use a device.
+         /// this member is a pointer to a <c>null</c>-terminated character string that specifies the name of a local device.
+         /// This member is <c>null</c> if the connection does not use a device.
          /// </summary>
          [MarshalAs(UnmanagedType.LPWStr)] public string lpLocalName;
 
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Network
          [MarshalAs(UnmanagedType.LPWStr)] public readonly string lpComment;
 
          /// <summary>A <see cref="string"/> that contains the name of the provider that owns the resource. 
-         /// This member can be <see langword="null"/> if the provider name is unknown.
+         /// This member can be <c>null</c> if the provider name is unknown.
          /// </summary>
          [MarshalAs(UnmanagedType.LPWStr)] public readonly string lpProvider;
       }

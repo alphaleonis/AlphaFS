@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The name of the file to be deleted. Wildcard characters are not supported.
       /// </param>
       /// <param name="ignoreReadOnly">
-      ///   <see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.
+      ///   <c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <exception cref="ArgumentException"/>
@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The name of the file to be deleted. Wildcard characters are not supported.
       /// </param>
       /// <param name="ignoreReadOnly">
-      ///   <see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.
+      ///   <c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.
       /// </param>      
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
-      /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <exception cref="ArgumentException"/>
@@ -121,7 +121,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
-      /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>      
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
@@ -147,7 +147,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="FileReadOnlyException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted.</param>
-      /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       internal static void DeleteFileCore(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)

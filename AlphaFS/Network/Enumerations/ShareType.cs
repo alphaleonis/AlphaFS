@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>A temporary share that is not persisted for creation each time the file server initializes.</summary>
       Temporary = 1073741824,
 
-      /// <summary>Retriev all known <see cref="ShareType"/></summary>
+      /// <summary>Retriev all known <see cref="ShareType"/>.</summary>
       All = DiskTree | PrintQueue | Device | Ipc | ClusterFs | ClusterSoFs | ClusterDfs | Special | Temporary
    }
 }

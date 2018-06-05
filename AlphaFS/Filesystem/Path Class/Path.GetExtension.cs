@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <exception cref="ArgumentException"/>
       /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
       public static string GetExtension(string path, bool checkInvalidPathChars)
       {

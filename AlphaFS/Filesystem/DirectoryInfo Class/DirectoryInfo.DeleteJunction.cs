@@ -27,11 +27,11 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public sealed partial class DirectoryInfo
    {
-      /// <summary>[AlphaFS] Removes the directory junction.
+      /// <summary>[AlphaFS] Removes the directory junction.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -49,11 +49,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Removes the directory junction.
+      /// <summary>[AlphaFS] Removes the directory junction.</summary>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks></summary>
+      /// </remarks>
       /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotAReparsePointException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="removeDirectory">When <see langword="true"/>, also removes the directory and all its contents.</param>
+      /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
       [SecurityCritical]
       public void DeleteJunction(bool removeDirectory)
       {

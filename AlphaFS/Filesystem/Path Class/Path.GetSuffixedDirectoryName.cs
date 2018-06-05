@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
       ///   <para>The suffixed directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
-      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
+      ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
       /// </returns>
       /// <remarks>This method is similar to calling Path.GetDirectoryName() + Path.AddTrailingDirectorySeparator()</remarks>
       /// <param name="path">The path.</param>
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
       ///   <para>The suffixed directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
-      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
+      ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
       /// </returns>
       /// <remarks>This method is similar to calling Path.GetDirectoryName() + Path.AddTrailingDirectorySeparator()</remarks>
       /// <param name="transaction">The transaction.</param>
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
       ///   <para>The suffixed directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
-      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
+      ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
       /// </returns>
       /// <remarks>This method is similar to calling Path.GetDirectoryName() + Path.AddTrailingDirectorySeparator()</remarks>
       /// <param name="transaction">The transaction.</param>

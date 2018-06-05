@@ -28,11 +28,11 @@ using System.Threading;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>[AlphaFS] Represents the method that will handle an error raised during retrieving file system entries.</summary>
-   /// <returns><see langword="true"/>, if the error has been fully handled and the caller may proceed, 
+   /// <returns><c>true</c>, if the error has been fully handled and the caller may proceed, 
    /// <param name="errorCode">The error code.</param>
    /// <param name="errorMessage">The error message.</param>
    /// <param name="pathProcessed">The faulty path being processed.</param>
-   /// <see langword="false"/> otherwise, in which case the caller will throw the corresponding exception.</returns>   
+   /// <c>false</c> otherwise, in which case the caller will throw the corresponding exception.</returns>   
    public delegate bool ErrorHandler(int errorCode, string errorMessage, string pathProcessed);
 
 
@@ -54,17 +54,17 @@ namespace Alphaleonis.Win32.Filesystem
    /// </remarks>
    public class DirectoryEnumerationFilters
    {
-      /// <summary>Gets or sets the filter that returns <see langword="true"/> if the input file system entry should be included in the enumeration.</summary>
+      /// <summary>Gets or sets the filter that returns <c>true</c> if the input file system entry should be included in the enumeration.</summary>
       /// <value>The delegate to a filtering method.</value>      
       public Predicate<FileSystemEntryInfo> InclusionFilter { get; set; }
 
 
-      /// <summary>Gets or sets the filter that returns <see langword="true"/> if the input directory should be recursively traversed.</summary>
+      /// <summary>Gets or sets the filter that returns <c>true</c> if the input directory should be recursively traversed.</summary>
       /// <value>The delegate to a filtering method.</value>
       public Predicate<FileSystemEntryInfo> RecursionFilter { get; set; }
 
 
-      /// <summary>Gets or sets the filter that returns <see langword="true"/> if the input error should not be thrown.</summary>
+      /// <summary>Gets or sets the filter that returns <c>true</c> if the input error should not be thrown.</summary>
       /// <value>The delegate to a filtering method.</value>
       public ErrorHandler ErrorFilter { get; set; }
 

@@ -26,10 +26,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Class for CopyMoveResult that contains the results for the Copy or Move action.
+   /// <summary>Class for CopyMoveResult that contains the results for the Copy or Move action.</summary>
    /// <remarks>Normally there is no need to manually instantiate and/or populate this class.</remarks>
-   /// </summary>
-   [SerializableAttribute]
+   [Serializable]
    public sealed class CopyMoveResult
    {
       #region Private Fields
@@ -60,10 +59,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="source">Indicates the full path to the source file or directory.</param>
       /// <param name="destination">Indicates the full path to the destination file or directory.</param>
-      /// <param name="isCopy">>When <see langword="true"/> the action is a Copy, Move otherwise.</param>
-      /// <param name="isFolder">When <see langword="true"/> indicates the sources is a directory; file otherwise.</param>
-      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise. This parameter is ignored for move operations.</param>
-      /// <param name="emulatedMove">When <see langword="true"/> indicates the Move action used a fallback of Copy + Delete actions.</param>
+      /// <param name="isCopy">>When <c>true</c> the action is a Copy, Move otherwise.</param>
+      /// <param name="isFolder">When <c>true</c> indicates the sources is a directory; file otherwise.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise. This parameter is ignored for move operations.</param>
+      /// <param name="emulatedMove">When <c>true</c> indicates the Move action used a fallback of Copy + Delete actions.</param>
       public CopyMoveResult(string source, string destination, bool isCopy, bool isFolder, bool preserveDates, bool emulatedMove) : this(source, destination)
       {
          IsEmulatedMove = emulatedMove;
@@ -101,18 +100,18 @@ namespace Alphaleonis.Win32.Filesystem
       public string ErrorMessage { get { return new Win32Exception(ErrorCode).Message; } }
 
 
-      /// <summary>When <see langword="true"/> indicates that the Copy or Move action was canceled.</summary>
-      /// <value><see langword="true"/> when the Copy/Move action was canceled. Otherwise <see langword="false"/>.</value>
+      /// <summary>When <c>true</c> indicates that the Copy or Move action was canceled.</summary>
+      /// <value><c>true</c> when the Copy/Move action was canceled. Otherwise <c>false</c>.</value>
       public bool IsCanceled { get; internal set; }
 
 
-      /// <summary>When <see langword="true"/> the action was a Copy, Move otherwise.</summary>
-      /// <value><see langword="true"/> when the action was a Copy. Otherwise a Move action was performed.</value>
+      /// <summary>When <c>true</c> the action was a Copy, Move otherwise.</summary>
+      /// <value><c>true</c> when the action was a Copy. Otherwise a Move action was performed.</value>
       public bool IsCopy { get; private set; }
 
 
       /// <summary>Gets a value indicating whether this instance represents a directory.</summary>
-      /// <value><see langword="true"/> if this instance represents a directory; otherwise, <see langword="false"/>.</value>
+      /// <value><c>true</c> if this instance represents a directory; otherwise, <c>false</c>.</value>
       public bool IsDirectory { get; private set; }
 
 
@@ -121,12 +120,12 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets a value indicating whether this instance represents a file.</summary>
-      /// <value><see langword="true"/> if this instance represents a file; otherwise, <see langword="false"/>.</value>
+      /// <value><c>true</c> if this instance represents a file; otherwise, <c>false</c>.</value>
       public bool IsFile { get { return !IsDirectory; } }
 
 
-      /// <summary>When <see langword="true"/> the action was a Move, Copy otherwise.</summary>
-      /// <value><see langword="true"/> when the action was a Move. Otherwise a Copy action was performed.</value>
+      /// <summary>When <c>true</c> the action was a Move, Copy otherwise.</summary>
+      /// <value><c>true</c> when the action was a Move. Otherwise a Copy action was performed.</value>
       public bool IsMove { get { return !IsCopy; } }
 
 

@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see cref="DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.
       /// </param>
       /// <param name="exactMatch">
-      ///   Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <see langword="true"/>,
+      ///   Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <c>true</c>,
       ///   <paramref name="targetPath"/> must be the same path used to create the mapping.
       /// </param>      
       [SecurityCritical]
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   default.
       /// </param>
       /// <param name="exactMatch">
-      ///   Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <see langword="true"/>,
+      ///   Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <c>true</c>,
       ///   <paramref name="targetPath"/> must be the same path used to create the mapping.
       /// </param>      
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]

@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain write date and time information.</param>
       /// <param name="getUtc">
-      ///   <see langword="true"/> gets the Coordinated Universal Time (UTC), <see langword="false"/> gets the local time.
+      ///   <c>true</c> gets the Coordinated Universal Time (UTC), <c>false</c> gets the local time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>

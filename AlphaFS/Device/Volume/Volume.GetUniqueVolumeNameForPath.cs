@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>
       ///   <para>Returns the unique volume name in the form: "\\?\Volume{GUID}\",</para>
-      ///   <para>or <see langword="null"/> on error or if unavailable.</para>
+      ///   <para>or <c>null</c> on error or if unavailable.</para>
       /// </returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]

@@ -37,8 +37,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </para>
       ///   <para>
       ///      If the caller does not have access to the key for the file, the caller needs
-      ///      <see cref="Alphaleonis.Win32.Security.Privilege.Backup"/> to export encrypted files. See
-      ///      <see cref="Alphaleonis.Win32.Security.PrivilegeEnabler"/>.
+      ///      <see cref="Security.Privilege.Backup"/> to export encrypted files. See
+      ///      <see cref="Security.PrivilegeEnabler"/>.
       ///   </para>
       ///   <para>
       ///      To backup an encrypted file call one of the
@@ -66,8 +66,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </para>
       ///   <para>
       ///      If the caller does not have access to the key for the file, the caller needs
-      ///      <see cref="Alphaleonis.Win32.Security.Privilege.Backup"/> to export encrypted files. See
-      ///      <see cref="Alphaleonis.Win32.Security.PrivilegeEnabler"/>.
+      ///      <see cref="Security.Privilege.Backup"/> to export encrypted files. See
+      ///      <see cref="Security.PrivilegeEnabler"/>.
       ///   </para>
       ///   <para>
       ///      To backup an encrypted file call one of the
@@ -97,8 +97,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>
       ///     If the caller does not have access to the key for the file, the caller needs
-      ///     <see cref="Alphaleonis.Win32.Security.Privilege.Backup"/> to restore encrypted files. See
-      ///     <see cref="Alphaleonis.Win32.Security.PrivilegeEnabler"/>.
+      ///     <see cref="Security.Privilege.Backup"/> to restore encrypted files. See
+      ///     <see cref="Security.PrivilegeEnabler"/>.
       ///   </para>
       ///   <para>
       ///     To restore an encrypted file call one of the
@@ -123,8 +123,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>
       ///     If the caller does not have access to the key for the file, the caller needs
-      ///     <see cref="Alphaleonis.Win32.Security.Privilege.Backup"/> to restore encrypted files. See
-      ///     <see cref="Alphaleonis.Win32.Security.PrivilegeEnabler"/>.
+      ///     <see cref="Security.Privilege.Backup"/> to restore encrypted files. See
+      ///     <see cref="Security.PrivilegeEnabler"/>.
       ///   </para>
       ///   <para>
       ///     To restore an encrypted file call one of the
@@ -151,8 +151,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>
       ///     If the caller does not have access to the key for the file, the caller needs
-      ///     <see cref="Alphaleonis.Win32.Security.Privilege.Backup"/> to restore encrypted files. See
-      ///     <see cref="Alphaleonis.Win32.Security.PrivilegeEnabler"/>.
+      ///     <see cref="Security.Privilege.Backup"/> to restore encrypted files. See
+      ///     <see cref="Security.PrivilegeEnabler"/>.
       ///   </para>
       ///   <para>
       ///     To restore an encrypted file call one of the
@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <param name="inputStream">The stream to read previously backed up data from.</param>
       /// <param name="destinationFilePath">The path of the destination file to restore to.</param>
-      /// <param name="overwriteHidden">If set to <see langword="true"/> a hidden file will be overwritten on import.</param>
+      /// <param name="overwriteHidden">If set to <c>true</c> a hidden file will be overwritten on import.</param>
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw"/>
       public static void ImportEncryptedFileRaw(Stream inputStream, string destinationFilePath, bool overwriteHidden)
       {
@@ -178,8 +178,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>
       ///     If the caller does not have access to the key for the file, the caller needs
-      ///     <see cref="Alphaleonis.Win32.Security.Privilege.Backup"/> to restore encrypted files. See
-      ///     <see cref="Alphaleonis.Win32.Security.PrivilegeEnabler"/>.
+      ///     <see cref="Security.Privilege.Backup"/> to restore encrypted files. See
+      ///     <see cref="Security.PrivilegeEnabler"/>.
       ///   </para>
       ///   <para>
       ///     To restore an encrypted file call one of the
@@ -193,7 +193,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <param name="inputStream">The stream to read previously backed up data from.</param>
       /// <param name="destinationFilePath">The path of the destination file to restore to.</param>
-      /// <param name="overwriteHidden">If set to <see langword="true"/> a hidden file will be overwritten on import.</param>
+      /// <param name="overwriteHidden">If set to <c>true</c> a hidden file will be overwritten on import.</param>
       /// <param name="pathFormat">The path format of the <paramref name="destinationFilePath"/> parameter.</param>
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw"/>
       public static void ImportEncryptedFileRaw(Stream inputStream, string destinationFilePath, bool overwriteHidden, PathFormat pathFormat)

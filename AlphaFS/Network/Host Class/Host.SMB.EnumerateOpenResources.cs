@@ -44,17 +44,17 @@ namespace Alphaleonis.Win32.Network
       /// <returns><see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="basePath">
-      ///   This parameter may be <see langword="null"/>. Enumerates only resources that have the value of the basepath parameter as a prefix.
+      ///   This parameter may be <c>null</c>. Enumerates only resources that have the value of the basepath parameter as a prefix.
       ///   (A prefix is the portion of a path that comes before a backslash.)
       /// </param>
       /// <param name="typeName">
-      ///   This parameter may be <see langword="null"/>. The name of the user or the name of the connection; If <paramref name="typeName"/>
+      ///   This parameter may be <c>null</c>. The name of the user or the name of the connection; If <paramref name="typeName"/>
       ///   does not begin with two backslashes ("\\") it indicates the name of the user. If <paramref name="typeName"/> begins with two
       ///   backslashes ("\\") it indicates the name of the connection.
       /// </param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public static IEnumerable<OpenResourceInfo> EnumerateOpenResources(string host, string basePath, string typeName, bool continueOnException)
       {
@@ -68,17 +68,17 @@ namespace Alphaleonis.Win32.Network
       /// <returns><see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
-      /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="basePath">
-      ///   This parameter may be <see langword="null"/>. Enumerates only resources that have the value of the basepath parameter as a prefix.
+      ///   This parameter may be <c>null</c>. Enumerates only resources that have the value of the basepath parameter as a prefix.
       ///   (A prefix is the portion of a path that comes before a backslash.)
       /// </param>
       /// <param name="typeName">
-      ///   This parameter may be <see langword="null"/>. The name of the user or the name of the connection; If <paramref name="typeName"/>
+      ///   This parameter may be <c>null</c>. The name of the user or the name of the connection; If <paramref name="typeName"/>
       ///   does not begin with two backslashes ("\\") it indicates the name of the user. If <paramref name="typeName"/> begins with two
       ///   backslashes ("\\") it indicates the name of the connection.
       /// </param>
-      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       internal static IEnumerable<OpenResourceInfo> EnumerateOpenResourcesCore(string host, string basePath, string typeName, bool continueOnException)
       {

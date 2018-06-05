@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory.</returns>
       /// <param name="path">The path to the directory.</param>
       /// <param name="continueOnException">
-      ///    <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <param name="continueOnException">
-      ///    <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
       /// <param name="continueOnException">
-      ///    <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
@@ -121,7 +121,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <param name="continueOnException">
-      ///    <para><see langword="true"/> suppress any Exception that might be thrown as a result from a failure,</para>
+      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
       ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]

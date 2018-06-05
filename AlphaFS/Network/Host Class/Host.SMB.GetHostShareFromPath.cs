@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="uncPath">The share in the format: \\host\share.</param>
       /// <returns>The host and share path. For example, if <paramref name="uncPath"/> is: "\\SERVER001\C$\WINDOWS\System32",
       ///   its is returned as string[0] = "SERVER001" and string[1] = "\C$\WINDOWS\System32".
-      /// <para>If the conversion from local path to UNC path fails, <see langword="null"/> is returned.</para>
+      /// <para>If the conversion from local path to UNC path fails, <c>null</c> is returned.</para>
       /// </returns>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]

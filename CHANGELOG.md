@@ -15,6 +15,7 @@ Version 2.2.2  (2018-XX-XX)
 ### Improvements
 
 - Issue #149: Split unit-tests.
+- Fixed all Sandcastle Help File Builder warnings.
 - Because of bug fixes, the correct source-/destination folder is now shown in exceptions thrown from Directory/File.Copy/Move methods, instead of always showing the source folder path.
 - Improved some unit tests that would fail when a removable drive is already removed but there's still a cached reference.
 

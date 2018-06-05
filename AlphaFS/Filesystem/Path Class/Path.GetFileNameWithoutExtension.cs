@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The string returned by GetFileName, minus the last period (.) and all characters following it.</returns>
       /// <exception cref="ArgumentException"/>
       /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
       public static string GetFileNameWithoutExtension(string path, bool checkInvalidPathChars)
       {

@@ -50,8 +50,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\".
       /// </param>
       /// <param name="spaceInfoType">
-      ///   <see langword="null"/> gets both size- and disk cluster information. <see langword="true"/> Get only disk cluster information,
-      ///   <see langword="false"/> Get only size information.
+      ///   <c>null</c> gets both size- and disk cluster information. <c>true</c> Get only disk cluster information,
+      ///   <c>false</c> Get only size information.
       /// </param>
       /// <returns>A <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>
       [SecurityCritical]
