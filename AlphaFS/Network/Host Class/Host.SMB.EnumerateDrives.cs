@@ -45,6 +45,21 @@ namespace Alphaleonis.Win32.Network
       /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
+      [SecurityCritical]
+      public static IEnumerable<DriveInfo> EnumerateDrives(string host)
+      {
+         return EnumerateDrivesCore(host, false)
+
+            .Select(drive => string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}", Path.UncPrefix, host,
+
+               Path.DirectorySeparator, drive[0], Path.NetworkDriveSeparator)).Select(uncDrive => new DriveInfo(uncDrive));
+      }
+
+
+      /// <summary>Enumerates local drives from the specified host.</summary>
+      /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
+      /// <exception cref="NetworkInformationException"/>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="continueOnException">
       ///   <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
       ///   <para>such as unavailable resources.</para>
@@ -56,7 +71,7 @@ namespace Alphaleonis.Win32.Network
 
             .Select(drive => string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}", Path.UncPrefix, host,
 
-               Path.DirectorySeparator, drive[0], Path.NetworkDriveSeparator)) .Select(uncDrive => new DriveInfo(uncDrive));
+               Path.DirectorySeparator, drive[0], Path.NetworkDriveSeparator)).Select(uncDrive => new DriveInfo(uncDrive));
       }
 
 

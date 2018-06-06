@@ -39,7 +39,20 @@ namespace Alphaleonis.Win32.Network
          return EnumerateOpenConnectionsCore(null, null, false);
       }
 
-      
+
+      /// <summary>Enumerates open connections from the specified host.</summary>
+      /// <returns><see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
+      /// <param name="share">The name of the Server Message Block (SMB) share.</param>
+      [SecurityCritical]
+      public static IEnumerable<OpenConnectionInfo> EnumerateOpenConnections(string host, string share)
+      {
+         return EnumerateOpenConnectionsCore(host, share, false);
+      }
+
+
       /// <summary>Enumerates open connections from the specified host.</summary>
       /// <returns><see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
       /// <exception cref="ArgumentNullException"/>

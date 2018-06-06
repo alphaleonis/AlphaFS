@@ -262,19 +262,20 @@ namespace Alphaleonis.Win32.Network
                      }
                      break;
 
-                  case Win32Errors.ERROR_BAD_NETPATH:
-                     break;
-
+                  
                   // Observed when SHARE_INFO_503 is requested but not supported/possible.
                   case Win32Errors.RPC_X_BAD_STUB_DATA:
                   case Win32Errors.ERROR_NOT_SUPPORTED:
                      yield break;
+
+
+                  default:
+                     if (lastError != Win32Errors.NO_ERROR && !continueOnException)
+                        throw new NetworkInformationException((int) lastError);
+                     break;
                }
 
          } while (lastError == Win32Errors.ERROR_MORE_DATA);
-
-         if (lastError != Win32Errors.NO_ERROR && !continueOnException)
-            throw new NetworkInformationException((int) lastError);
       }
 
 
