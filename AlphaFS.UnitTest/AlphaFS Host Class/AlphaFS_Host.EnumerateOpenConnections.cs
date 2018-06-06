@@ -38,7 +38,7 @@ namespace AlphaFS.UnitTest
          // Create an active connection to the "remote" host.
          var currentDir = System.IO.Directory.GetCurrentDirectory();
 
-         // This might cause other unit tests to fail with illegal path characters exception.
+         // This might cause other unit tests to fail with ArgumentException: Illegal characters in path.
          System.IO.Directory.SetCurrentDirectory(Alphaleonis.Win32.Filesystem.Path.UncPrefix + host + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator + share);
 
 
