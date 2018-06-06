@@ -48,8 +48,10 @@ namespace AlphaFS.UnitTest
 
             var bhfi = Alphaleonis.Win32.Filesystem.Directory.GetFileInfoByHandle(folder.FullName);
 
+            UnitTestConstants.Dump(bhfi);
 
-            Assert.IsTrue(UnitTestConstants.Dump(bhfi, -18));
+
+            Assert.IsNotNull(bhfi);
             
             Assert.AreEqual(folder.CreationTimeUtc, bhfi.CreationTimeUtc);
 

@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
             // Not much of a test...
             Assert.IsNotNull(shell32Info);
 
-            UnitTestConstants.Dump(shell32Info, -15);
+            UnitTestConstants.Dump(shell32Info);
 
             if (++cnt == 5)
                break;

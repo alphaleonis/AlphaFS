@@ -50,7 +50,8 @@ namespace AlphaFS.UnitTest
             try
             { 
                var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(driveInfo.Name);
-               UnitTestConstants.Dump(fsei, -19);
+
+               UnitTestConstants.Dump(fsei);
 
 
                Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));

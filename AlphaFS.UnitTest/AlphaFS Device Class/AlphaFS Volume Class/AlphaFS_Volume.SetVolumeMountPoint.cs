@@ -56,7 +56,7 @@ namespace AlphaFS.UnitTest
 
             var lvi = Alphaleonis.Win32.Filesystem.Directory.GetLinkTargetInfo(folder.FullName);
 
-            UnitTestConstants.Dump(lvi, -14);
+            UnitTestConstants.Dump(lvi);
 
             Assert.IsTrue(lvi.SubstituteName.StartsWith(Alphaleonis.Win32.Filesystem.Path.NonInterpretedPathPrefix));
 

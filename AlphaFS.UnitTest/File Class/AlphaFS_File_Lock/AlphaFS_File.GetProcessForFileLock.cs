@@ -63,7 +63,7 @@ namespace AlphaFS.UnitTest
                foreach (var process in processes)
                   using (process)
                   {
-                     UnitTestConstants.Dump(process, -26);
+                     UnitTestConstants.Dump(process);
                      Assert.IsTrue(process.Id == currentProcessId, "File was locked by a process other than the current process.");
                   }
             }

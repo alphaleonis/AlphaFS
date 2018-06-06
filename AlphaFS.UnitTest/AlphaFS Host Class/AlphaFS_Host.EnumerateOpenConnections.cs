@@ -62,12 +62,13 @@ namespace AlphaFS.UnitTest
          var count = 0;
          foreach (var openConnectionInfo in Alphaleonis.Win32.Network.Host.EnumerateOpenConnections(host, share))
          {
-            if (UnitTestConstants.Dump(openConnectionInfo, -16))
-            {
-               count++;
+            UnitTestConstants.Dump(openConnectionInfo);
 
-               Console.WriteLine();
-            }
+            Assert.IsNotNull(openConnectionInfo);
+
+            count++;
+
+            Console.WriteLine();
          }
 
 

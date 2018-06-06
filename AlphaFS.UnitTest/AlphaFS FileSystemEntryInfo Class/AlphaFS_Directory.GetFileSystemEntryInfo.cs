@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
             var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(folder.FullName);
 
-            UnitTestConstants.Dump(fsei, -19);
+            UnitTestConstants.Dump(fsei);
 
 
             Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));

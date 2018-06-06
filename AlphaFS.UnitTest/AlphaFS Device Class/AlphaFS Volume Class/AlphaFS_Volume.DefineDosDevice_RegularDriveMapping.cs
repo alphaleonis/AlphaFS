@@ -59,8 +59,8 @@ namespace AlphaFS.UnitTest
 
                var dirInfoAlphaFS = new Alphaleonis.Win32.Filesystem.DriveInfo(drive);
                
-               UnitTestConstants.Dump(dirInfoSysIO, -21);
-               UnitTestConstants.Dump(dirInfoAlphaFS, -21);
+               UnitTestConstants.Dump(dirInfoSysIO);
+               UnitTestConstants.Dump(dirInfoAlphaFS);
 
 
                Assert.AreEqual(dirInfoSysIO.Name, dirInfoAlphaFS.Name);

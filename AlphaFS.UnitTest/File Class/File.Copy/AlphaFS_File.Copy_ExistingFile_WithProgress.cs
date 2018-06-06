@@ -67,7 +67,7 @@ namespace AlphaFS.UnitTest
 
             var copyResult = Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy.FullName, copyOptions, callback, userProgressData);
 
-            UnitTestConstants.Dump(copyResult, -18);
+            UnitTestConstants.Dump(copyResult);
 
 
             Assert.IsTrue(System.IO.File.Exists(fileCopy.FullName), "The file does not exists, but is expected to.");

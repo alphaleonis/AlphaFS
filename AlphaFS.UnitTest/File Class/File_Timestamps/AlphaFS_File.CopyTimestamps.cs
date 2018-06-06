@@ -61,8 +61,8 @@ namespace AlphaFS.UnitTest
             Alphaleonis.Win32.Filesystem.File.CopyTimestamps(file1.FullName, file2.FullName);
 
 
-            UnitTestConstants.Dump(file1, -17);
-            UnitTestConstants.Dump(file2, -17);
+            UnitTestConstants.Dump(file1);
+            UnitTestConstants.Dump(file2);
 
 
             Assert.AreEqual(System.IO.File.GetCreationTime(file1.FullName), System.IO.File.GetCreationTime(file2.FullName));

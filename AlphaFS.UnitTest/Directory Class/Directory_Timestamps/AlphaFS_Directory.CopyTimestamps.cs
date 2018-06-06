@@ -61,8 +61,8 @@ namespace AlphaFS.UnitTest
             Alphaleonis.Win32.Filesystem.Directory.CopyTimestamps(folder1.FullName, folder2.FullName);
 
 
-            UnitTestConstants.Dump(folder1, -17);
-            UnitTestConstants.Dump(folder2, -17);
+            UnitTestConstants.Dump(folder1);
+            UnitTestConstants.Dump(folder2);
 
 
             Assert.AreEqual(System.IO.Directory.GetCreationTime(folder1.FullName), System.IO.Directory.GetCreationTime(folder2.FullName));

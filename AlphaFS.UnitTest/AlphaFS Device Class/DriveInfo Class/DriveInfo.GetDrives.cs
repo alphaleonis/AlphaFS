@@ -42,11 +42,11 @@ namespace AlphaFS.UnitTest
          {
             Console.WriteLine("Logical Drive: [{0}]", driveInfo.Name);
 
-            UnitTestConstants.Dump(driveInfo, -21);
+            UnitTestConstants.Dump(driveInfo);
 
 
             if (null != driveInfo.DiskSpaceInfo)
-               UnitTestConstants.Dump(driveInfo.DiskSpaceInfo, -26, true);
+               UnitTestConstants.Dump(driveInfo.DiskSpaceInfo, true);
 
 
             Console.WriteLine();

@@ -50,10 +50,12 @@ namespace AlphaFS.UnitTest
             using (var fs = file.Open(FileMode.Open))
             {
                var bhfi = Alphaleonis.Win32.Filesystem.File.GetFileInfoByHandle(fs.SafeFileHandle);
-
-
-               Assert.IsTrue(UnitTestConstants.Dump(bhfi, -18));
                
+               UnitTestConstants.Dump(bhfi);
+
+
+               Assert.IsNotNull(bhfi);
+
                Assert.AreEqual(file.CreationTimeUtc, bhfi.CreationTimeUtc);
 
                Assert.AreEqual(file.LastAccessTimeUtc, bhfi.LastAccessTimeUtc);

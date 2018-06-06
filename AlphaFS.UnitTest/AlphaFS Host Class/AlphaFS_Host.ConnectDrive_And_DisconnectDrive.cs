@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
                Alphaleonis.Win32.Network.Host.ConnectDrive(drive, folder.FullName);
 
-               UnitTestConstants.Dump(new System.IO.DriveInfo(drive), -18);
+               UnitTestConstants.Dump(new System.IO.DriveInfo(drive));
 
                Assert.IsTrue(System.IO.Directory.Exists(drive), "The drive does not exists, but is expected to.");
             }
