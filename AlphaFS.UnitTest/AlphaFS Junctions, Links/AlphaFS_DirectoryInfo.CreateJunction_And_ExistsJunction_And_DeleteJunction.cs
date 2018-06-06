@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
 
 
             var dirInfoSysIO = new System.IO.DirectoryInfo(junction);
-            UnitTestConstants.Dump(dirInfoSysIO, -17);
+            UnitTestConstants.Dump(dirInfoSysIO);
 
             Assert.IsTrue((dirInfoSysIO.Attributes & System.IO.FileAttributes.ReparsePoint) != 0);
 
@@ -65,8 +65,8 @@ namespace AlphaFS.UnitTest
             
 
             var lvi = Alphaleonis.Win32.Filesystem.Directory.GetLinkTargetInfo(dirInfo.FullName);
-            UnitTestConstants.Dump(lvi, -14);
-            UnitTestConstants.Dump(dirInfo.EntryInfo, -19);
+            UnitTestConstants.Dump(lvi);
+            UnitTestConstants.Dump(dirInfo.EntryInfo);
 
             Assert.AreEqual(System.IO.Directory.Exists(dirInfo.FullName), Alphaleonis.Win32.Filesystem.Directory.Exists(dirInfo.FullName));
             Assert.AreEqual(junction, dirInfo.FullName);

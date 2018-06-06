@@ -44,8 +44,11 @@ namespace AlphaFS.UnitTest
          {
             //Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, shareInfo);
 
-            if (UnitTestConstants.Dump(sessionsInfo, -16))
-               sessionCount++;
+            UnitTestConstants.Dump(sessionsInfo);
+
+            Assert.IsNotNull(sessionsInfo);
+
+            sessionCount++;
 
             Console.WriteLine();
          }

@@ -61,7 +61,7 @@ namespace AlphaFS.UnitTest
 
             var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.FailIfExists);
 
-            UnitTestConstants.Dump(copyResult, -18);
+            UnitTestConstants.Dump(copyResult);
 
 
             props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folderDst, dirEnumOptions);

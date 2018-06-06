@@ -49,13 +49,13 @@ namespace AlphaFS.UnitTest
 
                   var dfsInfo = Host.GetDfsInfo(dfsNamespace);
 
-                  UnitTestConstants.Dump(dfsInfo, -21);
+                  UnitTestConstants.Dump(dfsInfo);
 
 
                   Console.Write("\n\tNumber of Storages: [{0}]\n", dfsInfo.StorageInfoCollection.Count());
 
                   foreach (var store in dfsInfo.StorageInfoCollection)
-                     UnitTestConstants.Dump(store, -19);
+                     UnitTestConstants.Dump(store);
 
                   Console.WriteLine();
                }

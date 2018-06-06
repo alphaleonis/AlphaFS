@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("#{0:000}\tClass: [{1}]", ++classCnt, deviceClass);
 
             foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(tempPath, deviceClass))
-               UnitTestConstants.Dump(device, -24);
+               UnitTestConstants.Dump(device);
 
             Console.WriteLine();
          }

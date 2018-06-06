@@ -35,7 +35,7 @@ namespace AlphaFS.UnitTest
          
          var serverStatistics = Alphaleonis.Win32.Network.Host.GetServerStatistics();
 
-         UnitTestConstants.Dump(serverStatistics, -22);
+         UnitTestConstants.Dump(serverStatistics);
       }
    }
 }
