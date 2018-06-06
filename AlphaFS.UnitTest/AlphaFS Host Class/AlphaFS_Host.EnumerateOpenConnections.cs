@@ -38,6 +38,7 @@ namespace AlphaFS.UnitTest
          // Create an active connection to the "remote" host.
          var currentDir = System.IO.Directory.GetCurrentDirectory();
 
+         // This might cause other unit tests to fail with illegal path characters exception.
          System.IO.Directory.SetCurrentDirectory(Alphaleonis.Win32.Filesystem.Path.UncPrefix + host + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator + share);
 
 
@@ -52,14 +53,14 @@ namespace AlphaFS.UnitTest
 
       private void EnumerateOpenConnections(string host, string share)
       {
-         //UnitTestAssert.IsElevatedProcess(); // In User mode nothing is enumerated.
+         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
          
-         Console.WriteLine("Connected to Share: [{0}\\{1}]", host, share);
+         Console.WriteLine(@"Connected to Share: [\\{0}\{1}]", host, share);
          
 
          var count = 0;
-         foreach (var openConnectionInfo in Alphaleonis.Win32.Network.Host.EnumerateOpenConnections(host, share, true))
+         foreach (var openConnectionInfo in Alphaleonis.Win32.Network.Host.EnumerateOpenConnections(host, share))
          {
             if (UnitTestConstants.Dump(openConnectionInfo, -16))
             {

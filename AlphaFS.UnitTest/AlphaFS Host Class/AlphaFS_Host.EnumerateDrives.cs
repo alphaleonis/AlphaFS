@@ -33,13 +33,13 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateDrives_Network_Success()
       {
-         //UnitTestAssert.IsElevatedProcess(); // In User mode nothing is enumerated.
+         //UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(true);
          
 
          var host = Environment.MachineName;
 
-         var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true).ToArray();
+         var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives(host).ToArray();
 
          foreach (var driveInfo in drives)
          {
