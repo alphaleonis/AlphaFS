@@ -58,6 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
          ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, PathFormat.RelativePath, false);
       }
 
+
       /// <summary>[AlphaFS] Backs up (export) encrypted files. This is one of a group of Encrypted File System (EFS) functions that is
       ///   intended to implement backup and restore functionality, while maintaining files in their encrypted state.</summary>
       /// <remarks>
@@ -90,6 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Export
 
+
       #region Import
 
       /// <summary>[AlphaFS] Restores (import) encrypted files. This is one of a group of Encrypted File System (EFS) functions that is
@@ -115,8 +117,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw"/>
       public static void ImportEncryptedFileRaw(Stream inputStream, string destinationFilePath)
       {
-         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, PathFormat.RelativePath, false);
+         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath,
+            PathFormat.RelativePath, false);
       }
+
 
       /// <summary>[AlphaFS] Restores (import) encrypted files. This is one of a group of Encrypted File System (EFS) functions that is
       ///   intended to implement backup and restore functionality, while maintaining files in their encrypted state.</summary>
@@ -173,6 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
          ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, PathFormat.RelativePath, overwriteHidden);
       }
 
+
       /// <summary>[AlphaFS] Restores (import) encrypted files. This is one of a group of Encrypted File System (EFS) functions that is
       ///   intended to implement backup and restore functionality, while maintaining files in their encrypted state.</summary>
       /// <remarks>
@@ -208,11 +213,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal static void ImportExportEncryptedFileDirectoryRawCore(bool isExport, bool isFolder, Stream stream, string destinationPath, PathFormat pathFormat, bool overwriteHidden)
       {
-         string destinationPathLp = Path.GetExtendedLengthPathCore(null, destinationPath, pathFormat, GetFullPathOptions.FullCheck | GetFullPathOptions.TrimEnd);
-         
-         NativeMethods.EncryptedFileRawMode mode = isExport
-            ? NativeMethods.EncryptedFileRawMode.CreateForExport
-            : NativeMethods.EncryptedFileRawMode.CreateForImport;
+         var destinationPathLp = Path.GetExtendedLengthPathCore(null, destinationPath, pathFormat, GetFullPathOptions.FullCheck | GetFullPathOptions.TrimEnd);
+
+         var mode = isExport ? NativeMethods.EncryptedFileRawMode.CreateForExport : NativeMethods.EncryptedFileRawMode.CreateForImport;
 
          if (isFolder)
             mode = mode | NativeMethods.EncryptedFileRawMode.CreateForDir;
@@ -261,6 +264,7 @@ namespace Alphaleonis.Win32.Filesystem
                      var data = new byte[length];
 
                      length = (uint) stream.Read(data, 0, (int) length);
+
                      if (length == 0)
                         return (int) Win32Errors.ERROR_SUCCESS;
 
@@ -281,7 +285,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
          finally
          {
-            if (context != null)
+            if (null != context && !context.IsClosed)
                context.Dispose();
          }
       }

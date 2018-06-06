@@ -31,6 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       protected override bool ReleaseHandle()
       {
          NativeMethods.CloseEncryptedFileRaw(handle);
+
          return true;
       }
    }
