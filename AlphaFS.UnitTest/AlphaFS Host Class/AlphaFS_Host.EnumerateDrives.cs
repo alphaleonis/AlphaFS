@@ -33,7 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateDrives_Network_Success()
       {
-         //UnitTestAssert.IsElevatedProcess();
+         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(true);
          
 
