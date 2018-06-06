@@ -45,7 +45,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("Mapped drive letter [{0}] to [{1}]", driveName, folder.FullName);
 
-               UnitTestConstants.Dump(connection, -9);
+               UnitTestConstants.Dump(connection);
 
 
                var connectionName = Alphaleonis.Win32.Filesystem.Path.GetMappedUncName(driveName);

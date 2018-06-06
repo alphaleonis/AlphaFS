@@ -61,7 +61,7 @@ namespace AlphaFS.UnitTest
 
             foreach (var far in alphaFSaccessRules)
             {
-               UnitTestConstants.Dump(far, -17);
+               UnitTestConstants.Dump(far);
 
                UnitTestConstants.TestAccessRules(sysIO, alphaFS);
 

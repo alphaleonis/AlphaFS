@@ -48,8 +48,8 @@ namespace AlphaFS.UnitTest
             var newDateTime = new DateTime(1601, 1, 1);
             var newDateTimeLocaltime = new DateTime(1601, 1, 1).ToLocalTime();
 
-            UnitTestConstants.Dump(newDateTime, -11);
-            UnitTestConstants.Dump(newDateTimeLocaltime, -11);
+            UnitTestConstants.Dump(newDateTime);
+            UnitTestConstants.Dump(newDateTimeLocaltime);
             
 
             Assert.AreEqual(newDateTime, System.IO.Directory.GetCreationTimeUtc(folder));

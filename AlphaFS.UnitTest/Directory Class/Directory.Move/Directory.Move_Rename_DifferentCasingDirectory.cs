@@ -56,8 +56,8 @@ namespace AlphaFS.UnitTest
 
             var upperDirInfo = new System.IO.DirectoryInfo(destFolder);
 
-            UnitTestConstants.Dump(upperDirInfo, -17);
-
+            UnitTestConstants.Dump(upperDirInfo);
+            
 
             Assert.AreEqual(upperCaseFolderName, upperDirInfo.Name, "The source folder name is not uppercase, but is expected to.");
          }

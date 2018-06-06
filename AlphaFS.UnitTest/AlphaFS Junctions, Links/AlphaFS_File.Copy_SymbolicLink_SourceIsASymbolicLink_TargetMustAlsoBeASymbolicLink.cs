@@ -63,10 +63,10 @@ namespace AlphaFS.UnitTest
             var lviDst = Alphaleonis.Win32.Filesystem.File.GetLinkTargetInfo(destinationFileLink);
 
             Console.WriteLine("\n\tLink Info of source Link:");
-            UnitTestConstants.Dump(lviSrc, -14);
+            UnitTestConstants.Dump(lviSrc);
 
             Console.WriteLine("\n\tLink Info of copied Link:");
-            UnitTestConstants.Dump(lviDst, -14);
+            UnitTestConstants.Dump(lviDst);
 
 
             Assert.AreEqual(lviSrc.PrintName, lviDst.PrintName);

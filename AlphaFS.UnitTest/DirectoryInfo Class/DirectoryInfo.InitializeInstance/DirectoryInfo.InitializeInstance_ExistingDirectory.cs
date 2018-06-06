@@ -57,9 +57,9 @@ namespace AlphaFS.UnitTest
          if (expected == null || actual == null)
             Assert.AreEqual(expected, actual, "The two DirectoryInfo instances are not the same, but are expected to be.");
 
-         UnitTestConstants.Dump(expected, -17);
+         UnitTestConstants.Dump(expected);
          Console.WriteLine();
-         UnitTestConstants.Dump(actual, -17);
+         UnitTestConstants.Dump(actual);
 
 
          if (exists)

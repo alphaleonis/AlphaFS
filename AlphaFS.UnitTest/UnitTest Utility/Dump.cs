@@ -20,84 +20,44 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace AlphaFS.UnitTest
 {
    public static partial class UnitTestConstants
    {
       /// <summary>Shows the Object's available Properties and Values.</summary>
-      public static bool Dump(object obj, int width = -35, bool indent = false)
+      public static void Dump(object obj, bool indent = false)
       {
-         var cnt = 0;
-         var template = "\t{0}#{1:000}\t{2, " + width + "} = [{3}]";
-
-         if (obj == null)
+         if (null == obj)
          {
             Console.WriteLine("\n\t\tNothing to dump because the instance is null.");
-            return false;
+            return;
          }
+         
 
+         var allProperties = TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => null != descriptor).ToArray();
+
+
+         // Determine widest property name, for layout.
+         var width = allProperties.Select(prop => prop.Name.Length).Concat(new[] {0}).Max();
+
+         var count = 0;
+         var template = "\t{0}#{1:000}\t{2, " + -width + "} = [{3}]";
+         
          Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
 
-         var loopOk = false;
-         foreach (var descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => null != descriptor))
+
+         foreach (var descriptor in allProperties)
          {
-            string propValue = null;
+            string propValue;
 
             try
             {
-               var value = descriptor.GetValue(obj);
-
-               if (null != value)
-               {
-                  var propObjType = value.GetType();
-
-                  if (propObjType.IsAssignableToAnyOf(typeof(Stopwatch)))
-                  {
-                     var propObj = value as Stopwatch;
-                     if (null != propObj)
-                        propValue = propObj.Elapsed.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
-                  }
-
-                  else if (propObjType.IsAssignableToAnyOf(typeof(Collection<string>), typeof(List<string>)))
-                  {
-                     var propObj = (Collection<string>)value;
-
-                     if (null != propObj)
-                     {
-                        foreach (var itemValue in propObj)
-                           propValue += itemValue + ", ";
-
-                        if (null != propValue)
-                           propValue = propValue.TrimEnd(',', ' ');
-                     }
-                  }
-
-                  else if (propObjType.IsAssignableToAnyOf(typeof(Collection<int>), typeof(List<int>)))
-                  {
-                     var propObj = (Collection<int>)value;
-
-                     if (null != propObj)
-                     {
-                        foreach (var itemValue in propObj)
-                           propValue += itemValue + ", ";
-
-                        if (null != propValue)
-                           propValue = propValue.TrimEnd(',', ' ');
-                     }
-                  }
-
-                  else
-                     propValue = value.ToString();
-               }
-
-               loopOk = true;
+               propValue = Write(descriptor.GetValue(obj));
             }
             catch (Exception ex)
             {
@@ -109,35 +69,37 @@ namespace AlphaFS.UnitTest
             if (null == propValue)
                propValue = "NULL";
 
-            Console.WriteLine(template, indent ? "\t" : string.Empty, ++cnt, descriptor.Name, propValue);
+            Console.WriteLine(template, indent ? "\t" : string.Empty, ++count, descriptor.Name, propValue);
          }
-
-         return loopOk;
       }
 
 
-
-      public static bool IsAssignableToAnyOf(this Type typeOperand, IEnumerable<Type> types)
+      private static string Write(object value)
       {
-         return types.Any(type => type.IsAssignableFrom(typeOperand));
-      }
+         if (null == value)
+            return null;
+
+         if (value is string)
+            return value as string;
 
 
-      public static bool IsAssignableToAnyOf(this Type typeOperand, params Type[] types)
-      {
-         return IsAssignableToAnyOf(typeOperand, types.AsEnumerable());
-      }
+         long number;
+         if (long.TryParse(value.ToString(), out number))
+            return value.ToString();
 
 
-      public static bool IsAssignableToAnyOf<T1, T2, T3>(this Type typeOperand)
-      {
-         return typeOperand.IsAssignableToAnyOf(typeof(T1), typeof(T2), typeof(T3));
-      }
+         var objectType = value as IEnumerable;
+
+         if (null == objectType)
+            return value.ToString();
 
 
-      public static bool IsAssignableToAnyOf<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>(this Type typeOperand)
-      {
-         return typeOperand.IsAssignableToAnyOf(typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5), typeof(T6), typeof(T7), typeof(T8), typeof(T9), typeof(T10), typeof(T11), typeof(T12), typeof(T13), typeof(T14), typeof(T15), typeof(T16), typeof(T17), typeof(T18), typeof(T19), typeof(T20));
+         var sb = new StringBuilder();
+
+         foreach (var objectValue in objectType)
+            sb.Append(objectValue + ", ");
+
+         return sb.ToString().TrimEnd(',', ' ');
       }
    }
 }

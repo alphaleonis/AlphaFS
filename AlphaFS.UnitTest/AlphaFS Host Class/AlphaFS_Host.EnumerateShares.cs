@@ -41,8 +41,11 @@ namespace AlphaFS.UnitTest
          var count = 0;
          foreach (var shareInfo in Alphaleonis.Win32.Network.Host.EnumerateShares(host, true))
          {
-            if (UnitTestConstants.Dump(shareInfo, -18))
-               count++;
+            UnitTestConstants.Dump(shareInfo);
+
+            Assert.IsNotNull(shareInfo);
+
+            count++;
 
             Console.WriteLine();
          }

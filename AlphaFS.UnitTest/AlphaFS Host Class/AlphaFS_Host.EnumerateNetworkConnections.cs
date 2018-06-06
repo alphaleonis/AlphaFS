@@ -44,12 +44,11 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("#{0:000}\tNetwork: [{1}]", ++networkConnectionCount, networkConnection.NetworkInfo.Name);
 
 
-            UnitTestConstants.Dump(networkConnection, -21);
+            UnitTestConstants.Dump(networkConnection);
 
-            UnitTestConstants.Dump(networkConnection.NetworkInfo, -21, true);
+            UnitTestConstants.Dump(networkConnection.NetworkInfo, true);
 
-            UnitTestConstants.Dump(networkConnection.NetworkInterface, -20, true);
-
+            UnitTestConstants.Dump(networkConnection.NetworkInterface, true);
 
             Console.WriteLine();
          }
