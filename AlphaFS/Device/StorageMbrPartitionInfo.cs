@@ -79,15 +79,15 @@ namespace Alphaleonis.Win32.Filesystem
       #region Properties
 
       /// <summary><c>true</c> if the partition is a boot partition.</summary>
-      public bool BootIndicator { get; internal set; }
+      public bool BootIndicator { get; private set; }
 
 
       /// <summary>The type of the partition.</summary>
-      public DiskPartitionType DiskPartitionType { get; internal set; }
+      public DiskPartitionType DiskPartitionType { get; private set; }
 
 
       /// <summary>The number of hidden sectors to be allocated when the partition table is created.</summary>
-      public int HiddenSectors { get; internal set; }
+      public int HiddenSectors { get; private set; }
 
 
       /// <summary>The starting offset of the partition.</summary>
@@ -111,23 +111,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>The starting offset of the partition, formatted as a unit size.</summary>
-      public string PartitionLengthUnitSize
-      {
-         get { return Utils.UnitSizeToText(PartitionLength); }
-      }
-
-
       /// <summary>The storage partition number, starting at 1.</summary>
-      public int PartitionNumber { get; internal set; }
+      public int PartitionNumber { get; private set; }
       
 
       /// <summary><c>true</c> if the partition is of a recognized type.</summary>
-      public bool RecognizedPartition { get; internal set; }
+      public bool RecognizedPartition { get; private set; }
 
 
       /// <summary>The rewritable status of the storage partition.</summary>
-      public bool RewritePartition { get; internal set; }
+      public bool RewritePartition { get; private set; }
 
 
       /// <summary>The starting offset of the partition.</summary>

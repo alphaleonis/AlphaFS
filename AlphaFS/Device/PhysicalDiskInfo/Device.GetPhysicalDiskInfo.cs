@@ -31,17 +31,17 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Retrieves the physical disk on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.
       /// <para>Most properties of the returned <see cref="PhysicalDiskInfo.StorageAdapterInfo"/> and <see cref="PhysicalDiskInfo.StorageDeviceInfo"/> instances are meaningless unless this method is called from an elevated state.</para>
-      /// <para>Do not call this method for every volume or logical drive on the system as each call queries all physical disks and associated volumes and logical drives.</para>
+      /// <para>Do not call this method for every volume or logical drive on the system as each call queries all physical disks, associated volumes and logical drives.</para>
       /// <para>Instead, use method <see cref="EnumeratePhysicalDisks"/> and property <see cref="PhysicalDiskInfo.VolumeGuids"/> and/or <see cref="PhysicalDiskInfo.LogicalDrives"/>.</para>
       /// </summary>
       /// <returns>A <see cref="PhysicalDiskInfo"/> instance that represents the physical disk on the Computer or <c>null</c> on error/no data available.</returns>
-      ///  <exception cref="ArgumentException"/>
-      ///  <exception cref="ArgumentNullException"/>
-      ///  <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="devicePath">
-      /// <para>A disk path such as: "\\.\PhysicalDrive0"</para>s
-      /// <para>A drive path such as: "C", "C:" or "C:\".</para>
-      /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
+      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>s
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
       /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
       /// </param>
       [SecurityCritical]
@@ -92,15 +92,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Most properties of the returned <see cref="PhysicalDiskInfo.StorageAdapterInfo"/> and <see cref="PhysicalDiskInfo.StorageDeviceInfo"/> instances are meaningless unless this method is called from an elevated state.</para>
       /// </summary>
       ///  <returns>A <see cref="PhysicalDiskInfo"/> instance that represents the physical disk on the Computer or <c>null</c> on error/no data available.</returns>
-      ///  <exception cref="ArgumentException"/>
-      ///  <exception cref="ArgumentNullException"/>
-      ///  <exception cref="NotSupportedException"/>
-      ///  <exception cref="Exception"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="Exception"/>
       /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="devicePath">
-      /// <para>A disk path such as: "\\.\PhysicalDrive0"</para>
-      /// <para>A drive path such as: "C", "C:" or "C:\".</para>
-      /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
+      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
       /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
       /// </param>
       /// <param name="storageDeviceInfo">A <see cref="StorageDeviceInfo"/> instance.</param>
@@ -139,14 +139,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (isElevated)
          {
-            //GetDriveStuff(@"\\.\C:");
-
-
             using (var safeHandle = OpenPhysicalDisk(devicePath, FileSystemRights.Read))
             {
                pDiskInfo.StorageAdapterInfo = GetStorageAdapterInfoNative(safeHandle, devicePath);
 
                storageDeviceInfo = GetStorageDeviceInfoNative(safeHandle, devicePath, storageDeviceInfo);
+
+               pDiskInfo.StoragePartitionInfo = GetStoragePartitionInfoNative(safeHandle, devicePath);
             }
          }
 

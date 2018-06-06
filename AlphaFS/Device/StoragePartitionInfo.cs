@@ -20,8 +20,10 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -118,21 +120,21 @@ namespace Alphaleonis.Win32.Filesystem
       
       /// <summary>The GUID of the disk.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
-      public Guid GptDiskId { get; internal set; }
+      public Guid GptDiskId { get; private set; }
       
 
       /// <summary>The device number of the storage partition, starting at 0.</summary>
-      public int DeviceNumber { get; internal set; }
+      public int DeviceNumber { get; private set; }
 
 
       /// <summary>The maximum number of partitions that can be defined in the usable block.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
-      public int GptMaxPartitionCount { get; internal set; }
+      public int GptMaxPartitionCount { get; private set; }
 
 
       /// <summary>Contains GUID partition table (GPT) partition information.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
-      public Collection<StorageGptPartitionInfo> GptPartitionInfo { get; internal set; }
+      public ICollection<StorageGptPartitionInfo> GptPartitionInfo { get; private set; }
 
 
       /// <summary>The starting byte offset of the first usable block.</summary>
@@ -176,61 +178,47 @@ namespace Alphaleonis.Win32.Filesystem
       //      }
       //   }
       //}
-      
 
-      ///// <summary>(Only applicable to GPT partition) The size of the usable blocks on the disk in bytes, formatted as a unit size.</summary>
-      //public string GptUsableLengthUnitSize
-      //{
-      //   get { return Utils.UnitSizeToText(GptUsableLength); }
-      //}
-      
 
       /// <summary>Contains partition information specific to master boot record (MBR) disks.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mbr")]
-      public Collection<StorageMbrPartitionInfo> MbrPartitionInfo { get; internal set; }
+      public ICollection<StorageMbrPartitionInfo> MbrPartitionInfo { get; private set; }
 
 
       /// <summary>The MBR signature of the drive.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mbr")]
-      public long MbrSignature { get; internal set; }
+      public long MbrSignature { get; private set; }
 
 
       /// <summary>The media type of the storage partition.</summary>
-      public StorageMediaType MediaType { get; internal set; }
+      public StorageMediaType MediaType { get; private set; }
 
 
       /// <summary>The number of partitions on the drive.</summary>
-      public int PartitionCount { get; internal set; }
+      public int PartitionCount { get; private set; }
 
 
       /// <summary>The format of the partition. For a list of values, see <see cref="Filesystem.PartitionStyle"/>.</summary>
-      public PartitionStyle PartitionStyle { get; internal set; }
+      public PartitionStyle PartitionStyle { get; private set; }
 
 
       /// <summary>The total size of the storage partition.</summary>
-      public long TotalSize { get; internal set; }
-
-
-      /// <summary>The total size of the storage partition, formatted as a unit size.</summary>
-      public string TotalSizeUnitSize
-      {
-         get { return Utils.UnitSizeToText(TotalSize); }
-      }
-
+      public long TotalSize { get; private set; }
 
       #endregion // Properties
 
 
-      //#region Methods
+      #region Methods
 
-      ///// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
-      ///// <returns>A string that represents this instance.</returns>
-      //public override string ToString()
-      //{
-      //   return string.Format(CultureInfo.CurrentCulture, "{0}:{1} {2} {3}",
+      /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
+      /// <returns>A string that represents this instance.</returns>
+      public override string ToString()
+      {
+         return string.Format(CultureInfo.CurrentCulture, "{0}:{1} {2}",
 
-      //      DeviceNumber.ToString(CultureInfo.InvariantCulture), PartitionNumber.ToString(CultureInfo.InvariantCulture), PartitionStyle.ToString(), TotalSizeUnitSize).Trim();
-      //}
+            DeviceNumber.ToString(CultureInfo.InvariantCulture), "?".ToString(CultureInfo.InvariantCulture), PartitionStyle.ToString()).Trim();
+            //DeviceNumber.ToString(CultureInfo.InvariantCulture), PartitionNumber.ToString(CultureInfo.InvariantCulture), PartitionStyle.ToString()).Trim();
+      }
 
 
       ///// <summary>Determines whether the specified Object is equal to the current Object.</summary>
@@ -281,6 +269,6 @@ namespace Alphaleonis.Win32.Filesystem
       //   return !(left == right);
       //}
 
-      //#endregion // Methods
+      #endregion // Methods
    }
 }

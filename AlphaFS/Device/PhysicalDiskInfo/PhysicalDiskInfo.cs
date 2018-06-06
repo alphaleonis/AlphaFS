@@ -20,7 +20,7 @@
  */
 
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 
@@ -56,15 +56,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The path to the device.</summary>
       /// <returns>A string that represents the path to the device.
-      ///   A drive path such as: "C:", "D:\",
-      ///   a volume <see cref="Guid"/> path such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\"
+      ///   A drive path such as: <c>C:</c>, <c>D:\</c>,
+      ///   a volume <see cref="Guid"/> path such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>
       ///   or a <see cref="DeviceInfo.DevicePath"/> string.
       /// </returns>
       public string DevicePath { get; internal set; }
 
 
       /// <summary>The logical drives that are located on the physical disk.</summary>
-      public Collection<string> LogicalDrives { get; internal set; }
+      public ICollection<string> LogicalDrives { get; internal set; }
 
       
       /// <summary>The "FriendlyName" of the physical disk.</summary>
@@ -72,14 +72,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       
       /// <summary>The partition index numbers that are located on the physical disk.</summary>
-      public Collection<int> PartitionIndexes { get; internal set; }
+      public ICollection<int> PartitionIndexes { get; internal set; }
 
 
       /// <summary>Encapsulates the physical device location (PDO) information provided by a device's firmware to Windows.</summary>
       public string PhysicalDeviceObjectName { get; internal set; }
 
 
-      /// <summary>The storage device adapter information.</summary>
+      /// <summary>The storage device adapter information. Retrieving this information requires an elevated state.</summary>
       public StorageAdapterInfo StorageAdapterInfo { get; internal set; }
 
 
@@ -92,11 +92,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>A collection of volume GUID strings of volumes that are located on the physical disk.</summary>
-      public Collection<string> VolumeGuids { get; internal set; }
+      public ICollection<string> VolumeGuids { get; internal set; }
 
 
       ///// <summary>A collection of volume label strings of volumes that are located on the physical disk.</summary>
-      //public Collection<string> VolumeLabels { get; internal set; }
+      //public ICollection<string> VolumeLabels { get; internal set; }
 
       #endregion // Properties
 
@@ -104,8 +104,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region Methods
 
       /// <summary>Checks if the volume or logical drive is located on the physical disk.
-      /// <para>A drive path such as: "C", "C:" or "C:\".</para>
-      /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
       /// </summary>
       /// <returns><c>true</c> if the volume or logical drive is located on the physical disk, <c>false</c> otherwise..</returns>
       public bool ContainsVolume(string devicePath)

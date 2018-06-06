@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Gets the shortest display name for the specified <paramref name="volumeName"/>.</summary>
       /// <remarks>This method basically returns the shortest string returned by <see cref="EnumerateVolumePathNames"/></remarks>
-      /// <param name="volumeName">A volume <see cref="Guid"/> path: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</param>
+      /// <param name="volumeName">A volume <see cref="Guid"/> path: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</param>
       /// <returns>
       ///   The shortest display name for the specified volume found, or <c>null</c> if no display names were found.
       /// </returns>

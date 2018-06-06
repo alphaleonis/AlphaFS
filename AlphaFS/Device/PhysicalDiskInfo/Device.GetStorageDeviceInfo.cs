@@ -30,17 +30,20 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Device
    {
       /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.
-      /// <para>Properties of the returned <see cref="StorageDeviceInfo"/> instance are meaningless unless this method is called from an elevated state.</para>
+      /// <para>
+      ///   When this method is called from a non-elevated state, only the properties <see cref="StorageDeviceInfo.DeviceNumber"/> and <see cref="StorageDeviceInfo.PartitionNumber"/> are useful.
+      ///   The remaining properties are meaningless and can only be obtained by calling the method from an elevated state.
+      /// </para>
       /// </summary>
       /// <returns>A <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
-      ///  <exception cref="ArgumentException"/>
-      ///  <exception cref="ArgumentNullException"/>
-      ///  <exception cref="NotSupportedException"/>
-      ///  <exception cref="Exception"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="Exception"/>
       /// <param name="devicePath">
-      /// <para>A disk path such as: "\\.\PhysicalDrive0"</para>
-      /// <para>A drive path such as: "C", "C:" or "C:\".</para>
-      /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
+      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
       /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
       /// </param>
       public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath)
@@ -52,18 +55,21 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume GUID or <see cref="DeviceInfo.DevicePath"/>.
-      /// <para>Properties of the returned <see cref="StorageDeviceInfo"/> instance are meaningless unless this method is called from an elevated state.</para>
+      /// <para>
+      ///   When this method is called from a non-elevated state, only the properties <see cref="StorageDeviceInfo.DeviceNumber"/> and <see cref="StorageDeviceInfo.PartitionNumber"/> are useful.
+      ///   The remaining properties are meaningless and can only be obtained by calling the method from an elevated state.
+      /// </para>
       /// </summary>
       /// <returns>A <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
-      ///  <exception cref="ArgumentException"/>
-      ///  <exception cref="ArgumentNullException"/>
-      ///  <exception cref="NotSupportedException"/>
-      ///  <exception cref="Exception"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="Exception"/>
       /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="devicePath">
-      /// <para>A disk path such as: "\\.\PhysicalDrive0"</para>s
-      /// <para>A drive path such as: "C", "C:" or "C:\".</para>
-      /// <para>A volume <see cref="Guid"/> such as: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</para>
+      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>s
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
       /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
       /// </param>
       internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, string devicePath)

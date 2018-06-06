@@ -45,11 +45,11 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}\t\t{3}", ++driveCount, sourceDrive, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
 
 
-         UnitTestConstants.Dump(pDisk, -24);
+         UnitTestConstants.Dump(pDisk);
 
-         UnitTestConstants.Dump(pDisk.StorageAdapterInfo, -28, true);
+         UnitTestConstants.Dump(pDisk.StorageAdapterInfo, true);
 
-         UnitTestConstants.Dump(pDisk.StorageDeviceInfo, -17, true);
+         UnitTestConstants.Dump(pDisk.StorageDeviceInfo, true);
          Console.WriteLine();
 
 

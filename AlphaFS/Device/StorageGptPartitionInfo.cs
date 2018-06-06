@@ -106,15 +106,15 @@ namespace Alphaleonis.Win32.Filesystem
       #region Properties
 
       /// <summary>The Extensible Firmware Interface (EFI) attributes of the partition.</summary>
-      public EfiPartitionAttributes Attributes { get; internal set; }
+      public EfiPartitionAttributes Attributes { get; private set; }
 
 
       /// <summary>The description of the partition.</summary>
-      public string Description { get; internal set; }
+      public string Description { get; private set; }
 
 
       /// <summary>The GUID of the partition.</summary>
-      public Guid PartitionId { get; internal set; }
+      public Guid PartitionId { get; private set; }
 
 
       /// <summary>The starting offset of the partition.</summary>
@@ -138,23 +138,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>The starting offset of the partition, formatted as a unit size.</summary>
-      public string PartitionLengthUnitSize
-      {
-         get { return Utils.UnitSizeToText(PartitionLength); }
-      }
-
-
       /// <summary>The storage partition number, starting at 1.</summary>
-      public int PartitionNumber { get; internal set; }
+      public int PartitionNumber { get; private set; }
 
 
       /// <summary>The the partition type. Each partition type that the EFI specification supports is identified by its own GUID, which is published by the developer of the partition.</summary>
-      public PartitionType PartitionType { get; internal set; }
+      public PartitionType PartitionType { get; private set; }
 
 
       /// <summary>The rewritable status of the storage partition.</summary>
-      public bool RewritePartition { get; internal set; }
+      public bool RewritePartition { get; private set; }
 
 
       /// <summary>The starting offset of the partition.</summary>

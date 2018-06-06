@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storagePartitionInfo.ToString());
 
-            UnitTestConstants.Dump(storagePartitionInfo, -23);
+            UnitTestConstants.Dump(storagePartitionInfo);
 
 
             Assert.IsNotNull(storagePartitionInfo);
@@ -58,7 +58,7 @@ namespace AlphaFS.UnitTest
                gotDisk = true;
 
                foreach (var partition in storagePartitionInfo.GptPartitionInfo)
-                  UnitTestConstants.Dump(partition, -23, true);
+                  UnitTestConstants.Dump(partition, true);
             }
 
 
@@ -67,7 +67,7 @@ namespace AlphaFS.UnitTest
                gotDisk = true;
 
                foreach (var partition in storagePartitionInfo.MbrPartitionInfo)
-                  UnitTestConstants.Dump(partition, -23, true);
+                  UnitTestConstants.Dump(partition, true);
             }
 
 

@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An enumerable collection of <see cref="string"/> containing the path names for the specified volume.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
-      /// <param name="volumeGuid">A volume <see cref="Guid"/> path: "\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\".</param>
+      /// <param name="volumeGuid">A volume <see cref="Guid"/> path: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</param>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumePathNames(string volumeGuid)
       {

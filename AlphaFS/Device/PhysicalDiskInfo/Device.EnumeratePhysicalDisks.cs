@@ -144,6 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
          foreach (var pVolume in pVolumes.Where(pVol => pVol.StorageDeviceInfo.DeviceNumber == pDiskInfo.StorageDeviceInfo.DeviceNumber))
          {
             var volumeDriveNumber = pVolume.StorageDeviceInfo.DeviceNumber;
+
             var volumePartitionNumber = pVolume.StorageDeviceInfo.PartitionNumber;
 
 

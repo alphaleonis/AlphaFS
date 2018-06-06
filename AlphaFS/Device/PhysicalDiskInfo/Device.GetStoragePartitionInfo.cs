@@ -30,16 +30,19 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
-
+      /// <summary>Retrieves information about the partitions on a disk and the features of each partition.</summary>
+      /// <returns>A <see cref="StoragePartitionInfo"/> instance that represent the partition info on the Computer that is related to <paramref name="devicePath"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="Exception"/>
+      /// <param name="devicePath">
+      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
+      /// </param>
       public static StoragePartitionInfo GetStoragePartitionInfo(string devicePath)
-      {
-         return GetStoragePartitionInfoCore(devicePath);
-      }
-
-
-
-
-      internal static StoragePartitionInfo GetStoragePartitionInfoCore(string devicePath)
       {
          string logicalDrive;
 
@@ -55,7 +58,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Retrieves information about the number of partitions on a disk and the features of each partition.</summary>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       private static StoragePartitionInfo GetStoragePartitionInfoNative(SafeFileHandle safeHandle, string pathToDevice)
       {

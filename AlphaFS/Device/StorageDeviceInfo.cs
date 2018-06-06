@@ -48,9 +48,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DeviceType = device.DeviceType;
 
-         DeviceNumber = (int) device.DeviceNumber;
+         DeviceNumber = device.DeviceNumber;
 
-         PartitionNumber = (int) device.PartitionNumber;
+         PartitionNumber = device.PartitionNumber;
       }
 
       #endregion // Constructors
@@ -97,13 +97,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The total size of the physical disk.</summary>
       public long TotalSize { get; internal set; }
-
-
-      /// <summary>The total size of the physical disk, formatted as a unit size.</summary>
-      public string TotalSizeUnitSize
-      {
-         get { return Utils.UnitSizeToText(TotalSize); }
-      }
 
 
       /// <summary>The Vendor ID of the physical disk.</summary>

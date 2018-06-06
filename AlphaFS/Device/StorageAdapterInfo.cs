@@ -94,23 +94,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Specifies the maximum number of bytes the storage adapter can transfer in a single operation.</summary>
       public int MaximumTransferBytes { get; internal set; }
 
-
-      /// <summary>Specifies the maximum number of bytes the storage adapter can transfer in a single operation, formatted as a unit size.</summary>
-      public string MaximumTransferBytesUnitSize
-      {
-         get { return Utils.UnitSizeToText(MaximumTransferBytes); }
-      }
-
       #endregion // Properties
 
 
       #region Methods
 
-      /// <summary>Returns storage device as: "BusType MaximumTransferBytesUnitSize".</summary>
+      /// <summary>Returns storage device as: "BusType MaximumTransferBytes".</summary>
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         return string.Format(CultureInfo.CurrentCulture, "{0} {1}", (BusType.ToString() + " " + (null != BusVersion ? BusVersion.ToString() : string.Empty)).Trim(), MaximumTransferBytesUnitSize);
+         return BusType == StorageBusType.Unknown ? StorageBusType.Unknown.ToString() : string.Format(CultureInfo.CurrentCulture, "{0} {1}", (BusType.ToString() + " " ).Trim(), Utils.UnitSizeToText(MaximumTransferBytes));
       }
 
 

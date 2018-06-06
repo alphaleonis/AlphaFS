@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storageAdapterInfo.ToString());
 
-            UnitTestConstants.Dump(storageAdapterInfo, -28);
+            UnitTestConstants.Dump(storageAdapterInfo);
 
 
             Assert.IsNotNull(storageAdapterInfo);
