@@ -64,7 +64,7 @@ namespace AlphaFS.UnitTest
 
             var cmr = Alphaleonis.Win32.Filesystem.Directory.Move(srcFile, dstFile, options);
 
-            UnitTestConstants.Dump(cmr, -18);
+            UnitTestConstants.Dump(cmr);
 
 
             Assert.IsFalse(System.IO.Directory.Exists(dstFile));

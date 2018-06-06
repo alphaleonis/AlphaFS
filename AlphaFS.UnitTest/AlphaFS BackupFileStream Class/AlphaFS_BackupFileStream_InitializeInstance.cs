@@ -49,9 +49,9 @@ namespace AlphaFS.UnitTest
 
             using (var bfs = new Alphaleonis.Win32.Filesystem.BackupFileStream(file.FullName, System.IO.FileMode.Open))
             {
-               UnitTestConstants.Dump(bfs.ReadStreamInfo(), -10);
+               UnitTestConstants.Dump(bfs.ReadStreamInfo());
 
-               UnitTestConstants.Dump(bfs, -11);
+               UnitTestConstants.Dump(bfs);
             }
          }
 

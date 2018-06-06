@@ -66,7 +66,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(di1.Exists);
 
 
-            UnitTestConstants.Dump(di1, -17);
+            UnitTestConstants.Dump(di1);
          }
 
          Console.WriteLine();

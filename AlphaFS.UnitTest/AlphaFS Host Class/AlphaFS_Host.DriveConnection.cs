@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("Mapped drive [{0}] to share [{1}]", connection.LocalName, folder.FullName);
 
-               UnitTestConstants.Dump(connection, -9);
+               UnitTestConstants.Dump(connection);
 
                Assert.AreEqual(folder.FullName, connection.Share);
 

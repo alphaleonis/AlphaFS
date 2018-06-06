@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
 
             var accessRules = dirsec.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
 
-            UnitTestConstants.Dump(dirsec, -23);
+            UnitTestConstants.Dump(dirsec);
 
             Assert.IsFalse(HasLocalAces(accessRules), "Local access rules are found, but it is not expected.");
 
@@ -70,7 +70,7 @@ namespace AlphaFS.UnitTest
 
             accessRules = dirsec.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
 
-            UnitTestConstants.Dump(dirsec, -23);
+            UnitTestConstants.Dump(dirsec);
 
             Assert.IsFalse(HasLocalAces(accessRules), "Local access rules are found, but it is not expected.");
          }

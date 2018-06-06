@@ -82,7 +82,7 @@ namespace AlphaFS.UnitTest
                Assert.AreEqual(numCreate + 1, bhfi.NumberOfLinks);
 
                Console.WriteLine("\n\n\tByHandleFileInfo for Input Path, see property: NumberOfLinks");
-               UnitTestConstants.Dump(bhfi, -18);
+               UnitTestConstants.Dump(bhfi);
             }
          }
 

@@ -42,12 +42,13 @@ namespace AlphaFS.UnitTest
          var count = 0;
          foreach (var openResourceInfo in Alphaleonis.Win32.Network.Host.EnumerateOpenResources(host, null, null, false))
          {
-            if (UnitTestConstants.Dump(openResourceInfo, -11))
-            {
-               count++;
+            UnitTestConstants.Dump(openResourceInfo);
 
-               Console.WriteLine();
-            }
+            Assert.IsNotNull(openResourceInfo);
+
+            count++;
+
+            Console.WriteLine();
          }
 
 

@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
             
             Assert.IsTrue(null != shell32Info);
 
-            UnitTestConstants.Dump(shell32Info, -15);
+            UnitTestConstants.Dump(shell32Info);
          }
 
          Console.WriteLine();

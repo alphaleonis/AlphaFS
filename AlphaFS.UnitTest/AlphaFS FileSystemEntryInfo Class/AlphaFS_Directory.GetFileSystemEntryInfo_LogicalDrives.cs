@@ -41,16 +41,17 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
          
-         var drives = Alphaleonis.Win32.Filesystem.Directory.EnumerateLogicalDrives().ToList();
+         var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToArray();
 
-         foreach (var drive in drives)
+         foreach (var driveInfo in drives)
          {
-            Console.WriteLine("Input Logical Drive: [{0}]", drive.Name);
+            Console.WriteLine("Input Logical Drive: [{0}]", driveInfo.Name);
 
             try
             { 
-               var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(drive.Name);
-               UnitTestConstants.Dump(fsei, -19);
+               var fsei = Alphaleonis.Win32.Filesystem.Directory.GetFileSystemEntryInfo(driveInfo.Name);
+
+               UnitTestConstants.Dump(fsei);
 
 
                Assert.IsTrue(fsei.GetType().IsEquivalentTo(typeof(Alphaleonis.Win32.Filesystem.FileSystemEntryInfo)));
@@ -58,7 +59,7 @@ namespace AlphaFS.UnitTest
 
 
                // Fixed local drives should have these attributes.
-               if (new Alphaleonis.Win32.Filesystem.DriveInfo(drive.Name).DriveType == System.IO.DriveType.Fixed)
+               if (new Alphaleonis.Win32.Filesystem.DriveInfo(driveInfo.Name).DriveType == System.IO.DriveType.Fixed)
                {
                   Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.Hidden) != 0, "The Hidden attribute is not found, but is expected.");
                   Assert.IsTrue((fsei.Attributes & System.IO.FileAttributes.System) != 0, "The System attribute is not found, but is expected.");
@@ -66,7 +67,7 @@ namespace AlphaFS.UnitTest
 
 
                Assert.AreEqual(".", fsei.FileName, "The file names are not equal, but are expected to be.");
-               Assert.AreEqual(drive.Name, fsei.FullPath, "The full paths are not equal, but are expected to be.");
+               Assert.AreEqual(driveInfo.Name, fsei.FullPath, "The full paths are not equal, but are expected to be.");
             }
             catch (Exception ex)
             {

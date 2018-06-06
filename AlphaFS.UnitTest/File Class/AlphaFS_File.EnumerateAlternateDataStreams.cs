@@ -93,7 +93,9 @@ namespace AlphaFS.UnitTest
             // Enumerate all streams from the file.
             foreach (var stream in fi.EnumerateAlternateDataStreams())
             {
-               Assert.IsTrue(UnitTestConstants.Dump(stream, -10));
+               UnitTestConstants.Dump(stream);
+
+               Assert.IsNotNull(stream);
 
                // The default stream, a file as we know it.
                if (Alphaleonis.Utils.IsNullOrWhiteSpace(stream.StreamName))
@@ -124,8 +126,8 @@ namespace AlphaFS.UnitTest
             var fileInfo2 = new Alphaleonis.Win32.Filesystem.FileInfo(stream2Name, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
 
             Console.WriteLine();
-            UnitTestConstants.Dump(fileInfo1, -17);
-            UnitTestConstants.Dump(fileInfo2, -17);
+            UnitTestConstants.Dump(fileInfo1);
+            UnitTestConstants.Dump(fileInfo2);
 
 
             Assert.AreEqual(myStream, fileInfo1.Name);

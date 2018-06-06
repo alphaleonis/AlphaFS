@@ -73,7 +73,7 @@ namespace AlphaFS.UnitTest
 
                var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(driveName);
 
-               UnitTestConstants.Dump(volInfo, -26);
+               UnitTestConstants.Dump(volInfo);
 
 
                Assert.AreEqual(driveInfo2.VolumeLabel, volInfo.Name);
@@ -89,7 +89,7 @@ namespace AlphaFS.UnitTest
             {
                var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(driveName);
 
-               UnitTestConstants.Dump(volInfo, -26);
+               UnitTestConstants.Dump(volInfo);
 
 
                // System.IO.DriveInfo does not support UNC paths.

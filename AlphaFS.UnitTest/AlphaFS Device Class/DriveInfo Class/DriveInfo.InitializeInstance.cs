@@ -83,14 +83,16 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(expected.VolumeLabel, actual.VolumeLabel, "VolumeLabel AlphaFS != System.IO");
 
 
-            UnitTestConstants.Dump(expected, -18);
+            UnitTestConstants.Dump(expected);
             Console.WriteLine();
          }
 
 
-         UnitTestConstants.Dump(actual, -21);
-         UnitTestConstants.Dump(actual.DiskSpaceInfo, -26);
-         UnitTestConstants.Dump(actual.VolumeInfo, -26);
+         UnitTestConstants.Dump(actual);
+
+         UnitTestConstants.Dump(actual.DiskSpaceInfo);
+
+         UnitTestConstants.Dump(actual.VolumeInfo);
 
          Console.WriteLine();
       }
