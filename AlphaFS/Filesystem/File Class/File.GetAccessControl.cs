@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
       /// <summary>Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for a specified file.</summary>
-      /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>      
+      /// <returns>Returns a <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>      
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for a specified file.</summary>
-      /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>      
+      /// <returns>Returns a <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>      
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for a specified file.</summary>
-      /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>      
+      /// <returns>Returns a <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>      
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for a specified file.</summary>
-      /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
+      /// <returns>Returns a <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for a specified file handle.</summary>
-      /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="handle"/> parameter.</returns>      
+      /// <returns>Returns a <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="handle"/> parameter.</returns>      
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for a specified file handle.</summary>
-      /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="handle"/> parameter.</returns>      
+      /// <returns>Returns a <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="handle"/> parameter.</returns>      
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets an <see cref="ObjectSecurity"/> object for a particular file or directory.</summary>
-      /// <returns>An <see cref="ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the <paramref name="path"/> parameter.</returns>
+      /// <returns>Returns an <see cref="ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the <paramref name="path"/> parameter.</returns>
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -225,7 +225,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (lastError != Win32Errors.ERROR_SUCCESS)
                NativeError.ThrowException(lastError, !Utils.IsNullOrWhiteSpace(path) ? path : null);
 
-            if (!NativeMethods.IsValidHandle(securityDescriptor, false))
+            if (!Utils.IsValidHandle(securityDescriptor, false))
                throw new IOException(Resources.Returned_Invalid_Security_Descriptor);
 
 

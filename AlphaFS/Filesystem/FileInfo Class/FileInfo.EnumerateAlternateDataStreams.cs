@@ -26,8 +26,8 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
-      /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of instances for the file.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of instances for the file.</returns>
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams()
       {

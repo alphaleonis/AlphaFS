@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="DirectoryReadOnlyException"/>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>; otherwise, <c>false</c>.</param>
       [SecurityCritical]
       public static void Delete(string path, bool recursive)
       {
@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="DirectoryReadOnlyException"/>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>; otherwise, <c>false</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void Delete(string path, bool recursive, PathFormat pathFormat)
@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="DirectoryReadOnlyException"/>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>; otherwise, <c>false</c>.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly)
@@ -127,7 +127,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="DirectoryReadOnlyException"/>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>; otherwise, <c>false</c>.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -183,7 +183,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryReadOnlyException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>; otherwise, <c>false</c>.</param>
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive)
       {
@@ -200,7 +200,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryReadOnlyException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>; otherwise, <c>false</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
@@ -219,7 +219,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryReadOnlyException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>; otherwise, <c>false</c>.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
@@ -237,7 +237,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryReadOnlyException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>; otherwise, <c>false</c>.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -263,7 +263,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="fsEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fsEntryInfo"/> or <paramref name="path"/>, not both.</param>
       /// <param name="path">The name of the directory to remove. Use either <paramref name="path"/> or <paramref name="fsEntryInfo"/>, not both.</param>
-      /// <param name="recursive"><c>true</c> to remove all files and subdirectories recursively; <c>false</c> otherwise only the top level empty directory.</param>
+      /// <param name="recursive"><c>true</c> to remove all files and subdirectories recursively; otherwise, <c>false</c> only the top level empty directory.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only attribute of files and directories.</param>
       /// <param name="continueOnNotFound">When <c>true</c> does not throw an <see cref="DirectoryNotFoundException"/> when the directory does not exist.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>

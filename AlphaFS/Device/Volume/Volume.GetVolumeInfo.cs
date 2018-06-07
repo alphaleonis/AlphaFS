@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Retrieves information about the file system and volume associated with the specified root file or directorystream.</summary>
       /// <param name="volumePath">A path that contains the root directory.</param>
-      /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
+      /// <returns>Returns a <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
       [SecurityCritical]
       public static VolumeInfo GetVolumeInfo(string volumePath)
       {
@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves information about the file system and volume associated with the specified root file or directorystream.</summary>
       /// <param name="volumeHandle">An instance to a <see cref="SafeFileHandle"/> handle.</param>
-      /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
+      /// <returns>Returns a <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
       [SecurityCritical]
       public static VolumeInfo GetVolumeInfo(SafeFileHandle volumeHandle)
       {

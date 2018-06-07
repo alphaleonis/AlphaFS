@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -138,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -191,7 +191,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -219,8 +219,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -251,7 +251,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -278,7 +278,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -306,7 +306,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -335,7 +335,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method works across disk volumes.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>

@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Determines whether the volume of two file system objects is the same, by comparing their serial numbers.</summary>
       /// <param name="path1">The first filesystem object with full path information.</param>
       /// <param name="path2">The second file system object with full path information.</param>
-      /// <returns><c>true</c> if both filesytem objects reside on the same volume, <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if both filesytem objects reside on the same volume; otherwise, <c>false</c>.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       public static bool IsSameVolume(string path1, string path2)

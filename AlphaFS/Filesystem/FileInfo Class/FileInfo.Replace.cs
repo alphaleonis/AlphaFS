@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file.</summary>
-      /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
+      /// <returns>Returns a <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>
       ///   The Replace method replaces the contents of a specified file with the contents of the file described by the current
       ///   <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new
@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
-      /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
+      /// <returns>Returns a <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>
       ///   The Replace method replaces the contents of a specified file with the contents of the file described by the current
       ///   <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
-      /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
+      /// <returns>Returns a <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>
       ///   The Replace method replaces the contents of a specified file with the contents of the file described by the current
       ///   <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
-      /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
+      /// <returns>Returns a <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>
       ///   The Replace method replaces the contents of a specified file with the contents of the file described by the current
       ///   <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new

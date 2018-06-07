@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
+      /// <returns>Returns a stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
       /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
       /// <exception cref="ArgumentNullException">path is null.</exception>
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
+      /// <returns>Returns a stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
       /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
       /// <exception cref="ArgumentNullException">path is null.</exception>
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
+      /// <returns>Returns a stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
       /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
       /// <exception cref="ArgumentNullException">path is null.</exception>
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
@@ -82,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
+      /// <returns>Returns a stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
       /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
       /// <exception cref="ArgumentNullException">path is null.</exception>
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
+      /// <returns>Returns a stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
       /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
       /// <exception cref="ArgumentNullException">path is null.</exception>
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       
       /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
+      /// <returns>Returns a stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
       /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
       /// <exception cref="ArgumentNullException">path is null.</exception>
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
@@ -133,7 +133,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
+      /// <returns>Returns a stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
       /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
       /// <exception cref="ArgumentNullException">path is null.</exception>
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
+      /// <returns>Returns a stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
       /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
       /// <exception cref="ArgumentNullException">path is null.</exception>
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
+      /// <returns>Returns a stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
       /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
       /// <exception cref="ArgumentNullException">path is null.</exception>
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>

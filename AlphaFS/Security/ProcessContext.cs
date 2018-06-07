@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Security
 
 
       /// <summary>[AlphaFS] Retrieves the elevation type of the current process.</summary>
-      /// <returns>A <see cref="NativeMethods.TOKEN_ELEVATION_TYPE"/> value.</returns>
+      /// <returns>Returns a <see cref="NativeMethods.TOKEN_ELEVATION_TYPE"/> value.</returns>
       [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "OpenProcessToken")]
       [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "GetTokenInformation")]
       private static NativeMethods.TOKEN_ELEVATION_TYPE GetProcessElevationType()

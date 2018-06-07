@@ -19,33 +19,37 @@
  *  THE SOFTWARE. 
  */
 
-using System.IO;
-using System.Security;
-using System.Text;
+using Microsoft.Win32.SafeHandles;
+using System;
+using System.Runtime.InteropServices;
+using Alphaleonis.Win32.Filesystem;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   partial class FileInfo
+   internal static partial class FileSystemHelper
    {
-      #region .NET
-
-      /// <summary>Creates a <see cref="System.IO.StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
-      /// <returns>Returns a new <see cref="StreamWriter"/></returns>
-      [SecurityCritical]
-      public StreamWriter AppendText()
+      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
+      internal static void DeleteDirectoryJunction(SafeFileHandle safeHandle)
       {
-         return File.AppendTextCore(Transaction, LongFullName, NativeMethods.DefaultFileEncoding, PathFormat.LongFullPath);
-      }
+         var reparseDataBuffer = new NativeMethods.REPARSE_DATA_BUFFER
+         {
+            ReparseTag = ReparsePointTag.MountPoint,
+            ReparseDataLength = 0,
+            PathBuffer = new byte[MAXIMUM_REPARSE_DATA_BUFFER_SIZE - 16] // 16368
+         };
 
-      /// <summary>Creates a <see cref="StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
-      /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <returns>Returns a new <see cref="StreamWriter"/></returns>
-      [SecurityCritical]
-      public StreamWriter AppendText(Encoding encoding)
-      {
-         return File.AppendTextCore(Transaction, LongFullName, encoding, PathFormat.LongFullPath);
-      }
 
-      #endregion // .NET
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(reparseDataBuffer)))
+         {
+            safeBuffer.StructureToPtr(reparseDataBuffer, false);
+
+            var success = NativeMethods.DeviceIoJunctions(safeHandle, NativeMethods.IoControlCode.FSCTL_DELETE_REPARSE_POINT, safeBuffer, REPARSE_DATA_BUFFER_HEADER_SIZE, IntPtr.Zero, 0, IntPtr.Zero, IntPtr.Zero);
+
+            var lastError = Marshal.GetLastWin32Error();
+
+            if (!success)
+               NativeError.ThrowException(lastError);
+         }
+      }
    }
 }

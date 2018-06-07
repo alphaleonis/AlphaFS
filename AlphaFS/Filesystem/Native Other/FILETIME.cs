@@ -22,6 +22,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
@@ -38,6 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #endregion // Fields
 
+
          #region Methods
 
          /// <summary>Converts a value to long.</summary>
@@ -50,10 +52,11 @@ namespace Alphaleonis.Win32.Filesystem
          [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "long")]
          public long ToLong()
          {
-            return NativeMethods.ToLong(dwHighDateTime, dwLowDateTime);
+            return Utils.ToLong(dwHighDateTime, dwLowDateTime);
          }
 
          #endregion
+
 
          #region Equality
 
@@ -77,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
          #region GetHashCode
 
          /// <summary>Serves as a hash function for a particular type.</summary>
-         /// <returns>A hash code for the current Object.</returns>
+         /// <returns>Returns a hash code for the current Object.</returns>
          public override int GetHashCode()
          {
             unchecked

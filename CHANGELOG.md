@@ -16,6 +16,7 @@ Version 2.3  (2018-XX-XX)
 ### Breaking Changes
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
+- Issue #455: As a result, moved class `DeviceInfo` from `Alphaleonis.Win32.Filesystem` to `Alphaleonis.Win32.Device` namespace.
 
 
 Version 2.2.2  (2018-06-05)
@@ -33,7 +34,7 @@ Version 2.2.2  (2018-06-05)
 
 - Issue #149: Split unit-tests.
 - Fixed all Sandcastle Help File Builder warnings.
-- Because of bug fixes, the correct source-/destination folder is now shown in exceptions thrown from Directory/File.Copy/Move methods, instead of always showing the source folder path.
+- Because of bug fixes, the correct source-/destination folder is now shown in exceptions thrown from `Directory`/`File.Copy`/`Move` methods, instead of always showing the source folder path.
 - Improved some unit tests that would fail when a removable drive is already removed but there's still a cached reference.
 
 
@@ -42,7 +43,7 @@ Version 2.2.1  (2018-04-05)
 
 ### Bugs Fixed
 
-- Issue #433: Directory.ExistsDriveOrFolderOrFile fails on global root path, so a simple file copy from a shadow copy fails with "device GLOBALROOT not ready" (Thx CyberSinh)
+- Issue #433: `Directory.ExistsDriveOrFolderOrFile` fails on global root path, so a simple file copy from a shadow copy fails with "`device GLOBALROOT not ready`" (Thx CyberSinh)
 
 
 Version 2.2  (2018-03-25)
@@ -221,7 +222,7 @@ Version 2.1  (2016-09-29)
 
 ### Bugs Fixed
 
-- Issue #50 : `Path.GetLongPath()` does not prefix on "C:\", should it?
+- Issue #50 : `Path.GetLongPath()` does not prefix on <c>C:\</c>, should it?
 - Issue #60 : Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`.
 - Issue #160: `File.CreateSymbolicLink()` creates shortcut with no target. (martin-john-green)
 - Issue #162: `File.AppendAllLines()` concatenates content into one line. (pavelhritonenko)

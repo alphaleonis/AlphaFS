@@ -211,12 +211,12 @@ namespace Alphaleonis.Win32.Filesystem
       internal static extern bool GetVolumeInformationByHandle(SafeFileHandle hFile, StringBuilder lpVolumeNameBuffer, [MarshalAs(UnmanagedType.U4)] uint nVolumeNameSize, [MarshalAs(UnmanagedType.U4)] out uint lpVolumeSerialNumber, [MarshalAs(UnmanagedType.U4)] out int lpMaximumComponentLength, out VOLUME_INFO_FLAGS lpFileSystemAttributes, StringBuilder lpFileSystemNameBuffer, [MarshalAs(UnmanagedType.U4)] uint nFileSystemNameSize);
 
 
-      /// <summary>Retrieves a volume GUID path for the volume that is associated with the specified volume mount point (drive letter, volume GUID path, or mounted folder).</summary>
+      /// <summary>Retrieves a volume <see cref="Guid"/> path for the volume that is associated with the specified volume mount point (drive letter, volume <see cref="Guid"/> path, or mounted folder).</summary>
       /// <returns>
       /// If the function succeeds, the return value is nonzero.
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
-      /// <remarks>Use GetVolumeNameForVolumeMountPoint to obtain a volume GUID path for use with functions such as SetVolumeMountPoint and FindFirstVolumeMountPoint that require a volume GUID path as an input parameter.</remarks>
+      /// <remarks>Use GetVolumeNameForVolumeMountPoint to obtain a volume <see cref="Guid"/> path for use with functions such as SetVolumeMountPoint and FindFirstVolumeMountPoint that require a volume <see cref="Guid"/> path as an input parameter.</remarks>
       /// <remarks>SMB does not support volume management functions.</remarks>
       /// <remarks>Mount points aren't supported by ReFS volumes.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>

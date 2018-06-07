@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>An IEnumerable string containing all lines of the file.</returns>
+      /// <returns>Returns an IEnumerable string containing all lines of the file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       internal static IEnumerable<string> ReadAllLinesCore(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)

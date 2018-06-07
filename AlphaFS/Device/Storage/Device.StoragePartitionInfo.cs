@@ -26,8 +26,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
+using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
    /// <summary>[AlphaFS] Provides access to partition information of a storage device.</summary>
    [Serializable]
@@ -43,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Constructors
 
-      /// <summary>[AlphaFS] Initializes a StoragePartitionInfo instance.</summary>
+      /// <summary>[AlphaFS] Initializes an empty StoragePartitionInfo instance.</summary>
       public StoragePartitionInfo()
       {
          DeviceNumber = -1;
@@ -108,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
                   MbrPartitionInfo.Add(new StorageMbrPartitionInfo(partition));
                }
 
-
+               
                // Update to reflect the real number of used partition entries.
                PartitionCount = MbrPartitionInfo.Count;
 
@@ -116,7 +118,10 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         IsOnDynamicDisk = null != GptPartitionInfo && GptPartitionInfo.Any(partition => partition.PartitionType == PartitionType.LdmData) ||
+         IsOnDynamicDisk = null != GptPartitionInfo && GptPartitionInfo.Any(partition =>
+                              
+                              partition.PartitionType == PartitionType.LdmData || partition.PartitionType == PartitionType.LdmMetadata) ||
+                           
                            null != MbrPartitionInfo && MbrPartitionInfo.Any(partition => partition.DiskPartitionType == DiskPartitionType.Ldm);
       }
 
@@ -209,7 +214,7 @@ namespace Alphaleonis.Win32.Filesystem
       public int PartitionCount { get; private set; }
 
 
-      /// <summary>The format of the partition. For a list of values, see <see cref="Filesystem.PartitionStyle"/>.</summary>
+      /// <summary>The format of the partition. For a list of values, see <see cref="Alphaleonis.Win32.Filesystem.PartitionStyle"/>.</summary>
       public PartitionStyle PartitionStyle { get; private set; }
 
 
@@ -222,7 +227,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Methods
 
       /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return string.Format(CultureInfo.CurrentCulture, "{0}:{1} {2}",
@@ -251,7 +256,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       ///// <summary>Serves as a hash function for a particular type.</summary>
-      ///// <returns>A hash code for the current Object.</returns>
+      ///// <returns>Returns a hash code for the current Object.</returns>
       //public override int GetHashCode()
       //{
       //   unchecked

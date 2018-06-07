@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       /// <summary>[AlphaFS] Retrieves file information for the specified directory.</summary>
-      /// <returns>A <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
+      /// <returns>Returns a <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the directory ID for a directory can change over time.</remarks>
       /// <param name="path">The path to the directory.</param>
       [SecurityCritical]
@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves file information for the specified directory.</summary>
-      /// <returns>A <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
+      /// <returns>Returns a <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the directory ID for a directory can change over time.</remarks>
       /// <param name="path">The path to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves file information for the specified directory.</summary>
-      /// <returns>A <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
+      /// <returns>Returns a <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the directory ID for a directory can change over time.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves file information for the specified directory.</summary>
-      /// <returns>A <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
+      /// <returns>Returns a <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the directory ID for a directory can change over time.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves file information for the specified <see cref="SafeFileHandle"/>.</summary>
-      /// <returns>A <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
+      /// <returns>Returns a <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the directory ID for a directory can change over time.</remarks>
       /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the open file or directory from which to retrieve the information.</param>
       [SecurityCritical]

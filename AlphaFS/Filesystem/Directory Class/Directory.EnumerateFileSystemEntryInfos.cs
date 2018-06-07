@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -203,7 +203,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -242,7 +242,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -281,7 +281,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -321,7 +321,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -355,7 +355,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -390,7 +390,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -425,7 +425,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -461,7 +461,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -501,7 +501,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -542,7 +542,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -583,7 +583,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -627,7 +627,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -661,7 +661,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -696,7 +696,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -731,7 +731,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -767,7 +767,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -807,7 +807,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -848,7 +848,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -889,7 +889,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -931,7 +931,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -966,7 +966,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -1002,7 +1002,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -1038,7 +1038,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -1075,7 +1075,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -1116,7 +1116,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -1158,7 +1158,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -1200,7 +1200,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -1245,7 +1245,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path using <see cref="DirectoryEnumerationOptions"/> and <see cref="DirectoryEnumerationFilters"/>.</summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path using <see cref="DirectoryEnumerationOptions"/> and <see cref="DirectoryEnumerationFilters"/>.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>

@@ -23,8 +23,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
    /// <summary>[AlphaFS] Provides access to adapter information of a storage device.</summary>
    [Serializable]
@@ -33,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructors
 
-      /// <summary>[AlphaFS] Initializes a StorageAdapterInfo instance.</summary>
+      /// <summary>[AlphaFS] Initializes an empty StorageAdapterInfo instance.</summary>
       public StorageAdapterInfo()
       {
          BusType = StorageBusType.Unknown;
@@ -100,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Methods
 
       /// <summary>Returns storage device as: "BusType MaximumTransferBytes".</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return BusType == StorageBusType.Unknown ? StorageBusType.Unknown.ToString() : string.Format(CultureInfo.CurrentCulture, "{0} {1}", (BusType.ToString() + " " ).Trim(), Utils.UnitSizeToText(MaximumTransferBytes));
@@ -129,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Serves as a hash function for a particular type.</summary>
-      /// <returns>A hash code for the current Object.</returns>
+      /// <returns>Returns a hash code for the current Object.</returns>
       public override int GetHashCode()
       {
          unchecked

@@ -187,7 +187,7 @@ namespace Alphaleonis.Win32.Network
       #region Methods
 
       /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          var description = !Utils.IsNullOrWhiteSpace(Description) && !Equals(Name, Description) ? " (" + Description + ")" : string.Empty;
@@ -213,7 +213,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Serves as a hash function for a particular type.</summary>
-      /// <returns>A hash code for the current Object.</returns>
+      /// <returns>Returns a hash code for the current Object.</returns>
       public override int GetHashCode()
       {
          unchecked

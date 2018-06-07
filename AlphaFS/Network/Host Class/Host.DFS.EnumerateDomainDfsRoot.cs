@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Network
    public static partial class Host
    {
       /// <summary>Enumerates the DFS namespaces from the domain.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from the domain.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of DFS Root namespaces from the domain.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Network
 
       
       /// <summary>Enumerates the DFS namespaces from a domain.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of DFS Root namespaces from a domain.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="domain">A domain name.</param>
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Enumerates the DFS namespaces from a domain.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of DFS Root namespaces from a domain.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>

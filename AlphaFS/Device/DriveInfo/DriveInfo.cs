@@ -148,7 +148,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the name of the drive.</summary>
       /// <returns>The name of the drive.</returns>
-      /// <remarks>This property is the name assigned to the drive, such as: "C:\" or "D:\".</remarks>
+      /// <remarks>This property is the name assigned to the drive, such as: <c>C:\</c> or "D:\".</remarks>
       public string Name
       {
          get { return _name; }
@@ -156,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets the root directory of a drive.</summary>
-      /// <returns>A DirectoryInfo object that contains the root directory of the drive.</returns>
+      /// <returns>Returns a DirectoryInfo object that contains the root directory of the drive.</returns>
       public DirectoryInfo RootDirectory
       {
          get { return (DirectoryInfo) GetDeviceInfo(2, 0); }
@@ -257,7 +257,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       
       /// <summary>[AlphaFS] Contains information about a file system volume.</summary>
-      /// <returns>A <see cref="VolumeInfo"/> object that contains file system volume information of the drive.</returns>
+      /// <returns>Returns a <see cref="VolumeInfo"/> object that contains file system volume information of the drive.</returns>
       public VolumeInfo VolumeInfo
       {
          get { return (VolumeInfo) GetDeviceInfo(0, 0); }
@@ -271,7 +271,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Retrieves the names of the logical drives on the Computer in the form "drive letter:\".</summary>
-      /// <returns>An array of type <see cref="DriveInfo"/> that represents the logical drives on the Computer.</returns>
+      /// <returns>Returns an <see cref="Array"/>of <see cref="DriveInfo"/> instances on the Computer.</returns>
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
       {
@@ -291,7 +291,9 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves the names of the logical drives on the Computer in the form "drive letter:\".</summary>
-      /// <returns>An array of type <see cref="DriveInfo"/> that represents the logical drives on the Computer.</returns>
+      /// <returns>Returns an <see cref="Array"/>of <see cref="DriveInfo"/> instances on the Computer.</returns>
+      /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
+      /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
       [SecurityCritical]
       public static DriveInfo[] GetDrives(bool fromEnvironment, bool isReady)
       {

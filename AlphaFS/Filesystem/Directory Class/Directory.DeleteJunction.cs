@@ -29,11 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <remarks>Only the directory junction is removed, not the target.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -49,11 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <remarks>Only the directory junction is removed, not the target.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -70,11 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <remarks>Only the directory junction is removed, not the target.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -91,11 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <remarks>Only the directory junction is removed, not the target.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -115,11 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <remarks>Only the directory junction is removed, not the target.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -136,11 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <remarks>Only the directory junction is removed, not the target.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -158,11 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <remarks>Only the directory junction is removed, not the target.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -180,11 +152,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <remarks>Only the directory junction is removed, not the target.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -205,11 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Only the directory junction is removed, not the target.</para>
-      /// </remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <remarks>Only the directory junction is removed, not the target.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -249,7 +213,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Remove the directory junction.
          using (var safeHandle = OpenDirectoryJunction(transaction, fsEntryInfo.LongFullPath, pathFormat))
-            Device.DeleteDirectoryJunction(safeHandle);
+            Device.FileSystemHelper.DeleteDirectoryJunction(safeHandle);
 
 
          // Optionally the folder itself, which should and must be empty.

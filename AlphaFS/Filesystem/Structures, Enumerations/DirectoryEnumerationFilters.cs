@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// <param name="errorCode">The error code.</param>
    /// <param name="errorMessage">The error message.</param>
    /// <param name="pathProcessed">The faulty path being processed.</param>
-   /// <c>false</c> otherwise, in which case the caller will throw the corresponding exception.</returns>   
+   /// otherwise, <c>false</c>, in which case the caller will throw the corresponding exception.</returns>   
    public delegate bool ErrorHandler(int errorCode, string errorMessage, string pathProcessed);
 
 

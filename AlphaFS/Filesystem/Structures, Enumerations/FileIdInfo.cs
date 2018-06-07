@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
          _volumeSerialNumber = fibh.dwVolumeSerialNumber;
 
          _fileIdHighPart = 0;
-         _fileIdLowPart = NativeMethods.ToLong(fibh.nFileIndexHigh, fibh.nFileIndexLow);
+         _fileIdLowPart = Utils.ToLong(fibh.nFileIndexHigh, fibh.nFileIndexLow);
       }
 
 
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.</summary>
       /// <param name="obj">An object to compare with this instance.</param>
-      /// <returns>A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance precedes <paramref name="obj" /> in the sort order. Zero This instance occurs in the same position in the sort order as <paramref name="obj" />. Greater than zero This instance follows <paramref name="obj" /> in the sort order.</returns>        
+      /// <returns>Returns a value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance precedes <paramref name="obj" /> in the sort order. Zero This instance occurs in the same position in the sort order as <paramref name="obj" />. Greater than zero This instance follows <paramref name="obj" /> in the sort order.</returns>        
       public int CompareTo(object obj)
       {
          if (null == obj)
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Compares the current object with another object of the same type.</summary>
       /// <param name="other">An object to compare with this object.</param>
-      /// <returns>A value that indicates the relative order of the objects being compared. The return value has the following meanings: Value Meaning Less than zero This object is less than the <paramref name="other" /> parameter.Zero This object is equal to <paramref name="other" />. Greater than zero This object is greater than <paramref name="other" />.</returns>        
+      /// <returns>Returns a value that indicates the relative order of the objects being compared. The return value has the following meanings: Value Meaning Less than zero This object is less than the <paramref name="other" /> parameter.Zero This object is equal to <paramref name="other" />. Greater than zero This object is greater than <paramref name="other" />.</returns>        
       public int CompareTo(FileIdInfo other)
       {
          return _volumeSerialNumber != other._volumeSerialNumber
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
       /// <param name="other">An object to compare with this object.</param>
-      /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.</returns>
+      /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, <c>false</c>.</returns>
       public bool Equals(FileIdInfo other)
       {
          return _fileIdLowPart == other._fileIdLowPart && _fileIdHighPart == other._fileIdHighPart && _volumeSerialNumber == other._volumeSerialNumber;
@@ -121,7 +121,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Indicates whether the values of two specified <see cref="FileIdInfo" /> objects are equal.</summary>
       /// <param name="first">The first object to compare.</param>
       /// <param name="second">The second object to compare.</param>
-      /// <returns>true if <paramref name="first" /> and <paramref name="second" /> are equal; otherwise, false.</returns>
+      /// <returns>true if <paramref name="first" /> and <paramref name="second" /> are equal; otherwise, <c>false</c>.</returns>
       public static bool operator ==(FileIdInfo first, FileIdInfo second)
       {
          return first._fileIdLowPart == second._fileIdLowPart && first._fileIdHighPart == second._fileIdHighPart && first._volumeSerialNumber == second._volumeSerialNumber;
@@ -131,7 +131,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Indicates whether the values of two specified <see cref="FileIdInfo" /> objects are not equal.</summary>
       /// <param name="first">The first object to compare.</param>
       /// <param name="second">The second object to compare.</param>
-      /// <returns>true if <paramref name="first" /> and <paramref name="second" /> are not equal; otherwise, false.</returns>
+      /// <returns>true if <paramref name="first" /> and <paramref name="second" /> are not equal; otherwise, <c>false</c>.</returns>
       public static bool operator !=(FileIdInfo first, FileIdInfo second)
       {
          return first._fileIdLowPart != second._fileIdLowPart || first._fileIdHighPart != second._fileIdHighPart || first._volumeSerialNumber != second._volumeSerialNumber;
@@ -163,7 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns a hash code for this instance.</summary>
-      /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
+      /// <returns>Returns a hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
       public override int GetHashCode()
       {
          unchecked
@@ -176,7 +176,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns a <see cref="string" /> that represents this instance.</summary>
-      /// <returns>A <see cref="string" /> that represents this instance.</returns>
+      /// <returns>Returns a <see cref="string" /> that represents this instance.</returns>
       public override string ToString()
       {
          unchecked

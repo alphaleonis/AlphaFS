@@ -280,7 +280,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>This method uses <see cref="NativeMethods.REMOTE_NAME_INFO"/> level to retrieve full REMOTE_NAME_INFO structure.</summary>
-      /// <returns>A <see cref="NativeMethods.REMOTE_NAME_INFO"/> structure.</returns>
+      /// <returns>Returns a <see cref="NativeMethods.REMOTE_NAME_INFO"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>

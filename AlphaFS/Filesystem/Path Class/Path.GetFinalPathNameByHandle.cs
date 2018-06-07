@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string GetFinalPathNameByHandleCore(SafeFileHandle handle, FinalPathFormats finalPath)
       {
-         NativeMethods.IsValidHandle(handle);
+         Utils.IsValidHandle(handle);
 
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
@@ -117,13 +117,13 @@ namespace Alphaleonis.Win32.Filesystem
          // PageReadOnly = 0x02,
          using (var handle2 = NativeMethods.CreateFileMapping(handle, null, 2, 0, 1, null))
          {
-            NativeMethods.IsValidHandle(handle, Marshal.GetLastWin32Error());
+            Utils.IsValidHandle(handle, Marshal.GetLastWin32Error());
 
             // FILE_MAP_READ
             // Read = 4
             using (var pMem = NativeMethods.MapViewOfFile(handle2, 4, 0, 0, (UIntPtr)1))
             {
-               if (NativeMethods.IsValidHandle(pMem, Marshal.GetLastWin32Error()))
+               if (Utils.IsValidHandle(pMem, Marshal.GetLastWin32Error()))
                   if (NativeMethods.GetMappedFileName(Process.GetCurrentProcess().Handle, pMem, buffer, (uint)buffer.Capacity))
                      NativeMethods.UnmapViewOfFile(pMem);
             }
@@ -174,8 +174,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Tranlates DosDevicePath, Volume GUID. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".</summary>
-      /// <returns>A translated dos path.</returns>
+      /// <summary>Tranlates DosDevicePath, volume <see cref="Guid"/>. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".</summary>
+      /// <returns>Returns a translated dos path.</returns>
       /// <param name="dosDevice">A DosDevicePath, for example: \Device\HarddiskVolumeX\path\filename.ext.</param>
       /// <param name="deviceReplacement">Alternate path/device text, usually <c>string.Empty</c> or <c>null</c>.</param>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]

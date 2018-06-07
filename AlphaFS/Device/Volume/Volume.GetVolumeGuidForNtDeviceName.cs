@@ -27,12 +27,11 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Volume
    {
-      /// <summary>[AlphaFS] 
-      ///   Tranlates DosDevicePath to a Volume GUID. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\
-      ///   filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".
+      /// <summary>[AlphaFS] Tranlates DosDevicePath to a volume <see cref="Guid"/>.
+      /// For example: <c>\Device\HarddiskVolumeX\path\filename.ext</c> can translate to: <c>\path\filename.ext</c> or: <c>\\?\Volume{GUID}\path\filename.ext</c>
       /// </summary>
       /// <param name="dosDevice">A DosDevicePath, for example: \Device\HarddiskVolumeX\path\filename.ext.</param>
-      /// <returns>A translated dos path.</returns>
+      /// <returns>Returns a translated dos path.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Nt")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
       public static string GetVolumeGuidForNtDeviceName(string dosDevice)

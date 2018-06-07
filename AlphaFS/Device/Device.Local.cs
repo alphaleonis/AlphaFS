@@ -19,25 +19,10 @@
  *  THE SOFTWARE. 
  */
 
-using System.IO;
-using System.Security;
-using System.Security.AccessControl;
-
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class Device
+   /// <summary>[AlphaFS] Provides static methods to retrieve device resource information from the local host.</summary>
+   public static partial class Local
    {
-      /// <summary>[AlphaFS] Sets the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
-      /// <param name="compress"><c>true</c> = compress, <c>false</c> = decompress</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      internal static void ToggleCompressionCore(KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
-      {
-         using (var safeHandle = File.CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, false, pathFormat))
-
-         using (InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.FSCTL_SET_COMPRESSION, compress ? 1 : 0, path)) { }
-      }
    }
 }

@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Network
    {
       /// <summary>[AlphaFS] Retrieves a network based on a specified network connection ID.</summary>
       /// <param name="networkConnectionID">A <see cref="Guid"/> that specifies the network connection ID.</param>
-      /// <returns>A <see cref="NetworkConnectionInfo"/> instance that represents the network connection ID.</returns>
+      /// <returns>Returns a <see cref="NetworkConnectionInfo"/> instance that represents the network connection ID.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "ID")]
       [SecurityCritical]
       public static NetworkConnectionInfo GetNetworkConnection(Guid networkConnectionID)

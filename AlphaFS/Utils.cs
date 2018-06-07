@@ -25,11 +25,46 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
+using Alphaleonis.Win32;
+using Alphaleonis.Win32.Security;
+using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 
 namespace Alphaleonis
 {
    internal static class Utils
    {
+      [SecurityCritical]
+      internal static int GetDoubledBufferSizeOrThrowException(SafeHandle safeBuffer, int lastError, int bufferSize, string pathForException)
+      {
+         if (null != safeBuffer && !safeBuffer.IsClosed)
+            safeBuffer.Close();
+
+
+         switch ((uint)lastError)
+         {
+            case Win32Errors.ERROR_MORE_DATA:
+            case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
+            case Win32Errors.ERROR_INVALID_PARAMETER:
+
+               if (bufferSize == 0)
+                  bufferSize = NativeMethods.DefaultFileBufferSize / 32; // 128
+
+               bufferSize *= 2;
+               break;
+
+
+            default:
+               IsValidHandle(safeBuffer, lastError, String.Format(CultureInfo.InvariantCulture, "Buffer size: {0}. Path: {1}", bufferSize.ToString(CultureInfo.InvariantCulture), pathForException));
+               break;
+         }
+
+
+         return bufferSize;
+      }
+
+
       /// <summary>Gets an attribute on an enum field value.</summary>
       /// <returns>The description belonging to the enum option, as a string</returns>
       /// <param name="enumValue">One of the <see cref="Alphaleonis.Win32.Filesystem.DeviceGuid"/> enum types.</param>
@@ -89,6 +124,76 @@ namespace Alphaleonis
 #else
          return string.IsNullOrWhiteSpace(value);
 #endif
+      }
+
+
+      /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
+      /// <param name="handle">The current handle to check.</param>
+      /// <param name="throwException"><c>true</c> will throw an <exception cref="Resources.Handle_Is_Invalid"/>, <c>false</c> will not raise this exception..</param>
+      /// <returns><c>true</c> on success; otherwise, <c>false</c>.</returns>
+      /// <exception cref="ArgumentException"/>
+      internal static bool IsValidHandle(SafeHandle handle, bool throwException = true)
+      {
+         if (null == handle || handle.IsClosed || handle.IsInvalid)
+         {
+            if (null != handle && !handle.IsClosed)
+               handle.Close();
+
+            if (throwException)
+               throw new ArgumentException(Resources.Handle_Is_Invalid, "handle");
+
+            return false;
+         }
+
+         return true;
+      }
+
+
+      /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
+      /// <param name="handle">The current handle to check.</param>
+      /// <param name="lastError">The result of Marshal.GetLastWin32Error()</param>
+      /// <param name="throwException"><c>true</c> will throw an <exception cref="Resources.Handle_Is_Invalid_Win32Error"/>, <c>false</c> will not raise this exception..</param>
+      /// <returns><c>true</c> on success; otherwise, <c>false</c>.</returns>
+      /// <exception cref="ArgumentException"/>
+      internal static bool IsValidHandle(SafeHandle handle, int lastError, bool throwException = true)
+      {
+         if (null == handle || handle.IsClosed || handle.IsInvalid)
+         {
+            if (null != handle && !handle.IsClosed)
+               handle.Close();
+
+            if (throwException)
+               throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, Resources.Handle_Is_Invalid_Win32Error, lastError.ToString(CultureInfo.InvariantCulture)), "handle");
+
+            return false;
+         }
+
+         return true;
+      }
+
+
+      /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
+      /// <param name="handle">The current handle to check.</param>
+      /// <param name="lastError">The result of Marshal.GetLastWin32Error()</param>
+      /// <param name="path">The path on which the Exception occurred.</param>
+      /// <param name="throwException"><c>true</c> will throw an Exception, <c>false</c> will not raise this exception..</param>
+      /// <returns><c>true</c> on success; otherwise, <c>false</c>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="Exception"/>
+      internal static bool IsValidHandle(SafeHandle handle, int lastError, string path, bool throwException = true)
+      {
+         if (null == handle || handle.IsClosed || handle.IsInvalid)
+         {
+            if (null != handle && !handle.IsClosed)
+               handle.Close();
+
+            if (throwException)
+               NativeError.ThrowException(lastError, path);
+
+            return false;
+         }
+
+         return true;
       }
 
 
@@ -158,5 +263,42 @@ namespace Alphaleonis
       {
          return CombineHashCodesOf(CombineHashCodesOf(arg1, arg2), CombineHashCodesOf(arg3, arg4));
       }
+
+
+      #region Bitmasking
+
+      internal static uint GetHighOrderDword(long highPart)
+      {
+         return (uint)((highPart >> 32) & 0xFFFFFFFF);
+      }
+
+
+      internal static uint GetLowOrderDword(long lowPart)
+      {
+         return (uint)(lowPart & 0xFFFFFFFF);
+      }
+
+
+      internal static long LuidToLong(LUID luid)
+      {
+         var high = (ulong)luid.HighPart << 32;
+         var low = (ulong)luid.LowPart & 0x00000000FFFFFFFF;
+
+         return unchecked((long)(high | low));
+      }
+
+
+      internal static LUID LongToLuid(long lluid)
+      {
+         return new LUID { HighPart = (uint)(lluid >> 32), LowPart = (uint)(lluid & 0xFFFFFFFF) };
+      }
+
+
+      internal static long ToLong(uint highPart, uint lowPart)
+      {
+         return ((long)highPart << 32) | ((long)lowPart & 0xFFFFFFFF);
+      }
+
+      #endregion // Bitmasking
    }
 }

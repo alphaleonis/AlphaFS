@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Compress()
       {
-         Device.ToggleCompressionCore(Transaction, LongFullName, true, PathFormat.LongFullPath);
+         Device.FileSystemHelper.ToggleCompressionCore(Transaction, LongFullName, true, PathFormat.LongFullPath);
       }
 
       #endregion // AlphaFS

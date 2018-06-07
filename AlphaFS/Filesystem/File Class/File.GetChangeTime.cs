@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetChangeTime
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
       [SecurityCritical]
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="safeFileHandle">An open handle to the file or directory from which to retrieve information.</param>
       [SecurityCritical]
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetChangeTimeUtc
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       [SecurityCritical]
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="safeFileHandle">An open handle to the file or directory from which to retrieve information.</param>
       [SecurityCritical]
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
@@ -138,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internal Methods
 
       /// <summary>Gets the change date and time of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <remarks><para>Use either <paramref name="path"/> or <paramref name="safeFileHandle"/>, not both.</para></remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -186,7 +186,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            NativeMethods.IsValidHandle(safeFileHandle);
+            Utils.IsValidHandle(safeFileHandle);
             
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(IntPtr.Size + Marshal.SizeOf(typeof(NativeMethods.FILE_BASIC_INFO))))
             {

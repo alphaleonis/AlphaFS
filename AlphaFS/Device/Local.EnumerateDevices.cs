@@ -26,13 +26,15 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using Alphaleonis.Win32.Filesystem;
+using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class Device
+   public static partial class Local
    {
       /// <summary>[AlphaFS] Enumerates all available devices on the local host.</summary>
-      /// <returns><see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> from the local host.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{DeviceInfo}"/> collection from the local host.</returns>
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
       [SecurityCritical]
       public static IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
@@ -42,7 +44,12 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Enumerates all available devices of type <see cref="DeviceGuid"/> on the local or remote host.</summary>
-      /// <returns><see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> for the specified <paramref name="hostName"/>.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{DeviceInfo}"/> collection for the specified <paramref name="hostName"/>.</returns>
+      /// <remarks>
+      ///   MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.
+      ///   You cannot access remote machines when running on these versions of Windows.
+      ///   <para>http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx</para>
+      /// </remarks>
       /// <param name="hostName">The name of the local or remote host on which the device resides. <c>null</c> refers to the local host.</param>
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
       [SecurityCritical]
@@ -52,27 +59,27 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      
-      
-      /// <summary>[AlphaFS] Enumerates all available devices on the local or remote host.</summary>
+      /// <summary>[AlphaFS] Enumerates all available devices of type <see cref="DeviceGuid"/> on the local or remote host.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{DeviceInfo}"/> collection for the specified <paramref name="hostName"/>.</returns>
+      /// <remarks>
+      ///   MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.
+      ///   You cannot access remote machines when running on these versions of Windows.
+      ///   <para>http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx</para>
+      /// </remarks>
+      /// <param name="hostName">The name of the local or remote host on which the device resides. <c>null</c> refers to the local host.</param>
+      /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
+      /// <param name="getAllProperties"><c>true</c> to retrieve all device properties.</param>
       [SecurityCritical]
       internal static IEnumerable<DeviceInfo> EnumerateDevicesCore(string hostName, DeviceGuid deviceGuid, bool getAllProperties)
       {
          if (Utils.IsNullOrWhiteSpace(hostName))
             hostName = Environment.MachineName;
 
-
-         // CM_Connect_Machine()
-         // MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.
-         // You cannot access remote machines when running on these versions of Windows. 
-         // http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx
-
-
          SafeCmConnectMachineHandle safeMachineHandle;
 
          var lastError = NativeMethods.CM_Connect_Machine(Host.GetUncName(hostName), out safeMachineHandle);
 
-         NativeMethods.IsValidHandle(safeMachineHandle, lastError);
+         Utils.IsValidHandle(safeMachineHandle, lastError);
 
          
          var classGuid = new Guid(Utils.GetEnumDescription(deviceGuid));
@@ -83,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (safeMachineHandle)
          using (var safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref classGuid, IntPtr.Zero, IntPtr.Zero, NativeMethods.DEVICE_INFORMATION_FLAGS.DIGCF_PRESENT | NativeMethods.DEVICE_INFORMATION_FLAGS.DIGCF_DEVICEINTERFACE, IntPtr.Zero, hostName, IntPtr.Zero))
          {
-            NativeMethods.IsValidHandle(safeHandle, Marshal.GetLastWin32Error());
+            Utils.IsValidHandle(safeHandle, Marshal.GetLastWin32Error());
             
             uint memberInterfaceIndex = 0;
             var interfaceStructSize = (uint) Marshal.SizeOf(typeof(NativeMethods.SP_DEVICE_INTERFACE_DATA));
@@ -162,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Builds a Device Interface Detail Data structure.</summary>
-      /// <returns>An initialized NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA instance.</returns>
+      /// <returns>Returns an initialized NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA instance.</returns>
       [SecurityCritical]
       private static NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA GetDeviceInterfaceDetail(SafeHandle safeHandle, ref NativeMethods.SP_DEVICE_INTERFACE_DATA interfaceData, ref NativeMethods.SP_DEVINFO_DATA infoData)
       {
@@ -237,7 +244,7 @@ namespace Alphaleonis.Win32.Filesystem
                   return null;
 
 
-               bufferSize = GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, property.ToString());
+               bufferSize = Utils.GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, property.ToString());
             }
       }
 

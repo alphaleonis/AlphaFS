@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>Opens an existing file or creates a new file for writing.</summary>
       /// <param name="path">The file to be opened for writing.</param>
-      /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
+      /// <returns>Returns an unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
       /// <remarks>This method is equivalent to the <see cref="FileStream"/>(String, FileMode, FileAccess, FileShare) constructor overload with file mode set to OpenOrCreate, the access set to Write, and the share mode set to None.</remarks>
       [SecurityCritical]
       public static FileStream OpenWrite(string path)
@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
+      /// <returns>Returns an unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
       /// <remarks>This method is equivalent to the <see cref="FileStream"/>(String, FileMode, FileAccess, FileShare) constructor overload with file mode set to OpenOrCreate, the access set to Write, and the share mode set to None.</remarks>
       [SecurityCritical]
       public static FileStream OpenWrite(string path, PathFormat pathFormat)
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
-      /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
+      /// <returns>Returns an unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
       /// <remarks>This method is equivalent to the <see cref="FileStream"/>(String, FileMode, FileAccess, FileShare) constructor overload with file mode set to OpenOrCreate, the access set to Write, and the share mode set to None.</remarks>
       [SecurityCritical]
       public static FileStream OpenWriteTransacted(KernelTransaction transaction, string path)
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
+      /// <returns>Returns an unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
       /// <remarks>This method is equivalent to the <see cref="FileStream"/>(String, FileMode, FileAccess, FileShare) constructor overload with file mode set to OpenOrCreate, the access set to Write, and the share mode set to None.</remarks>
       [SecurityCritical]
       public static FileStream OpenWriteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)

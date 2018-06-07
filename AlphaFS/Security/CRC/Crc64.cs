@@ -117,7 +117,7 @@ namespace Alphaleonis.Win32.Security
 
       /// <summary>Int 64 to big endian bytes.</summary>
       /// <param name="value">The value.</param>
-      /// <returns>A byte[].</returns>
+      /// <returns>Returns a byte[].</returns>
       private static byte[] UInt64ToBigEndianBytes(ulong value)
       {
          var result = BitConverter.GetBytes(value);
@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Security
 
       /// <summary>Initializes the table.</summary>
       /// <param name="polynomial">The polynomial.</param>
-      /// <returns>An ulong[].</returns>
+      /// <returns>Returns an ulong[].</returns>
       private static ulong[] InitializeTable(ulong polynomial)
       {
          if (polynomial == Iso3309Polynomial && Table != null)
@@ -146,7 +146,7 @@ namespace Alphaleonis.Win32.Security
 
       /// <summary>Creates a table.</summary>
       /// <param name="polynomial">The polynomial.</param>
-      /// <returns>A new array of ulong.</returns>
+      /// <returns>Returns a new array of ulong.</returns>
       private static ulong[] CreateTable(ulong polynomial)
       {
          var createTable = new ulong[256];

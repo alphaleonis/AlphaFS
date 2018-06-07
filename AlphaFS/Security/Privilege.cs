@@ -308,7 +308,7 @@ namespace Alphaleonis.Win32.Security
             NativeError.ThrowException(lastError, _name);
 
 
-         return Filesystem.NativeMethods.LuidToLong(luid);
+         return Utils.LuidToLong(luid);
       }
 
 
@@ -341,7 +341,7 @@ namespace Alphaleonis.Win32.Security
 
 
       /// <summary>Serves as a hash function for a particular type.</summary>
-      /// <returns>A hash code for the current Object.</returns>
+      /// <returns>Returns a hash code for the current Object.</returns>
       public override int GetHashCode()
       {
          return null != _name ? _name.GetHashCode() : 0;
@@ -350,7 +350,7 @@ namespace Alphaleonis.Win32.Security
 
       /// <summary>Returns the system name for this privilege.</summary>
       /// <remarks>This is equivalent to <see cref="Privilege.Name"/>.</remarks>
-      /// <returns>A <see cref="System.String"/> that represents the current <see cref="System.Object"/>.</returns>
+      /// <returns>Returns a <see cref="System.String"/> that represents the current <see cref="System.Object"/>.</returns>
       public override string ToString()
       {
          return _name;

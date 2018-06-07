@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns the names of subdirectories (including their paths) in the specified directory.</summary>
-      /// <returns>An array of the full names (including paths) of subdirectories in the specified path, or an empty array if no directories are found.</returns>
+      /// <returns>Returns an array of the full names (including paths) of subdirectories in the specified path, or an empty array if no directories are found.</returns>
       /// <remarks>
       ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
       ///   <para>The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.</summary>
-      /// <returns>An array of the full names (including paths) of the subdirectories that match the search pattern in the specified directory, or an empty array if no directories are found.</returns>
+      /// <returns>Returns an array of the full names (including paths) of the subdirectories that match the search pattern in the specified directory, or an empty array if no directories are found.</returns>
       /// <remarks>
       ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
       ///   <para>The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.</summary>
-      /// <returns>An array of the full names (including paths) of the subdirectories that match the specified criteria, or an empty array if no directories are found.</returns>
+      /// <returns>Returns an array of the full names (including paths) of the subdirectories that match the specified criteria, or an empty array if no directories are found.</returns>
       /// <remarks>
       ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
       ///   <para>The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
@@ -122,7 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Returns the names of subdirectories (including their paths) in the specified directory.</summary>
-      /// <returns>An array of the full names (including paths) of subdirectories in the specified path, or an empty array if no directories are found.</returns>
+      /// <returns>Returns an array of the full names (including paths) of subdirectories in the specified path, or an empty array if no directories are found.</returns>
       /// <remarks>
       ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
       ///   <para>The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
@@ -146,7 +146,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.</summary>
-      /// <returns>An array of the full names (including paths) of the subdirectories that match the search pattern in the specified directory, or an empty array if no directories are found.</returns>
+      /// <returns>Returns an array of the full names (including paths) of the subdirectories that match the search pattern in the specified directory, or an empty array if no directories are found.</returns>
       /// <remarks>
       ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
       ///   <para>The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
@@ -175,7 +175,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.</summary>
-      /// <returns>An array of the full names (including paths) of the subdirectories that match the specified criteria, or an empty array if no directories are found.</returns>
+      /// <returns>Returns an array of the full names (including paths) of the subdirectories that match the specified criteria, or an empty array if no directories are found.</returns>
       /// <remarks>
       ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
       ///   <para>The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names

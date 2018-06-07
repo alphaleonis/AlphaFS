@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Creates or overwrites a file in the specified path.</summary>
       /// <param name="path">The path and name of the file to create.</param>
-      /// <returns>A <see cref="FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream Create(string path)
       {
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Creates or overwrites the specified file.</summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <returns>A <see cref="FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize)
       {
@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="FileOptions"/> values that describes how to create or overwrite the file.</param>
-      /// <returns>A new file with the specified buffer size.</returns>
+      /// <returns>Returns a new file with the specified buffer size.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options)
       {
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="FileOptions"/> values that describes how to create or overwrite the file.</param>
       /// <param name="fileSecurity">One of the <see cref="FileSecurity"/> values that determines the access control and audit security for the file.</param>
-      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
+      /// <returns>Returns a new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.</summary>
       /// <param name="path">The path and name of the file to create.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, PathFormat pathFormat)
       {
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, PathFormat pathFormat)
       {
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="FileOptions"/> values that describes how to create or overwrite the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A new file with the specified buffer size.</returns>
+      /// <returns>Returns a new file with the specified buffer size.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, PathFormat pathFormat)
       {
@@ -125,7 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options">One of the <see cref="FileOptions"/> values that describes how to create or overwrite the file.</param>
       /// <param name="fileSecurity">One of the <see cref="FileSecurity"/> values that determines the access control and audit security for the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
+      /// <returns>Returns a new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity,
          PathFormat pathFormat)
@@ -139,7 +139,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file to create.</param>
-      /// <returns>A <see cref="FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream CreateTransacted(KernelTransaction transaction, string path)
       {
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <returns>A <see cref="FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize)
       {
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="FileOptions"/> values that describes how to create or overwrite the file.</param>
-      /// <returns>A new file with the specified buffer size.</returns>
+      /// <returns>Returns a new file with the specified buffer size.</returns>
       [SecurityCritical]
       public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, FileOptions options)
       {
@@ -178,7 +178,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="FileOptions"/> values that describes how to create or overwrite the file.</param>
       /// <param name="fileSecurity">One of the <see cref="FileSecurity"/> values that determines the access control and audit security for the file.</param>
-      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
+      /// <returns>Returns a new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
       public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
@@ -190,7 +190,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file to create.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream CreateTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
@@ -203,7 +203,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// <returns>Returns a <see cref="FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, PathFormat pathFormat)
       {
@@ -217,7 +217,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="FileOptions"/> values that describes how to create or overwrite the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A new file with the specified buffer size.</returns>
+      /// <returns>Returns a new file with the specified buffer size.</returns>
       [SecurityCritical]
       public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, FileOptions options, PathFormat pathFormat)
       {
@@ -232,7 +232,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options">One of the <see cref="FileOptions"/> values that describes how to create or overwrite the file.</param>
       /// <param name="fileSecurity">One of the <see cref="FileSecurity"/> values that determines the access control and audit security for the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
+      /// <returns>Returns a new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
       public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize,
          FileOptions options, FileSecurity fileSecurity, PathFormat pathFormat)
@@ -255,7 +255,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="share">The <see cref="FileShare"/> option controls how you would like to share created file with other requesters.</param>
       ///  <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <returns>A <see cref="FileStream"/> that provides read/write access to the file specified in path.</returns>      
+      /// <returns>Returns a <see cref="FileStream"/> that provides read/write access to the file specified in path.</returns>      
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification =
          "False positive")]
       [SecurityCritical]
@@ -282,7 +282,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Creates or opens a file, directory or I/O device.</summary>
-      /// <returns>A <see cref="SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
+      /// <returns>Returns a <see cref="SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
       /// <remarks>
       ///   <para>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.</para>
       ///   <para>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, and pipe.</para>
@@ -348,7 +348,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             var lastError = Marshal.GetLastWin32Error();
 
-            NativeMethods.IsValidHandle(safeHandle, lastError, pathLp, !continueOnException);
+            Utils.IsValidHandle(safeHandle, lastError, pathLp, !continueOnException);
 
 
             if (isAppend)

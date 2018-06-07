@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer with the ready status.</summary>
-      /// <returns>An IEnumerable of type <see cref="DriveInfo"/> that represents the logical drives on the Computer.</returns>
+      /// <returns>Returns an IEnumerable of type <see cref="DriveInfo"/> that represents the logical drives on the Computer.</returns>
       [SecurityCritical]
       [Obsolete("Use DriveInfo.GetDrives()")]
       public static IEnumerable<DriveInfo> EnumerateLogicalDrives()
@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on the Computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="DriveInfo"/> that represents the logical drives on the Computer.</returns>
+      /// <returns>Returns an IEnumerable of type <see cref="DriveInfo"/> that represents the logical drives on the Computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
       [SecurityCritical]

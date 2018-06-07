@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the name of the file system, such as: "NTFS" or "FAT32".</summary>
       /// <remarks>Use DriveFormat to determine what formatting a drive uses.</remarks>
       /// <param name="drivePath">
-      ///   A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\".
+      ///   A path to a drive. For example: <c>C:\</c>, <c>\\server\share</c>, or <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>
       /// </param>
       /// <returns>The name of the file system on the specified drive or <c>null</c>  on failure or if not available.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]

@@ -23,24 +23,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   /// <summary>Provides access to information of a physical disk.</summary>
+   /// <summary>[AlphaFS] Provides access to information of a physical disk.</summary>
    [Serializable]
    [SecurityCritical]
    public sealed class PhysicalDiskInfo
    {
       #region Constructors
 
-      /// <summary>Initializes a PhysicalDiskInfo instance.</summary>
+      /// <summary>[AlphaFS] Initializes an empty PhysicalDiskInfo instance.</summary>
       public PhysicalDiskInfo()
       {
       }
 
 
-      /// <summary>Initializes a PhysicalDiskInfo instance.</summary>
-      public PhysicalDiskInfo(PhysicalDiskInfo physicalDiskInfo)
+      /// <summary>[AlphaFS] Initializes a PhysicalDiskInfo instance.</summary>
+      /// <param name="physicalDiskInfo">An initialized <see cref="PhysicalDiskInfo"/> instance.</param>
+      internal PhysicalDiskInfo(PhysicalDiskInfo physicalDiskInfo)
       {
          CopyTo(physicalDiskInfo, this);
       }
@@ -55,23 +57,23 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>The path to the device.</summary>
-      /// <returns>A string that represents the path to the device.
+      /// <returns>Returns a string that represents the path to the device.
       ///   A drive path such as: <c>C:</c>, <c>D:\</c>,
       ///   a volume <see cref="Guid"/> path such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>
-      ///   or a <see cref="DeviceInfo.DevicePath"/> string.
+      ///   or a <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c> string.
       /// </returns>
       public string DevicePath { get; internal set; }
 
 
-      /// <summary>The logical drives that are located on the physical disk.</summary>
+      /// <summary>An <see cref="ICollection{String}"/> of logical drives that are located on the physical disk.</summary>
       public ICollection<string> LogicalDrives { get; internal set; }
 
       
       /// <summary>The "FriendlyName" of the physical disk.</summary>
       public string Name { get; internal set; }
 
-      
-      /// <summary>The partition index numbers that are located on the physical disk.</summary>
+
+      /// <summary>An <see cref="ICollection{String}"/> of partition index numbers that are located on the physical disk.</summary>
       public ICollection<int> PartitionIndexes { get; internal set; }
 
 
@@ -91,11 +93,11 @@ namespace Alphaleonis.Win32.Filesystem
       public StoragePartitionInfo StoragePartitionInfo { get; internal set; }
 
 
-      /// <summary>A collection of volume GUID strings of volumes that are located on the physical disk.</summary>
+      /// <summary>An <see cref="ICollection{String}"/> of volume <see cref="Guid"/> strings of volumes that are located on the physical disk.</summary>
       public ICollection<string> VolumeGuids { get; internal set; }
 
 
-      ///// <summary>A collection of volume label strings of volumes that are located on the physical disk.</summary>
+      ///// <summary>An <see cref="ICollection{String}"/> of volume label strings of volumes that are located on the physical disk.</summary>
       //public ICollection<string> VolumeLabels { get; internal set; }
 
       #endregion // Properties
@@ -104,17 +106,23 @@ namespace Alphaleonis.Win32.Filesystem
       #region Methods
 
       /// <summary>Checks if the volume or logical drive is located on the physical disk.
-      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
-      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
       /// </summary>
-      /// <returns><c>true</c> if the volume or logical drive is located on the physical disk, <c>false</c> otherwise..</returns>
+      /// <returns><c>true</c> if the volume or logical drive is located on the physical disk; otherwise, <c>false</c>.</returns>
+      /// <param name="devicePath">
+      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// </param>
       public bool ContainsVolume(string devicePath)
       {
          bool isDrive;
          bool isVolume;
          bool isDeviceInfo;
 
-         devicePath = Device.ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
+         devicePath = FileSystemHelper.ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
 
 
          if (isDrive && null != LogicalDrives)
@@ -130,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns the "FriendlyName" of the physical disk.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return Name ?? DevicePath;
@@ -158,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Serves as a hash function for a particular type.</summary>
-      /// <returns>A hash code for the current Object.</returns>
+      /// <returns>Returns a hash code for the current Object.</returns>
       public override int GetHashCode()
       {
          return null != DevicePath ? DevicePath.GetHashCode() : 0;

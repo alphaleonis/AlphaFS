@@ -24,7 +24,7 @@ namespace Alphaleonis.Win32.Filesystem
    public sealed partial class DirectoryInfo
    {
       /// <summary>Returns the original path that was passed by the user.</summary>
-      /// <returns>A string that represents this object.</returns>
+      /// <returns>Returns a string that represents this object.</returns>
       public override string ToString()
       {
          return DisplayPath;

@@ -27,9 +27,9 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Determines whether the specified volume name is a defined volume on the current computer.</summary>
       /// <param name="volumeMountPoint">
-      ///   A path to a volume. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\".
+      ///   A path to a volume. For example: <c>C:\</c>, <c>\\server\share</c>, or <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>
       /// </param>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> on success; otherwise, <c>false</c>.</returns>
       [SecurityCritical]
       public static bool IsVolume(string volumeMountPoint)
       {

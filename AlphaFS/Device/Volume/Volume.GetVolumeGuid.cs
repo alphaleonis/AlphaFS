@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Volume
    {
-      /// <summary>[AlphaFS] Retrieves a volume <see cref="Guid"/> path for the volume that is associated with the specified volume mount point (drive letter, volume GUID path, or mounted folder).</summary>
+      /// <summary>[AlphaFS] Retrieves a volume <see cref="Guid"/> path for the volume that is associated with the specified volume mount point (drive letter, volume <see cref="Guid"/> path, or mounted folder).</summary>
       /// <returns>The unique volume name of the form: "\\?\Volume{GUID}\".</returns>
       /// <remarks>SMB does not support volume management functions.</remarks>
       /// <remarks>Mount points aren't supported by ReFS volumes.</remarks>

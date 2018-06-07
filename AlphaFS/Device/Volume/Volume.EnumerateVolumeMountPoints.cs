@@ -29,11 +29,11 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Volume
    {
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="String"/> of all mounted folders (volume mount points) on the specified volume. </summary>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of all mounted folders (volume mount points) on the specified volume. </summary>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <param name="volumeGuid">A <see cref="string"/> containing the volume <see cref="Guid"/>.</param>
-      /// <returns>An enumerable collection of <see cref="String"/> of all volume mount points on the specified volume.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of all volume mount points on the specified volume.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumeMountPoints(string volumeGuid)
       {
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var lastError = Marshal.GetLastWin32Error();
 
-            if (!NativeMethods.IsValidHandle(handle, false))
+            if (!Utils.IsValidHandle(handle, false))
             {
                switch ((uint)lastError)
                {
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                var throwException = lastError != Win32Errors.ERROR_NO_MORE_FILES && lastError != Win32Errors.ERROR_PATH_NOT_FOUND && lastError != Win32Errors.ERROR_MORE_DATA;
 
-               if (!NativeMethods.IsValidHandle(handle, lastError, volumeGuid, throwException))
+               if (!Utils.IsValidHandle(handle, lastError, volumeGuid, throwException))
                   yield break;
 
                yield return buffer.ToString();

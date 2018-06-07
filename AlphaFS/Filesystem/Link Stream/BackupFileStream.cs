@@ -185,7 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public BackupFileStream(SafeFileHandle handle, FileSystemRights access)
       {
-         NativeMethods.IsValidHandle(handle);
+         Utils.IsValidHandle(handle);
 
          SafeFileHandle = handle;
 
@@ -239,7 +239,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets a value indicating whether the current stream supports reading.</summary>
-      /// <returns><c>true</c> if the stream supports reading, <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the stream supports reading; otherwise, <c>false</c>.</returns>
       public override bool CanRead
       {
          get { return _canRead; }
@@ -253,7 +253,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Gets a value indicating whether the current stream supports writing.</summary>
-      /// <returns><c>true</c> if the stream supports writing, <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the stream supports writing; otherwise, <c>false</c>.</returns>
       public override bool CanWrite
       {
          get { return _canWrite; }
@@ -440,7 +440,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          uint lowSought, highSought;
 
-         var success = NativeMethods.BackupSeek(SafeFileHandle, NativeMethods.GetLowOrderDword(bytes), NativeMethods.GetHighOrderDword(bytes), out lowSought, out highSought, ref _context);
+         var success = NativeMethods.BackupSeek(SafeFileHandle, Utils.GetLowOrderDword(bytes), Utils.GetHighOrderDword(bytes), out lowSought, out highSought, ref _context);
 
          var lastError = Marshal.GetLastWin32Error();
          if (!success && lastError != Win32Errors.ERROR_SEEK)
@@ -449,7 +449,7 @@ namespace Alphaleonis.Win32.Filesystem
             NativeError.ThrowException(lastError);
          }
 
-         return NativeMethods.ToLong(highSought, lowSought);
+         return Utils.ToLong(highSought, lowSought);
       }
 
 
@@ -528,7 +528,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentOutOfRangeException("length", length, Resources.Negative_Lock_Length);
 
 
-         var success = NativeMethods.LockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length));
+         var success = NativeMethods.LockFile(SafeFileHandle, Utils.GetLowOrderDword(position), Utils.GetHighOrderDword(position), Utils.GetLowOrderDword(length), Utils.GetHighOrderDword(length));
 
          var lastError = Marshal.GetLastWin32Error();
          if (!success)
@@ -552,7 +552,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentOutOfRangeException("length", length, Resources.Negative_Lock_Length);
 
 
-         var success = NativeMethods.UnlockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length));
+         var success = NativeMethods.UnlockFile(SafeFileHandle, Utils.GetLowOrderDword(position), Utils.GetHighOrderDword(position), Utils.GetLowOrderDword(length), Utils.GetHighOrderDword(length));
 
          var lastError = Marshal.GetLastWin32Error();
          if (!success)

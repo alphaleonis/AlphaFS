@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Network
    public static partial class Host
    {
       /// <summary>Enumerates the DFS namespaces from the local host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from the local host.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of DFS Root namespaces from the local host.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Network
 
       
       /// <summary>Enumerates the DFS namespaces from a host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from a host.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of DFS Root namespaces from a host.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="host">The DNS or NetBIOS name of a host.</param>
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Enumerates the DFS namespaces from a host.</summary>
-      /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from a host.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of DFS Root namespaces from a host.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>

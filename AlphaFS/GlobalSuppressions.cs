@@ -44,3 +44,5 @@
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Name", Scope = "type", Target = "Alphaleonis.Win32.Filesystem.NativeMethods+PARTITION_INFORMATION_GPT")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Name", Scope = "type", Target = "Alphaleonis.Win32.Filesystem.NativeMethods+PARTITION_INFORMATION_EX")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Alphaleonis", Scope = "namespace", Target = "Alphaleonis.Win32.Device")]
+

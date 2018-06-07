@@ -30,19 +30,17 @@ namespace Alphaleonis.Win32.Network
 {
    public static partial class Host
    {
-      /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
-      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
-      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <summary>Enumerates (hidden) Server Message Block (SMB) shares from the local host.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{ShareInfo}"/> collection of shares from the specified host.</returns>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares()
       {
          return EnumerateSharesCore(null, ShareType.All, false);
       }
 
-      
-      /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
-      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
-      /// <remarks>This method also enumerates hidden shares.</remarks>
+
+      /// <summary>Enumerates (hidden) Server Message Block (SMB) shares from the local host.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{ShareInfo}"/> collection of shares from the specified host.</returns>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares(bool continueOnException)
@@ -50,10 +48,9 @@ namespace Alphaleonis.Win32.Network
          return EnumerateSharesCore(null, ShareType.All, continueOnException);
       }
 
-      
-      /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
-      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
-      /// <remarks>This method also enumerates hidden shares.</remarks>
+
+      /// <summary>Enumerates (hidden) Server Message Block (SMB) shares from the local host.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{ShareInfo}"/> collection of shares from the specified host.</returns>
       /// <param name="shareType">The type of the shared resource to retrieve.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
@@ -62,10 +59,9 @@ namespace Alphaleonis.Win32.Network
          return EnumerateSharesCore(null, shareType, continueOnException);
       }
 
-      
-      /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
-      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
-      /// <remarks>This method also enumerates hidden shares.</remarks>
+
+      /// <summary>Enumerates (hidden) Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{ShareInfo}"/> collection of shares from the specified host.</returns>
       /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares(string host)
@@ -73,10 +69,9 @@ namespace Alphaleonis.Win32.Network
          return EnumerateSharesCore(host, ShareType.All, false);
       }
 
-      
-      /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
-      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
-      /// <remarks>This method also enumerates hidden shares.</remarks>
+
+      /// <summary>Enumerates (hidden) Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{ShareInfo}"/> collection of shares from the specified host.</returns>
       /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
@@ -85,10 +80,9 @@ namespace Alphaleonis.Win32.Network
          return EnumerateSharesCore(host, ShareType.All, continueOnException);
       }
 
-      
-      /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
-      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
-      /// <remarks>This method also enumerates hidden shares.</remarks>
+
+      /// <summary>Enumerates (hidden) Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{ShareInfo}"/> collection of shares from the specified host.</returns>
       /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
       /// <param name="shareType">The type of the shared resource to retrieve.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
@@ -101,9 +95,8 @@ namespace Alphaleonis.Win32.Network
 
 
 
-      /// <summary>Enumerates Server Message Block (SMB) shares from a local or remote host.</summary>
-      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
-      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <summary>Enumerates (hidden) Server Message Block (SMB) shares from a local or remote host.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{ShareInfo}"/> collection of shares from the specified host.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the specified host.</param>

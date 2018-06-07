@@ -29,13 +29,12 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       /// <summary>[AlphaFS] Creates a symbolic link  to a directory (similar to CMD command: "MKLINK /D").</summary>
-      /// <para>&#160;</para>
       /// <remarks>
-      /// <para>Symbolic links can point to a non-existent target.</para>
-      /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
-      /// <para>Symbolic links are reparse points.</para>
-      /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
-      /// <para>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      ///   Symbolic links can point to a non-existent target.
+      ///   When creating a symbolic link, the operating system does not check to see if the target exists.
+      ///   Symbolic links are reparse points.
+      ///   There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.
+      ///   See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method from an elevated state.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -52,13 +51,12 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a symbolic link  to a directory (similar to CMD command: "MKLINK /D").</summary>
-      /// <para>&#160;</para>
       /// <remarks>
-      /// <para>Symbolic links can point to a non-existent target.</para>
-      /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
-      /// <para>Symbolic links are reparse points.</para>
-      /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
-      /// <para>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      ///   Symbolic links can point to a non-existent target.
+      ///   When creating a symbolic link, the operating system does not check to see if the target exists.
+      ///   Symbolic links are reparse points.
+      ///   There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.
+      ///   See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method from an elevated state.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -76,13 +74,12 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK /D") to a directory as a transacted operation.</summary>
-      /// <para>&#160;</para>
       /// <remarks>
-      /// <para>Symbolic links can point to a non-existent target.</para>
-      /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
-      /// <para>Symbolic links are reparse points.</para>
-      /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
-      /// <para>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      ///   Symbolic links can point to a non-existent target.
+      ///   When creating a symbolic link, the operating system does not check to see if the target exists.
+      ///   Symbolic links are reparse points.
+      ///   There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.
+      ///   See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method from an elevated state.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -100,13 +97,12 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK /D") to a directory as a transacted operation.</summary>
-      /// <para>&#160;</para>
       /// <remarks>
-      /// <para>Symbolic links can point to a non-existent target.</para>
-      /// <para>When creating a symbolic link, the operating system does not check to see if the target exists.</para>
-      /// <para>Symbolic links are reparse points.</para>
-      /// <para>There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.</para>
-      /// <para>See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</para>
+      ///   Symbolic links can point to a non-existent target.
+      ///   When creating a symbolic link, the operating system does not check to see if the target exists.
+      ///   Symbolic links are reparse points.
+      ///   There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.
+      ///   See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method from an elevated state.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>

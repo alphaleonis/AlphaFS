@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    public sealed partial class DriveInfo
    {
       /// <summary>[AlphaFS] Gets the first available drive letter on the local system.</summary>
-      /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
+      /// <returns>Returns a drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
       /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
       public static char GetFreeDriveLetter()
       {
@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets an available drive letter on the local system.</summary>
       /// <param name="getLastAvailable">When <c>true</c> get the last available drive letter. When <c>false</c> gets the first available drive letter.</param>
-      /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
+      /// <returns>Returns a drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
       /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
       /// <exception cref="ArgumentOutOfRangeException">No drive letters available.</exception>
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]

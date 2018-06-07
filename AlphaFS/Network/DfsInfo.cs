@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Network
       #region Methods
 
       /// <summary>Returns the Universal Naming Convention (UNC) path of the DFS root or link.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return EntryPath;

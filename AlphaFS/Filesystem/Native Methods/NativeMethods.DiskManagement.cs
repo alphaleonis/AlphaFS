@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>Symbolic link behavior: If the path points to a symbolic link, the operation is performed on the target.</para>
       ///   <para>If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").</para>
-      ///   <para>Furthermore, a drive specification must have a trailing backslash (for example, "C:\").</para>
+      ///   <para>Furthermore, a drive specification must have a trailing backslash (for example, <c>C:\</c>).</para>
       ///   <para>The calling application must have FILE_LIST_DIRECTORY access rights for this directory.</para>
       ///   <para>Minimum supported client: Windows XP [desktop apps only]</para>
       ///   <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>

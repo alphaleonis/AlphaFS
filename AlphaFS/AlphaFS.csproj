@@ -196,31 +196,32 @@
     <Compile Include="AssemblyVersionInfo.cs">
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
-    <Compile Include="Device\PhysicalDiskInfo\Device.GetStoragePartitionInfo.cs" />
-    <Compile Include="Device\Storage\StorageMbrPartitionInfo.cs" />
-    <Compile Include="Device\Storage\StorageGptPartitionInfo.cs" />
-    <Compile Include="Device\Storage\StoragePartitionInfo.cs" />
+    <Compile Include="Device\Device.Local.cs" />
+    <Compile Include="Device\Storage\Local.GetStoragePartitionInfo.cs" />
+    <Compile Include="Device\Storage\Device.StorageMbrPartitionInfo.cs" />
+    <Compile Include="Device\Storage\Device.StorageGptPartitionInfo.cs" />
+    <Compile Include="Device\Storage\Device.StoragePartitionInfo.cs" />
     <Compile Include="Device\Test.cs" />
-    <Compile Include="Device\Device.GetDeviceIoData.cs" />
-    <Compile Include="Device\Device.InvokeDeviceIoData.cs" />
-    <Compile Include="Device\Device.GetVolumeDiskExtents.cs" />
-    <Compile Include="Device\Device.GetDevicePath.cs" />
-    <Compile Include="Device\Device.ValidateDevicePath.cs" />
-    <Compile Include="Device\PhysicalDiskInfo\Device.GetStorageAdapterInfo.cs" />
-    <Compile Include="Device\Storage\StorageAdapterInfo.cs" />
-    <Compile Include="Device\Storage\StorageDeviceInfo.cs" />
-    <Compile Include="Device\PhysicalDiskInfo\Device.GetStorageDeviceInfo.cs" />
-    <Compile Include="Device\PhysicalDiskInfo\Device.GetPhysicalDiskInfo.cs" />
-    <Compile Include="Device\PhysicalDiskInfo\Device.EnumeratePhysicalDisks.cs" />
-    <Compile Include="Device\Device.EnumerateDevices.cs" />
-    <Compile Include="Device\Device.Compression.cs" />
-    <Compile Include="Device\PhysicalDiskInfo\PhysicalDiskInfo.cs" />
+    <Compile Include="Device\Storage\Local.GetDeviceIoData.cs" />
+    <Compile Include="Device\Local.InvokeDeviceIoData.cs" />
+    <Compile Include="Device\Storage\Local.GetVolumeDiskExtents.cs" />
+    <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetDevicePath.cs" />
+    <Compile Include="Device\FileSystemHelper\FileSystemHelper.ValidateDevicePath.cs" />
+    <Compile Include="Device\Storage\Local.GetStorageAdapterInfo.cs" />
+    <Compile Include="Device\Storage\Device.StorageAdapterInfo.cs" />
+    <Compile Include="Device\Storage\Device.StorageDeviceInfo.cs" />
+    <Compile Include="Device\Storage\Local.GetStorageDeviceInfo.cs" />
+    <Compile Include="Device\PhysicalDisk\Local.GetPhysicalDiskInfo.cs" />
+    <Compile Include="Device\PhysicalDisk\Local.EnumeratePhysicalDisks.cs" />
+    <Compile Include="Device\Local.EnumerateDevices.cs" />
+    <Compile Include="Device\FileSystemHelper\FileSystemHelper.Compression.cs" />
+    <Compile Include="Device\PhysicalDisk\Device.PhysicalDiskInfo.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.GetFreeDriveLetter.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.GetDeviceInfo.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.EnumerateLogicalDrives.cs" />
-    <Compile Include="Device\Junctions, Links\Device.GetLinkTarget.cs" />
-    <Compile Include="Device\Junctions, Links\Device.DeleteDirectoryJunction.cs" />
-    <Compile Include="Device\Junctions, Links\Device.CreateDirectoryJunction.cs" />
+    <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetLinkTarget.cs" />
+    <Compile Include="Device\FileSystemHelper\FileSystemHelper.DeleteDirectoryJunction.cs" />
+    <Compile Include="Device\FileSystemHelper\FileSystemHelper.CreateDirectoryJunction.cs" />
     <Compile Include="Device\Volume\Volume.DeleteDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.QueryDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.GetDriveFormat.cs" />
@@ -249,7 +250,7 @@
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateLogicalDrives.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetSize.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
-    <Compile Include="Device\Device.OpenPhysicalDrive.cs" />
+    <Compile Include="Device\FileSystemHelper\FileSystemHelper.OpenPhysicalDrive.cs" />
     <Compile Include="Filesystem\File Class\File.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\File Class\File.FileAttributeLogic.cs" />
@@ -325,6 +326,7 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateSubdirectory.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Create.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateAlternateDataStreams.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.ErrorMode.cs" />
     <Compile Include="Filesystem\Native Other\BY_HANDLE_FILE_INFORMATION.cs" />
     <Compile Include="Filesystem\Native Other\COPY_FILE_FLAGS.cs" />
     <Compile Include="Filesystem\Native Other\DEVPROPKEY.cs" />
@@ -433,10 +435,10 @@
     <Compile Include="Filesystem\File Class\File.WriteText.cs" />
     <Compile Include="Filesystem\File Class\File.AppendText.cs" />
     <Compile Include="Filesystem\File Class\File.Create.cs" />
-    <Compile Include="Device\DeviceInfo.cs" />
-    <Compile Include="Device\DiskSpaceInfo.cs" />
+    <Compile Include="Device\Device.DeviceInfo.cs" />
+    <Compile Include="Filesystem\DiskSpaceInfo.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.cs" />
-    <Compile Include="Device\Device.cs" />
+    <Compile Include="Device\Device.FileSystemHelper.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.cs" />
     <Compile Include="Filesystem\File Class\File.ThrowIOExceptionIfFsoExist.cs" />
@@ -505,7 +507,6 @@
     <Compile Include="Filesystem\Native Methods\NativeMethods.DeviceManagement.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.Constants.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.BackupStreams.cs" />
-    <Compile Include="Filesystem\Native Methods\NativeMethods.Utilities.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.PathManagement.cs" />
     <Compile Include="Filesystem\Path Class\Path.cs" />
     <Compile Include="Filesystem\Path Class\Path.Helpers.cs" />
@@ -554,7 +555,7 @@
     <Compile Include="Safe Handles\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />
     <Compile Include="Filesystem\CopyMoveResult.cs" />
-    <Compile Include="Device\ChangeErrorMode.cs" />
+    <Compile Include="Filesystem\ChangeErrorMode.cs" />
     <Compile Include="Filesystem\Link Stream\LinkTargetInfo.cs" />
     <Compile Include="Filesystem\Exceptions\NotAReparsePointException.cs" />
     <Compile Include="Filesystem\Shell32.cs" />
@@ -735,7 +736,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

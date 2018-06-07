@@ -22,24 +22,30 @@
 using Alphaleonis.Win32.Network;
 using System;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   /// <summary>Provides access to information of a device.</summary>
+   /// <summary>[AlphaFS] Provides access to information of a device.</summary>
    [Serializable]
    [SecurityCritical]
    public sealed class DeviceInfo
    {
       #region Constructors
 
-      /// <summary>Initializes a DeviceInfo class.</summary>
+      /// <summary>[AlphaFS] Initializes a DeviceInfo class.</summary>
       [SecurityCritical]
       public DeviceInfo()
       {
          HostName = Host.GetUncName();
       }
 
-      /// <summary>Initializes a DeviceInfo class.</summary>
+      /// <summary>[AlphaFS] Initializes a DeviceInfo class from a local or remote host.</summary>
+      /// <remarks>
+      ///   MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.
+      ///   You cannot access remote machines when running on these versions of Windows.
+      ///   <para>http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx</para>
+      /// </remarks>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       [SecurityCritical]
       public DeviceInfo(string host)
@@ -76,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
       public string DeviceDescription { get; internal set; }
 
 
-      /// <summary>The device interface path.</summary>
+      /// <summary>The device interface path string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></summary>
       public string DevicePath { get; internal set; }
 
       

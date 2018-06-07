@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // MSDN:
          // If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").
-         // Furthermore, a drive specification must have a trailing backslash (for example, "C:\").
+         // Furthermore, a drive specification must have a trailing backslash (for example, <c>C:\</c>).
          // The calling application must have FILE_LIST_DIRECTORY access rights for this directory.
          DriveName = Path.AddTrailingDirectorySeparator(driveName, false);
       }
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets the name of a drive.</summary>
-      /// <remarks>This property is the name assigned to the drive, such as: "C:\" or "D:\".</remarks>
+      /// <remarks>This property is the name assigned to the drive, such as: <c>C:\</c> or "D:\".</remarks>
       public string DriveName { get; private set; }
 
 
@@ -265,7 +265,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns the drive name.</summary>
-      /// <returns>A string that represents this object.</returns>
+      /// <returns>Returns a string that represents this object.</returns>
       public override string ToString()
       {
          return DriveName;

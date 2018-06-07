@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieve the label of a file system volume.</summary>
       /// <param name="volumePath">
-      ///   A path to a volume. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\".
+      ///   A path to a volume. For example: <c>C:\</c>, <c>\\server\share</c>, or <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>
       /// </param>
       /// <returns>The the label of the file system volume. This function can return <c>string.Empty</c> since a volume label is generally not mandatory.</returns>
       [SecurityCritical]
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Sets the label of a file system volume.</summary>
       /// <param name="volumePath">
-      ///   <para>A path to a volume. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\"</para>
+      ///   <para>A path to a volume. For example: <c>C:\</c>, <c>\\server\share</c>, or <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
       ///   <para>If this parameter is <c>null</c>, the function uses the current drive.</para>
       /// </param>
       /// <param name="volumeName">

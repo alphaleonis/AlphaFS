@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region DisableEncryption
 
       /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> on success; otherwise, <c>false</c>.</returns>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=0"</remarks>
       [SecurityCritical]
       public void DisableEncryption()
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnableEncryption
 
       /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> on success; otherwise, <c>false</c>.</returns>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=1"</remarks>
       [SecurityCritical]
       public void EnableEncryption()

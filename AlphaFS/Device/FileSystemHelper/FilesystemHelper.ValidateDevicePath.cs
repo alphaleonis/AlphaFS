@@ -20,10 +20,11 @@
  */
 
 using System;
+using Alphaleonis.Win32.Filesystem;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class Device
+   internal static partial class FileSystemHelper
    {
       /// <summary>Determines the type of device path.</summary>
       /// <returns>The final device path with a <see cref="Path.DirectorySeparator"/>.</returns>

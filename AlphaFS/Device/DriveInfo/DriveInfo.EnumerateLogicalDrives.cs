@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    public sealed partial class DriveInfo
    {
       /// <summary>Enumerates the drive names of all logical drives on the Computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="string"/> that represents the logical drives on the Computer.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of logical drives on the Computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
       [SecurityCritical]

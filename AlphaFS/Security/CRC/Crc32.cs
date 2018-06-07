@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Security
 
       /// <summary>Int 32 to big endian bytes.</summary>
       /// <param name="uint32">The second uint 3.</param>
-      /// <returns>A byte[].</returns>
+      /// <returns>Returns a byte[].</returns>
       private static byte[] UInt32ToBigEndianBytes(uint uint32)
       {
          var result = BitConverter.GetBytes(uint32);

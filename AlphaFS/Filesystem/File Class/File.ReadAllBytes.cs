@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
-      /// <returns>A byte array containing the contents of the file.</returns>
+      /// <returns>Returns a byte array containing the contents of the file.</returns>
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path)
       {
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A byte array containing the contents of the file.</returns>
+      /// <returns>Returns a byte array containing the contents of the file.</returns>
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path, PathFormat pathFormat)
       {
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
-      /// <returns>A byte array containing the contents of the file.</returns>
+      /// <returns>Returns a byte array containing the contents of the file.</returns>
       [SecurityCritical]
       public static byte[] ReadAllBytesTransacted(KernelTransaction transaction, string path)
       {
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A byte array containing the contents of the file.</returns>
+      /// <returns>Returns a byte array containing the contents of the file.</returns>
       [SecurityCritical]
       public static byte[] ReadAllBytesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A byte array containing the contents of the file.</returns>
+      /// <returns>Returns a byte array containing the contents of the file.</returns>
       [SecurityCritical]
       internal static byte[] ReadAllBytesCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {

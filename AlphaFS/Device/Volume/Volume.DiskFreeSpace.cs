@@ -31,9 +31,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <remarks>The calling application must have FILE_LIST_DIRECTORY access rights for this directory.</remarks>
       /// <param name="drivePath">
-      ///   A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\".
+      ///   A path to a drive. For example: <c>C:\</c>, <c>\\server\share</c>, or <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>
       /// </param>
-      /// <returns>A <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>
+      /// <returns>Returns a <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>
       [SecurityCritical]
       public static DiskSpaceInfo GetDiskFreeSpace(string drivePath)
       {
@@ -47,13 +47,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <remarks>The calling application must have FILE_LIST_DIRECTORY access rights for this directory.</remarks>
       /// <param name="drivePath">
-      ///   A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\".
+      ///   A path to a drive. For example: <c>C:\</c>, <c>\\server\share</c>, or <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>
       /// </param>
       /// <param name="spaceInfoType">
       ///   <c>null</c> gets both size- and disk cluster information. <c>true</c> Get only disk cluster information,
       ///   <c>false</c> Get only size information.
       /// </param>
-      /// <returns>A <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>
+      /// <returns>Returns a <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>
       [SecurityCritical]
       public static DiskSpaceInfo GetDiskFreeSpace(string drivePath, bool? spaceInfoType)
       {

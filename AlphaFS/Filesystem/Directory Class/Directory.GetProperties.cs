@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -134,7 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -157,7 +157,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -182,7 +182,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -206,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -234,7 +234,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>

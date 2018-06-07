@@ -23,27 +23,27 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
 using Microsoft.Win32.SafeHandles;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class Device
+   public static partial class Local
    {
-      /// <summary>Invokes InvokeIoControl with the specified input and specified size.</summary>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      private static SafeGlobalMemoryBufferHandle InvokeDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, T anyObject, string pathForException, int size = -1)
+      private static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string pathForException, int size = -1)
       {
-         NativeMethods.IsValidHandle(safeHandle);
+         Utils.IsValidHandle(safeHandle);
 
 
-         var bufferSize = size > -1 ? size : Marshal.SizeOf(anyObject);
+         var bufferSize = size > -1 ? size : Marshal.SizeOf(typeof(T));
 
          while (true)
          {
             var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize);
 
-            var success = NativeMethods.DeviceIoControlAnyObjectGetSet(safeHandle, controlCode, anyObject, (uint) bufferSize, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoControl(safeHandle, controlCode, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
 
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
                   return null;
             }
 
-            bufferSize = GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, pathForException);
+            bufferSize = Utils.GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, pathForException);
          }
       }
    }

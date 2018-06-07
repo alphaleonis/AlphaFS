@@ -22,10 +22,11 @@
 using System;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
+using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class Device
+   public static partial class Local
    {
       /// <summary>Retrieves the physical location of a specified volume on one or more disks.</summary>
       private static NativeMethods.VOLUME_DISK_EXTENTS? GetVolumeDiskExtents(SafeFileHandle safeHandle, string pathForException)
@@ -58,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
                
-               bufferSize = GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, pathForException);
+               bufferSize = Utils.GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, pathForException);
             }
       }
    }

@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
@@ -29,22 +30,26 @@ namespace Alphaleonis.Win32.Filesystem
    /// </summary>
    public enum PartitionType
    {
+      /// <summary>There is no partition or the partition is an unused entry.</summary>
+      /// <remarks>This value can be set for basic and dynamic disks.</remarks>
+      [Description("00000000-0000-0000-0000-000000000000")]
+      None = 0,
+
+
       #region Non-OS
 
-      /// <summary>There is no partition.
-      /// <remarks>This value can be set for basic and dynamic disks.</remarks>
-      /// </summary>
-      [Description("00000000-0000-0000-0000-000000000000")]
-      UnusedEntry,
+      ///// <summary>There is no partition.</summary>
+      ///// <remarks>This value can be set for basic and dynamic disks.</remarks>
+      //[Description("00000000-0000-0000-0000-000000000000")]
+      //UnusedEntry,
 
       /// <summary>Legacy MBR partition. A partition that is sub-partitioned by a Master Boot Record; "partitions-inside-a-slice configuration".</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mbr")]
       [Description("024DEE41-33E7-11D3-9D69-0008C781F39F")]
       LegacyMbr,
 
-      /// <summary>The partition is an EFI system partition.
+      /// <summary>The partition is an EFI system partition.</summary>
       /// <remarks>This value can be set for basic and dynamic disks.</remarks>
-      /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Efi")]
       [Description("C12A7328-F81F-11D2-BA4B-00A0C93EC93B")]
       EfiSystem,
@@ -71,40 +76,35 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Windows
 
-      /// <summary>The partition is a Microsoft reserved partition.
+      /// <summary>The partition is a Microsoft reserved partition.</summary>
       /// <remarks>This value can be set for basic and dynamic disks.</remarks>
-      /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Msft")]
       [SuppressMessage("Microsoft.Naming", "CA1700:DoNotNameEnumValuesReserved")]
       [Description("E3C9E316-0B5C-4DB8-817D-F92DF00215AE")]
       MsftReserved,
-      
-      /// <summary>The data partition type that is created and recognized by Windows.
+
+      /// <summary>The data partition type that is created and recognized by Windows.</summary>
       /// <remarks>
-      /// <para>This value can be set only for basic disks, with one exception.</para>
-      /// <para>Only partitions of this type can be assigned drive letters, receive volume GUID paths, host mounted folders (also called volume mount points), and be enumerated by calls to FindFirstVolume and FindNextVolume.</para>
+      ///   This value can be set only for basic disks, with one exception.
+      ///   Only partitions of this type can be assigned drive letters, receive volume <see cref="Guid"/> paths, host mounted folders (also called volume mount points), and be enumerated by calls to FindFirstVolume and FindNextVolume.
       /// </remarks>
-      /// </summary>
       [Description("EBD0A0A2-B9E5-4433-87C0-68B6B72699C7")]
       BasicData,
 
-      /// <summary>The partition is a Logical Disk Manager (LDM) metadata partition on a dynamic disk.
+      /// <summary>The partition is a Logical Disk Manager (LDM) metadata partition on a dynamic disk.</summary>
       /// <remarks>This value can be set only for dynamic disks.</remarks>
-      /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ldm")]
       [Description("5808C8AA-7E8F-42E0-85D2-E1E90434CFB3")]
       LdmMetadata,
 
-      /// <summary>The partition is an LDM data partition on a dynamic disk.
+      /// <summary>The partition is an LDM data partition on a dynamic disk.</summary>
       /// <remarks>This value can be set only for dynamic disks.</remarks>
-      /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ldm")]
       [Description("AF9B60A0-1431-4F62-BC68-3311714A69AD")]
       LdmData,
-      
-      /// <summary>The partition is a Microsoft recovery partition.
+
+      /// <summary>The partition is a Microsoft recovery partition.</summary>
       /// <remarks>This value can be set for basic and dynamic disks.</remarks>
-      /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Msft")]
       [Description("DE94BBA4-06D1-4D40-A16A-BFD50179D6AC")]
       MsftRecovery,
@@ -443,27 +443,24 @@ namespace Alphaleonis.Win32.Filesystem
       #region Chrome OS
 
       /// <summary>Chrome OS Kernel partition.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Chromse")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("FE3A2A5D-4F32-41A7-B725-ACCC3285A309")]
-      ChromseOsKernel,
+      ChromeOsKernel,
 
       /// <summary>Chrome OS RootFS partition.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fs")]
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Chromse")]
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Fs")]
       [Description("3CB8E202-3B7E-47DD-8A3C-7FF2A13CFCEC")]
-      ChromseOsRootFs,
+      ChromeOsRootFs,
 
       /// <summary>Chrome OS (future use) partition.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Chromse")]
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [Description("2E0A753D-9E48-43B0-8337-B15192CB1B5E")]
-      ChromseOsFutureUse,
+      ChromeOsFutureUse,
 
       #endregion // Chrome OS
 

@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Gets the date and time that the specified directory was last accessed.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       [SecurityCritical]
       public static DateTime GetLastAccessTime(string path)
@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Gets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in UTC time.</returns>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(string path)
@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last accessed.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in UTC time.</returns>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Transactional
 
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last accessed.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       [SecurityCritical]
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last accessed.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in UTC time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       [SecurityCritical]
@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in UTC time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>

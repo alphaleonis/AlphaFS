@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Creates or opens a file for writing UTF-8 encoded text.</summary>
       /// <param name="path">The file to be opened for writing.</param>
-      /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
+      /// <returns>Returns a StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public static StreamWriter CreateText(string path)
@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
+      /// <returns>Returns a StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public static StreamWriter CreateText(string path, PathFormat pathFormat)
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
+      /// <returns>Returns a StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public static StreamWriter CreateText(string path, Encoding encoding, PathFormat pathFormat)
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
-      /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
+      /// <returns>Returns a StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public static StreamWriter CreateTextTransacted(KernelTransaction transaction, string path)
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
+      /// <returns>Returns a StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public static StreamWriter CreateTextTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="StreamWriter"/> that writes to the specified file using NativeMethods.DefaultFileBufferSize encoding.</returns>
+      /// <returns>Returns a <see cref="StreamWriter"/> that writes to the specified file using NativeMethods.DefaultFileBufferSize encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       internal static StreamWriter CreateTextCore(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)

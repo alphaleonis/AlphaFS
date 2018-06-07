@@ -138,7 +138,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Returns the last available drive letter used for this connection.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return LocalName;

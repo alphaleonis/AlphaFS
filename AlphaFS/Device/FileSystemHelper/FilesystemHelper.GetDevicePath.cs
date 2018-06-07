@@ -20,12 +20,13 @@
  */
 
 using System.Globalization;
+using Alphaleonis.Win32.Filesystem;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class Device
+   internal static partial class FileSystemHelper
    {
-      private static string GetDevicePath(string devicePath, out string logicalDrive)
+      internal static string GetDevicePath(string devicePath, out string logicalDrive)
       {
          bool isDrive;
          bool isVolume;

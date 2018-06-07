@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in <see cref="FileShare.ReadWrite"/> mode.</summary>
-      /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <returns>Returns an enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified directory.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       [SecurityCritical]
@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in <see cref="FileShare.ReadWrite"/> mode.</summary>
-      /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <returns>Returns an enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified directory.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="FileShare"/> mode.</summary>
-      /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <returns>Returns an enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified directory.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="FileShare"/> mode.</summary>
-      /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <returns>Returns an enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified directory.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
@@ -82,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory handle specified.</summary>
-      /// <returns>An IEnumerable of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{FileIdBothDirectoryInfo}"/> collection for each file system entry in the specified directory.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="handle">An open handle to the directory from which to retrieve information.</param>
       [SecurityCritical]
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Transactional
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in <see cref="FileShare.ReadWrite"/> mode.</summary>
-      /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <returns>Returns an enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified directory.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in <see cref="FileShare.ReadWrite"/> mode.</summary>
-      /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <returns>Returns an enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified directory.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="FileShare"/> mode.</summary>
-      /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <returns>Returns an enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified directory.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
@@ -132,7 +132,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="FileShare"/> mode.</summary>
-      /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
+      /// <returns>Returns an enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified directory.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
@@ -148,8 +148,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>Returns an enumerable collection of information about files in the directory handle specified.</summary>
-      /// <returns>An IEnumerable of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>    
+      /// <summary>Returns an <see cref="IEnumerable{FileIdBothDirectoryInfo}"/> collection of information about files in the directory handle specified.</summary>
+      /// <returns>Returns an <see cref="FileIdBothDirectoryInfo"/> instance for each file system entry in the specified directory.</returns>    
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <remarks>
       ///   <para>Either use <paramref name="path"/> or <paramref name="safeFileHandle"/>, not both.</para>
@@ -188,7 +188,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            if (!NativeMethods.IsValidHandle(safeFileHandle, Marshal.GetLastWin32Error(), !continueOnException))
+            if (!Utils.IsValidHandle(safeFileHandle, Marshal.GetLastWin32Error(), !continueOnException))
                yield break;
 
             var fileNameOffset = (int) Marshal.OffsetOf(typeof(NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName");

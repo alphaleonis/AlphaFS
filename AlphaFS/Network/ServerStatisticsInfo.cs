@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>The number of server bytes received from the network.</summary>
       public long BytesReceived
       {
-         get { return Filesystem.NativeMethods.ToLong(_serverStat.sts0_bytesrcvd_high, _serverStat.sts0_bytesrcvd_low); }
+         get { return Utils.ToLong(_serverStat.sts0_bytesrcvd_high, _serverStat.sts0_bytesrcvd_low); }
       }
 
 
@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>The number of server bytes sent to the network.</summary>
       public long BytesSent
       {
-         get { return Filesystem.NativeMethods.ToLong(_serverStat.sts0_bytessent_high, _serverStat.sts0_bytessent_low); }
+         get { return Utils.ToLong(_serverStat.sts0_bytessent_high, _serverStat.sts0_bytessent_low); }
       }
 
 
@@ -207,7 +207,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Returns the local time when statistics collection started or when the statistics were last cleared.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return HostName;
@@ -229,7 +229,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Serves as a hash function for a particular type.</summary>
-      /// <returns>A hash code for the current Object.</returns>
+      /// <returns>Returns a hash code for the current Object.</returns>
       public override int GetHashCode()
       {
          return null != HostName ? HostName.GetHashCode() : 0;

@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns the names of all files and subdirectories in the specified directory.</summary>
-      /// <returns>An string[] array of the names of files and subdirectories in the specified directory.</returns>
+      /// <returns>Returns a string[] array of the names of files and subdirectories in the specified directory.</returns>
       /// <remarks>
       ///   <para>The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
       ///     you can start enumerating the collection of entries before the whole collection is returned; when you use GetFileSystemEntries,
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Returns an array of file system entries that match the specified search criteria.</summary>
-      /// <returns>An string[] array of file system entries that match the specified search criteria.</returns>
+      /// <returns>Returns a string[] array of file system entries that match the specified search criteria.</returns>
       /// <remarks>
       ///   <para>The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
       ///     you can start enumerating the collection of entries before the whole collection is returned; when you use GetFileSystemEntries,
@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Gets an array of all the file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
-      /// <returns>An string[] array of file system entries that match the specified search criteria.</returns>
+      /// <returns>Returns a string[] array of file system entries that match the specified search criteria.</returns>
       /// <remarks>
       ///   <para>The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
       ///     you can start enumerating the collection of entries before the whole collection is returned; when you use GetFileSystemEntries,
@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns the names of all files and subdirectories in the specified directory.</summary>
-      /// <returns>An string[] array of the names of files and subdirectories in the specified directory.</returns>
+      /// <returns>Returns a string[] array of the names of files and subdirectories in the specified directory.</returns>
       /// <remarks>
       ///   <para>The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
       ///     you can start enumerating the collection of entries before the whole collection is returned; when you use GetFileSystemEntries,
@@ -141,7 +141,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Returns an array of file system entries that match the specified search criteria.</summary>
-      /// <returns>An string[] array of file system entries that match the specified search criteria.</returns>
+      /// <returns>Returns a string[] array of file system entries that match the specified search criteria.</returns>
       /// <remarks>
       ///   <para>The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
       ///     you can start enumerating the collection of entries before the whole collection is returned; when you use GetFileSystemEntries,
@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Gets an array of all the file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
-      /// <returns>An string[] array of file system entries that match the specified search criteria.</returns>
+      /// <returns>Returns a string[] array of file system entries that match the specified search criteria.</returns>
       /// <remarks>
       ///   <para>The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
       ///     you can start enumerating the collection of entries before the whole collection is returned; when you use GetFileSystemEntries,

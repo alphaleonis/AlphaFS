@@ -21,6 +21,7 @@
 using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -336,7 +337,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static extern SafeFindFileHandle FindFirstFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FINDEX_INFO_LEVELS fInfoLevelId, out WIN32_FIND_DATA lpFindFileData, FINDEX_SEARCH_OPS fSearchOp, IntPtr lpSearchFilter, FIND_FIRST_EX_FLAGS dwAdditionalFlags, SafeHandle hTransaction);
 
       /// <summary>
-      ///   Creates an enumeration of all the hard links to the specified file. The FindFirstFileNameW function returns a handle to the
+      ///   Returns an <see cref="IEnumerable{String}"/> collection of all the hard links to the specified file. The FindFirstFileNameW function returns a handle to the
       ///   enumeration that can be used on subsequent calls to the FindNextFileNameW function.
       /// </summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>
@@ -351,7 +352,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static extern SafeFindFileHandle FindFirstFileNameW([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] uint dwFlags, [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName);
 
       /// <summary>
-      ///   Creates an enumeration of all the hard links to the specified file as a transacted operation. The function returns a handle to the
+      ///   Returns an <see cref="IEnumerable{String}"/> collection of all the hard links to the specified file as a transacted operation. The function returns a handle to the
       ///   enumeration that can be used on subsequent calls to the FindNextFileNameW function.
       /// </summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>

@@ -19,36 +19,26 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.Win32.SafeHandles;
-using System;
-using System.Runtime.InteropServices;
+using System.IO;
+using System.Security;
+using System.Security.AccessControl;
+using Alphaleonis.Win32.Filesystem;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class Device
+   internal static partial class FileSystemHelper
    {
-      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      internal static void DeleteDirectoryJunction(SafeFileHandle safeHandle)
+      /// <summary>[AlphaFS] Sets the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
+      /// <param name="compress"><c>true</c> = compress, <c>false</c> = decompress</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      internal static void ToggleCompressionCore(KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {
-         var reparseDataBuffer = new NativeMethods.REPARSE_DATA_BUFFER
-         {
-            ReparseTag = ReparsePointTag.MountPoint,
-            ReparseDataLength = 0,
-            PathBuffer = new byte[MAXIMUM_REPARSE_DATA_BUFFER_SIZE - 16] // 16368
-         };
+         using (var safeHandle = Win32.Filesystem.File.CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, false, pathFormat))
 
-
-         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(reparseDataBuffer)))
-         {
-            safeBuffer.StructureToPtr(reparseDataBuffer, false);
-
-            var success = NativeMethods.DeviceIoJunctions(safeHandle, NativeMethods.IoControlCode.FSCTL_DELETE_REPARSE_POINT, safeBuffer, REPARSE_DATA_BUFFER_HEADER_SIZE, IntPtr.Zero, 0, IntPtr.Zero, IntPtr.Zero);
-
-            var lastError = Marshal.GetLastWin32Error();
-
-            if (!success)
-               NativeError.ThrowException(lastError);
-         }
+         using (Local.InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.FSCTL_SET_COMPRESSION, compress ? 1 : 0, path)) { }
       }
    }
 }

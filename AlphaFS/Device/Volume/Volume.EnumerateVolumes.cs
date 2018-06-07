@@ -28,8 +28,8 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Volume
    {
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="string"/> volumes on the computer.</summary>
-      /// <returns>An enumerable collection of <see cref="string"/> volume names on the computer.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of volumes on the Computer.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of volume names on the Computer.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumes()
       {
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             var throwException = lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_NO_MORE_FILES && lastError != Win32Errors.ERROR_MORE_DATA;
 
-            if (!NativeMethods.IsValidHandle(handle, lastError, string.Empty, throwException))
+            if (!Utils.IsValidHandle(handle, lastError, string.Empty, throwException))
                yield break;
 
             yield return buffer.ToString();
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                throwException = lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_NO_MORE_FILES && lastError != Win32Errors.ERROR_MORE_DATA;
 
-               if (!NativeMethods.IsValidHandle(handle, lastError, string.Empty, throwException))
+               if (!Utils.IsValidHandle(handle, lastError, string.Empty, throwException))
                   yield break;
 
                yield return buffer.ToString();

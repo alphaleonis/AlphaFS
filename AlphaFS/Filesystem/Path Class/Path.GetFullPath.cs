@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
       /// <para>&#160;</para>
       /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
-      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as <c>\\.\PhysicalDrive0</c>.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as <c>\\.\PhysicalDrive0</c></para>
       /// <para>&#160;</para>
       /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
       /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
       /// <para>&#160;</para>
       /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
-      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as <c>\\.\PhysicalDrive0</c>.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as <c>\\.\PhysicalDrive0</c></para>
       /// <para>&#160;</para>
       /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
       /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
       /// <para>&#160;</para>
       /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
-      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as <c>\\.\PhysicalDrive0</c>.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as <c>\\.\PhysicalDrive0</c></para>
       /// <para>&#160;</para>
       /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
       /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
       /// <para>&#160;</para>
       /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
-      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as <c>\\.\PhysicalDrive0</c>.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as <c>\\.\PhysicalDrive0</c></para>
       /// <para>&#160;</para>
       /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
       /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
       /// <para>&#160;</para>
       /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
-      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as <c>\\.\PhysicalDrive0</c>.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as <c>\\.\PhysicalDrive0</c></para>
       /// <para>&#160;</para>
       /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
       /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
@@ -192,10 +192,10 @@ namespace Alphaleonis.Win32.Filesystem
                   options &= ~GetFullPathOptions.CheckAdditional;
             }
 
-            // Do not remove trailing directory separator when path points to a drive like: "C:\"
+            // Do not remove trailing directory separator when path points to a drive like: <c>C:\</c>
             // Doing so makes path point to the current directory.
 
-            // ".", "C:", "C:\"
+            // ".", "C:", <c>C:\</c>
             if (null == path || path.Length <= 3 || !path.StartsWith(LongPathPrefix, StringComparison.Ordinal) && path[1] != VolumeSeparatorChar)
                options &= ~GetFullPathOptions.RemoveTrailingDirectorySeparator;
          }

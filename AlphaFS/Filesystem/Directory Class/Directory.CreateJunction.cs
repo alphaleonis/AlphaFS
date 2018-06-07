@@ -439,7 +439,7 @@ namespace Alphaleonis.Win32.Filesystem
          CreateDirectoryCore(transaction, junctionPath, null, null, false, pathFormat);
 
          using (var safeHandle = OpenDirectoryJunction(transaction, junctionPath, pathFormat))
-            Device.CreateDirectoryJunction(safeHandle, directoryPath);
+            Device.FileSystemHelper.CreateDirectoryJunction(safeHandle, directoryPath);
 
 
          // Copy the target date and time stamps to the directory junction.

@@ -40,7 +40,7 @@ namespace AlphaFS.UnitTest
          // Use lowercase drive letter because .Contains() is case sensitive by default.
          var sourceDrive = UnitTestConstants.SysDrive.ToLowerInvariant() + System.IO.Path.DirectorySeparatorChar;
 
-         var pDisk = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDiskInfo(sourceDrive);
+         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceDrive);
 
          Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}\t\t{3}", ++driveCount, sourceDrive, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
 

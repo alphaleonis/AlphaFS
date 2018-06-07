@@ -459,7 +459,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Drop any trailing dots and spaces from file & directory names, EXCEPT
          // we MUST make sure that "C:\foo\.." is correctly handled.
-         // Also handle "C:\foo\." -> "C:\foo", while "C:\." -> "C:\"
+         // Also handle "C:\foo\." -> "C:\foo", while "C:\." -> <c>C:\</c>
          if (numSigChars == 0)
          {
             if (numDots > 0)

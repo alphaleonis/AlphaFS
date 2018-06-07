@@ -263,7 +263,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                else
                {
-                  if (NativeMethods.IsValidHandle(handle))
+                  if (Utils.IsValidHandle(handle))
                   {
                      lastError = (int) Security.NativeMethods.SetSecurityInfo(handle, SE_OBJECT_TYPE.SE_FILE_OBJECT, securityInfo, pOwner, pGroup, pDacl, pSacl);
 

@@ -25,10 +25,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using Alphaleonis.Win32.Filesystem;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class Device
+   internal static partial class FileSystemHelper
    {
       /// <summary>[AlphaFS] Get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       /// <exception cref="NotAReparsePointException"/>
@@ -88,7 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static SafeGlobalMemoryBufferHandle GetLinkTargetData(SafeFileHandle safeHandle, string reparsePath)
       {
-         NativeMethods.IsValidHandle(safeHandle);
+         Utils.IsValidHandle(safeHandle);
 
          var bufferSize = MAXIMUM_REPARSE_DATA_BUFFER_SIZE;
 
@@ -104,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (success)
                return safeBuffer;
 
-            bufferSize = GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, reparsePath);
+            bufferSize = Utils.GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, reparsePath);
          }
       }
    }

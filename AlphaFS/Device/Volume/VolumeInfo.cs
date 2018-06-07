@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public VolumeInfo(SafeFileHandle volumeHandle)
       {
-         NativeMethods.IsValidHandle(volumeHandle);
+         Utils.IsValidHandle(volumeHandle);
 
          _volumeHandle = volumeHandle;
       }
@@ -122,7 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns the full path of the volume.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return Guid;
@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
       public string FullPath { get; private set; }
 
 
-      /// <summary>The volume GUID.</summary>
+      /// <summary>The volume <see cref="Guid"/>.</summary>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       public string Guid
       {

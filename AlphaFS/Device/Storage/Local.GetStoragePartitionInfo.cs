@@ -25,34 +25,36 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using Microsoft.Win32.SafeHandles;
+using Alphaleonis.Win32.Filesystem;
+using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class Device
+   public static partial class Local
    {
-      /// <summary>Retrieves information about the partitions on a disk and the features of each partition.</summary>
-      /// <returns>A <see cref="StoragePartitionInfo"/> instance that represent the partition info on the Computer that is related to <paramref name="devicePath"/>.</returns>
+      /// <summary>[AlphaFS] Retrieves information about the partitions on a disk and the features of each partition.</summary>
+      /// <returns>Returns a <see cref="StoragePartitionInfo"/> instance that represent the partition info on the Computer that is related to <paramref name="devicePath"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
       /// <param name="devicePath">
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
-      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c>.</para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
       public static StoragePartitionInfo GetStoragePartitionInfo(string devicePath)
       {
          string unused;
 
-         var pathToDevice = GetDevicePath(devicePath, out unused);
+         var pathToDevice = FileSystemHelper.GetDevicePath(devicePath, out unused);
 
          if (Utils.IsNullOrWhiteSpace(pathToDevice))
             return null;
 
 
-         using (var safeHandle = OpenPhysicalDisk(pathToDevice, NativeMethods.FILE_ANY_ACCESS))
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, NativeMethods.FILE_ANY_ACCESS))
 
             return GetStoragePartitionInfoNative(safeHandle, devicePath);
       }
@@ -85,9 +87,9 @@ namespace Alphaleonis.Win32.Filesystem
                   pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
 
 
-                  safeHandleRetry = OpenPhysicalDisk(pathToDevice, FileSystemRights.Read);
+                  safeHandleRetry = FileSystemHelper.OpenPhysicalDisk(pathToDevice, FileSystemRights.Read);
 
-                  isRetry = NativeMethods.IsValidHandle(safeHandleRetry, false);
+                  isRetry = Utils.IsValidHandle(safeHandleRetry, false);
                }
 
 
@@ -102,23 +104,23 @@ namespace Alphaleonis.Win32.Filesystem
                safeHandleRetry.Close();
             
 
-            var drive = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>();
+            var layout = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>();
             
             // Sanity check.
-            if (drive.PartitionCount <= 256)
+            if (layout.PartitionCount <= 256)
             {
                var driveStructureSize = Marshal.SizeOf(typeof(NativeMethods.DRIVE_LAYOUT_INFORMATION_EX));  // 48
                var partitionStructureSize = Marshal.SizeOf(typeof(NativeMethods.PARTITION_INFORMATION_EX)); // 144
-               var partitions = new NativeMethods.PARTITION_INFORMATION_EX[drive.PartitionCount];
+               var partitions = new NativeMethods.PARTITION_INFORMATION_EX[layout.PartitionCount];
                
-               for (var i = 0; i <= drive.PartitionCount - 1; i++)
+               for (var i = 0; i <= layout.PartitionCount - 1; i++)
 
                   partitions[i] = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(driveStructureSize + i * partitionStructureSize);
 
 
                var disk = GetDiskGeometryExNative(safeHandle, pathToDevice);
 
-               return new StoragePartitionInfo(disk, drive, partitions);
+               return new StoragePartitionInfo(disk, layout, partitions);
             }
 
             return null;
@@ -230,7 +232,7 @@ namespace Alphaleonis.Win32.Filesystem
                   return new NativeMethods.DISK_GEOMETRY_EX();
 
 
-               bufferSize = GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, pathForException);
+               bufferSize = Utils.GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, pathForException);
             }
       }
    }

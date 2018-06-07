@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Path
    {
       /// <summary>[AlphaFS] Retrieves the short path form of the specified path.</summary>
-      /// <returns>A path that has the 8.3 path form.</returns>
+      /// <returns>Returns a path that has the 8.3 path form.</returns>
       /// <remarks>Will fail on NTFS volumes with disabled 8.3 name generation.</remarks>
       /// <remarks>The path must actually exist to be able to get the short path name.</remarks>
       /// <exception cref="ArgumentException"/>
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves the short path form of the specified path.</summary>
-      /// <returns>A path that has the 8.3 path form.</returns>
+      /// <returns>Returns a path that has the 8.3 path form.</returns>
       /// <remarks>Will fail on NTFS volumes with disabled 8.3 name generation.</remarks>
       /// <remarks>The path must actually exist to be able to get the short path name.</remarks>
       /// <exception cref="ArgumentException"/>

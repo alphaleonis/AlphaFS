@@ -33,8 +33,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region EnumerateHardlinks
 
-      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">The name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -45,8 +45,8 @@ namespace Alphaleonis.Win32.Filesystem
          return EnumerateHardlinksCore(null, path, pathFormat);
       }
 
-      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="path">The name of the file.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
@@ -56,8 +56,8 @@ namespace Alphaleonis.Win32.Filesystem
          return EnumerateHardlinksCore(null, path, PathFormat.RelativePath);
       }
 
-      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
@@ -69,8 +69,8 @@ namespace Alphaleonis.Win32.Filesystem
          return EnumerateHardlinksCore(transaction, path, pathFormat);
       }
 
-      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
@@ -85,8 +85,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var lastError = Marshal.GetLastWin32Error();
 
-            if (!NativeMethods.IsValidHandle(safeHandle, false))
+            if (!Utils.IsValidHandle(safeHandle, false))
             {
                switch ((uint) lastError)
                {

@@ -30,8 +30,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region .NET
 
-      /// <summary>Returns an enumerable collection of file information in the current directory.</summary>
-      /// <returns>An enumerable collection of the files in the current directory.</returns>
+      /// <summary>Returns an <see cref="IEnumerable{FileInfo}"/> collection of file information in the current directory.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{FileInfo}"/> collection of the files in the current directory.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -44,8 +44,8 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(false, Transaction, LongFullName, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath);
       }
 
-      /// <summary>Returns an enumerable collection of file information that matches a search pattern.</summary>
-      /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/>.</returns>
+      /// <summary>Returns an <see cref="IEnumerable{FileInfo}"/> collection of file information that matches a search pattern.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{FileInfo}"/> collection of files that matches <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -63,8 +63,8 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(false, Transaction, LongFullName, searchPattern, null, null, null, PathFormat.LongFullPath);
       }
 
-      /// <summary>Returns an enumerable collection of file information that matches a specified search pattern and search subdirectory option.</summary>
-      /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
+      /// <summary>Returns an <see cref="IEnumerable{FileInfo}"/> collection of file information that matches a specified search pattern and search subdirectory option.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{FileInfo}"/> collection of files that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -90,8 +90,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>Returns an enumerable collection of file information in the current directory.</summary>
-      /// <returns>An enumerable collection of the files in the current directory.</returns>
+      /// <summary>Returns an <see cref="IEnumerable{FileInfo}"/> collection of file information in the current directory.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{FileInfo}"/> collection of the files in the current directory.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -105,8 +105,8 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosCore<FileInfo>(false, Transaction, LongFullName, Path.WildcardStarMatchAll, null, options, null, PathFormat.LongFullPath);
       }
 
-      /// <summary>Returns an enumerable collection of file information that matches a search pattern.</summary>
-      /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/>.</returns>
+      /// <summary>Returns an <see cref="IEnumerable{FileInfo}"/> collection of file information that matches a search pattern.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{FileInfo}"/> collection of files that matches <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>

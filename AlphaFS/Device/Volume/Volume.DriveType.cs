@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Volume
    {
       /// <summary>[AlphaFS] Determines the disk <see cref="DriveType"/>, based on the root of the current directory.</summary>
-      /// <returns>A <see cref="DriveType"/> enum value.</returns>
+      /// <returns>Returns a <see cref="DriveType"/> enum value.</returns>
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
       public static DriveType GetCurrentDriveType()
@@ -38,8 +38,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Determines the disk <see cref="DriveType"/>.</summary>
-      /// <param name="drivePath">A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\"</param>
-      /// <returns>A <see cref="DriveType"/> enum value.</returns>
+      /// <param name="drivePath">A path to a drive. For example: <c>C:\</c>, <c>\\server\share</c>, or <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></param>
+      /// <returns>Returns a <see cref="DriveType"/> enum value.</returns>
       [SecurityCritical]
       public static DriveType GetDriveType(string drivePath)
       {

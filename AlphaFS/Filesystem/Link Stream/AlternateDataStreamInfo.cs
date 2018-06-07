@@ -28,29 +28,42 @@ namespace Alphaleonis.Win32.Filesystem
    /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.EnumerateAlternateDataStreams"/> 
    public struct AlternateDataStreamInfo
    {
+      #region Private Fields
+
+      private readonly string _streamName;
+      private readonly string _fullPath;
+
+      #endregion // Private Fields
+
+
       #region Constructor
 
       internal AlternateDataStreamInfo(string fullPath, NativeMethods.WIN32_FIND_STREAM_DATA findData) : this()
       {
-         StreamName = ParseStreamName(findData.cStreamName);
+         _streamName = ParseStreamName(findData.cStreamName);
+
          Size = findData.StreamSize;
+
          _fullPath = fullPath;
       }
 
       #endregion // Constructor
+
 
       #region Public Properties
 
       /// <summary>Gets the name of the alternate data stream.</summary>
       /// <remarks>This value is an empty string for the default stream (:$DATA), and for any other data stream it contains the name of the stream.</remarks>
       /// <value>The name of the stream.</value>
-      public string StreamName { get; private set; }
+      public string StreamName
+      {
+         get { return _streamName; }
+      }
+
 
       /// <summary>Gets the size of the stream.</summary>      
       public long Size { get; private set; }
 
-
-      private readonly string _fullPath;
 
       /// <summary>Gets the full path to the stream.</summary>
       /// <remarks>
@@ -69,16 +82,17 @@ namespace Alphaleonis.Win32.Filesystem
       #region Public Methods
 
       /// <summary>Returns the hash code for this instance.</summary>
-      /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+      /// <returns>Returns a 32-bit signed integer that is the hash code for this instance.</returns>
       public override int GetHashCode()
       {
          return StreamName.GetHashCode();
       }
 
+
       /// <summary>Indicates whether this instance and a specified object are equal.</summary>
       /// <param name="obj">The object to compare with the current instance.</param>
       /// <returns>
-      ///   true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false.
+      ///   true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, <c>false</c>.
       /// </returns>
       public override bool Equals(object obj)
       {
@@ -91,6 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
          return false;
       }
 
+
       /// <summary>Equality operator.</summary>
       /// <param name="first">The first operand.</param>
       /// <param name="second">The second operand.</param>
@@ -99,6 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return first.Equals(second);
       }
+
 
       /// <summary>Inequality operator.</summary>
       /// <param name="first">The first operand.</param>
@@ -110,6 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // Public Methods
+      
 
       #region Private Methods
 

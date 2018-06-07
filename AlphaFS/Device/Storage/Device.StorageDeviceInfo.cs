@@ -23,8 +23,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
    /// <summary>[AlphaFS] Provides access to information of a storage device.</summary>
    [Serializable]
@@ -33,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructors
 
-      /// <summary>[AlphaFS] Initializes a StorageDeviceInfo instance.</summary>
+      /// <summary>[AlphaFS] Initializes an empty StorageDeviceInfo instance.</summary>
       public StorageDeviceInfo()
       {
          DeviceType = StorageDeviceType.Unknown;
@@ -108,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Methods
 
       /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return string.Format(CultureInfo.CurrentCulture, "{0} {1}:{2} {3}", DeviceType.ToString(), DeviceNumber.ToString(CultureInfo.InvariantCulture), PartitionNumber.ToString(CultureInfo.InvariantCulture), (VendorId + " " + ProductId + " " + ProductRevision).Trim()).Trim();
@@ -135,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Serves as a hash function for a particular type.</summary>
-      /// <returns>A hash code for the current Object.</returns>
+      /// <returns>Returns a hash code for the current Object.</returns>
       public override int GetHashCode()
       {
          unchecked

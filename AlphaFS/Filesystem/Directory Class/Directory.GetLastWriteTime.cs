@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Gets the date and time that the specified directory was last written to.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in local time.</returns>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path)
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets the date and time, in coordinated universal time (UTC) time, that the specified directory was last written to.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in UTC time.</returns>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path)
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last written to.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in local time.</returns>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified directory was last written to.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in UTC time.</returns>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Transactional
 
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last written to.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in local time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       [SecurityCritical]
@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last written to.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in local time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified directory was last written to.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in UTC time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       [SecurityCritical]
@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified directory was last written to.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in UTC time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>

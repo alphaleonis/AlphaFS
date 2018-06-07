@@ -125,7 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (fileSizeLow == Win32Errors.ERROR_INVALID_FILE_SIZE && fileSizeHigh == 0)
             NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
 
-         return NativeMethods.ToLong(fileSizeHigh, fileSizeLow);
+         return Utils.ToLong(fileSizeHigh, fileSizeLow);
       }
 
       #endregion // Internal Methods

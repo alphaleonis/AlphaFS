@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       /// <summary>[AlphaFS] Gets the change date and time of the specified directory.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       [SecurityCritical]
       public static DateTime GetChangeTime(string path)
@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified directory.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path)
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified directory.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
       /// <param name="safeFileHandle">An open handle to the directory from which to retrieve information.</param>
       [SecurityCritical]
       public static DateTime GetChangeTime(SafeFileHandle safeFileHandle)
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
       /// <param name="safeFileHandle">An open handle to the directory from which to retrieve information.</param>
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(SafeFileHandle safeFileHandle)
@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Transactional
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified directory.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       [SecurityCritical]
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified directory.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       [SecurityCritical]
@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
+      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>

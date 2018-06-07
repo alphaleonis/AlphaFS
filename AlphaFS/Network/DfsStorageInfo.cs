@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Network
       #region Methods
 
       /// <summary>The share name of the DFS root target or link target.</summary>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          return ShareName;

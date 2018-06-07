@@ -40,11 +40,10 @@ namespace AlphaFS.UnitTest
          // Use lowercase drive letter because .Contains() is case sensitive by default.
          var sourceDrive = UnitTestConstants.SysDrive.ToLowerInvariant();
 
-         // Use uppercase volume guid because .Contains() is case sensitive by default.
-         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive).ToUpperInvariant();
+         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive);
 
 
-         var pDisk = Alphaleonis.Win32.Filesystem.Device.GetPhysicalDiskInfo(sourceVolume);
+         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceVolume);
 
 
          Console.WriteLine("#{0:000}\tInput Volume: [{1}]\t\t{2}\t\t{3}", ++volumeCount, sourceVolume, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());

@@ -24,13 +24,16 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
+using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
+using Path = Alphaleonis.Win32.Filesystem.Path;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class Device
+   public static partial class Local
    {
       /// <summary>[AlphaFS] Enumerates the physical disks on the Computer, populated with volume- and logical drive information.</summary>
-      /// <returns>An <see cref="IEnumerable{PhysicalDiskInfo}"/> collection that represents the physical disks on the Computer.</returns>      
+      /// <returns>Returns an <see cref="IEnumerable{PhysicalDiskInfo}"/> collection that represents the physical disks on the Computer.</returns>      
       [SecurityCritical]
       public static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisks()
       {
@@ -41,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       
       
       /// <summary>[AlphaFS] Enumerates the physical disks on the Computer, populated with volume- and logical drive information.</summary>
-      /// <returns>An <see cref="IEnumerable{PhysicalDiskInfo}"/> collection that represents the physical disks on the Computer.</returns>      
+      /// <returns>Returns an <see cref="IEnumerable{PhysicalDiskInfo}"/> collection that represents the physical disks on the Computer.</returns>      
       [SecurityCritical]
       internal static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisksCore(bool isElevated)
       {
@@ -100,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
          pDiskInfo.PartitionIndexes.Add(partitionNumber);
 
 
-         // Add device volume GUIDs.
+         // Add device volume <see cref="Guid"/>s.
 
          if (null == pDiskInfo.VolumeGuids)
             pDiskInfo.VolumeGuids = new Collection<string>();

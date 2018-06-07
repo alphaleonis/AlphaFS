@@ -30,10 +30,10 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Retrieves the volume mount point where the specified path is mounted.</summary>
       /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path to the volume, for example: "C:\Windows".</param>
+      /// <param name="path">The path to the volume, for example: <c>C:\Windows</c>.</param>
       /// <returns>
       ///   <para>Returns the nearest volume root path for a given directory.</para>
-      ///   <para>The volume path name, for example: "C:\Windows" returns: "C:\".</para>
+      ///   <para>The volume path name, for example: <c>C:\Windows</c> returns: <c>C:\</c></para>
       /// </returns>
       [SecurityCritical]
       public static string GetVolumePathName(string path)

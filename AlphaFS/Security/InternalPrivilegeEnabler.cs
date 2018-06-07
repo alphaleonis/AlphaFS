@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Security
             var newPrivilege = new TOKEN_PRIVILEGES
             {
                PrivilegeCount = 1,
-               Luid = Filesystem.NativeMethods.LongToLuid(EnabledPrivilege.LookupLuid()),
+               Luid = Utils.LongToLuid(EnabledPrivilege.LookupLuid()),
 
                // 2 = SePrivilegeEnabled;
                Attributes = (uint) (enable ? 2 : 0)

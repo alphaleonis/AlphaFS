@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Volume
    {
-      /// <summary>[AlphaFS] Gets the drive letter from an MS-DOS device name. For example: "\Device\HarddiskVolume2" returns "C:\".</summary>
+      /// <summary>[AlphaFS] Gets the drive letter from an MS-DOS device name. For example: <c>\Device\HarddiskVolume2</c> returns <c>C:\</c></summary>
       /// <param name="deviceName">An MS-DOS device name.</param>
       /// <returns>The drive letter from an MS-DOS device name.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Nt")]

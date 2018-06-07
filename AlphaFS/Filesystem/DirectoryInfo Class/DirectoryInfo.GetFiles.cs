@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns a file list from the current directory.</summary>
-      /// <returns>An array of type <see cref="FileInfo"/>.</returns>
+      /// <returns>Returns an array of type <see cref="FileInfo"/>.</returns>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</remarks>
       /// <remarks>If there are no files in the <see cref="DirectoryInfo"/>, this method returns an empty array.</remarks>
       /// <remarks>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   This parameter can contain a combination of valid literal path and wildcard
       ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
-      /// <returns>An array of type <see cref="FileInfo"/>.</returns>
+      /// <returns>Returns an array of type <see cref="FileInfo"/>.</returns>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</remarks>
       /// <remarks>If there are no files in the <see cref="DirectoryInfo"/>, this method returns an empty array.</remarks>
       /// <remarks>
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/>
       ///   should include only the current directory or should include all subdirectories.
       /// </param>
-      /// <returns>An array of type <see cref="FileInfo"/>.</returns>
+      /// <returns>Returns an array of type <see cref="FileInfo"/>.</returns>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</remarks>
       /// <remarks>If there are no files in the <see cref="DirectoryInfo"/>, this method returns an empty array.</remarks>
       /// <remarks>

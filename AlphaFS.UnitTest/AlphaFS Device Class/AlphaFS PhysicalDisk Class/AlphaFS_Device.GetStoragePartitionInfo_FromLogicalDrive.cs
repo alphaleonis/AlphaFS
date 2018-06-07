@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
             if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory || driveInfo.DriveType == System.IO.DriveType.Network)
                continue;
 
-            var storagePartitionInfo = Alphaleonis.Win32.Filesystem.Device.GetStoragePartitionInfo(driveInfo.Name);
+            var storagePartitionInfo = Alphaleonis.Win32.Device.Local.GetStoragePartitionInfo(driveInfo.Name);
 
             Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storagePartitionInfo.ToString());
 

@@ -430,7 +430,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets an enumerator that returns all of the file system objects that match both the wildcards that are in any of the directories to be searched and the custom predicate.</summary>
-      /// <returns>An <see cref="IEnumerable{T}" /> instance: FileSystemEntryInfo, DirectoryInfo, FileInfo or string (full path).</returns>
+      /// <returns>Returns an <see cref="IEnumerable{T}" /> instance: FileSystemEntryInfo, DirectoryInfo, FileInfo or string (full path).</returns>
       [SecurityCritical]
       public IEnumerable<T> Enumerate<T>()
       {
@@ -562,7 +562,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                if (null == handle)
                {
-                  // InputPath might be a logical drive such as: "C:\", "D:\".
+                  // InputPath might be a logical drive such as: <c>C:\</c>, "D:\".
 
                   var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
 

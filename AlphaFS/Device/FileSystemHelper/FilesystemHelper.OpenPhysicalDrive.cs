@@ -24,22 +24,24 @@ using Microsoft.Win32.SafeHandles;
 using System.IO;
 using System.Security;
 using System.Security.AccessControl;
+using Alphaleonis.Win32.Filesystem;
+using File = Alphaleonis.Win32.Filesystem.File;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class Device
+   internal static partial class FileSystemHelper
    {
       /// <summary>Opens a physical disk or volume/logical drive for read access.</summary>
-      /// <returns>A <see cref="SafeFileHandle"/> instance.</returns>
+      /// <returns>Returns a <see cref="SafeFileHandle"/> instance.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
       /// <param name="devicePath">
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
-      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c>.</para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
       /// <param name="fileSystemRights">If no elevated access is needed to access the physical disk or volume/logical drive, specify 0 for this parameter.</param>
       [SecurityCritical]

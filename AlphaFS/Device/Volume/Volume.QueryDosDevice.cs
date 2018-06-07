@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Volume
    {
       /// <summary>[AlphaFS] Retrieves a sorted list of all existing MS-DOS device names.</summary>
-      /// <returns>An <see cref="IEnumerable{String}"/> sorted list of all existing MS-DOS device names.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> sorted collection of all existing MS-DOS device names.</returns>
       [SecurityCritical]
       public static IEnumerable<string> QueryAllDosDevices()
       {
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Retrieves the current mapping for a particular MS-DOS device name. The function can also obtain a list of all existing MS-DOS device names.</summary>
-      /// <returns>An <see cref="IEnumerable{String}"/> sorted list of all existing MS-DOS device names or the .</returns>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> sorted collection of all existing MS-DOS device names or the .</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <param name="deviceName">An MS-DOS device name string specifying the target of the query, such as: "C:", "D:" or "\\?\Volume{GUID}".</param>

@@ -226,7 +226,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          var lastError = Marshal.GetLastWin32Error();
 
-         return NativeMethods.IsValidHandle(safeFindFileHandle, false) ? safeFindFileHandle : null;
+         return Utils.IsValidHandle(safeFindFileHandle, false) ? safeFindFileHandle : null;
       }
    }
 }

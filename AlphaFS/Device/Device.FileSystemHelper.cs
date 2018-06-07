@@ -19,49 +19,16 @@
  *  THE SOFTWARE. 
  */
 
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Security;
-
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
    /// <summary>[AlphaFS] Provides static methods to retrieve device resource information from a local or remote host.</summary>
-   public static partial class Device
+   internal static partial class FileSystemHelper
    {
       /// <summary>MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384</summary>
       private const int MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384;
 
+
       /// <summary>REPARSE_DATA_BUFFER_HEADER_SIZE = 8</summary>
       private const int REPARSE_DATA_BUFFER_HEADER_SIZE = 8;
-
-
-      [SecurityCritical]
-      private static int GetDoubledBufferSizeOrThrowException(SafeHandle safeBuffer, int lastError, int bufferSize, string pathForException)
-      {
-         if (null != safeBuffer && !safeBuffer.IsClosed)
-            safeBuffer.Close();
-
-
-         switch ((uint) lastError)
-         {
-            case Win32Errors.ERROR_MORE_DATA:
-            case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
-            case Win32Errors.ERROR_INVALID_PARAMETER:
-
-               if (bufferSize == 0)
-                  bufferSize = NativeMethods.DefaultFileBufferSize / 32; // 128
-
-               bufferSize *= 2;
-               break;
-
-
-            default:
-               NativeMethods.IsValidHandle(safeBuffer, lastError, string.Format(CultureInfo.InvariantCulture, "Buffer size: {0}. Path: {1}", bufferSize.ToString(CultureInfo.InvariantCulture), pathForException));
-               break;
-         }
-
-
-         return bufferSize;
-      }
    }
 }

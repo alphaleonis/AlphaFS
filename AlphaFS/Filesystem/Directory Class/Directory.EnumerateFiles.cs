@@ -31,8 +31,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region .NET
 
-      /// <summary>Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -47,8 +47,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -68,8 +68,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Returns an enumerable collection of file names that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
+      /// <summary>Returns an <see cref="IEnumerable{String}"/> collection of file names that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -95,8 +95,8 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -112,8 +112,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -135,8 +135,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -162,8 +162,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -179,8 +179,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -197,8 +197,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -220,8 +220,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -244,8 +244,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -261,8 +261,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -279,8 +279,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -302,8 +302,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -326,8 +326,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -344,8 +344,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -363,8 +363,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -387,8 +387,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -414,8 +414,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -431,8 +431,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -454,8 +454,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file instances instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file instances instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -481,8 +481,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -499,8 +499,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -523,8 +523,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file instances instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file instances instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -551,8 +551,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -569,8 +569,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -588,8 +588,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -612,8 +612,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -637,8 +637,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -655,8 +655,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -674,8 +674,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -698,8 +698,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -723,8 +723,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -742,8 +742,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -762,8 +762,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -787,8 +787,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>

@@ -278,7 +278,7 @@ namespace Alphaleonis.Win32
 
 
       /// <summary>Marshals data from an unmanaged block of memory to a newly allocated managed object of the specified type.</summary>
-      /// <returns>A managed object containing the data pointed to by the ptr parameter.</returns>
+      /// <returns>Returns a managed object containing the data pointed to by the ptr parameter.</returns>
       public T PtrToStructure<T>(int offset = 0)
       {
          return (T) Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof(T));
@@ -286,14 +286,14 @@ namespace Alphaleonis.Win32
       
 
       /// <summary>Allocates a managed System.String and copies a specified number of characters from an unmanaged ANSI string into it.</summary>
-      /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
+      /// <returns>Returns a managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
       public string PtrToStringAnsi(int offset = 0)
       {
          return Marshal.PtrToStringAnsi(new IntPtr(handle.ToInt64() + offset));
       }
 
       /// <summary>Allocates a managed System.String and copies all characters up to the first null character from an unmanaged Unicode string into it.</summary>
-      /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
+      /// <returns>Returns a managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
       public string PtrToStringUni()
       {
          return Marshal.PtrToStringUni(handle);
@@ -301,7 +301,7 @@ namespace Alphaleonis.Win32
 
 
       /// <summary>Allocates a managed System.String and copies a specified number of characters from an unmanaged Unicode string into it.</summary>
-      /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
+      /// <returns>Returns a managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
       public string PtrToStringUni(int offset, int length)
       {
          return Marshal.PtrToStringUni(new IntPtr(handle.ToInt64() + offset), length);

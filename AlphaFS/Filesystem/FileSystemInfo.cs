@@ -433,7 +433,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   ToString is the major formatting method in the .NET Framework. It converts an object to its string representation so that it is
       ///   suitable for display.
       /// </remarks>
-      /// <returns>A string that represents this instance.</returns>
+      /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
          // "Alphaleonis.Win32.Filesystem.FileSystemInfo"
@@ -458,7 +458,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Serves as a hash function for a particular type.</summary>
-      /// <returns>A hash code for the current Object.</returns>
+      /// <returns>Returns a hash code for the current Object.</returns>
       public override int GetHashCode()
       {
          return null != FullName ? FullName.GetHashCode() : 0;
@@ -574,7 +574,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          lastError = Marshal.GetLastWin32Error();
 
-         if (!NativeMethods.IsValidHandle(safeHandle, false))
+         if (!Utils.IsValidHandle(safeHandle, false))
             safeHandle = null;
 
 
