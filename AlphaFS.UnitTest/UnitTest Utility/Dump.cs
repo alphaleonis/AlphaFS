@@ -52,45 +52,43 @@ namespace AlphaFS.UnitTest
 
 
          foreach (var descriptor in allProperties)
-
-            Console.WriteLine(template, indent ? "\t" : string.Empty, ++count, descriptor.Name, Write(descriptor.GetValue(obj)) ?? "NULL");
+            try
+            {
+               Console.WriteLine(template, indent ? "\t" : string.Empty, ++count, descriptor.Name, Write(descriptor.GetValue(obj)) ?? "NULL");
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine(template, indent ? "\t" : string.Empty, ++count, descriptor.Name, ex.Message.Replace(Environment.NewLine, "  "));
+            }
       }
 
 
       private static string Write(object value)
       {
-         try
-         {
-            if (null == value)
-               return null;
+         if (null == value)
+            return null;
 
-            if (value is string)
-               return value as string;
+         if (value is string)
+            return value as string;
 
 
-            long number;
-            if (long.TryParse(value.ToString(), out number))
-               return value.ToString();
+         long number;
+         if (long.TryParse(value.ToString(), out number))
+            return value.ToString();
 
 
-            var objectType = value as IEnumerable;
+         var objectType = value as IEnumerable;
 
-            if (null == objectType)
-               return value.ToString();
+         if (null == objectType)
+            return value.ToString();
 
 
-            var sb = new StringBuilder();
+         var sb = new StringBuilder();
 
-            foreach (var objectValue in objectType)
-               sb.Append(objectValue + ", ");
+         foreach (var objectValue in objectType)
+            sb.Append(objectValue + ", ");
 
-            return sb.ToString().TrimEnd(',', ' ');
-         }
-         catch (Exception ex)
-         {
-            // Please do tell, oneliner preferably.
-            return ex.Message.Replace(Environment.NewLine, "  ");
-         }
+         return sb.ToString().TrimEnd(',', ' ');
       }
    }
 }
