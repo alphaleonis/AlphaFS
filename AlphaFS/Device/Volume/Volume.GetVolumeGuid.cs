@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
             // GetVolumeNameForVolumeMountPoint()
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-            success = NativeMethods.GetVolumeNameForVolumeMountPoint(volumeMountPoint, volumeGuid, (uint)volumeGuid.Capacity);
+            success = Device.NativeMethods.GetVolumeNameForVolumeMountPoint(volumeMountPoint, volumeGuid, (uint)volumeGuid.Capacity);
 
             lastError = Marshal.GetLastWin32Error();
 
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // The string must end with a trailing backslash.
 
-            success = NativeMethods.GetVolumeNameForVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeGuid.ToString(), false), uniqueName, (uint)uniqueName.Capacity);
+            success = Device.NativeMethods.GetVolumeNameForVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeGuid.ToString(), false), uniqueName, (uint)uniqueName.Capacity);
 
             lastError = Marshal.GetLastWin32Error();
 

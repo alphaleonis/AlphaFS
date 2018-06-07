@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [NonSerialized] private readonly bool _continueOnAccessError;
       [NonSerialized] private readonly SafeFileHandle _volumeHandle;
       [NonSerialized] private string _guid;
-      [NonSerialized] private NativeMethods.VOLUME_INFO_FLAGS _volumeInfoAttributes;
+      [NonSerialized] private Device.NativeMethods.VOLUME_INFO_FLAGS _volumeInfoAttributes;
 
       #endregion // Private Fields
 
@@ -134,28 +134,28 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The specified volume supports preserved case of file names when it places a name on disk.</summary>
       public bool CasePreservedNames
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_CASE_PRESERVED_NAMES) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_CASE_PRESERVED_NAMES) != 0; }
       }
 
 
       /// <summary>The specified volume supports case-sensitive file names.</summary>
       public bool CaseSensitiveSearch
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_CASE_SENSITIVE_SEARCH) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_CASE_SENSITIVE_SEARCH) != 0; }
       }
 
 
       /// <summary>The specified volume supports file-based compression.</summary>
       public bool Compression
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_FILE_COMPRESSION) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_FILE_COMPRESSION) != 0; }
       }
 
 
       /// <summary>The specified volume is a direct access (DAX) volume.</summary>
       public bool DirectAccess
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_DAX_VOLUME) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_DAX_VOLUME) != 0; }
       }
 
 
@@ -213,7 +213,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The specified volume supports named streams.</summary>
       public bool NamedStreams
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_NAMED_STREAMS) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_NAMED_STREAMS) != 0; }
       }
 
 
@@ -221,21 +221,21 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Acls")]
       public bool PersistentAcls
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_PERSISTENT_ACLS) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_PERSISTENT_ACLS) != 0; }
       }
 
 
       /// <summary>The specified volume is read-only.</summary>
       public bool ReadOnlyVolume
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_READ_ONLY_VOLUME) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_READ_ONLY_VOLUME) != 0; }
       }
 
 
       /// <summary>The specified volume supports a single sequential write.</summary>
       public bool SequentialWriteOnce
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_SEQUENTIAL_WRITE_ONCE) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_SEQUENTIAL_WRITE_ONCE) != 0; }
       }
 
 
@@ -247,63 +247,63 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The specified volume supports the Encrypted File System (EFS).</summary>
       public bool SupportsEncryption
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_ENCRYPTION) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_ENCRYPTION) != 0; }
       }
 
 
       /// <summary>The specified volume supports extended attributes.</summary>
       public bool SupportsExtendedAttributes
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_EXTENDED_ATTRIBUTES) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_EXTENDED_ATTRIBUTES) != 0; }
       }
 
 
       /// <summary>The specified volume supports hard links.</summary>
       public bool SupportsHardLinks
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_HARD_LINKS) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_HARD_LINKS) != 0; }
       }
 
 
       /// <summary>The specified volume supports object identifiers.</summary>
       public bool SupportsObjectIds
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_OBJECT_IDS) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_OBJECT_IDS) != 0; }
       }
 
 
       /// <summary>The file system supports open by FileID.</summary>
       public bool SupportsOpenByFileId
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_OPEN_BY_FILE_ID) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_OPEN_BY_FILE_ID) != 0; }
       }
 
 
       /// <summary>The specified volume supports remote storage. (This property does not appear on MSDN)</summary>
       public bool SupportsRemoteStorage
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_REMOTE_STORAGE) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_REMOTE_STORAGE) != 0; }
       }
 
 
       /// <summary>The specified volume supports re-parse points.</summary>
       public bool SupportsReparsePoints
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_REPARSE_POINTS) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_REPARSE_POINTS) != 0; }
       }
 
 
       /// <summary>The specified volume supports sparse files.</summary>
       public bool SupportsSparseFiles
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_SPARSE_FILES) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_SPARSE_FILES) != 0; }
       }
 
 
       /// <summary>The specified volume supports transactions.</summary>
       public bool SupportsTransactions
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_TRANSACTIONS) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_TRANSACTIONS) != 0; }
       }
 
 
@@ -311,28 +311,28 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Usn")]
       public bool SupportsUsnJournal
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_USN_JOURNAL) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_SUPPORTS_USN_JOURNAL) != 0; }
       }
 
 
       /// <summary>The specified volume supports Unicode in file names as they appear on disk.</summary>
       public bool UnicodeOnDisk
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_UNICODE_ON_DISK) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_UNICODE_ON_DISK) != 0; }
       }
 
 
       /// <summary>The specified volume is a compressed volume, for example, a DoubleSpace volume.</summary>
       public bool VolumeIsCompressed
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_VOLUME_IS_COMPRESSED) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_VOLUME_IS_COMPRESSED) != 0; }
       }
 
 
       /// <summary>The specified volume supports disk quotas.</summary>
       public bool VolumeQuotas
       {
-         get { return (_volumeInfoAttributes & NativeMethods.VOLUME_INFO_FLAGS.FILE_VOLUME_QUOTAS) != 0; }
+         get { return (_volumeInfoAttributes & Device.NativeMethods.VOLUME_INFO_FLAGS.FILE_VOLUME_QUOTAS) != 0; }
       }
 
       #endregion // Properties
@@ -356,10 +356,10 @@ namespace Alphaleonis.Win32.Filesystem
             {
                var success = null != _volumeHandle && NativeMethods.IsAtLeastWindowsVista
 
-                  ? NativeMethods.GetVolumeInformationByHandle(_volumeHandle, volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity)
+                  ? Device.NativeMethods.GetVolumeInformationByHandle(_volumeHandle, volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity)
 
                   // A trailing backslash is required.
-                  : NativeMethods.GetVolumeInformation(Path.AddTrailingDirectorySeparator(Name, false), volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity);
+                  : Device.NativeMethods.GetVolumeInformation(Path.AddTrailingDirectorySeparator(Name, false), volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity);
 
 
                lastError = (uint) Marshal.GetLastWin32Error();

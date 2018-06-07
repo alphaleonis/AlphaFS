@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
 
-            return NativeMethods.GetDriveType(drivePath);
+            return Device.NativeMethods.GetDriveType(drivePath);
       }
    }
 }

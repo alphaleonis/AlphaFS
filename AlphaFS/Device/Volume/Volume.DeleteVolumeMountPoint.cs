@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
             // A trailing backslash is required.
-            var success = NativeMethods.DeleteVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeMountPoint, false));
+            var success = Device.NativeMethods.DeleteVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeMountPoint, false));
 
             var lastError = Marshal.GetLastWin32Error();
             if (!success && !continueOnException)

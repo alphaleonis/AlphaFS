@@ -16,7 +16,6 @@ Version 2.3  (2018-XX-XX)
 ### Breaking Changes
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
-- Issue #455: As a result, moved class `DeviceInfo` from `Alphaleonis.Win32.Filesystem` to `Alphaleonis.Win32.Device` namespace.
 
 
 Version 2.2.2  (2018-06-05)

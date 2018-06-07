@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Get through NativeMethod.
-         var allDrives = NativeMethods.GetLogicalDrives();
+         var allDrives = Device.NativeMethods.GetLogicalDrives();
 
          var lastError = Marshal.GetLastWin32Error();
 

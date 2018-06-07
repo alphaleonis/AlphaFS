@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Device
 
          // Get storage device info.
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, NativeMethods.FILE_ANY_ACCESS))
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, Filesystem.NativeMethods.FILE_ANY_ACCESS))
          {
             var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath);
             
@@ -145,7 +145,7 @@ namespace Alphaleonis.Win32.Device
 
          // Get storage device info.
 
-         using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, NativeMethods.DefaultFileBufferSize / 2))
+         using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, Filesystem.NativeMethods.DefaultFileBufferSize / 2))
          {
             if (null == safeBuffer)
             {

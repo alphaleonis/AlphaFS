@@ -22,6 +22,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -93,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             {
-               var success = NativeMethods.DefineDosDevice(deviceAttributes, deviceName, targetPath);
+               var success = Device.NativeMethods.DefineDosDevice(deviceAttributes, deviceName, targetPath);
 
                var lastError = Marshal.GetLastWin32Error();
                if (!success)

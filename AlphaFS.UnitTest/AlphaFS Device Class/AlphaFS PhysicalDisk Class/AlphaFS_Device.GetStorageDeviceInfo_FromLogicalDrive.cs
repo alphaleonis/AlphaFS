@@ -56,12 +56,12 @@ namespace AlphaFS.UnitTest
             if (driveInfo.DriveType == System.IO.DriveType.Fixed)
             {
                gotDisk = true;
-               Assert.AreEqual(Alphaleonis.Win32.Filesystem.StorageDeviceType.Disk, storageDeviceInfo.DeviceType);
+               Assert.AreEqual(Alphaleonis.Win32.Device.StorageDeviceType.Disk, storageDeviceInfo.DeviceType);
             }
 
 
             if (driveInfo.DriveType == System.IO.DriveType.CDRom)
-               Assert.AreEqual(Alphaleonis.Win32.Filesystem.StorageDeviceType.CDRom, storageDeviceInfo.DeviceType);
+               Assert.AreEqual(Alphaleonis.Win32.Device.StorageDeviceType.CDRom, storageDeviceInfo.DeviceType);
 
 
             Console.WriteLine();

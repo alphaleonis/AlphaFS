@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (var handle = NativeMethods.FindFirstVolumeMountPoint(volumeGuid, buffer, (uint)buffer.Capacity))
+         using (var handle = Device.NativeMethods.FindFirstVolumeMountPoint(volumeGuid, buffer, (uint)buffer.Capacity))
          {
             var lastError = Marshal.GetLastWin32Error();
 
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
             yield return buffer.ToString();
 
 
-            while (NativeMethods.FindNextVolumeMountPoint(handle, buffer, (uint)buffer.Capacity))
+            while (Device.NativeMethods.FindNextVolumeMountPoint(handle, buffer, (uint)buffer.Capacity))
             {
                lastError = Marshal.GetLastWin32Error();
 

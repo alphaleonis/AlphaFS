@@ -50,7 +50,7 @@ namespace AlphaFS.UnitTest
 
             try
             {
-               Alphaleonis.Win32.Filesystem.Volume.DefineDosDevice(drive, folder.FullName, Alphaleonis.Win32.Filesystem.DosDeviceAttributes.RawTargetPath);
+               Alphaleonis.Win32.Filesystem.Volume.DefineDosDevice(drive, folder.FullName, Alphaleonis.Win32.Device.DosDeviceAttributes.RawTargetPath);
 
 
                // Remove Symbolic Link, no exact match: fail.

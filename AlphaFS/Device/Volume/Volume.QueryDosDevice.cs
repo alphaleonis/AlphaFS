@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                var cBuffer = new char[bufferSize];
 
-               returnedBufferSize = NativeMethods.QueryDosDevice(deviceName, cBuffer, bufferSize);
+               returnedBufferSize = Device.NativeMethods.QueryDosDevice(deviceName, cBuffer, bufferSize);
 
                var lastError = Marshal.GetLastWin32Error();
 

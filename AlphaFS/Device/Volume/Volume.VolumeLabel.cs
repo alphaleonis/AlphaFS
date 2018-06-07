@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeName");
 
 
-         var success = NativeMethods.SetVolumeLabel(null, volumeName);
+         var success = Device.NativeMethods.SetVolumeLabel(null, volumeName);
 
          var lastError = Marshal.GetLastWin32Error();
          if (!success)
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
          // NTFS uses a limit of 32 characters for the volume label as of Windows Server 2003.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
-            var success = NativeMethods.SetVolumeLabel(volumePath, volumeName);
+            var success = Device.NativeMethods.SetVolumeLabel(volumePath, volumeName);
 
             var lastError = Marshal.GetLastWin32Error();
             if (!success)

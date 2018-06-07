@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Device
             return null;
 
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, NativeMethods.FILE_ANY_ACCESS))
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, Filesystem.NativeMethods.FILE_ANY_ACCESS))
 
             return GetStoragePartitionInfoNative(safeHandle, devicePath);
       }
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Device
 
          // Get storage partition info.
 
-         using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, 0, pathToDevice, NativeMethods.DefaultFileBufferSize / 4))
+         using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, 0, pathToDevice, Filesystem.NativeMethods.DefaultFileBufferSize / 4))
          {
             if (null == safeBuffer)
             {

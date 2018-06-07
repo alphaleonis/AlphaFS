@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-            while (!NativeMethods.GetVolumePathNamesForVolumeName(volumeGuid, buffer, (uint) buffer.Length, out bufferSize))
+            while (!Device.NativeMethods.GetVolumePathNamesForVolumeName(volumeGuid, buffer, (uint) buffer.Length, out bufferSize))
             {
                var lastError = Marshal.GetLastWin32Error();
 

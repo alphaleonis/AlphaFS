@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
          var hostName = Environment.MachineName;
          var classCnt = 0;
 
-         foreach (var deviceClass in EnumMemberToList<Alphaleonis.Win32.Filesystem.DeviceGuid>())
+         foreach (var deviceClass in EnumMemberToList<Alphaleonis.Win32.Device.DeviceGuid>())
          {
             Console.WriteLine("#{0:000}\tClass: [{1}]", ++classCnt, deviceClass);
 

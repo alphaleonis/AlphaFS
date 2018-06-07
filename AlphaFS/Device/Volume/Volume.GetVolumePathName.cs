@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
             // GetVolumePathName()
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-            var success = NativeMethods.GetVolumePathName(pathLp, volumeRootPath, (uint) volumeRootPath.Capacity);
+            var success = Device.NativeMethods.GetVolumePathName(pathLp, volumeRootPath, (uint) volumeRootPath.Capacity);
 
             var lastError = Marshal.GetLastWin32Error();
 

@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
          var buffer = new StringBuilder(50);
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-         using (var handle = NativeMethods.FindFirstVolume(buffer, (uint) buffer.Capacity))
+         using (var handle = Device.NativeMethods.FindFirstVolume(buffer, (uint) buffer.Capacity))
          {
             var lastError = Marshal.GetLastWin32Error();
 
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
             yield return buffer.ToString();
 
 
-            while (NativeMethods.FindNextVolume(handle, buffer, (uint) buffer.Capacity))
+            while (Device.NativeMethods.FindNextVolume(handle, buffer, (uint) buffer.Capacity))
             {
                lastError = Marshal.GetLastWin32Error();
 

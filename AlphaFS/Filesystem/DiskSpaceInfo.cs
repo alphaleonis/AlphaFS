@@ -205,7 +205,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                long freeBytesAvailable, totalNumberOfBytes, totalNumberOfFreeBytes;
 
-               var success = NativeMethods.GetDiskFreeSpaceEx(DriveName, out freeBytesAvailable, out totalNumberOfBytes, out totalNumberOfFreeBytes);
+               var success = Device.NativeMethods.GetDiskFreeSpaceEx(DriveName, out freeBytesAvailable, out totalNumberOfBytes, out totalNumberOfFreeBytes);
 
                lastError = Marshal.GetLastWin32Error();
 
@@ -226,7 +226,7 @@ namespace Alphaleonis.Win32.Filesystem
                int sectorsPerCluster, bytesPerSector, numberOfFreeClusters;
                uint totalNumberOfClusters;
 
-               var success = NativeMethods.GetDiskFreeSpace(DriveName, out sectorsPerCluster, out bytesPerSector, out numberOfFreeClusters, out totalNumberOfClusters);
+               var success = Device.NativeMethods.GetDiskFreeSpace(DriveName, out sectorsPerCluster, out bytesPerSector, out numberOfFreeClusters, out totalNumberOfClusters);
 
                lastError = Marshal.GetLastWin32Error();
 

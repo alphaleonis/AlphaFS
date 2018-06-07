@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
       internal static void DeleteDirectoryJunction(SafeFileHandle safeHandle)
       {
-         var reparseDataBuffer = new NativeMethods.REPARSE_DATA_BUFFER
+         var reparseDataBuffer = new Filesystem.NativeMethods.REPARSE_DATA_BUFFER
          {
             ReparseTag = ReparsePointTag.MountPoint,
             ReparseDataLength = 0,

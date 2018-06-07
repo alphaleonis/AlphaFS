@@ -22,9 +22,8 @@
 using Alphaleonis.Win32.Network;
 using System;
 using System.Security;
-using Alphaleonis.Win32.Filesystem;
 
-namespace Alphaleonis.Win32.Device
+namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>[AlphaFS] Provides access to information of a device.</summary>
    [Serializable]

@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
             // 2014-01-29: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
             // The string must end with a trailing backslash.
-            var success = NativeMethods.SetVolumeMountPoint(volumeMountPoint, volumeGuid);
+            var success = Device.NativeMethods.SetVolumeMountPoint(volumeMountPoint, volumeGuid);
 
             var lastError = Marshal.GetLastWin32Error();
             if (!success)

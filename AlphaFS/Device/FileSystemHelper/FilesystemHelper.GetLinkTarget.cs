@@ -39,13 +39,13 @@ namespace Alphaleonis.Win32.Device
       {
          using (var safeBuffer = GetLinkTargetData(safeHandle, reparsePath))
          {
-            var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>();
+            var header = safeBuffer.PtrToStructure<Filesystem.NativeMethods.ReparseDataBufferHeader>();
 
-            var marshalReparseBuffer = (int)Marshal.OffsetOf(typeof(NativeMethods.ReparseDataBufferHeader), "data");
+            var marshalReparseBuffer = (int)Marshal.OffsetOf(typeof(Filesystem.NativeMethods.ReparseDataBufferHeader), "data");
 
             var dataOffset = (int)(marshalReparseBuffer + (header.ReparseTag == ReparsePointTag.MountPoint
-               ? Marshal.OffsetOf(typeof(NativeMethods.MountPointReparseBuffer), "data")
-               : Marshal.OffsetOf(typeof(NativeMethods.SymbolicLinkReparseBuffer), "data")).ToInt64());
+               ? Marshal.OffsetOf(typeof(Filesystem.NativeMethods.MountPointReparseBuffer), "data")
+               : Marshal.OffsetOf(typeof(Filesystem.NativeMethods.SymbolicLinkReparseBuffer), "data")).ToInt64());
 
             var dataBuffer = new byte[MAXIMUM_REPARSE_DATA_BUFFER_SIZE - dataOffset];
 
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Device
                // MountPoint can be a junction or mounted drive (mounted drive starts with "\??\Volume").
 
                case ReparsePointTag.MountPoint:
-                  var mountPoint = safeBuffer.PtrToStructure<NativeMethods.MountPointReparseBuffer>(marshalReparseBuffer);
+                  var mountPoint = safeBuffer.PtrToStructure<Filesystem.NativeMethods.MountPointReparseBuffer>(marshalReparseBuffer);
 
                   safeBuffer.CopyTo(dataOffset, dataBuffer);
 
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Device
 
 
                case ReparsePointTag.SymLink:
-                  var symLink = safeBuffer.PtrToStructure<NativeMethods.SymbolicLinkReparseBuffer>(marshalReparseBuffer);
+                  var symLink = safeBuffer.PtrToStructure<Filesystem.NativeMethods.SymbolicLinkReparseBuffer>(marshalReparseBuffer);
 
                   safeBuffer.CopyTo(dataOffset, dataBuffer);
 

@@ -22,6 +22,7 @@
 using System;
 using System.IO;
 using System.Security;
+using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -108,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (var safeHandle = CreateFileCore(transaction, reparsePath, eAttributes, null, FileMode.Open, 0, FileShare.ReadWrite, pathFormat != PathFormat.LongFullPath, continueOnException, pathFormat))
 
-            return null != safeHandle ? Device.FileSystemHelper.GetLinkTargetInfo(safeHandle, reparsePath) : null;
+            return null != safeHandle ? FileSystemHelper.GetLinkTargetInfo(safeHandle, reparsePath) : null;
       }
    }
 }

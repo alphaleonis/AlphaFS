@@ -24,6 +24,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security;
 using System.Security.AccessControl;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Device
 {

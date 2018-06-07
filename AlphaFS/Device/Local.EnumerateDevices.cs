@@ -27,7 +27,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using Alphaleonis.Win32.Filesystem;
-using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 
 namespace Alphaleonis.Win32.Device
 {
@@ -153,7 +152,7 @@ namespace Alphaleonis.Win32.Device
             NativeError.ThrowException(lastError, hostName);
 
 
-         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize / 8)) // 512
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Filesystem.NativeMethods.DefaultFileBufferSize / 8)) // 512
          {
             lastError = NativeMethods.CM_Get_Device_ID_Ex(diData.DevInst, safeBuffer, (uint) safeBuffer.Capacity, 0, safeMachineHandle);
 
@@ -193,7 +192,7 @@ namespace Alphaleonis.Win32.Device
             return null;
 
 
-         var bufferSize = NativeMethods.DefaultFileBufferSize / 32; // 128
+         var bufferSize = Filesystem.NativeMethods.DefaultFileBufferSize / 32; // 128
 
          var descriptionBuffer = new byte[bufferSize];
          ulong propertyType = 0;
@@ -220,7 +219,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       private static string GetDeviceRegistryProperty(SafeHandle safeHandle, NativeMethods.SP_DEVINFO_DATA infoData, NativeMethods.SPDRP property)
       {
-         var bufferSize = NativeMethods.DefaultFileBufferSize / 8; // 512
+         var bufferSize = Filesystem.NativeMethods.DefaultFileBufferSize / 8; // 512
 
          while (true)
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))

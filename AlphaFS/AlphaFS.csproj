@@ -329,20 +329,20 @@
     <Compile Include="Filesystem\Native Methods\NativeMethods.ErrorMode.cs" />
     <Compile Include="Filesystem\Native Other\BY_HANDLE_FILE_INFORMATION.cs" />
     <Compile Include="Filesystem\Native Other\COPY_FILE_FLAGS.cs" />
-    <Compile Include="Filesystem\Native Other\DEVPROPKEY.cs" />
-    <Compile Include="Filesystem\Native Other\DiskInt13Union.cs" />
-    <Compile Include="Filesystem\Native Other\DiskPartitionType.cs" />
-    <Compile Include="Filesystem\Native Other\DISK_DETECTION_INFO.cs" />
-    <Compile Include="Filesystem\Native Other\DISK_EXTENT.cs" />
-    <Compile Include="Filesystem\Native Other\DISK_EX_INT13_INFO.cs" />
-    <Compile Include="Filesystem\Native Other\DISK_GEOMETRY.cs" />
-    <Compile Include="Filesystem\Native Other\DISK_GEOMETRY_EX.cs" />
-    <Compile Include="Filesystem\Native Other\DISK_INT13_INFO.cs" />
-    <Compile Include="Filesystem\Native Other\DISK_PARTITION_INFO.cs" />
-    <Compile Include="Filesystem\Native Other\DRIVE_LAYOUT_INFORMATION_EX.cs" />
-    <Compile Include="Filesystem\Native Other\DRIVE_LAYOUT_INFORMATION_GPT.cs" />
-    <Compile Include="Filesystem\Native Other\DRIVE_LAYOUT_INFORMATION_MBR.cs" />
-    <Compile Include="Filesystem\Native Other\EfiPartitionAttributes.cs" />
+    <Compile Include="Device\Native Other\DEVPROPKEY.cs" />
+    <Compile Include="Device\Native Other\DiskInt13Union.cs" />
+    <Compile Include="Device\Native Methods\NativeMethods.DiskPartitionType.cs" />
+    <Compile Include="Device\Native Other\DISK_DETECTION_INFO.cs" />
+    <Compile Include="Device\Native Other\DISK_EXTENT.cs" />
+    <Compile Include="Device\Native Other\DISK_EX_INT13_INFO.cs" />
+    <Compile Include="Device\Native Other\DISK_GEOMETRY.cs" />
+    <Compile Include="Device\Native Other\DISK_GEOMETRY_EX.cs" />
+    <Compile Include="Device\Native Other\DISK_INT13_INFO.cs" />
+    <Compile Include="Device\Native Other\DISK_PARTITION_INFO.cs" />
+    <Compile Include="Device\Native Other\DRIVE_LAYOUT_INFORMATION_EX.cs" />
+    <Compile Include="Device\Native Other\DRIVE_LAYOUT_INFORMATION_GPT.cs" />
+    <Compile Include="Device\Native Other\DRIVE_LAYOUT_INFORMATION_MBR.cs" />
+    <Compile Include="Device\Native Methods\NativeMethods.EfiPartitionAttributes.cs" />
     <Compile Include="Filesystem\Native Other\FILETIME.cs" />
     <Compile Include="Filesystem\Native Other\FILE_BASIC_INFO.cs" />
     <Compile Include="Filesystem\Native Other\FILE_ID_BOTH_DIR_INFO.cs" />
@@ -352,34 +352,34 @@
     <Compile Include="Filesystem\Native Other\FINDEX_SEARCH_OPS.cs" />
     <Compile Include="Filesystem\Native Other\FIND_FIRST_EX_FLAGS.cs" />
     <Compile Include="Filesystem\Native Other\GET_FILEEX_INFO_LEVELS.cs" />
-    <Compile Include="Filesystem\Native Other\IoControlCode.cs" />
-    <Compile Include="Filesystem\Native Other\IoMethod.cs" />
+    <Compile Include="Device\Native Other\IoControlCode.cs" />
+    <Compile Include="Device\Native Other\IoMethod.cs" />
     <Compile Include="Filesystem\Native Other\MountPointReparseBuffer.cs" />
     <Compile Include="Filesystem\Native Other\MOVE_FILE_FLAGS.cs" />
-    <Compile Include="Filesystem\Native Other\PARTITION_INFORMATION_EX.cs" />
-    <Compile Include="Filesystem\Native Other\PARTITION_INFORMATION_GPT.cs" />
-    <Compile Include="Filesystem\Native Other\PARTITION_INFORMATION_MBR.cs" />
-    <Compile Include="Filesystem\Native Other\PARTITION_STYLE.cs" />
+    <Compile Include="Device\Native Other\PARTITION_INFORMATION_EX.cs" />
+    <Compile Include="Device\Native Other\PARTITION_INFORMATION_GPT.cs" />
+    <Compile Include="Device\Native Other\PARTITION_INFORMATION_MBR.cs" />
+    <Compile Include="Device\Native Other\PARTITION_STYLE.cs" />
     <Compile Include="Filesystem\Native Other\ReparseDataBufferHeader.cs" />
     <Compile Include="Filesystem\Native Other\REPARSE_DATA_BUFFER.cs" />
-    <Compile Include="Filesystem\Native Other\SP_DEVICE_INTERFACE_DATA.cs" />
-    <Compile Include="Filesystem\Native Other\SP_DEVICE_INTERFACE_DETAIL_DATA.cs" />
-    <Compile Include="Filesystem\Native Other\SP_DEVINFO_DATA.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_ADAPTER_DESCRIPTOR.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_BUS_TYPE.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_DESCRIPTOR.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_NUMBER.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_DEVICE_TYPE.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_MEDIA_TYPE.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_PROPERTY_ID.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_PROPERTY_QUERY.cs" />
-    <Compile Include="Filesystem\Native Other\STORAGE_QUERY_TYPE.cs" />
+    <Compile Include="Device\Native Other\SP_DEVICE_INTERFACE_DATA.cs" />
+    <Compile Include="Device\Native Other\SP_DEVICE_INTERFACE_DETAIL_DATA.cs" />
+    <Compile Include="Device\Native Other\SP_DEVINFO_DATA.cs" />
+    <Compile Include="Device\Native Other\STORAGE_ADAPTER_DESCRIPTOR.cs" />
+    <Compile Include="Device\Native Other\STORAGE_BUS_TYPE.cs" />
+    <Compile Include="Device\Native Other\STORAGE_DEVICE_DESCRIPTOR.cs" />
+    <Compile Include="Device\Native Other\STORAGE_DEVICE_NUMBER.cs" />
+    <Compile Include="Device\Native Other\STORAGE_DEVICE_TYPE.cs" />
+    <Compile Include="Device\Native Other\STORAGE_MEDIA_TYPE.cs" />
+    <Compile Include="Device\Native Other\STORAGE_PROPERTY_ID.cs" />
+    <Compile Include="Device\Native Other\STORAGE_PROPERTY_QUERY.cs" />
+    <Compile Include="Device\Native Other\STORAGE_QUERY_TYPE.cs" />
     <Compile Include="Filesystem\Native Other\STREAM_ATTRIBUTE.cs" />
     <Compile Include="Filesystem\Native Other\STREAM_ID.cs" />
     <Compile Include="Filesystem\Native Other\STREAM_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Native Other\SymbolicLinkReparseBuffer.cs" />
-    <Compile Include="Filesystem\Native Other\VOLUME_DISK_EXTENTS.cs" />
-    <Compile Include="Filesystem\Native Other\VOLUME_INFO_FLAGS.cs" />
+    <Compile Include="Device\Native Other\VOLUME_DISK_EXTENTS.cs" />
+    <Compile Include="Device\Native Other\VOLUME_INFO_FLAGS.cs" />
     <Compile Include="Filesystem\Native Other\WIN32_FILE_ATTRIBUTE_DATA.cs" />
     <Compile Include="Filesystem\Native Other\WIN32_FIND_DATA.cs" />
     <Compile Include="Filesystem\Native Other\WIN32_FIND_STREAM_DATA.cs" />
@@ -502,9 +502,9 @@
     <Compile Include="Filesystem\Native Methods\NativeMethods.KernelTransactions.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.Handles.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.FileManagement.cs" />
-    <Compile Include="Filesystem\Native Methods\NativeMethods.DiskManagement.cs" />
+    <Compile Include="Device\Native Methods\NativeMethods.DiskManagement.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.DirectoryManagement.cs" />
-    <Compile Include="Filesystem\Native Methods\NativeMethods.DeviceManagement.cs" />
+    <Compile Include="Device\Native Methods\NativeMethods.DeviceManagement.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.Constants.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.BackupStreams.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.PathManagement.cs" />
@@ -521,14 +521,14 @@
     <Compile Include="Filesystem\Structures, Enumerations\CopyMoveProgressCallbackReason.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\CopyMoveProgressResult.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\CopyOptions.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\DetectionType.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\DeviceGuid.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\DEVICE_INFORMATION_FLAGS.cs" />
+    <Compile Include="Device\Native Other\DetectionType.cs" />
+    <Compile Include="Device\Native Other\DeviceGuid.cs" />
+    <Compile Include="Device\Native Other\DEVICE_INFORMATION_FLAGS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DirectoryEnumerationFilters.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DirectoryEnumerationOptions.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\DiskPartitionType.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\DosDeviceAttributes.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\EfiPartitionAttributes.cs" />
+    <Compile Include="Device\Native Other\DiskPartitionType.cs" />
+    <Compile Include="Device\Native Other\DosDeviceAttributes.cs" />
+    <Compile Include="Device\Native Other\EfiPartitionAttributes.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\EncryptedFileRawMode.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\ErrorMode.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\ExtendedFileAttributes.cs" />
@@ -537,26 +537,26 @@
     <Compile Include="Filesystem\Structures, Enumerations\FinalPathFormats.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\GetFullPathOptions.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\MoveOptions.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\PartitionStyle.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\PartitionType..cs" />
+    <Compile Include="Device\Native Other\PartitionStyle.cs" />
+    <Compile Include="Device\Native Other\PartitionType..cs" />
     <Compile Include="Filesystem\Structures, Enumerations\PathFormat.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\ReparsePointTag.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\SPDRP.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\StorageBusType.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\StorageDeviceType.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\StorageMediaType.cs" />
+    <Compile Include="Filesystem\Native Other\ReparsePointTag.cs" />
+    <Compile Include="Device\Native Other\SPDRP.cs" />
+    <Compile Include="Device\Native Other\StorageBusType.cs" />
+    <Compile Include="Device\Native Other\StorageDeviceType.cs" />
+    <Compile Include="Device\Native Other\StorageMediaType.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\StreamAttribute.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\StreamId.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\SymbolicLinkTarget.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\SymbolicLinkType.cs" />
+    <Compile Include="Filesystem\Native Other\SymbolicLinkTarget.cs" />
+    <Compile Include="Filesystem\Native Other\SymbolicLinkType.cs" />
     <Compile Include="Safe Handles\SafeTokenHandle.cs" />
-    <Compile Include="Safe Handles\SafeCmConnectMachineHandle.cs" />
+    <Compile Include="Device\Native Other\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Safe Handles\SafeEncryptedFileRawHandle.cs" />
-    <Compile Include="Safe Handles\SafeSetupDiClassDevsExHandle.cs" />
+    <Compile Include="Device\Native Other\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />
     <Compile Include="Filesystem\CopyMoveResult.cs" />
     <Compile Include="Filesystem\ChangeErrorMode.cs" />
-    <Compile Include="Filesystem\Link Stream\LinkTargetInfo.cs" />
+    <Compile Include="Filesystem\Native Other\LinkTargetInfo.cs" />
     <Compile Include="Filesystem\Exceptions\NotAReparsePointException.cs" />
     <Compile Include="Filesystem\Shell32.cs" />
     <Compile Include="Network\DfsInfo.cs" />
@@ -679,7 +679,7 @@
     <Compile Include="Security\Native Other\SECURITY_DESCRIPTOR_CONTROL.cs" />
     <Compile Include="Security\Native Other\SECURITY_INFORMATION.cs" />
     <Compile Include="Safe Handles\SafeLocalMemoryBufferHandle.cs" />
-    <Compile Include="Filesystem\Link Stream\SymbolicLinkTargetInfo.cs" />
+    <Compile Include="Filesystem\Native Other\SymbolicLinkTargetInfo.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionalConflictException.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -708,7 +708,7 @@
     <Compile Include="Security\SecurityAttributes.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Win32Errors.cs" />
-    <Compile Include="Filesystem\Native Methods\NativeMethods.VolumeManagement.cs" />
+    <Compile Include="Device\Native Methods\NativeMethods.VolumeManagement.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -736,7 +736,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

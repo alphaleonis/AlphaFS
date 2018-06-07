@@ -36,14 +36,14 @@ namespace Alphaleonis.Win32.Device
       {
          var targetDirBytes = Encoding.Unicode.GetBytes(Path.NonInterpretedPathPrefix + Path.GetRegularPathCore(directoryPath, GetFullPathOptions.AddTrailingDirectorySeparator, false));
 
-         var header = new NativeMethods.ReparseDataBufferHeader
+         var header = new Filesystem.NativeMethods.ReparseDataBufferHeader
          {
             ReparseTag = ReparsePointTag.MountPoint,
             ReparseDataLength = (ushort) (targetDirBytes.Length + 12)
          };
 
 
-         var mountPoint = new NativeMethods.MountPointReparseBuffer
+         var mountPoint = new Filesystem.NativeMethods.MountPointReparseBuffer
          {
             SubstituteNameOffset = 0,
             SubstituteNameLength = (ushort) targetDirBytes.Length,
@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Device
          };
 
 
-         var reparseDataBuffer = new NativeMethods.REPARSE_DATA_BUFFER
+         var reparseDataBuffer = new Filesystem.NativeMethods.REPARSE_DATA_BUFFER
          {
             ReparseTag = header.ReparseTag,
             ReparseDataLength = header.ReparseDataLength,
