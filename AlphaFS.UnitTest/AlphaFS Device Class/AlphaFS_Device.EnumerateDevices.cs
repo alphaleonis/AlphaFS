@@ -45,14 +45,14 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         var tempPath = Environment.MachineName;
+         var hostName = Environment.MachineName;
          var classCnt = 0;
 
          foreach (var deviceClass in EnumMemberToList<Alphaleonis.Win32.Filesystem.DeviceGuid>())
          {
             Console.WriteLine("#{0:000}\tClass: [{1}]", ++classCnt, deviceClass);
 
-            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(tempPath, deviceClass))
+            foreach (var device in Alphaleonis.Win32.Filesystem.Device.EnumerateDevices(hostName, deviceClass))
                UnitTestConstants.Dump(device);
 
             Console.WriteLine();

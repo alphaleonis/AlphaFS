@@ -24,11 +24,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides access to partition information of a storage device.</summary>
+   /// <summary>[AlphaFS] Provides access to partition information of a storage device.</summary>
    [Serializable]
    [SecurityCritical]
    public sealed class StoragePartitionInfo
@@ -42,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Constructors
 
-      /// <summary>Initializes a StoragePartitionInfo instance.</summary>
+      /// <summary>[AlphaFS] Initializes a StoragePartitionInfo instance.</summary>
       public StoragePartitionInfo()
       {
          DeviceNumber = -1;
@@ -80,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
                GptPartitionInfo = new Collection<StorageGptPartitionInfo>();
 
                var partitionTypes = Utils.EnumToArray<PartitionType>();
-
+               
                for (var i = 0; i <= PartitionCount - 1; i++)
                   GptPartitionInfo.Add(new StorageGptPartitionInfo(partitions[i], partitionTypes));
                
@@ -88,6 +89,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             case PartitionStyle.Mbr:
+
+               if (null == MbrPartitionInfo)
+                  MbrPartitionInfo = new Collection<StorageMbrPartitionInfo>();
+
+
                for (var i = 0; i <= PartitionCount - 1; i++)
                {
                   var partition = partitions[i];
@@ -97,10 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   if (partition.Mbr.PartitionType == (NativeMethods.DiskPartitionType) DiskPartitionType.UnusedEntry)
                      continue;
-
-
-                  if (null == MbrPartitionInfo)
-                     MbrPartitionInfo = new Collection<StorageMbrPartitionInfo>();
+                  
 
                   MbrPartitionInfo.Add(new StorageMbrPartitionInfo(partition));
                }
@@ -111,6 +114,10 @@ namespace Alphaleonis.Win32.Filesystem
 
                break;
          }
+
+
+         IsOnDynamicDisk = null != GptPartitionInfo && GptPartitionInfo.Any(partition => partition.PartitionType == PartitionType.LdmData) ||
+                           null != MbrPartitionInfo && MbrPartitionInfo.Any(partition => partition.DiskPartitionType == DiskPartitionType.Ldm);
       }
 
       #endregion // Constructors
@@ -157,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
       }
-      
+
 
       ///// <summary>The size of the usable blocks on the disk, in bytes.</summary>
       //public long GptUsableLength
@@ -179,6 +186,10 @@ namespace Alphaleonis.Win32.Filesystem
       //   }
       //}
 
+
+      /// <summary><c>true</c> if the partition is on a dynamic disk.</summary>
+      public bool IsOnDynamicDisk { get; private set; }
+      
 
       /// <summary>Contains partition information specific to master boot record (MBR) disks.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mbr")]

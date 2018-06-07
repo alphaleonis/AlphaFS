@@ -26,14 +26,14 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides access to information of a storage device.</summary>
+   /// <summary>[AlphaFS] Provides access to information of a storage device.</summary>
    [Serializable]
    [SecurityCritical]
    public sealed class StorageDeviceInfo
    {
       #region Constructors
 
-      /// <summary>Initializes a StorageDeviceInfo instance.</summary>
+      /// <summary>[AlphaFS] Initializes a StorageDeviceInfo instance.</summary>
       public StorageDeviceInfo()
       {
          DeviceType = StorageDeviceType.Unknown;

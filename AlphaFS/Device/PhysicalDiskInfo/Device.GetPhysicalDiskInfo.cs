@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>s
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c>.</para>
       /// </param>
       [SecurityCritical]
       public static PhysicalDiskInfo GetPhysicalDiskInfo(string devicePath)
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c>.</para>
       /// </param>
       /// <param name="storageDeviceInfo">A <see cref="StorageDeviceInfo"/> instance.</param>
       /// <param name="deviceInfo">A <see cref="DeviceInfo"/> instance.</param>

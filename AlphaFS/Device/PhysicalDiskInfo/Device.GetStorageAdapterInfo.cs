@@ -41,13 +41,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c>.</para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>.</para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: "\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".</para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c>.</para>
       /// </param>
       public static StorageAdapterInfo GetStorageAdapterInfo(string devicePath)
       {
-         string logicalDrive;
+         string unused;
 
-         var pathToDevice = GetDevicePath(devicePath, out logicalDrive);
+         var pathToDevice = GetDevicePath(devicePath, out unused);
 
          if (Utils.IsNullOrWhiteSpace(pathToDevice))
             return null;
@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   safeHandleRetry = OpenPhysicalDisk(pathToDevice, FileSystemRights.Read);
 
-                  isRetry = null != safeHandleRetry && !safeHandleRetry.IsClosed && !safeHandleRetry.IsInvalid;
+                  isRetry = NativeMethods.IsValidHandle(safeHandleRetry, false);
                }
 
 

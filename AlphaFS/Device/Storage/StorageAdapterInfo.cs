@@ -26,14 +26,14 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides access to adapter information of a storage device.</summary>
+   /// <summary>[AlphaFS] Provides access to adapter information of a storage device.</summary>
    [Serializable]
    [SecurityCritical]
    public sealed class StorageAdapterInfo
    {
       #region Constructors
 
-      /// <summary>Initializes a StorageAdapterInfo instance.</summary>
+      /// <summary>[AlphaFS] Initializes a StorageAdapterInfo instance.</summary>
       public StorageAdapterInfo()
       {
          BusType = StorageBusType.Unknown;

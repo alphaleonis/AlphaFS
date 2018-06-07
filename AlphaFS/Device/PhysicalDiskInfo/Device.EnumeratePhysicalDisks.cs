@@ -148,7 +148,7 @@ namespace Alphaleonis.Win32.Filesystem
             var volumePartitionNumber = pVolume.StorageDeviceInfo.PartitionNumber;
 
 
-            PopulateVolumeDetails(pDiskInfo, pVolume.StorageDeviceInfo.PartitionNumber, pVolume.DevicePath);
+            PopulateVolumeDetails(pDiskInfo, volumePartitionNumber, pVolume.DevicePath);
 
 
             // Get logical drive from volume matching DeviceNumber and PartitionNumber.

@@ -25,6 +25,8 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Device
    {
+      /// <summary>Determines the type of device path.</summary>
+      /// <returns>The final device path with a <see cref="Path.DirectorySeparator"/>.</returns>
       internal static string ValidateDevicePath(string devicePath, out bool isDrive, out bool isVolume, out bool isDeviceInfo)
       {
          if (Utils.IsNullOrWhiteSpace(devicePath))
