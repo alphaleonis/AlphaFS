@@ -19,12 +19,12 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.Win32.SafeHandles;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
 using Alphaleonis.Win32.Filesystem;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {

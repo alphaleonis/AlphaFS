@@ -23,13 +23,14 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>[AlphaFS] The requested operation could not be completed because the device is not ready.</summary>
    [Serializable]
-   public class DeviceNotReadyException : System.IO.IOException
+   public class DeviceNotReadyException : IOException
    {
       private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_READY);
       private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_NOT_READY, new Win32Exception((int) Win32Errors.ERROR_NOT_READY).Message.Trim().TrimEnd('.').Trim());

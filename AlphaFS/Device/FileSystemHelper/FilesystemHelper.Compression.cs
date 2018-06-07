@@ -23,6 +23,7 @@ using System.IO;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
+using File = Alphaleonis.Win32.Filesystem.File;
 
 namespace Alphaleonis.Win32.Device
 {
@@ -36,7 +37,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       internal static void ToggleCompressionCore(KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {
-         using (var safeHandle = Win32.Filesystem.File.CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, false, pathFormat))
+         using (var safeHandle = File.CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, false, pathFormat))
 
          using (Local.InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.FSCTL_SET_COMPRESSION, compress ? 1 : 0, path)) { }
       }

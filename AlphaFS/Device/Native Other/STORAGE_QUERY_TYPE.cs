@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Device
       public enum STORAGE_QUERY_TYPE
       {
          /// <summary>Instructs the driver to return an appropriate descriptor.</summary>
-         PropertyStandardQuery = 0,
+         PropertyStandardQuery = 0
 
          ///// <summary>Instructs the driver to report whether the descriptor is supported.</summary>
          //PropertyExistsQuery = 1,

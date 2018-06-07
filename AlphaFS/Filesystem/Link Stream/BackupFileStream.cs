@@ -19,8 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Security;
-using Microsoft.Win32.SafeHandles;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -29,6 +27,8 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
 using System.Text;
+using Alphaleonis.Win32.Security;
+using Microsoft.Win32.SafeHandles;
 using SecurityNativeMethods = Alphaleonis.Win32.Security.NativeMethods;
 
 namespace Alphaleonis.Win32.Filesystem

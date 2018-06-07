@@ -22,6 +22,7 @@
 using System;
 using System.IO;
 using System.Security;
+using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -103,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DisableCompression()
       {
-         Device.FileSystemHelper.ToggleCompressionCore(Transaction, LongFullName, false, PathFormat.LongFullPath);
+         FileSystemHelper.ToggleCompressionCore(Transaction, LongFullName, false, PathFormat.LongFullPath);
       }
 
       #endregion // DisableCompression
@@ -118,7 +119,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void EnableCompression()
       {
-         Device.FileSystemHelper.ToggleCompressionCore(Transaction, LongFullName, true, PathFormat.LongFullPath);
+         FileSystemHelper.ToggleCompressionCore(Transaction, LongFullName, true, PathFormat.LongFullPath);
       }
 
       #endregion // EnableCompression

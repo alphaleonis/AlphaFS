@@ -25,6 +25,7 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
+using Alphaleonis.Win32.Security;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
@@ -37,7 +38,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisks()
       {
-         return EnumeratePhysicalDisksCore(Security.ProcessContext.IsElevatedProcess);
+         return EnumeratePhysicalDisksCore(ProcessContext.IsElevatedProcess);
       }
 
 

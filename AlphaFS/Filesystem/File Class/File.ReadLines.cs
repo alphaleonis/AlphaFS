@@ -24,7 +24,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security;
 using System.Text;
-using StreamReader = System.IO.StreamReader;
 
 namespace Alphaleonis.Win32.Filesystem
 {

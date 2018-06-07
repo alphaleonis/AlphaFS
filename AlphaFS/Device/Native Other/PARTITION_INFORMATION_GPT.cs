@@ -26,10 +26,11 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Contains GUID partition table (GPT) partition information.
-      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </summary>
+      /// <summary>Contains GUID partition table (GPT) partition information.</summary>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only]
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only]
+      /// </remarks>
       [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Unicode)]
       internal struct PARTITION_INFORMATION_GPT
       {

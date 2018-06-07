@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Device
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CM_Connect_MachineW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.I4)]
-      public static extern int CM_Connect_Machine([MarshalAs(UnmanagedType.LPWStr)] string uncServerName, out SafeCmConnectMachineHandle phMachine);
+      internal static extern int CM_Connect_Machine([MarshalAs(UnmanagedType.LPWStr)] string uncServerName, out SafeCmConnectMachineHandle phMachine);
 
 
       /// <summary>The CM_Get_Device_ID_Ex function retrieves the device instance ID for a specified device instance on a local or a remote machine.</summary>
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Device
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CM_Get_Device_ID_ExW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.I4)]
-      public static extern int CM_Get_Device_ID_Ex([MarshalAs(UnmanagedType.U4)] uint dnDevInst, SafeGlobalMemoryBufferHandle buffer, [MarshalAs(UnmanagedType.U4)] uint bufferLen, [MarshalAs(UnmanagedType.U4)] uint ulFlags, SafeCmConnectMachineHandle hMachine);
+      internal static extern int CM_Get_Device_ID_Ex([MarshalAs(UnmanagedType.U4)] uint dnDevInst, SafeGlobalMemoryBufferHandle buffer, [MarshalAs(UnmanagedType.U4)] uint bufferLen, [MarshalAs(UnmanagedType.U4)] uint ulFlags, SafeCmConnectMachineHandle hMachine);
 
 
       /// <summary>The CM_Disconnect_Machine function removes a connection to a remote machine.</summary>
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.
       /// <remarks>
-      ///   <para>To retrieve a handle to the device, you must call the <see cref="NativeMethods.CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
+      ///   <para>To retrieve a handle to the device, you must call the <see cref="Filesystem.NativeMethods.CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
       ///   <para>To specify a device name, use the following format: <c>\\.\DeviceName</c></para>
       ///   <para>Minimum supported client: Windows XP</para>
       ///   <para>Minimum supported server: Windows Server 2003</para>
@@ -125,7 +125,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.
       /// <remarks>
-      ///   <para>To retrieve a handle to the device, you must call the <see cref="NativeMethods.CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
+      ///   <para>To retrieve a handle to the device, you must call the <see cref="Filesystem.NativeMethods.CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
       ///   <para>To specify a device name, use the following format: <c>\\.\DeviceName</c></para>
       ///   <para>Minimum supported client: Windows XP</para>
       ///   <para>Minimum supported server: Windows Server 2003</para>
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.
       /// <remarks>
-      ///   <para>To retrieve a handle to the device, you must call the <see cref="NativeMethods.CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
+      ///   <para>To retrieve a handle to the device, you must call the <see cref="Filesystem.NativeMethods.CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
       ///   <para>To specify a device name, use the following format: <c>\\.\DeviceName</c></para>
       ///   <para>Minimum supported client: Windows XP</para>
       ///   <para>Minimum supported server: Windows Server 2003</para>
@@ -206,7 +206,7 @@ namespace Alphaleonis.Win32.Device
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
-      internal static extern NativeMethods.SafeSetupDiClassDevsExHandle SetupDiGetClassDevsEx(ref Guid classGuid, IntPtr enumerator, IntPtr hwndParent, [MarshalAs(UnmanagedType.U4)] DEVICE_INFORMATION_FLAGS devsExFlags, IntPtr deviceInfoSet, [MarshalAs(UnmanagedType.LPWStr)] string machineName, IntPtr reserved);
+      internal static extern SafeSetupDiClassDevsExHandle SetupDiGetClassDevsEx(ref Guid classGuid, IntPtr enumerator, IntPtr hwndParent, [MarshalAs(UnmanagedType.U4)] DEVICE_INFORMATION_FLAGS devsExFlags, IntPtr deviceInfoSet, [MarshalAs(UnmanagedType.LPWStr)] string machineName, IntPtr reserved);
 
 
       /// <summary>The SetupDiGetDeviceInterfaceDetail function returns details about a device interface.

@@ -20,10 +20,10 @@
  */
 
 using System.IO;
-using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {

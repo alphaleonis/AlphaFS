@@ -23,7 +23,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
-using Alphaleonis.Win32.Filesystem;
 using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device

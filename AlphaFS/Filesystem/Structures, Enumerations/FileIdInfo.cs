@@ -185,13 +185,13 @@ namespace Alphaleonis.Win32.Filesystem
 
             return string.Format(CultureInfo.InvariantCulture, "{0}-{1}-{2} : {3}-{4}-{5}",
 
-               ((uint)(_volumeSerialNumber >> 32)).ToString("X", CultureInfo.InvariantCulture),
-               ((ushort)(_volumeSerialNumber >> 16)).ToString("X", CultureInfo.InvariantCulture),
-               ((ushort)_volumeSerialNumber).ToString("X", CultureInfo.InvariantCulture),
+               ((uint) (_volumeSerialNumber >> 32)).ToString("X", CultureInfo.InvariantCulture),
+               ((ushort) (_volumeSerialNumber >> 16)).ToString("X", CultureInfo.InvariantCulture),
+               ((ushort) _volumeSerialNumber).ToString("X", CultureInfo.InvariantCulture),
 
                _fileIdHighPart.ToString("X", CultureInfo.InvariantCulture),
-               ((uint)(_fileIdLowPart >> 32)).ToString("X", CultureInfo.InvariantCulture),
-               ((uint)_fileIdLowPart).ToString("X", CultureInfo.InvariantCulture));
+               ((uint) (_fileIdLowPart >> 32)).ToString("X", CultureInfo.InvariantCulture),
+               ((uint) _fileIdLowPart).ToString("X", CultureInfo.InvariantCulture));
          }
       }
    }

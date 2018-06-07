@@ -23,7 +23,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security;
-using FileStream = System.IO.FileStream;
 
 namespace Alphaleonis.Win32.Filesystem
 {

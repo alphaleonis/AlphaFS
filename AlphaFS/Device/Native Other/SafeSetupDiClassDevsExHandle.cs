@@ -19,8 +19,8 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.Win32.SafeHandles;
 using System.Security;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {

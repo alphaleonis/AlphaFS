@@ -23,8 +23,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security;
-using Alphaleonis.Win32.Filesystem;
-using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 
 namespace Alphaleonis.Win32.Device
 {

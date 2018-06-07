@@ -21,7 +21,7 @@
 
 using System;
 using System.Security;
-using Alphaleonis.Win32.Filesystem;
+using Alphaleonis.Win32.Device;
 using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32
       /// </returns>
       protected override bool ReleaseHandle()
       {
-         return Device.NativeMethods.FindVolumeMountPointClose(handle);
+         return NativeMethods.FindVolumeMountPointClose(handle);
       }
    }
 }

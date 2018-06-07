@@ -34,7 +34,6 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Create an OpenResourceInfo instance.</summary>
       internal OpenResourceInfo(string hostName, NativeMethods.FILE_INFO_3 fileInfo)
       {
-         Host = hostName;
          HostName = hostName;
          Id = fileInfo.fi3_id;
          Permissions = fileInfo.fi3_permissions;
@@ -73,7 +72,10 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>The local or remote Host.</summary>
       [Obsolete("Use HostName")]
-      public string Host { get; private set; }
+      public string Host
+      {
+         get { return HostName; }
+      }
 
       /// <summary>The host name of this resource information.</summary>
       public string HostName { get; private set; }

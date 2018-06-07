@@ -23,7 +23,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Security;
-using SearchOption = System.IO.SearchOption;
 
 namespace Alphaleonis.Win32.Filesystem
 {

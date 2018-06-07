@@ -20,11 +20,11 @@
  */
 
 using System;
-using Microsoft.Win32.SafeHandles;
 using System.IO;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
+using Microsoft.Win32.SafeHandles;
 using File = Alphaleonis.Win32.Filesystem.File;
 
 namespace Alphaleonis.Win32.Device

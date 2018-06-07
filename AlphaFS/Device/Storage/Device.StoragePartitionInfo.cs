@@ -26,8 +26,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Security;
-using Alphaleonis.Win32.Filesystem;
-using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 
 namespace Alphaleonis.Win32.Device
 {
@@ -214,7 +212,7 @@ namespace Alphaleonis.Win32.Device
       public int PartitionCount { get; private set; }
 
 
-      /// <summary>The format of the partition. For a list of values, see <see cref="Alphaleonis.Win32.Filesystem.PartitionStyle"/>.</summary>
+      /// <summary>The format of the partition. For a list of values, see <see cref="Device.PartitionStyle"/>.</summary>
       public PartitionStyle PartitionStyle { get; private set; }
 
 

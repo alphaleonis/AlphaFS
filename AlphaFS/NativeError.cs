@@ -23,9 +23,11 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
 using Alphaleonis.Win32.Filesystem;
+using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace Alphaleonis.Win32
 {
@@ -87,7 +89,7 @@ namespace Alphaleonis.Win32
          switch (errorCode)
          {
             case Win32Errors.ERROR_INVALID_DRIVE:
-               throw new System.IO.DriveNotFoundException(errorMessage);
+               throw new DriveNotFoundException(errorMessage);
 
 
             case Win32Errors.ERROR_OPERATION_ABORTED:
@@ -95,11 +97,11 @@ namespace Alphaleonis.Win32
 
 
             case Win32Errors.ERROR_FILE_NOT_FOUND:
-               throw new System.IO.FileNotFoundException(errorMessage);
+               throw new FileNotFoundException(errorMessage);
 
 
             case Win32Errors.ERROR_PATH_NOT_FOUND:
-               throw new System.IO.DirectoryNotFoundException(errorMessage);
+               throw new DirectoryNotFoundException(errorMessage);
 
 
             case Win32Errors.ERROR_BAD_RECOVERY_POLICY:
@@ -167,7 +169,7 @@ namespace Alphaleonis.Win32
 
             default:
                // We don't have a specific exception to generate for this error.               
-               throw new System.IO.IOException(errorMessage, Win32Errors.GetHrFromWin32Error(errorCode));
+               throw new IOException(errorMessage, Win32Errors.GetHrFromWin32Error(errorCode));
          }
       }
    }

@@ -28,6 +28,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 using Alphaleonis.Win32;
+using Alphaleonis.Win32.Device;
 using Alphaleonis.Win32.Security;
 using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 
@@ -56,7 +57,7 @@ namespace Alphaleonis
 
 
             default:
-               IsValidHandle(safeBuffer, lastError, String.Format(CultureInfo.InvariantCulture, "Buffer size: {0}. Path: {1}", bufferSize.ToString(CultureInfo.InvariantCulture), pathForException));
+               IsValidHandle(safeBuffer, lastError, string.Format(CultureInfo.InvariantCulture, "Buffer size: {0}. Path: {1}", bufferSize.ToString(CultureInfo.InvariantCulture), pathForException));
                break;
          }
 
@@ -67,9 +68,9 @@ namespace Alphaleonis
 
       /// <summary>Gets an attribute on an enum field value.</summary>
       /// <returns>The description belonging to the enum option, as a string</returns>
-      /// <param name="enumValue">One of the <see cref="Alphaleonis.Win32.Filesystem.DeviceGuid"/> enum types.</param>
+      /// <param name="enumValue">One of the <see cref="DeviceGuid"/> enum types.</param>
       [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-      public static string GetEnumDescription(Enum enumValue)
+      internal static string GetEnumDescription(Enum enumValue)
       {
          var enumValueString = enumValue.ToString();
 
@@ -82,7 +83,7 @@ namespace Alphaleonis
 
 
       [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
-      public static T[] EnumToArray<T>()
+      internal static T[] EnumToArray<T>()
       {
          var enumType = typeof(T);
 
@@ -101,7 +102,7 @@ namespace Alphaleonis
 
 
       /// <summary>Checks that the object is not null.</summary>
-      public static bool IsNotNull<T>(T obj)
+      internal static bool IsNotNull<T>(T obj)
       {
          return !Equals(null, obj);
       }
@@ -110,7 +111,7 @@ namespace Alphaleonis
       /// <summary>Indicates whether a specified string is null, empty, or consists only of white-space characters.</summary>
       /// <returns><c>true</c> if the <paramref name="value"/> parameter is null or <see cref="string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
       /// <param name="value">The string to test.</param>
-      public static bool IsNullOrWhiteSpace(string value)
+      internal static bool IsNullOrWhiteSpace(string value)
       {
 #if NET35
          if (null != value)
@@ -163,7 +164,7 @@ namespace Alphaleonis
                handle.Close();
 
             if (throwException)
-               throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, Resources.Handle_Is_Invalid_Win32Error, lastError.ToString(CultureInfo.InvariantCulture)), "handle");
+               throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Handle_Is_Invalid_Win32Error, lastError.ToString(CultureInfo.InvariantCulture)), "handle");
 
             return false;
          }
@@ -198,7 +199,7 @@ namespace Alphaleonis
 
 
       /// <summary>Converts a number of type T to string formated using <see cref="CultureInfo.InvariantCulture"/>, suffixed with a unit size.</summary>
-      public static string UnitSizeToText<T>(T numberOfBytes)
+      internal static string UnitSizeToText<T>(T numberOfBytes)
       {
          // CultureInfo.CurrentCulture uses the culture as set in the Region applet.
 
@@ -207,7 +208,7 @@ namespace Alphaleonis
 
 
       /// <summary>Converts a number of type T to string formated using the specified <paramref name="cultureInfo"/>, suffixed with a unit size.</summary>
-      public static string UnitSizeToText<T>(T numberOfBytes, CultureInfo cultureInfo)
+      internal static string UnitSizeToText<T>(T numberOfBytes, CultureInfo cultureInfo)
       {
          var sizeFormats = new[] {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
          const int kb = 1024;
@@ -232,37 +233,37 @@ namespace Alphaleonis
       }
 
 
-      public static int CombineHashCodesOf<T1, T2>(T1 arg1, T2 arg2)
-      {
-         unchecked
-         {
-            var hash = 17;
+      //internal static int CombineHashCodesOf<T1, T2>(T1 arg1, T2 arg2)
+      //{
+      //   unchecked
+      //   {
+      //      var hash = 17;
 
-            hash = hash * 23 + (null != arg1 ? arg1.GetHashCode() : 0);
-            hash = hash * 23 + (null != arg2 ? arg2.GetHashCode() : 0);
+      //      hash = hash * 23 + (null != arg1 ? arg1.GetHashCode() : 0);
+      //      hash = hash * 23 + (null != arg2 ? arg2.GetHashCode() : 0);
 
-            return hash;
-         }
-      }
-
-
-      public static int CombineHashCodesOf<T1, T2, T3>(T1 arg1, T2 arg2, T3 arg3)
-      {
-         unchecked
-         {
-            var hash = CombineHashCodesOf(arg1, arg2);
-
-            hash = hash * 23 + (null != arg3 ? arg3.GetHashCode() : 0);
-
-            return hash;
-         }
-      }
+      //      return hash;
+      //   }
+      //}
 
 
-      public static int CombineHashCodesOf<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
-      {
-         return CombineHashCodesOf(CombineHashCodesOf(arg1, arg2), CombineHashCodesOf(arg3, arg4));
-      }
+      //internal static int CombineHashCodesOf<T1, T2, T3>(T1 arg1, T2 arg2, T3 arg3)
+      //{
+      //   unchecked
+      //   {
+      //      var hash = CombineHashCodesOf(arg1, arg2);
+
+      //      hash = hash * 23 + (null != arg3 ? arg3.GetHashCode() : 0);
+
+      //      return hash;
+      //   }
+      //}
+
+
+      //internal static int CombineHashCodesOf<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+      //{
+      //   return CombineHashCodesOf(CombineHashCodesOf(arg1, arg2), CombineHashCodesOf(arg3, arg4));
+      //}
 
 
       #region Bitmasking

@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Device
          StorageDeviceProperty = 0,
 
          /// <summary>Indicates that the caller is querying for the adapter descriptor, <see cref="STORAGE_ADAPTER_DESCRIPTOR"/>.</summary>
-         StorageAdapterProperty,
+         StorageAdapterProperty
 
          ///// <summary>Indicates that the caller is querying for the device identifiers provided with the SCSI vital product data pages. Data is returned using the <see cref="STORAGE_DEVICE_ID_DESCRIPTOR"/> structure.</summary>
          //StorageDeviceIdProperty,

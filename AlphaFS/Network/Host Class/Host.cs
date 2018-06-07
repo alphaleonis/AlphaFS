@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -30,6 +29,7 @@ using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using Alphaleonis.Win32.Filesystem;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace Alphaleonis.Win32.Network

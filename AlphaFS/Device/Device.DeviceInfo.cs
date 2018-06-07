@@ -19,9 +19,9 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Network;
 using System;
 using System.Security;
+using Alphaleonis.Win32.Network;
 
 namespace Alphaleonis.Win32.Filesystem
 {

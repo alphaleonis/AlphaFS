@@ -25,7 +25,6 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text;
-using StreamReader = System.IO.StreamReader;
 
 namespace Alphaleonis.Win32.Filesystem
 {

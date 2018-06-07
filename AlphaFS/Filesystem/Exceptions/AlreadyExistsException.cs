@@ -23,6 +23,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -31,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// Both <c>ERROR_ALREADY_EXISTS</c> and <c>ERROR_FILE_EXISTS</c> can cause this Exception.
    /// </summary>
    [Serializable]
-   public class AlreadyExistsException : System.IO.IOException
+   public class AlreadyExistsException : IOException
    {
       private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_ALREADY_EXISTS);
       private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_ALREADY_EXISTS, new Win32Exception((int) Win32Errors.ERROR_ALREADY_EXISTS).Message.Trim().TrimEnd('.').Trim());

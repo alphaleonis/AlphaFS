@@ -18,8 +18,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
  *  THE SOFTWARE. 
  */
-using Alphaleonis.Win32.Security;
-using Microsoft.Win32.SafeHandles;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -28,7 +27,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
 using System.Text;
-using Alphaleonis.Win32.Device;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -338,7 +337,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static extern SafeFindFileHandle FindFirstFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FINDEX_INFO_LEVELS fInfoLevelId, out WIN32_FIND_DATA lpFindFileData, FINDEX_SEARCH_OPS fSearchOp, IntPtr lpSearchFilter, FIND_FIRST_EX_FLAGS dwAdditionalFlags, SafeHandle hTransaction);
 
       /// <summary>
-      ///   Returns an <see cref="IEnumerable{String}"/> collection of all the hard links to the specified file. The FindFirstFileNameW function returns a handle to the
+      ///   Returns an <see cref="IEnumerable{T}"/> collection of all the hard links to the specified file. The FindFirstFileNameW function returns a handle to the
       ///   enumeration that can be used on subsequent calls to the FindNextFileNameW function.
       /// </summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>

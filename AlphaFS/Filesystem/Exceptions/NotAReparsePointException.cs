@@ -22,13 +22,14 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>[AlphaFS] The file or directory was not a reparse point.</summary>
    [Serializable]
-   public class NotAReparsePointException : System.IO.IOException
+   public class NotAReparsePointException : IOException
    {
       private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_A_REPARSE_POINT);
       private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_NOT_A_REPARSE_POINT, new Win32Exception((int) Win32Errors.ERROR_NOT_A_REPARSE_POINT).Message.Trim().TrimEnd('.').Trim());

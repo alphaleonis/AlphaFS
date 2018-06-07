@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Security
          //TokenElevationTypeDefault = 1,
 
          /// <summary>The token is an elevated token: UAC is enabled and User is elevated.</summary>
-         TokenElevationTypeFull = 2,
+         TokenElevationTypeFull = 2
 
          ///// <summary>The token is a limited token: UAC is enabled but User is not elevated.</summary>
          //TokenElevationTypeLimited = 3

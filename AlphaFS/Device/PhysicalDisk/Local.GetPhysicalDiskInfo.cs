@@ -25,6 +25,7 @@ using System.Linq;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
+using Alphaleonis.Win32.Security;
 
 namespace Alphaleonis.Win32.Device
 {
@@ -53,7 +54,7 @@ namespace Alphaleonis.Win32.Device
          bool isVolume;
          bool isDeviceInfo;
          
-         var isElevated = Security.ProcessContext.IsElevatedProcess;
+         var isElevated = ProcessContext.IsElevatedProcess;
 
          devicePath = FileSystemHelper.ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
          

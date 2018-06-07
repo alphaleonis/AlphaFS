@@ -23,6 +23,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Security;
+using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -213,7 +214,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Remove the directory junction.
          using (var safeHandle = OpenDirectoryJunction(transaction, fsEntryInfo.LongFullPath, pathFormat))
-            Device.FileSystemHelper.DeleteDirectoryJunction(safeHandle);
+            FileSystemHelper.DeleteDirectoryJunction(safeHandle);
 
 
          // Optionally the folder itself, which should and must be empty.

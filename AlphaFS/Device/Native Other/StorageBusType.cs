@@ -92,6 +92,6 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Indicates a file-backed virtual bus type.</summary>
       /// <remarks>Windows Server 2003 and Windows XP:  This value is not supported before Windows Vista and Windows Server 2008.</remarks>
-      FileBackedVirtual = NativeMethods.STORAGE_BUS_TYPE.BusTypeFileBackedVirtual,
+      FileBackedVirtual = NativeMethods.STORAGE_BUS_TYPE.BusTypeFileBackedVirtual
    }
 }

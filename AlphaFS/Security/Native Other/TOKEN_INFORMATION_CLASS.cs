@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Security
          //TokenOrigin = 17,
 
          /// <summary>The buffer receives a TOKEN_ELEVATION_TYPE value that specifies the elevation level of the token.</summary>
-         TokenElevationType = 18,
+         TokenElevationType = 18
 
          ///// <summary>The buffer receives a TOKEN_LINKED_TOKEN structure that contains a handle to another token that is linked to this token.</summary>
          //TokenLinkedToken = 19,

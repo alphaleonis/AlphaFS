@@ -19,8 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Information about the target of a symbolic link or mount point.</summary>

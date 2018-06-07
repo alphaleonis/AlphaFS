@@ -23,13 +23,14 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>[AlphaFS] The operation could not be completed because the directory is not empty.</summary>
    [Serializable]
-   public class DirectoryNotEmptyException : System.IO.IOException
+   public class DirectoryNotEmptyException : IOException
    {
       private static readonly int ErrorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_DIR_NOT_EMPTY);
       private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_DIR_NOT_EMPTY, new Win32Exception((int) Win32Errors.ERROR_DIR_NOT_EMPTY).Message.Trim().TrimEnd('.').Trim());

@@ -23,9 +23,9 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security.AccessControl;
-using Microsoft.Win32.SafeHandles;
 using Alphaleonis.Win32.Filesystem;
-using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
+using Alphaleonis.Win32.Security;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {
@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath)
       {
-         return GetStorageDeviceInfoCore(Security.ProcessContext.IsElevatedProcess, devicePath);
+         return GetStorageDeviceInfoCore(ProcessContext.IsElevatedProcess, devicePath);
       }
 
 
@@ -73,9 +73,7 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, string devicePath)
       {
-         string unused;
-
-         var pathToDevice = FileSystemHelper.GetDevicePath(devicePath, out unused);
+         var pathToDevice = FileSystemHelper.GetDevicePath(devicePath);
 
          if (Utils.IsNullOrWhiteSpace(pathToDevice))
             return null;

@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Globalization;
 using Alphaleonis.Win32.Filesystem;
 
@@ -26,6 +27,31 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class FileSystemHelper
    {
+      /// <summary>Determines and retrieves the <see cref="DeviceInfo.DevicePath"/> such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></summary>
+      /// <param name="devicePath">
+      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// </param>
+      /// <returns>Returns the <see cref="DeviceInfo.DevicePath"/> path string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></returns>
+      internal static string GetDevicePath(string devicePath)
+      {
+         string unused;
+
+         return GetDevicePath(devicePath, out unused);
+      }
+
+
+      /// <summary>Determines and retrieves the <see cref="DeviceInfo.DevicePath"/> such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></summary>
+      /// <returns>Returns the <see cref="DeviceInfo.DevicePath"/> path string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></returns>
+      /// <param name="devicePath">
+      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// </param>
+      /// <param name="logicalDrive">If <paramref name="devicePath"/> is a logical drive, it is returned in <paramref name="logicalDrive"/></param>
       internal static string GetDevicePath(string devicePath, out string logicalDrive)
       {
          bool isDrive;

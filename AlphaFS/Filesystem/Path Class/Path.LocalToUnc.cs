@@ -19,12 +19,12 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Network;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Security;
+using Alphaleonis.Win32.Network;
 
 namespace Alphaleonis.Win32.Filesystem
 {

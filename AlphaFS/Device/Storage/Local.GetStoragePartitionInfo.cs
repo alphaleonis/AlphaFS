@@ -24,9 +24,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
-using Microsoft.Win32.SafeHandles;
 using Alphaleonis.Win32.Filesystem;
-using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {
@@ -46,9 +45,7 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       public static StoragePartitionInfo GetStoragePartitionInfo(string devicePath)
       {
-         string unused;
-
-         var pathToDevice = FileSystemHelper.GetDevicePath(devicePath, out unused);
+         var pathToDevice = FileSystemHelper.GetDevicePath(devicePath);
 
          if (Utils.IsNullOrWhiteSpace(pathToDevice))
             return null;

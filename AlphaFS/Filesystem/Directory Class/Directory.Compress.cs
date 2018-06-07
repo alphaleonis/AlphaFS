@@ -22,6 +22,7 @@
 using System;
 using System.IO;
 using System.Security;
+using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -343,10 +344,10 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Traverse the source folder, processing files and folders.
          foreach (var fsei in EnumerateFileSystemEntryInfosCore<string>(null, transaction, pathLp, searchPattern, null, options | DirectoryEnumerationOptions.AsLongPath, filters, PathFormat.LongFullPath))
-            Device.FileSystemHelper.ToggleCompressionCore(transaction, fsei, compress, PathFormat.LongFullPath);
+            FileSystemHelper.ToggleCompressionCore(transaction, fsei, compress, PathFormat.LongFullPath);
 
          // Compress the root directory, the given path.
-         Device.FileSystemHelper.ToggleCompressionCore(transaction, pathLp, compress, PathFormat.LongFullPath);
+         FileSystemHelper.ToggleCompressionCore(transaction, pathLp, compress, PathFormat.LongFullPath);
       }
    }
 }

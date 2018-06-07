@@ -20,7 +20,6 @@
  */
 
 using System;
-
 #if !NET35
 using System.Threading;
 #endif
