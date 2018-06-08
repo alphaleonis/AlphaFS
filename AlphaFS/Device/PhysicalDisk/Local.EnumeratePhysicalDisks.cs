@@ -115,7 +115,11 @@ namespace Alphaleonis.Win32.Device
 
       private static PhysicalDiskInfo PopulatePhysicalCDRom(PhysicalDiskInfo pCdRom, PhysicalDiskInfo[] pVolumes, PhysicalDiskInfo[] pLogicalDrives)
       {
-         var pDiskInfo = new PhysicalDiskInfo(pCdRom) {StorageDeviceInfo = pCdRom.StorageDeviceInfo};
+         var pDiskInfo = new PhysicalDiskInfo(pCdRom)
+         {
+            StorageDeviceInfo = pCdRom.StorageDeviceInfo,
+            StoragePartitionInfo = pCdRom.StoragePartitionInfo
+         };
 
 
          // Get volume from CDRom matching DeviceNumber.
@@ -142,7 +146,11 @@ namespace Alphaleonis.Win32.Device
 
       private static PhysicalDiskInfo PopulatePhysicalDisk(PhysicalDiskInfo pDisk, PhysicalDiskInfo[] pVolumes, PhysicalDiskInfo[] pLogicalDrives)
       {
-         var pDiskInfo = new PhysicalDiskInfo(pDisk) {StorageDeviceInfo = pDisk.StorageDeviceInfo};
+         var pDiskInfo = new PhysicalDiskInfo(pDisk)
+         {
+            StorageDeviceInfo = pDisk.StorageDeviceInfo,
+            StoragePartitionInfo = pDisk.StoragePartitionInfo
+         };
 
 
          foreach (var pVolume in pVolumes.Where(pVol => pVol.StorageDeviceInfo.DeviceNumber == pDiskInfo.StorageDeviceInfo.DeviceNumber))

@@ -19,48 +19,43 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_PhysicalDiskInfoTest
+   public partial class AlphaFS_VolumeTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetStorageAdapterInfo_FromLogicalDrivePath_Success()
+      public void AlphaFS_Volume_GetVolumeLabel_UsingLogicalDrivePath_Local_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
-         
-         var gotDisk = false;
-         var driveCount = 0;
-         
 
-         foreach (var driveInfo in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
+
+         var logicalDriveCount = 0;
+
+         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
-            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory || driveInfo.DriveType == System.IO.DriveType.Network)
+            if (!driveInfo.IsReady)
                continue;
 
-            var storageAdapterInfo = Alphaleonis.Win32.Device.Local.GetStorageAdapterInfo(driveInfo.Name);
 
-            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storageAdapterInfo.ToString());
-
-            UnitTestConstants.Dump(storageAdapterInfo);
+            Console.Write("#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveInfo.Name);
 
 
-            Assert.IsNotNull(storageAdapterInfo);
+            var volumeLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(driveInfo.Name);
 
-            gotDisk = true;
+            Console.WriteLine("\t\tLabel: [{0}]", driveInfo.VolumeLabel);
 
 
-            Console.WriteLine();
+            Assert.AreEqual(driveInfo.VolumeLabel, volumeLabel, "The volume labels do not match, but it is expected.");
          }
 
 
-         Assert.IsTrue(gotDisk);
+         Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
       }
    }
 }

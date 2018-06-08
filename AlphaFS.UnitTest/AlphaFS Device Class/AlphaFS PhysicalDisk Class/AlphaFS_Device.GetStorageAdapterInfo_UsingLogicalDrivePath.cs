@@ -19,43 +19,61 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_VolumeTest
+   public partial class AlphaFS_PhysicalDiskInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetVolumeLabel_Local_Success()
+      public void AlphaFS_Device_GetStorageAdapterInfo_UsingLogicalDrivePath_Success()
       {
+         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
+         
+         var gotDisk = false;
+         var driveCount = 0;
+         
 
-
-         var logicalDriveCount = 0;
-
-         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
+         foreach (var driveInfo in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
          {
-            if (!driveInfo.IsReady)
+            // Works with System.IO.DriveType.CDRom.
+
+            // System.UnauthorizedAccessException: (5) Access is denied.
+            if (driveInfo.DriveType == System.IO.DriveType.Network)
+            {
+               Console.WriteLine("#{0:000}\tSkipped Network drive: [{1}]\n", ++driveCount, driveInfo.Name);
                continue;
+            }
+
+            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory)
+            {
+               Console.WriteLine("#{0:000}\tSkipped NoRootDirectory drive: [{1}]\n", ++driveCount, driveInfo.Name);
+               continue;
+            }
 
 
-            Console.Write("#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveInfo.Name);
+            var storageAdapterInfo = Alphaleonis.Win32.Device.Local.GetStorageAdapterInfo(driveInfo.Name);
+
+            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storageAdapterInfo.ToString());
+
+            UnitTestConstants.Dump(storageAdapterInfo);
 
 
-            var volumeLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(driveInfo.Name);
+            Assert.IsNotNull(storageAdapterInfo);
 
-            Console.WriteLine("\t\tLabel: [{0}]", driveInfo.VolumeLabel);
+            gotDisk = true;
 
 
-            Assert.AreEqual(driveInfo.VolumeLabel, volumeLabel, "The volume labels do not match, but it is expected.");
+            Console.WriteLine();
          }
 
 
-         Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
+         Assert.IsTrue(gotDisk);
       }
    }
 }

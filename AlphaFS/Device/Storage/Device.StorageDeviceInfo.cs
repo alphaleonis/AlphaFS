@@ -75,7 +75,10 @@ namespace Alphaleonis.Win32.Device
       public int DeviceNumber { get; internal set; }
 
 
-      /// <summary>The partition number of the storage device, starting at 1. If the device cannot be partitioned, like a CDROM, -1 is returned.</summary>
+      /// <summary>
+      ///   The partition number of the storage device, starting at 1. If the device cannot be partitioned, like a CDROM, -1 is returned.
+      ///   <para>-1 is also returned if the device is accessed by its path: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c> instead of a logical drive- or volume path.</para>
+      /// </summary>
       public int PartitionNumber { get; internal set; }
 
 
@@ -114,11 +117,11 @@ namespace Alphaleonis.Win32.Device
 
       #region Methods
 
-      /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
+      /// <summary>Returns storage device as: "DeviceType DeviceNumber:PartitionNumber VendorId ProductId".</summary>
       /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
-         return string.Format(CultureInfo.CurrentCulture, "{0} {1}:{2} {3}", DeviceType.ToString(), DeviceNumber.ToString(CultureInfo.InvariantCulture), PartitionNumber.ToString(CultureInfo.InvariantCulture), (VendorId + " " + ProductId + " " + ProductRevision).Trim()).Trim();
+         return string.Format(CultureInfo.CurrentCulture, "Device: {0}:{1} {2}", DeviceNumber.ToString(CultureInfo.InvariantCulture), PartitionNumber.ToString(CultureInfo.InvariantCulture), (VendorId + " " + ProductId + " " + ProductRevision).Trim()).Trim();
       }
 
 

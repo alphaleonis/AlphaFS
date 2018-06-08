@@ -147,9 +147,9 @@
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_UsingDevicePathFromSystemDrive.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_UsingLogicalDrivePathFromSystemDrive.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_UsingVolumePathFromSystemDrive.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageAdapterInfo_FromLogicalDrivePath.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageDeviceInfo_FromLogicalDrivePath.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStoragePartitionInfo_FromLogicalDrivePath.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageAdapterInfo_UsingLogicalDrivePath.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageDeviceInfo_UsingLogicalDrivePath.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStoragePartitionInfo_UsingLogicalDrivePath.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfoTest.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_RegularDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
@@ -250,7 +250,7 @@
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.EnumerateVolumeMountPoints.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.SetVolumeLabel.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.IsSameVolume.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetVolumeLabel.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetVolumeLabel_UsingLogicalDrivePath.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_SymbolicLinkDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetDriveFormat.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.EnumerateVolumes.cs" />
@@ -490,7 +490,7 @@
     <Compile Include="Path Class\AlphaFS_Path_IsUncPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.SetVolumeMountPoint.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetVolumeInfo.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetVolumeInfo_UsingLogicalDrivePath.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\AlphaFS.snk">

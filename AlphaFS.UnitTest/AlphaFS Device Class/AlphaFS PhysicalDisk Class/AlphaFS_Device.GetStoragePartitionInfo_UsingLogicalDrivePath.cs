@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetStorageDeviceInfo_FromLogicalDrivePath_Success()
+      public void AlphaFS_Device_GetStoragePartitionInfo_UsingLogicalDrivePath_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -40,28 +40,55 @@ namespace AlphaFS.UnitTest
 
          foreach (var driveInfo in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
          {
-            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory || driveInfo.DriveType == System.IO.DriveType.Network)
-               continue;
-
-            var storageDeviceInfo = Alphaleonis.Win32.Device.Local.GetStorageDeviceInfo(driveInfo.Name);
-
-            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storageDeviceInfo.ToString());
-
-            UnitTestConstants.Dump(storageDeviceInfo);
-
-
-            Assert.IsNotNull(storageDeviceInfo);
-
-
-            if (driveInfo.DriveType == System.IO.DriveType.Fixed)
+            // System.IO.DriveType.CDRom = null.
+            if (driveInfo.DriveType == System.IO.DriveType.CDRom)
             {
-               gotDisk = true;
-               Assert.AreEqual(Alphaleonis.Win32.Device.StorageDeviceType.Disk, storageDeviceInfo.DeviceType);
+               Console.WriteLine("#{0:000}\tSkipped CDRom drive: [{1}]\n", ++driveCount, driveInfo.Name);
+               continue;
+            }
+
+            // System.UnauthorizedAccessException: (5) Access is denied.
+            if (driveInfo.DriveType == System.IO.DriveType.Network)
+            {
+               Console.WriteLine("#{0:000}\tSkipped Network drive: [{1}]\n", ++driveCount, driveInfo.Name);
+               continue;
+            }
+
+            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory)
+            {
+               Console.WriteLine("#{0:000}\tSkipped NoRootDirectory drive: [{1}]\n", ++driveCount, driveInfo.Name);
+               continue;
             }
 
 
-            if (driveInfo.DriveType == System.IO.DriveType.CDRom)
-               Assert.AreEqual(Alphaleonis.Win32.Device.StorageDeviceType.CDRom, storageDeviceInfo.DeviceType);
+            var storagePartitionInfo = Alphaleonis.Win32.Device.Local.GetStoragePartitionInfo(driveInfo.Name);
+
+            if (null == storagePartitionInfo)
+               Console.WriteLine();
+
+            Assert.IsNotNull(storagePartitionInfo);
+
+            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storagePartitionInfo.ToString());
+
+            UnitTestConstants.Dump(storagePartitionInfo);
+
+
+            if (null != storagePartitionInfo.GptPartitionInfo)
+            {
+               gotDisk = true;
+
+               foreach (var partition in storagePartitionInfo.GptPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
+            }
+
+
+            if (null != storagePartitionInfo.MbrPartitionInfo)
+            {
+               gotDisk = true;
+
+               foreach (var partition in storagePartitionInfo.MbrPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
+            }
 
 
             Console.WriteLine();

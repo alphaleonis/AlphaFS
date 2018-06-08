@@ -51,31 +51,16 @@ namespace AlphaFS.UnitTest
             Console.Write("#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveName);
 
             
-            // Skip mapped drives and CDRom drives.
-
-            if (logicalDrive.DriveType == System.IO.DriveType.NoRootDirectory || logicalDrive.DriveType == System.IO.DriveType.CDRom)
-            {
-               Console.WriteLine();
-               continue;
-            }
-
-
             var driveFormat = Alphaleonis.Win32.Filesystem.Volume.GetDriveFormat(driveName);
 
             Console.WriteLine("\t\tDrive Format: [{0}]", driveFormat);
 
 
-            if (isNetwork)
+            if (!Alphaleonis.Utils.IsNullOrWhiteSpace(driveFormat))
             {
                // Some USB drives do not report drive format.
-
-               if (null != driveFormat)
-                  Assert.AreEqual(logicalDrive.DriveFormat, driveFormat);
-            }
-
-            else
                Assert.AreEqual(logicalDrive.DriveFormat, driveFormat);
-
+            }
          }
 
 

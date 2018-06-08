@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetVolumeInfo_LocalAndNetwork_Success()
+      public void AlphaFS_Volume_GetVolumeInfo_UsingLogicalDrivePath_LocalAndNetwork_Success()
       {
-         AlphaFS_Volume_GetVolumeInfo_FromLogicalDrive(false);
-         AlphaFS_Volume_GetVolumeInfo_FromLogicalDrive(true);
+         AlphaFS_Volume_GetVolumeInfo_UsingLogicalDrivePath(false);
+         AlphaFS_Volume_GetVolumeInfo_UsingLogicalDrivePath(true);
       }
 
 
-      private void AlphaFS_Volume_GetVolumeInfo_FromLogicalDrive(bool isNetwork)
+      private void AlphaFS_Volume_GetVolumeInfo_UsingLogicalDrivePath(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -51,13 +51,13 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveName);
 
 
-            // Skip mapped drives and CDRom drives.
+            //// Skip mapped drives and CDRom drives.
 
-            if (logicalDrive.DriveType == System.IO.DriveType.NoRootDirectory || logicalDrive.DriveType == System.IO.DriveType.CDRom)
-            {
-               Console.WriteLine();
-               continue;
-            }
+            //if (logicalDrive.DriveType == System.IO.DriveType.NoRootDirectory || logicalDrive.DriveType == System.IO.DriveType.CDRom)
+            //{
+            //   Console.WriteLine();
+            //   continue;
+            //}
             
 
             if (isNetwork)
@@ -87,7 +87,7 @@ namespace AlphaFS.UnitTest
 
             else
             {
-               var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(driveName);
+               var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(driveName, true);
 
                UnitTestConstants.Dump(volInfo);
 
@@ -96,15 +96,21 @@ namespace AlphaFS.UnitTest
 
                var driveInfo2 = new System.IO.DriveInfo(driveName);
 
-               Assert.AreEqual(driveInfo2.VolumeLabel, volInfo.Name);
-               Assert.AreEqual(driveInfo2.DriveFormat, volInfo.FileSystemName);
-               Assert.AreEqual(driveInfo2.Name, volInfo.FullPath);
+               
+               // Prevent System.IO.IOException: (1005) The volume does not contain a recognized file system.
 
-               if (logicalDrive.DriveType != System.IO.DriveType.Network)
+               if (null != volInfo && null != volInfo.FileSystemName)
                {
-                  Assert.IsNotNull(volInfo.Guid);
+                  Assert.AreEqual(driveInfo2.VolumeLabel, volInfo.Name);
+                  Assert.AreEqual(driveInfo2.DriveFormat, volInfo.FileSystemName);
+                  Assert.AreEqual(driveInfo2.Name, volInfo.FullPath);
 
-                  Assert.IsTrue(volInfo.Guid.StartsWith(Alphaleonis.Win32.Filesystem.Path.VolumePrefix));
+                  if (logicalDrive.DriveType != System.IO.DriveType.Network)
+                  {
+                     Assert.IsNotNull(volInfo.Guid);
+
+                     Assert.IsTrue(volInfo.Guid.StartsWith(Alphaleonis.Win32.Filesystem.Path.VolumePrefix));
+                  }
                }
             }
 

@@ -59,17 +59,16 @@ namespace AlphaFS.UnitTest
 
 
          Assert.IsNotNull(pDisk);
-         
-
-         Assert.IsNotNull(pDisk.VolumeGuids);
-         Assert.IsTrue(pDisk.VolumeGuids.ToList().Contains(sourceVolume, StringComparer.OrdinalIgnoreCase));
-
 
          Assert.IsNotNull(pDisk.LogicalDrives);
 
-         Assert.IsTrue(pDisk.LogicalDrives.Contains(sourceDrive));
+         Assert.IsNotNull(pDisk.VolumeGuids);
 
-         Assert.IsTrue(pDisk.ContainsVolume(sourceDrive[0].ToString()));
+         Assert.AreEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
+         
+         Assert.AreEqual(pDisk.LogicalDrives.Contains(sourceDrive, StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(sourceDrive));
+
+         Assert.AreEqual(pDisk.VolumeGuids.Contains(sourceVolume, StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(sourceVolume));
       }
    }
 }

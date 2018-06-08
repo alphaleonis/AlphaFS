@@ -56,19 +56,18 @@ namespace Alphaleonis.Win32.Device
          
          var isElevated = ProcessContext.IsElevatedProcess;
 
-         devicePath = FileSystemHelper.ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
+         var validatedDevicePath = FileSystemHelper.ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
          
          
-         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, devicePath);
+         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, validatedDevicePath);
 
          if (null == storageDeviceInfo)
             return null;
-
-
-         // Use logical drive path.
+         
 
          if (isDrive)
-            FileSystemHelper.GetDevicePath(devicePath, out devicePath);
+            // Use logical drive path.
+            FileSystemHelper.GetDevicePath(validatedDevicePath, out validatedDevicePath);
 
 
          var pDiskInfo = isDeviceInfo
@@ -76,15 +75,24 @@ namespace Alphaleonis.Win32.Device
             ? EnumeratePhysicalDisksCore(isElevated).SingleOrDefault(pDisk => pDisk.StorageDeviceInfo.DeviceNumber == storageDeviceInfo.DeviceNumber && pDisk.StorageDeviceInfo.PartitionNumber == storageDeviceInfo.PartitionNumber)
 
             : isVolume
-               ? EnumeratePhysicalDisksCore(isElevated).SingleOrDefault(pDisk => null != pDisk.VolumeGuids && pDisk.VolumeGuids.Contains(devicePath, StringComparer.OrdinalIgnoreCase))
+               ? EnumeratePhysicalDisksCore(isElevated).SingleOrDefault(pDisk => null != pDisk.VolumeGuids && pDisk.ContainsVolume(validatedDevicePath))
 
                : isDrive
-                  ? EnumeratePhysicalDisksCore(isElevated).SingleOrDefault(pDisk => null != pDisk.LogicalDrives && pDisk.LogicalDrives.Contains(devicePath, StringComparer.OrdinalIgnoreCase))
+                  ? EnumeratePhysicalDisksCore(isElevated).SingleOrDefault(pDisk => null != pDisk.LogicalDrives && pDisk.ContainsVolume(validatedDevicePath))
                   : null;
 
 
-         if (null != pDiskInfo && null != pDiskInfo.StorageDeviceInfo)
-            pDiskInfo.StorageDeviceInfo.PartitionNumber = storageDeviceInfo.PartitionNumber;
+         if (null != pDiskInfo)
+         {
+            // Use the storageDeviceInfo created earlier using validatedDevicePath.
+            pDiskInfo.StorageDeviceInfo = storageDeviceInfo;
+            
+
+            if (isDeviceInfo)
+               // Accessing the device by its path: \\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}
+               // does not relate to any drive or volume, so the default PartitionNumber of 0 is misleading.
+               pDiskInfo.StorageDeviceInfo.PartitionNumber = -1;
+         }
 
 
          return pDiskInfo;

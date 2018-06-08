@@ -37,6 +37,7 @@ namespace Alphaleonis.Win32.Device
       #region Private Fields
 
       private ulong _gptStartingUsableOffset;
+      private ulong _gptUsableLength;
 
       #endregion // Private Fields
 
@@ -78,6 +79,7 @@ namespace Alphaleonis.Win32.Device
                GptMaxPartitionCount = (int) drive.Gpt.MaxPartitionCount;
 
                _gptStartingUsableOffset = drive.Gpt.StartingUsableOffset;
+               _gptUsableLength = drive.Gpt.UsableLength;
 
                
                GptPartitionInfo = new Collection<StorageGptPartitionInfo>();
@@ -103,16 +105,16 @@ namespace Alphaleonis.Win32.Device
                   // MSDN: PartitionCount: On hard disks with the MBR layout, this value will always be a multiple of 4.
                   // Any partitions that are actually unused will have a partition type of PARTITION_ENTRY_UNUSED (0).
 
-                  //if (partition.Mbr.PartitionType == (NativeMethods.DiskPartitionType) DiskPartitionType.UnusedEntry)
-                  //   continue;
-                  
+                  if (partition.Mbr.PartitionType == (NativeMethods.DiskPartitionType)DiskPartitionType.UnusedEntry)
+                     continue;
+
 
                   MbrPartitionInfo.Add(new StorageMbrPartitionInfo(partition));
                }
 
-               
-               //// Update to reflect the real number of used partition entries.
-               //PartitionCount = MbrPartitionInfo.Count;
+
+               // Update to reflect the real number of used partition entries.
+               PartitionCount = MbrPartitionInfo.Count;
 
                break;
 
@@ -121,7 +123,7 @@ namespace Alphaleonis.Win32.Device
                Console.WriteLine(PartitionStyle.ToString());
                break;
          }
-
+         
 
          IsOnDynamicDisk = null != GptPartitionInfo && GptPartitionInfo.Any(partition =>
                               
@@ -138,7 +140,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>The GUID of the disk.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
       public Guid GptDiskId { get; private set; }
-      
+
 
       /// <summary>The device number of the storage partition, starting at 0.</summary>
       public int DeviceNumber { get; private set; }
@@ -176,25 +178,36 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      ///// <summary>The size of the usable blocks on the disk, in bytes.</summary>
-      //public long GptUsableLength
-      //{
-      //   get
-      //   {
-      //      unchecked
-      //      {
-      //         return (long) _gptUsableLength;
-      //      }
-      //   }
+      /// <summary>The size of the usable blocks on the disk, in bytes.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
+      public long GptUsableLength
+      {
+         get
+         {
+            unchecked
+            {
+               return (long) _gptUsableLength;
+            }
+         }
 
-      //   internal set
-      //   {
-      //      unchecked
-      //      {
-      //         _gptUsableLength = (ulong) value;
-      //      }
-      //   }
-      //}
+         internal set
+         {
+            unchecked
+            {
+               _gptUsableLength = (ulong) value;
+            }
+         }
+      }
+
+
+#if DEBUG
+      /// <summary/>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
+      public string GptUsableLengthUnitSize
+      {
+         get { return Utils.UnitSizeToText(GptUsableLength); }
+      }
+#endif
 
 
       /// <summary><c>true</c> if the partition is on a dynamic disk.</summary>
@@ -244,10 +257,7 @@ namespace Alphaleonis.Win32.Device
       /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
-         return string.Format(CultureInfo.CurrentCulture, "{0}:{1} {2}",
-
-            DeviceNumber.ToString(CultureInfo.InvariantCulture), "?".ToString(CultureInfo.InvariantCulture), PartitionStyle.ToString()).Trim();
-            //DeviceNumber.ToString(CultureInfo.InvariantCulture), PartitionNumber.ToString(CultureInfo.InvariantCulture), PartitionStyle.ToString()).Trim();
+         return string.Format(CultureInfo.CurrentCulture, "Device: {0} PartitionStyle: {1}", DeviceNumber.ToString(CultureInfo.InvariantCulture), PartitionStyle.ToString().ToUpperInvariant()).Trim();
       }
 
 
