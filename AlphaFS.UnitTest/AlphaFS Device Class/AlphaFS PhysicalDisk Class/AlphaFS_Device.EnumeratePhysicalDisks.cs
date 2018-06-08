@@ -25,7 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_PhysicalDiskInfoTest
+   public partial class EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

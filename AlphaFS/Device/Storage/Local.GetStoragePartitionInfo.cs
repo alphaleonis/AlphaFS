@@ -192,7 +192,7 @@ namespace Alphaleonis.Win32.Device
                if (success)
                {
                   var typeOf = typeof(NativeMethods.DISK_GEOMETRY);
-                  var sizeOf = Marshal.SizeOf(typeOf);
+                  var sizeOf = Marshal.SizeOf(typeOf); // 24
 
                   var diskGeometryEx = new NativeMethods.DISK_GEOMETRY_EX
                   {

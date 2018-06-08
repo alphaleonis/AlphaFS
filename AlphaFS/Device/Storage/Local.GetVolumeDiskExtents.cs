@@ -27,12 +27,11 @@ namespace Alphaleonis.Win32.Device
 {
    public static partial class Local
    {
-      /// <summary>Retrieves the physical location of a specified volume on one or more disks.</summary>
+      /// <summary>Retrieves the physical location and disk number of a specified volume on one or more disks.</summary>
       private static NativeMethods.VOLUME_DISK_EXTENTS? GetVolumeDiskExtents(SafeFileHandle safeHandle, string pathForException)
       {
-         var structSize = Marshal.SizeOf(typeof(NativeMethods.VOLUME_DISK_EXTENTS));
-         var numberOfExtents = 1;
-         var bufferSize = structSize * numberOfExtents;
+         var structSize = Marshal.SizeOf(typeof(NativeMethods.DISK_EXTENT_SINGLE));
+         var bufferSize = structSize;
 
 
          while(true)
@@ -44,20 +43,35 @@ namespace Alphaleonis.Win32.Device
 
                if (success)
                {
-                  numberOfExtents = safeBuffer.ReadInt32();
+                  var numberOfExtents = safeBuffer.ReadInt64();
 
                   var diskExtent = new NativeMethods.DISK_EXTENT[numberOfExtents];
 
+                  for (int i = 0, itemOffset = 0; i < numberOfExtents; i++, itemOffset = structSize * i)
+                  {
+                     var single = safeBuffer.PtrToStructure<NativeMethods.DISK_EXTENT_SINGLE>(itemOffset);
 
-                  for (int i = 0, itemOffset = 0; i < numberOfExtents - 1; i++, itemOffset = structSize * i)
+                     diskExtent[i].DiskNumber = single.Extent.DiskNumber;
+                     diskExtent[i].ExtentLength = single.Extent.ExtentLength;
+                     diskExtent[i].StartingOffset = single.Extent.StartingOffset;
+                  }
 
-                     diskExtent[i] = safeBuffer.PtrToStructure<NativeMethods.DISK_EXTENT>(itemOffset);
-
-
-                  return new NativeMethods.VOLUME_DISK_EXTENTS {Extents = diskExtent};
+                  return new NativeMethods.VOLUME_DISK_EXTENTS
+                  {
+                     NumberOfDiskExtents = (uint) numberOfExtents,
+                     Extents = diskExtent
+                  };
                }
 
+
+               // When lastError = ERROR_MORE_DATA the drive is part of a mirror or volume, or the volume is on multiple disks.
+
+
+               // Encountered a drive such as a CDRom/mounted .iso file.
+               if (lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+                  return null;
                
+
                bufferSize = Utils.GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, pathForException);
             }
       }

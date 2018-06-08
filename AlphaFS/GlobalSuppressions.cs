@@ -45,7 +45,7 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Scope = "member", Target = "Alphaleonis.Win32.Filesystem.NotSameDeviceException.#.cctor()")]
 [assembly: SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "Dir", Scope = "resource", Target = "Alphaleonis.Win32.Resources.resources")]
 
-[assembly: SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Name", Scope = "type", Target = "Alphaleonis.Win32.Filesystem.NativeMethods+PARTITION_INFORMATION_GPT")]
-[assembly: SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Name", Scope = "type", Target = "Alphaleonis.Win32.Filesystem.NativeMethods+PARTITION_INFORMATION_EX")]
 [assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Alphaleonis", Scope = "namespace", Target = "Alphaleonis.Win32.Device")]
+[assembly: SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Name", Scope = "type", Target = "Alphaleonis.Win32.Device.NativeMethods+PARTITION_INFORMATION_EX")]
+[assembly: SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Name", Scope = "type", Target = "Alphaleonis.Win32.Device.NativeMethods+PARTITION_INFORMATION_GPT")]
 

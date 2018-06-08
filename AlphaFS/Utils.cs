@@ -43,7 +43,7 @@ namespace Alphaleonis
             safeBuffer.Close();
 
 
-         switch ((uint)lastError)
+         switch ((uint) lastError)
          {
             case Win32Errors.ERROR_MORE_DATA:
             case Win32Errors.ERROR_INSUFFICIENT_BUFFER:

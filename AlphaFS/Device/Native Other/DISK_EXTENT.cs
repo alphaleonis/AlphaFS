@@ -25,22 +25,38 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Represents a disk extent.
-      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </summary>
+      /// <summary>Represents a disk extent.</summary>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only]
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only]
+      /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct DISK_EXTENT
       {
          /// <summary>The number of the disk that contains this extent. This is the same number that is used to construct the name of the disk,
          /// for example, the X in "\\.\PhysicalDriveX" or "\\?\HarddiskX".</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint DiskNumber;
+         [MarshalAs(UnmanagedType.U4)] public uint DiskNumber;
 
          /// <summary>The offset from the beginning of the disk to the extent, in bytes.</summary>
-         [MarshalAs(UnmanagedType.I8)] public readonly long StartingOffset;
+         [MarshalAs(UnmanagedType.I8)] public long StartingOffset;
 
          /// <summary>The number of bytes in this extent.</summary>
-         [MarshalAs(UnmanagedType.I8)] public readonly long ExtentLength;
+         [MarshalAs(UnmanagedType.I8)] public long ExtentLength;
+      }
+
+
+      /// <summary>Represents a disk extent.</summary>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only]
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only]
+      /// </remarks>
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      internal struct DISK_EXTENT_SINGLE
+      {
+         /// <summary>The number of disks in the volume (a volume can span multiple disks).</summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly uint NumberOfDiskExtents;
+
+         public readonly DISK_EXTENT Extent;
       }
    }
 }
