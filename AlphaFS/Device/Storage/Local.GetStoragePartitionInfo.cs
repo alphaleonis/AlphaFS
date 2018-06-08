@@ -57,123 +57,45 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      private static StoragePartitionInfo GetStoragePartitionInfoNative(SafeFileHandle safeHandle, string pathToDevice)
+      private static StoragePartitionInfo GetStoragePartitionInfoNative(SafeFileHandle safeHandle, string pathForException)
       {
-         SafeFileHandle safeHandleRetry = null;
-         var isRetry = false;
+         var volDiskExtents = GetVolumeDiskExtents(safeHandle, pathForException);
 
+         if (null == volDiskExtents || volDiskExtents.Value.NumberOfDiskExtents == 0)
+            return null;
+         
 
-      StartGetData:
-
-         // Get storage partition info.
-
-         using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, 0, pathToDevice, Filesystem.NativeMethods.DefaultFileBufferSize / 4))
+         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, 0, pathForException, Filesystem.NativeMethods.DefaultFileBufferSize / 4))
          {
-            if (null == safeBuffer)
-            {
-               // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
-
-
-               var volDiskExtents = GetVolumeDiskExtents(isRetry ? safeHandleRetry : safeHandle, pathToDevice);
-
-               if (volDiskExtents.HasValue)
-               {
-                  // Use the first disk extent.
-
-                  pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
-
-
-                  safeHandleRetry = FileSystemHelper.OpenPhysicalDisk(pathToDevice, FileSystemRights.Read);
-
-                  isRetry = Utils.IsValidHandle(safeHandleRetry, false);
-               }
-
-
-               if (isRetry)
-                  goto StartGetData;
-
-               return null;
-            }
-
-
-            if (isRetry && !safeHandleRetry.IsClosed)
-               safeHandleRetry.Close();
-            
-
             var layout = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>();
             
             // Sanity check.
             if (layout.PartitionCount <= 256)
             {
                var driveStructureSize = Marshal.SizeOf(typeof(NativeMethods.DRIVE_LAYOUT_INFORMATION_EX));  // 48
+
                var partitionStructureSize = Marshal.SizeOf(typeof(NativeMethods.PARTITION_INFORMATION_EX)); // 144
+
                var partitions = new NativeMethods.PARTITION_INFORMATION_EX[layout.PartitionCount];
                
+
                for (var i = 0; i <= layout.PartitionCount - 1; i++)
 
                   partitions[i] = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(driveStructureSize + i * partitionStructureSize);
 
 
-               var disk = GetDiskGeometryExNative(safeHandle, pathToDevice);
+               var disk = GetDiskGeometryExNative(safeHandle, pathForException);
 
-               return new StoragePartitionInfo(disk, layout, partitions);
+
+               // Use the first disk extent.
+               var diskNumber = volDiskExtents.Value.Extents[0].DiskNumber;
+
+               return new StoragePartitionInfo((int)diskNumber, disk, layout, partitions);
             }
-
-            return null;
          }
+
+         return null;
       }
-      
-
-
-      //private static StoragePartitionInfo GetStoragePartitionInfoNative0(SafeFileHandle safeHandle, string pathForException)
-      //{
-      //   var driveStructureSize = Marshal.SizeOf(typeof(NativeMethods.DRIVE_LAYOUT_INFORMATION_EX));  // 48
-      //   var partitionStructureSize = Marshal.SizeOf(typeof(NativeMethods.PARTITION_INFORMATION_EX)); // 144
-      //   var partitionCount = 1;
-
-      //   var bufferSize = driveStructureSize + partitionCount * partitionStructureSize;
-
-      //   while (true)
-      //      using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
-      //      {
-      //         var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
-
-      //         var lastError = Marshal.GetLastWin32Error();
-
-
-      //         if (success)
-      //         {
-      //            var drive = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>();
-
-      //            var partitions = new NativeMethods.PARTITION_INFORMATION_EX[drive.PartitionCount];
-
-
-      //            for (partitionCount = 0; partitionCount <= drive.PartitionCount - 1; partitionCount++)
-
-      //               partitions[partitionCount] = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(driveStructureSize + partitionCount * partitionStructureSize);
-
-
-      //            var disk = GetDiskGeometryExNative(safeHandle, pathForException);
-
-      //            return new StoragePartitionInfo(disk, drive, partitions);
-      //         }
-
-
-      //         if (lastError == Win32Errors.ERROR_NOT_READY ||
-
-      //             // Dynamic disk.
-      //             lastError == Win32Errors.ERROR_INVALID_FUNCTION ||
-
-      //             // Request device number from a DeviceGuid.Image device.
-      //             lastError == Win32Errors.ERROR_NOT_SUPPORTED)
-
-      //            return null;
-
-
-      //         bufferSize = GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, pathForException);
-      //      }
-      //}
 
 
       /// <summary>Returns information about the physical disk's geometry (media type, number of cylinders, tracks per cylinder, sectors per track, and bytes per sector).</summary>

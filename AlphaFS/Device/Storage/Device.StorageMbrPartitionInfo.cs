@@ -88,9 +88,9 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>The number of hidden sectors to be allocated when the partition table is created.</summary>
       public int HiddenSectors { get; private set; }
-      
 
-      /// <summary>The starting offset of the partition.</summary>
+
+      /// <summary>The size of the partition.</summary>
       public long PartitionLength
       {
          get
@@ -109,6 +109,15 @@ namespace Alphaleonis.Win32.Device
             }
          }
       }
+
+
+#if DEBUG
+      /// <summary/>
+      public string PartitionLengthUnitSize
+      {
+         get { return Utils.UnitSizeToText(PartitionLength); }
+      }
+#endif
 
 
       /// <summary>The storage partition number, starting at 1.</summary>

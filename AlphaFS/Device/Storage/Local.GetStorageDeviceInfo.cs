@@ -141,6 +141,8 @@ namespace Alphaleonis.Win32.Device
 
       StartGetData:
 
+         StorageDeviceInfo newStorageDeviceInfo;
+
          // Get storage device info.
 
          using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, Filesystem.NativeMethods.DefaultFileBufferSize / 2))
@@ -175,7 +177,7 @@ namespace Alphaleonis.Win32.Device
             var deviceDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>();
 
 
-            storageDeviceInfo = new StorageDeviceInfo
+            newStorageDeviceInfo = new StorageDeviceInfo
             {
                DeviceType = storageDeviceInfo.DeviceType,
 
@@ -200,26 +202,26 @@ namespace Alphaleonis.Win32.Device
             };
 
 
-            if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.ProductRevision) || storageDeviceInfo.ProductRevision.Length == 1)
-               storageDeviceInfo.ProductRevision = null;
+            if (Utils.IsNullOrWhiteSpace(newStorageDeviceInfo.ProductRevision) || newStorageDeviceInfo.ProductRevision.Length == 1)
+               newStorageDeviceInfo.ProductRevision = null;
 
-            if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.SerialNumber) || storageDeviceInfo.SerialNumber.Length == 1)
-               storageDeviceInfo.SerialNumber = null;
+            if (Utils.IsNullOrWhiteSpace(newStorageDeviceInfo.SerialNumber) || newStorageDeviceInfo.SerialNumber.Length == 1)
+               newStorageDeviceInfo.SerialNumber = null;
             
-            if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.VendorId) || storageDeviceInfo.VendorId.Length == 1)
-               storageDeviceInfo.VendorId = null;
+            if (Utils.IsNullOrWhiteSpace(newStorageDeviceInfo.VendorId) || newStorageDeviceInfo.VendorId.Length == 1)
+               newStorageDeviceInfo.VendorId = null;
          }
 
 
          using (var safeBuffer = GetDeviceIoData<long>(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, pathToDevice))
 
-            storageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
+            newStorageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
 
 
          if (isRetry && !safeHandleRetry.IsClosed)
             safeHandleRetry.Close();
 
-         return storageDeviceInfo;
+         return newStorageDeviceInfo;
       }
    }
 }

@@ -37,9 +37,9 @@ namespace Alphaleonis.Win32.Device
       /// <returns>Returns the <see cref="DeviceInfo.DevicePath"/> path string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></returns>
       internal static string GetDevicePath(string devicePath)
       {
-         string unused;
+         string unusedLogicalDrive;
 
-         return GetDevicePath(devicePath, out unused);
+         return GetDevicePath(devicePath, out unusedLogicalDrive);
       }
 
 

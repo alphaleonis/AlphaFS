@@ -144,12 +144,12 @@
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.EnumeratePhysicalDisks.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_DevicePathFromSystemDrive.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_LogicalDriveFromSystemDrive.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_VolumeFromSystemDrive.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageAdapterInfo_FromLogicalDrive.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageDeviceInfo_FromLogicalDrive.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStoragePartitionInfo_FromLogicalDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_UsingDevicePathFromSystemDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_UsingLogicalDrivePathFromSystemDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_UsingVolumePathFromSystemDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageAdapterInfo_FromLogicalDrivePath.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageDeviceInfo_FromLogicalDrivePath.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStoragePartitionInfo_FromLogicalDrivePath.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfoTest.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_RegularDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />

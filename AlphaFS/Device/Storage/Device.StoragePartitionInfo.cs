@@ -54,8 +54,10 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      internal StoragePartitionInfo(NativeMethods.DISK_GEOMETRY_EX disk, NativeMethods.DRIVE_LAYOUT_INFORMATION_EX drive, NativeMethods.PARTITION_INFORMATION_EX[] partitions) : this()
+      internal StoragePartitionInfo(int diskNumber, NativeMethods.DISK_GEOMETRY_EX disk, NativeMethods.DRIVE_LAYOUT_INFORMATION_EX drive, NativeMethods.PARTITION_INFORMATION_EX[] partitions) : this()
       {
+         DeviceNumber = diskNumber;
+
          MbrSignature = disk.PartitionInformation.MbrSignature;
 
          GptDiskId = disk.PartitionInformation.DiskId;
@@ -112,6 +114,11 @@ namespace Alphaleonis.Win32.Device
                //// Update to reflect the real number of used partition entries.
                //PartitionCount = MbrPartitionInfo.Count;
 
+               break;
+
+
+            default:
+               Console.WriteLine(PartitionStyle.ToString());
                break;
          }
 
@@ -218,6 +225,15 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>The total size of the storage partition.</summary>
       public long TotalSize { get; private set; }
+
+
+#if DEBUG
+      /// <summary/>
+      public string TotalSizeUnitSize
+      {
+         get { return Utils.UnitSizeToText(TotalSize); }
+      }
+#endif
 
       #endregion // Properties
 

@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetStoragePartitionInfo_FromLogicalDrive_Success()
+      public void AlphaFS_Device_GetStoragePartitionInfo_FromLogicalDrivePath_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -40,17 +40,35 @@ namespace AlphaFS.UnitTest
 
          foreach (var driveInfo in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
          {
-            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory || driveInfo.DriveType == System.IO.DriveType.Network)
+            if (driveInfo.DriveType == System.IO.DriveType.CDRom)
+            {
+               Console.WriteLine("\tSkipped CDRom drive: [{0}]", driveInfo.Name);
                continue;
+            }
+
+            if (driveInfo.DriveType == System.IO.DriveType.Network)
+            {
+               Console.WriteLine("\tSkipped Network drive: [{0}]", driveInfo.Name);
+               continue;
+            }
+
+            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory)
+            {
+               Console.WriteLine("\tSkipped NoRootDirectory drive: [{0}]", driveInfo.Name);
+               continue;
+            }
+
 
             var storagePartitionInfo = Alphaleonis.Win32.Device.Local.GetStoragePartitionInfo(driveInfo.Name);
+
+            if (null == storagePartitionInfo)
+               Console.WriteLine();
+
+            Assert.IsNotNull(storagePartitionInfo);
 
             Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storagePartitionInfo.ToString());
 
             UnitTestConstants.Dump(storagePartitionInfo);
-
-
-            Assert.IsNotNull(storagePartitionInfo);
 
 
             if (null != storagePartitionInfo.GptPartitionInfo)

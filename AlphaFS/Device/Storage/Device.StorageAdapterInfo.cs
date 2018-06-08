@@ -94,6 +94,16 @@ namespace Alphaleonis.Win32.Device
       /// <summary>Specifies the maximum number of bytes the storage adapter can transfer in a single operation.</summary>
       public int MaximumTransferBytes { get; internal set; }
 
+
+#if DEBUG
+      /// <summary/>
+      public string MaximumTransferBytesUnitSize
+      {
+         get { return Utils.UnitSizeToText(MaximumTransferBytes); }
+      }
+#endif
+
+
       #endregion // Properties
 
 

@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -31,45 +30,37 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetPhysicalDiskInfo_DevicePathFromSystemDrive_Success()
+      public void AlphaFS_Device_GetStorageAdapterInfo_FromLogicalDrivePath_Success()
       {
+         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
-
-
-         var deviceCount = 0;
-
-         var sourceDrive = UnitTestConstants.SysDrive;
-         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive);
-         var devicePath = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceDrive).DevicePath;
-
-         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(devicePath);
-
-
-         Console.WriteLine("#{0:000}\tInput Device Path: [{1}]\t\t{2}\t\t{3}", ++deviceCount, devicePath, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
-
-
-         UnitTestConstants.Dump(pDisk);
-
-         UnitTestConstants.Dump(pDisk.StorageAdapterInfo, true);
-
-         UnitTestConstants.Dump(pDisk.StorageDeviceInfo, true);
-
-         UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
-         Console.WriteLine();
-
-
-         Assert.IsNotNull(pDisk);
+         
+         var gotDisk = false;
+         var driveCount = 0;
          
 
-         Assert.IsNotNull(pDisk.VolumeGuids);
-         Assert.IsTrue(pDisk.VolumeGuids.ToList().Contains(sourceVolume, StringComparer.OrdinalIgnoreCase));
+         foreach (var driveInfo in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
+         {
+            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory || driveInfo.DriveType == System.IO.DriveType.Network)
+               continue;
+
+            var storageAdapterInfo = Alphaleonis.Win32.Device.Local.GetStorageAdapterInfo(driveInfo.Name);
+
+            Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storageAdapterInfo.ToString());
+
+            UnitTestConstants.Dump(storageAdapterInfo);
 
 
-         Assert.IsNotNull(pDisk.LogicalDrives);
+            Assert.IsNotNull(storageAdapterInfo);
 
-         Assert.IsTrue(pDisk.LogicalDrives.Contains(sourceDrive));
+            gotDisk = true;
 
-         Assert.IsTrue(pDisk.ContainsVolume(sourceDrive[0].ToString()));
+
+            Console.WriteLine();
+         }
+
+
+         Assert.IsTrue(gotDisk);
       }
    }
 }

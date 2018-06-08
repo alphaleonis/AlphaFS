@@ -98,6 +98,13 @@ namespace Alphaleonis.Win32.Device
       /// <summary>The total size of the physical disk.</summary>
       public long TotalSize { get; internal set; }
 
+#if DEBUG
+      /// <summary/>
+      public string TotalSizeUnitSize
+      {
+         get { return Utils.UnitSizeToText(TotalSize); }
+      }
+#endif
 
       /// <summary>The Vendor ID of the physical disk.</summary>
       public string VendorId { get; internal set; }

@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetStorageDeviceInfo_FromLogicalDrive_Success()
+      public void AlphaFS_Device_GetStorageDeviceInfo_FromLogicalDrivePath_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
