@@ -21,14 +21,13 @@
 
 using System;
 using System.Security;
-using Alphaleonis.Win32.Device;
 using Microsoft.Win32.SafeHandles;
 
-namespace Alphaleonis.Win32
+namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Represents a wrapper class for a handle used by the FindFirstVolume/FindNextVolume methods of the Win32 API.</summary>
    [SecurityCritical]
-   internal sealed class SafeFindVolumeHandle : SafeHandleZeroOrMinusOneIsInvalid
+   public sealed class SafeFindVolumeHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
       /// <summary>Constructor that prevents a default instance of this class from being created.</summary>
       private SafeFindVolumeHandle() : base(true)
@@ -51,7 +50,7 @@ namespace Alphaleonis.Win32
       /// </returns>
       protected override bool ReleaseHandle()
       {
-         return NativeMethods.FindVolumeClose(handle);
+         return Device.NativeMethods.FindVolumeClose(handle);
       }
    }
 }

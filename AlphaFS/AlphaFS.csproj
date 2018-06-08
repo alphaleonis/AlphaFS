@@ -549,6 +549,10 @@
     <Compile Include="Filesystem\Structures, Enumerations\StreamId.cs" />
     <Compile Include="Filesystem\Native Other\SymbolicLinkTarget.cs" />
     <Compile Include="Filesystem\Native Other\SymbolicLinkType.cs" />
+    <Compile Include="OperatingSystem\IsAtLeast.cs" />
+    <Compile Include="OperatingSystem\EnumOsName.cs" />
+    <Compile Include="OperatingSystem\EnumProcessorArchitecture.cs" />
+    <Compile Include="OperatingSystem\NativeMethods.OperatingSystem.cs" />
     <Compile Include="Safe Handles\SafeTokenHandle.cs" />
     <Compile Include="Device\Native Other\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Safe Handles\SafeEncryptedFileRawHandle.cs" />
@@ -642,7 +646,7 @@
     <Compile Include="Network\Native Other\SHARE_INFO_1.cs" />
     <Compile Include="Network\Native Other\SHARE_INFO_2.cs" />
     <Compile Include="Network\Native Other\SHARE_INFO_503.cs" />
-    <Compile Include="OperatingSystem.cs" />
+    <Compile Include="OperatingSystem\OperatingSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

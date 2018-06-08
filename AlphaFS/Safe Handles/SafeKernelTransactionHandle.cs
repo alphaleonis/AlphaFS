@@ -20,10 +20,9 @@
  */
 
 using System.Security;
-using Alphaleonis.Win32.Filesystem;
 using Microsoft.Win32.SafeHandles;
 
-namespace Alphaleonis.Win32
+namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides a concrete implementation of SafeHandle supporting transactions.</summary>
    internal class SafeKernelTransactionHandle : SafeHandleMinusOneIsInvalid

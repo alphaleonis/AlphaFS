@@ -24,101 +24,27 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using System.Security;
 
 namespace Alphaleonis.Win32
 {
-   /// <summary>Static class providing access to information about the operating system under which the assembly is executing.</summary>
-   public static class OperatingSystem
+   /// <summary>[AlphaFS] Static class providing access to information about the operating system under which the assembly is executing.</summary>
+   public static partial class OperatingSystem
    {
-      /// <summary>A set of flags that describe the named Windows versions.</summary>
-      /// <remarks>The values of the enumeration are ordered. A later released operating system version has a higher number, so comparisons between named versions are meaningful.</remarks>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
-      public enum EnumOsName
-      {
-         /// <summary>A Windows version earlier than Windows 2000.</summary>
-         Earlier = -1,
-
-         /// <summary>Windows 2000 (Server or Professional).</summary>
-         Windows2000 = 0,
-
-         /// <summary>Windows XP.</summary>
-         WindowsXP = 1,
-
-         /// <summary>Windows Server 2003.</summary>
-         WindowsServer2003 = 2,
-
-         /// <summary>Windows Vista.</summary>
-         WindowsVista = 3,
-
-         /// <summary>Windows Server 2008.</summary>
-         WindowsServer2008 = 4,
-
-         /// <summary>Windows 7.</summary>
-         Windows7 = 5,
-
-         /// <summary>Windows Server 2008 R2.</summary>
-         WindowsServer2008R2 = 6,
-
-         /// <summary>Windows 8.</summary>
-         Windows8 = 7,
-
-         /// <summary>Windows Server 2012.</summary>
-         WindowsServer2012 = 8,
-
-         /// <summary>Windows 8.1.</summary>
-         Windows81 = 9,
-
-         /// <summary>Windows Server 2012 R2</summary>
-         WindowsServer2012R2 = 10,
-
-         /// <summary>Windows 10</summary>
-         Windows10 = 11,
-
-         /// <summary>Windows Server 2016</summary>
-         WindowsServer2016 = 12,
-
-         /// <summary>A later version of Windows than currently installed.</summary>
-         Later = 65535
-      }
-
-
-      /// <summary>A set of flags to indicate the current processor architecture for which the operating system is targeted and running.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Pa")]
-      [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]      
-      public enum EnumProcessorArchitecture 
-      {
-         /// <summary>PROCESSOR_ARCHITECTURE_INTEL
-         /// <para>The system is running a 32-bit version of Windows.</para>
-         /// </summary>
-         X86 = 0,
-
-         /// <summary>PROCESSOR_ARCHITECTURE_IA64
-         /// <para>The system is running on a Itanium processor.</para>
-         /// </summary>
-         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
-         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
-         IA64 = 6,
-
-         /// <summary>PROCESSOR_ARCHITECTURE_AMD64
-         /// <para>The system is running a 64-bit version of Windows.</para>
-         /// </summary>
-         X64 = 9,
-
-         /// <summary>PROCESSOR_ARCHITECTURE_UNKNOWN
-         /// <para>Unknown architecture.</para>
-         /// </summary>
-         Unknown = 65535
-      }
-
-
-      
-      
-      #region Properties
+      #region Private Fields
 
       private static bool _isServer;
-      /// <summary>Gets a value indicating whether the operating system is a server operating system.</summary>
+      private static bool? _isWow64Process;
+      private static Version _osVersion;
+      private static EnumOsName _enumOsName = EnumOsName.Later;
+      private static EnumProcessorArchitecture _processorArchitecture;
+      private static Version _servicePackVersion;
+
+      #endregion // Private Fields
+
+
+      #region Properties
+
+      /// <summary>[AlphaFS] Gets a value indicating whether the operating system is a server operating system.</summary>
       /// <value><c>true</c> if the current operating system is a server operating system; otherwise, <c>false</c>.</value>
       public static bool IsServer
       {
@@ -131,9 +57,8 @@ namespace Alphaleonis.Win32
          }
       }
 
-
-      private static bool? _isWow64Process;
-      /// <summary>Gets a value indicating whether the current process is running under WOW64.</summary>
+      
+      /// <summary>[AlphaFS] Gets a value indicating whether the current process is running under WOW64.</summary>
       /// <value><c>true</c> if the current process is running under WOW64; otherwise, <c>false</c>.</value>
       public static bool IsWow64Process
       {
@@ -159,8 +84,7 @@ namespace Alphaleonis.Win32
       }
 
 
-      private static Version _osVersion;
-      /// <summary>Gets the numeric version of the operating system.</summary>            
+      /// <summary>[AlphaFS] Gets the numeric version of the operating system.</summary>            
       /// <value>The numeric version of the operating system.</value>
       public static Version OSVersion
       {
@@ -173,9 +97,8 @@ namespace Alphaleonis.Win32
          }
       }
 
-
-      private static EnumOsName _enumOsName = EnumOsName.Later;
-      /// <summary>Gets the named version of the operating system.</summary>
+      
+      /// <summary>[AlphaFS] Gets the named version of the operating system.</summary>
       /// <value>The named version of the operating system.</value>
       public static EnumOsName VersionName
       {
@@ -188,9 +111,8 @@ namespace Alphaleonis.Win32
          }
       }
 
-
-      private static EnumProcessorArchitecture _processorArchitecture;
-      /// <summary>Gets the processor architecture for which the operating system is targeted.</summary>
+      
+      /// <summary>[AlphaFS] Gets the processor architecture for which the operating system is targeted.</summary>
       /// <value>The processor architecture for which the operating system is targeted.</value>
       /// <remarks>If running under WOW64 this will return a 32-bit processor. Use <see cref="IsWow64Process"/> to determine if this is the case.</remarks>      
       public static EnumProcessorArchitecture ProcessorArchitecture
@@ -204,9 +126,8 @@ namespace Alphaleonis.Win32
          }
       }
 
-
-      private static Version _servicePackVersion;
-      /// <summary>Gets the version of the service pack currently installed on the operating system.</summary>
+      
+      /// <summary>[AlphaFS] Gets the version of the service pack currently installed on the operating system.</summary>
       /// <value>The version of the service pack currently installed on the operating system.</value>
       /// <remarks>Only the <see cref="System.Version.Major"/> and <see cref="System.Version.Minor"/> fields are used.</remarks>
       public static Version ServicePackVersion
@@ -221,32 +142,7 @@ namespace Alphaleonis.Win32
       }
 
       #endregion // Properties
-
-
-      #region Methods
-
-      /// <summary>Determines whether the operating system is of the specified version or later.</summary>
-      /// <returns><c>true</c> if the operating system is of the specified <paramref name="version"/> or later; otherwise, <c>false</c>.</returns>      
-      /// <param name="version">The lowest version for which to return true.</param>
-      public static bool IsAtLeast(EnumOsName version)
-      {
-         return VersionName >= version;
-      }
-
       
-      /// <summary>Determines whether the operating system is of the specified version or later, allowing specification of a minimum service pack that must be installed on the lowest version.</summary>
-      /// <returns><c>true</c> if the operating system matches the specified <paramref name="version"/> with the specified service pack, or if the operating system is of a later version; otherwise, <c>false</c>.</returns>      
-      /// <param name="version">The minimum required version.</param>
-      /// <param name="servicePackVersion">The major version of the service pack that must be installed on the minimum required version to return true. This can be 0 to indicate that no service pack is required.</param>
-      public static bool IsAtLeast(EnumOsName version, int servicePackVersion)
-      {
-         return IsAtLeast(version) && ServicePackVersion.Major >= servicePackVersion;
-      }
-      
-      #endregion // Methods
-
-
-      #region Private
 
       [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "RtlGetVersion")]
       private static void UpdateData()
@@ -405,83 +301,5 @@ namespace Alphaleonis.Win32
                   break;
             }
       }
-      
-
-      private static class NativeMethods
-      {
-         internal const short VER_NT_WORKSTATION = 1;
-         internal const short VER_NT_DOMAIN_CONTROLLER = 2;
-         internal const short VER_NT_SERVER = 3;
-
-
-         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-         internal struct RTL_OSVERSIONINFOEXW
-         {
-            public int dwOSVersionInfoSize;
-            public readonly int dwMajorVersion;
-            public readonly int dwMinorVersion;
-            public readonly int dwBuildNumber;
-            public readonly int dwPlatformId;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-            public readonly string szCSDVersion;
-            public readonly ushort wServicePackMajor;
-            public readonly ushort wServicePackMinor;
-            public readonly ushort wSuiteMask;
-            public readonly byte wProductType;
-            public readonly byte wReserved;
-         }
-
-
-         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-         internal struct SYSTEM_INFO
-         {
-            public readonly EnumProcessorArchitecture wProcessorArchitecture;
-            private readonly ushort wReserved;
-            public readonly uint dwPageSize;
-            public readonly IntPtr lpMinimumApplicationAddress;
-            public readonly IntPtr lpMaximumApplicationAddress;
-            public readonly IntPtr dwActiveProcessorMask;
-            public readonly uint dwNumberOfProcessors;
-            public readonly uint dwProcessorType;
-            public readonly uint dwAllocationGranularity;
-            public readonly ushort wProcessorLevel;
-            public readonly ushort wProcessorRevision;
-         }
-
-
-         /// <summary>The RtlGetVersion routine returns version information about the currently running operating system.</summary>
-         /// <returns>RtlGetVersion returns STATUS_SUCCESS.</returns>
-         /// <remarks>Available starting with Windows 2000.</remarks>
-         [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule"), DllImport("ntdll.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-         [return: MarshalAs(UnmanagedType.Bool)]
-         internal static extern bool RtlGetVersion([MarshalAs(UnmanagedType.Struct)] ref RTL_OSVERSIONINFOEXW lpVersionInformation);
-
-
-         /// <summary>Retrieves information about the current system to an application running under WOW64.
-         /// If the function is called from a 64-bit application, it is equivalent to the GetSystemInfo function.
-         /// </summary>
-         /// <returns>This function does not return a value.</returns>
-         /// <remarks>To determine whether a Win32-based application is running under WOW64, call the <see cref="IsWow64Process"/> function.</remarks>
-         /// <remarks>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</remarks>
-         /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</remarks>
-         [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-         [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
-         internal static extern void GetNativeSystemInfo([MarshalAs(UnmanagedType.Struct)] ref SYSTEM_INFO lpSystemInfo);
-
-
-         /// <summary>Determines whether the specified process is running under WOW64.</summary>
-         /// <returns>
-         /// If the function succeeds, the return value is a nonzero value.
-         /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
-         /// </returns>
-         /// <remarks>Minimum supported client: Windows Vista, Windows XP with SP2 [desktop apps only]</remarks>
-         /// <remarks>Minimum supported server: Windows Server 2008, Windows Server 2003 with SP1 [desktop apps only]</remarks>
-         [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-         [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
-         [return: MarshalAs(UnmanagedType.Bool)]
-         internal static extern bool IsWow64Process([In] IntPtr hProcess, [Out, MarshalAs(UnmanagedType.Bool)] out bool lpSystemInfo);
-      }
-
-      #endregion // Private
    }
 }

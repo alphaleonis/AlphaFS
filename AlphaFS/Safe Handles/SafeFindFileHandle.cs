@@ -21,14 +21,13 @@
 
 using System;
 using System.Security;
-using Alphaleonis.Win32.Filesystem;
 using Microsoft.Win32.SafeHandles;
 
-namespace Alphaleonis.Win32
+namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Represents a wrapper class for a handle used by the FindFirstFile/FindNextFile Win32 API functions.</summary>
    [SecurityCritical]
-   internal sealed class SafeFindFileHandle : SafeHandleZeroOrMinusOneIsInvalid
+   public sealed class SafeFindFileHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
       /// <summary>Constructor that prevents a default instance of this class from being created.</summary>
       private SafeFindFileHandle() : base(true)
