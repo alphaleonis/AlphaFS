@@ -42,11 +42,11 @@ namespace AlphaFS.UnitTest
          var logicalDriveCount = 0;
 
 
-         foreach (var logicalDrive in System.IO.DriveInfo.GetDrives())
+         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
-            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]\n", ++logicalDriveCount, logicalDrive.Name);
+            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]\n", ++logicalDriveCount, driveInfo.Name);
 
-            if (logicalDrive.DriveType == System.IO.DriveType.CDRom)
+            if (driveInfo.DriveType == System.IO.DriveType.CDRom)
             {
                Console.WriteLine();
                continue;
@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
             
             // GetVolumeDeviceName: "C:\" --> "\Device\HarddiskVolume4"
 
-            var deviceNameFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(logicalDrive.Name);
+            var deviceNameFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(driveInfo.Name);
 
             Console.WriteLine("\tGetVolumeDeviceName\t\t\t: [{0}]", deviceNameFromLogicalDrive);
 
@@ -67,14 +67,14 @@ namespace AlphaFS.UnitTest
 
             // Skip mapped drives and network drives.
 
-            if (logicalDrive.DriveType != System.IO.DriveType.NoRootDirectory && logicalDrive.DriveType != System.IO.DriveType.Network)
+            if (driveInfo.DriveType != System.IO.DriveType.NoRootDirectory && driveInfo.DriveType != System.IO.DriveType.Network)
             {
                Assert.IsTrue(deviceNameFromLogicalDrive.StartsWith(deviceNamePrefix));
 
 
                // GetVolumeGuid: "C:\" --> "\\?\Volume{db5044f9-bd1f-4243-ab97-4b985eb29e80}\"
 
-               var volumeGuidFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(logicalDrive.Name);
+               var volumeGuidFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(driveInfo.Name);
 
                Console.WriteLine("\tGetVolumeGuid\t\t\t\t: [{0}]", volumeGuidFromLogicalDrive);
 
@@ -87,7 +87,7 @@ namespace AlphaFS.UnitTest
 
                // GetUniqueVolumeNameForPath: "C:\" --> "\\?\Volume{db5044f9-bd1f-4243-ab97-4b985eb29e80}\"
 
-               var uniqueVolumeNameFromlDriveInputPath = Alphaleonis.Win32.Filesystem.Volume.GetUniqueVolumeNameForPath(logicalDrive.Name);
+               var uniqueVolumeNameFromlDriveInputPath = Alphaleonis.Win32.Filesystem.Volume.GetUniqueVolumeNameForPath(driveInfo.Name);
 
                Console.WriteLine("\tGetUniqueVolumeNameForPath\t: [{0}]", uniqueVolumeNameFromlDriveInputPath);
 
@@ -99,13 +99,13 @@ namespace AlphaFS.UnitTest
 
             // GetVolumePathName: "C:\" or "C:\Windows" --> "C:\"
 
-            var volumePathNameFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumePathName(logicalDrive.Name);
+            var volumePathNameFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumePathName(driveInfo.Name);
 
             Console.WriteLine("\tGetVolumePathName\t\t\t: [{0}]\n", volumePathNameFromLogicalDrive);
 
             Assert.IsNotNull(volumePathNameFromLogicalDrive);
 
-            Assert.AreEqual(logicalDrive.Name, volumePathNameFromLogicalDrive);
+            Assert.AreEqual(driveInfo.Name, volumePathNameFromLogicalDrive);
          }
 
          if (logicalDriveCount == 0)

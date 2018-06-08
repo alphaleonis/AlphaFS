@@ -44,9 +44,9 @@ namespace AlphaFS.UnitTest
 
          var logicalDriveCount = 0;
 
-         foreach (var logicalDrive in System.IO.DriveInfo.GetDrives())
+         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
-            var driveName = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(logicalDrive.Name) : logicalDrive.Name;
+            var driveName = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveInfo.Name) : driveInfo.Name;
 
             Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveName);
 
@@ -79,7 +79,7 @@ namespace AlphaFS.UnitTest
                Assert.AreEqual(driveInfo2.VolumeLabel, volInfo.Name);
                Assert.AreEqual(driveInfo2.DriveFormat, volInfo.FileSystemName);
 
-               if (logicalDrive.DriveType != System.IO.DriveType.Network)
+               if (driveInfo.DriveType != System.IO.DriveType.Network)
                   Assert.AreEqual(driveInfo2.Name, volInfo.FullPath);
 
                Assert.IsNull(volInfo.Guid);
@@ -105,7 +105,7 @@ namespace AlphaFS.UnitTest
                   Assert.AreEqual(driveInfo2.DriveFormat, volInfo.FileSystemName);
                   Assert.AreEqual(driveInfo2.Name, volInfo.FullPath);
 
-                  if (logicalDrive.DriveType != System.IO.DriveType.Network)
+                  if (driveInfo.DriveType != System.IO.DriveType.Network)
                   {
                      Assert.IsNotNull(volInfo.Guid);
 

@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
          
-         var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToArray();
+         var drives = System.IO.DriveInfo.GetDrives().ToArray();
 
          foreach (var driveInfo in drives)
          {

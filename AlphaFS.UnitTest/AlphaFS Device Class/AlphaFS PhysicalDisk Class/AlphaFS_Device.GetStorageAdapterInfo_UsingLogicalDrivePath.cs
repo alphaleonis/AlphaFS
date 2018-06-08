@@ -39,7 +39,7 @@ namespace AlphaFS.UnitTest
          var driveCount = 0;
          
 
-         foreach (var driveInfo in Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives())
+         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
             // Works with System.IO.DriveType.CDRom.
 

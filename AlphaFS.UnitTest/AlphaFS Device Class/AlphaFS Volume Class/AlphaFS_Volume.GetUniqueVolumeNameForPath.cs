@@ -38,15 +38,15 @@ namespace AlphaFS.UnitTest
 
          var logicalDriveCount = 0;
          
-         foreach (var drive in System.IO.DriveInfo.GetDrives())
+         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
             // Skip mapped drives and network drives.
 
-            if (drive.DriveType == System.IO.DriveType.NoRootDirectory || drive.DriveType == System.IO.DriveType.Network)
+            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory || driveInfo.DriveType == System.IO.DriveType.Network)
                continue;
 
 
-            var driveName = drive.Name;
+            var driveName = driveInfo.Name;
 
             var deviceGuid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(driveName);
 
@@ -65,16 +65,28 @@ namespace AlphaFS.UnitTest
 
             var pathNames = Alphaleonis.Win32.Filesystem.Volume.EnumerateVolumePathNames(volumeNameResult).ToArray();
 
-            foreach (var displayName in pathNames)
+            foreach (var uniqueName in pathNames)
             {
-               Console.WriteLine("\n\t(Input Volume GUID Path) EnumerateVolumePathNames: Volume points to logcal drive: [{0}]\n", displayName);
+               Console.WriteLine("\n\tUnique name: [{0}]", uniqueName);
 
 
-               // Volumes don't always have drive letters.
+               try
+               {
+                  var targetInfo = Alphaleonis.Win32.Filesystem.Directory.GetLinkTargetInfo(uniqueName);
 
-               if (!string.IsNullOrWhiteSpace(displayName))
-                  Assert.AreEqual(driveName, displayName);
+                  UnitTestConstants.Dump(targetInfo);
+
+                  Assert.AreEqual(deviceGuid, Alphaleonis.Win32.Filesystem.Path.LongPathPrefix + targetInfo.SubstituteName.Replace(Alphaleonis.Win32.Filesystem.Path.NonInterpretedPathPrefix, string.Empty));
+               }
+               catch
+               {
+                  if (!string.IsNullOrWhiteSpace(uniqueName))
+                     Assert.AreEqual(driveName, uniqueName);
+               }
             }
+
+
+            Console.WriteLine();
          }
 
 
