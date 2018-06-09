@@ -425,6 +425,8 @@ namespace Alphaleonis.Win32.Filesystem
       public void Refresh()
       {
          DataInitialised = File.FillAttributeInfoCore(Transaction, LongFullName, ref Win32AttributeData, false, false);
+
+         IsDirectory = File.IsDirectory(Win32AttributeData.dwFileAttributes);
       }
 
 

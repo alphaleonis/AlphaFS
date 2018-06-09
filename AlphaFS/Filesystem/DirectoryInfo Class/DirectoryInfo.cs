@@ -131,8 +131,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (DataInitialised == -1)
                   Refresh();
 
-               var attrs = Win32AttributeData.dwFileAttributes;
-               return DataInitialised == 0 && File.IsDirectory(attrs);
+               return DataInitialised == 0 && IsDirectory;
             }
             catch
             {
