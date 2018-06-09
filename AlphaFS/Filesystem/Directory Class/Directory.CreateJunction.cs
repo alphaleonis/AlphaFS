@@ -422,7 +422,8 @@ namespace Alphaleonis.Win32.Filesystem
             if (overwrite)
             {
                DeleteDirectoryCore(transaction, null, junctionPath, true, true, true, pathFormat);
-               CreateDirectoryCore(transaction, junctionPath, null, null, false, pathFormat);
+
+               CreateDirectoryCore(true, transaction, junctionPath, null, null, false, pathFormat);
             }
 
             else
@@ -437,7 +438,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Create the folder and convert it to a directory junction.
-         CreateDirectoryCore(transaction, junctionPath, null, null, false, pathFormat);
+         CreateDirectoryCore(true, transaction, junctionPath, null, null, false, pathFormat);
 
          using (var safeHandle = OpenDirectoryJunction(transaction, junctionPath, pathFormat))
             FileSystemHelper.CreateDirectoryJunction(safeHandle, directoryPath);
