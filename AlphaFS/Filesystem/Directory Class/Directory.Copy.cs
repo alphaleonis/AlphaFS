@@ -814,7 +814,7 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      var fileParentFolder = Path.GetLongPathCore(parentFolder.FullName, GetFullPathOptions.None);
 
-                     CreateDirectoryCore(transaction, fileParentFolder, null, null, false, PathFormat.LongFullPath);
+                     CreateDirectoryCore(true, transaction, fileParentFolder, null, null, false, PathFormat.LongFullPath);
                   }
 
 
