@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>      
+      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileEncryptionStatus GetEncryptionStatus(string path, PathFormat pathFormat)
       {
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
       /// <param name="path">The name of the file.</param>
-      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>      
+      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileEncryptionStatus GetEncryptionStatus(string path)
       {

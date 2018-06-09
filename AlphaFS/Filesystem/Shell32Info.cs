@@ -155,7 +155,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Returns the path as a string.</summary>
-      /// <returns>The path.</returns>      
+      /// <returns>The path.</returns>
       public override string ToString()
       {
          return FullPath;

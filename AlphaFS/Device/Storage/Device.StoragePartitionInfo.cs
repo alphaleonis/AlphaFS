@@ -117,19 +117,12 @@ namespace Alphaleonis.Win32.Device
                PartitionCount = MbrPartitionInfo.Count;
 
                break;
-
-
-            default:
-               Console.WriteLine(PartitionStyle.ToString());
-               break;
          }
          
 
-         IsOnDynamicDisk = null != GptPartitionInfo && GptPartitionInfo.Any(partition =>
-                              
-                              partition.PartitionType == PartitionType.LdmData || partition.PartitionType == PartitionType.LdmMetadata) ||
+         OnDynamicDisk = null != GptPartitionInfo && GptPartitionInfo.Any(partition => partition.PartitionType == PartitionType.LdmData || partition.PartitionType == PartitionType.LdmMetadata) ||
                            
-                           null != MbrPartitionInfo && MbrPartitionInfo.Any(partition => partition.DiskPartitionType == DiskPartitionType.Ldm);
+                         null != MbrPartitionInfo && MbrPartitionInfo.Any(partition => partition.DiskPartitionType == DiskPartitionType.Ldm);
       }
 
       #endregion // Constructors
@@ -211,7 +204,7 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary><c>true</c> if the partition is on a dynamic disk.</summary>
-      public bool IsOnDynamicDisk { get; private set; }
+      public bool OnDynamicDisk { get; private set; }
       
 
       /// <summary>Contains partition information specific to master boot record (MBR) disks.</summary>
@@ -238,7 +231,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>The total size of the storage partition.</summary>
       public long TotalSize { get; private set; }
-
+      
 
 #if DEBUG
       /// <summary/>

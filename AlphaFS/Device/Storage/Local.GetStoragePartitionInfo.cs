@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Device
                // Use the first disk extent.
                var diskNumber = volDiskExtents.Value.Extents[0].DiskNumber;
 
-               return new StoragePartitionInfo((int)diskNumber, disk, layout, partitions);
+               return new StoragePartitionInfo((int) diskNumber, disk, layout, partitions);
             }
          }
 

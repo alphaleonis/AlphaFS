@@ -11,7 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		AlphaFS.vsmdi = AlphaFS.vsmdi
 		BuildRelease.proj = BuildRelease.proj
 		CHANGELOG.md = CHANGELOG.md
-		AlphaFS\Device\Filesystem\Device.Filesystem.cs = AlphaFS\Device\Filesystem\Device.Filesystem.cs
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection

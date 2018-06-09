@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
          var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceVolume);
 
 
-         Console.WriteLine("#{0:000}\tInput Volume: [{1}]\t\t{2}\t\t{3}", ++volumeCount, sourceVolume, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
+         Console.WriteLine("#{0:000}\tInput Volume Path: [{1}]\t\t{2}\t\t{3}", ++volumeCount, sourceVolume, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
 
 
          UnitTestConstants.Dump(pDisk);
@@ -56,8 +56,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.Dump(pDisk.StorageDeviceInfo, true);
 
          UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
-         Console.WriteLine();
-
+         
 
          Assert.IsNotNull(pDisk);
 
@@ -70,6 +69,23 @@ namespace AlphaFS.UnitTest
          Assert.AreEqual(pDisk.LogicalDrives.Contains(sourceDrive, StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(sourceDrive));
 
          Assert.AreEqual(pDisk.VolumeGuids.Contains(sourceVolume, StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(sourceVolume));
+
+
+         // Show all partition information.
+
+         if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.GptPartitionInfo)
+         {
+            foreach (var partition in pDisk.StoragePartitionInfo.GptPartitionInfo)
+               UnitTestConstants.Dump(partition, true);
+         }
+
+         if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.MbrPartitionInfo)
+         {
+            foreach (var partition in pDisk.StoragePartitionInfo.MbrPartitionInfo)
+               UnitTestConstants.Dump(partition, true);
+         }
+
+         Console.WriteLine();
       }
    }
 }

@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.</summary>
       /// <param name="obj">An object to compare with this instance.</param>
-      /// <returns>Returns a value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance precedes <paramref name="obj" /> in the sort order. Zero This instance occurs in the same position in the sort order as <paramref name="obj" />. Greater than zero This instance follows <paramref name="obj" /> in the sort order.</returns>        
+      /// <returns>Returns a value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance precedes <paramref name="obj" /> in the sort order. Zero This instance occurs in the same position in the sort order as <paramref name="obj" />. Greater than zero This instance follows <paramref name="obj" /> in the sort order.</returns>  
       public int CompareTo(object obj)
       {
          if (null == obj)
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Compares the current object with another object of the same type.</summary>
       /// <param name="other">An object to compare with this object.</param>
-      /// <returns>Returns a value that indicates the relative order of the objects being compared. The return value has the following meanings: Value Meaning Less than zero This object is less than the <paramref name="other" /> parameter.Zero This object is equal to <paramref name="other" />. Greater than zero This object is greater than <paramref name="other" />.</returns>        
+      /// <returns>Returns a value that indicates the relative order of the objects being compared. The return value has the following meanings: Value Meaning Less than zero This object is less than the <paramref name="other" /> parameter.Zero This object is equal to <paramref name="other" />. Greater than zero This object is greater than <paramref name="other" />.</returns>  
       public int CompareTo(FileIdInfo other)
       {
          return _volumeSerialNumber != other._volumeSerialNumber

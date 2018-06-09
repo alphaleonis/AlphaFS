@@ -254,7 +254,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="share">The <see cref="FileShare"/> option controls how you would like to share created file with other requesters.</param>
       ///  <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <returns>Returns a <see cref="FileStream"/> that provides read/write access to the file specified in path.</returns>      
+      /// <returns>Returns a <see cref="FileStream"/> that provides read/write access to the file specified in path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification =
          "False positive")]
       [SecurityCritical]

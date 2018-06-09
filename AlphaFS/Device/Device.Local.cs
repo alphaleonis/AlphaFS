@@ -19,10 +19,13 @@
  *  THE SOFTWARE. 
  */
 
+using System.IO;
+
 namespace Alphaleonis.Win32.Device
 {
    /// <summary>[AlphaFS] Provides static methods to retrieve device resource information from the local host.</summary>
    public static partial class Local
    {
+      internal static DriveType[] ValidDriveTypes = {DriveType.CDRom, DriveType.Fixed, DriveType.Removable};
    }
 }

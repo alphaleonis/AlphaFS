@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -30,15 +31,12 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetStorageAdapterInfo_UsingLogicalDrivePath_Success()
+      public void AlphaFS_Device_GetPhysicalDiskInfo_UsingLogicalDrivePath_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
-         
-         var gotDisk = false;
+
          var driveCount = 0;
          
-
          foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
             // Works with System.IO.DriveType.CDRom.
@@ -57,23 +55,60 @@ namespace AlphaFS.UnitTest
             }
 
 
-            var storageAdapterInfo = Alphaleonis.Win32.Device.Local.GetStorageAdapterInfo(driveInfo.Name);
-
-            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storageAdapterInfo.ToString());
-
-            UnitTestConstants.Dump(storageAdapterInfo);
+            var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(driveInfo.Name);
 
 
-            Assert.IsNotNull(storageAdapterInfo);
+            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, pDisk.StorageAdapterInfo.ToString());
 
-            gotDisk = true;
+            UnitTestConstants.Dump(pDisk);
 
+            UnitTestConstants.Dump(pDisk.StorageAdapterInfo, true);
+
+            UnitTestConstants.Dump(pDisk.StorageDeviceInfo, true);
+
+            UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
+            
+
+            Assert.IsNotNull(pDisk);
+
+            Assert.IsNotNull(pDisk.LogicalDrives);
+
+            Assert.IsNotNull(pDisk.VolumeGuids);
+
+
+            if (pDisk.StorageDeviceInfo.PartitionNumber == -1)
+               Assert.IsNull(pDisk.StoragePartitionInfo);
+            else
+               Assert.IsNotNull(pDisk.StoragePartitionInfo);
+
+
+            // For CDRom, the PartitionNumber is always -1.
+
+            if (pDisk.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.StorageDeviceType.CDRom)
+               Assert.AreEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
+            else
+               Assert.AreNotEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
+            
+
+            Assert.AreEqual(pDisk.LogicalDrives.Contains(driveInfo.Name.TrimEnd('\\'), StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(driveInfo.Name));
+
+
+            // Show all partition information.
+
+            if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.GptPartitionInfo)
+            {
+               foreach (var partition in pDisk.StoragePartitionInfo.GptPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
+            }
+
+            if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.MbrPartitionInfo)
+            {
+               foreach (var partition in pDisk.StoragePartitionInfo.MbrPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
+            }
 
             Console.WriteLine();
          }
-
-
-         Assert.IsTrue(gotDisk);
       }
    }
 }

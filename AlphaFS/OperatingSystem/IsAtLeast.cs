@@ -25,7 +25,7 @@ namespace Alphaleonis.Win32
    public static partial class OperatingSystem
    {
       /// <summary>[AlphaFS] Determines whether the operating system is of the specified version or later.</summary>
-      /// <returns><c>true</c> if the operating system is of the specified <paramref name="version"/> or later; otherwise, <c>false</c>.</returns>      
+      /// <returns><c>true</c> if the operating system is of the specified <paramref name="version"/> or later; otherwise, <c>false</c>.</returns>
       /// <param name="version">The lowest version for which to return true.</param>
       public static bool IsAtLeast(EnumOsName version)
       {
@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32
 
 
       /// <summary>[AlphaFS] Determines whether the operating system is of the specified version or later, allowing specification of a minimum service pack that must be installed on the lowest version.</summary>
-      /// <returns><c>true</c> if the operating system matches the specified <paramref name="version"/> with the specified service pack, or if the operating system is of a later version; otherwise, <c>false</c>.</returns>      
+      /// <returns><c>true</c> if the operating system matches the specified <paramref name="version"/> with the specified service pack, or if the operating system is of a later version; otherwise, <c>false</c>.</returns>
       /// <param name="version">The minimum required version.</param>
       /// <param name="servicePackVersion">The major version of the service pack that must be installed on the minimum required version to return true. This can be 0 to indicate that no service pack is required.</param>
       public static bool IsAtLeast(EnumOsName version, int servicePackVersion)

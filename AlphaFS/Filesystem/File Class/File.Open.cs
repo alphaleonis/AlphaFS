@@ -212,7 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>
       ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
       ///   access and the specified sharing option.
-      /// </returns>      
+      /// </returns>
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes)
       {

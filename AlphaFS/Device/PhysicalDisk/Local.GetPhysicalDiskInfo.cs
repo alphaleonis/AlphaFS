@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Device
       /// <remark>
       ///   Most properties of the returned <see cref="PhysicalDiskInfo.StorageAdapterInfo"/> and <see cref="PhysicalDiskInfo.StorageDeviceInfo"/> instances are meaningless unless this method is called from an elevated state.
       ///   Do not call this method for every volume or logical drive on the system as each call queries all physical disks, associated volumes and logical drives.
-      ///   Instead, use method <see cref="EnumeratePhysicalDisks"/> and property <see cref="PhysicalDiskInfo.VolumeGuids"/> and/or <see cref="PhysicalDiskInfo.LogicalDrives"/>.
+      ///   Instead, use method <see cref="EnumeratePhysicalDisks()"/> and property <see cref="PhysicalDiskInfo.VolumeGuids"/> and/or <see cref="PhysicalDiskInfo.LogicalDrives"/>.
       /// </remark>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -64,6 +64,7 @@ namespace Alphaleonis.Win32.Device
          if (null == storageDeviceInfo)
             return null;
          
+         
 
          if (isDrive)
             // Use logical drive path.
@@ -84,7 +85,7 @@ namespace Alphaleonis.Win32.Device
 
          if (null != pDiskInfo)
          {
-            // Use the storageDeviceInfo created earlier using validatedDevicePath.
+            // Use the storageDeviceInfo instance created earlier because it is based on the input path.
             pDiskInfo.StorageDeviceInfo = storageDeviceInfo;
             
 
@@ -92,6 +93,10 @@ namespace Alphaleonis.Win32.Device
                // Accessing the device by its path: \\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}
                // does not relate to any drive or volume, so the default PartitionNumber of 0 is misleading.
                pDiskInfo.StorageDeviceInfo.PartitionNumber = -1;
+
+
+            if (null == pDiskInfo.StoragePartitionInfo)
+               pDiskInfo.StoragePartitionInfo = GetStoragePartitionInfo(validatedDevicePath);
          }
 
 
@@ -104,7 +109,7 @@ namespace Alphaleonis.Win32.Device
       /// <remark>
       ///   Most properties of the returned <see cref="PhysicalDiskInfo.StorageAdapterInfo"/> and <see cref="PhysicalDiskInfo.StorageDeviceInfo"/> instances are meaningless unless this method is called from an elevated state.
       ///   Do not call this method for every volume or logical drive on the system as each call queries all physical disks, associated volumes and logical drives.
-      ///   Instead, use method <see cref="EnumeratePhysicalDisks"/> and property <see cref="PhysicalDiskInfo.VolumeGuids"/> and/or <see cref="PhysicalDiskInfo.LogicalDrives"/>.
+      ///   Instead, use method <see cref="EnumeratePhysicalDisks()"/> and property <see cref="PhysicalDiskInfo.VolumeGuids"/> and/or <see cref="PhysicalDiskInfo.LogicalDrives"/>.
       /// </remark>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -112,17 +117,16 @@ namespace Alphaleonis.Win32.Device
       /// <exception cref="Exception"/>
       /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="devicePath">
-      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
-      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
-      /// <param name="storageDeviceInfo">A <see cref="StorageDeviceInfo"/> instance.</param>
       /// <param name="deviceInfo">A <see cref="DeviceInfo"/> instance.</param>
       /// <remarks>Use either <paramref name="devicePath"/> or <paramref name="deviceInfo"/>, not both.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is disposed.")]
       [SecurityCritical]
-      internal static PhysicalDiskInfo GetPhysicalDiskInfoCore(bool isElevated, string devicePath, StorageDeviceInfo storageDeviceInfo, DeviceInfo deviceInfo)
+      internal static PhysicalDiskInfo GetPhysicalDiskInfoCore(bool isElevated, string devicePath, DeviceInfo deviceInfo)
       {
          var isDeviceInfo = null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.DevicePath);
 
@@ -130,8 +134,7 @@ namespace Alphaleonis.Win32.Device
             devicePath = deviceInfo.DevicePath;
 
 
-         if (null == storageDeviceInfo)
-            storageDeviceInfo = GetStorageDeviceInfoCore(false, devicePath);
+         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, devicePath);
 
          if (null == storageDeviceInfo)
             return null;
@@ -164,6 +167,7 @@ namespace Alphaleonis.Win32.Device
          }
 
 
+         // Use the storageDeviceInfo instance created earlier because it is based on the input path.
          pDiskInfo.StorageDeviceInfo = storageDeviceInfo;
 
 

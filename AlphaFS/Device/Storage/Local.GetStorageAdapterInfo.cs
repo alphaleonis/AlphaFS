@@ -77,31 +77,31 @@ namespace Alphaleonis.Win32.Device
 
          using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
          {
-            if (null == safeBuffer)
-            {
-               // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
+            //if (null == safeBuffer)
+            //{
+            //   // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
 
 
-               var volDiskExtents = GetVolumeDiskExtents(isRetry ? safeHandleRetry : safeHandle, pathToDevice);
+            //   var volDiskExtents = GetVolumeDiskExtents(isRetry ? safeHandleRetry : safeHandle, pathToDevice);
 
-               if (volDiskExtents.HasValue)
-               {
-                  // Use the first disk extent.
+            //   if (volDiskExtents.HasValue)
+            //   {
+            //      // Use the first disk extent.
 
-                  pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
-
-
-                  safeHandleRetry = FileSystemHelper.OpenPhysicalDisk(pathToDevice, FileSystemRights.Read);
-
-                  isRetry = Utils.IsValidHandle(safeHandleRetry, false);
-               }
+            //      pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
 
 
-               if (isRetry)
-                  goto StartGetData;
+            //      safeHandleRetry = FileSystemHelper.OpenPhysicalDisk(pathToDevice, FileSystemRights.Read);
 
-               return null;
-            }
+            //      isRetry = Utils.IsValidHandle(safeHandleRetry, false);
+            //   }
+
+
+            //   if (isRetry)
+            //      goto StartGetData;
+
+            //   return null;
+            //}
 
 
             if (isRetry && !safeHandleRetry.IsClosed)

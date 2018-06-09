@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path"><para>The name of the file.</para></param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>      
+      /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
       internal static long GetCompressedSizeCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {

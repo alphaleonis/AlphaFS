@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -31,39 +30,36 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetPhysicalDiskInfo_UsingLogicalDrivePathFromSystemDrive_Success()
+      public void AlphaFS_Device_GetStorageAdapterInfo_UsingVolumePathFromSystemDrive_Success()
       {
+         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
-         
 
-         var driveCount = 0;
+
+         var volumeCount = 0;
 
          var sourceDrive = UnitTestConstants.SysDrive;
 
-         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceDrive);
+         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive);
 
-         Console.WriteLine("#{0:000}\tInput Logical Drive: [{1}]\t\t{2}\t\t{3}", ++driveCount, sourceDrive, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
+         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceVolume);
 
 
-         UnitTestConstants.Dump(pDisk);
+         Console.WriteLine("#{0:000}\tInput Volume Path: [{1}]\t\t{2}", ++volumeCount, sourceVolume, pDisk.StorageAdapterInfo.ToString());
 
-         UnitTestConstants.Dump(pDisk.StorageAdapterInfo, true);
 
-         UnitTestConstants.Dump(pDisk.StorageDeviceInfo, true);
+         var storageAdapterInfo = Alphaleonis.Win32.Device.Local.GetStorageAdapterInfo(sourceVolume);
 
-         UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
-         Console.WriteLine();
+         
+         UnitTestConstants.Dump(storageAdapterInfo);
 
+         Assert.IsNotNull(storageAdapterInfo);
 
          Assert.IsNotNull(pDisk);
 
-         Assert.IsNotNull(pDisk.LogicalDrives);
-
-         Assert.IsNotNull(pDisk.VolumeGuids);
-
          Assert.AreNotEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
 
-         Assert.AreEqual(pDisk.LogicalDrives.Contains(sourceDrive, StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(sourceDrive));
+         Assert.AreEqual(storageAdapterInfo, pDisk.StorageAdapterInfo);
       }
    }
 }

@@ -145,8 +145,10 @@
     </Compile>
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.EnumeratePhysicalDisks.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_UsingDevicePathFromSystemDrive.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_UsingLogicalDrivePathFromSystemDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_UsingLogicalDrivePath.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetPhysicalDiskInfo_UsingVolumePathFromSystemDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageAdapterInfo_UsingVolumePathFromSystemDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageAdapterInfo_UsingDevicePathFromSystemDrive.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageAdapterInfo_UsingLogicalDrivePath.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageDeviceInfo_UsingLogicalDrivePath.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStoragePartitionInfo_UsingLogicalDrivePath.cs" />

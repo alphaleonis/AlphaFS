@@ -30,50 +30,35 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetStorageAdapterInfo_UsingLogicalDrivePath_Success()
+      public void AlphaFS_Device_GetStorageAdapterInfo_UsingDevicePathFromSystemDrive_Success()
       {
          UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
+
+
+         var deviceCount = 0;
+
+         var sourceDrive = UnitTestConstants.SysDrive;
+         var devicePath = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceDrive).DevicePath;
+
+         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(devicePath);
+
+
+         Console.WriteLine("#{0:000}\tInput Device Path: [{1}]\t\t{2}", ++deviceCount, devicePath, pDisk.StorageAdapterInfo.ToString());
+
+
+         var storageAdapterInfo = Alphaleonis.Win32.Device.Local.GetStorageAdapterInfo(devicePath);
+
          
-         var gotDisk = false;
-         var driveCount = 0;
-         
+         UnitTestConstants.Dump(storageAdapterInfo);
 
-         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
-         {
-            // Works with System.IO.DriveType.CDRom.
+         Assert.IsNotNull(storageAdapterInfo);
 
-            // System.UnauthorizedAccessException: (5) Access is denied.
-            if (driveInfo.DriveType == System.IO.DriveType.Network)
-            {
-               Console.WriteLine("#{0:000}\tSkipped Network drive: [{1}]\n", ++driveCount, driveInfo.Name);
-               continue;
-            }
+         Assert.IsNotNull(pDisk);
 
-            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory)
-            {
-               Console.WriteLine("#{0:000}\tSkipped NoRootDirectory drive: [{1}]\n", ++driveCount, driveInfo.Name);
-               continue;
-            }
+         Assert.AreEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
 
-
-            var storageAdapterInfo = Alphaleonis.Win32.Device.Local.GetStorageAdapterInfo(driveInfo.Name);
-
-            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storageAdapterInfo.ToString());
-
-            UnitTestConstants.Dump(storageAdapterInfo);
-
-
-            Assert.IsNotNull(storageAdapterInfo);
-
-            gotDisk = true;
-
-
-            Console.WriteLine();
-         }
-
-
-         Assert.IsTrue(gotDisk);
+         Assert.AreEqual(storageAdapterInfo, pDisk.StorageAdapterInfo);
       }
    }
 }

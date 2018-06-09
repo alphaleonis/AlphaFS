@@ -58,6 +58,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
 
 
+         Assert.IsNull(pDisk.StoragePartitionInfo);
+
+
          Assert.IsNotNull(pDisk);
 
          Assert.IsNotNull(pDisk.LogicalDrives);
