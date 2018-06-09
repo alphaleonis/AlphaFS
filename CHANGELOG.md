@@ -18,6 +18,20 @@ Version 2.3  (2018-XX-XX)
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
 
 
+Version 2.2.3  (2018-XX-XX)
+-------------
+
+### Bugs Fixed
+
+- Issue #456: Methods `Directory/File.Copy` throw `DeviceNotReadyException` when using `GLOBALROOT` source path.  (Thx VladimirK69)
+- Issue #457: `FileInfo.Exists` is `true` when instance is created from a directory path.
+- Issue #458: `Directory.Copy` sometimes does not create the file's parent folder, throwing `System.IO.DirectoryNotFoundException`.
+
+### Improvements
+
+- Added unit tests for GLOBALROOT source path so that it can never happen again!
+
+
 Version 2.2.2  (2018-06-05)
 -------------
 
@@ -195,7 +209,7 @@ Version 2.1  (2016-09-29)
 - Issue #151: Add `Directory.EnumerateXxx()` methods with support for `DirectoryEnumerationOptions`- and `PathFormat` enum.
 - Issue #154: Modify private method `FindFileSystemEntryInfo.FindFirstFile()` to report the full path on Exception. 
 - Issue #146: Add method `DirectoryInfo.EnumerateAlternateDataStreams()`.
-- Issue #147: Add overloaded methods to set Reparse Point Timestamp. (rstarkov)
+- Issue #147: Add overloaded methods to set Reparse Point Timestamp.  (Thx rstarkov)
 - Issue #150: Enhancement: `File.IsLocked()`
 - Issue #158: Add SuppressUnmanagedCodeSecurity attribute to [DllImport] tag.
 - Issue #184: `File.CreateSymbolicLink()` should throw `PlatformNotSupportedException()` if OS < Vista. 
@@ -223,16 +237,16 @@ Version 2.1  (2016-09-29)
 
 - Issue #50 : `Path.GetLongPath()` does not prefix on "C:\", should it?
 - Issue #60 : Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`.
-- Issue #160: `File.CreateSymbolicLink()` creates shortcut with no target. (martin-john-green)
-- Issue #162: `File.AppendAllLines()` concatenates content into one line. (pavelhritonenko)
+- Issue #160: `File.CreateSymbolicLink()` creates shortcut with no target.  (Thx martin-john-green)
+- Issue #162: `File.AppendAllLines()` concatenates content into one line.  (Thx pavelhritonenko)
 - Issue #166: `File.Exists` & `Directory.Exists` fail when path has leading space(s).
 - Issue #168: Error on `File.Open()` with access-mode Append?
 - Issue #169: `DirectoryInfo .ToString()` returns path with `\\UNC` prefix.
-- Issue #176: At `DirectoryInfo.GetFileSystemInfos()`, Long path prefix of GLOBALROOT path is missing. (diontools)
-- Issue #179: `Path.GetFileName()` with an empty string throws an exception. (brutaldev)
-- Issue #180: Network connects methods hangs in Windows service when credentials fail. (brutaldev)
-- Issue #181: `File.OpenWrite()` should create file if it doesn't exist. (Thomas Levesque)
-- Issue #183: Add `SafeFileHandle` null check for BackupFileStream.Dispose. (diontools)
+- Issue #176: At `DirectoryInfo.GetFileSystemInfos()`, Long path prefix of GLOBALROOT path is missing.  (Thx diontools)
+- Issue #179: `Path.GetFileName()` with an empty string throws an exception.  (Thx brutaldev)
+- Issue #180: Network connects methods hangs in Windows service when credentials fail.  (Thx brutaldev)
+- Issue #181: `File.OpenWrite()` should create file if it doesn't exist.  (Thomas Levesque)
+- Issue #183: Add `SafeFileHandle` null check for BackupFileStream.Dispose.  (Thx diontools)
 - Issue #185: Correct pinvoke signatures of `CreateSymbolicLink()` and `CreateSymbolicLinkTransacted()` functions.
 - Issue #196: Replace usage of `ExtendedFileAttributes.None` with `ExtendedFileAttributes.Normal`.
 - Issue #197: Fix: Prevent normalization of GlobalRootPrefix paths.
@@ -256,8 +270,8 @@ Version 2.1  (2016-09-29)
 - Issue #253: Apply `Dispose()` to method `File.GetHashCore()`.
 - Issue #254: Change `File.GetHashCore()` output from `.ToLowerInvariant()` to `.ToUpperInvariant()`.
 - Issue #255: Creating Folder with Empty name. (ardestan)
-- Issue #256: `Directory.Move()` not working over volumes with `MoveOptions.CopyAllowed`. (frontier777)
-- Issue #263: `Directory.GetDirectories()` Method `(String, String, SearchOption)` with pattern "* " (ardestan)
+- Issue #256: `Directory.Move()` not working over volumes with `MoveOptions.CopyAllowed`.  (Thx frontier777)
+- Issue #263: `Directory.GetDirectories()` Method `(String, String, SearchOption)` with pattern "* "  (Thx ardestan)
 
 ### Breaking Changes
 
