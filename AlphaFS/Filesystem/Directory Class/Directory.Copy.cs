@@ -795,7 +795,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (fseiSource.IsDirectory)
                {
-                  CreateDirectoryCore(transaction, fseiDestinationPath, null, null, false, PathFormat.LongFullPath);
+                  CreateDirectoryCore(true, transaction, fseiDestinationPath, null, null, false, PathFormat.LongFullPath);
 
                   cmr.TotalFolders++;
 
