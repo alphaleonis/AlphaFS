@@ -12,6 +12,7 @@ Version 2.3  (2018-XX-XX)
 ### Improvements
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
+- Issue #459: Modify method `Directory.CreateDirectoryCore` to return null as well as DirectoryInfo instance.
 
 ### Breaking Changes
 
