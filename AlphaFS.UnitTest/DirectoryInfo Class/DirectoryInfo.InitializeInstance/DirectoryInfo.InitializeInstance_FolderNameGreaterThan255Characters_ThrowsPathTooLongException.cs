@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
          {
             var folder = tempRoot.Directory.FullName;
             
-            Console.WriteLine("Input Directory Path: [{0}]", folder);
+            Console.WriteLine("Input Directory Path: [{0}]\n", folder);
 
 
             // System.IO: 244, anything higher throws System.IO.PathTooLongException: The specified path, file name, or both are too long. The fully qualified file name must be less than 260 characters, and the directory name must be less than 248 characters.

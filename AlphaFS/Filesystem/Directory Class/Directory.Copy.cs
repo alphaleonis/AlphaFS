@@ -687,8 +687,9 @@ namespace Alphaleonis.Win32.Filesystem
          var isFile = File.ExistsCore(transaction, false, sourcePath, PathFormat.LongFullPath);
 
 
-         // Check for local or network drives, such as: "C:" or "\\server\c$".
-         ExistsDriveOrFolderOrFile(transaction, sourcePathLp, !isFile, (int) Win32Errors.NO_ERROR, true, false);
+         // Check for local or network drives, such as: "C:" or "\\server\c$" (but not for "\\?\GLOBALROOT\").
+         if (!sourcePathLp.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+            ExistsDriveOrFolderOrFile(transaction, sourcePathLp, !isFile, (int) Win32Errors.NO_ERROR, true, false);
          
 
          // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
@@ -726,7 +727,9 @@ namespace Alphaleonis.Win32.Filesystem
             else
             {
                cmr = isFile
+
                   ? File.CopyMoveCore(transaction, true, false, sourcePathLp, destinationPathLp, copyOptions, null, preserveDates, progressHandler, userProgressData, cmr, PathFormat.LongFullPath)
+
                   : CopyDeleteDirectoryCore(transaction, sourcePathLp, destinationPathLp, preserveDates, emulateMove, copyOptions, progressHandler, userProgressData, cmr);
             }
          }
@@ -803,6 +806,18 @@ namespace Alphaleonis.Win32.Filesystem
                // File.
                else
                {
+                  // Ensure the file's parent directory exists.
+
+                  var parentFolder = GetParentCore(transaction, fseiDestinationPath, PathFormat.LongFullPath);
+
+                  if (null != parentFolder)
+                  {
+                     var fileParentFolder = Path.GetLongPathCore(parentFolder.FullName, GetFullPathOptions.None);
+
+                     CreateDirectoryCore(transaction, fileParentFolder, null, null, false, PathFormat.LongFullPath);
+                  }
+
+
                   // File count is done in File.CopyMoveCore method.
 
                   cmr = File.CopyMoveCore(transaction, true, false, fseiSourcePath, fseiDestinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, cmr, PathFormat.LongFullPath);

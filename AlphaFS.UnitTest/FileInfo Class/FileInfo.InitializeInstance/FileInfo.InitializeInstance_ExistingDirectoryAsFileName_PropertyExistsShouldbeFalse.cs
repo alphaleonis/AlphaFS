@@ -30,22 +30,29 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void FileInfo_InitializeInstance_NonExistingFile_LocalAndNetwork_Success()
+      public void FileInfo_InitializeInstance_ExistingDirectoryAsFileName_PropertyExistsShouldbeFalse_LocalAndNetwork_Success()
       {
-         FileInfo_InitializeInstance_NonExistingFile(false);
-         FileInfo_InitializeInstance_NonExistingFile(true);
+         FileInfo_InitializeInstance_ExistingDirectoryAsFileName_PropertyExistsShouldbeFalse(false);
+         FileInfo_InitializeInstance_ExistingDirectoryAsFileName_PropertyExistsShouldbeFalse(true);
       }
-      
 
-      private void FileInfo_InitializeInstance_NonExistingFile(bool isNetwork)
+
+      private void FileInfo_InitializeInstance_ExistingDirectoryAsFileName_PropertyExistsShouldbeFalse(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomTxtFileFullPath;
+            Console.WriteLine("Input Directory Path: [{0}]", tempRoot.Directory.FullName);
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            var systemIOFileInfo = new System.IO.FileInfo(tempRoot.Directory.FullName);
 
-            CompareFileInfos(new System.IO.FileInfo(file), new Alphaleonis.Win32.Filesystem.FileInfo(file), false);
+            var alphaFSFileInfo = new Alphaleonis.Win32.Filesystem.FileInfo(tempRoot.Directory.FullName);
+
+            UnitTestConstants.Dump(alphaFSFileInfo);
+
+
+            Assert.AreEqual(systemIOFileInfo.Exists, alphaFSFileInfo.Exists);
+
+            Assert.IsTrue(alphaFSFileInfo.EntryInfo.IsDirectory);
          }
 
          Console.WriteLine();

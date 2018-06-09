@@ -43,6 +43,8 @@ namespace AlphaFS.UnitTest
          {
             var file = tempRoot.CreateFile();
 
+            Console.WriteLine("Input File Path: [{0}]", file);
+
             var alphaFSFileInfo = new Alphaleonis.Win32.Filesystem.FileInfo(file.FullName);
 
             using (file.Create())
