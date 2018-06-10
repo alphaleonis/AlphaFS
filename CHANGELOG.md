@@ -1,23 +1,6 @@
 Changelog
 =========
 
-Version 2.3  (2018-XX-XX)
--------------
-
-### New Features
-
-- Issue #451: Add overloaded method for `File.GetSize` to retrieve the size of all streams.  
-- Issue #454: Add method `Directory.GetSize` to return the size of all alternate data streams of the specified directory and its files.
-
-### Improvements
-
-- Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
-
-### Breaking Changes
-
-- Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
-
-
 Version 2.2.3  (2018-XX-XX)
 -------------
 
