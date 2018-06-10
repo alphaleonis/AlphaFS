@@ -29,33 +29,21 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      
+
       [TestMethod]
       public void DriveInfo_GetDrives_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-      
-         
-         var drives = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().ToList();
 
-         foreach (var driveInfo in drives)
-         {
-            Console.WriteLine("Logical Drive: [{0}]", driveInfo.Name);
+         var drivesSystemIO = System.IO.DriveInfo.GetDrives().Select(drive => drive.Name).ToArray();
 
-            UnitTestConstants.Dump(driveInfo);
+         var drivesAlphaFS = Alphaleonis.Win32.Filesystem.DriveInfo.GetDrives().Select(drive => drive.Name).ToArray();
+
+         foreach (var drivePath in drivesAlphaFS)
+            Console.WriteLine("Logical Drive: [{0}]\n", drivePath);
 
 
-            if (null != driveInfo.DiskSpaceInfo)
-               UnitTestConstants.Dump(driveInfo.DiskSpaceInfo, true);
-
-
-            Console.WriteLine();
-         }
-
-
-         Assert.IsTrue(drives.Count > 0);
-
-         Assert.AreEqual(drives[0].Name[0], UnitTestConstants.SysDrive[0]);
+         CollectionAssert.AreEqual(drivesSystemIO, drivesAlphaFS);
       }
    }
 }

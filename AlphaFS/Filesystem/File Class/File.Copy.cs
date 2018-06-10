@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -136,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -160,7 +160,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -185,7 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -210,7 +210,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -239,7 +239,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -264,7 +264,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -290,7 +290,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -301,7 +301,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
@@ -316,7 +316,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -327,7 +327,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
@@ -345,7 +345,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -374,7 +374,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -404,7 +404,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -415,7 +415,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
@@ -434,7 +434,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -445,7 +445,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -465,7 +465,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -491,7 +491,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -518,7 +518,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -530,7 +530,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
@@ -545,7 +545,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -557,7 +557,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
@@ -575,7 +575,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -605,7 +605,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -636,7 +636,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -648,7 +648,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
@@ -667,12 +667,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -709,7 +709,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into
       ///   that directory, you get an IOException.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -724,7 +724,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The destination directory path plus file name.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="moveOptions">Flags that specify how the file or directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise. This parameter is ignored for move operations.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>. This parameter is ignored for move operations.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="copyMoveResult">A <see cref="CopyMoveResult"/> instance containing Copy or Move action progress.</param>
@@ -745,7 +745,7 @@ namespace Alphaleonis.Win32.Filesystem
          // A file or folder will be deleted or renamed on Computer startup.
          bool delayUntilReboot;
          bool deleteOnStartup;
-         
+
 
          ValidateAndUpdatePathsAndOptions(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
 
@@ -762,7 +762,7 @@ namespace Alphaleonis.Win32.Filesystem
                Directory.ExistsDriveOrFolderOrFile(transaction, destinationPathLp, isFolder, (int) Win32Errors.NO_ERROR, true, false);
          }
 
-         
+
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
          // Otherwise, the copy/move operation will continue to completion.
          bool cancel;
@@ -813,7 +813,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (isSingleFileAction)
                // We take an extra hit by getting the file size for a single file Copy or Move action.
                cmr.TotalBytes = GetSizeCore(transaction, null, destinationPathLp, PathFormat.LongFullPath);
-            
+
 
             if (preserveDates)
                CopyTimestampsCore(transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
@@ -853,8 +853,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          return cmr;
       }
-      
-      
+
+
       private static bool CopyMoveNative(KernelTransaction transaction, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine, CopyOptions? copyOptions, MoveOptions? moveOptions, out bool cancel, out int lastError)
       {
          cancel = false;
@@ -918,10 +918,10 @@ namespace Alphaleonis.Win32.Filesystem
             case Win32Errors.ERROR_PATH_NOT_FOUND: // On folders.
 
                if (!srcExists)
-                  Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, isFolder, lastError, true, true);
+                  Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, isFolder, lastError, false, true);
 
                if (!dstExists)
-                  Directory.ExistsDriveOrFolderOrFile(transaction, destinationPathLp, isFolder, lastError, true, true);
+                  Directory.ExistsDriveOrFolderOrFile(transaction, destinationPathLp, isFolder, lastError, false, true);
 
                break;
 
@@ -930,8 +930,8 @@ namespace Alphaleonis.Win32.Filesystem
                Directory.ExistsDriveOrFolderOrFile(transaction, sourcePathLp, false, lastError, true, false);
                Directory.ExistsDriveOrFolderOrFile(transaction, destinationPathLp, false, lastError, true, false);
                break;
-               
-               
+
+
             // File.Copy()
             // Directory.Copy()
             case Win32Errors.ERROR_ALREADY_EXISTS: // On folders.
@@ -947,7 +947,7 @@ namespace Alphaleonis.Win32.Filesystem
                FillAttributeInfoCore(transaction, destinationPathLp, ref attrs, false, false);
 
                var destIsFolder = IsDirectory(attrs.dwFileAttributes);
-               
+
 
                // For a number of error codes (sharing violation, path not found, etc)
                // we don't know if the problem was with the source or destination file.
@@ -1049,7 +1049,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (null != sourcePath && sourcePath.Equals(destinationPath, StringComparison.Ordinal))
             NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPath);
-         
+
 
          sourcePathLp = sourcePath;
          destinationPathLp = destinationPath;
@@ -1064,32 +1064,40 @@ namespace Alphaleonis.Win32.Filesystem
          // When destinationPath is null, the file or folder needs to be removed on Computer startup.
          deleteOnStartup = delayUntilReboot && null == destinationPath;
 
-         
+
          if (pathFormat == PathFormat.RelativePath)
          {
             if (Utils.IsNullOrWhiteSpace(sourcePath))
                throw new ArgumentNullException("sourcePath");
 
-               
+
             // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
 
             if (!delayUntilReboot && Utils.IsNullOrWhiteSpace(destinationPath))
                throw new ArgumentNullException("destinationPath");
 
-            
+
 
 
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
             // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
 
+
             const GetFullPathOptions fullPathOptions = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
 
-            Path.CheckSupportedPathFormat(sourcePath, true, true);
-            sourcePathLp = Path.GetExtendedLengthPathCore(transaction, sourcePath, pathFormat, fullPathOptions);
+            // Check for local or network drives, such as: "C:" or "\\server\c$" (but not for "\\?\GLOBALROOT\").
+            if (!sourcePath.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+               Path.CheckSupportedPathFormat(sourcePath, true, true);
+
+               sourcePathLp = Path.GetExtendedLengthPathCore(transaction, sourcePath, pathFormat, fullPathOptions);
+            }
+
 
             if (!deleteOnStartup)
             {
                Path.CheckSupportedPathFormat(destinationPath, true, true);
+
                destinationPathLp = Path.GetExtendedLengthPathCore(transaction, destinationPath, pathFormat, fullPathOptions);
             }
          }

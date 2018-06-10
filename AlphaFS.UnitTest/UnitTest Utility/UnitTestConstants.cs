@@ -50,9 +50,8 @@ namespace AlphaFS.UnitTest
          System.IO.Path.DirectorySeparatorChar.ToString(),
          System.IO.Path.DirectorySeparatorChar + @"Program Files\Microsoft Office",
 
-         Alphaleonis.Win32.Filesystem.Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
-         Alphaleonis.Win32.Filesystem.Path.VolumePrefix +
-         @"{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}\Program Files\notepad.exe",
+         Alphaleonis.Win32.Filesystem.Path.GlobalRootDevicePrefix + @"harddisk0\partition1\",
+         Alphaleonis.Win32.Filesystem.Path.VolumePrefix + @"{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}\Program Files\notepad.exe",
 
          "dir1/dir2/dir3/",
 
