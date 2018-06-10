@@ -32,7 +32,6 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Device_GetStoragePartitionInfo_UsingDevicePathFromSystemDrive_ReturnsNull()
       {
-         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
 
          var deviceCount = 0;

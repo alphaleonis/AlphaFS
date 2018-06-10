@@ -21,9 +21,9 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
+using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
@@ -46,13 +46,34 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       public static StorageAdapterInfo GetStorageAdapterInfo(string devicePath)
       {
+         return GetStorageAdapterInfo(ProcessContext.IsElevatedProcess, devicePath);
+      }
+
+
+      /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.
+      /// <para>Calling this method requires an elevated state.</para>
+      /// </summary>
+      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="Exception"/>
+      /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
+      /// <param name="devicePath">
+      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// </param>
+      public static StorageAdapterInfo GetStorageAdapterInfo(bool isElevated, string devicePath)
+      {
          var pathToDevice = FileSystemHelper.GetDevicePath(devicePath);
 
          if (Utils.IsNullOrWhiteSpace(pathToDevice))
             return null;
+         
 
-
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, FileSystemRights.Read))
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, isElevated ? FileSystemRights.Read : Filesystem.NativeMethods.FILE_ANY_ACCESS))
 
             return GetStorageAdapterInfoNative(safeHandle, devicePath);
       }

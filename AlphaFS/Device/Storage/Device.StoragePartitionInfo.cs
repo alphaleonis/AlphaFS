@@ -86,9 +86,7 @@ namespace Alphaleonis.Win32.Device
 
                if (PartitionCount > 0)
                {
-                  if (null == GptPartitionInfo)
-                     GptPartitionInfo = new Collection<StorageGptPartitionInfo>();
-
+                  GptPartitionInfo = new Collection<StorageGptPartitionInfo>();
 
                   var partitionTypes = Utils.EnumToArray<PartitionType>();
 
@@ -103,9 +101,7 @@ namespace Alphaleonis.Win32.Device
 
                if (PartitionCount > 0)
                {
-                  if (null == MbrPartitionInfo)
-                     MbrPartitionInfo = new Collection<StorageMbrPartitionInfo>();
-
+                  MbrPartitionInfo = new Collection<StorageMbrPartitionInfo>();
 
                   for (var i = 0; i <= PartitionCount - 1; i++)
                   {

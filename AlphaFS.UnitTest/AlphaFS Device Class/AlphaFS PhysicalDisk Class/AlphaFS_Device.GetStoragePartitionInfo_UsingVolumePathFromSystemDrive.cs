@@ -32,9 +32,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Device_GetStoragePartitionInfo_UsingVolumePathFromSystemDrive_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
-
 
          var volumeCount = 0;
 

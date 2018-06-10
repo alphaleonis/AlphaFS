@@ -32,10 +32,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Device_GetStorageAdapterInfo_UsingVolumePathFromSystemDrive_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
+         //UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
-
-
+         
          var volumeCount = 0;
 
          var sourceDrive = UnitTestConstants.SysDrive;

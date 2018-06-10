@@ -21,7 +21,9 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
+using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
@@ -42,13 +44,32 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       public static StoragePartitionInfo GetStoragePartitionInfo(string devicePath)
       {
+         return GetStoragePartitionInfo(ProcessContext.IsElevatedProcess, devicePath);
+      }
+
+
+      /// <summary>[AlphaFS] Retrieves information about the partitions on a disk and the features of each partition.</summary>
+      /// <returns>Returns a <see cref="StoragePartitionInfo"/> instance that represent the partition info on the Computer that is related to <paramref name="devicePath"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="Exception"/>
+      /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
+      /// <param name="devicePath">
+      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// </param>
+      public static StoragePartitionInfo GetStoragePartitionInfo(bool isElevated, string devicePath)
+      {
          var pathToDevice = FileSystemHelper.GetDevicePath(devicePath);
 
          if (Utils.IsNullOrWhiteSpace(pathToDevice))
             return null;
 
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, Filesystem.NativeMethods.FILE_ANY_ACCESS))
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, isElevated ? FileSystemRights.Read : Filesystem.NativeMethods.FILE_ANY_ACCESS))
 
             return GetStoragePartitionInfoNative(safeHandle, devicePath);
       }

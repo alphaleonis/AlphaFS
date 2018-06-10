@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Device
 
 
             if (null == pDiskInfo.StoragePartitionInfo)
-               pDiskInfo.StoragePartitionInfo = GetStoragePartitionInfo(validatedDevicePath);
+               pDiskInfo.StoragePartitionInfo = GetStoragePartitionInfo(isElevated, validatedDevicePath);
          }
 
 

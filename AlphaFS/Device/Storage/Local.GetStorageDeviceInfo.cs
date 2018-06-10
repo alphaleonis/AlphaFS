@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.</summary>
       /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
       /// <remarks>
-      ///   When this method is called from a non-elevated state, only the properties <see cref="StorageDeviceInfo.DeviceNumber"/> and <see cref="StorageDeviceInfo.PartitionNumber"/> are useful.
+      ///   When this method is called from a non-elevated state, only the properties <see cref="StorageDeviceInfo.DeviceNumber"/>, <see cref="StorageDeviceInfo.PartitionNumber"/> and <see cref="StorageDeviceInfo.DeviceType"/> are useful.
       ///   The remaining properties are meaningless and can only be obtained by calling the method from an elevated state.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
       /// <remarks>
-      ///   When this method is called from a non-elevated state, only the properties <see cref="StorageDeviceInfo.DeviceNumber"/> and <see cref="StorageDeviceInfo.PartitionNumber"/> are useful.
+      ///   When this method is called from a non-elevated state, only the properties <see cref="StorageDeviceInfo.DeviceNumber"/>, <see cref="StorageDeviceInfo.PartitionNumber"/> and <see cref="StorageDeviceInfo.DeviceType"/> are useful.
       ///   The remaining properties are meaningless and can only be obtained by calling the method from an elevated state.
       /// </remarks>
       /// <exception cref="ArgumentException"/>
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Device
 
          // Get storage device info.
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, Filesystem.NativeMethods.FILE_ANY_ACCESS))
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, isElevated ? FileSystemRights.Read : Filesystem.NativeMethods.FILE_ANY_ACCESS))
          {
             var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath);
             
@@ -116,17 +116,16 @@ namespace Alphaleonis.Win32.Device
          if (null != storageDeviceInfo && isElevated)
          {
             using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, FileSystemRights.Read))
-            {
+
                storageDeviceInfo = GetStorageDeviceInfoNative(safeHandle, pathToDevice, storageDeviceInfo);
-            }
-
-            
-            // Accessing the device by its path: \\?\scsi#disk&ven_sandisk&prod...
-            // does not relate to any drive or volume, so the default PartitionNumber of 0 is misleading.
-
-            if (null != storageDeviceInfo && storageDeviceInfo.PartitionNumber == 0)
-               storageDeviceInfo.PartitionNumber = -1;
          }
+
+
+         // Accessing the device by its path: \\?\scsi#disk&ven_sandisk&prod...
+         // does not relate to any drive or volume, so the default PartitionNumber of 0 is misleading.
+
+         if (null != storageDeviceInfo && storageDeviceInfo.PartitionNumber == 0)
+            storageDeviceInfo.PartitionNumber = -1;
 
 
          return storageDeviceInfo;
