@@ -73,8 +73,17 @@ namespace AlphaFS.UnitTest
             }
 
 
+            // For CDRom, the PartitionNumber is always - 1.
+
             if (driveInfo.DriveType == System.IO.DriveType.CDRom)
+            {
+               Assert.AreEqual(-1, storageDeviceInfo.PartitionNumber);
+
                Assert.AreEqual(Alphaleonis.Win32.Device.StorageDeviceType.CDRom, storageDeviceInfo.DeviceType);
+            }
+
+            else
+               Assert.AreNotEqual(-1, storageDeviceInfo.PartitionNumber);
 
 
             Console.WriteLine();

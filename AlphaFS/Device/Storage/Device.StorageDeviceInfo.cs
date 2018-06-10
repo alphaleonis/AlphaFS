@@ -31,6 +31,12 @@ namespace Alphaleonis.Win32.Device
    [SecurityCritical]
    public sealed class StorageDeviceInfo
    {
+      #region Private Fields
+
+
+      #endregion // Private Fields
+
+
       #region Constructors
 
       /// <summary>[AlphaFS] Initializes an empty StorageDeviceInfo instance.</summary>
@@ -136,11 +142,16 @@ namespace Alphaleonis.Win32.Device
          var other = obj as StorageDeviceInfo;
 
          return null != other &&
-                other.DeviceNumber == DeviceNumber &&
-                other.PartitionNumber == PartitionNumber &&
-                other.DeviceType == DeviceType &&
                 other.BusType == BusType &&
-                other.SerialNumber == SerialNumber;
+                other.DeviceNumber == DeviceNumber &&
+                other.DeviceType == DeviceType &&
+                other.PartitionNumber == PartitionNumber &&
+                other.ProductId == ProductId &&
+                other.ProductRevision == ProductRevision &&
+                other.RemovableMedia == RemovableMedia &&
+                other.SerialNumber == SerialNumber &&
+                other.TotalSize == TotalSize &&
+                other.VendorId == VendorId;
       }
 
 
@@ -150,7 +161,7 @@ namespace Alphaleonis.Win32.Device
       {
          unchecked
          {
-            return DeviceNumber + PartitionNumber + (null != SerialNumber ? SerialNumber.GetHashCode() : 0) + BusType.GetHashCode() + DeviceType.GetHashCode();
+            return RemovableMedia.GetHashCode() + TotalSize.GetHashCode() + DeviceNumber.GetHashCode() + PartitionNumber.GetHashCode();
          }
       }
 

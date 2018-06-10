@@ -59,62 +59,72 @@ namespace Alphaleonis.Win32.Device
       {
          DeviceNumber = diskNumber;
 
+         MediaType = (StorageMediaType) disk.Geometry.MediaType;
+
+         PartitionCount = (int)drive.PartitionCount;
+
+
          MbrSignature = disk.PartitionInformation.MbrSignature;
 
          GptDiskId = disk.PartitionInformation.DiskId;
-
-         MediaType = (StorageMediaType) disk.Geometry.MediaType;
-
+         
          PartitionStyle = (PartitionStyle) disk.PartitionInformation.PartitionStyle;
 
          TotalSize = disk.DiskSize;
-
-
-         PartitionCount = (int) drive.PartitionCount;
-
+         
 
          switch (PartitionStyle)
          {
             case PartitionStyle.Gpt:
+
                GptMaxPartitionCount = (int) drive.Gpt.MaxPartitionCount;
 
                _gptStartingUsableOffset = drive.Gpt.StartingUsableOffset;
+
                _gptUsableLength = drive.Gpt.UsableLength;
 
-               
-               GptPartitionInfo = new Collection<StorageGptPartitionInfo>();
 
-               var partitionTypes = Utils.EnumToArray<PartitionType>();
-               
-               for (var i = 0; i <= PartitionCount - 1; i++)
-                  GptPartitionInfo.Add(new StorageGptPartitionInfo(partitions[i], partitionTypes));
-               
+               if (PartitionCount > 0)
+               {
+                  if (null == GptPartitionInfo)
+                     GptPartitionInfo = new Collection<StorageGptPartitionInfo>();
+
+
+                  var partitionTypes = Utils.EnumToArray<PartitionType>();
+
+                  for (var i = 0; i <= PartitionCount - 1; i++)
+                     GptPartitionInfo.Add(new StorageGptPartitionInfo(partitions[i], partitionTypes));
+               }
+
                break;
 
 
             case PartitionStyle.Mbr:
 
-               if (null == MbrPartitionInfo)
-                  MbrPartitionInfo = new Collection<StorageMbrPartitionInfo>();
-
-
-               for (var i = 0; i <= PartitionCount - 1; i++)
+               if (PartitionCount > 0)
                {
-                  var partition = partitions[i];
-
-                  // MSDN: PartitionCount: On hard disks with the MBR layout, this value will always be a multiple of 4.
-                  // Any partitions that are actually unused will have a partition type of PARTITION_ENTRY_UNUSED (0).
-
-                  if (partition.Mbr.PartitionType == (NativeMethods.DiskPartitionType)DiskPartitionType.UnusedEntry)
-                     continue;
+                  if (null == MbrPartitionInfo)
+                     MbrPartitionInfo = new Collection<StorageMbrPartitionInfo>();
 
 
-                  MbrPartitionInfo.Add(new StorageMbrPartitionInfo(partition));
+                  for (var i = 0; i <= PartitionCount - 1; i++)
+                  {
+                     var partition = partitions[i];
+
+                     // MSDN: PartitionCount: On hard disks with the MBR layout, this value will always be a multiple of 4.
+                     // Any partitions that are actually unused will have a partition type of PARTITION_ENTRY_UNUSED (0).
+
+                     if (partition.Mbr.PartitionType == (NativeMethods.DiskPartitionType) DiskPartitionType.UnusedEntry)
+                        continue;
+
+
+                     MbrPartitionInfo.Add(new StorageMbrPartitionInfo(partition));
+                  }
+
+
+                  // Update to reflect the real number of used partition entries.
+                  PartitionCount = MbrPartitionInfo.Count;
                }
-
-
-               // Update to reflect the real number of used partition entries.
-               PartitionCount = MbrPartitionInfo.Count;
 
                break;
          }
@@ -224,7 +234,6 @@ namespace Alphaleonis.Win32.Device
       /// <summary>The number of partitions on the drive.</summary>
       public int PartitionCount { get; private set; }
 
-
       /// <summary>The format of the partition. For a list of values, see <see cref="Device.PartitionStyle"/>.</summary>
       public PartitionStyle PartitionStyle { get; private set; }
 
@@ -254,53 +263,57 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      ///// <summary>Determines whether the specified Object is equal to the current Object.</summary>
-      ///// <param name="obj">Another object to compare to.</param>
-      ///// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
-      //public override bool Equals(object obj)
-      //{
-      //   if (null == obj || GetType() != obj.GetType())
-      //      return false;
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="obj">Another object to compare to.</param>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
+      public override bool Equals(object obj)
+      {
+         if (null == obj || GetType() != obj.GetType())
+            return false;
 
-      //   var other = obj as StoragePartitionInfo;
+         var other = obj as StoragePartitionInfo;
 
-      //   return null != other &&
-      //          other.DeviceNumber == DeviceNumber &&
-      //          other.PartitionNumber == PartitionNumber &&
-      //          other.PartitionStyle == PartitionStyle &&
-      //          other.TotalSize == TotalSize;
-      //}
-
-
-      ///// <summary>Serves as a hash function for a particular type.</summary>
-      ///// <returns>Returns a hash code for the current Object.</returns>
-      //public override int GetHashCode()
-      //{
-      //   unchecked
-      //   {
-      //      return PartitionCount + PartitionStyle.GetHashCode() + TotalSize.GetHashCode();
-      //   }
-      //}
+         return null != other &&
+                other.DeviceNumber == DeviceNumber &&
+                other.GptDiskId == GptDiskId &&
+                other.GptStartingUsableOffset == GptStartingUsableOffset &&
+                other.GptUsableLength == GptUsableLength &&
+                other.MediaType == MediaType &&
+                other.PartitionCount == PartitionCount &&
+                other.PartitionStyle == PartitionStyle &&
+                other.TotalSize == TotalSize;
+      }
 
 
-      ///// <summary>Implements the operator ==</summary>
-      ///// <param name="left">A.</param>
-      ///// <param name="right">B.</param>
-      ///// <returns>The result of the operator.</returns>
-      //public static bool operator ==(StoragePartitionInfo left, StoragePartitionInfo right)
-      //{
-      //   return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
-      //}
+      /// <summary>Serves as a hash function for a particular type.</summary>
+      /// <returns>Returns a hash code for the current Object.</returns>
+      public override int GetHashCode()
+      {
+         unchecked
+         {
+            return GptUsableLength.GetHashCode() + GptStartingUsableOffset.GetHashCode() + DeviceNumber.GetHashCode() + PartitionCount.GetHashCode();
+         }
+      }
 
 
-      ///// <summary>Implements the operator !=</summary>
-      ///// <param name="left">A.</param>
-      ///// <param name="right">B.</param>
-      ///// <returns>The result of the operator.</returns>
-      //public static bool operator !=(StoragePartitionInfo left, StoragePartitionInfo right)
-      //{
-      //   return !(left == right);
-      //}
+      /// <summary>Implements the operator ==</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator ==(StoragePartitionInfo left, StoragePartitionInfo right)
+      {
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
+      }
+
+
+      /// <summary>Implements the operator !=</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator !=(StoragePartitionInfo left, StoragePartitionInfo right)
+      {
+         return !(left == right);
+      }
 
       #endregion // Methods
    }

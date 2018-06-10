@@ -19,10 +19,33 @@
  *  THE SOFTWARE. 
  */
 
-namespace Alphaleonis.Win32.Device
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace AlphaFS.UnitTest
 {
-   /// <summary>[AlphaFS] Provides static methods to retrieve device resource information from the local host.</summary>
-   public static partial class Local
+   public partial class AlphaFS_PhysicalDiskInfoTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
+      [TestMethod]
+      public void AlphaFS_Device_GetStoragePartitionInfo_UsingDevicePathFromSystemDrive_ReturnsNull()
+      {
+         UnitTestAssert.IsElevatedProcess();
+         UnitTestConstants.PrintUnitTestHeader(false);
+
+         var deviceCount = 0;
+
+         var sourceDrive = UnitTestConstants.SysDrive;
+
+         var devicePath = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceDrive).DevicePath;
+
+         Console.WriteLine("#{0:000}\tInput Device Path: [{1}]", ++deviceCount, devicePath);
+         
+         var storagePartitionInfo = Alphaleonis.Win32.Device.Local.GetStoragePartitionInfo(devicePath);
+         
+         Assert.IsNull(storagePartitionInfo);
+      }
    }
 }

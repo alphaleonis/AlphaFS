@@ -148,7 +148,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the name of the drive.</summary>
       /// <returns>The name of the drive.</returns>
-      /// <remarks>This property is the name assigned to the drive, such as: <c>C:\</c> or "D:\".</remarks>
+      /// <remarks>This property is the name assigned to the drive, such as: <c>C:\</c> or  <c>D:\</c></remarks>
       public string Name
       {
          get { return _name; }

@@ -30,36 +30,35 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetStorageAdapterInfo_UsingVolumePathFromSystemDrive_Success()
+      public void AlphaFS_Device_GetStorageDeviceInfo_UsingDevicePathFromSystemDrive_Success()
       {
          UnitTestAssert.IsElevatedProcess();
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var volumeCount = 0;
+         var deviceCount = 0;
 
          var sourceDrive = UnitTestConstants.SysDrive;
+         var devicePath = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceDrive).DevicePath;
 
-         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive);
-
-         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceVolume);
-
-
-         Console.WriteLine("#{0:000}\tInput Volume Path: [{1}]\t\t{2}", ++volumeCount, sourceVolume, pDisk.StorageAdapterInfo.ToString());
+         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(devicePath);
 
 
-         var storageAdapterInfo = Alphaleonis.Win32.Device.Local.GetStorageAdapterInfo(sourceVolume);
+         Console.WriteLine("#{0:000}\tInput Device Path: [{1}]\t\t{2}", ++deviceCount, devicePath, pDisk.StorageDeviceInfo.ToString());
+
+
+         var storageDeviceInfo = Alphaleonis.Win32.Device.Local.GetStorageDeviceInfo(devicePath);
 
          
-         UnitTestConstants.Dump(storageAdapterInfo);
+         UnitTestConstants.Dump(storageDeviceInfo);
 
-         Assert.IsNotNull(storageAdapterInfo);
+         Assert.IsNotNull(storageDeviceInfo);
 
          Assert.IsNotNull(pDisk);
 
-         Assert.AreNotEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
-         
-         Assert.AreEqual(pDisk.StorageAdapterInfo, storageAdapterInfo);
+         Assert.AreEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
+
+         Assert.AreEqual(storageDeviceInfo, pDisk.StorageDeviceInfo);
       }
    }
 }

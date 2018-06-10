@@ -86,12 +86,14 @@ namespace Alphaleonis.Win32.Device
          if (null != pDiskInfo)
          {
             // Use the storageDeviceInfo instance created earlier because it is based on the input path.
-            pDiskInfo.StorageDeviceInfo = storageDeviceInfo;
-            
 
-            if (isDeviceInfo)
-               // Accessing the device by its path: \\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}
-               // does not relate to any drive or volume, so the default PartitionNumber of 0 is misleading.
+            pDiskInfo.StorageDeviceInfo = storageDeviceInfo;
+
+
+            // Accessing the device by its path: \\?\scsi#disk&ven_sandisk&prod...
+            // does not relate to any drive or volume, so the default PartitionNumber of 0 is misleading.
+
+            if (isDeviceInfo && pDiskInfo.StorageDeviceInfo.PartitionNumber == 0)
                pDiskInfo.StorageDeviceInfo.PartitionNumber = -1;
 
 
@@ -148,7 +150,15 @@ namespace Alphaleonis.Win32.Device
 
             Name = isDeviceInfo ? deviceInfo.FriendlyName : null,
 
-            PhysicalDeviceObjectName = isDeviceInfo ? deviceInfo.PhysicalDeviceObjectName : null
+            PhysicalDeviceObjectName = isDeviceInfo ? deviceInfo.PhysicalDeviceObjectName : null,
+
+
+            StorageAdapterInfo = isDeviceInfo ? new StorageAdapterInfo {BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription} : null,
+
+
+            // Use the storageDeviceInfo instance created earlier because it is based on the input path.
+
+            StorageDeviceInfo = storageDeviceInfo
          };
 
 
@@ -160,25 +170,13 @@ namespace Alphaleonis.Win32.Device
             {
                pDiskInfo.StorageAdapterInfo = GetStorageAdapterInfoNative(safeHandle, devicePath);
 
-               storageDeviceInfo = GetStorageDeviceInfoNative(safeHandle, devicePath, storageDeviceInfo);
+               // Use the storageDeviceInfo instance created earlier because it is based on the input path.
+               //pDiskInfo.StorageDeviceInfo = GetStorageDeviceInfoNative(safeHandle, devicePath, pDiskInfo.StorageDeviceInfo);
 
                pDiskInfo.StoragePartitionInfo = GetStoragePartitionInfoNative(safeHandle, devicePath);
             }
          }
 
-
-         // Use the storageDeviceInfo instance created earlier because it is based on the input path.
-         pDiskInfo.StorageDeviceInfo = storageDeviceInfo;
-
-
-         if (isDeviceInfo)
-         {
-            if (null == pDiskInfo.StorageAdapterInfo)
-               pDiskInfo.StorageAdapterInfo = new StorageAdapterInfo();
-
-            pDiskInfo.StorageAdapterInfo.BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription;
-         }
-         
 
          return pDiskInfo;
       }

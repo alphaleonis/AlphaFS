@@ -33,6 +33,7 @@ namespace Alphaleonis.Win32.Device
    {
       #region Private Fields
 
+      private readonly int _partitionNumber;
       private ulong _partitionLength;
       private ulong _startingOffset;
 
@@ -44,24 +45,24 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Initializes an empty StorageMbrPartitionInfo instance.</summary>
       public StorageMbrPartitionInfo()
       {
-         HiddenSectors = -1;
+         _partitionNumber = -1;
 
-         PartitionNumber = -1;
+         HiddenSectors = -1;
       }
 
       
 
       internal StorageMbrPartitionInfo(NativeMethods.PARTITION_INFORMATION_EX partition) : this()
       {
+         _partitionNumber = (int) partition.PartitionNumber;
+
          _partitionLength = partition.PartitionLength;
 
          _startingOffset = partition.StartingOffset;
          
-         PartitionNumber = (int) partition.PartitionNumber;
-         
+
          RewritePartition = partition.RewritePartition;
          
-
          var mbrPartition = partition.Mbr;
          
          BootIndicator = mbrPartition.BootIndicator;
@@ -121,7 +122,10 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>The storage partition number, starting at 1.</summary>
-      public int PartitionNumber { get; private set; }
+      public int PartitionNumber
+      {
+         get { return _partitionNumber; }
+      }
       
 
       /// <summary><c>true</c> if the partition is of a recognized type.</summary>
@@ -177,9 +181,14 @@ namespace Alphaleonis.Win32.Device
 
          return null != other &&
                 other.BootIndicator == BootIndicator &&
+                other.DiskPartitionType == DiskPartitionType &&
                 other.HiddenSectors == HiddenSectors &&
+                other.PartitionLength == PartitionLength &&
+                other.PartitionNumber == PartitionNumber &&
                 other.RecognizedPartition == RecognizedPartition &&
-                other.DiskPartitionType == DiskPartitionType;
+                other.RewritePartition == RewritePartition &&
+                other.StartingOffset == StartingOffset;
+
       }
 
 
@@ -189,7 +198,7 @@ namespace Alphaleonis.Win32.Device
       {
          unchecked
          {
-            return BootIndicator.GetHashCode() + HiddenSectors.GetHashCode() + RecognizedPartition.GetHashCode() + DiskPartitionType.GetHashCode();
+            return PartitionLength.GetHashCode() + StartingOffset.GetHashCode() + PartitionNumber.GetHashCode();
          }
       }
 

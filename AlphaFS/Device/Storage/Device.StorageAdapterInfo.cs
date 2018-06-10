@@ -131,10 +131,11 @@ namespace Alphaleonis.Win32.Device
                 other.AcceleratedTransfer == AcceleratedTransfer &&
                 other.AdapterScansDown == AdapterScansDown &&
                 other.AdapterUsesPio == AdapterUsesPio &&
-                other.CommandQueueing == CommandQueueing &&
-                other.MaximumTransferBytes == MaximumTransferBytes &&
+                other.BusReportedDeviceDescription == BusReportedDeviceDescription &&
+                other.BusType == BusType &&
                 other.BusVersion == BusVersion &&
-                other.BusType == BusType;
+                other.CommandQueueing == CommandQueueing &&
+                other.MaximumTransferBytes == MaximumTransferBytes;
       }
 
 
@@ -144,7 +145,7 @@ namespace Alphaleonis.Win32.Device
       {
          unchecked
          {
-            return MaximumTransferBytes + AcceleratedTransfer.GetHashCode() + (null != BusVersion ? BusVersion.GetHashCode() : 0) + BusType.GetHashCode();
+            return MaximumTransferBytes.GetHashCode() + AcceleratedTransfer.GetHashCode() + AcceleratedTransfer.GetHashCode() + CommandQueueing.GetHashCode() + BusType.GetHashCode();
          }
       }
 

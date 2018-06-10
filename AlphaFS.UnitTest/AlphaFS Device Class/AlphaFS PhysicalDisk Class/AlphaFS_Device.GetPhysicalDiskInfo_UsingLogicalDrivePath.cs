@@ -35,6 +35,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
+         var gotDisk = false;
          var driveCount = 0;
          
          foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
@@ -85,7 +86,11 @@ namespace AlphaFS.UnitTest
             // For CDRom, the PartitionNumber is always -1.
 
             if (pDisk.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.StorageDeviceType.CDRom)
+            {
                Assert.AreEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
+               Assert.AreEqual(Alphaleonis.Win32.Device.StorageDeviceType.CDRom, pDisk.StorageDeviceInfo.DeviceType);
+            }
+
             else
                Assert.AreNotEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
             
@@ -97,17 +102,23 @@ namespace AlphaFS.UnitTest
 
             if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.GptPartitionInfo)
             {
+               gotDisk = true;
+
                foreach (var partition in pDisk.StoragePartitionInfo.GptPartitionInfo)
                   UnitTestConstants.Dump(partition, true);
             }
 
             if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.MbrPartitionInfo)
             {
+               gotDisk = true;
+
                foreach (var partition in pDisk.StoragePartitionInfo.MbrPartitionInfo)
                   UnitTestConstants.Dump(partition, true);
             }
 
             Console.WriteLine();
+
+            Assert.IsTrue(gotDisk);
          }
       }
    }

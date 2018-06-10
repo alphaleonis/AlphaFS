@@ -73,6 +73,8 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(storagePartitionInfo);
 
 
+            // Show all partition information.
+
             if (null != storagePartitionInfo.GptPartitionInfo)
             {
                gotDisk = true;

@@ -35,7 +35,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-
+         var gotDisk = false;
          var volumeCount = 0;
 
          var sourceDrive = UnitTestConstants.SysDrive;
@@ -75,17 +75,23 @@ namespace AlphaFS.UnitTest
 
          if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.GptPartitionInfo)
          {
+            gotDisk = true;
+
             foreach (var partition in pDisk.StoragePartitionInfo.GptPartitionInfo)
                UnitTestConstants.Dump(partition, true);
          }
 
          if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.MbrPartitionInfo)
          {
+            gotDisk = true;
+
             foreach (var partition in pDisk.StoragePartitionInfo.MbrPartitionInfo)
                UnitTestConstants.Dump(partition, true);
          }
 
          Console.WriteLine();
+
+         Assert.IsTrue(gotDisk);
       }
    }
 }

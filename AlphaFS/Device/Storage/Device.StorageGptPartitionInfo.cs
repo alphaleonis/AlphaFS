@@ -33,6 +33,7 @@ namespace Alphaleonis.Win32.Device
    {
       #region Private Fields
 
+      private readonly int _partitionNumber;
       private ulong _partitionLength;
       private ulong _startingOffset;
 
@@ -44,7 +45,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Initializes an empty StorageGptPartitionInfo instance.</summary>
       public StorageGptPartitionInfo()
       {
-         PartitionNumber = -1;
+         _partitionNumber = -1;
       }
 
 
@@ -54,11 +55,11 @@ namespace Alphaleonis.Win32.Device
 
          _startingOffset = partition.StartingOffset;
 
-         PartitionNumber = (int) partition.PartitionNumber;
+         _partitionNumber = (int) partition.PartitionNumber;
+
          
          RewritePartition = partition.RewritePartition;
          
-
          var gptPartition = partition.Gpt;
          
          Description = gptPartition.Name.Trim();
@@ -148,7 +149,10 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>The storage partition number, starting at 1.</summary>
-      public int PartitionNumber { get; private set; }
+      public int PartitionNumber
+      {
+         get { return _partitionNumber; }
+      }
 
 
       /// <summary>The the partition type. Each partition type that the EFI specification supports is identified by its own GUID, which is published by the developer of the partition.</summary>
@@ -204,9 +208,13 @@ namespace Alphaleonis.Win32.Device
 
          return null != other &&
                 other.Attributes == Attributes &&
-                other.PartitionId == PartitionId &&
                 other.Description == Description &&
-                other.PartitionType == PartitionType;
+                other.PartitionId == PartitionId &&
+                other.PartitionLength == PartitionLength &&
+                other.PartitionNumber == PartitionNumber &&
+                other.PartitionType == PartitionType &&
+                other.RewritePartition == RewritePartition &&
+                other.StartingOffset == StartingOffset;
       }
 
 
@@ -216,7 +224,7 @@ namespace Alphaleonis.Win32.Device
       {
          unchecked
          {
-            return Attributes.GetHashCode() + PartitionId.GetHashCode() + Description.GetHashCode() + PartitionType.GetHashCode();
+            return PartitionLength.GetHashCode() + StartingOffset.GetHashCode() + PartitionNumber.GetHashCode();
          }
       }
 
