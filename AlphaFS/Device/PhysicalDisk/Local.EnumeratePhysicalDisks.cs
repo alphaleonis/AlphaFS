@@ -67,16 +67,15 @@ namespace Alphaleonis.Win32.Device
             driveTypes = new[] {DriveType.CDRom, DriveType.Fixed, DriveType.Removable};
 
 
-         var physicalDisks = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => GetPhysicalDiskInfoCore(isElevated, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
+         var physicalDisks = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => CreatePhysicalDiskInfo(isElevated, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
 
-         //var pVolumeGuids = EnumerateDevicesCore(null, DeviceGuid.Volume, false).Select(deviceInfo => GetPhysicalDiskInfoCore(isElevated, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
-         var pVolumeGuids = Volume.EnumerateVolumes().Select(volumeGuid => GetPhysicalDiskInfoCore(false, volumeGuid, null)).Where(physicalDisk => null != physicalDisk).ToArray();
+         var pVolumeGuids = Volume.EnumerateVolumes().Select(volumeGuid => CreatePhysicalDiskInfo(false, volumeGuid, null)).Where(physicalDisk => null != physicalDisk).ToArray();
          
          var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false)
             
-            .Select(driveName => new DriveInfo(driveName)).Where(driveInfo => {return driveTypes.Any(drive => driveInfo.DriveType == drive);})
+            .Select(driveName => new DriveInfo(driveName)).Where(driveInfo => {return driveTypes.Any(driveType => driveInfo.DriveType == driveType);})
             
-            .Select(driveInfo => GetPhysicalDiskInfoCore(false, driveInfo.Name, null)).Where(physicalDisk => null != physicalDisk).ToArray();
+            .Select(driveInfo => CreatePhysicalDiskInfo(false, driveInfo.Name, null)).Where(physicalDisk => null != physicalDisk).ToArray();
 
 
          foreach (var pDisk in physicalDisks)
@@ -86,7 +85,7 @@ namespace Alphaleonis.Win32.Device
 
          //// Windows Disk Management shows CD-ROM so mimic that behaviour.
 
-         //var cdRoms = EnumerateDevicesCore(null, DeviceGuid.CDRom, false).Select(deviceInfo => GetPhysicalDiskInfoCore(isElevated, null, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
+         //var cdRoms = EnumerateDevicesCore(null, DeviceGuid.CDRom, false).Select(deviceInfo => CreatePhysicalDiskInfo(isElevated, null, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
 
          //foreach (var pCdRom in cdRoms)
 

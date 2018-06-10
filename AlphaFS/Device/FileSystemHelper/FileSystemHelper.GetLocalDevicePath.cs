@@ -27,53 +27,56 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class FileSystemHelper
    {
-      /// <summary>Determines and retrieves the <see cref="DeviceInfo.DevicePath"/> such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></summary>
+      /// <summary>Determines and retrieves the <see cref="DeviceInfo.DevicePath"/> such as: <c>\\.\C:</c> or <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></summary>
+      /// <returns>Returns the <see cref="DeviceInfo.DevicePath"/> path string such as: <c>\\.\C:</c> or <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></returns>
       /// <param name="devicePath">
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
-      /// <returns>Returns the <see cref="DeviceInfo.DevicePath"/> path string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></returns>
-      internal static string GetDevicePath(string devicePath)
+      internal static string GetLocalDevicePath(string devicePath)
       {
          string unusedLogicalDrive;
 
-         return GetDevicePath(devicePath, out unusedLogicalDrive);
+         return GetLocalDevicePath(devicePath, out unusedLogicalDrive);
       }
 
 
-      /// <summary>Determines and retrieves the <see cref="DeviceInfo.DevicePath"/> such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></summary>
-      /// <returns>Returns the <see cref="DeviceInfo.DevicePath"/> path string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></returns>
+      /// <summary>Determines and retrieves the <see cref="DeviceInfo.DevicePath"/> such as: <c>\\.\C:</c> or <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></summary>
+      /// <returns>Returns the <see cref="DeviceInfo.DevicePath"/> path string such as: <c>\\.\C:</c> or <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></returns>
       /// <param name="devicePath">
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
       /// <param name="logicalDrive">If <paramref name="devicePath"/> is a logical drive, it is returned in <paramref name="logicalDrive"/></param>
-      internal static string GetDevicePath(string devicePath, out string logicalDrive)
+      internal static string GetLocalDevicePath(string devicePath, out string logicalDrive)
       {
          bool isDrive;
          bool isVolume;
          bool isDeviceInfo;
 
-         devicePath = ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
+         var validatedDevicePath = GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
 
-         devicePath = string.Format(CultureInfo.InvariantCulture, "{0}{1}", isDrive ? Path.LogicalDrivePrefix : string.Empty, Path.RemoveTrailingDirectorySeparator(devicePath));
+         if (!validatedDevicePath.StartsWith(Path.LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
+
+            validatedDevicePath = string.Format(CultureInfo.InvariantCulture, "{0}{1}", isDrive ? Path.LogicalDrivePrefix : string.Empty, Path.RemoveTrailingDirectorySeparator(validatedDevicePath));
+
 
          if (isDrive)
          {
-            logicalDrive = Path.GetRegularPathCore(devicePath, GetFullPathOptions.RemoveTrailingDirectorySeparator, false);
+            logicalDrive = Path.GetRegularPathCore(validatedDevicePath, GetFullPathOptions.RemoveTrailingDirectorySeparator, false);
 
-            logicalDrive = devicePath.Substring(Path.LogicalDrivePrefix.Length);
+            logicalDrive = validatedDevicePath.Substring(Path.LogicalDrivePrefix.Length);
          }
 
          else
             logicalDrive = null;
 
 
-         return devicePath;
+         return validatedDevicePath;
       }
    }
 }

@@ -26,12 +26,15 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class FileSystemHelper
    {
-      /// <summary>Determines the type of device path.</summary>
+      /// <summary>Determines and retrieves the type of device path.</summary>
       /// <returns>The final device path with a <see cref="Path.DirectorySeparator"/>.</returns>
-      internal static string ValidateDevicePath(string devicePath, out bool isDrive, out bool isVolume, out bool isDeviceInfo)
+      internal static string GetValidatedDevicePath(string devicePath, out bool isDrive, out bool isVolume, out bool isDevice)
       {
-         if (Utils.IsNullOrWhiteSpace(devicePath))
+         if (null == devicePath)
             throw new ArgumentNullException("devicePath");
+
+         if (devicePath.Trim().Length == 0)
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "devicePath");
 
 
          // Resolve single drive letter or get root directory information.
@@ -43,13 +46,13 @@ namespace Alphaleonis.Win32.Device
 
          isVolume = hasPath && devicePath.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase);
 
-         isDeviceInfo = hasPath && !isVolume && devicePath.StartsWith(Path.LongPathPrefix, StringComparison.Ordinal);
+         isDevice = hasPath && !isVolume && devicePath.StartsWith(Path.LongPathPrefix, StringComparison.Ordinal);
 
-         isDrive = hasPath && !isDeviceInfo && !isVolume && Path.IsLogicalDriveCore(devicePath, false, PathFormat.LongFullPath);
+         isDrive = hasPath && !isDevice && !isVolume && Path.IsLogicalDriveCore(devicePath, false, PathFormat.LongFullPath);
 
 
 
-         if (!hasPath || !isVolume && !isDeviceInfo && !isDrive)
+         if (!hasPath || !isVolume && !isDevice && !isDrive)
             throw new ArgumentException(Resources.Argument_must_be_DriveLetter_or_VolumeGuid_or_DevicePath, "devicePath");
 
 

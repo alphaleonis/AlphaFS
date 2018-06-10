@@ -21,6 +21,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Security;
@@ -30,10 +31,8 @@ namespace Alphaleonis.Win32.Device
 {
    public static partial class Local
    {
-      /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.
-      /// <para>Calling this method requires an elevated state.</para>
-      /// </summary>
-      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
+      /// <summary>[AlphaFS] Retrieves the storage adapter of the device that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.</summary>
+      /// <returns>Returns a <see cref="StorageAdapterInfo"/> instance that represent the adapter information of the storage device that is related to <paramref name="devicePath"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
@@ -42,18 +41,17 @@ namespace Alphaleonis.Win32.Device
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
+      [SecurityCritical]
       public static StorageAdapterInfo GetStorageAdapterInfo(string devicePath)
       {
          return GetStorageAdapterInfo(ProcessContext.IsElevatedProcess, devicePath);
       }
 
 
-      /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.
-      /// <para>Calling this method requires an elevated state.</para>
-      /// </summary>
-      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
+      /// <summary>[AlphaFS] Retrieves the storage adapter of the device that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.</summary>
+      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="devicePath"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
@@ -63,23 +61,29 @@ namespace Alphaleonis.Win32.Device
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
+      [SecurityCritical]
       public static StorageAdapterInfo GetStorageAdapterInfo(bool isElevated, string devicePath)
       {
-         var pathToDevice = FileSystemHelper.GetDevicePath(devicePath);
+         bool isDrive;
+         bool isVolume;
+         bool isDevice;
 
-         if (Utils.IsNullOrWhiteSpace(pathToDevice))
-            return null;
-         
+         var validatedDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, isElevated ? FileSystemRights.Read : Filesystem.NativeMethods.FILE_ANY_ACCESS))
+         if (isDrive)
+            validatedDevicePath = FileSystemHelper.GetLocalDevicePath(validatedDevicePath);
+
+
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(validatedDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
 
             return GetStorageAdapterInfoNative(safeHandle, devicePath);
       }
 
 
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      [SecurityCritical]
       private static StorageAdapterInfo GetStorageAdapterInfoNative(SafeFileHandle safeHandle, string pathToDevice)
       {
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
@@ -88,46 +92,9 @@ namespace Alphaleonis.Win32.Device
             QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
          };
 
-         SafeFileHandle safeHandleRetry = null;
-         var isRetry = false;
 
-
-      StartGetData:
-         
-         // Get storage adapter info.
-
-         using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
+         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
          {
-            //if (null == safeBuffer)
-            //{
-            //   // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
-
-
-            //   var volDiskExtents = GetVolumeDiskExtents(isRetry ? safeHandleRetry : safeHandle, pathToDevice);
-
-            //   if (volDiskExtents.HasValue)
-            //   {
-            //      // Use the first disk extent.
-
-            //      pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
-
-
-            //      safeHandleRetry = FileSystemHelper.OpenPhysicalDisk(pathToDevice, FileSystemRights.Read);
-
-            //      isRetry = Utils.IsValidHandle(safeHandleRetry, false);
-            //   }
-
-
-            //   if (isRetry)
-            //      goto StartGetData;
-
-            //   return null;
-            //}
-
-
-            if (isRetry && !safeHandleRetry.IsClosed)
-               safeHandleRetry.Close();
-
             return new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
          }
       }

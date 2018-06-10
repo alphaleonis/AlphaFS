@@ -19,44 +19,11 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Device
 {
-   public partial class AlphaFS_PhysicalDiskInfoTest
+   internal static partial class NativeMethods
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_Device_GetStorageDeviceInfo_UsingDevicePathFromSystemDrive_Success()
-      {
-         UnitTestConstants.PrintUnitTestHeader(false);
-
-         var deviceCount = 0;
-
-         var sourceDrive = UnitTestConstants.SysDrive;
-         var devicePath = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceDrive).DevicePath;
-
-         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(devicePath);
-
-
-         Console.WriteLine("#{0:000}\tInput Device Path: [{1}]\t\t{2}", ++deviceCount, devicePath, pDisk.StorageDeviceInfo.ToString());
-
-
-         var storageDeviceInfo = Alphaleonis.Win32.Device.Local.GetStorageDeviceInfo(devicePath);
-
-         
-         UnitTestConstants.Dump(storageDeviceInfo);
-
-         Assert.IsNotNull(storageDeviceInfo);
-
-         Assert.IsNotNull(pDisk);
-
-         Assert.AreEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
-
-         Assert.AreEqual(pDisk.StorageDeviceInfo, storageDeviceInfo);
-      }
+      /// <summary>FILE_ANY_ACCESS = 0</summary>
+      internal const int FILE_ANY_ACCESS = 0;
    }
 }

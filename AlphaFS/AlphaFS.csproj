@@ -197,6 +197,7 @@
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
     <Compile Include="Device\Device.Local.cs" />
+    <Compile Include="Device\Native Methods\NativeMethods.cs" />
     <Compile Include="Device\Storage\Local.GetStoragePartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageMbrPartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageGptPartitionInfo.cs" />
@@ -205,8 +206,8 @@
     <Compile Include="Device\Storage\Local.GetDeviceIoData.cs" />
     <Compile Include="Device\Local.InvokeDeviceIoData.cs" />
     <Compile Include="Device\Storage\Local.GetVolumeDiskExtents.cs" />
-    <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetDevicePath.cs" />
-    <Compile Include="Device\FileSystemHelper\FileSystemHelper.ValidateDevicePath.cs" />
+    <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetLocalDevicePath.cs" />
+    <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetValidatedDevicePath.cs" />
     <Compile Include="Device\Storage\Local.GetStorageAdapterInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageAdapterInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageDeviceInfo.cs" />
@@ -740,7 +741,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

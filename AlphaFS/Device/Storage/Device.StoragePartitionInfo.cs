@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>The size of the usable blocks on the disk, in bytes.</summary>
+      /// <summary>The size of the usable blocks on the disk in bytes.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
       public long GptUsableLength
       {
@@ -200,7 +200,7 @@ namespace Alphaleonis.Win32.Device
 
 
 #if DEBUG
-      /// <summary/>
+      /// <summary>The size of the usable blocks on the disk in bytes, formatted as a unit size.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpt")]
       public string GptUsableLengthUnitSize
       {
@@ -236,15 +236,14 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>The total size of the storage partition.</summary>
       public long TotalSize { get; private set; }
-      
 
-#if DEBUG
-      /// <summary/>
+
+
+      /// <summary>The total size of the storage partition, formatted as a unit size.</summary>
       public string TotalSizeUnitSize
       {
          get { return Utils.UnitSizeToText(TotalSize); }
       }
-#endif
 
       #endregion // Properties
 

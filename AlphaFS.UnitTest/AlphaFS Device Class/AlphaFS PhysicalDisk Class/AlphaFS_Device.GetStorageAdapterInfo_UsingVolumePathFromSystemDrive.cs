@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
          Assert.IsNotNull(pDisk);
 
          Assert.AreNotEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
-         
+
          Assert.AreEqual(pDisk.StorageAdapterInfo, storageAdapterInfo);
       }
    }

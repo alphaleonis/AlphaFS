@@ -21,7 +21,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
+using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Security;
@@ -31,12 +31,9 @@ namespace Alphaleonis.Win32.Device
 {
    public static partial class Local
    {
-      /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device on the Computer that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.</summary>
-      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
-      /// <remarks>
-      ///   When this method is called from a non-elevated state, only the properties <see cref="StorageDeviceInfo.DeviceNumber"/>, <see cref="StorageDeviceInfo.PartitionNumber"/> and <see cref="StorageDeviceInfo.DeviceType"/> are useful.
-      ///   The remaining properties are meaningless and can only be obtained by calling the method from an elevated state.
-      /// </remarks>
+      /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.</summary>
+      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="devicePath"/>.</returns>
+      /// <remarks>When this method is called from a non-elevated state, the <see cref="StorageDeviceInfo.TotalSize"/> property always returns <c>0</c>.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
@@ -45,86 +42,59 @@ namespace Alphaleonis.Win32.Device
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
+      [SecurityCritical]
       public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath)
       {
-         return GetStorageDeviceInfoCore(ProcessContext.IsElevatedProcess, devicePath);
+         return GetStorageDeviceInfo(ProcessContext.IsElevatedProcess, devicePath);
       }
 
 
-
-
-      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device on the Computer that is related to <paramref name="devicePath"/>.</returns>
-      /// <remarks>
-      ///   When this method is called from a non-elevated state, only the properties <see cref="StorageDeviceInfo.DeviceNumber"/>, <see cref="StorageDeviceInfo.PartitionNumber"/> and <see cref="StorageDeviceInfo.DeviceType"/> are useful.
-      ///   The remaining properties are meaningless and can only be obtained by calling the method from an elevated state.
-      /// </remarks>
+      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="devicePath"/>.</returns>
+      /// <remarks>When this method is called from a non-elevated state, the <see cref="StorageDeviceInfo.TotalSize"/> property always returns <c>0</c>.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
       /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="devicePath">
-      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
-      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
-      internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, string devicePath)
+      [SecurityCritical]
+      public static StorageDeviceInfo GetStorageDeviceInfo(bool isElevated, string devicePath)
       {
-         var pathToDevice = FileSystemHelper.GetDevicePath(devicePath);
+         bool isDrive;
+         bool isVolume;
+         bool isDevice;
 
-         if (Utils.IsNullOrWhiteSpace(pathToDevice))
-            return null;
+         var localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
+
+         if (isDrive)
+            localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
 
 
-         StorageDeviceInfo storageDeviceInfo = null;
+         StorageDeviceInfo storageDeviceInfo;
 
-
-      StartGetData:
-
-         // Get storage device info.
-
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, isElevated ? FileSystemRights.Read : Filesystem.NativeMethods.FILE_ANY_ACCESS))
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
          {
-            var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath);
-            
-            //if (null == safeBuffer)
-            //{
-            //   // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
+            using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath))
+
+               storageDeviceInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>());
 
 
-            //   var volDiskExtents = GetVolumeDiskExtents(safeHandle, pathToDevice);
-
-            //   if (volDiskExtents.HasValue)
-            //   {
-            //      // Use the first disk extent.
-
-            //      pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
-                  
-            //      goto StartGetData;
-            //   }
-            //}
-
-            //else
-               using (safeBuffer)
-                  storageDeviceInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>());
-         }
-      
-
-         if (null != storageDeviceInfo && isElevated)
-         {
-            using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, FileSystemRights.Read))
-
-               storageDeviceInfo = GetStorageDeviceInfoNative(safeHandle, pathToDevice, storageDeviceInfo);
+            SetStorageDeviceInfoData(isElevated, safeHandle, localDevicePath, storageDeviceInfo);
          }
 
 
          // Accessing the device by its path: \\?\scsi#disk&ven_sandisk&prod...
          // does not relate to any drive or volume, so the default PartitionNumber of 0 is misleading.
 
-         if (null != storageDeviceInfo && storageDeviceInfo.PartitionNumber == 0)
+         if (isDevice && storageDeviceInfo.PartitionNumber == 0)
+
             storageDeviceInfo.PartitionNumber = -1;
 
 
@@ -132,104 +102,55 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>Sets the physical disk properties such as FriendlyName, device size and serial number.</summary>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      private static StorageDeviceInfo GetStorageDeviceInfoNative(SafeFileHandle safeHandle, string pathToDevice, StorageDeviceInfo storageDeviceInfo)
+      [SecurityCritical]
+      private static void SetStorageDeviceInfoData(bool isElevated, SafeFileHandle safeHandle, string localDevicePath, StorageDeviceInfo storageDeviceInfo)
       {
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
          {
             PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageDeviceProperty,
             QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
          };
+         
 
-         SafeFileHandle safeHandleRetry = null;
-         var isRetry = false;
-
-
-      StartGetData:
-
-         StorageDeviceInfo newStorageDeviceInfo;
-
-         // Get storage device info.
-
-         using (var safeBuffer = InvokeDeviceIoData(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, Filesystem.NativeMethods.DefaultFileBufferSize / 2))
+         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 2))
          {
-            //if (null == safeBuffer)
-            //{
-            //   // Assumption through observation: devicePath is a logical drive that points to a Dynamic disk.
-
-
-            //   var volDiskExtents = GetVolumeDiskExtents(isRetry ? safeHandleRetry : safeHandle, pathToDevice);
-
-            //   if (volDiskExtents.HasValue)
-            //   {
-            //      // Use the first disk extent.
-
-            //      pathToDevice = string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.PhysicalDrivePrefix, volDiskExtents.Value.Extents[0].DiskNumber.ToString(CultureInfo.InvariantCulture));
-
-
-            //      safeHandleRetry = FileSystemHelper.OpenPhysicalDisk(pathToDevice, FileSystemRights.Read);
-
-            //      isRetry = Utils.IsValidHandle(safeHandleRetry, false);
-            //   }
-
-
-            //   if (isRetry)
-            //      goto StartGetData;
-
-            //   return null;
-            //}
-
-
             var deviceDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>();
 
 
-            newStorageDeviceInfo = new StorageDeviceInfo
-            {
-               DeviceType = storageDeviceInfo.DeviceType,
+            storageDeviceInfo.BusType = (StorageBusType) deviceDescriptor.BusType;
 
-               DeviceNumber = storageDeviceInfo.DeviceNumber,
+            storageDeviceInfo.CommandQueueing = deviceDescriptor.CommandQueueing;
 
-               PartitionNumber = storageDeviceInfo.PartitionNumber,
+            storageDeviceInfo.ProductId = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.ProductIdOffset).Trim();
 
+            storageDeviceInfo.ProductRevision = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.ProductRevisionOffset).Trim();
 
-               BusType = (StorageBusType) deviceDescriptor.BusType,
+            storageDeviceInfo.RemovableMedia = deviceDescriptor.RemovableMedia;
 
-               CommandQueueing = deviceDescriptor.CommandQueueing,
-               
-               ProductId = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.ProductIdOffset).Trim(),
+            storageDeviceInfo.SerialNumber = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.SerialNumberOffset).Trim();
 
-               ProductRevision = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.ProductRevisionOffset).Trim(),
-
-               RemovableMedia = deviceDescriptor.RemovableMedia,
-
-               SerialNumber = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.SerialNumberOffset).Trim(),
-
-               VendorId = safeBuffer.PtrToStringAnsi((int)deviceDescriptor.VendorIdOffset).Trim()
-            };
+            storageDeviceInfo.VendorId = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.VendorIdOffset).Trim();
 
 
-            if (Utils.IsNullOrWhiteSpace(newStorageDeviceInfo.ProductRevision) || newStorageDeviceInfo.ProductRevision.Length == 1)
-               newStorageDeviceInfo.ProductRevision = null;
+            if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.ProductRevision) || storageDeviceInfo.ProductRevision.Length == 1)
+               storageDeviceInfo.ProductRevision = null;
 
-            if (Utils.IsNullOrWhiteSpace(newStorageDeviceInfo.SerialNumber) || newStorageDeviceInfo.SerialNumber.Length == 1)
-               newStorageDeviceInfo.SerialNumber = null;
+            if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.SerialNumber) || storageDeviceInfo.SerialNumber.Length == 1)
+               storageDeviceInfo.SerialNumber = null;
             
-            if (Utils.IsNullOrWhiteSpace(newStorageDeviceInfo.VendorId) || newStorageDeviceInfo.VendorId.Length == 1)
-               newStorageDeviceInfo.VendorId = null;
+            if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.VendorId) || storageDeviceInfo.VendorId.Length == 1)
+               storageDeviceInfo.VendorId = null;
          }
 
 
-         using (var safeBuffer = GetDeviceIoData<long>(isRetry ? safeHandleRetry : safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, pathToDevice))
+         // Get disk total size.
 
-            newStorageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
+         if (isElevated)
 
+            using (var safeBuffer = GetDeviceIoData<long>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, localDevicePath))
 
-         if (isRetry && !safeHandleRetry.IsClosed)
-            safeHandleRetry.Close();
-
-
-         return newStorageDeviceInfo;
+               storageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
       }
    }
 }

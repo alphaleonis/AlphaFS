@@ -21,6 +21,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Security;
@@ -31,7 +32,7 @@ namespace Alphaleonis.Win32.Device
    public static partial class Local
    {
       /// <summary>[AlphaFS] Retrieves information about the partitions on a disk and the features of each partition.</summary>
-      /// <returns>Returns a <see cref="StoragePartitionInfo"/> instance that represent the partition info on the Computer that is related to <paramref name="devicePath"/>.</returns>
+      /// <returns>Returns a <see cref="StoragePartitionInfo"/> instance that represent the partition info that is related to <paramref name="devicePath"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
@@ -40,8 +41,9 @@ namespace Alphaleonis.Win32.Device
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
+      [SecurityCritical]
       public static StoragePartitionInfo GetStoragePartitionInfo(string devicePath)
       {
          return GetStoragePartitionInfo(ProcessContext.IsElevatedProcess, devicePath);
@@ -49,7 +51,7 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>[AlphaFS] Retrieves information about the partitions on a disk and the features of each partition.</summary>
-      /// <returns>Returns a <see cref="StoragePartitionInfo"/> instance that represent the partition info on the Computer that is related to <paramref name="devicePath"/>.</returns>
+      /// <returns>Returns a <see cref="StoragePartitionInfo"/> instance that represent the partition info that is related to <paramref name="devicePath"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
@@ -59,22 +61,28 @@ namespace Alphaleonis.Win32.Device
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
+      [SecurityCritical]
       public static StoragePartitionInfo GetStoragePartitionInfo(bool isElevated, string devicePath)
       {
-         var pathToDevice = FileSystemHelper.GetDevicePath(devicePath);
+         bool isDrive;
+         bool isVolume;
+         bool isDevice;
 
-         if (Utils.IsNullOrWhiteSpace(pathToDevice))
-            return null;
+         var validatedDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
+
+         if (isDrive)
+            validatedDevicePath = FileSystemHelper.GetLocalDevicePath(validatedDevicePath);
 
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(pathToDevice, isElevated ? FileSystemRights.Read : Filesystem.NativeMethods.FILE_ANY_ACCESS))
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(validatedDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
 
             return GetStoragePartitionInfoNative(safeHandle, devicePath);
       }
 
 
+      [SecurityCritical]
       private static StoragePartitionInfo GetStoragePartitionInfoNative(SafeFileHandle safeHandle, string pathForException)
       {
          var volDiskExtents = GetVolumeDiskExtents(safeHandle, pathForException);
@@ -116,6 +124,7 @@ namespace Alphaleonis.Win32.Device
       }
 
 
+      [SecurityCritical]
       /// <summary>Returns information about the physical disk's geometry (media type, number of cylinders, tracks per cylinder, sectors per track, and bytes per sector).</summary>
       private static NativeMethods.DISK_GEOMETRY_EX GetDiskGeometryExNative(SafeFileHandle safeHandle, string pathForException)
       {

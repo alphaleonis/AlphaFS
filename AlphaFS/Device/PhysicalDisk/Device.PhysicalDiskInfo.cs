@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Device
       /// <returns>Returns a string that represents the path to the device.
       ///   A drive path such as: <c>C:</c>, <c>D:\</c>,
       ///   a volume <see cref="Guid"/> path such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>
-      ///   or a <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c> string.
+      ///   or a <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c> string.
       /// </returns>
       public string DevicePath { get; internal set; }
 
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Device
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
       public bool ContainsVolume(string devicePath)
       {
@@ -122,11 +122,13 @@ namespace Alphaleonis.Win32.Device
          bool isVolume;
          bool isDeviceInfo;
 
-         devicePath = FileSystemHelper.ValidateDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
+         devicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
 
 
          if (isDrive && null != LogicalDrives)
          {
+            devicePath = devicePath.Replace(Path.LogicalDrivePrefix, string.Empty);
+
             devicePath = Path.RemoveTrailingDirectorySeparator(devicePath, false);
 
             return LogicalDrives.Any(driveName => driveName.Equals(devicePath, StringComparison.OrdinalIgnoreCase));

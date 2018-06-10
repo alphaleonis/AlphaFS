@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       public string DeviceDescription { get; internal set; }
 
 
-      /// <summary>The device interface path string such as: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></summary>
+      /// <summary>The device interface path string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></summary>
       public string DevicePath { get; internal set; }
 
       

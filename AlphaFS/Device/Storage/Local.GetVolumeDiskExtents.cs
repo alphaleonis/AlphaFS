@@ -21,6 +21,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Security;
 using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
@@ -28,6 +29,7 @@ namespace Alphaleonis.Win32.Device
    public static partial class Local
    {
       /// <summary>Retrieves the physical location and disk number of a specified volume on one or more disks.</summary>
+      [SecurityCritical]
       private static NativeMethods.VOLUME_DISK_EXTENTS? GetVolumeDiskExtents(SafeFileHandle safeHandle, string pathForException)
       {
          var structSize = Marshal.SizeOf(typeof(NativeMethods.DISK_EXTENT_SINGLE));

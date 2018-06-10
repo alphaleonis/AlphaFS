@@ -35,8 +35,6 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         var gotDisk = false;
-
          var pDriveCount = 0;
 
          var pDrives = Alphaleonis.Win32.Device.Local.EnumeratePhysicalDisks().OrderBy(pDiskInfo => pDiskInfo.StorageDeviceInfo.DeviceNumber).ThenBy(pDiskInfo => pDiskInfo.StorageDeviceInfo.PartitionNumber).ToArray();
@@ -55,27 +53,7 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
 
 
-            // Show all partition information.
-
-            if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.GptPartitionInfo)
-            {
-               gotDisk = true;
-
-               foreach (var partition in pDisk.StoragePartitionInfo.GptPartitionInfo)
-                  UnitTestConstants.Dump(partition, true);
-            }
-
-            if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.MbrPartitionInfo)
-            {
-               gotDisk = true;
-
-               foreach (var partition in pDisk.StoragePartitionInfo.MbrPartitionInfo)
-                  UnitTestConstants.Dump(partition, true);
-            }
-
             Console.WriteLine();
-
-            //Assert.IsTrue(gotDisk);
          }
 
 

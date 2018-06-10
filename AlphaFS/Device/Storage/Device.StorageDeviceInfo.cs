@@ -68,7 +68,10 @@ namespace Alphaleonis.Win32.Device
       public StorageBusType BusType { get; internal set; }
 
 
-      /// <summary>Indicates if the physical disk supports multiple outstanding commands (SCSI tagged queuing or equivalent). When false the physical disk does not support SCSI-tagged queuing or the equivalent.</summary>
+      /// <summary>
+      ///   Indicates if the physical disk supports multiple outstanding commands (SCSI tagged queuing or equivalent).
+      ///   When false the physical disk does not support SCSI-tagged queuing or the equivalent.
+      /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Queueing")]
       public bool CommandQueueing { get; internal set; }
       
@@ -77,13 +80,14 @@ namespace Alphaleonis.Win32.Device
       public StorageDeviceType DeviceType { get; internal set; }
 
 
-      /// <summary>The device number of the storage device, starting at 0.</summary>
+      /// <summary>The device number of the storage device, starting at <c>0</c>.</summary>
       public int DeviceNumber { get; internal set; }
 
 
       /// <summary>
-      ///   The partition number of the storage device, starting at 1. If the device cannot be partitioned, like a CDROM, -1 is returned.
-      ///   <para>-1 is also returned if the device is accessed by its path: <c>\\?\pcistor#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c> instead of a logical drive- or volume path.</para>
+      ///   The partition number of the storage device, starting at <c>1</c>. If the device cannot be partitioned, like a CDROM, <c>-1</c> is returned.
+      ///   <c>-1</c> is also returned if the device is accessed by its path: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c>
+      ///   instead of a logical drive- or volume path.
       /// </summary>
       public int PartitionNumber { get; internal set; }
 
@@ -96,24 +100,27 @@ namespace Alphaleonis.Win32.Device
       public string ProductRevision { get; internal set; }
 
 
-      /// <summary>Indicates if the physical disk is removable. When true the physical disk's media (if any) is removable. If the device has no media, this member should be ignored. When false the physical disk's media is not removable.</summary>
+      /// <summary>
+      ///   Indicates if the physical disk is removable. When true the physical disk's media (if any) is removable.
+      ///   If the device has no media, this member should be ignored. When false the physical disk's media is not removable.
+      /// </summary>
       public bool RemovableMedia { get; internal set; }
 
 
-      /// <summary>The serial number of the physical disk. If the physical disk has no serial number or the session is not elevated -1 is returned.</summary>
+      /// <summary>The serial number of the physical disk. If the physical disk has no serial number <c>null</c> is returned.</summary>
       public string SerialNumber { get; internal set; }
 
 
-      /// <summary>The total size of the physical disk.</summary>
+      /// <summary>The total size of the physical disk. If the session is not elevated <c>0</c> is returned.</summary>
       public long TotalSize { get; internal set; }
 
-#if DEBUG
-      /// <summary/>
+
+      /// <summary>The total size of the physical disk, formatted as a unit size. If the session is not elevated <c>0</c> is returned.</summary>
       public string TotalSizeUnitSize
       {
          get { return Utils.UnitSizeToText(TotalSize); }
       }
-#endif
+
 
       /// <summary>The Vendor ID of the physical disk.</summary>
       public string VendorId { get; internal set; }

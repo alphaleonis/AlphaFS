@@ -63,46 +63,45 @@ namespace Alphaleonis.Win32.Device
       #region Properties
 
       /// <summary>When <c>true</c>, the storage adapter supports synchronous transfers as a way of speeding up I/O.</summary>
-      public bool AcceleratedTransfer { get; internal set; }
+      public bool AcceleratedTransfer { get; private set; }
 
 
       /// <summary>When <c>true</c>, the storage adapter scans down for BIOS devices, that is, the storage adapter begins scanning with the highest device number rather than the lowest.</summary>
-      public bool AdapterScansDown { get; internal set; }
+      public bool AdapterScansDown { get; private set; }
 
 
       /// <summary>When <c>true</c>, the storage adapter uses programmed I/O (PIO).</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pio")]
-      public bool AdapterUsesPio { get; internal set; }
+      public bool AdapterUsesPio { get; private set; }
 
 
       /// <summary>The bus type of the storage adapter.</summary>
-      public StorageBusType BusType { get; internal set; }
+      public StorageBusType BusType { get; private set; }
 
 
       /// <summary>Represents a description of a device instance as identified by the bus.</summary>
       public string BusReportedDeviceDescription { get; internal set; }
 
       /// <summary>The version number, if any, of the storage adapter.</summary>
-      public Version BusVersion { get; internal set; }
+      public Version BusVersion { get; private set; }
 
 
       /// <summary>When <c>true</c>, the storage adapter supports SCSI tagged queuing and/or per-logical-unit internal queues, or the non-SCSI equivalent.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Queueing")]
-      public bool CommandQueueing { get; internal set; }
+      public bool CommandQueueing { get; private set; }
 
 
       /// <summary>Specifies the maximum number of bytes the storage adapter can transfer in a single operation.</summary>
-      public int MaximumTransferBytes { get; internal set; }
+      public int MaximumTransferBytes { get; private set; }
 
 
 #if DEBUG
-      /// <summary/>
+      /// <summary>Specifies the maximum number of bytes the storage adapter can transfer in a single operation, formatted as a unit size.</summary>
       public string MaximumTransferBytesUnitSize
       {
          get { return Utils.UnitSizeToText(MaximumTransferBytes); }
       }
 #endif
-
 
       #endregion // Properties
 

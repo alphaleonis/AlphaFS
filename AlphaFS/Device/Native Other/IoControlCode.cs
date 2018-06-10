@@ -123,7 +123,9 @@ namespace Alphaleonis.Win32.Device
          //IOCTL_STORAGE_RESET_DEVICE = (STORAGE_DEVICE_TYPE.FILE_DEVICE_MASS_STORAGE << 16) | (0x0401 << 2) | IoMethod.Buffered | (FileAccess.Read << 14),
 
 
-         /// <summary>Returns a STORAGE_DEVICE_NUMBER structure that contains the FILE_DEVICE_XXX type, device number, and, for a partitionable device, the partition number assigned to a device by the driver when the device is started. This request is usually issued by a fault-tolerant disk driver.</summary>
+         /// <summary>Returns a STORAGE_DEVICE_NUMBER structure that contains the FILE_DEVICE_XXX type, device number, and, for a partitionable device,
+         /// the partition number assigned to a device by the driver when the device is started. This request is usually issued by a fault-tolerant disk driver.
+         /// </summary>
          IOCTL_STORAGE_GET_DEVICE_NUMBER = (STORAGE_DEVICE_TYPE.FILE_DEVICE_MASS_STORAGE << 16) | (0x0420 << 2) | IoMethod.Buffered | (0 << 14),
 
 
