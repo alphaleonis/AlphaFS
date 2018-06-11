@@ -70,15 +70,15 @@ namespace Alphaleonis.Win32.Device
          bool isVolume;
          bool isDevice;
 
-         var validatedDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
+         var localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
          if (isDrive)
-            validatedDevicePath = FileSystemHelper.GetLocalDevicePath(validatedDevicePath);
+            localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
 
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(validatedDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
 
-            return GetStoragePartitionInfoNative(safeHandle, devicePath);
+            return GetStoragePartitionInfoNative(safeHandle, localDevicePath);
       }
 
 
@@ -89,43 +89,44 @@ namespace Alphaleonis.Win32.Device
 
          if (null == volDiskExtents || volDiskExtents.Value.NumberOfDiskExtents == 0)
             return null;
-         
+
 
          using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, 0, pathForException, Filesystem.NativeMethods.DefaultFileBufferSize / 4))
-         {
-            var layout = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>();
-            
-            // Sanity check.
-            if (layout.PartitionCount <= 256)
+            if (null != safeBuffer)
             {
-               var driveStructureSize = Marshal.SizeOf(typeof(NativeMethods.DRIVE_LAYOUT_INFORMATION_EX));  // 48
+               var layout = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>();
 
-               var partitionStructureSize = Marshal.SizeOf(typeof(NativeMethods.PARTITION_INFORMATION_EX)); // 144
+               // Sanity check.
+               if (layout.PartitionCount <= 256)
+               {
+                  var driveStructureSize = Marshal.SizeOf(typeof(NativeMethods.DRIVE_LAYOUT_INFORMATION_EX)); // 48
 
-               var partitions = new NativeMethods.PARTITION_INFORMATION_EX[layout.PartitionCount];
-               
+                  var partitionStructureSize = Marshal.SizeOf(typeof(NativeMethods.PARTITION_INFORMATION_EX)); // 144
 
-               for (var i = 0; i <= layout.PartitionCount - 1; i++)
-
-                  partitions[i] = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(driveStructureSize + i * partitionStructureSize);
-
-
-               var disk = GetDiskGeometryExNative(safeHandle, pathForException);
+                  var partitions = new NativeMethods.PARTITION_INFORMATION_EX[layout.PartitionCount];
 
 
-               // Use the first disk extent.
-               var diskNumber = volDiskExtents.Value.Extents[0].DiskNumber;
+                  for (var i = 0; i <= layout.PartitionCount - 1; i++)
 
-               return new StoragePartitionInfo((int) diskNumber, disk, layout, partitions);
+                     partitions[i] = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(driveStructureSize + i * partitionStructureSize);
+
+
+                  var disk = GetDiskGeometryExNative(safeHandle, pathForException);
+
+
+                  // Use the first disk extent.
+                  var diskNumber = volDiskExtents.Value.Extents[0].DiskNumber;
+
+                  return new StoragePartitionInfo((int) diskNumber, disk, layout, partitions);
+               }
             }
-         }
 
          return null;
       }
 
 
-      [SecurityCritical]
       /// <summary>Returns information about the physical disk's geometry (media type, number of cylinders, tracks per cylinder, sectors per track, and bytes per sector).</summary>
+      [SecurityCritical]
       private static NativeMethods.DISK_GEOMETRY_EX GetDiskGeometryExNative(SafeFileHandle safeHandle, string pathForException)
       {
          var bufferSize = 128;
@@ -133,7 +134,7 @@ namespace Alphaleonis.Win32.Device
          while (true)
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
             {
-               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
                var lastError = Marshal.GetLastWin32Error();
 
@@ -151,9 +152,9 @@ namespace Alphaleonis.Win32.Device
                   };
 
 
-                  var offset = (uint) sizeOf + sizeof(long); // 32
+                  var offset = (uint)sizeOf + sizeof(long); // 32
 
-                  diskGeometryEx.PartitionInformation = safeBuffer.PtrToStructure<NativeMethods.DISK_PARTITION_INFO>((int) offset);
+                  diskGeometryEx.PartitionInformation = safeBuffer.PtrToStructure<NativeMethods.DISK_PARTITION_INFO>((int)offset);
 
 
                   //// Intermittently throws: System.AccessViolationException: Attempted to read or write protected memory.

@@ -35,7 +35,6 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-
          var deviceCount = 0;
 
          var sourceDrive = UnitTestConstants.SysDrive;
@@ -67,8 +66,6 @@ namespace AlphaFS.UnitTest
 
          Assert.IsNotNull(pDisk.VolumeGuids);
 
-         Assert.AreEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
-         
          Assert.AreEqual(pDisk.LogicalDrives.Contains(sourceDrive, StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(sourceDrive));
 
          Assert.AreEqual(pDisk.VolumeGuids.Contains(sourceVolume, StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(sourceVolume));

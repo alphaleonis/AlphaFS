@@ -44,17 +44,23 @@ namespace AlphaFS.UnitTest
 
          foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
+            var isCDRom = driveInfo.DriveType == System.IO.DriveType.CDRom;
+            var isNetwork = driveInfo.DriveType == System.IO.DriveType.Network;
+            var isNoRootDirectory = driveInfo.DriveType == System.IO.DriveType.NoRootDirectory;
+
+
             Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]\n", ++logicalDriveCount, driveInfo.Name);
 
-            if (driveInfo.DriveType == System.IO.DriveType.CDRom)
+
+            if (isCDRom)
             {
-               Console.WriteLine();
+               Console.WriteLine("\t\tSkipped CDRom drive\n");
                continue;
             }
 
 
 
-            
+
             // GetVolumeDeviceName: "C:\" --> "\Device\HarddiskVolume4"
 
             var deviceNameFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(driveInfo.Name);
@@ -65,11 +71,17 @@ namespace AlphaFS.UnitTest
             Assert.IsNotNull(deviceNameFromLogicalDrive);
 
 
-            // Skip mapped drives and network drives.
-
-            if (driveInfo.DriveType != System.IO.DriveType.NoRootDirectory && driveInfo.DriveType != System.IO.DriveType.Network)
+            if (isNetwork)
             {
-               Assert.IsTrue(deviceNameFromLogicalDrive.StartsWith(deviceNamePrefix));
+               Assert.IsTrue(deviceNameFromLogicalDrive.StartsWith(Alphaleonis.Win32.Filesystem.Path.DosDeviceLanmanPrefix + @";" + driveInfo.Name[0] + ":", StringComparison.OrdinalIgnoreCase));
+            }
+               
+            
+
+
+            if (!isNoRootDirectory && !isNetwork)
+            {
+               Assert.IsTrue(deviceNameFromLogicalDrive.StartsWith(deviceNamePrefix, StringComparison.OrdinalIgnoreCase));
 
 
                // GetVolumeGuid: "C:\" --> "\\?\Volume{db5044f9-bd1f-4243-ab97-4b985eb29e80}\"

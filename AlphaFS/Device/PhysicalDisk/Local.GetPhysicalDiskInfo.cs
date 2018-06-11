@@ -84,39 +84,27 @@ namespace Alphaleonis.Win32.Device
             validatedDevicePath = FileSystemHelper.GetLocalDevicePath(validatedDevicePath);
 
 
-         var storageDeviceInfo = GetStorageDeviceInfo(isElevated, validatedDevicePath);
+         // We need the StorageDeviceInfo to locate our input path.
 
-         if (null == storageDeviceInfo)
-            return null;
-         
+         var storageDeviceInfo = GetStorageDeviceInfo(isElevated, validatedDevicePath);
 
          // Get the PhysicalDiskInfo instance.
 
-         var pDiskInfo = isDevice
+         var pDiskInfo = null == storageDeviceInfo ? null : isDevice
 
             ? EnumeratePhysicalDisksCore(isElevated).SingleOrDefault(pDisk => pDisk.StorageDeviceInfo.DeviceNumber == storageDeviceInfo.DeviceNumber && pDisk.StorageDeviceInfo.PartitionNumber == storageDeviceInfo.PartitionNumber)
 
             : isVolume
-               ? EnumeratePhysicalDisksCore(isElevated).SingleOrDefault(pDisk => null != pDisk.VolumeGuids && pDisk.ContainsVolume(validatedDevicePath))
+               ? EnumeratePhysicalDisksCore(isElevated).SingleOrDefault(pDisk => pDisk.ContainsVolume(validatedDevicePath))
 
                : isDrive
-                  ? EnumeratePhysicalDisksCore(isElevated).SingleOrDefault(pDisk => null != pDisk.LogicalDrives && pDisk.ContainsVolume(validatedDevicePath))
+                  ? EnumeratePhysicalDisksCore(isElevated).SingleOrDefault(pDisk => pDisk.ContainsVolume(validatedDevicePath))
                   : null;
 
 
          if (null != pDiskInfo)
          {
-            // Use the storageDeviceInfo instance created earlier because it is based on the input path.
-
             pDiskInfo.StorageDeviceInfo = storageDeviceInfo;
-
-
-            // Accessing the device by its path: \\?\scsi#disk&ven_sandisk&prod...
-            // does not relate to any drive or volume, so the default PartitionNumber of 0 is misleading.
-
-            if (isDevice && pDiskInfo.StorageDeviceInfo.PartitionNumber == 0)
-               pDiskInfo.StorageDeviceInfo.PartitionNumber = -1;
-
 
             if (null == pDiskInfo.StoragePartitionInfo)
                pDiskInfo.StoragePartitionInfo = GetStoragePartitionInfo(isElevated, validatedDevicePath);
@@ -149,22 +137,26 @@ namespace Alphaleonis.Win32.Device
       /// <remarks>Use either <paramref name="devicePath"/> or <paramref name="deviceInfo"/>, not both.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is disposed.")]
       [SecurityCritical]
-      internal static PhysicalDiskInfo CreatePhysicalDiskInfo(bool isElevated, string devicePath, DeviceInfo deviceInfo)
+      private static PhysicalDiskInfo NewPhysicalDiskInfo(bool isElevated, string devicePath, DeviceInfo deviceInfo)
       {
+         if (devicePath == null && deviceInfo == null)
+            return null;
+
          var isDevice = null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.DevicePath);
 
          if (isDevice)
             devicePath = deviceInfo.DevicePath;
 
-
-         var storageDeviceInfo = GetStorageDeviceInfo(isElevated, devicePath);
-
-         if (null == storageDeviceInfo)
-            return null;
-
-
+         
          var pDiskInfo = new PhysicalDiskInfo
          {
+            StorageAdapterInfo = GetStorageAdapterInfo(isElevated, devicePath),
+
+            StorageDeviceInfo = GetStorageDeviceInfo(isElevated, devicePath),
+
+            StoragePartitionInfo = GetStoragePartitionInfo(isElevated, devicePath),
+
+
             DevicePath = devicePath,
 
             DeviceDescription = isDevice ? deviceInfo.DeviceDescription : null,
@@ -172,31 +164,11 @@ namespace Alphaleonis.Win32.Device
             Name = isDevice ? deviceInfo.FriendlyName : null,
 
             PhysicalDeviceObjectName = isDevice ? deviceInfo.PhysicalDeviceObjectName : null,
-
-
-            StorageAdapterInfo = isDevice ? new StorageAdapterInfo {BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription} : null,
-
-
-            // Use the storageDeviceInfo instance created earlier because it is based on the input path.
-
-            StorageDeviceInfo = storageDeviceInfo
          };
 
 
-         // When elevated, get populated StorageAdapterInfo and StorageDeviceInfo instances.
-
-         if (isElevated)
-         {
-            using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(devicePath, FileSystemRights.Read))
-            {
-               pDiskInfo.StorageAdapterInfo = GetStorageAdapterInfoNative(safeHandle, devicePath);
-
-               // Use the storageDeviceInfo instance created earlier because it is based on the input path.
-               //pDiskInfo.StorageDeviceInfo = SetStorageDeviceInfoData(safeHandle, devicePath, pDiskInfo.StorageDeviceInfo);
-
-               pDiskInfo.StoragePartitionInfo = GetStoragePartitionInfoNative(safeHandle, devicePath);
-            }
-         }
+         if (isDevice)
+            pDiskInfo.StorageAdapterInfo.BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription;
 
 
          return pDiskInfo;

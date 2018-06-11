@@ -76,26 +76,18 @@ namespace Alphaleonis.Win32.Device
             validatedDevicePath = FileSystemHelper.GetLocalDevicePath(validatedDevicePath);
 
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(validatedDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
-
-            return GetStorageAdapterInfoNative(safeHandle, devicePath);
-      }
-
-
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SecurityCritical]
-      private static StorageAdapterInfo GetStorageAdapterInfoNative(SafeFileHandle safeHandle, string pathToDevice)
-      {
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
          {
             PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageAdapterProperty,
             QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
          };
+         
 
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(validatedDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
 
-         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathToDevice, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
+         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, validatedDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
          {
-            return new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
+            return null == safeBuffer ? null : new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
          }
       }
    }

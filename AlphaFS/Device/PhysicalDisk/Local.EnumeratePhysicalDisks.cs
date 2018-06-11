@@ -67,15 +67,15 @@ namespace Alphaleonis.Win32.Device
             driveTypes = new[] {DriveType.CDRom, DriveType.Fixed, DriveType.Removable};
 
 
-         var physicalDisks = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => CreatePhysicalDiskInfo(isElevated, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
+         var physicalDisks = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => NewPhysicalDiskInfo(isElevated, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
 
-         var pVolumeGuids = Volume.EnumerateVolumes().Select(volumeGuid => CreatePhysicalDiskInfo(false, volumeGuid, null)).Where(physicalDisk => null != physicalDisk).ToArray();
+         var pVolumeGuids = Volume.EnumerateVolumes().Select(volumeGuid => NewPhysicalDiskInfo(isElevated, volumeGuid, null)).Where(physicalDisk => null != physicalDisk).ToArray();
          
          var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false)
             
             .Select(driveName => new DriveInfo(driveName)).Where(driveInfo => {return driveTypes.Any(driveType => driveInfo.DriveType == driveType);})
             
-            .Select(driveInfo => CreatePhysicalDiskInfo(false, driveInfo.Name, null)).Where(physicalDisk => null != physicalDisk).ToArray();
+            .Select(driveInfo => NewPhysicalDiskInfo(isElevated, driveInfo.Name, null)).Where(physicalDisk => null != physicalDisk).ToArray();
 
 
          foreach (var pDisk in physicalDisks)
@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Device
 
          //// Windows Disk Management shows CD-ROM so mimic that behaviour.
 
-         //var cdRoms = EnumerateDevicesCore(null, DeviceGuid.CDRom, false).Select(deviceInfo => CreatePhysicalDiskInfo(isElevated, null, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
+         //var cdRoms = EnumerateDevicesCore(null, DeviceGuid.CDRom, false).Select(deviceInfo => NewPhysicalDiskInfo(isElevated, null, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
 
          //foreach (var pCdRom in cdRoms)
 
@@ -100,17 +100,17 @@ namespace Alphaleonis.Win32.Device
 
          foreach (var pVolume in pVolumes.Where(pVol => pVol.StorageDeviceInfo.DeviceNumber == pDiskInfo.StorageDeviceInfo.DeviceNumber))
          {
-            var volumeDriveNumber = pVolume.StorageDeviceInfo.DeviceNumber;
+            var driveNumber = pVolume.StorageDeviceInfo.DeviceNumber;
 
-            var volumePartitionNumber = pVolume.StorageDeviceInfo.PartitionNumber;
+            var partitionNumber = pVolume.StorageDeviceInfo.PartitionNumber;
 
 
-            PopulateVolumeDetails(pDiskInfo, volumePartitionNumber, pVolume.DevicePath);
+            PopulateVolumeDetails(pDiskInfo, partitionNumber, pVolume.DevicePath);
 
 
             // Get logical drive from volume matching DeviceNumber and PartitionNumber.
 
-            foreach (var pLogicalDrive in pLogicalDrives.Where(pDriveLogical => pDriveLogical.StorageDeviceInfo.DeviceNumber == volumeDriveNumber && pDriveLogical.StorageDeviceInfo.PartitionNumber == volumePartitionNumber))
+            foreach (var pLogicalDrive in pLogicalDrives.Where(pDriveLogical => pDriveLogical.StorageDeviceInfo.DeviceNumber == driveNumber && pDriveLogical.StorageDeviceInfo.PartitionNumber == partitionNumber))
 
                PopulateLogicalDriveDetails(pDiskInfo, pLogicalDrive.DevicePath);
          }

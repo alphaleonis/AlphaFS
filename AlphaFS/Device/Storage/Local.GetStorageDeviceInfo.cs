@@ -83,21 +83,13 @@ namespace Alphaleonis.Win32.Device
          {
             using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath))
 
-               storageDeviceInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>());
+               storageDeviceInfo = null != safeBuffer ? new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>()) : null;
 
 
-            SetStorageDeviceInfoData(isElevated, safeHandle, localDevicePath, storageDeviceInfo);
+            if (null != storageDeviceInfo)
+               SetStorageDeviceInfoData(isElevated, safeHandle, localDevicePath, storageDeviceInfo);
          }
-
-
-         // Accessing the device by its path: \\?\scsi#disk&ven_sandisk&prod...
-         // does not relate to any drive or volume, so the default PartitionNumber of 0 is misleading.
-
-         if (isDevice && storageDeviceInfo.PartitionNumber == 0)
-
-            storageDeviceInfo.PartitionNumber = -1;
-
-
+         
          return storageDeviceInfo;
       }
 

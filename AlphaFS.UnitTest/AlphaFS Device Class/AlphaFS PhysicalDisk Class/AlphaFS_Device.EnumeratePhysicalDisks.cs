@@ -53,6 +53,17 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
 
 
+            // Show all partition information.
+
+            if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.GptPartitionInfo)
+               foreach (var partition in pDisk.StoragePartitionInfo.GptPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
+
+            if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.MbrPartitionInfo)
+               foreach (var partition in pDisk.StoragePartitionInfo.MbrPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
+
+
             Console.WriteLine();
          }
 
