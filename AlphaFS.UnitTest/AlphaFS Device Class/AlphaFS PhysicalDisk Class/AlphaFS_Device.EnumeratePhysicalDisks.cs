@@ -37,7 +37,14 @@ namespace AlphaFS.UnitTest
 
          var pDriveCount = 0;
 
+         var physicalDrives = Alphaleonis.Win32.Filesystem.Volume.QueryAllDosDevices().Where(device => device.StartsWith("PhysicalDrive", StringComparison.OrdinalIgnoreCase)).ToArray();
+
          var pDrives = Alphaleonis.Win32.Device.Local.EnumeratePhysicalDisks().OrderBy(pDiskInfo => pDiskInfo.StorageDeviceInfo.DeviceNumber).ThenBy(pDiskInfo => pDiskInfo.StorageDeviceInfo.PartitionNumber).ToArray();
+
+
+         Console.WriteLine("Found: [{0}] physical drives.\n", physicalDrives.Length);
+
+         Assert.AreEqual(physicalDrives.Length, pDrives.Length);
 
 
          foreach (var pDisk in pDrives)

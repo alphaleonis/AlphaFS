@@ -44,7 +44,7 @@
 
 //      internal static T SetFlag<T>(this Enum flags, T value, bool state = true)
 //      {
-//         if (!Enum.IsDefined(typeof(T), value)) throw new ArgumentException("Enum value and flags types don't match.");
+//         if (!Enum.IsDefined(typeof(T), value)) throw new ArgumentException("Enum value and flags types do not match.");
 //         if (state) return (T) Enum.ToObject(typeof(T), Convert.ToUInt64(flags) | Convert.ToUInt64(value));
 //         return (T) Enum.ToObject(typeof(T), Convert.ToUInt64(flags) & ~Convert.ToUInt64(value));
 //      }

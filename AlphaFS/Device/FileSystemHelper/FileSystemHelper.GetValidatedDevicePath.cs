@@ -37,10 +37,20 @@ namespace Alphaleonis.Win32.Device
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "devicePath");
 
 
+         if (devicePath.StartsWith(Path.PhysicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
+         {
+            isDrive = false;
+            isVolume = false;
+            isDevice = false;
+
+            return devicePath;
+         }
+
+
          // Resolve single drive letter or get root directory information.
 
          devicePath = devicePath.Length == 1 ? devicePath + Path.VolumeSeparatorChar : Path.GetPathRoot(devicePath, false);
-
+         
          var hasPath = !Utils.IsNullOrWhiteSpace(devicePath);
 
 

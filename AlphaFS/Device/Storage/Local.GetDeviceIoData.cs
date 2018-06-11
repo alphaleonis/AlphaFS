@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Device
    {
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      private static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string pathForException, int size = -1)
+      internal static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string pathForException, int size = -1)
       {
          Utils.IsValidHandle(safeHandle);
 

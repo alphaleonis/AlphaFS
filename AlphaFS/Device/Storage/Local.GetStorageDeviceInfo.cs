@@ -21,6 +21,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
@@ -47,7 +48,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath)
       {
-         return GetStorageDeviceInfo(ProcessContext.IsElevatedProcess, devicePath);
+         return GetStorageDeviceInfoCore(ProcessContext.IsElevatedProcess, devicePath);
       }
 
 
@@ -66,6 +67,26 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       [SecurityCritical]
       public static StorageDeviceInfo GetStorageDeviceInfo(bool isElevated, string devicePath)
+      {
+         return GetStorageDeviceInfoCore(isElevated, devicePath);
+      }
+
+
+      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="devicePath"/>.</returns>
+      /// <remarks>When this method is called from a non-elevated state, the <see cref="StorageDeviceInfo.TotalSize"/> property always returns <c>0</c>.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="Exception"/>
+      /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
+      /// <param name="devicePath">
+      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// </param>
+      [SecurityCritical]
+      internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, string devicePath)
       {
          bool isDrive;
          bool isVolume;
@@ -96,7 +117,7 @@ namespace Alphaleonis.Win32.Device
 
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      private static void SetStorageDeviceInfoData(bool isElevated, SafeFileHandle safeHandle, string localDevicePath, StorageDeviceInfo storageDeviceInfo)
+      private static void SetStorageDeviceInfoData(bool isElevated, SafeFileHandle safeHandle, string pathForException, StorageDeviceInfo storageDeviceInfo)
       {
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
          {
@@ -105,7 +126,7 @@ namespace Alphaleonis.Win32.Device
          };
          
 
-         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 2))
+         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathForException, Filesystem.NativeMethods.DefaultFileBufferSize / 2))
          {
             var deviceDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>();
 
@@ -140,7 +161,7 @@ namespace Alphaleonis.Win32.Device
 
          if (isElevated)
 
-            using (var safeBuffer = GetDeviceIoData<long>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, localDevicePath))
+            using (var safeBuffer = GetDeviceIoData<long>(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, pathForException))
 
                storageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
       }

@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
@@ -46,7 +47,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static StoragePartitionInfo GetStoragePartitionInfo(string devicePath)
       {
-         return GetStoragePartitionInfo(ProcessContext.IsElevatedProcess, devicePath);
+         return GetStoragePartitionInfoCore(ProcessContext.IsElevatedProcess, -1, devicePath);
       }
 
 
@@ -66,11 +67,35 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static StoragePartitionInfo GetStoragePartitionInfo(bool isElevated, string devicePath)
       {
-         bool isDrive;
+         return GetStoragePartitionInfoCore(isElevated, -1, devicePath);
+      }
+
+
+
+
+      /// <summary>[AlphaFS] Retrieves information about the partitions on a disk and the features of each partition.</summary>
+      /// <returns>Returns a <see cref="StoragePartitionInfo"/> instance that represent the partition info that is related to <paramref name="devicePath"/>.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="Exception"/>
+      /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
+      /// <param name="deviceNumber">Retrieve a <see cref="PhysicalDiskInfo"/> instance by device number.</param>
+      /// <param name="devicePath">
+      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// </param>
+      [SecurityCritical]
+      internal static StoragePartitionInfo GetStoragePartitionInfoCore(bool isElevated, int deviceNumber, string devicePath)
+      {
+         var isDeviceNumber = deviceNumber > -1;
+         var isDrive = false;
          bool isVolume;
          bool isDevice;
 
-         var localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
+         var localDevicePath = isDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
          if (isDrive)
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);

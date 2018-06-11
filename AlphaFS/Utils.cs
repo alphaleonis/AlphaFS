@@ -36,6 +36,38 @@ namespace Alphaleonis
 {
    internal static class Utils
    {
+      internal static T CopyFrom<T>(T source) where T : new()
+      {
+         var destination = new T();
+
+         CopyTo(source, destination);
+
+         return destination;
+      }
+
+
+      internal static void CopyTo<T>(T source, T destination)
+      {
+         // Properties listed here should not be overwritten by the physical disk template.
+
+         //var excludedProps = new[] {"PartitionNumber"};
+
+
+         //var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite && !excludedProps.Any(prop => prop.Equals(x.Name))).ToArray();
+
+         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite).ToArray();
+
+         var dstProps = srcProps.ToArray();
+
+         foreach (var srcProp in srcProps)
+         {
+            var dstProp = dstProps.First(x => x.Name.Equals(srcProp.Name));
+
+            dstProp.SetValue(destination, srcProp.GetValue(source, null), null);
+         }
+      }
+
+
       [SecurityCritical]
       internal static int GetDoubledBufferSizeOrThrowException(SafeHandle safeBuffer, int lastError, int bufferSize, string pathForException)
       {
@@ -87,7 +119,7 @@ namespace Alphaleonis
       {
          var enumType = typeof(T);
 
-         // Can't use generic type constraints on value types, so have to do check like this.
+         // Cannot use generic type constraints on value types, so have to do check like this.
          if (enumType.BaseType != typeof(Enum))
             throw new ArgumentException("T must be of type System.Enum", "T");
 

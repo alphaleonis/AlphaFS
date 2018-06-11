@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -39,7 +40,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisks()
       {
-         return EnumeratePhysicalDisksCore(ProcessContext.IsElevatedProcess);
+         return EnumeratePhysicalDisksCore(ProcessContext.IsElevatedProcess, null);
       }
 
 
@@ -61,41 +62,33 @@ namespace Alphaleonis.Win32.Device
       /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="driveTypes">>One or more of the <see cref="DriveType"/> values.</param>
       [SecurityCritical]
-      internal static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisksCore(bool isElevated, DriveType[] driveTypes = null)
+      private static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisksCore(bool isElevated, DriveType[] driveTypes)
       {
          if (null == driveTypes)
             driveTypes = new[] {DriveType.CDRom, DriveType.Fixed, DriveType.Removable};
 
 
-         var physicalDisks = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => NewPhysicalDiskInfo(isElevated, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
+         var physicalDisks = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
 
-         var pVolumeGuids = Volume.EnumerateVolumes().Select(volumeGuid => NewPhysicalDiskInfo(isElevated, volumeGuid, null)).Where(physicalDisk => null != physicalDisk).ToArray();
+
+         var pVolumeGuids = Volume.EnumerateVolumes().Select(volumeGuid => PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, volumeGuid, null)).Where(physicalDisk => null != physicalDisk).ToArray();
          
          var pLogicalDrives = DriveInfo.EnumerateLogicalDrivesCore(false, false)
             
             .Select(driveName => new DriveInfo(driveName)).Where(driveInfo => {return driveTypes.Any(driveType => driveInfo.DriveType == driveType);})
             
-            .Select(driveInfo => NewPhysicalDiskInfo(isElevated, driveInfo.Name, null)).Where(physicalDisk => null != physicalDisk).ToArray();
+            .Select(driveInfo => PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, driveInfo.Name, null)).Where(physicalDisk => null != physicalDisk).ToArray();
 
 
          foreach (var pDisk in physicalDisks)
 
             yield return PopulatePhysicalDisk(pDisk, pVolumeGuids, pLogicalDrives);
-
-
-         //// Windows Disk Management shows CD-ROM so mimic that behaviour.
-
-         //var cdRoms = EnumerateDevicesCore(null, DeviceGuid.CDRom, false).Select(deviceInfo => NewPhysicalDiskInfo(isElevated, null, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
-
-         //foreach (var pCdRom in cdRoms)
-
-         //   yield return PopulatePhysicalCDRom(pCdRom, pVolumeGuids, pLogicalDrives);
       }
       
 
       private static PhysicalDiskInfo PopulatePhysicalDisk(PhysicalDiskInfo pDisk, PhysicalDiskInfo[] pVolumes, PhysicalDiskInfo[] pLogicalDrives)
       {
-         var pDiskInfo = new PhysicalDiskInfo(pDisk);
+         var pDiskInfo = Utils.CopyFrom(pDisk);
 
 
          foreach (var pVolume in pVolumes.Where(pVol => pVol.StorageDeviceInfo.DeviceNumber == pDiskInfo.StorageDeviceInfo.DeviceNumber))
@@ -156,32 +149,5 @@ namespace Alphaleonis.Win32.Device
 
          pDiskInfo.LogicalDrives.Add(Path.RemoveTrailingDirectorySeparator(drivePath));
       }
-
-
-      //private static PhysicalDiskInfo PopulatePhysicalCDRom(PhysicalDiskInfo pCdRom, PhysicalDiskInfo[] pVolumes, PhysicalDiskInfo[] pLogicalDrives)
-      //{
-      //   var pDiskInfo = new PhysicalDiskInfo(pCdRom);
-
-
-      //   // Get volume from CDRom matching DeviceNumber.
-
-      //   var pVolume = pVolumes.SingleOrDefault(pVol => pVol.StorageDeviceInfo.DeviceNumber == pDiskInfo.StorageDeviceInfo.DeviceNumber && pVol.StorageDeviceInfo.PartitionNumber == pDiskInfo.StorageDeviceInfo.PartitionNumber);
-
-      //   if (null != pVolume)
-      //   {
-      //      PopulateVolumeDetails(pDiskInfo, pVolume.StorageDeviceInfo.PartitionNumber, pVolume.DevicePath);
-
-
-      //      // Get logical drive from CDRom matching DeviceNumber and PartitionNumber.
-
-      //      var pLogicalDrive = pLogicalDrives.SingleOrDefault(pDriveLogical => pDriveLogical.StorageDeviceInfo.DeviceNumber == pVolume.StorageDeviceInfo.DeviceNumber && pDriveLogical.StorageDeviceInfo.PartitionNumber == pVolume.StorageDeviceInfo.PartitionNumber);
-
-      //      if (null != pLogicalDrive)
-      //         PopulateLogicalDriveDetails(pDiskInfo, pLogicalDrive.DevicePath);
-      //   }
-
-
-      //   return pDiskInfo;
-      //}
    }
 }

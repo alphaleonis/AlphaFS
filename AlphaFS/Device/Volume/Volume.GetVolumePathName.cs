@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             switch ((uint) lastError)
             {
-               // Don't throw exception on these errors.
+               // Do not throw exception on these errors.
                case Win32Errors.ERROR_NO_MORE_FILES:
                case Win32Errors.ERROR_INVALID_PARAMETER:
                case Win32Errors.ERROR_INVALID_NAME:

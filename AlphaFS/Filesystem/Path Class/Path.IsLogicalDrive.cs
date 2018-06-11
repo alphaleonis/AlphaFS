@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
          
          var c = regularPath.ToUpperInvariant()[0];
 
-         // Don't use char.IsLetter() here as that can be misleading; The only valid drive letters are: A-Z.
+         // Do not use char.IsLetter() here as that can be misleading; The only valid drive letters are: A-Z.
 
          return regularPath[1] == VolumeSeparatorChar && c >= 'A' && c <= 'Z';
       }

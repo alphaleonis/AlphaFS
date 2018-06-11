@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
       /// <param name="getAllProperties"><c>true</c> to retrieve all device properties.</param>
       [SecurityCritical]
-      internal static IEnumerable<DeviceInfo> EnumerateDevicesCore(string hostName, DeviceGuid deviceGuid, bool getAllProperties)
+      private static IEnumerable<DeviceInfo> EnumerateDevicesCore(string hostName, DeviceGuid deviceGuid, bool getAllProperties)
       {
          if (Utils.IsNullOrWhiteSpace(hostName))
             hostName = Environment.MachineName;
@@ -192,7 +192,7 @@ namespace Alphaleonis.Win32.Device
             return null;
 
 
-         var bufferSize = Filesystem.NativeMethods.DefaultFileBufferSize / 32; // 128
+         const int bufferSize = Filesystem.NativeMethods.DefaultFileBufferSize / 32; // 128
 
          var descriptionBuffer = new byte[bufferSize];
          ulong propertyType = 0;

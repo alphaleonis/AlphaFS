@@ -231,7 +231,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         // Don't use long path notation, as it will be empty upon creation.
+         // Do not use long path notation, as it will be empty upon creation.
          targetFileName = Path.GetRegularPathCore(targetFileName, GetFullPathOptions.None, false);
 
 

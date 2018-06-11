@@ -67,7 +67,7 @@ namespace AlphaFS.UnitTest
       {
          var enumType = typeof(T);
 
-         // Can't use generic type constraints on value types, so have to do check like this.
+         // Cannot use generic type constraints on value types, so have to do check like this.
          if (enumType.BaseType != typeof(Enum))
             throw new ArgumentException("T must be of type System.Enum", "T");
 

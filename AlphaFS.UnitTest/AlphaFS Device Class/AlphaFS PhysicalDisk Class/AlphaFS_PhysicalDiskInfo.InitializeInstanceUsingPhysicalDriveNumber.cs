@@ -19,55 +19,39 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_VolumeTest
+   public partial class AlphaFS_PhysicalDiskInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Volume_GetDriveFormat_LocalAndNetwork_Success()
+      public void AlphaFS_PhysicalDiskInfo_InitializeInstanceUsingPhysicalDriveNumber_Local_Success()
       {
-         AlphaFS_Volume_GetDriveFormat(false);
-         AlphaFS_Volume_GetDriveFormat(true);
-      }
-
-
-      private void AlphaFS_Volume_GetDriveFormat(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
+         UnitTestConstants.PrintUnitTestHeader(false);
 
          var driveCount = 0;
 
-         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
+         var physicalDisks = Alphaleonis.Win32.Filesystem.Volume.QueryAllDosDevices().Where(device => device.StartsWith("PhysicalDrive", StringComparison.OrdinalIgnoreCase)).ToArray();
+
+         Console.WriteLine("Found: [{0}] physical drives.\n", physicalDisks.Length);
+
+
+         for (var physicalDiskNumber = 0; physicalDiskNumber < physicalDisks.Length; physicalDiskNumber++)
          {
-            var driveName = isNetwork ? Alphaleonis.Win32.Filesystem.Path.LocalToUnc(driveInfo.Name) : driveInfo.Name;
+            Console.WriteLine("#{0:000}\tInput Physical Disk Number: [{1}]", ++driveCount, physicalDiskNumber);
 
-            Console.Write("#{0:000}\tInput Logical Drive Path: [{1}]", ++driveCount, driveName);
+            var pDisk = new Alphaleonis.Win32.Device.PhysicalDiskInfo(physicalDiskNumber);
 
-            
-            var driveFormat = Alphaleonis.Win32.Filesystem.Volume.GetDriveFormat(driveName);
+            UnitTestConstants.Dump(pDisk);
 
-            Console.WriteLine("\t\tDrive Format: [{0}]", driveFormat);
-
-
-            // Some USB drives do not report drive format when path is UNC.
-
-            if (!Alphaleonis.Utils.IsNullOrWhiteSpace(driveFormat))
-
-               Assert.AreEqual(driveInfo.DriveFormat, driveFormat);
+            Console.WriteLine();
          }
-
-
-         Assert.IsTrue(driveCount > 0, "No logical drives enumerated, but it is expected.");
-
-
-         Console.WriteLine();
       }
    }
 }

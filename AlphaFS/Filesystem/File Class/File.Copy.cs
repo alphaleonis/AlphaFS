@@ -950,7 +950,7 @@ namespace Alphaleonis.Win32.Filesystem
                
 
                // For a number of error codes (sharing violation, path not found, etc)
-               // we don't know if the problem was with the source or destination file.
+               // we do not know if the problem was with the source or destination file.
 
                // Check if destination directory already exists.
                // Directory.Move()

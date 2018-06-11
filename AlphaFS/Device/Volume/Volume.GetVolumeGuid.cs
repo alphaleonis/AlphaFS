@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves a volume <see cref="Guid"/> path for the volume that is associated with the specified volume mount point (drive letter, volume <see cref="Guid"/> path, or mounted folder).</summary>
       /// <returns>The unique volume name of the form: "\\?\Volume{GUID}\".</returns>
       /// <remarks>SMB does not support volume management functions.</remarks>
-      /// <remarks>Mount points aren't supported by ReFS volumes.</remarks>
+      /// <remarks>Mount points are not supported by ReFS volumes.</remarks>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeMountPoint">The path of a mounted folder (for example, "Y:\MountX\") or a drive letter (for example, "X:\").</param>
       [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification =

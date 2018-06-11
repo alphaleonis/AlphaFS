@@ -198,6 +198,8 @@
     </Compile>
     <Compile Include="Device\Device.Local.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.cs" />
+    <Compile Include="Device\PhysicalDisk\Device.PhysicalDiskInfo_Methods.cs" />
+    <Compile Include="Device\PhysicalDisk\Device.PhysicalDiskInfo_Properties.cs" />
     <Compile Include="Device\Storage\Local.GetStoragePartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageMbrPartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageGptPartitionInfo.cs" />

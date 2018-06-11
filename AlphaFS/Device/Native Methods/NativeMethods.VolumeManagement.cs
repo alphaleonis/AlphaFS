@@ -219,7 +219,7 @@ namespace Alphaleonis.Win32.Device
       /// </returns>
       /// <remarks>Use GetVolumeNameForVolumeMountPoint to obtain a volume <see cref="Guid"/> path for use with functions such as SetVolumeMountPoint and FindFirstVolumeMountPoint that require a volume <see cref="Guid"/> path as an input parameter.</remarks>
       /// <remarks>SMB does not support volume management functions.</remarks>
-      /// <remarks>Mount points aren't supported by ReFS volumes.</remarks>
+      /// <remarks>Mount points are not supported by ReFS volumes.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]

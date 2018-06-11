@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
          // This is more towards returning a filename from a file handle. If the handle is a named pipe handle it seems to hang the thread.
          // Check for: FileTypes.DiskFile
 
-         // Can't map a 0 byte file.
+         // Cannot map a 0 byte file.
          long fileSizeHi;
          if (!NativeMethods.GetFileSizeEx(handle, out fileSizeHi))
             if (fileSizeHi == 0)

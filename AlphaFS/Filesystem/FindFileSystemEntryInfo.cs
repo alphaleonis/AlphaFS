@@ -317,7 +317,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       private T NewFileSystemEntryType<T>(bool isFolder, FileSystemEntryInfo fsei, string fileName, string pathLp, NativeMethods.WIN32_FIND_DATA win32FindData)
       {
-         // Determine yield, e.g. don't return files when only folders are requested and vice versa.
+         // Determine yield, e.g. do not return files when only folders are requested and vice versa.
          if (null != FileSystemObjectType && (!(bool) FileSystemObjectType || !isFolder) && (!(bool) !FileSystemObjectType || isFolder))
             return (T) (object) null;
 
@@ -456,7 +456,7 @@ namespace Alphaleonis.Win32.Filesystem
             )
             {
                // Removes the object at the beginning of your Queue.
-               // The algorithmic complexity of this is O(1). It doesn't loop over elements.
+               // The algorithmic complexity of this is O(1). It does not loop over elements.
 
                var pathLp = dirs.Dequeue();
                NativeMethods.WIN32_FIND_DATA win32FindData;

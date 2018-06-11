@@ -20,17 +20,17 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Device
 {
-   /// <summary>[AlphaFS] Provides access to information of a physical disk.</summary>
+   /// <summary>[AlphaFS] Provides access to information of a physical disk on the Computer.</summary>
    [Serializable]
    [SecurityCritical]
-   public sealed class PhysicalDiskInfo
+   public sealed partial class PhysicalDiskInfo
    {
       #region Constructors
 
@@ -40,103 +40,86 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>[AlphaFS] Initializes a PhysicalDiskInfo instance.</summary>
-      /// <param name="physicalDiskInfo">An initialized <see cref="PhysicalDiskInfo"/> instance.</param>
-      internal PhysicalDiskInfo(PhysicalDiskInfo physicalDiskInfo)
+      /// <summary>[AlphaFS] Initializes a PhysicalDiskInfo instance from a physical disk number such as: <c>0</c>, <c>1</c>, ...</summary>
+      /// <param name="deviceNumber">A number that indicates a physical disk on the Computer.</param>
+      public PhysicalDiskInfo(int deviceNumber)
       {
-         CopyTo(physicalDiskInfo, this);
+         if (deviceNumber < 0)
+            throw new ArgumentOutOfRangeException("deviceNumber");
+
+         Utils.CopyTo(Local.GetPhysicalDiskInfoCore(Security.ProcessContext.IsElevatedProcess, deviceNumber, null), this);
       }
 
       #endregion // Constructors
 
 
-      #region Properties
-
-      /// <summary>The device description.</summary>
-      public string DeviceDescription { get; internal set; }
-
-
-      /// <summary>The path to the device.</summary>
-      /// <returns>Returns a string that represents the path to the device.
-      ///   A drive path such as: <c>C:</c>, <c>D:\</c>,
-      ///   a volume <see cref="Guid"/> path such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>
-      ///   or a <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c> string.
-      /// </returns>
-      public string DevicePath { get; internal set; }
-
-
-      /// <summary>An <see cref="ICollection{String}"/> of logical drives that are located on the physical disk.</summary>
-      public ICollection<string> LogicalDrives { get; internal set; }
-
-      
-      /// <summary>The "FriendlyName" of the physical disk.</summary>
-      public string Name { get; internal set; }
-
-
-      /// <summary>An <see cref="ICollection{String}"/> of partition index numbers that are located on the physical disk.</summary>
-      public ICollection<int> PartitionIndexes { get; internal set; }
-
-
-      /// <summary>Encapsulates the physical device location (PDO) information provided by a device's firmware to Windows.</summary>
-      public string PhysicalDeviceObjectName { get; internal set; }
-
-
-      /// <summary>The storage device adapter information. Retrieving this information requires an elevated state.</summary>
-      public StorageAdapterInfo StorageAdapterInfo { get; internal set; }
-
-
-      /// <summary>The storage device information.</summary>
-      public StorageDeviceInfo StorageDeviceInfo { get; internal set; }
-
-      
-      /// <summary>The storage device partitiion information.</summary>
-      public StoragePartitionInfo StoragePartitionInfo { get; internal set; }
-
-
-      /// <summary>An <see cref="ICollection{String}"/> of volume <see cref="Guid"/> strings of volumes that are located on the physical disk.</summary>
-      public ICollection<string> VolumeGuids { get; internal set; }
-
-
-      ///// <summary>An <see cref="ICollection{String}"/> of volume label strings of volumes that are located on the physical disk.</summary>
-      //public ICollection<string> VolumeLabels { get; internal set; }
-
-      #endregion // Properties
-
-
-      #region Methods
-
-      /// <summary>Checks if the volume or logical drive is located on the physical disk.
-      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
-      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// </summary>
-      /// <returns><c>true</c> if the volume or logical drive is located on the physical disk; otherwise, <c>false</c>.</returns>
+      /// <summary>[AlphaFS] Retrieves the physical disk that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.</summary>
+      ///  <returns>A <see cref="PhysicalDiskInfo"/> instance that represents the physical disk on the Computer or <c>null</c> on error/no data available.</returns>
+      /// <remark>
+      ///   Most properties of the returned <see cref="StorageAdapterInfo"/> and <see cref="StorageDeviceInfo"/> instances are meaningless unless this method is called from an elevated state.
+      ///   Do not call this method for every logical drive/volume on the Computer as each call queries all physical disks, associated volumes and logical drives.
+      ///   Instead, use method <see cref="Local.EnumeratePhysicalDisks()"/> and property <see cref="VolumeGuids"/> or <see cref="LogicalDrives"/>.
+      /// </remark>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="Exception"/>
+      /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="devicePath">
-      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
-      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
-      public bool ContainsVolume(string devicePath)
+      /// <param name="deviceInfo">A <see cref="DeviceInfo"/> instance.</param>
+      /// <remarks>Use either <paramref name="devicePath"/> or <paramref name="deviceInfo"/>, not both.</remarks>
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is disposed.")]
+      [SecurityCritical]
+      internal static PhysicalDiskInfo InitializePhysicalDiskInfo(bool isElevated, string devicePath, DeviceInfo deviceInfo)
       {
-         bool isDrive;
-         bool isVolume;
-         bool isDeviceInfo;
+         if (null == devicePath && null == deviceInfo)
+            return null;
 
-         devicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
+         var isDevice = null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.DevicePath);
+
+         if (isDevice)
+            devicePath = deviceInfo.DevicePath;
 
 
-         if (isDrive && null != LogicalDrives)
+
+         var storageDeviceInfo = Local.GetStorageDeviceInfoCore(isElevated, devicePath);
+
+         if (null == storageDeviceInfo)
+            return null;
+
+
+         var pDiskInfo = new PhysicalDiskInfo
          {
-            devicePath = devicePath.Replace(Path.LogicalDrivePrefix, string.Empty);
+            DevicePath = devicePath,
 
-            devicePath = Path.RemoveTrailingDirectorySeparator(devicePath, false);
+            DeviceDescription = isDevice ? deviceInfo.DeviceDescription : null,
 
-            return LogicalDrives.Any(driveName => driveName.Equals(devicePath, StringComparison.OrdinalIgnoreCase));
-         }
+            Name = isDevice ? deviceInfo.FriendlyName : null,
+
+            PhysicalDeviceObjectName = isDevice ? deviceInfo.PhysicalDeviceObjectName : null,
 
 
-         return isVolume && null != VolumeGuids && VolumeGuids.Any(guid => guid.Equals(devicePath, StringComparison.OrdinalIgnoreCase));
+            StorageAdapterInfo = Local.GetStorageAdapterInfo(isElevated, devicePath),
+
+            StorageDeviceInfo = storageDeviceInfo,
+
+            StoragePartitionInfo = Local.GetStoragePartitionInfo(isElevated, devicePath)
+         };
+
+
+         if (isDevice)
+            pDiskInfo.StorageAdapterInfo.BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription;
+
+
+         return pDiskInfo;
       }
+      
+
 
 
       /// <summary>Returns the "FriendlyName" of the physical disk.</summary>
@@ -158,11 +141,8 @@ namespace Alphaleonis.Win32.Device
          var other = obj as PhysicalDiskInfo;
 
          return null != other && null != other.DevicePath && null != other.StorageDeviceInfo &&
-
                 other.DevicePath.Equals(DevicePath, StringComparison.OrdinalIgnoreCase) &&
-
                 other.StorageDeviceInfo.Equals(StorageDeviceInfo) &&
-
                 other.StorageDeviceInfo.DeviceNumber.Equals(StorageDeviceInfo.DeviceNumber) && other.StorageDeviceInfo.PartitionNumber.Equals(StorageDeviceInfo.PartitionNumber);
       }
 
@@ -193,30 +173,5 @@ namespace Alphaleonis.Win32.Device
       {
          return !(left == right);
       }
-
-
-      private static void CopyTo<T>(T source, T destination)
-      {
-         // Properties listed here should not be overwritten by the physical disk template.
-
-         //var excludedProps = new[] {"PartitionNumber"};
-
-
-         //var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite && !excludedProps.Any(prop => prop.Equals(x.Name))).ToArray();
-
-         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite).ToArray();
-
-         var dstProps = srcProps.ToArray();
-
-
-         foreach (var srcProp in srcProps)
-         {
-            var dstProp = dstProps.First(x => x.Name.Equals(srcProp.Name));
-
-            dstProp.SetValue(destination, srcProp.GetValue(source, null), null);
-         }
-      }
-
-      #endregion // Methods
    }
 }

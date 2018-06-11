@@ -35,7 +35,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var logicalDriveCount = 0;
+         var driveCount = 0;
 
          foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
                continue;
 
 
-            Console.Write("#{0:000}\tInput Logical Drive Path: [{1}]", ++logicalDriveCount, driveInfo.Name);
+            Console.Write("#{0:000}\tInput Logical Drive Path: [{1}]", ++driveCount, driveInfo.Name);
 
 
             var volumeLabel = Alphaleonis.Win32.Filesystem.Volume.GetVolumeLabel(driveInfo.Name);
@@ -55,7 +55,7 @@ namespace AlphaFS.UnitTest
          }
 
 
-         Assert.IsTrue(logicalDriveCount > 0, "No logical drives enumerated, but it is expected.");
+         Assert.IsTrue(driveCount > 0, "No logical drives enumerated, but it is expected.");
       }
    }
 }

@@ -620,7 +620,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          var lastError = NativeMethods.PathCreateFromUrl(urlPath, buffer, ref bufferSize, 0);
 
-         // Don't throw exception, but return string.Empty;
+         // Do not throw exception, but return string.Empty;
          return lastError == Win32Errors.S_OK ? buffer.ToString() : string.Empty;
       }
 
@@ -645,7 +645,7 @@ namespace Alphaleonis.Win32.Filesystem
          StringBuilder buffer;
          var lastError = NativeMethods.PathCreateFromUrlAlloc(urlPath, out buffer, 0);
 
-         // Don't throw exception, but return string.Empty;
+         // Do not throw exception, but return string.Empty;
          return lastError == Win32Errors.S_OK ? buffer.ToString() : string.Empty;
       }
 
@@ -699,7 +699,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          var lastError = NativeMethods.UrlCreateFromPath(pathRp, buffer, ref bufferSize, 0);
 
-         // Don't throw exception, but return null;
+         // Do not throw exception, but return null;
          var url = buffer.ToString();
          if (Utils.IsNullOrWhiteSpace(url))
             url = string.Empty;

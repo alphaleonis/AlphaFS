@@ -168,7 +168,7 @@ namespace Alphaleonis.Win32
                throw new NotImplementedException(string.Format(CultureInfo.InvariantCulture, "{0} {1}", Resources.Exception_From_Successful_Operation, errorMessage));
 
             default:
-               // We don't have a specific exception to generate for this error.               
+               // We do not have a specific exception to generate for this error.               
                throw new IOException(errorMessage, Win32Errors.GetHrFromWin32Error(errorCode));
          }
       }

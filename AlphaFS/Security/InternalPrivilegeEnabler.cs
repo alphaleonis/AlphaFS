@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Security
                NativeError.ThrowException(lastError);
 
 
-            // If no privilege was changed, we don't want to reset it.
+            // If no privilege was changed, we do not want to reset it.
             if (mOldPrivilege.PrivilegeCount == 0)
                EnabledPrivilege = null;
          }

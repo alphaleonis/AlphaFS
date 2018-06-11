@@ -283,7 +283,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (currentChar == DirectorySeparatorChar || currentChar == AltDirectorySeparatorChar)
             {
                // If we have a path like "123.../foo", remove the trailing dots.
-               // However, if we found "c:\temp\..\bar" or "c:\temp\...\bar", don't.
+               // However, if we found "c:\temp\..\bar" or "c:\temp\...\bar", do not.
                // Also remove trailing spaces from both files & directory names.
                // This was agreed on with the OS team to fix undeletable directory
                // names ending in spaces.
@@ -382,7 +382,7 @@ namespace Alphaleonis.Win32.Filesystem
                // Reduce only multiple .'s only after slash to 2 dots. For
                // instance a...b is a valid file name.
                numDots++;
-               // Don't flush out non-terminal spaces here, because they may in
+               // Do not flush out non-terminal spaces here, because they may in
                // the end not be significant.  Turn "c:\ . .\foo" -> "c:\foo"
                // which is the conclusion of removing trailing dots & spaces,
                // as well as folding multiple '\' characters.
@@ -432,7 +432,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                // Copy any spaces & dots since the last significant character
                // to here.  Note we only counted the number of dots & spaces,
-               // and don't know what order they're in.  Hence the copy.
+               // and do not know what order they're in.  Hence the copy.
                if (numDots > 0 || numSpaces > 0)
                {
                   var numCharsToCopy = lastSigChar >= 0 ? index - lastSigChar - 1 : index;
@@ -514,8 +514,8 @@ namespace Alphaleonis.Win32.Filesystem
          // Disallow URL's here.  Some of our other Win32 API calls will reject
          // them later, so we might be better off rejecting them here.
          // Note we've probably turned them into "file:\D:\foo.tmp" by now.
-         // But for compatibility, ensure that callers that aren't doing a 
-         // full check aren't rejected here.
+         // But for compatibility, ensure that callers that are not doing a 
+         // full check are not rejected here.
          if ((options & GetFullPathOptions.FullCheck) != 0)
          {
             var newBufferString = newBuffer.ToString();

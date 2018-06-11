@@ -4116,7 +4116,7 @@ namespace Alphaleonis.Win32
       ///// <summary>This link is already supported by the specified server-share.</summary>
       //public const uint NERR_DfsDuplicateService = 2676;
 
-      ///// <summary>Can't remove the last server-share supporting this root or link.</summary>
+      ///// <summary>Cannot remove the last server-share supporting this root or link.</summary>
       //public const uint NERR_DfsCantRemoveLastServerShare = 2677;
 
       ///// <summary>The operation is not supported for an Inter-DFS link.</summary>
