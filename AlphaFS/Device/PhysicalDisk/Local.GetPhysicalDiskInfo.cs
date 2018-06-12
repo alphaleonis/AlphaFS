@@ -101,50 +101,85 @@ namespace Alphaleonis.Win32.Device
       internal static PhysicalDiskInfo GetPhysicalDiskInfoCore(bool isElevated, int deviceNumber, string devicePath)
       {
          var isDeviceNumber = deviceNumber > -1;
+         bool isDevice;
          var isDrive = false;
          var isVolume = false;
-         var isDevice = false;
-
-         var validatedDevicePath = isDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
+         
+         var localDevicePath = isDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
          if (isDrive)
-            validatedDevicePath = FileSystemHelper.GetLocalDevicePath(validatedDevicePath);
-         
-
-         // We need the StorageDeviceInfo to locate the device number or input path.
-
-         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, validatedDevicePath);
-
-
-         Func<PhysicalDiskInfo, bool> matchDeviceNumber = pDisk => pDisk.StorageDeviceInfo.DeviceNumber == storageDeviceInfo.DeviceNumber;
-
-         var matchAll = matchDeviceNumber + (pDisk => pDisk.StorageDeviceInfo.DeviceNumber == storageDeviceInfo.DeviceNumber && pDisk.StorageDeviceInfo.PartitionNumber == storageDeviceInfo.PartitionNumber);
+            localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
          
          
-         // Get the PhysicalDiskInfo instance.
+         // StorageDeviceInfo contains the device number.
 
-         var pDiskInfo = null == storageDeviceInfo ? null : isDeviceNumber || isDevice
+         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, localDevicePath);
 
-            ? EnumeratePhysicalDisksCore(isElevated, null).SingleOrDefault(isDeviceNumber ? matchDeviceNumber : matchAll)
-
-            : isVolume
-               ? EnumeratePhysicalDisksCore(isElevated, null).SingleOrDefault(pDisk => pDisk.ContainsVolume(validatedDevicePath))
-
-               : isDrive
-                  ? EnumeratePhysicalDisksCore(isElevated, null).SingleOrDefault(pDisk => pDisk.ContainsVolume(validatedDevicePath))
-                  : null;
+         if (null == storageDeviceInfo)
+            return null;
 
 
-         if (null != pDiskInfo)
+         if (!isDeviceNumber)
+            deviceNumber = storageDeviceInfo.DeviceNumber;
+
+
+         Func<PhysicalDiskInfo, bool> matchVolume = pDiskInfo => pDiskInfo.ContainsVolume(localDevicePath);
+
+         Func<PhysicalDiskInfo, bool> matchDeviceNumber = pDiskInfo => pDiskInfo.StorageDeviceInfo.DeviceNumber == storageDeviceInfo.DeviceNumber;
+
+         Func<PhysicalDiskInfo, bool> matchDeviceAndPartitionNumber = pDiskInfo => pDiskInfo.StorageDeviceInfo.DeviceNumber == storageDeviceInfo.DeviceNumber && pDiskInfo.StorageDeviceInfo.PartitionNumber == storageDeviceInfo.PartitionNumber;
+
+         PhysicalDiskInfo physicalDiskInfo = null;
+
+
+         //var physicalDiskInfo = EnumeratePhysicalDisksCore(isElevated, deviceNumber)
+
+         //    .SingleOrDefault(isDrive || isVolume ? matchVolume : isDeviceNumber ? matchDeviceNumber : matchDeviceAndPartitionNumber);
+
+
+         var deze = EnumeratePhysicalDisksCore(isElevated, deviceNumber);
+
+
+         foreach (var pDiskInfo in EnumeratePhysicalDisksCore(isElevated, deviceNumber))
          {
-            pDiskInfo.StorageDeviceInfo = storageDeviceInfo;
+            if (isDrive || isVolume)
+            {
+               if (!pDiskInfo.ContainsVolume(localDevicePath))
+                  continue;
 
-            if (null == pDiskInfo.StoragePartitionInfo)
-               pDiskInfo.StoragePartitionInfo = GetStoragePartitionInfoCore(isElevated, deviceNumber, validatedDevicePath);
+               physicalDiskInfo = pDiskInfo;
+               break;
+            }
+
+
+            if (isDeviceNumber)
+            {
+               if (pDiskInfo.StorageDeviceInfo.DeviceNumber != storageDeviceInfo.DeviceNumber)
+                  continue;
+
+               physicalDiskInfo = pDiskInfo;
+               break;
+            }
+
+
+            if (pDiskInfo.StorageDeviceInfo.DeviceNumber != storageDeviceInfo.DeviceNumber && pDiskInfo.StorageDeviceInfo.PartitionNumber != storageDeviceInfo.PartitionNumber)
+               continue;
+
+            physicalDiskInfo = pDiskInfo;
+            break;
          }
 
 
-         return pDiskInfo;
+         if (null != physicalDiskInfo)
+         {
+            physicalDiskInfo.StorageDeviceInfo = storageDeviceInfo;
+
+            if (null == physicalDiskInfo.StoragePartitionInfo)
+               physicalDiskInfo.StoragePartitionInfo = GetStoragePartitionInfoCore(isElevated, -1, localDevicePath);
+         }
+
+
+         return physicalDiskInfo;
       }
    }
 }

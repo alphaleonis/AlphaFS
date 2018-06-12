@@ -91,9 +91,9 @@ namespace Alphaleonis.Win32.Device
       internal static StoragePartitionInfo GetStoragePartitionInfoCore(bool isElevated, int deviceNumber, string devicePath)
       {
          var isDeviceNumber = deviceNumber > -1;
+         bool isDevice;
          var isDrive = false;
          bool isVolume;
-         bool isDevice;
 
          var localDevicePath = isDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 

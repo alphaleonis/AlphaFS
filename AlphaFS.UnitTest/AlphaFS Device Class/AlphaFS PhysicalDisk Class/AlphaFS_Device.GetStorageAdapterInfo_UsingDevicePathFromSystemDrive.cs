@@ -56,18 +56,10 @@ namespace AlphaFS.UnitTest
 
 
          if (Alphaleonis.Win32.Security.ProcessContext.IsElevatedProcess)
-         {
             Assert.AreEqual(pDisk.StorageAdapterInfo, storageAdapterInfo);
 
-            Assert.AreNotEqual(Alphaleonis.Win32.Device.StorageBusType.Unknown, storageAdapterInfo.BusType);
-         }
-
          else
-         {
             Assert.AreNotEqual(pDisk.StorageAdapterInfo, storageAdapterInfo);
-
-            Assert.AreEqual(pDisk.StorageAdapterInfo.BusType, storageAdapterInfo.BusType);
-         }
       }
    }
 }

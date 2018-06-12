@@ -85,8 +85,6 @@ namespace Alphaleonis.Win32.Device
          if (isDevice)
             devicePath = deviceInfo.DevicePath;
 
-
-
          var storageDeviceInfo = Local.GetStorageDeviceInfoCore(isElevated, devicePath);
 
          if (null == storageDeviceInfo)

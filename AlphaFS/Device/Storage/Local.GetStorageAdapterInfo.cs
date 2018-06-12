@@ -70,10 +70,10 @@ namespace Alphaleonis.Win32.Device
          bool isVolume;
          bool isDevice;
 
-         var validatedDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
+         var localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
          if (isDrive)
-            validatedDevicePath = FileSystemHelper.GetLocalDevicePath(validatedDevicePath);
+            localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
 
 
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
@@ -83,9 +83,9 @@ namespace Alphaleonis.Win32.Device
          };
          
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(validatedDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
 
-         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, validatedDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
+         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
          {
             return null == safeBuffer ? null : new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
          }
