@@ -21,7 +21,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Security;
@@ -110,7 +109,7 @@ namespace Alphaleonis.Win32.Device
          if (isDrive)
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
          
-         
+
          // StorageDeviceInfo contains the device number.
 
          var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, localDevicePath);
@@ -118,26 +117,10 @@ namespace Alphaleonis.Win32.Device
          if (null == storageDeviceInfo)
             return null;
 
-
          if (!isDeviceNumber)
             deviceNumber = storageDeviceInfo.DeviceNumber;
 
-
-         Func<PhysicalDiskInfo, bool> matchVolume = pDiskInfo => pDiskInfo.ContainsVolume(localDevicePath);
-
-         Func<PhysicalDiskInfo, bool> matchDeviceNumber = pDiskInfo => pDiskInfo.StorageDeviceInfo.DeviceNumber == storageDeviceInfo.DeviceNumber;
-
-         Func<PhysicalDiskInfo, bool> matchDeviceAndPartitionNumber = pDiskInfo => pDiskInfo.StorageDeviceInfo.DeviceNumber == storageDeviceInfo.DeviceNumber && pDiskInfo.StorageDeviceInfo.PartitionNumber == storageDeviceInfo.PartitionNumber;
-
          PhysicalDiskInfo physicalDiskInfo = null;
-
-
-         //var physicalDiskInfo = EnumeratePhysicalDisksCore(isElevated, deviceNumber)
-
-         //    .SingleOrDefault(isDrive || isVolume ? matchVolume : isDeviceNumber ? matchDeviceNumber : matchDeviceAndPartitionNumber);
-
-
-         var deze = EnumeratePhysicalDisksCore(isElevated, deviceNumber);
 
 
          foreach (var pDiskInfo in EnumeratePhysicalDisksCore(isElevated, deviceNumber))
@@ -172,7 +155,8 @@ namespace Alphaleonis.Win32.Device
 
          if (null != physicalDiskInfo)
          {
-            physicalDiskInfo.StorageDeviceInfo = storageDeviceInfo;
+            if (!isDeviceNumber)
+               physicalDiskInfo.StorageDeviceInfo = storageDeviceInfo;
 
             if (null == physicalDiskInfo.StoragePartitionInfo)
                physicalDiskInfo.StoragePartitionInfo = GetStoragePartitionInfoCore(isElevated, -1, localDevicePath);

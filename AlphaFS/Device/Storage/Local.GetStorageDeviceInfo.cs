@@ -21,7 +21,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
@@ -100,17 +99,17 @@ namespace Alphaleonis.Win32.Device
 
          StorageDeviceInfo storageDeviceInfo;
 
+
          using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
+
+         using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath))
          {
-            using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath))
-
-               storageDeviceInfo = null != safeBuffer ? new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>()) : null;
-
+            storageDeviceInfo = null != safeBuffer ? new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>()) : null;
 
             if (null != storageDeviceInfo)
                SetStorageDeviceInfoData(isElevated, safeHandle, localDevicePath, storageDeviceInfo);
          }
-         
+
          return storageDeviceInfo;
       }
 

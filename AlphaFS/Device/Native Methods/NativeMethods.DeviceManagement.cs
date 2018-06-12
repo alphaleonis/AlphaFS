@@ -244,41 +244,41 @@ namespace Alphaleonis.Win32.Device
 
 
 
-      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SetupDiGetDevicePropertyW"), SuppressUnmanagedCodeSecurity]
-      [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool SetupDiGetDeviceProperty3(SafeHandle deviceInfoSet, ref SP_DEVINFO_DATA deviceInfoData, ref DEVPROPKEY propkey, [MarshalAs(UnmanagedType.U8)] ref ulong propertyDataType, Guid propertyBuffer, int propertyBufferSize, ref int requiredSize, uint flags);
+      //[SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      //[DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SetupDiGetDevicePropertyW"), SuppressUnmanagedCodeSecurity]
+      //[return: MarshalAs(UnmanagedType.Bool)]
+      //internal static extern bool SetupDiGetDeviceProperty3(SafeHandle deviceInfoSet, ref SP_DEVINFO_DATA deviceInfoData, ref DEVPROPKEY propkey, [MarshalAs(UnmanagedType.U8)] ref ulong propertyDataType, Guid propertyBuffer, int propertyBufferSize, ref int requiredSize, uint flags);
 
 
-      /// <summary>The SetupDiGetDeviceProperty function retrieves a device instance property.
-      /// <remarks>
-      ///   <para>Available in Windows Vista and later versions of Windows.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>
-      ///   <para>SetupDiGetDeviceProperty returns TRUE if it is successful.</para>
-      ///   <para>Otherwise, it returns FALSE, and the logged error can be retrieved by calling GetLastError.</para>
-      /// </returns>
-      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SetupDiGetDevicePropertyW"), SuppressUnmanagedCodeSecurity]
-      [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool SetupDiGetDeviceProperty2(SafeHandle deviceInfoSet, ref SP_DEVINFO_DATA deviceInfoData, ref DEVPROPKEY propkey, [MarshalAs(UnmanagedType.U8)] ref ulong propertyDataType, SafeGlobalMemoryBufferHandle propertyBuffer, int propertyBufferSize, ref int requiredSize, [MarshalAs(UnmanagedType.U4)] uint flags);
+      ///// <summary>The SetupDiGetDeviceProperty function retrieves a device instance property.
+      ///// <remarks>
+      /////   <para>Available in Windows Vista and later versions of Windows.</para>
+      ///// </remarks>
+      ///// </summary>
+      ///// <returns>
+      /////   <para>SetupDiGetDeviceProperty returns TRUE if it is successful.</para>
+      /////   <para>Otherwise, it returns FALSE, and the logged error can be retrieved by calling GetLastError.</para>
+      ///// </returns>
+      //[SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      //[DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SetupDiGetDevicePropertyW"), SuppressUnmanagedCodeSecurity]
+      //[return: MarshalAs(UnmanagedType.Bool)]
+      //internal static extern bool SetupDiGetDeviceProperty2(SafeHandle deviceInfoSet, ref SP_DEVINFO_DATA deviceInfoData, ref DEVPROPKEY propkey, [MarshalAs(UnmanagedType.U8)] ref ulong propertyDataType, SafeGlobalMemoryBufferHandle propertyBuffer, int propertyBufferSize, ref int requiredSize, [MarshalAs(UnmanagedType.U4)] uint flags);
 
 
-      /// <summary>The SetupDiGetDeviceRegistryProperty function retrieves a specified Plug and Play device property.
-      /// <remarks>
-      ///   <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
-      /// </remarks>
-      /// </summary>
-      /// <returns>
-      ///   <para>SetupDiGetDeviceRegistryProperty returns TRUE if the call was successful.</para>
-      ///   <para>Otherwise, it returns FALSE and the logged error can be retrieved by making a call to GetLastError.</para>
-      ///   <para>SetupDiGetDeviceRegistryProperty returns the ERROR_INVALID_DATA error code if the requested property does not exist for a device or if the property data is not valid.</para>
-      /// </returns>
-      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
-      [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool SetupDiGetDeviceRegistryProperty(SafeHandle deviceInfoSet, ref SP_DEVINFO_DATA deviceInfoData, SPDRP property, ref int propertyRegDataType, byte[] propertyBuffer, [MarshalAs(UnmanagedType.U4)] uint propertyBufferSize, ref int requiredSize);
+      ///// <summary>The SetupDiGetDeviceRegistryProperty function retrieves a specified Plug and Play device property.
+      ///// <remarks>
+      /////   <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      ///// </remarks>
+      ///// </summary>
+      ///// <returns>
+      /////   <para>SetupDiGetDeviceRegistryProperty returns TRUE if the call was successful.</para>
+      /////   <para>Otherwise, it returns FALSE and the logged error can be retrieved by making a call to GetLastError.</para>
+      /////   <para>SetupDiGetDeviceRegistryProperty returns the ERROR_INVALID_DATA error code if the requested property does not exist for a device or if the property data is not valid.</para>
+      ///// </returns>
+      //[SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      //[DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      //[return: MarshalAs(UnmanagedType.Bool)]
+      //internal static extern bool SetupDiGetDeviceRegistryProperty(SafeHandle deviceInfoSet, ref SP_DEVINFO_DATA deviceInfoData, SPDRP property, ref int propertyRegDataType, byte[] propertyBuffer, [MarshalAs(UnmanagedType.U4)] uint propertyBufferSize, ref int requiredSize);
 
 
       /// <summary>The SetupDiGetDeviceRegistryProperty function retrieves a specified Plug and Play device property.

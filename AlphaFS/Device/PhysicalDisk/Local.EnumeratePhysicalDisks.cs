@@ -19,10 +19,8 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -35,87 +33,75 @@ namespace Alphaleonis.Win32.Device
 {
    public static partial class Local
    {
-      /// <summary>[AlphaFS] Enumerates the physical disks on the Computer, populated with volume- and logical drive information.</summary>
+      /// <summary>[AlphaFS] Enumerates the physical disks on the Computer, populated with volume-/logical drive information.</summary>
       /// <returns>Returns an <see cref="IEnumerable{PhysicalDiskInfo}"/> collection that represents the physical disks on the Computer.</returns>
       [SecurityCritical]
       public static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisks()
       {
-         return EnumeratePhysicalDisksCore(ProcessContext.IsElevatedProcess, -1);
+         return EnumeratePhysicalDisksCore(ProcessContext.IsElevatedProcess);
       }
 
       
-      /// <summary>[AlphaFS] Enumerates the physical disks of type <paramref name="driveTypes"/> on the Computer, populated with volume- and logical drive information.</summary>
+      /// <summary>[AlphaFS] Enumerates the physical disks on the Computer, populated with volume-/logical drive information.</summary>
       /// <returns>Returns an <see cref="IEnumerable{PhysicalDiskInfo}"/> collection that represents the physical disks on the Computer.</returns>
       /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="deviceNumber">Retrieve a <see cref="PhysicalDiskInfo"/> instance by device number.</param>
       [SecurityCritical]
-      private static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisksCore(bool isElevated, int deviceNumber)
+      private static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisksCore(bool isElevated, int deviceNumber = -1)
       {
          var isDeviceNumber = deviceNumber > -1;
-
+         var driveTypes = new[] {DriveType.CDRom, DriveType.Fixed, DriveType.Removable};
          var physicalDisks = new PhysicalDiskInfo[1];
          var volumeGuids = new Collection<PhysicalDiskInfo>();
          var logicalDrives = new Collection<PhysicalDiskInfo>();
+         
+         
+         // Devices / Physical disk.
 
-         var driveTypes = new[] {DriveType.CDRom, DriveType.Fixed, DriveType.Removable};
-
-
-         if (isDeviceNumber)
+         foreach (var deviceInfo in EnumerateDevicesCore(null, DeviceGuid.Disk, false))
          {
-            // Devices / Physical disk.
-            foreach (var deviceInfo in EnumerateDevicesCore(null, DeviceGuid.Disk, false))
-            {
-               var storageDeviceInfo = GetStorageDeviceInfoCore(false, deviceInfo.DevicePath);
+            var storageDeviceInfo = GetStorageDeviceInfoCore(false, deviceInfo.DevicePath);
 
-               if (null == storageDeviceInfo || storageDeviceInfo.DeviceNumber != deviceNumber)
-                  continue;
+            if (null == storageDeviceInfo || isDeviceNumber && storageDeviceInfo.DeviceNumber != deviceNumber)
+               continue;
+            
+            physicalDisks[0] = PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, null, deviceInfo);
 
-
-               physicalDisks[0] = PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, null, deviceInfo);
-
-
-               // Volumes.
-               foreach (var volumeGuid in Volume.EnumerateVolumes())
-               {
-                  storageDeviceInfo = GetStorageDeviceInfoCore(false, volumeGuid);
-
-                  if (null == storageDeviceInfo || storageDeviceInfo.DeviceNumber != deviceNumber)
-                     continue;
-
-
-                  volumeGuids.Add(PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, volumeGuid, null));
-               }
-
-
-               // Logical drives.
-               foreach (var driveInfo in DriveInfo.GetDrives())
-               {
-                  if (!driveTypes.Contains(driveInfo.DriveType))
-                     continue;
-
-                  storageDeviceInfo = GetStorageDeviceInfoCore(false, driveInfo.Name);
-
-                  if (null == storageDeviceInfo || storageDeviceInfo.DeviceNumber != deviceNumber)
-                     continue;
-
-
-                  logicalDrives.Add(PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, driveInfo.Name, null));
-               }
-            }
+            // There can only be one.
+            break;
          }
 
-         else
+
+         if (null == physicalDisks[0])
+            yield break;
+
+
+         // Volumes.
+
+         foreach (var volumeGuid in Volume.EnumerateVolumes())
          {
-            physicalDisks = EnumerateDevicesCore(null, DeviceGuid.Disk, false).Select(deviceInfo => PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, null, deviceInfo)).Where(physicalDisk => null != physicalDisk).ToArray();
+            var storageDeviceInfo = GetStorageDeviceInfoCore(false, volumeGuid);
 
-            foreach (var volumeGuid in Volume.EnumerateVolumes().Select(volumeGuid => PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, volumeGuid, null)).Where(physicalDisk => null != physicalDisk))
-               volumeGuids.Add(volumeGuid);
+            if (null == storageDeviceInfo || isDeviceNumber && storageDeviceInfo.DeviceNumber != deviceNumber)
+               continue;
 
-            foreach (var driveName in DriveInfo.EnumerateLogicalDrivesCore(false, false)
-               .Select(driveName => new DriveInfo(driveName)).Where(driveInfo => {return driveTypes.Any(driveType => driveInfo.DriveType == driveType);})
-               .Select(driveInfo => PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, driveInfo.Name, null)).Where(physicalDisk => null != physicalDisk))
+            volumeGuids.Add(PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, volumeGuid, null));
+         }
 
-               logicalDrives.Add(driveName);
+
+         // Logical drives.
+
+         foreach (var driveInfo in DriveInfo.GetDrives())
+         {
+            if (!driveTypes.Contains(driveInfo.DriveType))
+               continue;
+
+            var storageDeviceInfo = GetStorageDeviceInfoCore(false, driveInfo.Name);
+
+            if (null == storageDeviceInfo || storageDeviceInfo.DeviceNumber != deviceNumber)
+               continue;
+
+            logicalDrives.Add(PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, driveInfo.Name, null));
          }
 
 

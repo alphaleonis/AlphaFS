@@ -56,10 +56,11 @@ namespace AlphaFS.UnitTest
             }
 
 
+            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]", ++driveCount, driveInfo.Name);
+
+
             var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(driveInfo.Name);
-
-
-            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, pDisk.StorageAdapterInfo.ToString());
+            
 
             UnitTestConstants.Dump(pDisk);
 

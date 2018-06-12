@@ -524,14 +524,14 @@
     <Compile Include="Filesystem\Structures, Enumerations\CopyMoveProgressCallbackReason.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\CopyMoveProgressResult.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\CopyOptions.cs" />
-    <Compile Include="Device\Native Other\DetectionType.cs" />
-    <Compile Include="Device\Native Other\DeviceGuid.cs" />
+    <Compile Include="Device\Structures, Enumerations\DetectionType.cs" />
+    <Compile Include="Device\Structures, Enumerations\DeviceGuid.cs" />
     <Compile Include="Device\Native Other\DEVICE_INFORMATION_FLAGS.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DirectoryEnumerationFilters.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DirectoryEnumerationOptions.cs" />
-    <Compile Include="Device\Native Other\DiskPartitionType.cs" />
-    <Compile Include="Device\Native Other\DosDeviceAttributes.cs" />
-    <Compile Include="Device\Native Other\EfiPartitionAttributes.cs" />
+    <Compile Include="Device\Structures, Enumerations\DiskPartitionType.cs" />
+    <Compile Include="Device\Structures, Enumerations\DosDeviceAttributes.cs" />
+    <Compile Include="Device\Structures, Enumerations\EfiPartitionAttributes.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\EncryptedFileRawMode.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\ErrorMode.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\ExtendedFileAttributes.cs" />
@@ -540,14 +540,14 @@
     <Compile Include="Filesystem\Structures, Enumerations\FinalPathFormats.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\GetFullPathOptions.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\MoveOptions.cs" />
-    <Compile Include="Device\Native Other\PartitionStyle.cs" />
-    <Compile Include="Device\Native Other\PartitionType..cs" />
+    <Compile Include="Device\Structures, Enumerations\PartitionStyle.cs" />
+    <Compile Include="Device\Structures, Enumerations\PartitionType..cs" />
     <Compile Include="Filesystem\Structures, Enumerations\PathFormat.cs" />
     <Compile Include="Filesystem\Native Other\ReparsePointTag.cs" />
     <Compile Include="Device\Native Other\SPDRP.cs" />
-    <Compile Include="Device\Native Other\StorageBusType.cs" />
-    <Compile Include="Device\Native Other\StorageDeviceType.cs" />
-    <Compile Include="Device\Native Other\StorageMediaType.cs" />
+    <Compile Include="Device\Structures, Enumerations\StorageBusType.cs" />
+    <Compile Include="Device\Structures, Enumerations\StorageDeviceType.cs" />
+    <Compile Include="Device\Structures, Enumerations\StorageMediaType.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\StreamAttribute.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\StreamId.cs" />
     <Compile Include="Filesystem\Native Other\SymbolicLinkTarget.cs" />
@@ -557,9 +557,9 @@
     <Compile Include="OperatingSystem\EnumProcessorArchitecture.cs" />
     <Compile Include="OperatingSystem\NativeMethods.OperatingSystem.cs" />
     <Compile Include="Safe Handles\SafeTokenHandle.cs" />
-    <Compile Include="Device\Native Other\SafeCmConnectMachineHandle.cs" />
+    <Compile Include="Safe Handles\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Safe Handles\SafeEncryptedFileRawHandle.cs" />
-    <Compile Include="Device\Native Other\SafeSetupDiClassDevsExHandle.cs" />
+    <Compile Include="Safe Handles\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />
     <Compile Include="Filesystem\CopyMoveResult.cs" />
     <Compile Include="Filesystem\ChangeErrorMode.cs" />
@@ -743,7 +743,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

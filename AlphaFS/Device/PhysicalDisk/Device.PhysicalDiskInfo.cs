@@ -21,7 +21,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
 
@@ -47,7 +46,10 @@ namespace Alphaleonis.Win32.Device
          if (deviceNumber < 0)
             throw new ArgumentOutOfRangeException("deviceNumber");
 
-         Utils.CopyTo(Local.GetPhysicalDiskInfoCore(Security.ProcessContext.IsElevatedProcess, deviceNumber, null), this);
+         var pDiskInfo = Local.GetPhysicalDiskInfoCore(Security.ProcessContext.IsElevatedProcess, deviceNumber, null);
+
+         if (null != pDiskInfo)
+            Utils.CopyTo(pDiskInfo, this);
       }
 
       #endregion // Constructors

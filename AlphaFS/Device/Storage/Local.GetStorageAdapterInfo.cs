@@ -20,12 +20,10 @@
  */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Security;
-using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {
