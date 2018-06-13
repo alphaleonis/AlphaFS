@@ -21,6 +21,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Security;
@@ -112,7 +113,7 @@ namespace Alphaleonis.Win32.Device
 
          // StorageDeviceInfo contains the device number.
 
-         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, localDevicePath);
+         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, localDevicePath);
 
          if (null == storageDeviceInfo)
             return null;
@@ -120,35 +121,8 @@ namespace Alphaleonis.Win32.Device
          if (!isDeviceNumber)
             deviceNumber = storageDeviceInfo.DeviceNumber;
 
-         PhysicalDiskInfo physicalDiskInfo = null;
 
-
-         foreach (var pDiskInfo in EnumeratePhysicalDisksCore(isElevated, deviceNumber))
-         {
-            if (isDrive || isVolume)
-            {
-               physicalDiskInfo = pDiskInfo;
-               break;
-            }
-
-
-            if (isDeviceNumber)
-            {
-               if (pDiskInfo.StorageDeviceInfo.DeviceNumber != storageDeviceInfo.DeviceNumber)
-                  continue;
-
-               physicalDiskInfo = pDiskInfo;
-               break;
-            }
-
-
-            if (pDiskInfo.StorageDeviceInfo.DeviceNumber != storageDeviceInfo.DeviceNumber && pDiskInfo.StorageDeviceInfo.PartitionNumber != storageDeviceInfo.PartitionNumber)
-               continue;
-
-            physicalDiskInfo = pDiskInfo;
-            break;
-         }
-
+         var physicalDiskInfo = EnumeratePhysicalDisksCore(isElevated, deviceNumber).FirstOrDefault();
 
          if (null != physicalDiskInfo)
          {

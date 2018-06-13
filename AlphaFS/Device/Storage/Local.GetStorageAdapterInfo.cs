@@ -21,9 +21,7 @@
 
 using System;
 using System.Security;
-using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
-using Alphaleonis.Win32.Security;
 
 namespace Alphaleonis.Win32.Device
 {
@@ -44,7 +42,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static StorageAdapterInfo GetStorageAdapterInfo(string devicePath)
       {
-         return GetStorageAdapterInfo(ProcessContext.IsElevatedProcess, devicePath);
+         return GetStorageAdapterInfoCore(devicePath);
       }
 
 
@@ -54,15 +52,15 @@ namespace Alphaleonis.Win32.Device
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="devicePath">
-      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
-      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
+      /// <param name="deviceInfo">An initialized <see cref="DeviceInfo"/> instance.</param>
       [SecurityCritical]
-      public static StorageAdapterInfo GetStorageAdapterInfo(bool isElevated, string devicePath)
+      internal static StorageAdapterInfo GetStorageAdapterInfoCore(string devicePath, DeviceInfo deviceInfo = null)
       {
          bool isDrive;
          bool isVolume;
@@ -79,13 +77,18 @@ namespace Alphaleonis.Win32.Device
             PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageAdapterProperty,
             QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
          };
-         
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
+
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, NativeMethods.FILE_ANY_ACCESS))
 
          using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
          {
-            return null == safeBuffer ? null : new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
+            var storageAdapterInfo = null == safeBuffer ? null : new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
+
+            if (null != deviceInfo && null != storageAdapterInfo)
+               storageAdapterInfo.BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription;
+
+            return storageAdapterInfo;
          }
       }
    }

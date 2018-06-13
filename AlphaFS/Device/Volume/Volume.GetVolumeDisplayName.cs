@@ -28,21 +28,21 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Volume
    {
-      /// <summary>[AlphaFS] Gets the shortest display name for the specified <paramref name="volumeName"/>.</summary>
+      /// <summary>[AlphaFS] Gets the shortest display name for the specified <paramref name="volumeGuid"/>.</summary>
       /// <remarks>This method basically returns the shortest string returned by <see cref="EnumerateVolumePathNames"/></remarks>
-      /// <param name="volumeName">A volume <see cref="Guid"/> path: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></param>
+      /// <param name="volumeGuid">A volume <see cref="Guid"/> path: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></param>
       /// <returns>
       ///   The shortest display name for the specified volume found, or <c>null</c> if no display names were found.
       /// </returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
-      public static string GetVolumeDisplayName(string volumeName)
+      public static string GetVolumeDisplayName(string volumeGuid)
       {
          string[] smallestMountPoint = {new string(Path.WildcardStarMatchAllChar, NativeMethods.MaxPathUnicode)};
 
          try
          {
-            foreach (var mountPoint in EnumerateVolumePathNames(volumeName).Where(mPoint => !Utils.IsNullOrWhiteSpace(mPoint) && mPoint.Length < smallestMountPoint[0].Length))
+            foreach (var mountPoint in EnumerateVolumePathNames(volumeGuid).Where(mPoint => !Utils.IsNullOrWhiteSpace(mPoint) && mPoint.Length < smallestMountPoint[0].Length))
 
                smallestMountPoint[0] = mountPoint;
          }

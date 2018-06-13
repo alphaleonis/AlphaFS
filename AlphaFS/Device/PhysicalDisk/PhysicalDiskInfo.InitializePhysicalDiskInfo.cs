@@ -42,10 +42,11 @@ namespace Alphaleonis.Win32.Device
       ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
       ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
-      /// <param name="deviceInfo">A <see cref="DeviceInfo"/> instance.</param>
+      /// <param name="storageDeviceInfo">An initialized <see cref="StorageDeviceInfo"/> instance.</param>
+      /// <param name="deviceInfo">An initialized <see cref="DeviceInfo"/> instance.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object is disposed.")]
       [SecurityCritical]
-      internal static PhysicalDiskInfo InitializePhysicalDiskInfo(bool isElevated, string devicePath, DeviceInfo deviceInfo)
+      internal static PhysicalDiskInfo InitializePhysicalDiskInfo(bool isElevated, string devicePath, StorageDeviceInfo storageDeviceInfo, DeviceInfo deviceInfo)
       {
          if (null == devicePath && null == deviceInfo)
             return null;
@@ -55,13 +56,7 @@ namespace Alphaleonis.Win32.Device
          if (isDevice)
             devicePath = deviceInfo.DevicePath;
 
-         var storageDeviceInfo = Local.GetStorageDeviceInfoCore(isElevated, devicePath);
-
-         if (null == storageDeviceInfo)
-            return null;
-
-
-         var pDiskInfo = new PhysicalDiskInfo
+         return new PhysicalDiskInfo
          {
             DevicePath = devicePath,
 
@@ -72,19 +67,12 @@ namespace Alphaleonis.Win32.Device
             PhysicalDeviceObjectName = isDevice ? deviceInfo.PhysicalDeviceObjectName : null,
 
 
-            StorageAdapterInfo = Local.GetStorageAdapterInfo(isElevated, devicePath),
+            StorageAdapterInfo = Local.GetStorageAdapterInfoCore(devicePath, deviceInfo),
 
-            StorageDeviceInfo = storageDeviceInfo,
+            StorageDeviceInfo = null != storageDeviceInfo ? storageDeviceInfo : Local.GetStorageDeviceInfoCore(isElevated, -1, devicePath),
 
             StoragePartitionInfo = Local.GetStoragePartitionInfo(isElevated, devicePath)
          };
-
-
-         if (isDevice)
-            pDiskInfo.StorageAdapterInfo.BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription;
-
-
-         return pDiskInfo;
       }
    }
 }

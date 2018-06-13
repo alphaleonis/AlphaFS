@@ -47,6 +47,25 @@ namespace AlphaFS.UnitTest
 
 
          UnitTestConstants.Dump(storagePartitionInfo);
+
+
+         if (null != storagePartitionInfo)
+         {
+            // Show all partition information.
+
+            if (null != storagePartitionInfo.GptPartitionInfo)
+            {
+               foreach (var partition in storagePartitionInfo.GptPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
+            }
+
+
+            if (null != storagePartitionInfo.MbrPartitionInfo)
+            {
+               foreach (var partition in storagePartitionInfo.MbrPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
+            }
+         }
       }
    }
 }

@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -28,8 +29,8 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Volume
    {
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of volumes on the Computer.</summary>
-      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of volume names on the Computer.</returns>
+      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of volume <see cref="Guid"/>s on the Computer.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of volume <see cref="Guid"/>s on the Computer.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumes()
       {

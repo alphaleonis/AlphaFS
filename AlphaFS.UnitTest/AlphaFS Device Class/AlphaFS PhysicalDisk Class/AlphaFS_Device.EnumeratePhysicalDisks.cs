@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_EnumeratePhysicalDisks_Local_Success()
+      public void AlphaFS_Device_EnumeratePhysicalDisks_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -49,7 +49,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var pDisk in pDrives)
          {
-            Console.WriteLine("#{0:000}\tPhysical Disk: [{1}]\t\t{2}\t\t{3}", ++pDriveCount, pDisk.StorageDeviceInfo.DeviceNumber, pDisk.StorageAdapterInfo.ToString(), pDisk.StorageDeviceInfo.ToString());
+            Console.WriteLine("#{0:000}\tPhysical Disk: [{1}]", ++pDriveCount, pDisk.StorageDeviceInfo.DeviceNumber);
 
             UnitTestConstants.Dump(pDisk);
 

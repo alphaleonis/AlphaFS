@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath)
       {
-         return GetStorageDeviceInfoCore(ProcessContext.IsElevatedProcess, devicePath);
+         return GetStorageDeviceInfoCore(ProcessContext.IsElevatedProcess, -1, devicePath);
       }
 
 
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static StorageDeviceInfo GetStorageDeviceInfo(bool isElevated, string devicePath)
       {
-         return GetStorageDeviceInfoCore(isElevated, devicePath);
+         return GetStorageDeviceInfoCore(isElevated, -1, devicePath);
       }
 
 
@@ -78,6 +78,7 @@ namespace Alphaleonis.Win32.Device
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
       /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
+      /// <param name="deviceNumber">Retrieve a <see cref="StorageDeviceInfo"/> instance by device number.</param>
       /// <param name="devicePath">
       ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
@@ -85,8 +86,9 @@ namespace Alphaleonis.Win32.Device
       ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
       [SecurityCritical]
-      internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, string devicePath)
+      internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, int deviceNumber, string devicePath)
       {
+         var isDeviceNumber = deviceNumber > -1;
          bool isDrive;
          bool isVolume;
          bool isDevice;
@@ -106,8 +108,12 @@ namespace Alphaleonis.Win32.Device
             storageDeviceInfo = null != safeBuffer ? new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>()) : null;
 
             if (null != storageDeviceInfo)
+            {
+               if (isDeviceNumber && storageDeviceInfo.DeviceNumber != deviceNumber)
+                  return null;
 
                SetStorageDeviceInfoData(isElevated, isDevice, safeHandle, localDevicePath, storageDeviceInfo);
+            }
          }
 
 

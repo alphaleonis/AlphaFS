@@ -68,7 +68,7 @@ namespace AlphaFS.UnitTest
 
             Assert.IsNotNull(storagePartitionInfo);
 
-            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storagePartitionInfo.ToString());
+            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]", ++driveCount, driveInfo.Name);
 
             UnitTestConstants.Dump(storagePartitionInfo);
 
