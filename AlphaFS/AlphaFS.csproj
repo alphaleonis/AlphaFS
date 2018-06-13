@@ -198,8 +198,8 @@
     </Compile>
     <Compile Include="Device\Device.Local.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.cs" />
-    <Compile Include="Device\PhysicalDisk\Device.PhysicalDiskInfo_Methods.cs" />
-    <Compile Include="Device\PhysicalDisk\Device.PhysicalDiskInfo_Properties.cs" />
+    <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.ContainsVolume.cs" />
+    <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo_Properties.cs" />
     <Compile Include="Device\Storage\Local.GetStoragePartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageMbrPartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageGptPartitionInfo.cs" />
@@ -218,7 +218,7 @@
     <Compile Include="Device\PhysicalDisk\Local.EnumeratePhysicalDisks.cs" />
     <Compile Include="Device\Local.EnumerateDevices.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.Compression.cs" />
-    <Compile Include="Device\PhysicalDisk\Device.PhysicalDiskInfo.cs" />
+    <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.GetFreeDriveLetter.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.GetDeviceInfo.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.EnumerateLogicalDrives.cs" />

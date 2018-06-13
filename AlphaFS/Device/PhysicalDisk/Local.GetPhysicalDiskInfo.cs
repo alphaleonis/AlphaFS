@@ -127,9 +127,6 @@ namespace Alphaleonis.Win32.Device
          {
             if (isDrive || isVolume)
             {
-               if (!pDiskInfo.ContainsVolume(localDevicePath))
-                  continue;
-
                physicalDiskInfo = pDiskInfo;
                break;
             }

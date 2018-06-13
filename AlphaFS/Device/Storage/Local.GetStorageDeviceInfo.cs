@@ -96,9 +96,8 @@ namespace Alphaleonis.Win32.Device
          if (isDrive)
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
 
-
          StorageDeviceInfo storageDeviceInfo;
-
+         
 
          using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
 
@@ -109,6 +108,7 @@ namespace Alphaleonis.Win32.Device
             if (null != storageDeviceInfo)
                SetStorageDeviceInfoData(isElevated, safeHandle, localDevicePath, storageDeviceInfo);
          }
+
 
          return storageDeviceInfo;
       }

@@ -27,11 +27,11 @@ namespace Alphaleonis.Win32.Device
 {
    public sealed partial class PhysicalDiskInfo
    {
-      /// <summary>Checks if the logical drive/volume is located on the physical disk.
+      /// <summary>Checks if the volume/logical drive is located on the physical disk.
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
       /// </summary>
-      /// <returns><c>true</c> if the logical drive/volume is located on the physical disk; otherwise, <c>false</c>.</returns>
+      /// <returns><c>true</c> if the volume/logical drive is located on the physical disk; otherwise, <c>false</c>.</returns>
       /// <param name="devicePath">
       /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>

@@ -251,12 +251,11 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>Retrieves a list of drive letters and mounted folder paths for the specified volume.</summary>
-      /// <remarks>Minimum supported client: Windows XP.</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003.</remarks>
-      /// <returns>
-      ///   If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. To get extended error
-      ///   information, call GetLastError.
-      /// </returns>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only].
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only].
+      /// </remarks>
+      /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetVolumePathNamesForVolumeNameW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]

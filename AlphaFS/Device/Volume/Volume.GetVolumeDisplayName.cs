@@ -38,12 +38,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetVolumeDisplayName(string volumeName)
       {
-         string[] smallestMountPoint = { new string(Path.WildcardStarMatchAllChar, NativeMethods.MaxPathUnicode) };
+         string[] smallestMountPoint = {new string(Path.WildcardStarMatchAllChar, NativeMethods.MaxPathUnicode)};
 
          try
          {
-            foreach (var m in EnumerateVolumePathNames(volumeName).Where(m => !Utils.IsNullOrWhiteSpace(m) && m.Length < smallestMountPoint[0].Length))
-               smallestMountPoint[0] = m;
+            foreach (var mountPoint in EnumerateVolumePathNames(volumeName).Where(mPoint => !Utils.IsNullOrWhiteSpace(mPoint) && mPoint.Length < smallestMountPoint[0].Length))
+
+               smallestMountPoint[0] = mountPoint;
          }
          catch
          {

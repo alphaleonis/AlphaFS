@@ -270,7 +270,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Retrieves the names of the logical drives on the Computer in the form "drive letter:\".</summary>
+      /// <summary>Retrieves the drive names of all logical drives on a Computer.</summary>
       /// <returns>Returns an <see cref="Array"/>of <see cref="DriveInfo"/> instances on the Computer.</returns>
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
@@ -290,7 +290,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
 
-      /// <summary>[AlphaFS] Retrieves the names of the logical drives on the Computer in the form "drive letter:\".</summary>
+      /// <summary>[AlphaFS] Retrieves the drive names of all logical drives on a Computer.</summary>
       /// <returns>Returns an <see cref="Array"/>of <see cref="DriveInfo"/> instances on the Computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>

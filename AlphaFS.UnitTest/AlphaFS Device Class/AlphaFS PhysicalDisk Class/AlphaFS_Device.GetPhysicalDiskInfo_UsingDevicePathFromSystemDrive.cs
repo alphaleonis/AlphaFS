@@ -56,9 +56,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
 
 
-         Assert.IsNull(pDisk.StoragePartitionInfo);
-
-
          Assert.IsNotNull(pDisk);
 
          Assert.IsNotNull(pDisk.LogicalDrives);
@@ -68,6 +65,23 @@ namespace AlphaFS.UnitTest
          Assert.AreEqual(pDisk.LogicalDrives.Contains(sourceDrive, StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(sourceDrive));
 
          Assert.AreEqual(pDisk.VolumeGuids.Contains(sourceVolume, StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(sourceVolume));
+
+
+         // Show all partition information.
+
+         if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.GptPartitionInfo)
+         {
+            foreach (var partition in pDisk.StoragePartitionInfo.GptPartitionInfo)
+               UnitTestConstants.Dump(partition, true);
+         }
+
+         if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.MbrPartitionInfo)
+         {
+            foreach (var partition in pDisk.StoragePartitionInfo.MbrPartitionInfo)
+               UnitTestConstants.Dump(partition, true);
+         }
+
+         Console.WriteLine();
       }
    }
 }

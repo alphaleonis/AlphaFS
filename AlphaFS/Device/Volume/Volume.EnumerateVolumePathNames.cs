@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Volume
    {
       /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{String}"/> collection of drive letters and mounted folder paths for the specified volume.</summary>
-      /// <returns>RReturns an <see cref="IEnumerable{String}"/> collection of path names for the specified volume.</returns>
+      /// <returns>Returns an <see cref="IEnumerable{String}"/> collection of path names for the specified volume.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <param name="volumeGuid">A volume <see cref="Guid"/> path: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></param>
