@@ -111,11 +111,11 @@ namespace Alphaleonis.Win32.Device
       public string SerialNumber { get; internal set; }
 
 
-      /// <summary>The total size of the physical disk. If the session is not elevated <c>0</c> is returned.</summary>
+      /// <summary>The total size of the physical disk or <c>0</c> if the process is not elevated.</summary>
       public long TotalSize { get; internal set; }
 
 
-      /// <summary>The total size of the physical disk, formatted as a unit size. If the session is not elevated <c>0</c> is returned.</summary>
+      /// <summary>The <see cref="TotalSize"/> of the physical disk, formatted as a unit size.</summary>
       public string TotalSizeUnitSize
       {
          get { return Utils.UnitSizeToText(TotalSize); }

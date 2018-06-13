@@ -37,14 +37,14 @@ namespace AlphaFS.UnitTest
          var deviceCount = 0;
 
          var sourceDrive = UnitTestConstants.SysDrive;
+
          var devicePath = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceDrive).DevicePath;
 
+         Console.WriteLine("#{0:000}\tInput Device Path: [{1}]", ++deviceCount, devicePath);
+
+
          var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(devicePath);
-
-
-         Console.WriteLine("#{0:000}\tInput Device Path: [{1}]\t\t{2}", ++deviceCount, devicePath, pDisk.StorageDeviceInfo.ToString());
-
-
+         
          var storageDeviceInfo = Alphaleonis.Win32.Device.Local.GetStorageDeviceInfo(devicePath);
 
          

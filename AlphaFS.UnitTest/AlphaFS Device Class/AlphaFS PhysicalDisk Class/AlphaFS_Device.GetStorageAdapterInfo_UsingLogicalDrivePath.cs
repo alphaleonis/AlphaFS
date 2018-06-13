@@ -34,7 +34,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
          
-         var gotDisk = false;
+         var gotAdapter = false;
          var driveCount = 0;
          
 
@@ -55,24 +55,23 @@ namespace AlphaFS.UnitTest
                continue;
             }
 
+            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]", ++driveCount, driveInfo.Name);
+
 
             var storageAdapterInfo = Alphaleonis.Win32.Device.Local.GetStorageAdapterInfo(driveInfo.Name);
-
-            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]\t\t{2}", ++driveCount, driveInfo.Name, storageAdapterInfo.ToString());
+            
 
             UnitTestConstants.Dump(storageAdapterInfo);
-
-
+            
             Assert.IsNotNull(storageAdapterInfo);
 
-            gotDisk = true;
-
-
+            gotAdapter = true;
+            
             Console.WriteLine();
          }
 
 
-         Assert.IsTrue(gotDisk);
+         Assert.IsTrue(gotAdapter);
       }
    }
 }

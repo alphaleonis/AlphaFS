@@ -17,7 +17,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pvContext">[out] The address of a context block that must be presented in subsequent calls to
       /// ReadEncryptedFileRaw, WriteEncryptedFileRaw, or CloseEncryptedFileRaw.</param>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("Advapi32.dll", SetLastError = false, CharSet = CharSet.Unicode, EntryPoint = "OpenEncryptedFileRawW"), SuppressUnmanagedCodeSecurity]
+      [DllImport("advapi32.dll", SetLastError = false, CharSet = CharSet.Unicode, EntryPoint = "OpenEncryptedFileRawW"), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint OpenEncryptedFileRaw([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, EncryptedFileRawMode ulFlags, out SafeEncryptedFileRawHandle pvContext);
 
@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       /// <param name="pvContext">A pointer to a system-defined context block. The OpenEncryptedFileRaw function returns the context block.</param>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("Advapi32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [DllImport("advapi32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       internal static extern void CloseEncryptedFileRaw(IntPtr pvContext);
 
 
@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Minimum supported client: Windows XP Professional [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule"), SuppressUnmanagedCodeSecurity]
-      [DllImport("Advapi32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [DllImport("advapi32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint ReadEncryptedFileRaw([MarshalAs(UnmanagedType.FunctionPtr)] EncryptedFileRawExportCallback pfExportCallback, IntPtr pvCallbackContext, SafeEncryptedFileRawHandle pvContext);
 
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Minimum supported client: Windows XP Professional [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("Advapi32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [DllImport("advapi32.dll", SetLastError = false, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint WriteEncryptedFileRaw([MarshalAs(UnmanagedType.FunctionPtr)] EncryptedFileRawImportCallback pfExportCallback, IntPtr pvCallbackContext, SafeEncryptedFileRawHandle pvContext);
 

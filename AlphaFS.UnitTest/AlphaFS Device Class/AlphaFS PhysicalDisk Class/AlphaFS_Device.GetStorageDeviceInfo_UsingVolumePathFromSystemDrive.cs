@@ -40,12 +40,11 @@ namespace AlphaFS.UnitTest
 
          var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive);
 
+         Console.WriteLine("#{0:000}\tInput Volume Path: [{1}]", ++volumeCount, sourceVolume);
+
+
          var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceVolume);
-
-
-         Console.WriteLine("#{0:000}\tInput Volume Path: [{1}]\t\t{2}", ++volumeCount, sourceVolume, pDisk.StorageDeviceInfo.ToString());
-
-
+         
          var storageDeviceInfo = Alphaleonis.Win32.Device.Local.GetStorageDeviceInfo(sourceVolume);
 
          

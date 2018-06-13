@@ -198,6 +198,7 @@
     </Compile>
     <Compile Include="Device\Device.Local.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.cs" />
+    <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.InitializePhysicalDiskInfo.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.ContainsVolume.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo_Properties.cs" />
     <Compile Include="Device\Storage\Local.GetStoragePartitionInfo.cs" />
@@ -334,7 +335,7 @@
     <Compile Include="Filesystem\Native Other\COPY_FILE_FLAGS.cs" />
     <Compile Include="Device\Native Other\DEVPROPKEY.cs" />
     <Compile Include="Device\Native Other\DiskInt13Union.cs" />
-    <Compile Include="Device\Native Methods\NativeMethods.DiskPartitionType.cs" />
+    <Compile Include="Device\Native Other\NativeMethods.DiskPartitionType.cs" />
     <Compile Include="Device\Native Other\DISK_DETECTION_INFO.cs" />
     <Compile Include="Device\Native Other\DISK_EXTENT.cs" />
     <Compile Include="Device\Native Other\DISK_EX_INT13_INFO.cs" />
@@ -345,7 +346,7 @@
     <Compile Include="Device\Native Other\DRIVE_LAYOUT_INFORMATION_EX.cs" />
     <Compile Include="Device\Native Other\DRIVE_LAYOUT_INFORMATION_GPT.cs" />
     <Compile Include="Device\Native Other\DRIVE_LAYOUT_INFORMATION_MBR.cs" />
-    <Compile Include="Device\Native Methods\NativeMethods.EfiPartitionAttributes.cs" />
+    <Compile Include="Device\Native Other\NativeMethods.EfiPartitionAttributes.cs" />
     <Compile Include="Filesystem\Native Other\FILETIME.cs" />
     <Compile Include="Filesystem\Native Other\FILE_BASIC_INFO.cs" />
     <Compile Include="Filesystem\Native Other\FILE_ID_BOTH_DIR_INFO.cs" />

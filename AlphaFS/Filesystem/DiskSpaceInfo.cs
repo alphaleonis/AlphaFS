@@ -88,8 +88,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          else
          {
-            _initGetSpaceInfo = (bool)!spaceInfoType;
-            _initGetClusterInfo = (bool)spaceInfoType;
+            _initGetSpaceInfo = (bool) !spaceInfoType;
+            _initGetClusterInfo = (bool) spaceInfoType;
          }
 
          _continueOnAccessError = continueOnException;
