@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Device
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
       /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
-      /// <param name="deviceNumber">Retrieve a <see cref="StorageDeviceInfo"/> instance by device number.</param>
+      /// <param name="deviceNumber">A number that indicates a physical disk on the Computer.</param>
       /// <param name="devicePath">
       ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
@@ -89,13 +89,11 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, int deviceNumber, string devicePath)
       {
-         var isDeviceNumber = deviceNumber > -1;
-         var isDrive = false;
+         bool isDrive;
          bool isVolume;
-         var isDevice = false;
+         bool isDevice;
 
-         var localDevicePath = isDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
-         //var localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
+         var localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
          if (isDrive)
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
@@ -111,11 +109,8 @@ namespace Alphaleonis.Win32.Device
 
             if (null != storageDeviceInfo)
             {
-               // Get by deviceNumber.
-
-               if (isDeviceNumber && deviceNumber != storageDeviceInfo.DeviceNumber)
+               if (deviceNumber > -1 && deviceNumber != storageDeviceInfo.DeviceNumber)
                   return null;
-
 
                SetStorageDeviceInfoData(isElevated, isDevice, safeHandle, localDevicePath, storageDeviceInfo);
             }

@@ -21,7 +21,6 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Security;
@@ -51,13 +50,35 @@ namespace Alphaleonis.Win32.Device
 
          foreach (var deviceInfo in EnumerateDevicesCore(null, DeviceGuid.Disk, false))
          {
-            var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, deviceInfo.DevicePath);
+            var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, deviceNumber, deviceInfo.DevicePath);
 
-            if (null == storageDeviceInfo || isDeviceNumber && deviceNumber != storageDeviceInfo.DeviceNumber)
+            if (null == storageDeviceInfo)
                continue;
-            
 
-            var pDiskInfo = PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, null, storageDeviceInfo, deviceInfo);
+
+            var devicePath = deviceInfo.DevicePath;
+
+            var pDiskInfo = new PhysicalDiskInfo
+            {
+               DevicePath = devicePath,
+
+               DeviceDescription = deviceInfo.DeviceDescription,
+
+               Name = deviceInfo.FriendlyName,
+
+               PhysicalDeviceObjectName = deviceInfo.PhysicalDeviceObjectName,
+
+
+               StorageAdapterInfo = GetStorageAdapterInfoCore(devicePath, deviceInfo),
+
+               StorageDeviceInfo = storageDeviceInfo,
+
+               StoragePartitionInfo = GetStoragePartitionInfoCore(isElevated, devicePath)
+            };
+
+
+            //if (pDiskInfo.StorageDeviceInfo.TotalSize == 0)
+            //   pDiskInfo.StorageDeviceInfo.TotalSize = new DiskSpaceInfo(devicePath, false, true, true).TotalNumberOfBytes;
 
             yield return PopulatePhysicalDisk(isElevated, pDiskInfo);
 
@@ -77,11 +98,11 @@ namespace Alphaleonis.Win32.Device
          var deviceNumber = newPDiskInfo.StorageDeviceInfo.DeviceNumber;
 
 
-         foreach (var volumeGuid in Volume.EnumerateVolumes().ToArray())
+         foreach (var volumeGuid in Volume.EnumerateVolumes())
          {
-            var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, volumeGuid);
+            var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, deviceNumber, volumeGuid);
 
-            if (null == storageDeviceInfo || deviceNumber != storageDeviceInfo.DeviceNumber)
+            if (null == storageDeviceInfo)
                continue;
 
 

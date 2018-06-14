@@ -198,7 +198,6 @@
     </Compile>
     <Compile Include="Device\Device.Local.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.cs" />
-    <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.InitializePhysicalDiskInfo.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.ContainsVolume.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo_Properties.cs" />
     <Compile Include="Device\Storage\Local.GetStoragePartitionInfo.cs" />
@@ -744,7 +743,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Device
 
             StorageDeviceInfo = null != storageDeviceInfo ? storageDeviceInfo : Local.GetStorageDeviceInfoCore(isElevated, -1, devicePath),
 
-            StoragePartitionInfo = Local.GetStoragePartitionInfo(isElevated, devicePath)
+            StoragePartitionInfo = Local.GetStoragePartitionInfoCore(isElevated, devicePath)
          };
       }
    }

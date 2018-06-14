@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Device
 
          // The StorageDeviceInfo is always needed because it contains the device- and partition number.
 
-         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, deviceNumber, localDevicePath);
+         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, localDevicePath);
 
          if (null == storageDeviceInfo)
             return null;
@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Device
                physicalDiskInfo.StorageDeviceInfo = storageDeviceInfo;
 
             if (null == physicalDiskInfo.StoragePartitionInfo)
-               physicalDiskInfo.StoragePartitionInfo = GetStoragePartitionInfoCore(isElevated, -1, localDevicePath);
+               physicalDiskInfo.StoragePartitionInfo = GetStoragePartitionInfoCore(isElevated, localDevicePath);
          }
 
 
