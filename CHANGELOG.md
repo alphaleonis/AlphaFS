@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 2.2.3  (2018-XX-XX)
+Version 2.2.3  (2018-06-14)
 -------------
 
 ### Bugs Fixed
@@ -9,10 +9,6 @@ Version 2.2.3  (2018-XX-XX)
 - Issue #456: Methods `Directory/File.Copy` throw `DeviceNotReadyException` when using `GLOBALROOT` source path.  (Thx VladimirK69)
 - Issue #457: `FileInfo.Exists` is `true` when instance is created from a directory path.
 - Issue #458: `Directory.Copy` sometimes does not create the file's parent folder, throwing `System.IO.DirectoryNotFoundException`.
-
-### Improvements
-
-- Added unit tests for GLOBALROOT source path so that it can never happen again!
 
 
 Version 2.2.2  (2018-06-05)

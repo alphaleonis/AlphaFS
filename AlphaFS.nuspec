@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
    <metadata>
       <id>AlphaFS</id>
-      <version>2.2.2</version>
+      <version>2.2.3</version>
       <title>AlphaFS</title>
       <authors>Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</authors>
       <owners>Peter Palotas</owners>
@@ -11,7 +11,13 @@
       <iconUrl>http://alphaleonis.com/img/AlphaFS-icon.png</iconUrl>
       <requireLicenseAcceptance>true</requireLicenseAcceptance>
       <description>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes. Features highlights: creating hardlinks, accessing hidden volumes, enumeration of volumes, transactional file operations and much more.</description>
-      <releaseNotes>Many bugfixes and new features.</releaseNotes>
+      <releaseNotes>
+         ### Bugs Fixed
+
+         - Issue #456: Methods `Directory/File.Copy` throw `DeviceNotReadyException` when using `GLOBALROOT` source path.  (Thx VladimirK69)
+         - Issue #457: `FileInfo.Exists` is `true` when instance is created from a directory path.
+         - Issue #458: `Directory.Copy` sometimes does not create the file's parent folder, throwing `System.IO.DirectoryNotFoundException`.
+      </releaseNotes>
       <copyright>Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</copyright>
       <tags>Win32, Filesystem</tags>
       <frameworkAssemblies>
