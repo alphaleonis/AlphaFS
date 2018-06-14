@@ -27,7 +27,7 @@ using System.Resources;
 [assembly: AssemblyTrademark("")]
 
 [assembly: AssemblyVersion("2.2.0.0")]
-[assembly: AssemblyFileVersion("2.2.2.0")]
+[assembly: AssemblyFileVersion("2.2.3.0")]
 [assembly: AssemblyInformationalVersion("2.2")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
 

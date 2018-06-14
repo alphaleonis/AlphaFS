@@ -87,7 +87,18 @@ namespace AlphaFS.UnitTest
 
             else
             {
-               var volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(driveName);
+               Alphaleonis.Win32.Filesystem.VolumeInfo volInfo;
+
+               try
+               {
+                  volInfo = Alphaleonis.Win32.Filesystem.Volume.GetVolumeInfo(driveName);
+               }
+               catch (Exception ex)
+               {
+                  Console.WriteLine("\nCaught (UNEXPECTED) {0}: [{1}]\n", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+
+                  continue;
+               }
 
                UnitTestConstants.Dump(volInfo);
 
