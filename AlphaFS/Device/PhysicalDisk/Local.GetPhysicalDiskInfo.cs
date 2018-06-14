@@ -104,16 +104,16 @@ namespace Alphaleonis.Win32.Device
          bool isDevice;
          var isDrive = false;
          var isVolume = false;
-         
+
          var localDevicePath = isDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
          if (isDrive)
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
-         
 
-         // StorageDeviceInfo contains the device number.
 
-         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, localDevicePath);
+         // The StorageDeviceInfo is always needed because it contains the device- and partition number.
+
+         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, deviceNumber, localDevicePath);
 
          if (null == storageDeviceInfo)
             return null;
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Device
 
          if (null != physicalDiskInfo)
          {
-            if (!isDeviceNumber)
+            if (isDrive || isVolume)
                physicalDiskInfo.StorageDeviceInfo = storageDeviceInfo;
 
             if (null == physicalDiskInfo.StoragePartitionInfo)

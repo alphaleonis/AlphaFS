@@ -21,6 +21,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Security;
@@ -50,15 +51,15 @@ namespace Alphaleonis.Win32.Device
 
          foreach (var deviceInfo in EnumerateDevicesCore(null, DeviceGuid.Disk, false))
          {
-            var storageDeviceInfo = GetStorageDeviceInfoCore(false, deviceNumber, deviceInfo.DevicePath);
+            var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, deviceInfo.DevicePath);
 
-            if (null == storageDeviceInfo)
+            if (null == storageDeviceInfo || isDeviceNumber && deviceNumber != storageDeviceInfo.DeviceNumber)
                continue;
-
+            
 
             var pDiskInfo = PhysicalDiskInfo.InitializePhysicalDiskInfo(isElevated, null, storageDeviceInfo, deviceInfo);
 
-            yield return PopulatePhysicalDisk(deviceNumber, pDiskInfo);
+            yield return PopulatePhysicalDisk(isElevated, pDiskInfo);
 
 
             // There can only be one.
@@ -68,18 +69,22 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>Retrieves volumes and logical drives that belong to <paramref name="deviceNumber"/> </summary>
-      private static PhysicalDiskInfo PopulatePhysicalDisk(int deviceNumber, PhysicalDiskInfo pDiskInfo)
+      /// <summary>Retrieves volumes and logical drives that belong to <paramref name="pDiskInfo"/> </summary>
+      private static PhysicalDiskInfo PopulatePhysicalDisk(bool isElevated, PhysicalDiskInfo pDiskInfo)
       {
          var newPDiskInfo = Utils.CopyFrom(pDiskInfo);
 
-         foreach (var volumeGuid in Volume.EnumerateVolumes())
-         {
-            var storageDeviceInfo = GetStorageDeviceInfoCore(false, deviceNumber, volumeGuid);
+         var deviceNumber = newPDiskInfo.StorageDeviceInfo.DeviceNumber;
 
-            if (null == storageDeviceInfo || storageDeviceInfo.DeviceNumber != newPDiskInfo.StorageDeviceInfo.DeviceNumber)
+
+         foreach (var volumeGuid in Volume.EnumerateVolumes().ToArray())
+         {
+            var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, volumeGuid);
+
+            if (null == storageDeviceInfo || deviceNumber != storageDeviceInfo.DeviceNumber)
                continue;
-            
+
+
             AddToPartitionIndex(newPDiskInfo, storageDeviceInfo.PartitionNumber);
             
             AddToVolumeGuids(newPDiskInfo, volumeGuid);
@@ -89,10 +94,10 @@ namespace Alphaleonis.Win32.Device
             var driveName = Volume.GetVolumeDisplayName(volumeGuid);
 
             if (!Utils.IsNullOrWhiteSpace(driveName))
-
                AddToLogicalDrives(newPDiskInfo, driveName);
          }
-         
+
+
          return newPDiskInfo;
       }
 

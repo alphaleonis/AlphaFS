@@ -21,6 +21,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
@@ -89,11 +90,12 @@ namespace Alphaleonis.Win32.Device
       internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, int deviceNumber, string devicePath)
       {
          var isDeviceNumber = deviceNumber > -1;
-         bool isDrive;
+         var isDrive = false;
          bool isVolume;
-         bool isDevice;
+         var isDevice = false;
 
-         var localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
+         var localDevicePath = isDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
+         //var localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
          if (isDrive)
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
@@ -103,14 +105,17 @@ namespace Alphaleonis.Win32.Device
 
          using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
 
-         using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, devicePath))
+         using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, localDevicePath))
          {
             storageDeviceInfo = null != safeBuffer ? new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>()) : null;
 
             if (null != storageDeviceInfo)
             {
-               if (isDeviceNumber && storageDeviceInfo.DeviceNumber != deviceNumber)
+               // Get by deviceNumber.
+
+               if (isDeviceNumber && deviceNumber != storageDeviceInfo.DeviceNumber)
                   return null;
+
 
                SetStorageDeviceInfoData(isElevated, isDevice, safeHandle, localDevicePath, storageDeviceInfo);
             }
@@ -173,11 +178,7 @@ namespace Alphaleonis.Win32.Device
          }
 
          else if (!isDevice)
-         {
-            var diskSpaceInfo = Volume.GetDiskFreeSpace(localDevicePath, false);
-
-            storageDeviceInfo.TotalSize = diskSpaceInfo.TotalNumberOfBytes;
-         }
+            storageDeviceInfo.TotalSize = new DiskSpaceInfo(localDevicePath, false, true, true).TotalNumberOfBytes;
       }
    }
 }

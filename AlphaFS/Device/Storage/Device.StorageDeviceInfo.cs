@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Device
       public string SerialNumber { get; internal set; }
 
 
-      /// <summary>The total size of the physical disk or <c>0</c> if the process is not elevated.</summary>
+      /// <summary>The total size of the physical disk or <c>0</c> if the process is not elevated or the device is a controller.</summary>
       public long TotalSize { get; internal set; }
 
 

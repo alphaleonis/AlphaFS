@@ -48,8 +48,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region Constructors
 
       /// <summary>Initializes a DiskSpaceInfo instance.</summary>
-      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share</param>
       /// <Remark>This is a Lazyloading object; call <see cref="Refresh()"/> to populate all properties first before accessing.</Remark>
+      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share</param>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]
       public DiskSpaceInfo(string driveName)
@@ -83,8 +83,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DiskSpaceInfo(string driveName, bool? spaceInfoType, bool refresh, bool continueOnException) : this(driveName)
       {
-         if (spaceInfoType == null)
-            _initGetSpaceInfo = _initGetClusterInfo = true;
+         if (null == spaceInfoType)
+         {
+            _initGetSpaceInfo = true;
+            _initGetClusterInfo = true;
+         }
 
          else
          {

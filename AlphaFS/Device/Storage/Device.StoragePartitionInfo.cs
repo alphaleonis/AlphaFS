@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Device
 
          MediaType = (StorageMediaType) disk.Geometry.MediaType;
 
-         PartitionCount = (int)drive.PartitionCount;
+         PartitionCount = (int) drive.PartitionCount;
 
 
          MbrSignature = disk.PartitionInformation.MbrSignature;
