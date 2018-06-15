@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Device
             {
                if (null != safeBuffer)
                {
-                  var storageAdapterInfo = new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
+                  var storageAdapterInfo = new StorageAdapterInfo(storageDeviceInfo.DeviceNumber, safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
 
                   if (!Utils.IsNullOrWhiteSpace(busReportedDeviceDescription))
                      storageAdapterInfo.BusReportedDeviceDescription = busReportedDeviceDescription;

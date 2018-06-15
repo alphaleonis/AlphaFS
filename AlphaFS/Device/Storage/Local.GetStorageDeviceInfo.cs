@@ -20,13 +20,11 @@
  */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Security;
-using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {
@@ -94,6 +92,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       private static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, int deviceNumber, string devicePath, out string localDevicePath)
       {
+         var getByDeviceNumber = deviceNumber > -1;
          bool isDrive;
          bool isVolume;
          bool isDevice;
@@ -106,7 +105,7 @@ namespace Alphaleonis.Win32.Device
          var retry = false;
 
       Retry:
-         
+
          using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
          {
             int lastError;
@@ -117,7 +116,7 @@ namespace Alphaleonis.Win32.Device
                {
                   var storageDeviceInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>());
 
-                  if (!retry && deviceNumber > -1 && deviceNumber != storageDeviceInfo.DeviceNumber)
+                  if (getByDeviceNumber && deviceNumber != storageDeviceInfo.DeviceNumber)
                      return null;
 
                   SetStorageDeviceInfoData(isElevated, isDevice, safeHandle, localDevicePath, storageDeviceInfo);
@@ -135,9 +134,16 @@ namespace Alphaleonis.Win32.Device
                   if (null != volDiskExtents && volDiskExtents.Value.NumberOfDiskExtents > 0)
                   {
                      // Use the first disk extent.
-                     deviceNumber = (int) volDiskExtents.Value.Extents[0].DiskNumber;
+                     // TODO 2018-06-15: Handle multiple disk extents.
 
-                     localDevicePath = Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture);
+                     var newDeviceNumber = (int) volDiskExtents.Value.Extents[0].DiskNumber;
+
+                     getByDeviceNumber = deviceNumber > -1;
+
+                     if (getByDeviceNumber && deviceNumber != newDeviceNumber)
+                        return null;
+
+                     localDevicePath = Path.PhysicalDrivePrefix + newDeviceNumber.ToString(CultureInfo.InvariantCulture);
 
                      retry = true;
                      goto Retry;
@@ -147,68 +153,6 @@ namespace Alphaleonis.Win32.Device
 
             return null;
          }
-      }
-
-
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SecurityCritical]
-      private static void SetStorageDeviceInfoData(bool isElevated, bool isDevice, SafeFileHandle safeHandle, string localDevicePath, StorageDeviceInfo storageDeviceInfo)
-      {
-         var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
-         {
-            PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageDeviceProperty,
-            QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
-         };
-         
-
-         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 2))
-         {
-            var deviceDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>();
-
-
-            storageDeviceInfo.BusType = (StorageBusType) deviceDescriptor.BusType;
-
-            storageDeviceInfo.CommandQueueing = deviceDescriptor.CommandQueueing;
-
-            storageDeviceInfo.ProductId = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.ProductIdOffset).Trim();
-
-            storageDeviceInfo.ProductRevision = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.ProductRevisionOffset).Trim();
-
-            storageDeviceInfo.RemovableMedia = deviceDescriptor.RemovableMedia;
-
-            storageDeviceInfo.SerialNumber = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.SerialNumberOffset).Trim();
-
-            storageDeviceInfo.VendorId = safeBuffer.PtrToStringAnsi((int) deviceDescriptor.VendorIdOffset).Trim();
-
-
-            if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.ProductRevision) || storageDeviceInfo.ProductRevision.Length == 1)
-               storageDeviceInfo.ProductRevision = null;
-
-            if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.SerialNumber) || storageDeviceInfo.SerialNumber.Length == 1)
-               storageDeviceInfo.SerialNumber = null;
-            
-            if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.VendorId) || storageDeviceInfo.VendorId.Length == 1)
-               storageDeviceInfo.VendorId = null;
-         }
-
-
-         // Get disk total size.
-
-         var lastError = 0;
-
-         if (isElevated)
-         {
-            using (var safeBuffer = GetDeviceIoData<long>(safeHandle,NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, localDevicePath, out lastError))
-
-               storageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
-         }
-
-
-         // A logical drive path like \\.\D: fails on a dynamic disk.
-
-         else if (!isDevice || lastError == Win32Errors.ERROR_INVALID_FUNCTION)
-
-            storageDeviceInfo.TotalSize = new DiskSpaceInfo(localDevicePath, false, true, true).TotalNumberOfBytes;
       }
    }
 }

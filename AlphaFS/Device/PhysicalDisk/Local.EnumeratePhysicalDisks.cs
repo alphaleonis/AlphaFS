@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       private static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisksCore(bool isElevated, int deviceNumber)
       {
-         var isDeviceNumber = deviceNumber > -1;
+         var getByDeviceNumber = deviceNumber > -1;
 
          foreach (var deviceInfo in EnumerateDevicesCore(null, new []{DeviceGuid.Disk}, false))
          {
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Device
 
 
             // There can only be one.
-            if (isDeviceNumber)
+            if (getByDeviceNumber)
                break;
          }
       }

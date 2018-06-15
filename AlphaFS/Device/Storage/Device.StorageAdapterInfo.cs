@@ -37,11 +37,15 @@ namespace Alphaleonis.Win32.Device
       public StorageAdapterInfo()
       {
          BusType = StorageBusType.Unknown;
+
+         DeviceNumber = -1;
       }
 
 
-      internal StorageAdapterInfo(NativeMethods.STORAGE_ADAPTER_DESCRIPTOR adapter) : this()
+      internal StorageAdapterInfo(int diskNumber, NativeMethods.STORAGE_ADAPTER_DESCRIPTOR adapter) : this()
       {
+         DeviceNumber = diskNumber;
+
          BusType = (StorageBusType) adapter.BusType;
 
          AcceleratedTransfer = adapter.AcceleratedTransfer;
@@ -89,6 +93,10 @@ namespace Alphaleonis.Win32.Device
       /// <summary>When <c>true</c>, the storage adapter supports SCSI tagged queuing and/or per-logical-unit internal queues, or the non-SCSI equivalent.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Queueing")]
       public bool CommandQueueing { get; private set; }
+
+
+      /// <summary>The device number connected to this storage adapter, starting at 0.</summary>
+      public int DeviceNumber { get; private set; }
 
 
       /// <summary>Specifies the maximum number of bytes the storage adapter can transfer in a single operation.</summary>

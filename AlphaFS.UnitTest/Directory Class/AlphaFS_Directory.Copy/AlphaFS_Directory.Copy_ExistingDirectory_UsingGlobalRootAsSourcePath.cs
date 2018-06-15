@@ -40,7 +40,7 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Directory_Copy_ExistingDirectory_UsingGlobalRootAsSourcePath(bool isNetwork)
       {
-         var testOk = false;
+         var foundShadowCopy = false;
          
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -50,7 +50,7 @@ namespace AlphaFS.UnitTest
 
             foreach (var dosDevice in dosDevices)
             {
-               if (testOk)
+               if (foundShadowCopy)
                   break;
 
                var shadowSource = Alphaleonis.Win32.Filesystem.Path.GlobalRootDevicePrefix + dosDevice;
@@ -98,7 +98,7 @@ namespace AlphaFS.UnitTest
                   Assert.AreEqual(0, cmr.ErrorCode);
 
 
-                  testOk = true;
+                  foundShadowCopy = true;
 
                   copyCount++;
                }
@@ -107,7 +107,9 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
 
-         Assert.IsTrue(testOk);
+
+         if (!foundShadowCopy)
+            UnitTestAssert.InconclusiveBecauseFileNotFound("No volume shadow copy found.");
       }
    }
 }

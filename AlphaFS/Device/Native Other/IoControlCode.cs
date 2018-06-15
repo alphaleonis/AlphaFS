@@ -28,7 +28,6 @@ namespace Alphaleonis.Win32.Device
    {
       /// <summary>Enumerable values that enter into <c>DeviceIoControl</c> function as <c>dwIoControlCode</c> parameter</summary>
       /// <remarks>Some of the code was taken from: http://blogs.msdn.com/b/codedebate/archive/2007/12/18/6797175.aspx </remarks>
-      [Flags]
       internal enum IoControlCode : uint
       {
          /// <summary>Retrieves the physical location of a specified volume on one or more disks.</summary>

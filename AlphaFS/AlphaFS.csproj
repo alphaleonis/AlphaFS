@@ -200,6 +200,7 @@
     <Compile Include="Device\Native Methods\NativeMethods.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.ContainsVolume.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo_Properties.cs" />
+    <Compile Include="Device\Storage\Local.SetStorageDeviceInfoData.cs" />
     <Compile Include="Device\Storage\Local.GetStoragePartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageMbrPartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageGptPartitionInfo.cs" />

@@ -100,12 +100,12 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       internal static PhysicalDiskInfo GetPhysicalDiskInfoCore(bool isElevated, int deviceNumber, string devicePath)
       {
-         var isDeviceNumber = deviceNumber > -1;
+         var getByDeviceNumber = deviceNumber > -1;
          bool isDevice;
          var isDrive = false;
          var isVolume = false;
 
-         var localDevicePath = isDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
+         var localDevicePath = getByDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
          if (isDrive)
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Device
          if (null == storageDeviceInfo)
             return null;
 
-         if (!isDeviceNumber)
+         if (!getByDeviceNumber)
             deviceNumber = storageDeviceInfo.DeviceNumber;
 
 

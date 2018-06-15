@@ -55,6 +55,8 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
 
 
+            Assert.AreEqual(physicalDiskNumber, pDisk.StorageAdapterInfo.DeviceNumber);
+
             Assert.AreEqual(physicalDiskNumber, pDisk.StorageDeviceInfo.DeviceNumber);
 
             Assert.AreEqual(physicalDiskNumber, pDisk.StoragePartitionInfo.DeviceNumber);

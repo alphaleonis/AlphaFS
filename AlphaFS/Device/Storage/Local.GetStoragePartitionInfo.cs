@@ -140,8 +140,7 @@ namespace Alphaleonis.Win32.Device
                var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
                var lastError = Marshal.GetLastWin32Error();
-
-
+               
                if (success)
                {
                   var typeOf = typeof(NativeMethods.DISK_GEOMETRY);
