@@ -35,7 +35,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         var pDriveCount = 0;
+         var driveCount = 0;
 
          var physicalDrives = Alphaleonis.Win32.Filesystem.Volume.QueryAllDosDevices().Where(device => device.StartsWith("PhysicalDrive", StringComparison.OrdinalIgnoreCase)).ToArray();
 
@@ -49,7 +49,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var pDisk in pDrives)
          {
-            Console.WriteLine("#{0:000}\tPhysical Disk: [{1}]", ++pDriveCount, pDisk.StorageDeviceInfo.DeviceNumber);
+            Console.WriteLine("#{0:000}\tPhysical Disk: [{1}]", driveCount, pDisk.StorageDeviceInfo.DeviceNumber);
 
             UnitTestConstants.Dump(pDisk);
 
@@ -60,16 +60,12 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
 
 
-            // Show all partition information.
+            Assert.AreEqual(driveCount, pDisk.StorageDeviceInfo.DeviceNumber);
 
-            if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.GptPartitionInfo)
-               foreach (var partition in pDisk.StoragePartitionInfo.GptPartitionInfo)
-                  UnitTestConstants.Dump(partition, true);
+            Assert.AreEqual(driveCount, pDisk.StoragePartitionInfo.DeviceNumber);
 
-            if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.MbrPartitionInfo)
-               foreach (var partition in pDisk.StoragePartitionInfo.MbrPartitionInfo)
-                  UnitTestConstants.Dump(partition, true);
 
+            driveCount++;
 
             Console.WriteLine();
          }

@@ -44,27 +44,26 @@ namespace AlphaFS.UnitTest
 
 
          var storagePartitionInfo = Alphaleonis.Win32.Device.Local.GetStoragePartitionInfo(devicePath);
-
+         
 
          UnitTestConstants.Dump(storagePartitionInfo);
 
+         Assert.IsNotNull(storagePartitionInfo);
 
-         if (null != storagePartitionInfo)
+
+         // Show all partition information.
+
+         if (null != storagePartitionInfo.GptPartitionInfo)
          {
-            // Show all partition information.
-
-            if (null != storagePartitionInfo.GptPartitionInfo)
-            {
-               foreach (var partition in storagePartitionInfo.GptPartitionInfo)
-                  UnitTestConstants.Dump(partition, true);
-            }
+            foreach (var partition in storagePartitionInfo.GptPartitionInfo)
+               UnitTestConstants.Dump(partition, true);
+         }
 
 
-            if (null != storagePartitionInfo.MbrPartitionInfo)
-            {
-               foreach (var partition in storagePartitionInfo.MbrPartitionInfo)
-                  UnitTestConstants.Dump(partition, true);
-            }
+         if (null != storagePartitionInfo.MbrPartitionInfo)
+         {
+            foreach (var partition in storagePartitionInfo.MbrPartitionInfo)
+               UnitTestConstants.Dump(partition, true);
          }
       }
    }

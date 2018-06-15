@@ -35,7 +35,6 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         var gotDisk = false;
          var driveCount = 0;
          
          foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
@@ -97,27 +96,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(pDisk.LogicalDrives.Contains(driveInfo.Name.TrimEnd('\\'), StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(driveInfo.Name));
 
 
-            // Show all partition information.
-
-            if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.GptPartitionInfo)
-            {
-               gotDisk = true;
-
-               foreach (var partition in pDisk.StoragePartitionInfo.GptPartitionInfo)
-                  UnitTestConstants.Dump(partition, true);
-            }
-
-            if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.MbrPartitionInfo)
-            {
-               gotDisk = true;
-
-               foreach (var partition in pDisk.StoragePartitionInfo.MbrPartitionInfo)
-                  UnitTestConstants.Dump(partition, true);
-            }
-
             Console.WriteLine();
-
-            Assert.IsTrue(gotDisk);
          }
       }
    }

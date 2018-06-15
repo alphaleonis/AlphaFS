@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Globalization;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
 
@@ -60,11 +61,11 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       /// <param name="deviceInfo">An initialized <see cref="DeviceInfo"/> instance.</param>
       [SecurityCritical]
-      internal static StorageAdapterInfo GetStorageAdapterInfoCore(string devicePath, DeviceInfo deviceInfo = null)
+      private static StorageAdapterInfo GetStorageAdapterInfoCore(string devicePath, DeviceInfo deviceInfo = null)
       {
+         bool isDevice;
          bool isDrive;
          bool isVolume;
-         bool isDevice;
 
          var localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
@@ -72,23 +73,68 @@ namespace Alphaleonis.Win32.Device
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
 
 
+         // The StorageDeviceInfo is always needed because it contains the device- and partition number.
+
+         var storageDeviceInfo = GetStorageDeviceInfoCore(false, -1, localDevicePath);
+
+         //if (null == storageDeviceInfo)
+         //   return null;
+
+
+         var deviceNumber = null != storageDeviceInfo ? storageDeviceInfo.DeviceNumber : -1;
+         
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
          {
             PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageAdapterProperty,
             QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
          };
 
+         var retry = false;
+
+
+      Retry:
 
          using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, NativeMethods.FILE_ANY_ACCESS))
-
-         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
          {
-            var storageAdapterInfo = null == safeBuffer ? null : new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
+            if (!retry && !isDevice)
+            {
+               var volDiskExtents = GetVolumeDiskExtents(safeHandle, localDevicePath);
 
-            if (null != deviceInfo && null != storageAdapterInfo)
-               storageAdapterInfo.BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription;
+               if (null == volDiskExtents || volDiskExtents.Value.NumberOfDiskExtents == 0)
+                  return null;
 
-            return storageAdapterInfo;
+               // Use the first disk extent.
+               deviceNumber = (int) volDiskExtents.Value.Extents[0].DiskNumber;
+            }
+
+
+            int lastError;
+
+            using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, localDevicePath, out lastError, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
+            {
+               if (null != safeBuffer)
+               {
+                  var storageAdapterInfo = new StorageAdapterInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
+
+                  if (null != deviceInfo)
+                     storageAdapterInfo.BusReportedDeviceDescription = deviceInfo.BusReportedDeviceDescription;
+
+                  return storageAdapterInfo;
+               }
+
+
+               // A logical drive path like \\.\D: fails on a dynamic disk.
+
+               if (!retry && lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+               {
+                  localDevicePath = Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture);
+
+                  retry = true;
+                  goto Retry;
+               }
+
+               return null;
+            }
          }
       }
    }

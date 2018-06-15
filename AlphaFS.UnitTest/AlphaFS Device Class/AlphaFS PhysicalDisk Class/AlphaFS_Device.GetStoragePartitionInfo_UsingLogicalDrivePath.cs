@@ -43,28 +43,31 @@ namespace AlphaFS.UnitTest
             // System.IO.DriveType.CDRom = null.
             if (driveInfo.DriveType == System.IO.DriveType.CDRom)
             {
-               Console.WriteLine("#{0:000}\tSkipped CDRom drive: [{1}]\n", ++driveCount, driveInfo.Name);
+               Console.WriteLine("#{0:000}\tSkipped CDRom Drive: [{1}]\n", ++driveCount, driveInfo.Name);
                continue;
             }
 
             // System.UnauthorizedAccessException: (5) Access is denied.
             if (driveInfo.DriveType == System.IO.DriveType.Network)
             {
-               Console.WriteLine("#{0:000}\tSkipped Network drive: [{1}]\n", ++driveCount, driveInfo.Name);
+               Console.WriteLine("#{0:000}\tSkipped Network Drive: [{1}]\n", ++driveCount, driveInfo.Name);
                continue;
             }
 
             if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory)
             {
-               Console.WriteLine("#{0:000}\tSkipped NoRootDirectory drive: [{1}]\n", ++driveCount, driveInfo.Name);
+               Console.WriteLine("#{0:000}\tSkipped NoRootDirectory Drive: [{1}]\n", ++driveCount, driveInfo.Name);
                continue;
             }
 
 
             var storagePartitionInfo = Alphaleonis.Win32.Device.Local.GetStoragePartitionInfo(driveInfo.Name);
 
-            if (null == storagePartitionInfo)
-               Console.WriteLine();
+            //if (null == storagePartitionInfo)
+            //{
+            //   Console.WriteLine("#{0:000}\tSkipped Logical Drive: [{1}]\n", ++driveCount, driveInfo.Name);
+            //   continue;
+            //}
 
             Assert.IsNotNull(storagePartitionInfo);
 

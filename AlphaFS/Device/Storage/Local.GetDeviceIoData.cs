@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Device
    {
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      internal static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string pathForException, int size = -1)
+      private static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string pathForException, int size = -1)
       {
          Utils.IsValidHandle(safeHandle);
 
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Device
             {
                if (lastError == Win32Errors.ERROR_NOT_READY ||
 
-                   // Dynamic disk.
+                   // A logical drive path like \\.\D: fails on a dynamic disk.
                    lastError == Win32Errors.ERROR_INVALID_FUNCTION ||
 
                    // Request device number from a DeviceGuid.Image device.

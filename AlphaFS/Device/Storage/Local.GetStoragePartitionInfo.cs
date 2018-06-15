@@ -85,10 +85,10 @@ namespace Alphaleonis.Win32.Device
       ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
       [SecurityCritical]
-      internal static StoragePartitionInfo GetStoragePartitionInfoCore(bool isElevated, string devicePath)
+      private static StoragePartitionInfo GetStoragePartitionInfoCore(bool isElevated, string devicePath)
       {
          bool isDevice;
-         var isDrive = false;
+         bool isDrive;
          bool isVolume;
 
          var localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
@@ -97,50 +97,73 @@ namespace Alphaleonis.Win32.Device
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
 
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
+         // The StorageDeviceInfo is always needed because it contains the device- and partition number.
 
-            return GetStoragePartitionInfoNative(safeHandle, localDevicePath);
-      }
+         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, localDevicePath);
 
-
-      [SecurityCritical]
-      private static StoragePartitionInfo GetStoragePartitionInfoNative(SafeFileHandle safeHandle, string pathForException)
-      {
-         var volDiskExtents = GetVolumeDiskExtents(safeHandle, pathForException);
-
-         if (null == volDiskExtents || volDiskExtents.Value.NumberOfDiskExtents == 0)
+         if (null == storageDeviceInfo)
             return null;
 
 
-         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, 0, pathForException, Filesystem.NativeMethods.DefaultFileBufferSize / 4))
-            if (null != safeBuffer)
+         var deviceNumber = storageDeviceInfo.DeviceNumber;
+
+         var retry = false;
+
+
+      Retry:
+
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
+         {
+            if (!retry && !isDevice)
             {
-               var layout = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>();
+               var volDiskExtents = GetVolumeDiskExtents(safeHandle, localDevicePath);
 
-               // Sanity check.
-               if (layout.PartitionCount <= 256)
-               {
-                  var driveStructureSize = Marshal.SizeOf(typeof(NativeMethods.DRIVE_LAYOUT_INFORMATION_EX)); // 48
+               if (null == volDiskExtents || volDiskExtents.Value.NumberOfDiskExtents == 0)
+                  return null;
 
-                  var partitionStructureSize = Marshal.SizeOf(typeof(NativeMethods.PARTITION_INFORMATION_EX)); // 144
-
-                  var partitions = new NativeMethods.PARTITION_INFORMATION_EX[layout.PartitionCount];
-
-
-                  for (var i = 0; i <= layout.PartitionCount - 1; i++)
-
-                     partitions[i] = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(driveStructureSize + i * partitionStructureSize);
-
-
-                  var disk = GetDiskGeometryExNative(safeHandle, pathForException);
-
-
-                  // Use the first disk extent.
-                  var diskNumber = volDiskExtents.Value.Extents[0].DiskNumber;
-
-                  return new StoragePartitionInfo((int) diskNumber, disk, layout, partitions);
-               }
+               // Use the first disk extent.
+               deviceNumber = (int) volDiskExtents.Value.Extents[0].DiskNumber;
             }
+
+
+            int lastError;
+
+            using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, 0, localDevicePath, out lastError, Filesystem.NativeMethods.DefaultFileBufferSize / 4))
+               if (null != safeBuffer)
+               {
+                  var layout = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>();
+
+                  // Sanity check.
+                  if (layout.PartitionCount <= 256)
+                  {
+                     var driveStructureSize = Marshal.SizeOf(typeof(NativeMethods.DRIVE_LAYOUT_INFORMATION_EX)); // 48
+
+                     var partitionStructureSize = Marshal.SizeOf(typeof(NativeMethods.PARTITION_INFORMATION_EX)); // 144
+
+                     var partitions = new NativeMethods.PARTITION_INFORMATION_EX[layout.PartitionCount];
+
+
+                     for (var i = 0; i <= layout.PartitionCount - 1; i++)
+
+                        partitions[i] = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(driveStructureSize + i * partitionStructureSize);
+
+
+                     var disk = GetDiskGeometryExNative(safeHandle, localDevicePath);
+
+                     return deviceNumber == -1 ? null : new StoragePartitionInfo(deviceNumber, disk, layout, partitions);
+                  }
+               }
+
+               // A logical drive path like \\.\D: fails on a dynamic disk.
+
+               else if (!retry && lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+               {
+                  localDevicePath = Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture);
+
+                  retry = true;
+                  goto Retry;
+               }
+         }
 
          return null;
       }
@@ -191,7 +214,7 @@ namespace Alphaleonis.Win32.Device
 
                if (lastError == Win32Errors.ERROR_NOT_READY ||
 
-                   // Dynamic disk.
+                   // A logical drive path like \\.\D: fails on a dynamic disk.
                    lastError == Win32Errors.ERROR_INVALID_FUNCTION ||
 
                    // Request device number from a DeviceGuid.Image device.

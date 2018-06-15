@@ -34,6 +34,8 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
+         Assert.Inconclusive("TODO");
+         
          //var gotDisk = false;
          var driveCount = 0;
 
