@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetStoragePartitionInfo_UsingDevicePathFromSystemDrive_ReturnsNull()
+      public void AlphaFS_Device_GetStoragePartitionInfo_UsingDevicePathFromSystemDrive_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -50,21 +50,19 @@ namespace AlphaFS.UnitTest
 
          Assert.IsNotNull(storagePartitionInfo);
 
+         Assert.AreEqual(0, storagePartitionInfo.DeviceNumber);
+
 
          // Show all partition information.
 
          if (null != storagePartitionInfo.GptPartitionInfo)
-         {
             foreach (var partition in storagePartitionInfo.GptPartitionInfo)
                UnitTestConstants.Dump(partition, true);
-         }
 
 
          if (null != storagePartitionInfo.MbrPartitionInfo)
-         {
             foreach (var partition in storagePartitionInfo.MbrPartitionInfo)
                UnitTestConstants.Dump(partition, true);
-         }
       }
    }
 }

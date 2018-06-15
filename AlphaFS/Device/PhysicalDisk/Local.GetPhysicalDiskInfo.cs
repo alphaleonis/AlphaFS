@@ -109,11 +109,11 @@ namespace Alphaleonis.Win32.Device
 
          if (isDrive)
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
+         
 
+         // The StorageDeviceInfo is always needed as it contains the device- and partition number.
 
-         // The StorageDeviceInfo is always needed because it contains the device- and partition number.
-
-         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, localDevicePath);
+         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, localDevicePath, out localDevicePath);
 
          if (null == storageDeviceInfo)
             return null;

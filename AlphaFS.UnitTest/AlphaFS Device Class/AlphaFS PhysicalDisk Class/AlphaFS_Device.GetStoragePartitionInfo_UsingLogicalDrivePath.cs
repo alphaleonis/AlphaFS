@@ -40,12 +40,7 @@ namespace AlphaFS.UnitTest
 
          foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
-            // System.IO.DriveType.CDRom = null.
-            if (driveInfo.DriveType == System.IO.DriveType.CDRom)
-            {
-               Console.WriteLine("#{0:000}\tSkipped CDRom Drive: [{1}]\n", ++driveCount, driveInfo.Name);
-               continue;
-            }
+            // Works with System.IO.DriveType.CDRom.
 
             // System.UnauthorizedAccessException: (5) Access is denied.
             if (driveInfo.DriveType == System.IO.DriveType.Network)
@@ -68,13 +63,13 @@ namespace AlphaFS.UnitTest
             //   Console.WriteLine("#{0:000}\tSkipped Logical Drive: [{1}]\n", ++driveCount, driveInfo.Name);
             //   continue;
             //}
-
-            Assert.IsNotNull(storagePartitionInfo);
-
+            
             Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]", ++driveCount, driveInfo.Name);
 
             UnitTestConstants.Dump(storagePartitionInfo);
 
+
+            Assert.IsNotNull(storagePartitionInfo);
 
             // Show all partition information.
 

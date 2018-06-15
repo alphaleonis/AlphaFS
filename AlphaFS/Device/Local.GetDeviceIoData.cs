@@ -33,9 +33,18 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       private static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string pathForException, int size = -1)
       {
+         int unusedLastError;
+
+         return GetDeviceIoData<T>(safeHandle, controlCode, pathForException, out unusedLastError, size);
+      }
+
+
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
+      [SecurityCritical]
+      private static SafeGlobalMemoryBufferHandle GetDeviceIoData<T>(SafeFileHandle safeHandle, NativeMethods.IoControlCode controlCode, string pathForException, out int lastError, int size = -1)
+      {
          Utils.IsValidHandle(safeHandle);
-
-
+         
          var bufferSize = size > -1 ? size : Marshal.SizeOf(typeof(T));
 
          while (true)
@@ -44,7 +53,7 @@ namespace Alphaleonis.Win32.Device
 
             var success = NativeMethods.DeviceIoControl(safeHandle, controlCode, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
-            var lastError = Marshal.GetLastWin32Error();
+            lastError = Marshal.GetLastWin32Error();
 
 
             if (success)

@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {
-         return EnumerateDevicesCore(null, deviceGuid, true);
+         return EnumerateDevicesCore(null, new[] {deviceGuid}, true);
       }
 
 
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static IEnumerable<DeviceInfo> EnumerateDevices(string hostName, DeviceGuid deviceGuid)
       {
-         return EnumerateDevicesCore(hostName, deviceGuid, true);
+         return EnumerateDevicesCore(hostName, new[] {deviceGuid}, true);
       }
 
 
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
       /// <param name="getAllProperties"><c>true</c> to retrieve all device properties.</param>
       [SecurityCritical]
-      private static IEnumerable<DeviceInfo> EnumerateDevicesCore(string hostName, DeviceGuid deviceGuid, bool getAllProperties)
+      private static IEnumerable<DeviceInfo> EnumerateDevicesCore(string hostName, DeviceGuid[] deviceGuid, bool getAllProperties)
       {
          if (Utils.IsNullOrWhiteSpace(hostName))
             hostName = Environment.MachineName;
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Device
          Utils.IsValidHandle(safeMachineHandle, lastError);
 
          
-         var classGuid = new Guid(Utils.GetEnumDescription(deviceGuid));
+         var classGuid = new Guid(Utils.GetEnumDescription(deviceGuid[0]));
 
          
          // Start at the "Root" of the device tree of the specified machine.

@@ -48,9 +48,11 @@ namespace Alphaleonis.Win32.Device
       {
          var isDeviceNumber = deviceNumber > -1;
 
-         foreach (var deviceInfo in EnumerateDevicesCore(null, DeviceGuid.Disk, false))
+         foreach (var deviceInfo in EnumerateDevicesCore(null, new []{DeviceGuid.Disk}, false))
          {
-            var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, deviceNumber, deviceInfo.DevicePath);
+            string unusedLocalDevicePath;
+
+            var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, deviceNumber, deviceInfo.DevicePath, out unusedLocalDevicePath);
 
             if (null == storageDeviceInfo)
                continue;
@@ -69,7 +71,7 @@ namespace Alphaleonis.Win32.Device
                PhysicalDeviceObjectName = deviceInfo.PhysicalDeviceObjectName,
 
 
-               StorageAdapterInfo = GetStorageAdapterInfoCore(devicePath, deviceInfo),
+               StorageAdapterInfo = GetStorageAdapterInfoCore(isElevated, devicePath, deviceInfo.BusReportedDeviceDescription),
 
                StorageDeviceInfo = storageDeviceInfo,
 
@@ -100,7 +102,9 @@ namespace Alphaleonis.Win32.Device
 
          foreach (var volumeGuid in Volume.EnumerateVolumes())
          {
-            var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, deviceNumber, volumeGuid);
+            string unusedLocalDevicePath;
+
+            var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, deviceNumber, volumeGuid, out unusedLocalDevicePath);
 
             if (null == storageDeviceInfo)
                continue;

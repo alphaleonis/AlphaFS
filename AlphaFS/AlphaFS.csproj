@@ -205,9 +205,9 @@
     <Compile Include="Device\Storage\Device.StorageGptPartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StoragePartitionInfo.cs" />
     <Compile Include="Device\Test.cs" />
-    <Compile Include="Device\Storage\Local.GetDeviceIoData.cs" />
+    <Compile Include="Device\Local.GetDeviceIoData.cs" />
     <Compile Include="Device\Local.InvokeDeviceIoData.cs" />
-    <Compile Include="Device\Storage\Local.GetVolumeDiskExtents.cs" />
+    <Compile Include="Device\Local.GetVolumeDiskExtents.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetLocalDevicePath.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetValidatedDevicePath.cs" />
     <Compile Include="Device\Storage\Local.GetStorageAdapterInfo.cs" />
@@ -743,7 +743,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

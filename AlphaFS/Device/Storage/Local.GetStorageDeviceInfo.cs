@@ -48,7 +48,9 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath)
       {
-         return GetStorageDeviceInfoCore(ProcessContext.IsElevatedProcess, -1, devicePath);
+         string unusedLocalDevicePath;
+
+         return GetStorageDeviceInfoCore(ProcessContext.IsElevatedProcess, -1, devicePath, out unusedLocalDevicePath);
       }
 
 
@@ -68,7 +70,9 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static StorageDeviceInfo GetStorageDeviceInfo(bool isElevated, string devicePath)
       {
-         return GetStorageDeviceInfoCore(isElevated, -1, devicePath);
+         string unusedLocalDevicePath;
+
+         return GetStorageDeviceInfoCore(isElevated, -1, devicePath, out unusedLocalDevicePath);
       }
 
 
@@ -86,38 +90,63 @@ namespace Alphaleonis.Win32.Device
       ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
       ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
+      /// <param name="localDevicePath">The resolved local device path such as <c>\\.\C:</c> or <c>\\.\PhysicalDrive0</c></param>
       [SecurityCritical]
-      internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, int deviceNumber, string devicePath)
+      private static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, int deviceNumber, string devicePath, out string localDevicePath)
       {
          bool isDrive;
          bool isVolume;
          bool isDevice;
 
-         var localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
+         localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
          if (isDrive)
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
 
-         StorageDeviceInfo storageDeviceInfo;
+         var retry = false;
+
+      Retry:
          
-
          using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
-
-         using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, localDevicePath))
          {
-            storageDeviceInfo = null != safeBuffer ? new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>()) : null;
+            int lastError;
 
-            if (null != storageDeviceInfo)
+            using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, localDevicePath, out lastError))
             {
-               if (deviceNumber > -1 && deviceNumber != storageDeviceInfo.DeviceNumber)
-                  return null;
+               if (null != safeBuffer)
+               {
+                  var storageDeviceInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>());
 
-               SetStorageDeviceInfoData(isElevated, isDevice, safeHandle, localDevicePath, storageDeviceInfo);
+                  if (!retry && deviceNumber > -1 && deviceNumber != storageDeviceInfo.DeviceNumber)
+                     return null;
+
+                  SetStorageDeviceInfoData(isElevated, isDevice, safeHandle, localDevicePath, storageDeviceInfo);
+
+                  return storageDeviceInfo;
+               }
+
+
+               // A logical drive path like \\.\D: fails on a dynamic disk.
+
+               if (!retry && !isDevice && lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+               {
+                  var volDiskExtents = GetVolumeDiskExtents(safeHandle, localDevicePath);
+
+                  if (null != volDiskExtents && volDiskExtents.Value.NumberOfDiskExtents > 0)
+                  {
+                     // Use the first disk extent.
+                     deviceNumber = (int) volDiskExtents.Value.Extents[0].DiskNumber;
+
+                     localDevicePath = Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture);
+
+                     retry = true;
+                     goto Retry;
+                  }
+               }
             }
+
+            return null;
          }
-
-
-         return storageDeviceInfo;
       }
 
 
@@ -165,14 +194,20 @@ namespace Alphaleonis.Win32.Device
 
          // Get disk total size.
 
+         var lastError = 0;
+
          if (isElevated)
          {
-            using (var safeBuffer = GetDeviceIoData<long>(safeHandle,NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, localDevicePath))
+            using (var safeBuffer = GetDeviceIoData<long>(safeHandle,NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, localDevicePath, out lastError))
 
                storageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
          }
 
-         else if (!isDevice)
+
+         // A logical drive path like \\.\D: fails on a dynamic disk.
+
+         else if (!isDevice || lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+
             storageDeviceInfo.TotalSize = new DiskSpaceInfo(localDevicePath, false, true, true).TotalNumberOfBytes;
       }
    }
