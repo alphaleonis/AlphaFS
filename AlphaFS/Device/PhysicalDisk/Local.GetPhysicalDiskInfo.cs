@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Device
 
          // The StorageDeviceInfo is always needed as it contains the device- and partition number.
 
-         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, localDevicePath, out localDevicePath);
+         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, deviceNumber, localDevicePath, out localDevicePath);
 
          if (null == storageDeviceInfo)
             return null;

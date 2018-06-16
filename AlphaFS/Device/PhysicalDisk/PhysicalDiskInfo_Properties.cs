@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Device
       public StorageDeviceInfo StorageDeviceInfo { get; internal set; }
 
       
-      /// <summary>The storage device partitiion information.</summary>
+      /// <summary>The storage device partition information.</summary>
       public StoragePartitionInfo StoragePartitionInfo { get; internal set; }
 
 

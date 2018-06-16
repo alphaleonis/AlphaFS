@@ -34,11 +34,21 @@ namespace Alphaleonis.Win32.Device
    {
       /// <summary>[AlphaFS] Enumerates all available devices on the local host.</summary>
       /// <returns>Returns an <see cref="IEnumerable{DeviceInfo}"/> collection from the local host.</returns>
-      /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
+      /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> device guids.</param>
       [SecurityCritical]
       public static IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {
          return EnumerateDevicesCore(null, new[] {deviceGuid}, true);
+      }
+
+
+      /// <summary>[AlphaFS] Enumerates all available devices of type <see cref="DeviceGuid"/> on the local host.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{DeviceInfo}"/> collection from the local host.</returns>
+      /// <param name="deviceGuid">One or more <see cref="DeviceGuid"/> device guids.</param>
+      [SecurityCritical]
+      public static IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid[] deviceGuid)
+      {
+         return EnumerateDevicesCore(null, deviceGuid, true);
       }
 
 
@@ -50,7 +60,7 @@ namespace Alphaleonis.Win32.Device
       ///   <para>http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx</para>
       /// </remarks>
       /// <param name="hostName">The name of the local or remote host on which the device resides. <c>null</c> refers to the local host.</param>
-      /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
+      /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> device guids.</param>
       [SecurityCritical]
       public static IEnumerable<DeviceInfo> EnumerateDevices(string hostName, DeviceGuid deviceGuid)
       {
@@ -66,30 +76,71 @@ namespace Alphaleonis.Win32.Device
       ///   <para>http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx</para>
       /// </remarks>
       /// <param name="hostName">The name of the local or remote host on which the device resides. <c>null</c> refers to the local host.</param>
-      /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
+      /// <param name="deviceGuid">One or more <see cref="DeviceGuid"/> device guids.</param>
+      [SecurityCritical]
+      public static IEnumerable<DeviceInfo> EnumerateDevices(string hostName, DeviceGuid[] deviceGuid)
+      {
+         return EnumerateDevicesCore(hostName, deviceGuid, true);
+      }
+
+
+      /// <summary>[AlphaFS] Enumerates all available devices of type <see cref="DeviceGuid"/> on the local or remote host.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{DeviceInfo}"/> collection for the specified <paramref name="hostName"/>.</returns>
+      /// <remarks>
+      ///   MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.
+      ///   You cannot access remote machines when running on these versions of Windows.
+      ///   <para>http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx</para>
+      /// </remarks>
+      /// <param name="hostName">The name of the local or remote host on which the device resides. <c>null</c> refers to the local host.</param>
+      /// <param name="deviceGuid">One or more <see cref="DeviceGuid"/> device guids.</param>
       /// <param name="getAllProperties"><c>true</c> to retrieve all device properties.</param>
       [SecurityCritical]
       private static IEnumerable<DeviceInfo> EnumerateDevicesCore(string hostName, DeviceGuid[] deviceGuid, bool getAllProperties)
       {
-         if (Utils.IsNullOrWhiteSpace(hostName))
-            hostName = Environment.MachineName;
+         SafeCmConnectMachineHandle safeMachineHandle = null;
 
-         SafeCmConnectMachineHandle safeMachineHandle;
+         var isRemote = !Utils.IsNullOrWhiteSpace(hostName);
+         if (isRemote)
+         {
+            var lastError = NativeMethods.CM_Connect_Machine(Host.GetUncName(hostName), out safeMachineHandle);
 
-         var lastError = NativeMethods.CM_Connect_Machine(Host.GetUncName(hostName), out safeMachineHandle);
+            Utils.IsValidHandle(safeMachineHandle, lastError);
+         }
 
-         Utils.IsValidHandle(safeMachineHandle, lastError);
-
-         
-         var classGuid = new Guid(Utils.GetEnumDescription(deviceGuid[0]));
-
-         
-         // Start at the "Root" of the device tree of the specified machine.
 
          using (safeMachineHandle)
+            foreach (var guid in deviceGuid)
+            foreach (var device in EnumerateDevicesNative(safeMachineHandle, hostName, guid, getAllProperties))
+               yield return device;
+      }
+
+
+      /// <summary>[AlphaFS] Enumerates all available devices of type <see cref="DeviceGuid"/> on the local or remote host.</summary>
+      /// <returns>Returns an <see cref="IEnumerable{DeviceInfo}"/> collection for the specified <paramref name="safeMachineHandle"/>.</returns>
+      /// <remarks>
+      ///   MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.
+      ///   You cannot access remote machines when running on these versions of Windows.
+      ///   <para>http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx</para>
+      /// </remarks>
+      /// <param name="safeMachineHandle">An initialized <see cref="SafeCmConnectMachineHandle"/> instance.</param>
+      /// <param name="hostName">The name of the local or remote host on which the device resides. <c>null</c> refers to the local host.</param>
+      /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
+      /// <param name="getAllProperties"><c>true</c> to retrieve all device properties.</param>
+      [SecurityCritical]
+      private static IEnumerable<DeviceInfo> EnumerateDevicesNative(SafeCmConnectMachineHandle safeMachineHandle, string hostName, DeviceGuid deviceGuid, bool getAllProperties)
+      {
+         var nonNullHostName = !Utils.IsNullOrWhiteSpace(hostName) ? hostName : Environment.MachineName;
+
+         var classGuid = new Guid(Utils.GetEnumDescription(deviceGuid));
+         
+
+         // Start at the "Root" of the device tree.
+
          using (var safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref classGuid, IntPtr.Zero, IntPtr.Zero, NativeMethods.DEVICE_INFORMATION_FLAGS.DIGCF_PRESENT | NativeMethods.DEVICE_INFORMATION_FLAGS.DIGCF_DEVICEINTERFACE, IntPtr.Zero, hostName, IntPtr.Zero))
          {
-            Utils.IsValidHandle(safeHandle, Marshal.GetLastWin32Error());
+            var lastError = Marshal.GetLastWin32Error();
+
+            Utils.IsValidHandle(safeHandle, lastError);
             
             uint memberInterfaceIndex = 0;
             var interfaceStructSize = (uint) Marshal.SizeOf(typeof(NativeMethods.SP_DEVICE_INTERFACE_DATA));
@@ -97,7 +148,7 @@ namespace Alphaleonis.Win32.Device
 
 
             // Start enumerating device interfaces.
-
+            
             while (true)
             {
                var interfaceData = new NativeMethods.SP_DEVICE_INTERFACE_DATA {cbSize = interfaceStructSize};
@@ -109,7 +160,7 @@ namespace Alphaleonis.Win32.Device
                if (!success)
                {
                   if (lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_NO_MORE_ITEMS)
-                     NativeError.ThrowException(lastError, hostName);
+                     NativeError.ThrowException(lastError, nonNullHostName);
 
                   break;
                }
@@ -119,12 +170,12 @@ namespace Alphaleonis.Win32.Device
 
                var diData = new NativeMethods.SP_DEVINFO_DATA {cbSize = dataStructSize};
 
-               var deviceInfo = new DeviceInfo(hostName) {DevicePath = GetDeviceInterfaceDetail(safeHandle, ref interfaceData, ref diData).DevicePath};
+               var deviceInfo = new DeviceInfo(nonNullHostName) {DevicePath = GetDeviceInterfaceDetail(safeHandle, ref interfaceData, ref diData).DevicePath};
 
 
                if (getAllProperties)
                {
-                  deviceInfo.InstanceId = GetDeviceInstanceId(safeMachineHandle, hostName, diData);
+                  deviceInfo.InstanceId = GetDeviceInstanceId(safeMachineHandle, nonNullHostName, diData);
 
                   SetDeviceProperties(safeHandle, deviceInfo, diData);
                }
@@ -142,14 +193,14 @@ namespace Alphaleonis.Win32.Device
 
 
       [SecurityCritical]
-      private static string GetDeviceInstanceId(SafeCmConnectMachineHandle safeMachineHandle, string hostName, NativeMethods.SP_DEVINFO_DATA diData)
+      private static string GetDeviceInstanceId(SafeCmConnectMachineHandle safeMachineHandle, string hostNameForException, NativeMethods.SP_DEVINFO_DATA diData)
       {
          uint ptrPrevious;
 
          var lastError = NativeMethods.CM_Get_Parent_Ex(out ptrPrevious, diData.DevInst, 0, safeMachineHandle);
 
          if (lastError != Win32Errors.CR_SUCCESS)
-            NativeError.ThrowException(lastError, hostName);
+            NativeError.ThrowException(lastError, hostNameForException);
 
 
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Filesystem.NativeMethods.DefaultFileBufferSize / 8)) // 512
@@ -157,7 +208,7 @@ namespace Alphaleonis.Win32.Device
             lastError = NativeMethods.CM_Get_Device_ID_Ex(diData.DevInst, safeBuffer, (uint) safeBuffer.Capacity, 0, safeMachineHandle);
 
             if (lastError != Win32Errors.CR_SUCCESS)
-               NativeError.ThrowException(lastError, hostName);
+               NativeError.ThrowException(lastError, hostNameForException);
 
 
             // Device InstanceID, such as: "USB\VID_8087&PID_0A2B\5&2EDA7E1E&0&7", "SCSI\DISK&VEN_SANDISK&PROD_X400\4&288ED25&0&000200", ...
@@ -253,12 +304,6 @@ namespace Alphaleonis.Win32.Device
       {
          SetMinimalDeviceProperties(safeHandle, deviceInfo, infoData);
          
-         //var guid = GetDeviceBusTypeGuid(safeHandle, infoData);
-
-         //if (null != guid)
-         //   deviceInfo.BusTypeGuid = (Guid)guid;
-
-         
 
          deviceInfo.CompatibleIds = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.CompatibleIds);
 
@@ -281,10 +326,9 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       private static void SetMinimalDeviceProperties(SafeHandle safeHandle, DeviceInfo deviceInfo, NativeMethods.SP_DEVINFO_DATA infoData)
       {
-         deviceInfo.BusReportedDeviceDescription = GetDeviceBusReportedDeviceDescription(safeHandle, infoData);
-
-
          deviceInfo.BaseContainerId = new Guid(GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.BaseContainerId));
+
+         deviceInfo.BusReportedDeviceDescription = GetDeviceBusReportedDeviceDescription(safeHandle, infoData);
 
          deviceInfo.ClassGuid = new Guid(GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.ClassGuid));
 

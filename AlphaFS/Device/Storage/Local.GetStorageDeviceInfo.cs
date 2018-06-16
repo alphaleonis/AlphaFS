@@ -131,23 +131,19 @@ namespace Alphaleonis.Win32.Device
                {
                   var volDiskExtents = GetVolumeDiskExtents(safeHandle, localDevicePath);
 
-                  if (null != volDiskExtents && volDiskExtents.Value.NumberOfDiskExtents > 0)
-                  {
-                     // Use the first disk extent.
-                     // TODO 2018-06-15: Handle multiple disk extents.
+                  if (volDiskExtents.HasValue)
+                     foreach (var extent in volDiskExtents.Value.Extents)
+                     {
+                        var newDeviceNumber = (int) extent.DiskNumber;
 
-                     var newDeviceNumber = (int) volDiskExtents.Value.Extents[0].DiskNumber;
+                        if (getByDeviceNumber && deviceNumber != newDeviceNumber)
+                           continue;
 
-                     getByDeviceNumber = deviceNumber > -1;
+                        localDevicePath = Path.PhysicalDrivePrefix + newDeviceNumber.ToString(CultureInfo.InvariantCulture);
 
-                     if (getByDeviceNumber && deviceNumber != newDeviceNumber)
-                        return null;
-
-                     localDevicePath = Path.PhysicalDrivePrefix + newDeviceNumber.ToString(CultureInfo.InvariantCulture);
-
-                     retry = true;
-                     goto Retry;
-                  }
+                        retry = true;
+                        goto Retry;
+                     }
                }
             }
 
