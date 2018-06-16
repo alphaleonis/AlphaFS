@@ -22,7 +22,6 @@
 using System;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
-using Alphaleonis.Win32.Security;
 
 namespace Alphaleonis.Win32.Device
 {
@@ -43,7 +42,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static StorageAdapterInfo GetStorageAdapterInfo(string devicePath)
       {
-         return GetStorageAdapterInfoCore(ProcessContext.IsElevatedProcess, devicePath, null);
+         return GetStorageAdapterInfoCore(devicePath, null);
       }
 
 
@@ -53,7 +52,6 @@ namespace Alphaleonis.Win32.Device
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="devicePath">
       ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
@@ -62,18 +60,26 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       /// <param name="busReportedDeviceDescription">The bus reported bus reported device description of the <see cref="DeviceInfo"/> instance.</param>
       [SecurityCritical]
-      internal static StorageAdapterInfo GetStorageAdapterInfoCore(bool isElevated, string devicePath, string busReportedDeviceDescription)
+      internal static StorageAdapterInfo GetStorageAdapterInfoCore(string devicePath, string busReportedDeviceDescription)
       {
          var localDevicePath = devicePath;
          
+
          // The StorageDeviceInfo is always needed as it contains the device- and partition number.
 
-         var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, localDevicePath, out localDevicePath);
+         var storageDeviceInfo = GetStorageDeviceInfoCore(false, -1, localDevicePath, out localDevicePath);
 
          if (null == storageDeviceInfo)
             return null;
 
 
+         return GetStorageAdapterInfoNative(storageDeviceInfo.DeviceNumber, localDevicePath, busReportedDeviceDescription);
+      }
+
+
+      [SecurityCritical]
+      internal static StorageAdapterInfo GetStorageAdapterInfoNative(int deviceNumber, string localDevicePath, string busReportedDeviceDescription)
+      {
          using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, NativeMethods.FILE_ANY_ACCESS))
          {
             var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
@@ -87,7 +93,7 @@ namespace Alphaleonis.Win32.Device
             {
                if (null != safeBuffer)
                {
-                  var storageAdapterInfo = new StorageAdapterInfo(storageDeviceInfo.DeviceNumber, safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
+                  var storageAdapterInfo = new StorageAdapterInfo(deviceNumber, safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
 
                   if (!Utils.IsNullOrWhiteSpace(busReportedDeviceDescription))
                      storageAdapterInfo.BusReportedDeviceDescription = busReportedDeviceDescription;

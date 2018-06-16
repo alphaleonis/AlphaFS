@@ -127,7 +127,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
       /// <param name="getAllProperties"><c>true</c> to retrieve all device properties.</param>
       [SecurityCritical]
-      private static IEnumerable<DeviceInfo> EnumerateDevicesNative(SafeCmConnectMachineHandle safeMachineHandle, string hostName, DeviceGuid deviceGuid, bool getAllProperties)
+      internal static IEnumerable<DeviceInfo> EnumerateDevicesNative(SafeCmConnectMachineHandle safeMachineHandle, string hostName, DeviceGuid deviceGuid, bool getAllProperties)
       {
          var nonNullHostName = !Utils.IsNullOrWhiteSpace(hostName) ? hostName : Environment.MachineName;
 

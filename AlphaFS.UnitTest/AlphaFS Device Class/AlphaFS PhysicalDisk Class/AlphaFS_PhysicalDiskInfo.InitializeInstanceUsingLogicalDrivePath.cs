@@ -39,10 +39,18 @@ namespace AlphaFS.UnitTest
 
          foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
+            // Works with System.IO.DriveType.CDRom.
+
             // System.UnauthorizedAccessException: (5) Access is denied.
             if (driveInfo.DriveType == System.IO.DriveType.Network)
             {
                Console.WriteLine("#{0:000}\tSkipped Network drive: [{1}]\n", ++driveCount, driveInfo.Name);
+               continue;
+            }
+
+            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory)
+            {
+               Console.WriteLine("#{0:000}\tSkipped NoRootDirectory drive: [{1}]\n", ++driveCount, driveInfo.Name);
                continue;
             }
 
@@ -64,6 +72,29 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(pDiskInfo.StorageDeviceInfo, true);
 
             UnitTestConstants.Dump(pDiskInfo.StoragePartitionInfo, true);
+
+
+            Assert.IsNotNull(pDiskInfo);
+
+            Assert.IsNotNull(pDiskInfo.LogicalDrives);
+
+            Assert.IsNotNull(pDiskInfo.VolumeGuids);
+
+
+            if (pDiskInfo.StorageDeviceInfo.PartitionNumber > 0)
+               Assert.IsNotNull(pDiskInfo.StoragePartitionInfo);
+
+
+            // For CDRom, the PartitionNumber is always -1.
+
+            if (pDiskInfo.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.StorageDeviceType.CDRom)
+            {
+               Assert.AreEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+               Assert.AreEqual(Alphaleonis.Win32.Device.StorageDeviceType.CDRom, pDiskInfo.StorageDeviceInfo.DeviceType);
+            }
+
+            else
+               Assert.AreNotEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
 
 
             var physicalDiskNumber = pDiskInfo.StorageDeviceInfo.DeviceNumber;

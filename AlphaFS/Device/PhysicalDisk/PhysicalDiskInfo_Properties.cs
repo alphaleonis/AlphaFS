@@ -27,17 +27,26 @@ namespace Alphaleonis.Win32.Device
 {
    public sealed partial class PhysicalDiskInfo
    {
-      /// <summary>The device description.</summary>
-      public string DeviceDescription { get; internal set; }
+      private DeviceInfo DeviceInfo { get; set; }
 
+
+      /// <summary>The device description.</summary>
+      public string DeviceDescription
+      {
+         get { return null != DeviceInfo ? DeviceInfo.DeviceDescription : null; }
+      }
+      
 
       /// <summary>The path to the device.</summary>
       /// <returns>Returns a string that represents the path to the device.
       ///   A drive path such as: <c>C:</c>, <c>D:\</c>,
       ///   a volume <see cref="Guid"/> path such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>
-      ///   or a <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c> string.
+      ///   or a <see cref="Filesystem.DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c> string.
       /// </returns>
-      public string DevicePath { get; internal set; }
+      public string DevicePath
+      {
+         get { return null != DeviceInfo ? DeviceInfo.DevicePath : null; }
+      }
 
 
       /// <summary>An <see cref="ICollection{String}"/> of logical drives that are located on the physical disk.</summary>
@@ -45,7 +54,10 @@ namespace Alphaleonis.Win32.Device
 
       
       /// <summary>The "FriendlyName" of the physical disk.</summary>
-      public string Name { get; internal set; }
+      public string Name
+      {
+         get { return null != DeviceInfo ? DeviceInfo.FriendlyName : null; }
+      }
 
 
       /// <summary>An <see cref="ICollection{String}"/> of partition index numbers that are located on the physical disk.</summary>
@@ -53,7 +65,10 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>Encapsulates the physical device location (PDO) information provided by a device's firmware to Windows.</summary>
-      public string PhysicalDeviceObjectName { get; internal set; }
+      public string PhysicalDeviceObjectName
+      {
+         get { return null != DeviceInfo ? DeviceInfo.PhysicalDeviceObjectName : null; }
+      }
 
 
       /// <summary>The storage device adapter information. Retrieving this information requires an elevated state.</summary>

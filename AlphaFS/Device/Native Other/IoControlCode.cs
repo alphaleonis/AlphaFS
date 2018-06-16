@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.IO;
 
 namespace Alphaleonis.Win32.Device

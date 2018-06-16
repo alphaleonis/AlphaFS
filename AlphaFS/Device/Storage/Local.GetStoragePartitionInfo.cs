@@ -70,34 +70,31 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>[AlphaFS] Retrieves information about the partitions on a disk and the features of each partition.</summary>
-      /// <returns>Returns a <see cref="StoragePartitionInfo"/> instance that represent the partition info that is related to <paramref name="devicePath"/>.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="Exception"/>
-      /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
-      /// <param name="devicePath">
-      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
-      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
-      /// </param>
       [SecurityCritical]
       internal static StoragePartitionInfo GetStoragePartitionInfoCore(bool isElevated, string devicePath)
       {
          var localDevicePath = devicePath;
          
+
          // The StorageDeviceInfo is always needed as it contains the device- and partition number.
 
          var storageDeviceInfo = GetStorageDeviceInfoCore(isElevated, -1, localDevicePath, out localDevicePath);
 
          if (null == storageDeviceInfo)
             return null;
-         
 
+
+         return GetStoragePartitionInfoNative(isElevated, storageDeviceInfo.DeviceNumber, localDevicePath);
+      }
+
+
+      [SecurityCritical]
+      internal static StoragePartitionInfo GetStoragePartitionInfoNative(bool isElevated, int deviceNumber, string localDevicePath)
+      {
          using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
+
          using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, 0, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 4))
+
             if (null != safeBuffer)
             {
                var layout = safeBuffer.PtrToStructure<NativeMethods.DRIVE_LAYOUT_INFORMATION_EX>();
@@ -119,7 +116,7 @@ namespace Alphaleonis.Win32.Device
 
                   var disk = GetDiskGeometryExNative(safeHandle, localDevicePath);
 
-                  return new StoragePartitionInfo(storageDeviceInfo.DeviceNumber, disk, layout, partitions);
+                  return new StoragePartitionInfo(deviceNumber, disk, layout, partitions);
                }
             }
 

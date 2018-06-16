@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetPhysicalDiskInfo_UsingDevicePathFromSystemDrive_Success()
+      public void AlphaFS_PhysicalDiskInfo_InitializeInstanceUsingDevicePathFromSystemDrive_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 

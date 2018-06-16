@@ -64,13 +64,6 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(pDiskInfo.StoragePartitionInfo, true);
 
 
-            //Assert.AreEqual(driveCount, pDiskInfo.StorageAdapterInfo.DeviceNumber);
-
-            //Assert.AreEqual(driveCount, pDiskInfo.StorageDeviceInfo.DeviceNumber);
-
-            //Assert.AreEqual(driveCount, pDiskInfo.StoragePartitionInfo.DeviceNumber);
-
-
             driveCount++;
 
             Console.WriteLine();

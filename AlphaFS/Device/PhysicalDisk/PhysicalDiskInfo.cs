@@ -20,8 +20,8 @@
  */
 
 using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
 
@@ -32,40 +32,27 @@ namespace Alphaleonis.Win32.Device
    [SecurityCritical]
    public sealed partial class PhysicalDiskInfo
    {
-      #region Fields
-
-      private int _deviceNumber = -1;
-      private string _localDevicePath;
-      private bool _isElevated;
-      private bool _isDrive;
-      private bool _isVolume;
-      private bool _isDevice;
-
-      #endregion // Fields
-
-
       #region Constructors
 
-      /// <summary>[AlphaFS] Initializes an empty PhysicalDiskInfo instance.</summary>
-      public PhysicalDiskInfo()
+      private PhysicalDiskInfo()
       {
       }
 
 
-      /// <summary>[AlphaFS] Initializes a PhysicalDiskInfo instance from a physical disk number such as: <c>0</c>, <c>1</c>, ...</summary>
+      /// <summary>[AlphaFS] Initializes an instance from a physical disk number.</summary>
       /// <param name="deviceNumber">A number that indicates a physical disk on the Computer.</param>
       public PhysicalDiskInfo(int deviceNumber)
       {
          if (deviceNumber < 0)
             throw new ArgumentOutOfRangeException("deviceNumber");
 
-         CreatePhysicalDiskInfoInstance(Security.ProcessContext.IsElevatedProcess, deviceNumber, null);
+         CreatePhysicalDiskInfoInstance(this, Security.ProcessContext.IsElevatedProcess, deviceNumber, null, null);
       }
 
 
-      /// <summary>[AlphaFS] Initializes a PhysicalDiskInfo instance from a physical disk number such as: <c>0</c>, <c>1</c>, ...</summary>
+      /// <summary>[AlphaFS] Initializes an instance from a physical disk device path.</summary>
       /// <remark>
-      ///   Do not create and instance for every volume/logical drive on the Computer as each call queries all physical disks, associated volumes and logical drives.
+      ///   Creating an instance for every volume/logical drive on the Computer is expensive as each call queries all physical disks, associated volumes/logical drives.
       ///   Instead, use method <see cref="Local.EnumeratePhysicalDisks()"/> and property <see cref="VolumeGuids"/> or <see cref="LogicalDrives"/>.
       /// </remark>
       /// <param name="devicePath">
@@ -76,104 +63,147 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       public PhysicalDiskInfo(string devicePath)
       {
-         CreatePhysicalDiskInfoInstance(Security.ProcessContext.IsElevatedProcess, -1, devicePath);
+         CreatePhysicalDiskInfoInstance(this, Security.ProcessContext.IsElevatedProcess, -1, devicePath, null);
+      }
+
+
+      internal PhysicalDiskInfo(int deviceNumber, string devicePath, DeviceInfo deviceInfo)
+      {
+         CreatePhysicalDiskInfoInstance(this, Security.ProcessContext.IsElevatedProcess, deviceNumber, devicePath, deviceInfo);
       }
 
       #endregion // Constructors
 
 
       [SecurityCritical]
-      private void CreatePhysicalDiskInfoInstance(bool isElevated, int deviceNumber, string devicePath)
+      private static void CreatePhysicalDiskInfoInstance(PhysicalDiskInfo physicalDiskInfo, bool isElevated, int deviceNumber, string devicePath, DeviceInfo deviceInfo)
       {
-         _isElevated = isElevated;
-
          var getByDeviceNumber = deviceNumber > -1;
+         var isDrive = false;
+         bool isVolume;
+         var isDevice = false;
 
-         if (getByDeviceNumber)
-            _deviceNumber = deviceNumber;
-         
-         _localDevicePath = getByDeviceNumber ? Path.PhysicalDrivePrefix + _deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out _isDrive, out _isVolume, out _isDevice);
+         var localDevicePath = getByDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
 
-         if (_isDrive)
-            _localDevicePath = FileSystemHelper.GetLocalDevicePath(_localDevicePath);
+         if (isDrive)
+            localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
          
 
          // The StorageDeviceInfo is always needed as it contains the device- and partition number.
 
-         var localDevicePathStorageDeviceInfo = Local.GetStorageDeviceInfoNative(_isElevated, _isDevice, _deviceNumber, _localDevicePath, out _localDevicePath);
+         var storageDeviceInfo = Local.GetStorageDeviceInfoNative(isElevated, isDevice, deviceNumber, localDevicePath, out localDevicePath);
          
-         if (null == localDevicePathStorageDeviceInfo)
+         if (null == storageDeviceInfo)
             return;
 
 
-         DeviceInfo theDeviceInfo = null;
-         StorageDeviceInfo theDeviceStorageInfo = null;
+         deviceNumber = getByDeviceNumber ? deviceNumber : storageDeviceInfo.DeviceNumber;
 
-         var theDeviceNumber = getByDeviceNumber ? _deviceNumber : localDevicePathStorageDeviceInfo.DeviceNumber;
+         if (null == deviceInfo)
+            foreach (var device in Local.EnumerateDevicesCore(null, new[] {DeviceGuid.Disk, DeviceGuid.CDRom}, false))
+            {
+               string unusedDevicePath;
+
+               var deviceStorageInfo = Local.GetStorageDeviceInfoNative(isElevated, true, deviceNumber, device.DevicePath, out unusedDevicePath);
+
+               if (null == deviceStorageInfo)
+                  continue;
+
+               deviceInfo = device;
+               break;
+            }
+
+         if (null == deviceInfo)
+            return;
 
 
-         foreach (var device in Local.EnumerateDevicesCore(null, new[] {DeviceGuid.Disk, DeviceGuid.CDRom}, false))
+         physicalDiskInfo.DeviceInfo = deviceInfo;
+
+         physicalDiskInfo.StorageAdapterInfo = Local.GetStorageAdapterInfoNative(deviceNumber, localDevicePath, deviceInfo.BusReportedDeviceDescription);
+         
+         physicalDiskInfo.StoragePartitionInfo = Local.GetStoragePartitionInfoNative(isElevated, deviceNumber, localDevicePath);
+
+         physicalDiskInfo.StorageDeviceInfo = storageDeviceInfo;
+
+
+         PopulatePhysicalDisk(isElevated, physicalDiskInfo);
+      }
+
+
+      /// <summary>Retrieves volumes/logical drives that belong to the <paramref name="physicalDiskInfo"/> instance.</summary>
+      [SecurityCritical]
+      private static void PopulatePhysicalDisk(bool isElevated, PhysicalDiskInfo physicalDiskInfo)
+      {
+         var deviceNumber = physicalDiskInfo.StorageDeviceInfo.DeviceNumber;
+
+
+         foreach (var volumeGuid in Volume.EnumerateVolumes())
          {
-            string unusedDevicePath;
+            string unusedLocalDevicePath;
 
-            theDeviceStorageInfo = Local.GetStorageDeviceInfoNative(_isElevated, true, theDeviceNumber, device.DevicePath, out unusedDevicePath);
+            // The StorageDeviceInfo is always needed as it contains the device- and partition number.
 
-            if (null == theDeviceStorageInfo)
+            var storageDeviceInfo = Local.GetStorageDeviceInfoCore(isElevated, deviceNumber, volumeGuid, out unusedLocalDevicePath);
+
+            if (null == storageDeviceInfo)
                continue;
 
-            theDeviceInfo = device;
-            break;
+
+            AddToPartitionIndex(physicalDiskInfo, storageDeviceInfo.PartitionNumber);
+            
+            AddToVolumeGuids(physicalDiskInfo, volumeGuid);
+            
+
+            // Resolve logical drive from volume matching DeviceNumber and PartitionNumber.
+
+            var driveName = Volume.GetVolumeDisplayName(volumeGuid);
+
+
+            if (!Utils.IsNullOrWhiteSpace(driveName))
+
+               AddToLogicalDrives(physicalDiskInfo, driveName);
          }
-
-         if (null == theDeviceInfo)
-            return;
+      }
 
 
-         // Set instance properties.
+      private static void AddToPartitionIndex(PhysicalDiskInfo pDiskInfo, int deviceNumber)
+      {
+         // Add device partition index numbers.
 
-         DevicePath = theDeviceInfo.DevicePath;
+         if (null == pDiskInfo.PartitionIndexes)
+            pDiskInfo.PartitionIndexes = new Collection<int>();
 
-         DeviceDescription = theDeviceInfo.DeviceDescription;
-
-         Name = theDeviceInfo.FriendlyName;
-
-         PhysicalDeviceObjectName = theDeviceInfo.PhysicalDeviceObjectName;
-
-
-         StorageAdapterInfo = Local.GetStorageAdapterInfoCore(_isElevated, theDeviceInfo.DevicePath, theDeviceInfo.BusReportedDeviceDescription);
-
-         StorageDeviceInfo = _isDevice ? theDeviceStorageInfo : localDevicePathStorageDeviceInfo;
-
-         StoragePartitionInfo = Local.GetStoragePartitionInfoCore(_isElevated, theDeviceInfo.DevicePath);
+         pDiskInfo.PartitionIndexes.Add(deviceNumber);
+      }
 
 
-         var pDiskInfo = Local.PopulatePhysicalDisk(_isElevated, this);
+      private static void AddToVolumeGuids(PhysicalDiskInfo pDiskInfo, string volumeGuid)
+      {
+         //// Add device volume labels.
 
-         LogicalDrives = pDiskInfo.LogicalDrives;
+         //if (null == pDiskInfo.VolumeLabels)
+         //   pDiskInfo.VolumeLabels = new Collection<string>();
 
-         VolumeGuids = pDiskInfo.VolumeGuids;
+         //pDiskInfo.VolumeLabels.Add(pVolume.Name);
+         
 
-         PartitionIndexes = pDiskInfo.PartitionIndexes;
+         // Add device volume GUIDs.
+
+         if (null == pDiskInfo.VolumeGuids)
+            pDiskInfo.VolumeGuids = new Collection<string>();
+
+         pDiskInfo.VolumeGuids.Add(volumeGuid);
+      }
 
 
+      private static void AddToLogicalDrives(PhysicalDiskInfo pDiskInfo, string drivePath)
+      {
+         // Add device logical drive.
 
+         if (null == pDiskInfo.LogicalDrives)
+            pDiskInfo.LogicalDrives = new Collection<string>();
 
-         //if (!getByDeviceNumber)
-         //   _deviceNumber = storageDeviceInfo.DeviceNumber;
-
-         //var physicalDiskInfo = Local.EnumeratePhysicalDisksCore(_isElevated, _deviceNumber).FirstOrDefault();
-
-         //if (null != physicalDiskInfo)
-         //{
-         //   physicalDiskInfo.StorageAdapterInfo = Local.GetStorageAdapterInfoCore(isElevated, devicePath, busReportedDeviceDescription);
-
-         //   if (_isDrive || _isVolume)
-         //      physicalDiskInfo.StorageDeviceInfo = storageDeviceInfo;
-
-         //   physicalDiskInfo.StoragePartitionInfo = Local.GetStoragePartitionInfoCore(isElevated, devicePath);
-
-         //   Utils.CopyTo(physicalDiskInfo, this);
-         //}
+         pDiskInfo.LogicalDrives.Add(Path.RemoveTrailingDirectorySeparator(drivePath));
       }
 
 
