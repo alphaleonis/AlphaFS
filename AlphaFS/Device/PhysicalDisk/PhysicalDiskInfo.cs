@@ -20,6 +20,8 @@
  */
 
 using System;
+using System.Globalization;
+using System.Linq;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
 
@@ -34,6 +36,7 @@ namespace Alphaleonis.Win32.Device
 
       private int _deviceNumber = -1;
       private string _localDevicePath;
+      private bool _isElevated;
       private bool _isDrive;
       private bool _isVolume;
       private bool _isDevice;
@@ -56,24 +59,14 @@ namespace Alphaleonis.Win32.Device
          if (deviceNumber < 0)
             throw new ArgumentOutOfRangeException("deviceNumber");
 
-         _deviceNumber = deviceNumber;
-         
-
-         var pDiskInfo = Local.GetPhysicalDiskInfoCore(Security.ProcessContext.IsElevatedProcess, _deviceNumber, null);
-
-         if (null != pDiskInfo)
-         {
-            SetDevicePath(pDiskInfo.DevicePath);
-
-            Utils.CopyTo(pDiskInfo, this);
-         }
+         CreatePhysicalDiskInfoInstance(Security.ProcessContext.IsElevatedProcess, deviceNumber, null);
       }
 
 
       /// <summary>[AlphaFS] Initializes a PhysicalDiskInfo instance from a physical disk number such as: <c>0</c>, <c>1</c>, ...</summary>
       /// <remark>
       ///   Do not create and instance for every volume/logical drive on the Computer as each call queries all physical disks, associated volumes and logical drives.
-      ///   Instead, use method <see cref="EnumeratePhysicalDisks()"/> and property <see cref="VolumeGuids"/> or <see cref="LogicalDrives"/>.
+      ///   Instead, use method <see cref="Local.EnumeratePhysicalDisks()"/> and property <see cref="VolumeGuids"/> or <see cref="LogicalDrives"/>.
       /// </remark>
       /// <param name="devicePath">
       ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
@@ -83,24 +76,107 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       public PhysicalDiskInfo(string devicePath)
       {
-         SetDevicePath(devicePath);
-
-         var pDiskInfo = Local.GetPhysicalDiskInfoCore(Security.ProcessContext.IsElevatedProcess, -1, _localDevicePath);
-
-         if (null != pDiskInfo)
-            Utils.CopyTo(pDiskInfo, this);
+         CreatePhysicalDiskInfoInstance(Security.ProcessContext.IsElevatedProcess, -1, devicePath);
       }
 
       #endregion // Constructors
 
 
-      private void SetDevicePath(string devicePath)
+      [SecurityCritical]
+      private void CreatePhysicalDiskInfoInstance(bool isElevated, int deviceNumber, string devicePath)
       {
-         _localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out _isDrive, out _isVolume, out _isDevice);
+         _isElevated = isElevated;
+
+         var getByDeviceNumber = deviceNumber > -1;
+
+         if (getByDeviceNumber)
+            _deviceNumber = deviceNumber;
+         
+         _localDevicePath = getByDeviceNumber ? Path.PhysicalDrivePrefix + _deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out _isDrive, out _isVolume, out _isDevice);
 
          if (_isDrive)
             _localDevicePath = FileSystemHelper.GetLocalDevicePath(_localDevicePath);
+         
+
+         // The StorageDeviceInfo is always needed as it contains the device- and partition number.
+
+         var localDevicePathStorageDeviceInfo = Local.GetStorageDeviceInfoNative(_isElevated, _isDevice, _deviceNumber, _localDevicePath, out _localDevicePath);
+         
+         if (null == localDevicePathStorageDeviceInfo)
+            return;
+
+
+         DeviceInfo theDeviceInfo = null;
+         StorageDeviceInfo theDeviceStorageInfo = null;
+
+         var theDeviceNumber = getByDeviceNumber ? _deviceNumber : localDevicePathStorageDeviceInfo.DeviceNumber;
+
+
+         foreach (var device in Local.EnumerateDevicesCore(null, new[] {DeviceGuid.Disk, DeviceGuid.CDRom}, false))
+         {
+            string unusedDevicePath;
+
+            theDeviceStorageInfo = Local.GetStorageDeviceInfoNative(_isElevated, true, theDeviceNumber, device.DevicePath, out unusedDevicePath);
+
+            if (null == theDeviceStorageInfo)
+               continue;
+
+            theDeviceInfo = device;
+            break;
+         }
+
+         if (null == theDeviceInfo)
+            return;
+
+
+         // Set instance properties.
+
+         DevicePath = theDeviceInfo.DevicePath;
+
+         DeviceDescription = theDeviceInfo.DeviceDescription;
+
+         Name = theDeviceInfo.FriendlyName;
+
+         PhysicalDeviceObjectName = theDeviceInfo.PhysicalDeviceObjectName;
+
+
+         StorageAdapterInfo = Local.GetStorageAdapterInfoCore(_isElevated, theDeviceInfo.DevicePath, theDeviceInfo.BusReportedDeviceDescription);
+
+         StorageDeviceInfo = _isDevice ? theDeviceStorageInfo : localDevicePathStorageDeviceInfo;
+
+         StoragePartitionInfo = Local.GetStoragePartitionInfoCore(_isElevated, theDeviceInfo.DevicePath);
+
+
+         var pDiskInfo = Local.PopulatePhysicalDisk(_isElevated, this);
+
+         LogicalDrives = pDiskInfo.LogicalDrives;
+
+         VolumeGuids = pDiskInfo.VolumeGuids;
+
+         PartitionIndexes = pDiskInfo.PartitionIndexes;
+
+
+
+
+         //if (!getByDeviceNumber)
+         //   _deviceNumber = storageDeviceInfo.DeviceNumber;
+
+         //var physicalDiskInfo = Local.EnumeratePhysicalDisksCore(_isElevated, _deviceNumber).FirstOrDefault();
+
+         //if (null != physicalDiskInfo)
+         //{
+         //   physicalDiskInfo.StorageAdapterInfo = Local.GetStorageAdapterInfoCore(isElevated, devicePath, busReportedDeviceDescription);
+
+         //   if (_isDrive || _isVolume)
+         //      physicalDiskInfo.StorageDeviceInfo = storageDeviceInfo;
+
+         //   physicalDiskInfo.StoragePartitionInfo = Local.GetStoragePartitionInfoCore(isElevated, devicePath);
+
+         //   Utils.CopyTo(physicalDiskInfo, this);
+         //}
       }
+
+
 
 
       /// <summary>Returns the "FriendlyName" of the physical disk.</summary>
@@ -121,10 +197,13 @@ namespace Alphaleonis.Win32.Device
 
          var other = obj as PhysicalDiskInfo;
 
-         return null != other && null != other.DevicePath && null != other.StorageDeviceInfo &&
-                other.DevicePath.Equals(DevicePath, StringComparison.OrdinalIgnoreCase) &&
-                other.StorageDeviceInfo.Equals(StorageDeviceInfo) &&
-                other.StorageDeviceInfo.DeviceNumber.Equals(StorageDeviceInfo.DeviceNumber) && other.StorageDeviceInfo.PartitionNumber.Equals(StorageDeviceInfo.PartitionNumber);
+         return null != other && Equals(DevicePath, other.DevicePath) &&
+
+                Equals(StorageAdapterInfo, other.StorageAdapterInfo) &&
+
+                Equals(StorageDeviceInfo, other.StorageDeviceInfo) &&
+
+                Equals(StoragePartitionInfo, other.StoragePartitionInfo);
       }
 
 

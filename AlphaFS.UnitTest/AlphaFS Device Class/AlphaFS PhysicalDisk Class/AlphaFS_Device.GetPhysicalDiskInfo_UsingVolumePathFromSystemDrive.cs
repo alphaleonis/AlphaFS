@@ -44,44 +44,48 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("#{0:000}\tInput Volume Path: [{1}]", ++volumeCount, sourceVolume);
 
 
-         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceVolume);
+         var pDiskInfo = new Alphaleonis.Win32.Device.PhysicalDiskInfo(sourceVolume);
 
          
-         UnitTestConstants.Dump(pDisk);
+         UnitTestConstants.Dump(pDiskInfo);
 
-         UnitTestConstants.Dump(pDisk.StorageAdapterInfo, true);
+         UnitTestConstants.Dump(pDiskInfo.StorageAdapterInfo, true);
 
-         UnitTestConstants.Dump(pDisk.StorageDeviceInfo, true);
+         UnitTestConstants.Dump(pDiskInfo.StorageDeviceInfo, true);
 
-         UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
+         UnitTestConstants.Dump(pDiskInfo.StoragePartitionInfo, true);
+         Console.WriteLine();
+
+
+         Assert.IsNotNull(pDiskInfo);
+
+         Assert.IsNotNull(pDiskInfo.LogicalDrives);
+
+         Assert.IsNotNull(pDiskInfo.VolumeGuids);
+
+
+         Assert.IsTrue(pDiskInfo.LogicalDrives.Contains(sourceDrive, StringComparer.OrdinalIgnoreCase));
+
+         Assert.IsTrue(pDiskInfo.ContainsVolume(sourceDrive));
+
+
+         Assert.IsTrue(pDiskInfo.VolumeGuids.Contains(sourceVolume, StringComparer.OrdinalIgnoreCase));
+
+         Assert.IsTrue(pDiskInfo.ContainsVolume(sourceVolume));
          
 
-         Assert.IsNotNull(pDisk);
-
-         Assert.IsNotNull(pDisk.LogicalDrives);
-
-         Assert.IsNotNull(pDisk.VolumeGuids);
-
-         Assert.AreNotEqual(-1, pDisk.StorageDeviceInfo.PartitionNumber);
-
-         Assert.AreEqual(pDisk.LogicalDrives.Contains(sourceDrive, StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(sourceDrive));
-
-         Assert.AreEqual(pDisk.VolumeGuids.Contains(sourceVolume, StringComparer.OrdinalIgnoreCase), pDisk.ContainsVolume(sourceVolume));
+         Assert.AreNotEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
 
 
          // Show all partition information.
 
-         if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.GptPartitionInfo)
-         {
-            foreach (var partition in pDisk.StoragePartitionInfo.GptPartitionInfo)
+         if (null != pDiskInfo.StoragePartitionInfo && null != pDiskInfo.StoragePartitionInfo.GptPartitionInfo)
+            foreach (var partition in pDiskInfo.StoragePartitionInfo.GptPartitionInfo)
                UnitTestConstants.Dump(partition, true);
-         }
 
-         if (null != pDisk.StoragePartitionInfo && null != pDisk.StoragePartitionInfo.MbrPartitionInfo)
-         {
-            foreach (var partition in pDisk.StoragePartitionInfo.MbrPartitionInfo)
+         if (null != pDiskInfo.StoragePartitionInfo && null != pDiskInfo.StoragePartitionInfo.MbrPartitionInfo)
+            foreach (var partition in pDiskInfo.StoragePartitionInfo.MbrPartitionInfo)
                UnitTestConstants.Dump(partition, true);
-         }
 
 
          Console.WriteLine();

@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Device
       ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
       [SecurityCritical]
-      private static StoragePartitionInfo GetStoragePartitionInfoCore(bool isElevated, string devicePath)
+      internal static StoragePartitionInfo GetStoragePartitionInfoCore(bool isElevated, string devicePath)
       {
          var localDevicePath = devicePath;
          

@@ -38,13 +38,13 @@ namespace Alphaleonis.Win32.Device
          return EnumeratePhysicalDisksCore(ProcessContext.IsElevatedProcess, -1);
       }
 
-      
+
       /// <summary>[AlphaFS] Enumerates the physical disks (including CD/DVD devices) on the Computer, populated with volume-/logical drive information.</summary>
       /// <returns>Returns an <see cref="IEnumerable{PhysicalDiskInfo}"/> collection that represents the physical disks on the Computer.</returns>
       /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="deviceNumber">Retrieve a <see cref="PhysicalDiskInfo"/> instance by device number.</param>
       [SecurityCritical]
-      private static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisksCore(bool isElevated, int deviceNumber)
+      internal static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisksCore(bool isElevated, int deviceNumber)
       {
          var getByDeviceNumber = deviceNumber > -1;
 
@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Device
 
 
                StorageAdapterInfo = GetStorageAdapterInfoCore(isElevated, devicePath, deviceInfo.BusReportedDeviceDescription),
-
+               
                StorageDeviceInfo = storageDeviceInfo,
 
                StoragePartitionInfo = GetStoragePartitionInfoCore(isElevated, devicePath)
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>Retrieves volumes and logical drives that belong to <paramref name="pDiskInfo"/> </summary>
-      private static PhysicalDiskInfo PopulatePhysicalDisk(bool isElevated, PhysicalDiskInfo pDiskInfo)
+      internal static PhysicalDiskInfo PopulatePhysicalDisk(bool isElevated, PhysicalDiskInfo pDiskInfo)
       {
          var newPDiskInfo = Utils.CopyFrom(pDiskInfo);
 

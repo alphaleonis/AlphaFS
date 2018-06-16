@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("#{0:000}\tInput Volume Path: [{1}]", ++volumeCount, sourceVolume);
 
 
-         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceVolume);
+         var pDiskInfo = new Alphaleonis.Win32.Device.PhysicalDiskInfo(sourceVolume);
 
          var storagePartitionInfo = Alphaleonis.Win32.Device.Local.GetStoragePartitionInfo(sourceVolume);
 
@@ -54,11 +54,11 @@ namespace AlphaFS.UnitTest
 
          Assert.AreEqual(0, storagePartitionInfo.DeviceNumber);
 
-         Assert.IsNotNull(pDisk);
+         Assert.IsNotNull(pDiskInfo);
 
-         Assert.AreEqual(pDisk.StorageDeviceInfo.DeviceNumber, storagePartitionInfo.DeviceNumber);
+         Assert.AreEqual(pDiskInfo.StorageDeviceInfo.DeviceNumber, storagePartitionInfo.DeviceNumber);
 
-         Assert.AreEqual(pDisk.StoragePartitionInfo, storagePartitionInfo);
+         Assert.AreEqual(pDiskInfo.StoragePartitionInfo, storagePartitionInfo);
 
 
          // Show all partition information.

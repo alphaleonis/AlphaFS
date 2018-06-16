@@ -35,6 +35,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(false);
 
          var driveCount = 0;
+         Alphaleonis.Win32.Device.PhysicalDiskInfo prevDiskInfo = null;
 
          foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
@@ -49,22 +50,27 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]", ++driveCount, driveInfo.Name);
 
 
-            var pDisk = new Alphaleonis.Win32.Device.PhysicalDiskInfo(driveInfo.Name);
+            var pDiskInfo = new Alphaleonis.Win32.Device.PhysicalDiskInfo(driveInfo.Name);
 
-            UnitTestConstants.Dump(pDisk);
+            Assert.AreNotEqual(prevDiskInfo, pDiskInfo);
 
-            UnitTestConstants.Dump(pDisk.StorageAdapterInfo, true);
-
-            UnitTestConstants.Dump(pDisk.StorageDeviceInfo, true);
-
-            UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
+            prevDiskInfo = pDiskInfo;
 
 
-            var physicalDiskNumber = pDisk.StorageDeviceInfo.DeviceNumber;
+            UnitTestConstants.Dump(pDiskInfo);
 
-            Assert.AreEqual(physicalDiskNumber, pDisk.StorageAdapterInfo.DeviceNumber);
+            UnitTestConstants.Dump(pDiskInfo.StorageAdapterInfo, true);
 
-            Assert.AreEqual(physicalDiskNumber, pDisk.StoragePartitionInfo.DeviceNumber);
+            UnitTestConstants.Dump(pDiskInfo.StorageDeviceInfo, true);
+
+            UnitTestConstants.Dump(pDiskInfo.StoragePartitionInfo, true);
+
+
+            var physicalDiskNumber = pDiskInfo.StorageDeviceInfo.DeviceNumber;
+
+            Assert.AreEqual(physicalDiskNumber, pDiskInfo.StorageAdapterInfo.DeviceNumber);
+
+            Assert.AreEqual(physicalDiskNumber, pDiskInfo.StoragePartitionInfo.DeviceNumber);
 
             Console.WriteLine();
          }

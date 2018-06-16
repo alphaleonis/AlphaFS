@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="deviceGuid">One or more <see cref="DeviceGuid"/> device guids.</param>
       /// <param name="getAllProperties"><c>true</c> to retrieve all device properties.</param>
       [SecurityCritical]
-      private static IEnumerable<DeviceInfo> EnumerateDevicesCore(string hostName, DeviceGuid[] deviceGuid, bool getAllProperties)
+      internal static IEnumerable<DeviceInfo> EnumerateDevicesCore(string hostName, DeviceGuid[] deviceGuid, bool getAllProperties)
       {
          SafeCmConnectMachineHandle safeMachineHandle = null;
 

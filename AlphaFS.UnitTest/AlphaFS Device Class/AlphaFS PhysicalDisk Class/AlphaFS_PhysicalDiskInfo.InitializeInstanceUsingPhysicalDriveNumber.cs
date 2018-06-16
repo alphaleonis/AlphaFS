@@ -44,22 +44,22 @@ namespace AlphaFS.UnitTest
          {
             Console.WriteLine("#{0:000}\tInput Physical Disk Number: [{1}]", physicalDiskNumber + 1, physicalDiskNumber);
 
-            var pDisk = new Alphaleonis.Win32.Device.PhysicalDiskInfo(physicalDiskNumber);
+            var pDiskInfo = new Alphaleonis.Win32.Device.PhysicalDiskInfo(physicalDiskNumber);
 
-            UnitTestConstants.Dump(pDisk);
+            UnitTestConstants.Dump(pDiskInfo);
 
-            UnitTestConstants.Dump(pDisk.StorageAdapterInfo, true);
+            UnitTestConstants.Dump(pDiskInfo.StorageAdapterInfo, true);
 
-            UnitTestConstants.Dump(pDisk.StorageDeviceInfo, true);
+            UnitTestConstants.Dump(pDiskInfo.StorageDeviceInfo, true);
 
-            UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
+            UnitTestConstants.Dump(pDiskInfo.StoragePartitionInfo, true);
 
 
-            Assert.AreEqual(physicalDiskNumber, pDisk.StorageAdapterInfo.DeviceNumber);
+            Assert.AreEqual(physicalDiskNumber, pDiskInfo.StorageAdapterInfo.DeviceNumber);
 
-            Assert.AreEqual(physicalDiskNumber, pDisk.StorageDeviceInfo.DeviceNumber);
+            Assert.AreEqual(physicalDiskNumber, pDiskInfo.StorageDeviceInfo.DeviceNumber);
 
-            Assert.AreEqual(physicalDiskNumber, pDisk.StoragePartitionInfo.DeviceNumber);
+            Assert.AreEqual(physicalDiskNumber, pDiskInfo.StoragePartitionInfo.DeviceNumber);
 
             Console.WriteLine();
          }

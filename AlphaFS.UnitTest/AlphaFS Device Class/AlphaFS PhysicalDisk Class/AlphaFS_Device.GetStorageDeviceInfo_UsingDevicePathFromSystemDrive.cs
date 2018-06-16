@@ -38,12 +38,12 @@ namespace AlphaFS.UnitTest
 
          var sourceDrive = UnitTestConstants.SysDrive;
 
-         var devicePath = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(sourceDrive).DevicePath;
+         var devicePath = new Alphaleonis.Win32.Device.PhysicalDiskInfo(sourceDrive).DevicePath;
 
          Console.WriteLine("#{0:000}\tInput Device Path: [{1}]", ++deviceCount, devicePath);
 
 
-         var pDisk = Alphaleonis.Win32.Device.Local.GetPhysicalDiskInfo(devicePath);
+         var pDiskInfo = new Alphaleonis.Win32.Device.PhysicalDiskInfo(devicePath);
          
          var storageDeviceInfo = Alphaleonis.Win32.Device.Local.GetStorageDeviceInfo(devicePath);
 
@@ -54,9 +54,9 @@ namespace AlphaFS.UnitTest
 
          Assert.AreEqual(0, storageDeviceInfo.DeviceNumber);
 
-         Assert.IsNotNull(pDisk);
+         Assert.IsNotNull(pDiskInfo);
 
-         Assert.AreEqual(pDisk.StorageDeviceInfo, storageDeviceInfo);
+         Assert.AreEqual(pDiskInfo.StorageDeviceInfo, storageDeviceInfo);
       }
    }
 }

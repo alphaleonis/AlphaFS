@@ -215,7 +215,6 @@
     <Compile Include="Device\Storage\Device.StorageAdapterInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageDeviceInfo.cs" />
     <Compile Include="Device\Storage\Local.GetStorageDeviceInfo.cs" />
-    <Compile Include="Device\PhysicalDisk\Local.GetPhysicalDiskInfo.cs" />
     <Compile Include="Device\PhysicalDisk\Local.EnumeratePhysicalDisks.cs" />
     <Compile Include="Device\Local.EnumerateDevices.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.Compression.cs" />
@@ -744,7 +743,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

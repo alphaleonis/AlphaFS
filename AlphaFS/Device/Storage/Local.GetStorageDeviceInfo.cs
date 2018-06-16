@@ -90,9 +90,8 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       /// <param name="localDevicePath">The resolved local device path such as <c>\\.\C:</c> or <c>\\.\PhysicalDrive0</c></param>
       [SecurityCritical]
-      private static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, int deviceNumber, string devicePath, out string localDevicePath)
+      internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, int deviceNumber, string devicePath, out string localDevicePath)
       {
-         var getByDeviceNumber = deviceNumber > -1;
          bool isDrive;
          bool isVolume;
          bool isDevice;
@@ -102,6 +101,14 @@ namespace Alphaleonis.Win32.Device
          if (isDrive)
             localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
 
+         return GetStorageDeviceInfoNative(isElevated, isDevice, deviceNumber, localDevicePath, out localDevicePath);
+      }
+
+
+      internal static StorageDeviceInfo GetStorageDeviceInfoNative(bool isElevated, bool isDevice, int deviceNumber, string devicePath, out string localDevicePath)
+      {
+         localDevicePath = devicePath;
+         var getByDeviceNumber = deviceNumber > -1;
          var retry = false;
 
       Retry:

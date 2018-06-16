@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
 
          var cdRoms = Alphaleonis.Win32.Filesystem.Volume.QueryAllDosDevices().Where(device => device.StartsWith("CdRom", StringComparison.OrdinalIgnoreCase)).ToArray();
 
-         var pDrives = Alphaleonis.Win32.Device.Local.EnumeratePhysicalDisks().OrderBy(pDiskInfo => pDiskInfo.StorageDeviceInfo.DeviceNumber).ThenBy(pDiskInfo => pDiskInfo.StorageDeviceInfo.PartitionNumber).ToArray();
+         var pDrives = Alphaleonis.Win32.Device.Local.EnumeratePhysicalDisks().OrderBy(pDiskInfo => pDiskInfo.StorageDeviceInfo.DeviceNumber).ThenByDescending(pDiskInfo => pDiskInfo.StorageDeviceInfo.PartitionNumber).ToArray();
 
          var allPhysicalDrives = physicalDrives.Length + cdRoms.Length;
 
@@ -51,24 +51,24 @@ namespace AlphaFS.UnitTest
          Assert.AreEqual(allPhysicalDrives, pDrives.Length);
 
 
-         foreach (var pDisk in pDrives)
+         foreach (var pDiskInfo in pDrives)
          {
-            Console.WriteLine("#{0:000}\tPhysical Disk: [{1}]", driveCount, pDisk.StorageDeviceInfo.DeviceNumber);
+            Console.WriteLine("#{0:000}\tPhysical Disk: [{1}]", driveCount, pDiskInfo.StorageDeviceInfo.DeviceNumber);
 
-            UnitTestConstants.Dump(pDisk);
+            UnitTestConstants.Dump(pDiskInfo);
 
-            UnitTestConstants.Dump(pDisk.StorageAdapterInfo, true);
+            UnitTestConstants.Dump(pDiskInfo.StorageAdapterInfo, true);
 
-            UnitTestConstants.Dump(pDisk.StorageDeviceInfo, true);
+            UnitTestConstants.Dump(pDiskInfo.StorageDeviceInfo, true);
 
-            UnitTestConstants.Dump(pDisk.StoragePartitionInfo, true);
+            UnitTestConstants.Dump(pDiskInfo.StoragePartitionInfo, true);
 
 
-            //Assert.AreEqual(driveCount, pDisk.StorageAdapterInfo.DeviceNumber);
+            //Assert.AreEqual(driveCount, pDiskInfo.StorageAdapterInfo.DeviceNumber);
 
-            //Assert.AreEqual(driveCount, pDisk.StorageDeviceInfo.DeviceNumber);
+            //Assert.AreEqual(driveCount, pDiskInfo.StorageDeviceInfo.DeviceNumber);
 
-            //Assert.AreEqual(driveCount, pDisk.StoragePartitionInfo.DeviceNumber);
+            //Assert.AreEqual(driveCount, pDiskInfo.StoragePartitionInfo.DeviceNumber);
 
 
             driveCount++;

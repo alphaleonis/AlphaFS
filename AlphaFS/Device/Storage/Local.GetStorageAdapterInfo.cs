@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       /// <param name="busReportedDeviceDescription">The bus reported bus reported device description of the <see cref="DeviceInfo"/> instance.</param>
       [SecurityCritical]
-      private static StorageAdapterInfo GetStorageAdapterInfoCore(bool isElevated, string devicePath, string busReportedDeviceDescription)
+      internal static StorageAdapterInfo GetStorageAdapterInfoCore(bool isElevated, string devicePath, string busReportedDeviceDescription)
       {
          var localDevicePath = devicePath;
          
