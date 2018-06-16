@@ -404,7 +404,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             uint bytesWritten;
 
-            var success = NativeMethods.BackupWrite(SafeFileHandle, safeBuffer, (uint)safeBuffer.Capacity, out bytesWritten, false, processSecurity, ref _context);
+            var success = NativeMethods.BackupWrite(SafeFileHandle, safeBuffer, (uint) safeBuffer.Capacity, out bytesWritten, false, processSecurity, ref _context);
             
             var lastError = Marshal.GetLastWin32Error();
             if (!success)

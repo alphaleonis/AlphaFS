@@ -133,7 +133,7 @@ namespace Alphaleonis.Win32.Security
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(Enum.GetUnderlyingType(typeof(NativeMethods.TOKEN_ELEVATION_TYPE)))))
          {
             uint bytesReturned;
-            success = NativeMethods.GetTokenInformation(tokenHandle, NativeMethods.TOKEN_INFORMATION_CLASS.TokenElevationType, safeBuffer, (uint)safeBuffer.Capacity, out bytesReturned);
+            success = NativeMethods.GetTokenInformation(tokenHandle, NativeMethods.TOKEN_INFORMATION_CLASS.TokenElevationType, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned);
 
             lastError = Marshal.GetLastWin32Error();
 

@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static StorageAdapterInfo GetStorageAdapterInfo(string devicePath)
       {
-         return GetStorageAdapterInfoCore(ProcessContext.IsElevatedProcess, devicePath);
+         return GetStorageAdapterInfoCore(ProcessContext.IsElevatedProcess, devicePath, null);
       }
 
 
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       /// <param name="busReportedDeviceDescription">The bus reported bus reported device description of the <see cref="DeviceInfo"/> instance.</param>
       [SecurityCritical]
-      private static StorageAdapterInfo GetStorageAdapterInfoCore(bool isElevated, string devicePath, string busReportedDeviceDescription = null)
+      private static StorageAdapterInfo GetStorageAdapterInfoCore(bool isElevated, string devicePath, string busReportedDeviceDescription)
       {
          var localDevicePath = devicePath;
          

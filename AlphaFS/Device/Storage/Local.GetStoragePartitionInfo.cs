@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
@@ -137,7 +136,7 @@ namespace Alphaleonis.Win32.Device
          while (true)
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
             {
-               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
                var lastError = Marshal.GetLastWin32Error();
                
@@ -154,9 +153,9 @@ namespace Alphaleonis.Win32.Device
                   };
 
 
-                  var offset = (uint)sizeOf + sizeof(long); // 32
+                  var offset = (uint) sizeOf + sizeof(long); // 32
 
-                  diskGeometryEx.PartitionInformation = safeBuffer.PtrToStructure<NativeMethods.DISK_PARTITION_INFO>((int)offset);
+                  diskGeometryEx.PartitionInformation = safeBuffer.PtrToStructure<NativeMethods.DISK_PARTITION_INFO>((int) offset);
 
 
                   //// Intermittently throws: System.AccessViolationException: Attempted to read or write protected memory.

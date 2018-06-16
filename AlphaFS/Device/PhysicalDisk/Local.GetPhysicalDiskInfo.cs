@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Device
       /// <returns>Returns a <see cref="PhysicalDiskInfo"/> instance that represents the physical disk on the Computer or <c>null</c> if the device can not be retrieved.</returns>
       /// <remark>
       ///   Most properties of the returned <see cref="PhysicalDiskInfo.StorageAdapterInfo"/> and <see cref="PhysicalDiskInfo.StorageDeviceInfo"/> instances are meaningless unless this method is called from an elevated state.
-      ///   Do not call this method for every logical drive/volume on the Computer as each call queries all physical disks, associated volumes and logical drives.
+      ///   Do not call this method for every volume/logical drive on the Computer as each call queries all physical disks, associated volumes and logical drives.
       ///   Instead, use method <see cref="EnumeratePhysicalDisks()"/> and property <see cref="PhysicalDiskInfo.VolumeGuids"/> or <see cref="PhysicalDiskInfo.LogicalDrives"/>.
       /// </remark>
       /// <exception cref="ArgumentException"/>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Device
       /// <returns>Returns a <see cref="PhysicalDiskInfo"/> instance that represents the physical disk on the Computer or <c>null</c> if the device can not be retrieved.</returns>
       /// <remark>
       ///   Most properties of the returned <see cref="PhysicalDiskInfo.StorageAdapterInfo"/> and <see cref="PhysicalDiskInfo.StorageDeviceInfo"/> instances are meaningless unless this method is called from an elevated state.
-      ///   Do not call this method for every logical drive/volume on the Computer as each call queries all physical disks, associated volumes and logical drives.
+      ///   Do not call this method for every volume/logical drive on the Computer as each call queries all physical disks, associated volumes and logical drives.
       ///   Instead, use method <see cref="EnumeratePhysicalDisks()"/> and property <see cref="PhysicalDiskInfo.VolumeGuids"/> or <see cref="PhysicalDiskInfo.LogicalDrives"/>.
       /// </remark>
       /// <exception cref="ArgumentException"/>
@@ -77,13 +77,11 @@ namespace Alphaleonis.Win32.Device
       }
       
 
-
-
       /// <summary>[AlphaFS] Retrieves the physical disk that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.</summary>
       /// <returns>Returns a <see cref="PhysicalDiskInfo"/> instance that represents the physical disk on the Computer or <c>null</c> if the device can not be retrieved.</returns>
       /// <remark>
       ///   Most properties of the returned <see cref="PhysicalDiskInfo.StorageAdapterInfo"/> and <see cref="PhysicalDiskInfo.StorageDeviceInfo"/> instances are meaningless unless this method is called from an elevated state.
-      ///   Do not call this method for every logical drive/volume on the Computer as each call queries all physical disks, associated volumes and logical drives.
+      ///   Do not call this method for every volume/logical drive on the Computer as each call queries all physical disks, associated volumes and logical drives.
       ///   Instead, use method <see cref="EnumeratePhysicalDisks()"/> and property <see cref="PhysicalDiskInfo.VolumeGuids"/> or <see cref="PhysicalDiskInfo.LogicalDrives"/>.
       /// </remark>
       /// <exception cref="ArgumentException"/>

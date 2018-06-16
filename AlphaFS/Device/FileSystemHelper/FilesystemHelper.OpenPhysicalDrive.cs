@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class FileSystemHelper
    {
-      /// <summary>Opens a physical disk or logical drive/volume for read access.</summary>
+      /// <summary>Opens a physical disk or volume/logical drive for read access.</summary>
       /// <returns>Returns a <see cref="SafeFileHandle"/> instance.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Device
       /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
       /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
-      /// <param name="fileSystemRights">If no elevated access is needed to access the physical disk or logical drive/volume, specify 0 for this parameter.</param>
+      /// <param name="fileSystemRights">If no elevated access is needed to access the physical disk or volume/logical drive, specify 0 for this parameter.</param>
       [SecurityCritical]
       public static SafeFileHandle OpenPhysicalDisk(string devicePath, FileSystemRights fileSystemRights)
       {

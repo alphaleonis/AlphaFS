@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
 
@@ -31,6 +30,17 @@ namespace Alphaleonis.Win32.Device
    [SecurityCritical]
    public sealed partial class PhysicalDiskInfo
    {
+      #region Fields
+
+      private int _deviceNumber = -1;
+      private string _localDevicePath;
+      private bool _isDrive;
+      private bool _isVolume;
+      private bool _isDevice;
+
+      #endregion // Fields
+
+
       #region Constructors
 
       /// <summary>[AlphaFS] Initializes an empty PhysicalDiskInfo instance.</summary>
@@ -46,14 +56,52 @@ namespace Alphaleonis.Win32.Device
          if (deviceNumber < 0)
             throw new ArgumentOutOfRangeException("deviceNumber");
 
-         var pDiskInfo = Local.GetPhysicalDiskInfoCore(Security.ProcessContext.IsElevatedProcess, deviceNumber, null);
+         _deviceNumber = deviceNumber;
+         
+
+         var pDiskInfo = Local.GetPhysicalDiskInfoCore(Security.ProcessContext.IsElevatedProcess, _deviceNumber, null);
+
+         if (null != pDiskInfo)
+         {
+            SetDevicePath(pDiskInfo.DevicePath);
+
+            Utils.CopyTo(pDiskInfo, this);
+         }
+      }
+
+
+      /// <summary>[AlphaFS] Initializes a PhysicalDiskInfo instance from a physical disk number such as: <c>0</c>, <c>1</c>, ...</summary>
+      /// <remark>
+      ///   Do not create and instance for every volume/logical drive on the Computer as each call queries all physical disks, associated volumes and logical drives.
+      ///   Instead, use method <see cref="EnumeratePhysicalDisks()"/> and property <see cref="VolumeGuids"/> or <see cref="LogicalDrives"/>.
+      /// </remark>
+      /// <param name="devicePath">
+      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// </param>
+      public PhysicalDiskInfo(string devicePath)
+      {
+         SetDevicePath(devicePath);
+
+         var pDiskInfo = Local.GetPhysicalDiskInfoCore(Security.ProcessContext.IsElevatedProcess, -1, _localDevicePath);
 
          if (null != pDiskInfo)
             Utils.CopyTo(pDiskInfo, this);
       }
 
       #endregion // Constructors
-      
+
+
+      private void SetDevicePath(string devicePath)
+      {
+         _localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out _isDrive, out _isVolume, out _isDevice);
+
+         if (_isDrive)
+            _localDevicePath = FileSystemHelper.GetLocalDevicePath(_localDevicePath);
+      }
+
 
       /// <summary>Returns the "FriendlyName" of the physical disk.</summary>
       /// <returns>Returns a string that represents this instance.</returns>
