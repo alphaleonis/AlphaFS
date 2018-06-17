@@ -55,12 +55,12 @@ namespace Alphaleonis.Win32.Device
       {
          foreach (var deviceInfo in EnumerateDevicesCore(null, new []{DeviceGuid.Disk, DeviceGuid.CDRom}, false))
          {
-            string unusedLocalDevicePath;
+            string unusedPhysicalDriveNumberPath;
 
 
             // The StorageDeviceInfo is always needed as it contains the device- and partition number.
 
-            var storageDeviceInfo = GetStorageDeviceInfoNative(isElevated, true, deviceNumber, deviceInfo.DevicePath, out unusedLocalDevicePath);
+            var storageDeviceInfo = GetStorageDeviceInfoNative(isElevated, true, deviceNumber, deviceInfo.DevicePath, out unusedPhysicalDriveNumberPath);
 
             if (null == storageDeviceInfo)
                continue;

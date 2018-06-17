@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_PhysicalDiskInfo_InitializeInstanceUsingLogicalDrivePath_Local_Success()
+      public void AlphaFS_PhysicalDiskInfo_CreateInstance_UsingLogicalDrivePath_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 

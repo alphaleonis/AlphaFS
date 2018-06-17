@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -38,6 +39,8 @@ namespace AlphaFS.UnitTest
 
          var sourceDrive = UnitTestConstants.SysDrive;
 
+         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive);
+
          var devicePath = new Alphaleonis.Win32.Device.PhysicalDiskInfo(sourceDrive).DevicePath;
 
          Console.WriteLine("#{0:000}\tInput Device Path: [{1}]", ++deviceCount, devicePath);
@@ -48,15 +51,42 @@ namespace AlphaFS.UnitTest
          var storageDeviceInfo = Alphaleonis.Win32.Device.Local.GetStorageDeviceInfo(devicePath);
 
          
-         UnitTestConstants.Dump(storageDeviceInfo);
+         UnitTestConstants.Dump(pDiskInfo);
+
+         UnitTestConstants.Dump(pDiskInfo.StorageAdapterInfo, true);
+
+         UnitTestConstants.Dump(pDiskInfo.StorageDeviceInfo, true);
+
+         UnitTestConstants.Dump(pDiskInfo.StoragePartitionInfo, true);
+         Console.WriteLine();
+
 
          Assert.IsNotNull(storageDeviceInfo);
 
-         Assert.AreEqual(0, storageDeviceInfo.DeviceNumber);
-
          Assert.IsNotNull(pDiskInfo);
 
+
          Assert.AreEqual(pDiskInfo.StorageDeviceInfo, storageDeviceInfo);
+
+
+         Assert.IsNotNull(pDiskInfo.LogicalDrives);
+
+         Assert.IsNotNull(pDiskInfo.VolumeGuids);
+
+         Assert.IsNotNull(pDiskInfo.DosDeviceName);
+
+
+         Assert.IsTrue(pDiskInfo.LogicalDrives.Contains(sourceDrive, StringComparer.OrdinalIgnoreCase));
+
+         Assert.IsTrue(pDiskInfo.ContainsVolume(sourceDrive));
+
+
+         Assert.IsTrue(pDiskInfo.VolumeGuids.Contains(sourceVolume, StringComparer.OrdinalIgnoreCase));
+
+         Assert.IsTrue(pDiskInfo.ContainsVolume(sourceVolume));
+         
+
+         Assert.AreNotEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
       }
    }
 }

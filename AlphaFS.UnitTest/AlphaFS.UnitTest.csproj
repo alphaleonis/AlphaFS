@@ -144,8 +144,8 @@
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.EnumeratePhysicalDisks.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfo.InitializeInstanceUsingDevicePathFromSystemDrive.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfo.InitializeInstanceUsingVolumePathFromSystemDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfo.CreateInstance_UsingDevicePathFromSystemDrive.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfo.CreateInstance_UsingVolumePathFromSystemDrive.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStoragePartitionInfo_UsingVolumePathFromSystemDrive.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStoragePartitionInfo_UsingDevicePathFromSystemDrive.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageDeviceInfo_UsingVolumePathFromSystemDrive.cs" />
@@ -155,9 +155,9 @@
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageAdapterInfo_UsingLogicalDrivePath.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStorageDeviceInfo_UsingLogicalDrivePath.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.GetStoragePartitionInfo_UsingLogicalDrivePath.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfo.InitializeInstanceUsingLogicalDrivePath.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfo.CreateInstance_UsingLogicalDrivePath.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfoTest.cs" />
-    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfo.InitializeInstanceUsingPhysicalDriveNumber.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfo.CreateInstance_UsingPhysicalDriveNumber.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_RegularDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_NoStreamsOnRootFolder.cs" />
@@ -168,7 +168,7 @@
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_NullAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\AlphaFS_File_GetSize\AlphaFS_File.GetSize_AllStreams.cs" />
-    <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo.CreateInstance\DirectoryInfo.CreateInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptySourceFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptyDestFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_ExistingFile_UsingGlobalRootAsSourcePath.cs" />
@@ -182,7 +182,7 @@
     <Compile Include="File Class\File.Move\File.Move_NullDestFileNameAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\File.Move\File.Move_NullSourceFileNameAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\FileTest.cs" />
-    <Compile Include="FileInfo Class\FileInfo.InitializeInstance\FileInfo.InitializeInstance_ExistingDirectoryAsFileName_PropertyExistsShouldBeFalse.cs" />
+    <Compile Include="FileInfo Class\FileInfo.CreateInstance\FileInfo.CreateInstance_ExistingDirectoryAsFileName_PropertyExistsShouldBeFalse.cs" />
     <Compile Include="Path Class\PathTest.cs" />
     <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
     <Compile Include="UnitTest Utility\Dump.cs" />
@@ -232,7 +232,7 @@
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File.GetFileSystemEntryInfo_DirectoryExistsWithSameNameAsFile_ThrowsFileNotFoundException.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_FileSystemEntryInfoTest.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_File.GetFileSystemEntryInfo.cs" />
-    <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_InitializeInstance.cs" />
+    <Compile Include="AlphaFS BackupFileStream Class\AlphaFS_BackupFileStream_CreateInstance.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateNetworkConnections.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateNetworks.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.GetWorkstationStatistics.cs" />
@@ -393,19 +393,19 @@
     <Compile Include="Path Class\Path.GetFullPath\Path.GetFullPath_InvalidLocalPath1_ThrowsArgumentException_Success.cs" />
     <Compile Include="Path Class\Path.IsPathRooted\Path.IsPathRooted_NullOrEmpty.cs" />
     <Compile Include="UnitTests\TimestampsTest.cs" />
-    <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_NonExistingDirectory.cs" />
-    <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_AnalyzeDirectoryInfoSecurity.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo.CreateInstance\DirectoryInfo.CreateInstance_NonExistingDirectory.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo.CreateInstance\DirectoryInfo.CreateInstance_AnalyzeDirectoryInfoSecurity.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\DirectoryInfo.MoveTo_FolderToEmptyFolder.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\DirectoryInfo.MoveTo_Rename.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\AlphaFS_DirectoryInfo.MoveTo_DelayUntilReboot.cs" />
-    <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_FolderNameGreaterThan255Characters_ThrowsPathTooLongException.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo.CreateInstance\DirectoryInfo.CreateInstance_FolderNameGreaterThan255Characters_ThrowsPathTooLongException.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.FolderName255Characters.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\AlphaFS_DirectoryInfo.MoveTo_DelayUntilRebootFlagCombinedWithCopyAllowedFlagUsingUncPath_ThrowsArgumentException.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.Attributes.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.Refresh.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfoTest.cs" />
     <Compile Include="AlphaFS Device Class\DriveInfo Class\DriveInfo.GetDrives.cs" />
-    <Compile Include="AlphaFS Device Class\DriveInfo Class\DriveInfo.InitializeInstance.cs" />
+    <Compile Include="AlphaFS Device Class\DriveInfo Class\DriveInfo.CreateInstance_UsingLogicalDrivePathFromSystemDrive.cs" />
     <Compile Include="AlphaFS Device Class\DriveInfo Class\DriveInfoTest.cs" />
     <Compile Include="AlphaFS Encryption\AlphaFS_File.GetHash.cs" />
     <Compile Include="File Class\AlphaFS_File_Lock\AlphaFS_File.GetProcessForFileLock_NoLockReturnsNull.cs" />
@@ -462,10 +462,10 @@
     <Compile Include="File Class\File.Exists\File.Exists_ExistingFile.cs" />
     <Compile Include="File Class\File_AccessControl\File.SetAccessControl.cs" />
     <Compile Include="File Class\File_AccessControl\File.GetAccessControl.cs" />
-    <Compile Include="FileInfo Class\FileInfo.InitializeInstance\FileInfo.InitializeInstance_NonExistingFile.cs" />
+    <Compile Include="FileInfo Class\FileInfo.CreateInstance\FileInfo.CreateInstance_NonExistingFile.cs" />
     <Compile Include="FileInfo Class\FileInfoTest.cs" />
     <Compile Include="FileInfo Class\FileInfo.Attributes.cs" />
-    <Compile Include="FileInfo Class\FileInfo.InitializeInstance\FileInfo.InitializeInstance_ExistingFile.cs" />
+    <Compile Include="FileInfo Class\FileInfo.CreateInstance\FileInfo.CreateInstance_ExistingFile.cs" />
     <Compile Include="FileInfo Class\FileInfo.Refresh.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateDomainDfsRoot.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateDfsRoot.cs" />
@@ -495,9 +495,9 @@
     <Compile Include="Path Class\Path.GetDirectoryName\Path.GetDirectoryName.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetFileIcon.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32.GetVerbCommand.cs" />
-    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.InitializeInstance.cs" />
+    <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Info.CreateInstance.cs" />
     <Compile Include="AlphaFS Shell32 Class\AlphaFS_Shell32Test.UrlIs.cs" />
-    <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_ExistingDirectory.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo.CreateInstance\DirectoryInfo.CreateInstance_ExistingDirectory.cs" />
     <Compile Include="Path Class\AlphaFS_Path_IsUncPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.SetVolumeMountPoint.cs" />

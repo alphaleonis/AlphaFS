@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void DirectoryInfo_InitializeInstance_ExistingDirectory_LocalAndNetwork_Success()
+      public void DirectoryInfo_CreateInstance_ExistingDirectory_LocalAndNetwork_Success()
       {
-         DirectoryInfo_InitializeInstance_ExistingDirectory(false);
-         DirectoryInfo_InitializeInstance_ExistingDirectory(true);
+         DirectoryInfo_CreateInstance_ExistingDirectory(false);
+         DirectoryInfo_CreateInstance_ExistingDirectory(true);
       }
       
       
-      private void DirectoryInfo_InitializeInstance_ExistingDirectory(bool isNetwork)
+      private void DirectoryInfo_CreateInstance_ExistingDirectory(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

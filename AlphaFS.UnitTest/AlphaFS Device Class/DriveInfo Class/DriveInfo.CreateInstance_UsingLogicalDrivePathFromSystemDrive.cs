@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void DriveInfo_InitializeInstance_LocalAndNetwork_Success()
+      public void DriveInfo_CreateInstance_UsingLogicalDrivePathFromSystemDrive_LocalAndNetwork_Success()
       {
-         DriveInfo_InitializeInstance(false);
-         DriveInfo_InitializeInstance(true);
+         DriveInfo_CreateInstance_UsingLogicalDrivePathFromSystemDrive(false);
+         DriveInfo_CreateInstance_UsingLogicalDrivePathFromSystemDrive(true);
       }
       
 
-      private void DriveInfo_InitializeInstance(bool isNetwork)
+      private void DriveInfo_CreateInstance_UsingLogicalDrivePathFromSystemDrive(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          

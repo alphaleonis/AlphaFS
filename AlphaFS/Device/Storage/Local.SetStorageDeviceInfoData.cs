@@ -58,13 +58,13 @@ namespace Alphaleonis.Win32.Device
 
 
             if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.ProductRevision) || storageDeviceInfo.ProductRevision.Length == 1)
-               storageDeviceInfo.ProductRevision = null;
+               storageDeviceInfo.ProductRevision = string.Empty;
 
             if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.SerialNumber) || storageDeviceInfo.SerialNumber.Length == 1)
-               storageDeviceInfo.SerialNumber = null;
+               storageDeviceInfo.SerialNumber = string.Empty;
             
             if (Utils.IsNullOrWhiteSpace(storageDeviceInfo.VendorId) || storageDeviceInfo.VendorId.Length == 1)
-               storageDeviceInfo.VendorId = null;
+               storageDeviceInfo.VendorId = string.Empty;
          }
 
 

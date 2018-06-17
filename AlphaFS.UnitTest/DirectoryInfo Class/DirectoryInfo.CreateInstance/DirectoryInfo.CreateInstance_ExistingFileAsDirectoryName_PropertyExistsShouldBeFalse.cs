@@ -24,35 +24,37 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class FileInfoTest
+   public partial class DirectoryInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void FileInfo_InitializeInstance_ExistingDirectoryAsFileName_PropertyExistsShouldBeFalse_LocalAndNetwork_Success()
+      public void DirectoryInfo_CreateInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse_LocalAndNetwork_Success()
       {
-         FileInfo_InitializeInstance_ExistingDirectoryAsFileName_PropertyExistsShouldBeFalse(false);
-         FileInfo_InitializeInstance_ExistingDirectoryAsFileName_PropertyExistsShouldBeFalse(true);
+         DirectoryInfo_CreateInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse(false);
+         DirectoryInfo_CreateInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse(true);
       }
 
 
-      private void FileInfo_InitializeInstance_ExistingDirectoryAsFileName_PropertyExistsShouldBeFalse(bool isNetwork)
+      private void DirectoryInfo_CreateInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            Console.WriteLine("Input Directory Path: [{0}]", tempRoot.Directory.FullName);
+            var file = tempRoot.CreateFileRandomizedAttributes();
 
-            var systemIOFileInfo = new System.IO.FileInfo(tempRoot.Directory.FullName);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
-            var alphaFSFileInfo = new Alphaleonis.Win32.Filesystem.FileInfo(tempRoot.Directory.FullName);
+            var systemIODirInfo = new System.IO.DirectoryInfo(file.FullName);
 
-            UnitTestConstants.Dump(alphaFSFileInfo);
+            var alphaFSDirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(file.FullName);
+
+            UnitTestConstants.Dump(alphaFSDirInfo);
 
 
-            Assert.AreEqual(systemIOFileInfo.Exists, alphaFSFileInfo.Exists);
+            Assert.AreEqual(systemIODirInfo.Exists, alphaFSDirInfo.Exists);
 
-            Assert.IsTrue(alphaFSFileInfo.EntryInfo.IsDirectory);
+            Assert.IsFalse(alphaFSDirInfo.EntryInfo.IsDirectory);
          }
 
          Console.WriteLine();

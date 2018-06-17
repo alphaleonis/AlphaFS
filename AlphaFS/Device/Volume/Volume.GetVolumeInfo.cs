@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Security;
 using Microsoft.Win32.SafeHandles;
 
@@ -30,6 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="volumePath">A path that contains the root directory.</param>
       /// <returns>Returns a <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
       [SecurityCritical]
+      [Obsolete("Use: new VolumeInfo(volumePath)")]
       public static VolumeInfo GetVolumeInfo(string volumePath)
       {
          return new VolumeInfo(volumePath, true, false);
@@ -41,6 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="volumePath">A path that contains the root directory.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
+      [Obsolete("Use: new VolumeInfo(volumePath, true, continueOnException)")]
       public static VolumeInfo GetVolumeInfo(string volumePath, bool continueOnException)
       {
          return new VolumeInfo(volumePath, true, continueOnException);
@@ -51,6 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="volumeHandle">An instance to a <see cref="SafeFileHandle"/> handle.</param>
       /// <returns>Returns a <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
       [SecurityCritical]
+      [Obsolete("Use: new VolumeInfo(volumeHandle, true, true)")]
       public static VolumeInfo GetVolumeInfo(SafeFileHandle volumeHandle)
       {
          return new VolumeInfo(volumeHandle, true, true);

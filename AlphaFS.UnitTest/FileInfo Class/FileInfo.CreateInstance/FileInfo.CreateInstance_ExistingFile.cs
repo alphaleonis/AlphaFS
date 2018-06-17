@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void FileInfo_InitializeInstance_ExistingFile_LocalAndNetwork_Success()
+      public void FileInfo_CreateInstance_ExistingFile_LocalAndNetwork_Success()
       {
-         FileInfo_InitializeInstance_ExistingFile(false);
-         FileInfo_InitializeInstance_ExistingFile(true);
+         FileInfo_CreateInstance_ExistingFile(false);
+         FileInfo_CreateInstance_ExistingFile(true);
       }
 
 
-      private void FileInfo_InitializeInstance_ExistingFile(bool isNetwork)
+      private void FileInfo_CreateInstance_ExistingFile(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

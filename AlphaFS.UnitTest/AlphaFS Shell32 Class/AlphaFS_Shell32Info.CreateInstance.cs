@@ -24,37 +24,30 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DirectoryInfoTest
+   public partial class AlphaFS_Shell32Test
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void DirectoryInfo_InitializeInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse_LocalAndNetwork_Success()
+      public void AlphaFS_Shell32Info_CreateInstance_LocalAndNetwork_Success()
       {
-         DirectoryInfo_InitializeInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse(false);
-         DirectoryInfo_InitializeInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse(true);
+         AlphaFS_Shell32Info_CreateInstance(false);
+         AlphaFS_Shell32Info_CreateInstance(true);
       }
+      
 
-
-      private void DirectoryInfo_InitializeInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse(bool isNetwork)
+      private void AlphaFS_Shell32Info_CreateInstance(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.CreateFileRandomizedAttributes();
+            var file = tempRoot.RandomTxtFileFullPath;
 
-            Console.WriteLine("Input File Path: [{0}]", file.FullName);
+            var shell32Info = new Alphaleonis.Win32.Filesystem.Shell32Info(file);
+            
+            Assert.IsTrue(null != shell32Info);
 
-            var systemIODirInfo = new System.IO.DirectoryInfo(file.FullName);
-
-            var alphaFSDirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(file.FullName);
-
-            UnitTestConstants.Dump(alphaFSDirInfo);
-
-
-            Assert.AreEqual(systemIODirInfo.Exists, alphaFSDirInfo.Exists);
-
-            Assert.IsFalse(alphaFSDirInfo.EntryInfo.IsDirectory);
+            UnitTestConstants.Dump(shell32Info);
          }
 
          Console.WriteLine();

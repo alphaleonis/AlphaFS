@@ -74,7 +74,8 @@ namespace Alphaleonis.Win32
          /// <summary>The RtlGetVersion routine returns version information about the currently running operating system.</summary>
          /// <returns>RtlGetVersion returns STATUS_SUCCESS.</returns>
          /// <remarks>Available starting with Windows 2000.</remarks>
-         [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule"), DllImport("ntdll.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+         [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+         [DllImport("ntdll.dll", SetLastError = true, CharSet = CharSet.Unicode)]
          [return: MarshalAs(UnmanagedType.Bool)]
          internal static extern bool RtlGetVersion([MarshalAs(UnmanagedType.Struct)] ref RTL_OSVERSIONINFOEXW lpVersionInformation);
 

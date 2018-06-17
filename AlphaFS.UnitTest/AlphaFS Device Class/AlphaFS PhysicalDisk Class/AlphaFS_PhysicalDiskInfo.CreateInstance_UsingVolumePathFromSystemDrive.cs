@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_PhysicalDiskInfo_InitializeInstanceUsingVolumePathFromSystemDrive_Success()
+      public void AlphaFS_PhysicalDiskInfo_CreateInstance_UsingVolumePathFromSystemDrive_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -76,7 +76,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(pDiskInfo.ContainsVolume(sourceVolume));
          
 
-         Assert.AreNotEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+         Assert.AreNotEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
 
 
          // Show all partition information.

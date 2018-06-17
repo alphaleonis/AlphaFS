@@ -20,11 +20,8 @@
  */
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
@@ -103,8 +100,10 @@ namespace Alphaleonis.Win32.Device
          
 
          // The StorageDeviceInfo is always needed as it contains the device- and partition number.
+         
+         string physicalDriveNumberPath;
 
-         physicalDiskInfo.StorageDeviceInfo =  Local.GetStorageDeviceInfoNative(isElevated, isDevice, deviceNumber, localDevicePath, out localDevicePath);
+         physicalDiskInfo.StorageDeviceInfo =  Local.GetStorageDeviceInfoNative(isElevated, isDevice, deviceNumber, localDevicePath, out physicalDriveNumberPath);
          
          if (null == physicalDiskInfo.StorageDeviceInfo)
             return;
@@ -130,19 +129,29 @@ namespace Alphaleonis.Win32.Device
          if (null == deviceInfo)
             return;
 
-
          physicalDiskInfo.DeviceInfo = deviceInfo;
 
 
+         // physicalDriveNumberPath != null: The drive is opened using: "\\.\PhysicalDriveX" path format
+         // which is the device, not the volume/logical drive.
+
+         var updatedDevicPath = physicalDriveNumberPath ?? localDevicePath;
+         
+
          if (isDrive || isVolume)
+         {
             physicalDiskInfo.DosDeviceName = Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false));
 
+            updatedDevicPath = localDevicePath;
+            //updatedDevicPath = Path.GlobalRootPrefix + deviceInfo.PhysicalDeviceObjectName.TrimStart('\\');
+         }
 
-         using (var safeFileHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
+
+         using (var safeFileHandle = FileSystemHelper.OpenPhysicalDisk(updatedDevicPath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
          {
-            physicalDiskInfo.StorageAdapterInfo = Local.GetStorageAdapterInfoNative(safeFileHandle, deviceNumber, localDevicePath, deviceInfo.BusReportedDeviceDescription);
+            physicalDiskInfo.StorageAdapterInfo = Local.GetStorageAdapterInfoNative(safeFileHandle, deviceNumber, updatedDevicPath, deviceInfo.BusReportedDeviceDescription);
 
-            physicalDiskInfo.StoragePartitionInfo = Local.GetStoragePartitionInfoNative(safeFileHandle, deviceNumber, localDevicePath);
+            physicalDiskInfo.StoragePartitionInfo = Local.GetStoragePartitionInfoNative(safeFileHandle, deviceNumber, updatedDevicPath);
          }
          
 

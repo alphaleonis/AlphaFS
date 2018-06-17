@@ -24,34 +24,28 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_BackupFileStreamTest
+   public partial class FileInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_BackupFileStream_InitializeInstance_LocalAndNetwork_Success()
+      public void FileInfo_CreateInstance_NonExistingFile_LocalAndNetwork_Success()
       {
-         AlphaFS_BackupFileStream_InitializeInstance(false);
-         AlphaFS_BackupFileStream_InitializeInstance(true);
+         FileInfo_CreateInstance_NonExistingFile(false);
+         FileInfo_CreateInstance_NonExistingFile(true);
       }
       
 
-      private void AlphaFS_BackupFileStream_InitializeInstance(bool isNetwork)
+      private void FileInfo_CreateInstance_NonExistingFile(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.CreateFile();
+            var file = tempRoot.RandomTxtFileFullPath;
 
-            Console.WriteLine("Input File Path: [{0}]", file.FullName);
+            Console.WriteLine("Input File Path: [{0}]", file);
 
-
-            using (var bfs = new Alphaleonis.Win32.Filesystem.BackupFileStream(file.FullName, System.IO.FileMode.Open))
-            {
-               UnitTestConstants.Dump(bfs.ReadStreamInfo());
-
-               UnitTestConstants.Dump(bfs);
-            }
+            CompareFileInfos(new System.IO.FileInfo(file), new Alphaleonis.Win32.Filesystem.FileInfo(file), false);
          }
 
          Console.WriteLine();

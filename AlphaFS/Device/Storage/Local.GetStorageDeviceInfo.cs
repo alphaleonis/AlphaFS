@@ -113,6 +113,9 @@ namespace Alphaleonis.Win32.Device
 
       Retry:
 
+         // Accessing volume: "\\.\D" on a dynamic disk fails with ERROR_INVALID_FUNCTION.
+         // On retry, the drive is accessed using the: "\\.\PhysicalDriveX" path format which is the device, not the volume/logical drive.
+
          using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
          {
             int lastError;
@@ -127,6 +130,10 @@ namespace Alphaleonis.Win32.Device
                      return null;
 
                   SetStorageDeviceInfoData(isElevated, isDevice, safeHandle, localDevicePath, storageDeviceInfo);
+
+
+                  if (!localDevicePath.StartsWith(Path.PhysicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
+                     localDevicePath = null;
 
                   return storageDeviceInfo;
                }

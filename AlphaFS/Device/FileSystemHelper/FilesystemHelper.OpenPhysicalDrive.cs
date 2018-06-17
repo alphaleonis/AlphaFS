@@ -60,5 +60,24 @@ namespace Alphaleonis.Win32.Device
 
          return File.CreateFileCore(null, devicePath, ExtendedFileAttributes.Normal | ExtendedFileAttributes.NoBuffering, null, FileMode.Open, fileSystemRights, FileShare.ReadWrite, false, false, PathFormat.LongFullPath);
       }
+
+
+
+
+      internal static SafeFileHandle OpenPhysicalDisk2(string devicePath, FileSystemRights fileSystemRights)
+      {
+         // fileSystemRights: If this parameter is 0 (FILE_ANY_ACCESS), the application can query certain metadata such as file, directory, or device attributes
+         // without accessing that file or device, even if GENERIC_READ access would have been denied.
+         // You cannot request an access mode that conflicts with the sharing mode that is specified by the dwShareMode parameter in an open request that already has an open handle.
+         //
+         //
+         // When opening a volume or removable media drive (for example, a floppy disk drive or flash memory thumb drive), the lpFileName string should be the following form: "\\.\X:".
+         // Do not use a trailing backslash (\), which indicates the root directory of a drive.
+         //
+         // When opening a volume or floppy disk, the dwShareMode parameter must have the FILE_SHARE_WRITE flag.
+
+
+         return File.CreateFileCore2(null, devicePath, ExtendedFileAttributes.Normal | ExtendedFileAttributes.NoBuffering, null, FileMode.Open, fileSystemRights, FileShare.ReadWrite, false, false, PathFormat.LongFullPath);
+      }
    }
 }

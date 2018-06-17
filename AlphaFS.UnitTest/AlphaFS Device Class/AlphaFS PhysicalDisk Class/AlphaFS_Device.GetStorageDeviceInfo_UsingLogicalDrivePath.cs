@@ -63,8 +63,9 @@ namespace AlphaFS.UnitTest
 
             UnitTestConstants.Dump(storageDeviceInfo);
 
-
             Assert.IsNotNull(storageDeviceInfo);
+
+            Assert.AreNotEqual(0, storageDeviceInfo.PartitionNumber);
 
 
             if (driveInfo.DriveType == System.IO.DriveType.Fixed)

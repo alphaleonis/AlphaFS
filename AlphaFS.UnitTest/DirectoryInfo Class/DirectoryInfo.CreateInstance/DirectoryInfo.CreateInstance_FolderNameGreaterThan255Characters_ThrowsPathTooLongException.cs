@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void DirectoryInfo_InitializeInstance_FolderNameGreaterThan255Characters_ThrowsPathTooLongException_LocalAndNetwork_Success()
+      public void DirectoryInfo_CreateInstance_FolderNameGreaterThan255Characters_ThrowsPathTooLongException_LocalAndNetwork_Success()
       {
-         DirectoryInfo_InitializeInstance_FolderNameGreaterThan255Characters_ThrowsPathTooLongException(false);
-         DirectoryInfo_InitializeInstance_FolderNameGreaterThan255Characters_ThrowsPathTooLongException(true);
+         DirectoryInfo_CreateInstance_FolderNameGreaterThan255Characters_ThrowsPathTooLongException(false);
+         DirectoryInfo_CreateInstance_FolderNameGreaterThan255Characters_ThrowsPathTooLongException(true);
       }
 
 
-      private void DirectoryInfo_InitializeInstance_FolderNameGreaterThan255Characters_ThrowsPathTooLongException(bool isNetwork)
+      private void DirectoryInfo_CreateInstance_FolderNameGreaterThan255Characters_ThrowsPathTooLongException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

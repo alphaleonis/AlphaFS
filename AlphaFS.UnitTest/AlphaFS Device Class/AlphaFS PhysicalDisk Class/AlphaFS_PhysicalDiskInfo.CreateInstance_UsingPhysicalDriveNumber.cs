@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_PhysicalDiskInfo_InitializeInstanceUsingPhysicalDriveNumber_Local_Success()
+      public void AlphaFS_PhysicalDiskInfo_CreateInstance_UsingPhysicalDriveNumber_Local_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -60,6 +60,9 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(physicalDiskNumber, pDiskInfo.StorageDeviceInfo.DeviceNumber);
 
             Assert.AreEqual(physicalDiskNumber, pDiskInfo.StoragePartitionInfo.DeviceNumber);
+
+            Assert.AreEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+
 
             Console.WriteLine();
          }

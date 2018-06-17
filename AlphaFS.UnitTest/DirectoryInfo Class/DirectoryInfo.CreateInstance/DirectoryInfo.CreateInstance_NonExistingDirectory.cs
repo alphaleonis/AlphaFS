@@ -24,28 +24,28 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class FileInfoTest
+   public partial class DirectoryInfoTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void FileInfo_InitializeInstance_NonExistingFile_LocalAndNetwork_Success()
+      public void DirectoryInfo_CreateInstance_NonExistingDirectory_LocalAndNetwork_Success()
       {
-         FileInfo_InitializeInstance_NonExistingFile(false);
-         FileInfo_InitializeInstance_NonExistingFile(true);
+         DirectoryInfo_CreateInstance_NonExistingDirectory(false);
+         DirectoryInfo_CreateInstance_NonExistingDirectory(true);
       }
-      
 
-      private void FileInfo_InitializeInstance_NonExistingFile(bool isNetwork)
+
+      private void DirectoryInfo_CreateInstance_NonExistingDirectory(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file = tempRoot.RandomTxtFileFullPath;
+            var folder = tempRoot.RandomDirectoryFullPath;
 
-            Console.WriteLine("Input File Path: [{0}]", file);
+            Console.WriteLine("Input Directory Path: [{0}]", folder);
 
-            CompareFileInfos(new System.IO.FileInfo(file), new Alphaleonis.Win32.Filesystem.FileInfo(file), false);
+            CompareDirectoryInfos(new System.IO.DirectoryInfo(folder), new Alphaleonis.Win32.Filesystem.DirectoryInfo(folder), false);
          }
 
          Console.WriteLine();

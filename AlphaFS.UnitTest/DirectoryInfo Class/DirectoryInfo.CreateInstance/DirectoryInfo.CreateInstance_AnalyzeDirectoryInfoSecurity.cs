@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AnalyzeDirectoryInfoSecurity_ShouldNotExist_LocalAndNetwork()
+      public void AnalyzeDirectoryInfoSecurity_CreateInstance_ShouldNotExist_LocalAndNetwork()
       {
-         AnalyzeDirectoryInfoSecurity_ShouldNotExist(false);
-         AnalyzeDirectoryInfoSecurity_ShouldNotExist(true);
+         AnalyzeDirectoryInfoSecurity_CreateInstance_ShouldNotExist(false);
+         AnalyzeDirectoryInfoSecurity_CreateInstance_ShouldNotExist(true);
       }
 
 
-      private void AnalyzeDirectoryInfoSecurity_ShouldNotExist(bool isNetwork)
+      private void AnalyzeDirectoryInfoSecurity_CreateInstance_ShouldNotExist(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
