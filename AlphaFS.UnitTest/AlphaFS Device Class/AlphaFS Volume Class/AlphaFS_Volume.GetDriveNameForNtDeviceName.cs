@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
             var driveName = driveInfo.Name;
 
-            var dosDeviceName = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(driveName);
+            var dosDeviceName = Alphaleonis.Win32.Filesystem.Volume.QueryDosDevice(driveName);
 
             var deviceGuid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(driveName);
 

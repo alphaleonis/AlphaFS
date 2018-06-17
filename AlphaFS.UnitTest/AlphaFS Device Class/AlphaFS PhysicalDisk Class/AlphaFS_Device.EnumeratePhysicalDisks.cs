@@ -64,7 +64,7 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(pDiskInfo.StoragePartitionInfo, true);
 
 
-            Assert.IsNull(pDiskInfo.DosDevice);
+            Assert.IsNull(pDiskInfo.DosDeviceName);
 
 
             driveCount++;

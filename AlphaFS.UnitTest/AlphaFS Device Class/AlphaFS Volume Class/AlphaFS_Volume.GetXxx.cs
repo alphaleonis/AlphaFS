@@ -56,7 +56,7 @@ namespace AlphaFS.UnitTest
 
             // GetVolumeDeviceName: "C:\" --> "\Device\HarddiskVolume4"
 
-            var deviceNameFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.GetVolumeDeviceName(driveInfo.Name);
+            var deviceNameFromLogicalDrive = Alphaleonis.Win32.Filesystem.Volume.QueryDosDevice(driveInfo.Name);
 
             Console.WriteLine("\tGetVolumeDeviceName\t\t\t: [{0}]", deviceNameFromLogicalDrive);
 

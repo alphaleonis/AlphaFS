@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] The MS-DOS device name.</summary>
+      /// <summary>[AlphaFS] The Win32 Device name.</summary>
       public string DosDeviceName
       {
          get { return (string) GetDeviceInfo(1, 0); }

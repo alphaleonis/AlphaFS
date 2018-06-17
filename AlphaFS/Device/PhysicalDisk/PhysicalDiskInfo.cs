@@ -135,7 +135,7 @@ namespace Alphaleonis.Win32.Device
 
 
          if (isDrive || isVolume)
-            physicalDiskInfo.DosDevice = Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false));
+            physicalDiskInfo.DosDeviceName = Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false));
 
 
          using (var safeFileHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))

@@ -50,8 +50,8 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>The DOS device name.</summary>
-      public string DosDevice { get; private set; }
+      /// <summary>The Win32 Device name.</summary>
+      public string DosDeviceName { get; private set; }
 
 
       /// <summary>An <see cref="Array"/> of logical drives that are located on the physical disk or <c>null</c> when no entries found.</summary>
