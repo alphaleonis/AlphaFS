@@ -291,7 +291,7 @@ namespace AlphaFS.UnitTest
       #endregion // Methods
 
 
-      #region Private Members
+      #region Fields Members
 
       /// <summary>The path to the temporary folder, ending with a backslash.</summary>
       private static readonly string TempPath = System.IO.Path.GetTempPath();
@@ -331,7 +331,7 @@ namespace AlphaFS.UnitTest
             fsi.Attributes |= System.IO.FileAttributes.Hidden;
       }
 
-      #endregion Private Members
+      #endregion Fields Members
 
 
       #region Disposable Members

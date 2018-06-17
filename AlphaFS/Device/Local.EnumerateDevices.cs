@@ -136,7 +136,7 @@ namespace Alphaleonis.Win32.Device
 
          // Start at the "Root" of the device tree.
 
-         using (var safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref classGuid, IntPtr.Zero, IntPtr.Zero, NativeMethods.DEVICE_INFORMATION_FLAGS.DIGCF_PRESENT | NativeMethods.DEVICE_INFORMATION_FLAGS.DIGCF_DEVICEINTERFACE, IntPtr.Zero, hostName, IntPtr.Zero))
+         using (var safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref classGuid, IntPtr.Zero, IntPtr.Zero, NativeMethods.DEVICE_INFORMATION_FLAGS.DIGCF_ALLCLASSES | NativeMethods.DEVICE_INFORMATION_FLAGS.DIGCF_PRESENT | NativeMethods.DEVICE_INFORMATION_FLAGS.DIGCF_DEVICEINTERFACE, IntPtr.Zero, hostName, IntPtr.Zero))
          {
             var lastError = Marshal.GetLastWin32Error();
 
@@ -335,7 +335,7 @@ namespace Alphaleonis.Win32.Device
          deviceInfo.DeviceClass = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.Class);
 
          deviceInfo.DeviceDescription = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.DeviceDescription);
-
+         
          deviceInfo.FriendlyName = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.FriendlyName);
          
          deviceInfo.PhysicalDeviceObjectName = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.PhysicalDeviceObjectName);

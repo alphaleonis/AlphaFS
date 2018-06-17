@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Device
    [SecurityCritical]
    public sealed class StorageGptPartitionInfo
    {
-      #region Private Fields
+      #region Fields
 
       private readonly int _partitionNumber;
       private ulong _partitionLength;

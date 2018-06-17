@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Network
    [Serializable]
    public sealed class SessionInfo
    {
-      #region Private Fields
+      #region Fields
 
       private string _netName;
 

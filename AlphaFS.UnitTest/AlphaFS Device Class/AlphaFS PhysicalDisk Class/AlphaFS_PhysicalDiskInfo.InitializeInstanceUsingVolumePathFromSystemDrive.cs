@@ -63,6 +63,8 @@ namespace AlphaFS.UnitTest
 
          Assert.IsNotNull(pDiskInfo.VolumeGuids);
 
+         Assert.IsNotNull(pDiskInfo.DosDevice);
+
 
          Assert.IsTrue(pDiskInfo.LogicalDrives.Contains(sourceDrive, StringComparer.OrdinalIgnoreCase));
 

@@ -80,6 +80,8 @@ namespace AlphaFS.UnitTest
 
             Assert.IsNotNull(pDiskInfo.VolumeGuids);
 
+            Assert.IsNotNull(pDiskInfo.DosDevice);
+
 
             if (pDiskInfo.StorageDeviceInfo.PartitionNumber > 0)
                Assert.IsNotNull(pDiskInfo.StoragePartitionInfo);

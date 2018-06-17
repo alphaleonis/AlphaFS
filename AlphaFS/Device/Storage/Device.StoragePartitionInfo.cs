@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Device
    [SecurityCritical]
    public sealed class StoragePartitionInfo
    {
-      #region Private Fields
+      #region Fields
 
       private ulong _gptStartingUsableOffset;
       private ulong _gptUsableLength;

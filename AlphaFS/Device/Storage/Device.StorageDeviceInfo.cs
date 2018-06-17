@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Device
    [SecurityCritical]
    public sealed class StorageDeviceInfo
    {
-      #region Private Fields
+      #region Fields
 
 
       #endregion // Private Fields

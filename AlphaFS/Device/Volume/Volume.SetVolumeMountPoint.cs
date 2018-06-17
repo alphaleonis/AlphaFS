@@ -40,11 +40,20 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetVolumeMountPoint(string volumeMountPoint, string volumeGuid)
       {
-         if (Utils.IsNullOrWhiteSpace(volumeMountPoint))
+         if (null == volumeMountPoint)
             throw new ArgumentNullException("volumeMountPoint");
 
-         if (Utils.IsNullOrWhiteSpace(volumeGuid))
+         if (volumeMountPoint.Trim().Length == 0)
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "volumeMountPoint");
+
+         if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, "volumeGuid");
+
+         if (null == volumeGuid)
             throw new ArgumentNullException("volumeGuid");
+
+         if (volumeGuid.Trim().Length == 0)
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(Resources.Not_A_Valid_Guid, "volumeGuid");

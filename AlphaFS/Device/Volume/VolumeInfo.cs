@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    public sealed class VolumeInfo
    {
-      #region Private Fields
+      #region Fields
 
       [NonSerialized] private readonly bool _continueOnAccessError;
       [NonSerialized] private readonly SafeFileHandle _volumeHandle;
@@ -54,8 +54,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public VolumeInfo(string driveName)
       {
-         if (Utils.IsNullOrWhiteSpace(driveName))
+         if (null == driveName)
             throw new ArgumentNullException("driveName");
+
+         if (driveName.Trim().Length == 0)
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "driveName");
 
 
          if (!driveName.StartsWith(Path.LongPathPrefix, StringComparison.Ordinal))

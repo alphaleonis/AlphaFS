@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Network
    /// <summary>Represents a connection to a network.</summary>
    public class NetworkConnectionInfo
    {
-      #region Private Fields
+      #region Fields
 
       private readonly INetworkConnection _networkConnection;
 

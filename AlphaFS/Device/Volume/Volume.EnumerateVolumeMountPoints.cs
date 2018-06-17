@@ -37,8 +37,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumeMountPoints(string volumeGuid)
       {
-         if (Utils.IsNullOrWhiteSpace(volumeGuid))
+         if (null == volumeGuid)
             throw new ArgumentNullException("volumeGuid");
+
+         if (volumeGuid.Trim().Length == 0)
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(Resources.Not_A_Valid_Guid, "volumeGuid");

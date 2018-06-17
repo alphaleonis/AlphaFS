@@ -24,28 +24,12 @@ namespace Alphaleonis.Win32.Device
    internal static partial class NativeMethods
    {
       /// <summary>Define values for <c>DeviceIoControl</c>.</summary>
-      internal enum IoMethod : uint
+      private enum IoCtlMethod : uint
       {
-         /// <summary>Buffered</summary>
          Buffered = 0,
-
-         /// <summary>InDirect</summary>
          InDirect = 1,
-
-         /// <summary>OutDirect</summary>
          OutDirect = 2,
-
-         /// <summary>Neither</summary>
          Neither = 3
       }
-
-
-      ///// <summary>Define values for <c>DeviceIoControl</c> access</summary>
-      //internal enum IoctlAccess : uint
-      //{
-      //   Any = 0,
-      //   Read = 1,
-      //   Write = 2
-      //}
    }
 }

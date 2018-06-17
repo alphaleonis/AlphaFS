@@ -356,7 +356,7 @@
     <Compile Include="Filesystem\Native Other\FIND_FIRST_EX_FLAGS.cs" />
     <Compile Include="Filesystem\Native Other\GET_FILEEX_INFO_LEVELS.cs" />
     <Compile Include="Device\Native Other\IoControlCode.cs" />
-    <Compile Include="Device\Native Other\IoMethod.cs" />
+    <Compile Include="Device\Native Other\IoCtlMethod.cs" />
     <Compile Include="Filesystem\Native Other\MountPointReparseBuffer.cs" />
     <Compile Include="Filesystem\Native Other\MOVE_FILE_FLAGS.cs" />
     <Compile Include="Device\Native Other\PARTITION_INFORMATION_EX.cs" />
@@ -743,7 +743,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

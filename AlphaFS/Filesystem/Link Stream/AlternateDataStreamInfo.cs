@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.EnumerateAlternateDataStreams"/> 
    public struct AlternateDataStreamInfo
    {
-      #region Private Fields
+      #region Fields
 
       private readonly string _streamName;
       private readonly string _fullPath;
@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Public Methods
       
 
-      #region Private Methods
+      #region Fields Methods
 
       private static string ParseStreamName(string streamName)
       {

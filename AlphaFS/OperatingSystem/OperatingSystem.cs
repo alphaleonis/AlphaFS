@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32
    /// <summary>[AlphaFS] Static class providing access to information about the operating system under which the assembly is executing.</summary>
    public static partial class OperatingSystem
    {
-      #region Private Fields
+      #region Fields
 
       private static bool _isServer;
       private static bool? _isWow64Process;

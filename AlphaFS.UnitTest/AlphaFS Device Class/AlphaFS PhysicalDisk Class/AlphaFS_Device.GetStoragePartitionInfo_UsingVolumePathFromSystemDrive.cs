@@ -54,11 +54,14 @@ namespace AlphaFS.UnitTest
 
          Assert.AreEqual(0, storagePartitionInfo.DeviceNumber);
 
+
          Assert.IsNotNull(pDiskInfo);
 
          Assert.AreEqual(pDiskInfo.StorageDeviceInfo.DeviceNumber, storagePartitionInfo.DeviceNumber);
 
          Assert.AreEqual(pDiskInfo.StoragePartitionInfo, storagePartitionInfo);
+
+         Assert.IsNotNull(pDiskInfo.DosDevice);
 
 
          // Show all partition information.

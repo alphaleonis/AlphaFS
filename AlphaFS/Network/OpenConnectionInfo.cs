@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Network
    [Serializable]
    public sealed class OpenConnectionInfo
    {
-      #region Private Fields
+      #region Fields
 
       private string _netName;
 

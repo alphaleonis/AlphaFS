@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       
       /// <summary>Represents the registry entry name of the driver key for a device instance.</summary>
       public string DeviceDriver { get; internal set; }
-
+      
 
       /// <summary>Represents the name of the enumerator for a device instance.</summary>
       public string EnumeratorName { get; internal set; }

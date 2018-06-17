@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Device
       {
          var getByDeviceNumber = deviceNumber > -1;
          var isDrive = false;
-         bool isVolume;
+         var isVolume = false;
          var isDevice = false;
 
          var localDevicePath = getByDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
@@ -132,7 +132,11 @@ namespace Alphaleonis.Win32.Device
 
 
          physicalDiskInfo.DeviceInfo = deviceInfo;
-         
+
+
+         if (isDrive || isVolume)
+            physicalDiskInfo.DosDevice = Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false));
+
 
          using (var safeFileHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
          {
@@ -181,13 +185,13 @@ namespace Alphaleonis.Win32.Device
 
 
          if (null != partitionIndexCollection)
-            physicalDiskInfo.PartitionIndexes = partitionIndexCollection.ToArray();
+            physicalDiskInfo.PartitionIndexes = partitionIndexCollection;
 
          if (null != volumeGuidCollection)
-            physicalDiskInfo.VolumeGuids = volumeGuidCollection.ToArray();
+            physicalDiskInfo.VolumeGuids = volumeGuidCollection;
 
          if (null != logicalDriveCollection)
-            physicalDiskInfo.LogicalDrives = logicalDriveCollection.ToArray();
+            physicalDiskInfo.LogicalDrives = logicalDriveCollection;
       }
 
 

@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Device
@@ -49,8 +50,12 @@ namespace Alphaleonis.Win32.Device
       }
 
 
+      /// <summary>The DOS device name.</summary>
+      public string DosDevice { get; private set; }
+
+
       /// <summary>An <see cref="Array"/> of logical drives that are located on the physical disk or <c>null</c> when no entries found.</summary>
-      public string[] LogicalDrives { get; private set; }
+      public IEnumerable<string> LogicalDrives { get; private set; }
 
       
       /// <summary>The <see cref="Filesystem.DeviceInfo.FriendlyName"/>.</summary>
@@ -61,7 +66,7 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>An <see cref="Array"/> of partition index numbers that are located on the physical disk or <c>null</c> when no entries found.</summary>
-      public int[] PartitionIndexes { get; private set; }
+      public IEnumerable<int> PartitionIndexes { get; private set; }
 
 
       /// <summary>The <see cref="Filesystem.DeviceInfo.PhysicalDeviceObjectName"/> (PDO) information provided by a device's firmware to Windows.</summary>
@@ -84,6 +89,6 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>An <see cref="Array"/> of volume <see cref="Guid"/> strings of volumes that are located on the physical disk or <c>null</c> when no entries found.</summary>
-      public string[] VolumeGuids { get; private set; }
+      public IEnumerable<string> VolumeGuids { get; private set; }
    }
 }
