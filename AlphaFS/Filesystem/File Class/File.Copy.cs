@@ -853,9 +853,9 @@ namespace Alphaleonis.Win32.Filesystem
 
          return cmr;
       }
-      
-      
-      private static bool CopyMoveNative(KernelTransaction transaction, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine, CopyOptions? copyOptions, MoveOptions? moveOptions, out bool cancel, out int lastError)
+
+
+      internal static bool CopyMoveNative(KernelTransaction transaction, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine, CopyOptions? copyOptions, MoveOptions? moveOptions, out bool cancel, out int lastError)
       {
          cancel = false;
 

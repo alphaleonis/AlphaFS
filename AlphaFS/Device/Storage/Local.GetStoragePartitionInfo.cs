@@ -84,16 +84,16 @@ namespace Alphaleonis.Win32.Device
             return null;
 
 
-         return GetStoragePartitionInfoNative(isElevated, storageDeviceInfo.DeviceNumber, localDevicePath);
+         using (var safeFileHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
+
+            return GetStoragePartitionInfoNative(safeFileHandle, storageDeviceInfo.DeviceNumber, localDevicePath);
       }
 
 
       [SecurityCritical]
-      internal static StoragePartitionInfo GetStoragePartitionInfoNative(bool isElevated, int deviceNumber, string localDevicePath)
+      internal static StoragePartitionInfo GetStoragePartitionInfoNative(SafeFileHandle safeFileHandle, int deviceNumber, string localDevicePath)
       {
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
-
-         using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, 0, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 4))
+         using (var safeBuffer = InvokeDeviceIoData(safeFileHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_LAYOUT_EX, 0, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 4))
 
             if (null != safeBuffer)
             {
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Device
                      partitions[i] = safeBuffer.PtrToStructure<NativeMethods.PARTITION_INFORMATION_EX>(driveStructureSize + i * partitionStructureSize);
 
 
-                  var disk = GetDiskGeometryExNative(safeHandle, localDevicePath);
+                  var disk = GetDiskGeometryExNative(safeFileHandle, localDevicePath);
 
                   return new StoragePartitionInfo(deviceNumber, disk, layout, partitions);
                }
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Returns information about the physical disk's geometry (media type, number of cylinders, tracks per cylinder, sectors per track, and bytes per sector).</summary>
       [SecurityCritical]
-      private static NativeMethods.DISK_GEOMETRY_EX GetDiskGeometryExNative(SafeFileHandle safeHandle, string pathForException)
+      internal static NativeMethods.DISK_GEOMETRY_EX GetDiskGeometryExNative(SafeFileHandle safeHandle, string pathForException)
       {
          var bufferSize = 128;
 

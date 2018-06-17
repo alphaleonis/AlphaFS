@@ -22,6 +22,7 @@
 using System;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {
@@ -73,37 +74,37 @@ namespace Alphaleonis.Win32.Device
             return null;
 
 
-         return GetStorageAdapterInfoNative(storageDeviceInfo.DeviceNumber, localDevicePath, busReportedDeviceDescription);
+         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, NativeMethods.FILE_ANY_ACCESS))
+
+            return GetStorageAdapterInfoNative(safeHandle, storageDeviceInfo.DeviceNumber, localDevicePath, busReportedDeviceDescription);
       }
 
 
       [SecurityCritical]
-      internal static StorageAdapterInfo GetStorageAdapterInfoNative(int deviceNumber, string localDevicePath, string busReportedDeviceDescription)
+      internal static StorageAdapterInfo GetStorageAdapterInfoNative(SafeFileHandle safeFileHandle, int deviceNumber, string localDevicePath, string busReportedDeviceDescription)
       {
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, NativeMethods.FILE_ANY_ACCESS))
+         var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
          {
-            var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
+            PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageAdapterProperty,
+            QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
+         };
+
+
+         using (var safeBuffer = InvokeDeviceIoData(safeFileHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
+            if (null != safeBuffer)
             {
-               PropertyId = NativeMethods.STORAGE_PROPERTY_ID.StorageAdapterProperty,
-               QueryType = NativeMethods.STORAGE_QUERY_TYPE.PropertyStandardQuery
-            };
+               var storageAdapterInfo = new StorageAdapterInfo(deviceNumber, safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
 
 
-            using (var safeBuffer = InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
-            {
-               if (null != safeBuffer)
-               {
-                  var storageAdapterInfo = new StorageAdapterInfo(deviceNumber, safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());
+               if (!Utils.IsNullOrWhiteSpace(busReportedDeviceDescription))
 
-                  if (!Utils.IsNullOrWhiteSpace(busReportedDeviceDescription))
-                     storageAdapterInfo.BusReportedDeviceDescription = busReportedDeviceDescription;
+                  storageAdapterInfo.BusReportedDeviceDescription = busReportedDeviceDescription;
 
-                  return storageAdapterInfo;
-               }
 
-               return null;
+               return storageAdapterInfo;
             }
-         }
+
+         return null;
       }
    }
 }

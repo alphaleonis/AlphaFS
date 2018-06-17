@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">An existing path to a folder or file.</param>
       /// <param name="getShort"><c>true</c> to retrieve the short path form, <c>false</c> to retrieve the regular long form from the 8.3 <paramref name="path"/>.</param>
       [SecurityCritical]
-      private static string GetLongShort83PathCore(KernelTransaction transaction, string path, bool getShort)
+      internal static string GetLongShort83PathCore(KernelTransaction transaction, string path, bool getShort)
       {
          var pathLp = GetFullPathCore(transaction, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 

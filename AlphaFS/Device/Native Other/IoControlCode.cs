@@ -182,7 +182,7 @@ namespace Alphaleonis.Win32.Device
 
 
          ///// <summary></summary>
-         //DiskLogging = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x000a << 2) | IoMethod.Buffered | (0 << 14),
+         //IOCTL_DISK_LOGGING = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x000a << 2) | IoMethod.Buffered | (0 << 14),
 
 
          ///// <summary>Is similar to IOCTL_DISK_FORMAT_TRACKS, except that it allows the caller to specify several more parameters. The additional extended parameters are the format gap length, the number of sectors per track, and an array whose element size is equal to the number of sectors per track. This array represents the track layout.</summary>
@@ -675,15 +675,6 @@ namespace Alphaleonis.Win32.Device
          //FSCTL_GET_BOOT_AREA_INFO = (STORAGE_DEVICE_TYPE.FILE_DEVICE_FILE_SYSTEM << 16) | (140 << 2) | IoMethod.Buffered | (0 << 14),
 
          #endregion // FILE_DEVICE_FILE_SYSTEM
-
-
-         #region VIDEO
-
-         //VideoQuerySupportedBrightness = (STORAGE_DEVICE_TYPE.FILE_DEVICE_VIDEO << 16) | (0x0125 << 2) | IoMethod.Buffered | (0 << 14),
-         //VideoQueryDisplayBrightness = (STORAGE_DEVICE_TYPE.FILE_DEVICE_VIDEO << 16) | (0x0126 << 2) | IoMethod.Buffered | (0 << 14),
-         //VideoSetDisplayBrightness = (STORAGE_DEVICE_TYPE.FILE_DEVICE_VIDEO << 16) | (0x0127 << 2) | IoMethod.Buffered | (0 << 14),
-
-         #endregion // VIDEO
       }
    }
 }

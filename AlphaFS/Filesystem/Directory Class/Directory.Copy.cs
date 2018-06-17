@@ -767,7 +767,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private static CopyMoveResult CopyDeleteDirectoryCore(KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove, CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult)
+      internal static CopyMoveResult CopyDeleteDirectoryCore(KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove, CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult)
       {
          var cmr = copyMoveResult ?? new CopyMoveResult(sourcePathLp, destinationPathLp, true, true, preserveDates, emulateMove);
          

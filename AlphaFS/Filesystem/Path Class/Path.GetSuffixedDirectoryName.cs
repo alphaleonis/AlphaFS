@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       [SecurityCritical]
-      private static string GetSuffixedDirectoryNameCore(KernelTransaction transaction, string path)
+      internal static string GetSuffixedDirectoryNameCore(KernelTransaction transaction, string path)
       {
          var dirInfo = Directory.GetParentCore(transaction, path, PathFormat.RelativePath);
 

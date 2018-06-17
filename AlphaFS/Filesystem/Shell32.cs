@@ -747,7 +747,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The associated file- or protocol-related string from the registry or <c>string.Empty</c> if no association can be found.</returns>
       /// <exception cref="ArgumentNullException"/>
       [SecurityCritical]
-      private static string GetFileAssociationCore(string path, AssociationAttributes attributes, AssociationString associationType)
+      internal static string GetFileAssociationCore(string path, AssociationAttributes attributes, AssociationString associationType)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");

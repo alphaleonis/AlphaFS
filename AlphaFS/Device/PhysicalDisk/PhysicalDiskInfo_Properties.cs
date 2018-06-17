@@ -20,17 +20,17 @@
  */
 
 using System;
-using System.Collections.Generic;
 using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Device
 {
    public sealed partial class PhysicalDiskInfo
    {
+      /// <summary>An initialized <see cref="Filesystem.DeviceInfo"/> instance.</summary>
       private DeviceInfo DeviceInfo { get; set; }
 
 
-      /// <summary>The device description.</summary>
+      /// <summary>The <see cref="Filesystem.DeviceInfo.DeviceDescription"/>.</summary>
       public string DeviceDescription
       {
          get { return null != DeviceInfo ? DeviceInfo.DeviceDescription : null; }
@@ -49,22 +49,22 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>An <see cref="ICollection{String}"/> of logical drives that are located on the physical disk.</summary>
-      public ICollection<string> LogicalDrives { get; internal set; }
+      /// <summary>An <see cref="Array"/> of logical drives that are located on the physical disk or <c>null</c> when no entries found.</summary>
+      public string[] LogicalDrives { get; private set; }
 
       
-      /// <summary>The "FriendlyName" of the physical disk.</summary>
+      /// <summary>The <see cref="Filesystem.DeviceInfo.FriendlyName"/>.</summary>
       public string Name
       {
          get { return null != DeviceInfo ? DeviceInfo.FriendlyName : null; }
       }
 
 
-      /// <summary>An <see cref="ICollection{String}"/> of partition index numbers that are located on the physical disk.</summary>
-      public ICollection<int> PartitionIndexes { get; internal set; }
+      /// <summary>An <see cref="Array"/> of partition index numbers that are located on the physical disk or <c>null</c> when no entries found.</summary>
+      public int[] PartitionIndexes { get; private set; }
 
 
-      /// <summary>Encapsulates the physical device location (PDO) information provided by a device's firmware to Windows.</summary>
+      /// <summary>The <see cref="Filesystem.DeviceInfo.PhysicalDeviceObjectName"/> (PDO) information provided by a device's firmware to Windows.</summary>
       public string PhysicalDeviceObjectName
       {
          get { return null != DeviceInfo ? DeviceInfo.PhysicalDeviceObjectName : null; }
@@ -72,18 +72,18 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>The storage device adapter information. Retrieving this information requires an elevated state.</summary>
-      public StorageAdapterInfo StorageAdapterInfo { get; internal set; }
+      public StorageAdapterInfo StorageAdapterInfo { get; private set; }
 
 
       /// <summary>The storage device information.</summary>
-      public StorageDeviceInfo StorageDeviceInfo { get; internal set; }
+      public StorageDeviceInfo StorageDeviceInfo { get; private set; }
 
       
       /// <summary>The storage device partition information.</summary>
-      public StoragePartitionInfo StoragePartitionInfo { get; internal set; }
+      public StoragePartitionInfo StoragePartitionInfo { get; private set; }
 
 
-      /// <summary>An <see cref="ICollection{String}"/> of volume <see cref="Guid"/> strings of volumes that are located on the physical disk.</summary>
-      public ICollection<string> VolumeGuids { get; internal set; }
+      /// <summary>An <see cref="Array"/> of volume <see cref="Guid"/> strings of volumes that are located on the physical disk or <c>null</c> when no entries found.</summary>
+      public string[] VolumeGuids { get; private set; }
    }
 }

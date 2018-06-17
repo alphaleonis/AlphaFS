@@ -212,7 +212,7 @@ namespace AlphaFS.UnitTest
       
       
       /// <summary>Creates an, optional recursive, directory structure of <param name="level"/> levels deep, populated with subdirectories and files of random size and possibly with read-only and/or hidden attributes set.</summary>
-      private System.IO.DirectoryInfo CreateTreeCore(string rootFullPath, int level = 1, bool recurse = false, bool readOnly = false, bool hidden = false)
+      internal System.IO.DirectoryInfo CreateTreeCore(string rootFullPath, int level = 1, bool recurse = false, bool readOnly = false, bool hidden = false)
       {
          var dirInfo = CreateDirectoryCore(rootFullPath, readOnly, hidden);
 
@@ -298,7 +298,7 @@ namespace AlphaFS.UnitTest
 
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with read-only and/or hidden attributes set.</summary>
-      private System.IO.DirectoryInfo CreateDirectoryCore(string folderFullPath, bool readOnly = false, bool hidden = false)
+      internal System.IO.DirectoryInfo CreateDirectoryCore(string folderFullPath, bool readOnly = false, bool hidden = false)
       {
          var dirInfo = System.IO.Directory.CreateDirectory(!Alphaleonis.Utils.IsNullOrWhiteSpace(folderFullPath) ? folderFullPath : RandomDirectoryFullPath);
 
@@ -309,7 +309,7 @@ namespace AlphaFS.UnitTest
 
 
       /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file, possibly with read-only and/or hidden attributes set.</summary>
-      private System.IO.FileInfo CreateFileCore(string fileFullPath, bool readOnly = false, bool hidden = false)
+      internal System.IO.FileInfo CreateFileCore(string fileFullPath, bool readOnly = false, bool hidden = false)
       {
          var fileInfo = new System.IO.FileInfo(!Alphaleonis.Utils.IsNullOrWhiteSpace(fileFullPath) ? fileFullPath : RandomTxtFileFullPath);
 

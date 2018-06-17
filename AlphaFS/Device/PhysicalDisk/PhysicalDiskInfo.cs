@@ -20,9 +20,13 @@
  */
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Security;
+using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Device
@@ -32,6 +36,15 @@ namespace Alphaleonis.Win32.Device
    [SecurityCritical]
    public sealed partial class PhysicalDiskInfo
    {
+      #region Fields
+
+      private Collection<int> partitionIndexCollection;
+      private Collection<string> volumeGuidCollection;
+      private Collection<string> logicalDriveCollection;
+
+      #endregion // Fields
+
+
       #region Constructors
 
       private PhysicalDiskInfo()
@@ -59,7 +72,7 @@ namespace Alphaleonis.Win32.Device
       ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
       ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
       ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      ///    <para>A <see cref="Filesystem.DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
       public PhysicalDiskInfo(string devicePath)
       {
@@ -91,13 +104,14 @@ namespace Alphaleonis.Win32.Device
 
          // The StorageDeviceInfo is always needed as it contains the device- and partition number.
 
-         var storageDeviceInfo = Local.GetStorageDeviceInfoNative(isElevated, isDevice, deviceNumber, localDevicePath, out localDevicePath);
+         physicalDiskInfo.StorageDeviceInfo =  Local.GetStorageDeviceInfoNative(isElevated, isDevice, deviceNumber, localDevicePath, out localDevicePath);
          
-         if (null == storageDeviceInfo)
+         if (null == physicalDiskInfo.StorageDeviceInfo)
             return;
 
 
-         deviceNumber = getByDeviceNumber ? deviceNumber : storageDeviceInfo.DeviceNumber;
+         deviceNumber = getByDeviceNumber ? deviceNumber : physicalDiskInfo.StorageDeviceInfo.DeviceNumber;
+
 
          if (null == deviceInfo)
             foreach (var device in Local.EnumerateDevicesCore(null, new[] {DeviceGuid.Disk, DeviceGuid.CDRom}, false))
@@ -118,25 +132,26 @@ namespace Alphaleonis.Win32.Device
 
 
          physicalDiskInfo.DeviceInfo = deviceInfo;
-
-         physicalDiskInfo.StorageAdapterInfo = Local.GetStorageAdapterInfoNative(deviceNumber, localDevicePath, deviceInfo.BusReportedDeviceDescription);
          
-         physicalDiskInfo.StoragePartitionInfo = Local.GetStoragePartitionInfoNative(isElevated, deviceNumber, localDevicePath);
 
-         physicalDiskInfo.StorageDeviceInfo = storageDeviceInfo;
+         using (var safeFileHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
+         {
+            physicalDiskInfo.StorageAdapterInfo = Local.GetStorageAdapterInfoNative(safeFileHandle, deviceNumber, localDevicePath, deviceInfo.BusReportedDeviceDescription);
 
+            physicalDiskInfo.StoragePartitionInfo = Local.GetStoragePartitionInfoNative(safeFileHandle, deviceNumber, localDevicePath);
+         }
+         
 
-         PopulatePhysicalDisk(isElevated, physicalDiskInfo);
+         physicalDiskInfo.PopulatePhysicalDisk(isElevated, physicalDiskInfo);
       }
 
 
       /// <summary>Retrieves volumes/logical drives that belong to the <paramref name="physicalDiskInfo"/> instance.</summary>
       [SecurityCritical]
-      private static void PopulatePhysicalDisk(bool isElevated, PhysicalDiskInfo physicalDiskInfo)
+      private void PopulatePhysicalDisk(bool isElevated, PhysicalDiskInfo physicalDiskInfo)
       {
          var deviceNumber = physicalDiskInfo.StorageDeviceInfo.DeviceNumber;
-
-
+         
          foreach (var volumeGuid in Volume.EnumerateVolumes())
          {
             string unusedLocalDevicePath;
@@ -149,35 +164,45 @@ namespace Alphaleonis.Win32.Device
                continue;
 
 
-            AddToPartitionIndex(physicalDiskInfo, storageDeviceInfo.PartitionNumber);
+            AddToPartitionIndex(storageDeviceInfo.PartitionNumber);
             
-            AddToVolumeGuids(physicalDiskInfo, volumeGuid);
+            AddToVolumeGuids(volumeGuid);
             
 
             // Resolve logical drive from volume matching DeviceNumber and PartitionNumber.
 
             var driveName = Volume.GetVolumeDisplayName(volumeGuid);
-
+            
 
             if (!Utils.IsNullOrWhiteSpace(driveName))
 
-               AddToLogicalDrives(physicalDiskInfo, driveName);
+               AddToLogicalDrives(driveName);
          }
+
+
+         if (null != partitionIndexCollection)
+            physicalDiskInfo.PartitionIndexes = partitionIndexCollection.ToArray();
+
+         if (null != volumeGuidCollection)
+            physicalDiskInfo.VolumeGuids = volumeGuidCollection.ToArray();
+
+         if (null != logicalDriveCollection)
+            physicalDiskInfo.LogicalDrives = logicalDriveCollection.ToArray();
       }
 
 
-      private static void AddToPartitionIndex(PhysicalDiskInfo pDiskInfo, int deviceNumber)
+      /// <summary>Adds device partition index numbers.</summary>
+      private void AddToPartitionIndex(int deviceNumber)
       {
-         // Add device partition index numbers.
-
-         if (null == pDiskInfo.PartitionIndexes)
-            pDiskInfo.PartitionIndexes = new Collection<int>();
-
-         pDiskInfo.PartitionIndexes.Add(deviceNumber);
+         if (null == partitionIndexCollection)
+            partitionIndexCollection = new Collection<int>();
+            
+         partitionIndexCollection.Add(deviceNumber);
       }
 
 
-      private static void AddToVolumeGuids(PhysicalDiskInfo pDiskInfo, string volumeGuid)
+      /// <summary>Adds device volume GUIDs.</summary>
+      private void AddToVolumeGuids(string volumeGuid)
       {
          //// Add device volume labels.
 
@@ -187,23 +212,20 @@ namespace Alphaleonis.Win32.Device
          //pDiskInfo.VolumeLabels.Add(pVolume.Name);
          
 
-         // Add device volume GUIDs.
+         if (null == volumeGuidCollection)
+            volumeGuidCollection = new Collection<string>();
 
-         if (null == pDiskInfo.VolumeGuids)
-            pDiskInfo.VolumeGuids = new Collection<string>();
-
-         pDiskInfo.VolumeGuids.Add(volumeGuid);
+         volumeGuidCollection.Add(volumeGuid);
       }
 
 
-      private static void AddToLogicalDrives(PhysicalDiskInfo pDiskInfo, string drivePath)
+      /// <summary>Adds device logical drive.</summary>
+      private void AddToLogicalDrives(string drivePath)
       {
-         // Add device logical drive.
+         if (null == logicalDriveCollection)
+            logicalDriveCollection = new Collection<string>();
 
-         if (null == pDiskInfo.LogicalDrives)
-            pDiskInfo.LogicalDrives = new Collection<string>();
-
-         pDiskInfo.LogicalDrives.Add(Path.RemoveTrailingDirectorySeparator(drivePath));
+         logicalDriveCollection.Add(Path.RemoveTrailingDirectorySeparator(drivePath));
       }
 
 
@@ -227,13 +249,10 @@ namespace Alphaleonis.Win32.Device
 
          var other = obj as PhysicalDiskInfo;
 
-         return null != other && Equals(DevicePath, other.DevicePath) &&
-
-                Equals(StorageAdapterInfo, other.StorageAdapterInfo) &&
-
-                Equals(StorageDeviceInfo, other.StorageDeviceInfo) &&
-
-                Equals(StoragePartitionInfo, other.StoragePartitionInfo);
+         return null != other && other.DevicePath == DevicePath &&
+                other.StorageAdapterInfo == StorageAdapterInfo &&
+                other.StorageDeviceInfo == StorageDeviceInfo &&
+                other.StoragePartitionInfo == StoragePartitionInfo;
       }
 
 

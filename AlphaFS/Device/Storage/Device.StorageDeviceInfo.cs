@@ -77,11 +77,11 @@ namespace Alphaleonis.Win32.Device
       
 
       /// <summary>The storage device type.</summary>
-      public StorageDeviceType DeviceType { get; internal set; }
+      public StorageDeviceType DeviceType { get; private set; }
 
 
       /// <summary>The device number of the storage device, starting at <c>0</c>.</summary>
-      public int DeviceNumber { get; internal set; }
+      public int DeviceNumber { get; private set; }
 
 
       /// <summary>
@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Device
       ///   <c>-1</c> is also returned if the device is accessed by its path: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c>
       ///   instead of a logical drive- or volume path.
       /// </summary>
-      public int PartitionNumber { get; internal set; }
+      public int PartitionNumber { get; private set; }
 
 
       /// <summary>The product ID of the physical disk.</summary>
