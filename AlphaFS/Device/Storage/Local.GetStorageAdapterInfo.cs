@@ -91,6 +91,7 @@ namespace Alphaleonis.Win32.Device
 
 
          using (var safeBuffer = InvokeDeviceIoData(safeFileHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 8))
+
             if (null != safeBuffer)
             {
                var storageAdapterInfo = new StorageAdapterInfo(deviceNumber, safeBuffer.PtrToStructure<NativeMethods.STORAGE_ADAPTER_DESCRIPTOR>());

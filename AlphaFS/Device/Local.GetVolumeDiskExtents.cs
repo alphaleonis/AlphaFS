@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Device
    {
       /// <summary>Retrieves the physical location and disk number of a specified volume on one or more disks.</summary>
       [SecurityCritical]
-      private static NativeMethods.VOLUME_DISK_EXTENTS? GetVolumeDiskExtents(SafeFileHandle safeHandle, string pathForException)
+      private static NativeMethods.VOLUME_DISK_EXTENTS? GetVolumeDiskExtents(SafeFileHandle safeFileHandle, string pathForException)
       {
          var structSize = Marshal.SizeOf(typeof(NativeMethods.DISK_EXTENT_SINGLE));
          var bufferSize = structSize;
@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Device
          while(true)
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
             {
-               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+               var success = NativeMethods.DeviceIoControl(safeFileHandle, NativeMethods.IoControlCode.IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
                var lastError = Marshal.GetLastWin32Error();
 

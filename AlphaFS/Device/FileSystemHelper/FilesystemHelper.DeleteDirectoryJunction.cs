@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Device
    internal static partial class FileSystemHelper
    {
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      internal static void DeleteDirectoryJunction(SafeFileHandle safeHandle)
+      internal static void DeleteDirectoryJunction(SafeFileHandle safeFileHandle)
       {
          var reparseDataBuffer = new Filesystem.NativeMethods.REPARSE_DATA_BUFFER
          {
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Device
          {
             safeBuffer.StructureToPtr(reparseDataBuffer, false);
 
-            var success = NativeMethods.DeviceIoJunctions(safeHandle, NativeMethods.IoControlCode.FSCTL_DELETE_REPARSE_POINT, safeBuffer, REPARSE_DATA_BUFFER_HEADER_SIZE, IntPtr.Zero, 0, IntPtr.Zero, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoJunctions(safeFileHandle, NativeMethods.IoControlCode.FSCTL_DELETE_REPARSE_POINT, safeBuffer, REPARSE_DATA_BUFFER_HEADER_SIZE, IntPtr.Zero, 0, IntPtr.Zero, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
 

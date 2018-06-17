@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Device
    internal static partial class FileSystemHelper
    {
       /// <summary>[AlphaFS] Creates an NTFS directory junction (similar to CMD command: "MKLINK /J").</summary>
-      internal static void CreateDirectoryJunction(SafeFileHandle safeHandle, string directoryPath)
+      internal static void CreateDirectoryJunction(SafeFileHandle safeFileHandle, string directoryPath)
       {
          var targetDirBytes = Encoding.Unicode.GetBytes(Path.NonInterpretedPathPrefix + Path.GetRegularPathCore(directoryPath, GetFullPathOptions.AddTrailingDirectorySeparator, false));
 
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Device
          {
             safeBuffer.StructureToPtr(reparseDataBuffer, false);
 
-            var success = NativeMethods.DeviceIoJunctions(safeHandle, NativeMethods.IoControlCode.FSCTL_SET_REPARSE_POINT, safeBuffer, (uint) (targetDirBytes.Length + 20), IntPtr.Zero, 0, IntPtr.Zero, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoJunctions(safeFileHandle, NativeMethods.IoControlCode.FSCTL_SET_REPARSE_POINT, safeBuffer, (uint) (targetDirBytes.Length + 20), IntPtr.Zero, 0, IntPtr.Zero, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
 

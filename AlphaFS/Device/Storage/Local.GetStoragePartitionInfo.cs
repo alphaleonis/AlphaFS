@@ -126,14 +126,14 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Returns information about the physical disk's geometry (media type, number of cylinders, tracks per cylinder, sectors per track, and bytes per sector).</summary>
       [SecurityCritical]
-      internal static NativeMethods.DISK_GEOMETRY_EX GetDiskGeometryExNative(SafeFileHandle safeHandle, string pathForException)
+      internal static NativeMethods.DISK_GEOMETRY_EX GetDiskGeometryExNative(SafeFileHandle safeFileHandle, string pathForException)
       {
          var bufferSize = 128;
 
          while (true)
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
             {
-               var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+               var success = NativeMethods.DeviceIoControl(safeFileHandle, NativeMethods.IoControlCode.IOCTL_DISK_GET_DRIVE_GEOMETRY_EX, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
                var lastError = Marshal.GetLastWin32Error();
                

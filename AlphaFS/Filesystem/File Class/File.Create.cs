@@ -258,22 +258,19 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification =
          "False positive")]
       [SecurityCritical]
-      internal static FileStream CreateFileStreamCore(KernelTransaction transaction, string path,
-         ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access,
-         FileShare share, int bufferSize, PathFormat pathFormat)
+      internal static FileStream CreateFileStreamCore(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, int bufferSize, PathFormat pathFormat)
       {
-         SafeFileHandle safeHandle = null;
+         SafeFileHandle safeFileHandle = null;
 
          try
          {
-            safeHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, true, false, pathFormat);
+            safeFileHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, true, false, pathFormat);
 
-            return new FileStream(safeHandle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
+            return new FileStream(safeFileHandle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
          }
          catch
          {
-            if (null != safeHandle && !safeHandle.IsClosed)
-               safeHandle.Close();
+            Utils.IsValidHandle(safeFileHandle, false);
 
             throw;
          }

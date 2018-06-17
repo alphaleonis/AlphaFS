@@ -993,18 +993,17 @@ namespace Alphaleonis.Win32.Filesystem
                          : 0);
 
 
-         SafeFileHandle safeHandle = null;
+         SafeFileHandle safeFileHandle = null;
 
          try
          {
-            safeHandle = CreateFileCore(transaction, path, attributes, security, mode, rights, share, true, false, pathFormat);
+            safeFileHandle = CreateFileCore(transaction, path, attributes, security, mode, rights, share, true, false, pathFormat);
 
-            return new FileStream(safeHandle, access, bufferSize ?? NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
+            return new FileStream(safeFileHandle, access, bufferSize ?? NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
          }
          catch
          {
-            if (null != safeHandle && !safeHandle.IsClosed)
-               safeHandle.Close();
+            Utils.IsValidHandle(safeFileHandle, false);
 
             throw;
          }

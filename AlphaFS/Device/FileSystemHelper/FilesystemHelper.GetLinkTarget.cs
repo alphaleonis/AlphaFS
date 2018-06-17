@@ -35,9 +35,9 @@ namespace Alphaleonis.Win32.Device
       /// <exception cref="NotAReparsePointException"/>
       /// <exception cref="UnrecognizedReparsePointException"/>
       [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfo(SafeFileHandle safeHandle, string reparsePath)
+      internal static LinkTargetInfo GetLinkTargetInfo(SafeFileHandle safeFileHandle, string reparsePath)
       {
-         using (var safeBuffer = GetLinkTargetData(safeHandle, reparsePath))
+         using (var safeBuffer = GetLinkTargetData(safeFileHandle, reparsePath))
          {
             var header = safeBuffer.PtrToStructure<Filesystem.NativeMethods.ReparseDataBufferHeader>();
 
@@ -87,9 +87,9 @@ namespace Alphaleonis.Win32.Device
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing is controlled.")]
       [SecurityCritical]
-      private static SafeGlobalMemoryBufferHandle GetLinkTargetData(SafeFileHandle safeHandle, string reparsePath)
+      private static SafeGlobalMemoryBufferHandle GetLinkTargetData(SafeFileHandle safeFileHandle, string reparsePath)
       {
-         Utils.IsValidHandle(safeHandle);
+         Utils.IsValidHandle(safeFileHandle);
 
          var bufferSize = MAXIMUM_REPARSE_DATA_BUFFER_SIZE;
 
@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Device
          {
             var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize);
 
-            var success = NativeMethods.DeviceIoControl(safeHandle, NativeMethods.IoControlCode.FSCTL_GET_REPARSE_POINT, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
+            var success = NativeMethods.DeviceIoControl(safeFileHandle, NativeMethods.IoControlCode.FSCTL_GET_REPARSE_POINT, IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, IntPtr.Zero, IntPtr.Zero);
 
             var lastError = Marshal.GetLastWin32Error();
 
