@@ -22,6 +22,7 @@
 using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
@@ -31,7 +32,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_PhysicalDiskInfo_CreateInstance_UsingPhysicalDriveNumber_Local_Success()
+      public void AlphaFS_PhysicalDiskInfo_CreateInstance_UsingPhysicalDriveNumber_ReturnsStorageDeviceInfoForDevice()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -42,7 +43,7 @@ namespace AlphaFS.UnitTest
 
          for (var physicalDiskNumber = 0; physicalDiskNumber < physicalDisks.Length; physicalDiskNumber++)
          {
-            Console.WriteLine("#{0:000}\tInput Physical Disk Number: [{1}]", physicalDiskNumber + 1, physicalDiskNumber);
+            Console.WriteLine("#{0:000}\tInput Physical Disk Path: [{1}{2}]", physicalDiskNumber + 1, Alphaleonis.Win32.Filesystem.Path.PhysicalDrivePrefix, physicalDiskNumber);
 
             var pDiskInfo = new Alphaleonis.Win32.Device.PhysicalDiskInfo(physicalDiskNumber);
 
@@ -55,14 +56,30 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(pDiskInfo.StoragePartitionInfo, true);
 
 
+            Assert.IsNotNull(pDiskInfo);
+
+            Assert.IsNotNull(pDiskInfo.LogicalDrives);
+
+            Assert.IsNotNull(pDiskInfo.VolumeGuids);
+
+
+            // DosDeviceName should contain "X\DR" for device.
+
+            Assert.IsTrue(pDiskInfo.DosDeviceName.Contains(string.Format(CultureInfo.InvariantCulture, @"{0}\DR", physicalDiskNumber)));
+
+
+            // PartitionNumber should be 0 for device.
+
+            Assert.AreEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+
+
+
             Assert.AreEqual(physicalDiskNumber, pDiskInfo.StorageAdapterInfo.DeviceNumber);
 
             Assert.AreEqual(physicalDiskNumber, pDiskInfo.StorageDeviceInfo.DeviceNumber);
 
             Assert.AreEqual(physicalDiskNumber, pDiskInfo.StoragePartitionInfo.DeviceNumber);
-
-            Assert.AreEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
-
+            
 
             Console.WriteLine();
          }

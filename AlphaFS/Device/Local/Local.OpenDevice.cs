@@ -29,7 +29,7 @@ using File = Alphaleonis.Win32.Filesystem.File;
 
 namespace Alphaleonis.Win32.Device
 {
-   internal static partial class FileSystemHelper
+   public static partial class Local
    {
       /// <summary>Opens a physical disk or volume/logical drive for read access.</summary>
       /// <returns>Returns a <see cref="SafeFileHandle"/> instance.</returns>
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Device
       /// </param>
       /// <param name="fileSystemRights">If no elevated access is needed to access the physical disk or volume/logical drive, specify 0 for this parameter.</param>
       [SecurityCritical]
-      public static SafeFileHandle OpenPhysicalDisk(string devicePath, FileSystemRights fileSystemRights)
+      public static SafeFileHandle OpenDevice(string devicePath, FileSystemRights fileSystemRights)
       {
          // fileSystemRights: If this parameter is 0 (FILE_ANY_ACCESS), the application can query certain metadata such as file, directory, or device attributes
          // without accessing that file or device, even if GENERIC_READ access would have been denied.
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Device
 
 
 
-      internal static SafeFileHandle OpenPhysicalDisk2(string devicePath, FileSystemRights fileSystemRights)
+      internal static SafeFileHandle OpenDevice2(string devicePath, FileSystemRights fileSystemRights)
       {
          // fileSystemRights: If this parameter is 0 (FILE_ANY_ACCESS), the application can query certain metadata such as file, directory, or device attributes
          // without accessing that file or device, even if GENERIC_READ access would have been denied.

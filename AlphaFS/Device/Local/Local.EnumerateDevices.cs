@@ -240,7 +240,7 @@ namespace Alphaleonis.Win32.Device
       private static string GetDeviceBusReportedDeviceDescription(SafeHandle safeHandle, NativeMethods.SP_DEVINFO_DATA infoData)
       {
          if (!OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows7))
-            return null;
+            return string.Empty;
 
 
          const int bufferSize = Filesystem.NativeMethods.DefaultFileBufferSize / 32; // 128
@@ -260,10 +260,10 @@ namespace Alphaleonis.Win32.Device
 
             var result = value.Remove(value.IndexOf((char) 0));
 
-            return !Utils.IsNullOrWhiteSpace(result) ? result.Trim() : null;
+            return !Utils.IsNullOrWhiteSpace(result) ? result.Trim() : string.Empty;
          }
 
-         return null;
+         return string.Empty;
       }
 
 
@@ -283,7 +283,7 @@ namespace Alphaleonis.Win32.Device
                {
                   var value = safeBuffer.PtrToStringUni();
 
-                  return !Utils.IsNullOrWhiteSpace(value) ? value.Trim() : null;
+                  return !Utils.IsNullOrWhiteSpace(value) ? value.Trim() : string.Empty;
                }
 
 
@@ -291,7 +291,7 @@ namespace Alphaleonis.Win32.Device
                // the requested property does not exist for a device or if the property data is not valid.
 
                if (lastError == Win32Errors.ERROR_INVALID_DATA)
-                  return null;
+                  return string.Empty;
 
 
                bufferSize = Utils.GetDoubledBufferSizeOrThrowException(safeBuffer, lastError, bufferSize, property.ToString());
@@ -303,9 +303,15 @@ namespace Alphaleonis.Win32.Device
       private static void SetDeviceProperties(SafeHandle safeHandle, DeviceInfo deviceInfo, NativeMethods.SP_DEVINFO_DATA infoData)
       {
          SetMinimalDeviceProperties(safeHandle, deviceInfo, infoData);
-         
 
+
+         deviceInfo.BaseContainerId = new Guid(GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.BaseContainerId));
+
+         deviceInfo.ClassGuid = new Guid(GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.ClassGuid));
+         
          deviceInfo.CompatibleIds = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.CompatibleIds);
+
+         deviceInfo.DeviceClass = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.Class);
 
          deviceInfo.DeviceDriver = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.Driver);
 
@@ -326,14 +332,8 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       private static void SetMinimalDeviceProperties(SafeHandle safeHandle, DeviceInfo deviceInfo, NativeMethods.SP_DEVINFO_DATA infoData)
       {
-         deviceInfo.BaseContainerId = new Guid(GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.BaseContainerId));
-
          deviceInfo.BusReportedDeviceDescription = GetDeviceBusReportedDeviceDescription(safeHandle, infoData);
-
-         deviceInfo.ClassGuid = new Guid(GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.ClassGuid));
-
-         deviceInfo.DeviceClass = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.Class);
-
+         
          deviceInfo.DeviceDescription = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.DeviceDescription);
          
          deviceInfo.FriendlyName = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.FriendlyName);

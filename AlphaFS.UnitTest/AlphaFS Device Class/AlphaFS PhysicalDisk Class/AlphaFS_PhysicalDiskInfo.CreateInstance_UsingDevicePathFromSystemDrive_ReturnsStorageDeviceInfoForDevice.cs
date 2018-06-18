@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_GetStorageDeviceInfo_UsingDevicePathFromSystemDrive_Success()
+      public void AlphaFS_PhysicalDiskInfo_CreateInstance_UsingDevicePathFromSystemDrive_ReturnsStorageDeviceInfoForDevice()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -48,9 +48,7 @@ namespace AlphaFS.UnitTest
 
          var pDiskInfo = new Alphaleonis.Win32.Device.PhysicalDiskInfo(devicePath);
          
-         var storageDeviceInfo = Alphaleonis.Win32.Device.Local.GetStorageDeviceInfo(devicePath);
 
-         
          UnitTestConstants.Dump(pDiskInfo);
 
          UnitTestConstants.Dump(pDiskInfo.StorageAdapterInfo, true);
@@ -58,23 +56,31 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.Dump(pDiskInfo.StorageDeviceInfo, true);
 
          UnitTestConstants.Dump(pDiskInfo.StoragePartitionInfo, true);
-         Console.WriteLine();
 
-
-         Assert.IsNotNull(storageDeviceInfo);
 
          Assert.IsNotNull(pDiskInfo);
-
-
-         Assert.AreEqual(pDiskInfo.StorageDeviceInfo, storageDeviceInfo);
-
 
          Assert.IsNotNull(pDiskInfo.LogicalDrives);
 
          Assert.IsNotNull(pDiskInfo.VolumeGuids);
 
-         Assert.IsNotNull(pDiskInfo.DosDeviceName);
 
+         // DosDeviceName should be the same for device.
+
+         Assert.AreEqual(pDiskInfo.DosDeviceName, pDiskInfo.PhysicalDeviceObjectName);
+
+         
+         // PartitionNumber should be -1 for CDRom.
+
+         if (pDiskInfo.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.StorageDeviceType.CDRom)
+            Assert.AreEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+
+         // PartitionNumber should be > 0 for logical drive because it is not the device.
+         else
+            Assert.AreNotEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+
+
+         // ContainsVolume should find volumes/logical drives.
 
          Assert.IsTrue(pDiskInfo.LogicalDrives.Contains(sourceDrive, StringComparer.OrdinalIgnoreCase));
 
@@ -86,7 +92,18 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(pDiskInfo.ContainsVolume(sourceVolume));
          
 
-         Assert.AreNotEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+         // Show all partition information.
+
+         if (null != pDiskInfo.StoragePartitionInfo && null != pDiskInfo.StoragePartitionInfo.GptPartitionInfo)
+            foreach (var partition in pDiskInfo.StoragePartitionInfo.GptPartitionInfo)
+               UnitTestConstants.Dump(partition, true);
+
+         if (null != pDiskInfo.StoragePartitionInfo && null != pDiskInfo.StoragePartitionInfo.MbrPartitionInfo)
+            foreach (var partition in pDiskInfo.StoragePartitionInfo.MbrPartitionInfo)
+               UnitTestConstants.Dump(partition, true);
+
+
+         Console.WriteLine();
       }
    }
 }

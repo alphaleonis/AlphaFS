@@ -74,7 +74,9 @@ namespace Alphaleonis.Win32.Device
             return null;
 
 
-         using (var safeHandle = FileSystemHelper.OpenPhysicalDisk(localDevicePath, NativeMethods.FILE_ANY_ACCESS))
+         localDevicePath = localDevicePath ?? devicePath;
+
+         using (var safeHandle = OpenDevice(localDevicePath, NativeMethods.FILE_ANY_ACCESS))
 
             return GetStorageAdapterInfoNative(safeHandle, storageDeviceInfo.DeviceNumber, localDevicePath, busReportedDeviceDescription);
       }

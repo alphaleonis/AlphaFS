@@ -85,9 +85,11 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>
-      ///   The partition number of the storage device, starting at <c>1</c>. If the device cannot be partitioned, like a CDROM, <c>-1</c> is returned.
+      ///   The partition number of the storage device, starting at <c>1</c>.
+      ///   Partition number <c>0</c> is the device.
+      ///   If the device cannot be partitioned, like a CDROM, <c>-1</c> is returned.
       ///   <c>-1</c> is also returned if the device is accessed by its path: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c>
-      ///   instead of a logical drive- or volume path.
+      ///   instead of a volume /logical drive path.
       /// </summary>
       public int PartitionNumber { get; private set; }
 

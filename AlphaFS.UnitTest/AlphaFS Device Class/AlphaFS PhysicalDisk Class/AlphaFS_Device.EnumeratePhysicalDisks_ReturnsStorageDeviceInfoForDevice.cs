@@ -20,50 +20,40 @@
  */
 
 using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class AlphaFS_PhysicalDiskInfoTest
+   public partial class EnumerationTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_PhysicalDiskInfo_CreateInstance_UsingLogicalDrivePath_Local_Success()
+      public void AlphaFS_Device_EnumeratePhysicalDisks_ReturnsStorageDeviceInfoForDevice()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
          var driveCount = 0;
-         Alphaleonis.Win32.Device.PhysicalDiskInfo prevDiskInfo = null;
 
-         foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
+         var physicalDrives = Alphaleonis.Win32.Filesystem.Volume.QueryAllDosDevices().Where(device => device.StartsWith("PhysicalDrive", StringComparison.OrdinalIgnoreCase)).ToArray();
+
+         var cdRoms = Alphaleonis.Win32.Filesystem.Volume.QueryAllDosDevices().Where(device => device.StartsWith("CdRom", StringComparison.OrdinalIgnoreCase)).ToArray();
+
+         var pDrives = Alphaleonis.Win32.Device.Local.EnumeratePhysicalDisks().OrderBy(pDiskInfo => pDiskInfo.StorageDeviceInfo.DeviceNumber).ThenByDescending(pDiskInfo => pDiskInfo.StorageDeviceInfo.PartitionNumber).ToArray();
+
+         var allPhysicalDrives = physicalDrives.Length + cdRoms.Length;
+
+
+         Console.WriteLine("Found: [{0}] physical drives.\n", allPhysicalDrives);
+
+         Assert.AreEqual(allPhysicalDrives, pDrives.Length);
+
+
+         foreach (var pDiskInfo in pDrives)
          {
-            // Works with System.IO.DriveType.CDRom.
-
-            // System.UnauthorizedAccessException: (5) Access is denied.
-            if (driveInfo.DriveType == System.IO.DriveType.Network)
-            {
-               Console.WriteLine("#{0:000}\tSkipped Network drive: [{1}]\n", ++driveCount, driveInfo.Name);
-               continue;
-            }
-
-            if (driveInfo.DriveType == System.IO.DriveType.NoRootDirectory)
-            {
-               Console.WriteLine("#{0:000}\tSkipped NoRootDirectory drive: [{1}]\n", ++driveCount, driveInfo.Name);
-               continue;
-            }
-
-
-            Console.WriteLine("#{0:000}\tInput Logical Drive Path: [{1}]", ++driveCount, driveInfo.Name);
-
-
-            var pDiskInfo = new Alphaleonis.Win32.Device.PhysicalDiskInfo(driveInfo.Name);
-
-            Assert.AreNotEqual(prevDiskInfo, pDiskInfo);
-
-            prevDiskInfo = pDiskInfo;
-
+            Console.WriteLine("#{0:000}\tPhysical Disk: [{1}]", driveCount, pDiskInfo.StorageDeviceInfo.DeviceNumber);
 
             UnitTestConstants.Dump(pDiskInfo);
 
@@ -80,33 +70,29 @@ namespace AlphaFS.UnitTest
 
             Assert.IsNotNull(pDiskInfo.VolumeGuids);
 
-            Assert.IsNotNull(pDiskInfo.DosDeviceName);
+
+            // DosDeviceName should be the same for device.
+
+            Assert.AreEqual(pDiskInfo.DosDeviceName, pDiskInfo.PhysicalDeviceObjectName);
 
 
-            if (pDiskInfo.StorageDeviceInfo.PartitionNumber > 0)
-               Assert.IsNotNull(pDiskInfo.StoragePartitionInfo);
-
-
-            // For CDRom, the PartitionNumber is always -1.
+            // PartitionNumber should be -1 for CDRom.
 
             if (pDiskInfo.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.StorageDeviceType.CDRom)
-            {
                Assert.AreEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
-               Assert.AreEqual(Alphaleonis.Win32.Device.StorageDeviceType.CDRom, pDiskInfo.StorageDeviceInfo.DeviceType);
-            }
 
+            // PartitionNumber should be 0 for device.
             else
-               Assert.AreNotEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+               Assert.AreEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
 
 
-            var physicalDiskNumber = pDiskInfo.StorageDeviceInfo.DeviceNumber;
-
-            Assert.AreEqual(physicalDiskNumber, pDiskInfo.StorageAdapterInfo.DeviceNumber);
-
-            Assert.AreEqual(physicalDiskNumber, pDiskInfo.StoragePartitionInfo.DeviceNumber);
+            driveCount++;
 
             Console.WriteLine();
          }
+
+
+         Assert.IsTrue(driveCount > 0, "No physical disks enumerated, but it is expected.");
       }
    }
 }

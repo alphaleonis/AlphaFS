@@ -196,27 +196,27 @@
     <Compile Include="AssemblyVersionInfo.cs">
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
-    <Compile Include="Device\Device.Local.cs" />
+    <Compile Include="Device\Local\Device.Local.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.ContainsVolume.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo_Properties.cs" />
-    <Compile Include="Device\Storage\Local.SetStorageDeviceInfoData.cs" />
-    <Compile Include="Device\Storage\Local.GetStoragePartitionInfo.cs" />
+    <Compile Include="Device\Local\Local.SetStorageDeviceInfoData.cs" />
+    <Compile Include="Device\Local\Local.GetStoragePartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageMbrPartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageGptPartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StoragePartitionInfo.cs" />
     <Compile Include="Device\Test.cs" />
-    <Compile Include="Device\Local.GetDeviceIoData.cs" />
-    <Compile Include="Device\Local.InvokeDeviceIoData.cs" />
-    <Compile Include="Device\Local.GetVolumeDiskExtents.cs" />
+    <Compile Include="Device\Local\Local.GetDeviceIoData.cs" />
+    <Compile Include="Device\Local\Local.InvokeDeviceIoData.cs" />
+    <Compile Include="Device\Local\Local.GetVolumeDiskExtents.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetLocalDevicePath.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetValidatedDevicePath.cs" />
-    <Compile Include="Device\Storage\Local.GetStorageAdapterInfo.cs" />
+    <Compile Include="Device\Local\Local.GetStorageAdapterInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageAdapterInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageDeviceInfo.cs" />
-    <Compile Include="Device\Storage\Local.GetStorageDeviceInfo.cs" />
+    <Compile Include="Device\Local\Local.GetStorageDeviceInfo.cs" />
     <Compile Include="Device\PhysicalDisk\Local.EnumeratePhysicalDisks.cs" />
-    <Compile Include="Device\Local.EnumerateDevices.cs" />
+    <Compile Include="Device\Local\Local.EnumerateDevices.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.Compression.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.GetFreeDriveLetter.cs" />
@@ -253,7 +253,7 @@
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateLogicalDrives.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetSize.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
-    <Compile Include="Device\FileSystemHelper\FileSystemHelper.OpenPhysicalDrive.cs" />
+    <Compile Include="Device\Local\Local.OpenDevice.cs" />
     <Compile Include="Filesystem\File Class\File.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\File Class\File.FileAttributeLogic.cs" />
@@ -356,7 +356,7 @@
     <Compile Include="Filesystem\Native Other\FIND_FIRST_EX_FLAGS.cs" />
     <Compile Include="Filesystem\Native Other\GET_FILEEX_INFO_LEVELS.cs" />
     <Compile Include="Device\Native Other\IoControlCode.cs" />
-    <Compile Include="Device\Native Other\IoCtlMethod.cs" />
+    <Compile Include="Device\Native Other\IoControlMethod.cs" />
     <Compile Include="Filesystem\Native Other\MountPointReparseBuffer.cs" />
     <Compile Include="Filesystem\Native Other\MOVE_FILE_FLAGS.cs" />
     <Compile Include="Device\Native Other\PARTITION_INFORMATION_EX.cs" />
@@ -441,7 +441,7 @@
     <Compile Include="Device\Device.DeviceInfo.cs" />
     <Compile Include="Filesystem\DiskSpaceInfo.cs" />
     <Compile Include="Device\DriveInfo\DriveInfo.cs" />
-    <Compile Include="Device\Device.FileSystemHelper.cs" />
+    <Compile Include="Device\FileSystemHelper\Device.FileSystemHelper.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.cs" />
     <Compile Include="Filesystem\File Class\File.ThrowIOExceptionIfFsoExist.cs" />
@@ -743,7 +743,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -19,42 +19,17 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Device
 {
-   public partial class AlphaFS_PhysicalDiskInfoTest
+   internal static partial class NativeMethods
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_Device_GetStorageAdapterInfo_UsingVolumePathFromSystemDrive_Success()
+      /// <summary>Define values for <c>DeviceIoControl</c>.</summary>
+      private enum IoControlMethod : uint
       {
-         UnitTestConstants.PrintUnitTestHeader(false);
-         
-         var volumeCount = 0;
-
-         var sourceDrive = UnitTestConstants.SysDrive;
-
-         var sourceVolume = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(sourceDrive);
-
-         Console.WriteLine("#{0:000}\tInput Volume Path: [{1}]", ++volumeCount, sourceVolume);
-
-
-         var pDiskInfo = new Alphaleonis.Win32.Device.PhysicalDiskInfo(sourceVolume);
-         
-         var storageAdapterInfo = Alphaleonis.Win32.Device.Local.GetStorageAdapterInfo(sourceVolume);
-
-
-         UnitTestConstants.Dump(storageAdapterInfo);
-
-         Assert.IsNotNull(storageAdapterInfo);
-
-         Assert.IsNotNull(pDiskInfo);
-
-         Assert.AreEqual(pDiskInfo.StorageAdapterInfo, storageAdapterInfo);
+         Buffered = 0,
+         InDirect = 1,
+         OutDirect = 2,
+         Neither = 3
       }
    }
 }
