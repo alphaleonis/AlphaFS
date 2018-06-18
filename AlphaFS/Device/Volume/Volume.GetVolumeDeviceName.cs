@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="FileNotFoundException"/>
       /// <param name="volumeName">Name of the Volume.</param>
       [SecurityCritical]
-      [Obsolete("Use Volume.QueryDosDevice")]
+      [Obsolete("Use Volume.QueryDosDevice(volumeName)")]
       public static string GetVolumeDeviceName(string volumeName)
       {
          return QueryDosDevice(volumeName);

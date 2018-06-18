@@ -53,20 +53,17 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       internal static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisksCore(bool isElevated, int deviceNumber)
       {
-         foreach (var deviceInfo in EnumerateDevicesCore(null, new []{DeviceGuid.Disk, DeviceGuid.CDRom}, false))
+         foreach (var deviceInfo in EnumerateDevicesCore(null, new []{DeviceGuid.Disk, DeviceGuid.CDRom, DeviceGuid.Wpd, DeviceGuid.WpdPrivate}, false))
          {
             string unusedPhysicalDriveNumberPath;
 
 
             // The StorageDeviceInfo is always needed as it contains the device- and partition number.
 
-            var storageDeviceInfo = GetStorageDeviceInfoNative(isElevated, true, deviceNumber, deviceInfo.DevicePath, out unusedPhysicalDriveNumberPath);
+            var storageDeviceInfo = GetStorageDeviceInfo(isElevated, true, deviceNumber, deviceInfo.DevicePath, out unusedPhysicalDriveNumberPath);
 
-            if (null == storageDeviceInfo)
-               continue;
-
-
-            yield return new PhysicalDiskInfo(deviceNumber, deviceInfo.DevicePath, storageDeviceInfo, deviceInfo);
+            if (null != storageDeviceInfo)
+               yield return new PhysicalDiskInfo(deviceNumber, storageDeviceInfo, deviceInfo);
          }
       }
    }

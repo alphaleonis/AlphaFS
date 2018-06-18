@@ -197,11 +197,14 @@
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
     <Compile Include="Device\Local\Device.Local.cs" />
+    <Compile Include="Device\Local\Local.GetStoragePartitionInfo.cs" />
+    <Compile Include="Device\Local\Local.GetStorageDeviceInfo.cs" />
+    <Compile Include="Device\Local\Local.GetStorageAdapterInfo.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.ContainsVolume.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo_Properties.cs" />
     <Compile Include="Device\Local\Local.SetStorageDeviceInfoData.cs" />
-    <Compile Include="Device\Local\Local.GetStoragePartitionInfo.cs" />
+    <Compile Include="Device\Local\Local.GetDiskGeometryEx.cs" />
     <Compile Include="Device\Storage\Device.StorageMbrPartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageGptPartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StoragePartitionInfo.cs" />
@@ -211,10 +214,8 @@
     <Compile Include="Device\Local\Local.GetVolumeDiskExtents.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetLocalDevicePath.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetValidatedDevicePath.cs" />
-    <Compile Include="Device\Local\Local.GetStorageAdapterInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageAdapterInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageDeviceInfo.cs" />
-    <Compile Include="Device\Local\Local.GetStorageDeviceInfo.cs" />
     <Compile Include="Device\PhysicalDisk\Local.EnumeratePhysicalDisks.cs" />
     <Compile Include="Device\Local\Local.EnumerateDevices.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.Compression.cs" />
@@ -743,7 +744,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

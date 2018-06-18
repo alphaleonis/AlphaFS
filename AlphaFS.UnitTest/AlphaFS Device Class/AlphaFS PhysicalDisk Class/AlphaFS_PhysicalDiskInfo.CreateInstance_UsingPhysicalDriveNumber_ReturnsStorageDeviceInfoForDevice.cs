@@ -73,6 +73,11 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
 
 
+            // TotalSize should always match for device.
+
+            Assert.AreEqual(pDiskInfo.StorageDeviceInfo.TotalSize, pDiskInfo.StoragePartitionInfo.TotalSize);
+
+
 
             Assert.AreEqual(physicalDiskNumber, pDiskInfo.StorageAdapterInfo.DeviceNumber);
 

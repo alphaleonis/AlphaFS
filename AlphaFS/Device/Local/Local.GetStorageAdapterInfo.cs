@@ -29,61 +29,10 @@ namespace Alphaleonis.Win32.Device
    public static partial class Local
    {
       /// <summary>[AlphaFS] Retrieves the storage adapter of the device that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.</summary>
-      /// <returns>Returns a <see cref="StorageAdapterInfo"/> instance that represent the adapter information of the storage device that is related to <paramref name="devicePath"/>.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException"/>
+      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="safeFileHandle"/>.</returns>
       /// <exception cref="Exception"/>
-      /// <param name="devicePath">
-      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
-      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
-      /// </param>
       [SecurityCritical]
-      public static StorageAdapterInfo GetStorageAdapterInfo(string devicePath)
-      {
-         return GetStorageAdapterInfoCore(devicePath, null);
-      }
-
-
-      /// <summary>[AlphaFS] Retrieves the storage adapter of the device that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.</summary>
-      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="devicePath"/>.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="Exception"/>
-      /// <param name="devicePath">
-      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
-      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
-      /// </param>
-      /// <param name="busReportedDeviceDescription">The bus reported bus reported device description of the <see cref="DeviceInfo"/> instance.</param>
-      [SecurityCritical]
-      internal static StorageAdapterInfo GetStorageAdapterInfoCore(string devicePath, string busReportedDeviceDescription)
-      {
-         var localDevicePath = devicePath;
-         
-
-         // The StorageDeviceInfo is always needed as it contains the device- and partition number.
-
-         var storageDeviceInfo = GetStorageDeviceInfoCore(false, -1, localDevicePath, out localDevicePath);
-
-         if (null == storageDeviceInfo)
-            return null;
-
-
-         localDevicePath = localDevicePath ?? devicePath;
-
-         using (var safeHandle = OpenDevice(localDevicePath, NativeMethods.FILE_ANY_ACCESS))
-
-            return GetStorageAdapterInfoNative(safeHandle, storageDeviceInfo.DeviceNumber, localDevicePath, busReportedDeviceDescription);
-      }
-
-
-      [SecurityCritical]
-      internal static StorageAdapterInfo GetStorageAdapterInfoNative(SafeFileHandle safeFileHandle, int deviceNumber, string localDevicePath, string busReportedDeviceDescription)
+      internal static StorageAdapterInfo GetStorageAdapterInfo(SafeFileHandle safeFileHandle, int deviceNumber, string localDevicePath, string busReportedDeviceDescription)
       {
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
          {

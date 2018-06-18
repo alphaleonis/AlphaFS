@@ -69,15 +69,14 @@ namespace AlphaFS.UnitTest
 
          Assert.AreEqual(pDiskInfo.DosDeviceName, pDiskInfo.PhysicalDeviceObjectName);
 
-         
-         // PartitionNumber should be -1 for CDRom.
+         // PartitionNumber should be 0 for device.
 
-         if (pDiskInfo.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.StorageDeviceType.CDRom)
-            Assert.AreEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+         Assert.AreEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
 
-         // PartitionNumber should be > 0 for logical drive because it is not the device.
-         else
-            Assert.AreNotEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+
+         // TotalSize should always match for device.
+
+         Assert.AreEqual(pDiskInfo.StorageDeviceInfo.TotalSize, pDiskInfo.StoragePartitionInfo.TotalSize);
 
 
          // ContainsVolume should find volumes/logical drives.

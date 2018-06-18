@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Device
          {
             isDrive = false;
             isVolume = false;
-            isDevice = false;
+            isDevice = true;
 
             return devicePath;
          }

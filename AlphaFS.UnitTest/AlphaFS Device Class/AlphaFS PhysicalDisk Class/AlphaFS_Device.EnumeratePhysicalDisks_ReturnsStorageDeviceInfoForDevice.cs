@@ -34,7 +34,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Device_EnumeratePhysicalDisks_ReturnsStorageDeviceInfoForDevice()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
-
+         
          var driveCount = 0;
 
          var physicalDrives = Alphaleonis.Win32.Filesystem.Volume.QueryAllDosDevices().Where(device => device.StartsWith("PhysicalDrive", StringComparison.OrdinalIgnoreCase)).ToArray();
@@ -84,6 +84,11 @@ namespace AlphaFS.UnitTest
             // PartitionNumber should be 0 for device.
             else
                Assert.AreEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+
+
+            // TotalSize should always match for device.
+
+            Assert.AreEqual(pDiskInfo.StorageDeviceInfo.TotalSize, pDiskInfo.StoragePartitionInfo.TotalSize);
 
 
             driveCount++;

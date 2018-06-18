@@ -24,88 +24,16 @@ using System.Globalization;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
-using Alphaleonis.Win32.Security;
 
 namespace Alphaleonis.Win32.Device
 {
    public static partial class Local
    {
-      /// <summary>[AlphaFS] Retrieves the type, device- and partition number for the storage device that is related to the logical drive name, volume <see cref="Guid"/> or <see cref="DeviceInfo.DevicePath"/>.</summary>
       /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="devicePath"/>.</returns>
       /// <remarks>When this method is called from a non-elevated state, the <see cref="StorageDeviceInfo.TotalSize"/> property always returns <c>0</c>.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
-      /// <param name="devicePath">
-      /// <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      /// <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
-      /// <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
-      /// </param>
       [SecurityCritical]
-      public static StorageDeviceInfo GetStorageDeviceInfo(string devicePath)
-      {
-         string unusedLocalDevicePath;
-
-         return GetStorageDeviceInfoCore(ProcessContext.IsElevatedProcess, -1, devicePath, out unusedLocalDevicePath);
-      }
-
-
-      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="devicePath"/>.</returns>
-      /// <remarks>When this method is called from a non-elevated state, the <see cref="StorageDeviceInfo.TotalSize"/> property always returns <c>0</c>.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="Exception"/>
-      /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
-      /// <param name="devicePath">
-      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
-      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
-      /// </param>
-      [SecurityCritical]
-      public static StorageDeviceInfo GetStorageDeviceInfo(bool isElevated, string devicePath)
-      {
-         string unusedLocalDevicePath;
-
-         return GetStorageDeviceInfoCore(isElevated, -1, devicePath, out unusedLocalDevicePath);
-      }
-
-
-      /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="devicePath"/>.</returns>
-      /// <remarks>When this method is called from a non-elevated state, the <see cref="StorageDeviceInfo.TotalSize"/> property always returns <c>0</c>.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="Exception"/>
-      /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
-      /// <param name="deviceNumber">A number that indicates a physical disk on the Computer.</param>
-      /// <param name="devicePath">
-      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
-      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
-      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      ///    <para>A <see cref="DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
-      /// </param>
-      /// <param name="localDevicePath">The resolved local device path such as <c>\\.\C:</c> or <c>\\.\PhysicalDrive0</c></param>
-      [SecurityCritical]
-      internal static StorageDeviceInfo GetStorageDeviceInfoCore(bool isElevated, int deviceNumber, string devicePath, out string localDevicePath)
-      {
-         bool isDrive;
-         bool isVolume;
-         bool isDevice;
-
-         localDevicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDevice);
-
-         if (isDrive)
-            localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
-
-         return GetStorageDeviceInfoNative(isElevated, isDevice, deviceNumber, localDevicePath, out localDevicePath);
-      }
-
-
-      internal static StorageDeviceInfo GetStorageDeviceInfoNative(bool isElevated, bool isDevice, int deviceNumber, string devicePath, out string localDevicePath)
+      internal static StorageDeviceInfo GetStorageDeviceInfo(bool isElevated, bool isDevice, int deviceNumber, string devicePath, out string localDevicePath)
       {
          localDevicePath = devicePath;
          var getByDeviceNumber = deviceNumber > -1;
@@ -143,12 +71,17 @@ namespace Alphaleonis.Win32.Device
 
                if (!retry && !isDevice && lastError == Win32Errors.ERROR_INVALID_FUNCTION)
                {
+
+                  // For dynamic disk?
+                  // localDevicePath = Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false));
+
+
                   var volDiskExtents = GetVolumeDiskExtents(safeHandle, localDevicePath);
 
                   if (volDiskExtents.HasValue)
                      foreach (var extent in volDiskExtents.Value.Extents)
                      {
-                        var newDeviceNumber = (int) extent.DiskNumber;
+                        var newDeviceNumber = (int)extent.DiskNumber;
 
                         if (getByDeviceNumber && deviceNumber != newDeviceNumber)
                            continue;

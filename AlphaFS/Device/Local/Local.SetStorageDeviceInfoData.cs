@@ -20,7 +20,6 @@
  */
 
 using System.Security;
-using Alphaleonis.Win32.Filesystem;
 using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
@@ -69,22 +68,34 @@ namespace Alphaleonis.Win32.Device
 
 
          // Get disk total size.
-
-         var lastError = 0;
-
+         
          if (isElevated)
          {
+            int lastError;
+
             using (var safeBuffer = GetDeviceIoData<long>(safeFileHandle,NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, localDevicePath, out lastError))
 
                storageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
          }
 
 
-         // A logical drive path like \\.\D: fails on a dynamic disk.
+         //// A logical drive path like \\.\D: fails on a dynamic disk.
 
-         else if (!isDevice || lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+         //else
+         //{
+         //   if (isDevice)
+         //   {
+         //      //var dosDeviceName = Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false));
 
-            storageDeviceInfo.TotalSize = new DiskSpaceInfo(localDevicePath, false, true, true).TotalNumberOfBytes;
+         //      //storageDeviceInfo.TotalSize = new DiskSpaceInfo(dosDeviceName, false, true, true).TotalNumberOfBytes;
+         //   }
+
+         //   else
+         //   {
+         //      //if (lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+         //      storageDeviceInfo.TotalSize = new DiskSpaceInfo(localDevicePath, false, true, true).TotalNumberOfBytes;
+         //   }
+         //}
       }
    }
 }
