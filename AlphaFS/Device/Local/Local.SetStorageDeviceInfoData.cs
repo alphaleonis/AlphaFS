@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Device
    public static partial class Local
    {
       [SecurityCritical]
-      private static void SetStorageDeviceInfoData(bool isElevated, bool isDevice, SafeFileHandle safeFileHandle, string localDevicePath, StorageDeviceInfo storageDeviceInfo)
+      private static void SetStorageDeviceInfoData(bool isElevated, SafeFileHandle safeFileHandle, string localDevicePath, StorageDeviceInfo storageDeviceInfo)
       {
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
          {
@@ -77,25 +77,6 @@ namespace Alphaleonis.Win32.Device
 
                storageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
          }
-
-
-         //// A logical drive path like \\.\D: fails on a dynamic disk.
-
-         //else
-         //{
-         //   if (isDevice)
-         //   {
-         //      //var dosDeviceName = Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false));
-
-         //      //storageDeviceInfo.TotalSize = new DiskSpaceInfo(dosDeviceName, false, true, true).TotalNumberOfBytes;
-         //   }
-
-         //   else
-         //   {
-         //      //if (lastError == Win32Errors.ERROR_INVALID_FUNCTION)
-         //      storageDeviceInfo.TotalSize = new DiskSpaceInfo(localDevicePath, false, true, true).TotalNumberOfBytes;
-         //   }
-         //}
       }
    }
 }

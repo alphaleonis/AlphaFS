@@ -127,9 +127,6 @@ namespace Alphaleonis.Win32.Device
 
          DosDeviceName = Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false));
 
-         //localDevicePath = Path.GlobalRootPrefix + DosDeviceName.TrimStart('\\');
-         //using (var safeFileHandle = Local.OpenDevice(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
-
 
          using (var safeFileHandle = Local.OpenDevice(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
          {

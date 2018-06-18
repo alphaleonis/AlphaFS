@@ -29,8 +29,10 @@ namespace Alphaleonis.Win32.Device
 {
    public static partial class Local
    {
+      // /// <remarks>When this method is called from a non-elevated state, the <see cref="StorageDeviceInfo.TotalSize"/> property always returns <c>0</c>.</remarks>
+
+
       /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="devicePath"/>.</returns>
-      /// <remarks>When this method is called from a non-elevated state, the <see cref="StorageDeviceInfo.TotalSize"/> property always returns <c>0</c>.</remarks>
       /// <exception cref="Exception"/>
       [SecurityCritical]
       internal static StorageDeviceInfo GetStorageDeviceInfo(bool isElevated, bool isDevice, int deviceNumber, string devicePath, out string localDevicePath)
@@ -57,7 +59,7 @@ namespace Alphaleonis.Win32.Device
                   if (getByDeviceNumber && deviceNumber != storageDeviceInfo.DeviceNumber)
                      return null;
 
-                  SetStorageDeviceInfoData(isElevated, isDevice, safeHandle, localDevicePath, storageDeviceInfo);
+                  SetStorageDeviceInfoData(isElevated, safeHandle, localDevicePath, storageDeviceInfo);
 
 
                   if (!localDevicePath.StartsWith(Path.PhysicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
@@ -71,11 +73,6 @@ namespace Alphaleonis.Win32.Device
 
                if (!retry && !isDevice && lastError == Win32Errors.ERROR_INVALID_FUNCTION)
                {
-
-                  // For dynamic disk?
-                  // localDevicePath = Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false));
-
-
                   var volDiskExtents = GetVolumeDiskExtents(safeHandle, localDevicePath);
 
                   if (volDiskExtents.HasValue)
@@ -88,7 +85,9 @@ namespace Alphaleonis.Win32.Device
 
                         localDevicePath = Path.PhysicalDrivePrefix + newDeviceNumber.ToString(CultureInfo.InvariantCulture);
 
+                        isDevice = true;
                         retry = true;
+
                         goto Retry;
                      }
                }

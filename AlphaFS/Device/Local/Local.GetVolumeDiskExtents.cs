@@ -66,8 +66,7 @@ namespace Alphaleonis.Win32.Device
                }
 
 
-               // When lastError = ERROR_MORE_DATA the drive is part of a mirror or volume, or the volume is on multiple disks.
-
+               // 2016-06-18 TODO: When lastError = ERROR_MORE_DATA, the drive is part of a mirror or volume, or the volume is on multiple disks.
 
                // Encountered a drive such as a CDRom/mounted .iso file.
                if (lastError == Win32Errors.ERROR_INVALID_FUNCTION)
