@@ -78,7 +78,7 @@ namespace AlphaFS.UnitTest
 
             // PartitionNumber should be -1 for CDRom.
 
-            if (pDiskInfo.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.StorageDeviceType.CDRom)
+            if (pDiskInfo.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.DeviceType.CDRom)
                Assert.AreEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
 
             // PartitionNumber should be 0 for device.
@@ -89,6 +89,17 @@ namespace AlphaFS.UnitTest
             // TotalSize should always match for device.
 
             Assert.AreEqual(pDiskInfo.StorageDeviceInfo.TotalSize, pDiskInfo.StoragePartitionInfo.TotalSize);
+
+
+            // Show all partition information.
+
+            if (null != pDiskInfo.StoragePartitionInfo && null != pDiskInfo.StoragePartitionInfo.GptPartitionInfo)
+               foreach (var partition in pDiskInfo.StoragePartitionInfo.GptPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
+
+            if (null != pDiskInfo.StoragePartitionInfo && null != pDiskInfo.StoragePartitionInfo.MbrPartitionInfo)
+               foreach (var partition in pDiskInfo.StoragePartitionInfo.MbrPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
 
 
             driveCount++;

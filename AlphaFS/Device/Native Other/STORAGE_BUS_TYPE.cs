@@ -23,10 +23,11 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Provides a symbolic means of representing storage bus types.
-      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </summary>
+      /// <summary>Provides a symbolic means of representing storage bus types.</summary>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only]
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only]
+      /// </remarks>
       internal enum STORAGE_BUS_TYPE
       {
          /// <summary>Indicates an unknown bus type.</summary>

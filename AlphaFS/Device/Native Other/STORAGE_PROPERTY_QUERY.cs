@@ -26,6 +26,10 @@ namespace Alphaleonis.Win32.Device
    internal static partial class NativeMethods
    {
       /// <summary>Indicates the properties of a storage device or adapter to retrieve as the input buffer passed to the IOCTL_STORAGE_QUERY_PROPERTY control code.</summary>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only]
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only]
+      /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       public struct STORAGE_PROPERTY_QUERY
       {

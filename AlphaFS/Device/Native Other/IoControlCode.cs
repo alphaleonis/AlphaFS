@@ -30,11 +30,11 @@ namespace Alphaleonis.Win32.Device
       internal enum IoControlCode : uint
       {
          /// <summary>Retrieves the physical location of a specified volume on one or more disks.</summary>
-         IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS = (STORAGE_DEVICE_TYPE.FILE_DEVICE_VOLUME << 16) | (0 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
+         IOCTL_VOLUME_GET_VOLUME_DISK_EXTENTS = (DEVICE_TYPE.FILE_DEVICE_VOLUME << 16) | (0 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
 
 
          /// <summary>Return properties of a storage device or adapter. The request indicates the kind of information to retrieve, such as inquiry data for a device or capabilities and limitations of an adapter.</summary>
-         IOCTL_STORAGE_QUERY_PROPERTY = (STORAGE_DEVICE_TYPE.FILE_DEVICE_MASS_STORAGE << 16) | (0x500 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
+         IOCTL_STORAGE_QUERY_PROPERTY = (DEVICE_TYPE.FILE_DEVICE_MASS_STORAGE << 16) | (0x500 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
 
 
          #region FILE_DEVICE_MASS_STORAGE
@@ -124,7 +124,7 @@ namespace Alphaleonis.Win32.Device
          /// <summary>Returns a STORAGE_DEVICE_NUMBER structure that contains the FILE_DEVICE_XXX type, device number, and, for a partitionable device,
          /// the partition number assigned to a device by the driver when the device is started. This request is usually issued by a fault-tolerant disk driver.
          /// </summary>
-         IOCTL_STORAGE_GET_DEVICE_NUMBER = (STORAGE_DEVICE_TYPE.FILE_DEVICE_MASS_STORAGE << 16) | (0x0420 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
+         IOCTL_STORAGE_GET_DEVICE_NUMBER = (DEVICE_TYPE.FILE_DEVICE_MASS_STORAGE << 16) | (0x0420 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
 
 
          ///// <summary>
@@ -142,7 +142,7 @@ namespace Alphaleonis.Win32.Device
          /// <summary>Returns information about the physical disk's geometry (media type, number of cylinders, tracks per cylinder, sectors per track, and bytes per sector).
          /// IOCTL_DISK_GET_DRIVE_GEOMETRY_EX can retrieve information from both Master Boot Record (MBR) and GUID Partition Table (GPT)-type partitioned media.
          /// </summary>
-         IOCTL_DISK_GET_DRIVE_GEOMETRY_EX = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0028 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
+         IOCTL_DISK_GET_DRIVE_GEOMETRY_EX = (DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0028 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
 
 
          ///////// <summary>Returns information about the type, size, and nature of a disk partition. (Floppy drivers need not handle this request.)</summary>
@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Device
 
 
          /// <summary>Contains extended information about a drive's partitions.</summary>
-         IOCTL_DISK_GET_DRIVE_LAYOUT_EX = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0014 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
+         IOCTL_DISK_GET_DRIVE_LAYOUT_EX = (DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0014 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
 
 
          ///// <summary>Repartitions a disk as specified. (Floppy drivers need not handle this request.)</summary>
@@ -220,7 +220,7 @@ namespace Alphaleonis.Win32.Device
 
          /// <summary>Retrieves the length of the specified disk, volume, or partition.</summary>
          /// <remarks>This operation should be used instead of IOCTL_DISK_GET_PARTITION_INFO_EX for volumes that do not have partition info, such as partition type or number of hidden sectors.</remarks>
-         IOCTL_DISK_GET_LENGTH_INFO = (STORAGE_DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0017 << 2) | IoControlMethod.Buffered | (FileAccess.Read << 14),
+         IOCTL_DISK_GET_LENGTH_INFO = (DEVICE_TYPE.FILE_DEVICE_DISK << 16) | (0x0017 << 2) | IoControlMethod.Buffered | (FileAccess.Read << 14),
 
 
          ///// <summary>Returns version information, a capabilities mask, and a bitmask for the device. This IOCTL must be handled by drivers that support Self-Monitoring Analysis and Reporting Technology (SMART).</summary>
@@ -406,7 +406,7 @@ namespace Alphaleonis.Win32.Device
 
 
          /// <summary>Sets the compression state of a file or directory on a volume whose file system supports per-file and per-directory compression. You can use FSCTL_SET_COMPRESSION to compress or uncompress a file or directory on such a volume.</summary>
-         FSCTL_SET_COMPRESSION = (STORAGE_DEVICE_TYPE.FILE_DEVICE_FILE_SYSTEM << 16) | (16 << 2) | IoControlMethod.Buffered | ((FileAccess.Read | FileAccess.Write) << 14),
+         FSCTL_SET_COMPRESSION = (DEVICE_TYPE.FILE_DEVICE_FILE_SYSTEM << 16) | (16 << 2) | IoControlMethod.Buffered | ((FileAccess.Read | FileAccess.Write) << 14),
 
 
          ///// <summary>
@@ -530,7 +530,7 @@ namespace Alphaleonis.Win32.Device
          /// Minifilters should use FltTagFile instead of FSCTL_SET_REPARSE_POINT to set a reparse point.
          /// For more information about reparse points and the FSCTL_SET_REPARSE_POINT control code, see the Microsoft Windows SDK documentation.
          /// </summary>
-         FSCTL_SET_REPARSE_POINT = (STORAGE_DEVICE_TYPE.FILE_DEVICE_FILE_SYSTEM << 16) | (41 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
+         FSCTL_SET_REPARSE_POINT = (DEVICE_TYPE.FILE_DEVICE_FILE_SYSTEM << 16) | (41 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
 
 
          /// <summary>
@@ -538,7 +538,7 @@ namespace Alphaleonis.Win32.Device
          /// To perform this operation, call FltFsControlFile or ZwFsControlFile with the following parameters.
          /// For more information about reparse points and the FSCTL_GET_REPARSE_POINT control code, see the Microsoft Windows SDK documentation.
          /// </summary>
-         FSCTL_GET_REPARSE_POINT = (STORAGE_DEVICE_TYPE.FILE_DEVICE_FILE_SYSTEM << 16) | (42 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
+         FSCTL_GET_REPARSE_POINT = (DEVICE_TYPE.FILE_DEVICE_FILE_SYSTEM << 16) | (42 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
 
 
          /// <summary>
@@ -548,7 +548,7 @@ namespace Alphaleonis.Win32.Device
          /// Minifilters should use FltUntagFile instead of FSCTL_DELETE_REPARSE_POINT to delete a reparse point.
          /// For more information about reparse points and the FSCTL_DELETE_REPARSE_POINT control code, see the Microsoft Windows SDK documentation.
          /// </summary>
-         FSCTL_DELETE_REPARSE_POINT = (STORAGE_DEVICE_TYPE.FILE_DEVICE_FILE_SYSTEM << 16) | (43 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
+         FSCTL_DELETE_REPARSE_POINT = (DEVICE_TYPE.FILE_DEVICE_FILE_SYSTEM << 16) | (43 << 2) | IoControlMethod.Buffered | (FILE_ANY_ACCESS << 14),
 
 
          ///// <summary>

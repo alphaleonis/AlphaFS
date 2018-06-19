@@ -123,6 +123,11 @@ namespace Alphaleonis.Win32.Device
                }
 
                break;
+
+
+            default:
+               Console.WriteLine();
+               break;
          }
          
 

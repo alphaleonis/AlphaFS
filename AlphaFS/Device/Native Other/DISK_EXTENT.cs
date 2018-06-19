@@ -25,6 +25,13 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class NativeMethods
    {
+      // MSDN: Regardless of the disk type, a disk can contain one or more disk extents.
+      // A disk extent is a contiguous range of logical blocks exposed by the disk. For example, a disk extent can represent an entire volume,
+      // one portion of a spanned volume, one member of a striped volume, or one plex of a mirrored volume.
+
+
+
+
       /// <summary>Represents a disk extent.</summary>
       /// <remarks>
       ///   Minimum supported client: Windows XP [desktop apps only]

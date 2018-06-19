@@ -26,6 +26,10 @@ namespace Alphaleonis.Win32.Device
    internal static partial class NativeMethods
    {
       /// <summary>The Extensible Firmware Interface (EFI) partition attributes.</summary>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only]
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only]
+      /// </remarks>
       [Flags]
       internal enum EfiPartitionAttributes : ulong
       {

@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Device
          [MarshalAs(UnmanagedType.I8)] public readonly long Cylinders;
 
          /// <summary>The type of media.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly STORAGE_MEDIA_TYPE MediaType;
+         [MarshalAs(UnmanagedType.U4)] public readonly MEDIA_TYPE MediaType;
 
          /// <summary>The number of tracks per cylinder.</summary>
          [MarshalAs(UnmanagedType.U4)] public readonly uint TracksPerCylinder;

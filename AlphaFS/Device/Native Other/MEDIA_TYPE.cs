@@ -23,11 +23,12 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Specifies various types of storage media. Parameters and members of type STORAGE_MEDIA_TYPE also accept values from the MEDIA_TYPE enumeration type.
-      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </summary>
-      public enum STORAGE_MEDIA_TYPE
+      /// <summary>Represents the various forms of device media.</summary>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only]
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only]
+      /// </remarks>
+      public enum MEDIA_TYPE
       {
          /// <summary>Format is unknown.</summary>
          Unknown = 0,

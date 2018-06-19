@@ -119,6 +119,8 @@ namespace Alphaleonis.Win32.Device
          if (!SetDeviceInfoDataFromDeviceNumber(isElevated, deviceNumber, deviceInfo))
             return;
 
+         var dosDeviceName = isDrive ? Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false)) : null;
+
 
          // If physicalDriveNumberPath != null, the drive is opened using: "\\.\PhysicalDriveX" path format
          // which is the device, not the volume/logical drive.
@@ -142,9 +144,13 @@ namespace Alphaleonis.Win32.Device
          // The Win32 API to retrieve the total size of the device requires an elevated process or the TotalSize is 0.
          // The Win32 API to retrieve the total size of the device partition does not require elevation, so use that value.
 
-         if (!isElevated && StorageDeviceInfo.TotalSize == 0 && null != StoragePartitionInfo)
+         if (StoragePartitionInfo.OnDynamicDisk && null != dosDeviceName)
 
-            StorageDeviceInfo.TotalSize = isDevice ? StoragePartitionInfo.TotalSize : new DiskSpaceInfo(localDevicePath, false, true, true).TotalNumberOfBytes;
+            StorageDeviceInfo.TotalSize = new DiskSpaceInfo(dosDeviceName, false, true, true).TotalNumberOfBytes;
+
+         else if (!isElevated && StorageDeviceInfo.TotalSize == 0 && null != StoragePartitionInfo)
+
+            StorageDeviceInfo.TotalSize = isDevice ? StoragePartitionInfo.TotalSize : new DiskSpaceInfo(dosDeviceName ?? localDevicePath, false, true, true).TotalNumberOfBytes;
       }
       
 

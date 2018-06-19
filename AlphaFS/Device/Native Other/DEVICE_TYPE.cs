@@ -23,15 +23,8 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class NativeMethods
    {
-      // STORAGE_DEVICE_NUMBER structure.
-      // 2018-01-17: https://msdn.microsoft.com/en-us/library/bb968801(VS.85).aspx
-
-      // The type of device. Values from 0 through 32,767 are reserved for use by Microsoft.
-      // Values from 32,768 through 65,535 are reserved for use by other vendors. The following values are defined by Microsoft.
-
-
       /// <summary>The storage device type.</summary>
-      internal enum STORAGE_DEVICE_TYPE
+      internal enum DEVICE_TYPE
       {
          /// <summary>FILE_DEVICE_BEEP parameter.</summary>
          FILE_DEVICE_BEEP = 1,

@@ -23,10 +23,11 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Enumerates the possible values of the PropertyId member of the <see cref="STORAGE_PROPERTY_QUERY"/> structure passed as input to the IOCTL_STORAGE_QUERY_PROPERTY request to retrieve the properties of a storage device or adapter.
-      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </summary>
+      /// <summary>Enumerates the possible values of the PropertyId member of the <see cref="STORAGE_PROPERTY_QUERY"/> structure passed as input to the IOCTL_STORAGE_QUERY_PROPERTY request to retrieve the properties of a storage device or adapter.</summary>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only]
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only]
+      /// </remarks>
       public enum STORAGE_PROPERTY_ID
       {
          /// <summary>Indicates that the caller is querying for the device descriptor, <see cref="STORAGE_DEVICE_DESCRIPTOR"/>.</summary>
@@ -35,7 +36,7 @@ namespace Alphaleonis.Win32.Device
          /// <summary>Indicates that the caller is querying for the adapter descriptor, <see cref="STORAGE_ADAPTER_DESCRIPTOR"/>.</summary>
          StorageAdapterProperty
 
-         ///// <summary>Indicates that the caller is querying for the device identifiers provided with the SCSI vital product data pages. Data is returned using the <see cref="STORAGE_DEVICE_ID_DESCRIPTOR"/> structure.</summary>
+         ///// <summary>Indicates that the caller is querying for the device identifiers provided with the SCSI vital product data pages. Data is returned using the STORAGE_DEVICE_ID_DESCRIPTOR structure.</summary>
          //StorageDeviceIdProperty,
 
          ///// <summary>Indicates that the caller is querying for the unique device identifiers. Data is returned using the STORAGE_DEVICE_UNIQUE_IDENTIFIER structure.</summary>

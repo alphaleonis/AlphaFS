@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Initializes an empty StorageDeviceInfo instance.</summary>
       public StorageDeviceInfo()
       {
-         DeviceType = StorageDeviceType.Unknown;
+         DeviceType = Device.DeviceType.Unknown;
 
          DeviceNumber = -1;
 
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Device
       
 
       /// <summary>The storage device type.</summary>
-      public StorageDeviceType DeviceType { get; private set; }
+      public DeviceType DeviceType { get; private set; }
 
 
       /// <summary>The device number of the storage device, starting at <c>0</c>.</summary>

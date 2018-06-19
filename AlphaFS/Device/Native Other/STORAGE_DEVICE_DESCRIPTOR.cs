@@ -26,6 +26,10 @@ namespace Alphaleonis.Win32.Device
    internal static partial class NativeMethods
    {
       /// <summary>Used in conjunction with the IOCTL_STORAGE_QUERY_PROPERTY control code to retrieve the storage device descriptor data for a device.</summary>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only]
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only]
+      /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct STORAGE_DEVICE_DESCRIPTOR
       {

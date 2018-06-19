@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Device
                   if (volDiskExtents.HasValue)
                      foreach (var extent in volDiskExtents.Value.Extents)
                      {
-                        var newDeviceNumber = (int)extent.DiskNumber;
+                        var newDeviceNumber = (int) extent.DiskNumber;
 
                         if (getByDeviceNumber && deviceNumber != newDeviceNumber)
                            continue;

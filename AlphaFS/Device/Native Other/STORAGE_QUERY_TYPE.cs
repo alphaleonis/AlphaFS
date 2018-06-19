@@ -23,10 +23,11 @@ namespace Alphaleonis.Win32.Device
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Used by the <see cref="STORAGE_PROPERTY_QUERY"/> structure passed to the IOCTL_STORAGE_QUERY_PROPERTY control code to indicate what information is returned about a property of a storage device or adapter.
-      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </summary>
+      /// <summary>Used by the <see cref="STORAGE_PROPERTY_QUERY"/> structure passed to the IOCTL_STORAGE_QUERY_PROPERTY control code to indicate what information is returned about a property of a storage device or adapter.</summary>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only]
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only]
+      /// </remarks>
       public enum STORAGE_QUERY_TYPE
       {
          /// <summary>Instructs the driver to return an appropriate descriptor.</summary>
