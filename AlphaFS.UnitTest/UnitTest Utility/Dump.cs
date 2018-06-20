@@ -22,6 +22,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -74,7 +75,7 @@ namespace AlphaFS.UnitTest
 
          long number;
          if (long.TryParse(value.ToString(), out number))
-            return value.ToString();
+            return number.ToString("N0", CultureInfo.CurrentCulture);
 
 
          var objectType = value as IEnumerable;

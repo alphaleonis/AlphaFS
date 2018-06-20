@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Device
 {
    public static partial class Local
    {
-      /// <summary>[AlphaFS] Enumerates the physical disks (including CD-ROM/DVD devices) on the Computer, populated with volume/logical drive information.</summary>
+      /// <summary>[AlphaFS] Enumerates the physical disks (including CD/DVD-ROM devices) on the Computer, populated with volume/logical drive information.</summary>
       /// <returns>Returns an <see cref="IEnumerable{PhysicalDiskInfo}"/> collection that represents the physical disks on the Computer.</returns>
       [SecurityCritical]
       public static IEnumerable<PhysicalDiskInfo> EnumeratePhysicalDisks()
@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>[AlphaFS] Enumerates the physical disks (including CD-ROM/DVD devices) on the Computer, populated with volume/logical drive information.</summary>
+      /// <summary>[AlphaFS] Enumerates the physical disks (including CD/DVD-ROM devices) on the Computer, populated with volume/logical drive information.</summary>
       /// <returns>Returns an <see cref="IEnumerable{PhysicalDiskInfo}"/> collection that represents the physical disks on the Computer.</returns>
       /// <param name="deviceNumber">Retrieve <see cref="PhysicalDiskInfo"/> instances by device number.</param>
       [SecurityCritical]
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>[AlphaFS] Enumerates the physical disks (including CD-ROM/DVD devices) on the Computer, populated with volume/logical drive information.</summary>
+      /// <summary>[AlphaFS] Enumerates the physical disks (including CD/DVD-ROM devices) on the Computer, populated with volume/logical drive information.</summary>
       /// <returns>Returns an <see cref="IEnumerable{PhysicalDiskInfo}"/> collection that represents the physical disks on the Computer.</returns>
       /// <param name="isElevated"><c>true</c> indicates the current process is in an elevated state, allowing to retrieve more data.</param>
       /// <param name="deviceNumber">Retrieve a <see cref="PhysicalDiskInfo"/> instance by device number.</param>
@@ -56,9 +56,6 @@ namespace Alphaleonis.Win32.Device
          foreach (var deviceInfo in EnumerateDevicesCore(null, new []{DeviceGuid.Disk, DeviceGuid.CDRom, DeviceGuid.Wpd, DeviceGuid.WpdPrivate}, false))
          {
             string unusedPhysicalDriveNumberPath;
-
-
-            // The StorageDeviceInfo is always needed as it contains the device- and partition number.
 
             var storageDeviceInfo = GetStorageDeviceInfo(isElevated, true, deviceNumber, deviceInfo.DevicePath, out unusedPhysicalDriveNumberPath);
 

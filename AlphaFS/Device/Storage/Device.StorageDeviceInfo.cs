@@ -86,12 +86,11 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>
       ///   The partition number of the storage device, starting at <c>1</c>.
-      ///   Partition number <c>0</c> is the device.
-      ///   If the device cannot be partitioned, like a CDROM, <c>-1</c> is returned.
-      ///   <c>-1</c> is also returned if the device is accessed by its path: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c>
-      ///   instead of a volume /logical drive path.
+      ///   If the device cannot be partitioned, like a CD/DVD-ROM, <c>-1</c> is returned.
+      ///   If this value is <c>0</c>, the information points to the device, not partition.
+      ///   If the partition is on a dynamic disk (<see cref="StoragePartitionInfo.OnDynamicDisk"/>), the partition's number is returned.
       /// </summary>
-      public int PartitionNumber { get; private set; }
+      public int PartitionNumber { get; internal set; }
 
 
       /// <summary>The product ID of the physical disk.</summary>

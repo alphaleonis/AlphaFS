@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Device
    public static partial class Local
    {
       [SecurityCritical]
-      private static void SetStorageDeviceInfoData(bool isElevated, SafeFileHandle safeFileHandle, string localDevicePath, StorageDeviceInfo storageDeviceInfo)
+      private static void SetStorageDeviceInfoData(bool isElevated, SafeFileHandle safeFileHandle, string pathForException, StorageDeviceInfo storageDeviceInfo)
       {
          var storagePropertyQuery = new NativeMethods.STORAGE_PROPERTY_QUERY
          {
@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Device
          };
          
 
-         using (var safeBuffer = InvokeDeviceIoData(safeFileHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, localDevicePath, Filesystem.NativeMethods.DefaultFileBufferSize / 2))
+         using (var safeBuffer = InvokeDeviceIoData(safeFileHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_QUERY_PROPERTY, storagePropertyQuery, pathForException, Filesystem.NativeMethods.DefaultFileBufferSize / 2))
          {
             var deviceDescriptor = safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_DESCRIPTOR>();
 
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Device
          {
             int lastError;
 
-            using (var safeBuffer = GetDeviceIoData<long>(safeFileHandle,NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, localDevicePath, out lastError))
+            using (var safeBuffer = GetDeviceIoData<long>(safeFileHandle,NativeMethods.IoControlCode.IOCTL_DISK_GET_LENGTH_INFO, pathForException, out lastError))
 
                storageDeviceInfo.TotalSize = null != safeBuffer ? safeBuffer.ReadInt64() : 0;
          }

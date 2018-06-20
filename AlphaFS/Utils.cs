@@ -79,13 +79,17 @@ namespace Alphaleonis
          {
             case Win32Errors.ERROR_MORE_DATA:
             case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
-            case Win32Errors.ERROR_INVALID_PARAMETER:
 
                if (bufferSize == 0)
                   bufferSize = NativeMethods.DefaultFileBufferSize / 32; // 128
 
                bufferSize *= 2;
                break;
+
+
+            //case Win32Errors.ERROR_INVALID_PARAMETER:
+            //case Win32Errors.ERROR_INVALID_FUNCTION:
+               //break
 
 
             default:

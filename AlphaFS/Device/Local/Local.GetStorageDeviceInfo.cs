@@ -20,81 +20,117 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {
    public static partial class Local
    {
       // /// <remarks>When this method is called from a non-elevated state, the <see cref="StorageDeviceInfo.TotalSize"/> property always returns <c>0</c>.</remarks>
-
+      
 
       /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="devicePath"/>.</returns>
       /// <exception cref="Exception"/>
       [SecurityCritical]
       internal static StorageDeviceInfo GetStorageDeviceInfo(bool isElevated, bool isDevice, int deviceNumber, string devicePath, out string localDevicePath)
       {
-         localDevicePath = devicePath;
+         localDevicePath = FileSystemHelper.GetLocalDevicePath(devicePath);
          var getByDeviceNumber = deviceNumber > -1;
          var retry = false;
 
       Retry:
 
+         int lastError;
+
          // Accessing a volume like: "\\.\D" on a dynamic disk fails with ERROR_INVALID_FUNCTION.
          // On retry, the drive is accessed using the: "\\.\PhysicalDriveX" path format which is the device, not the volume/logical drive.
 
          using (var safeFileHandle = OpenDevice(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
-         {
-            int lastError;
 
-            using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeFileHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, localDevicePath, out lastError))
+         using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeFileHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, localDevicePath, out lastError))
+
+            if (null != safeBuffer)
             {
-               if (null != safeBuffer)
-               {
-                  var storageDeviceInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>());
+               var storageDeviceInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>());
 
-                  if (getByDeviceNumber && deviceNumber != storageDeviceInfo.DeviceNumber)
-                     return null;
+               if (getByDeviceNumber && deviceNumber != storageDeviceInfo.DeviceNumber)
+                  return null;
 
-                  SetStorageDeviceInfoData(isElevated, safeFileHandle, localDevicePath, storageDeviceInfo);
+               SetStorageDeviceInfoData(isElevated, safeFileHandle, localDevicePath, storageDeviceInfo);
 
 
-                  if (!localDevicePath.StartsWith(Path.PhysicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
-                     localDevicePath = null;
+               if (!localDevicePath.StartsWith(Path.PhysicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
+                  localDevicePath = null;
 
-                  return storageDeviceInfo;
-               }
-
-
-               // A logical drive path like \\.\D: fails on a dynamic disk.
-
-               if (!retry && !isDevice && lastError == Win32Errors.ERROR_INVALID_FUNCTION)
-               {
-                  var volDiskExtents = GetVolumeDiskExtents(safeFileHandle, localDevicePath);
-
-                  if (volDiskExtents.HasValue)
-                     foreach (var extent in volDiskExtents.Value.Extents)
-                     {
-                        var newDeviceNumber = (int) extent.DiskNumber;
-
-                        if (getByDeviceNumber && deviceNumber != newDeviceNumber)
-                           continue;
-
-                        localDevicePath = Path.PhysicalDrivePrefix + newDeviceNumber.ToString(CultureInfo.InvariantCulture);
-
-                        isDevice = true;
-                        retry = true;
-
-                        goto Retry;
-                     }
-               }
+               return storageDeviceInfo;
             }
 
-            return null;
+
+         // A logical drive path on a dynamic disk like \\.\D: fails.
+
+         if (!retry && !isDevice && lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+         {
+            foreach (var physicalDeviceNumber in GetDeviceNumbersForVolume(null, localDevicePath))
+            {
+               if (getByDeviceNumber && deviceNumber != physicalDeviceNumber)
+                  continue;
+
+               // By opening the device as PhysicalDriveX, StorageDeviceInfo.PartitionNumber = 0.
+
+               localDevicePath = Path.PhysicalDrivePrefix + physicalDeviceNumber.ToString(CultureInfo.InvariantCulture);
+
+               isDevice = true;
+               retry = true;
+
+               goto Retry;
+            }
          }
+
+
+         return null;
+      }
+
+
+      /// <returns>Returns an <see cref="IEnumerable{Int}"/> of physical drive device numbers used by the specified <paramref name="localDevicePath"/> volume.</returns>
+      /// <exception cref="Exception"/>
+      /// <param name="safeFileHandle">An initialized <see cref="SafeFileHandle"/> instance.</param>
+      /// <param name="localDevicePath">
+      ///    <para>A drive path such as: <c>\\.\C:</c></para>
+      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      /// </param>
+      [SecurityCritical]
+      internal static IEnumerable<int> GetDeviceNumbersForVolume(SafeFileHandle safeFileHandle, string localDevicePath)
+      {
+         var physicalDrives = new Collection<int>();
+
+         var disposeHandle = null == safeFileHandle;
+         
+         try
+         {
+            if (null == safeFileHandle)
+               safeFileHandle = OpenDevice(localDevicePath, NativeMethods.FILE_ANY_ACCESS);
+            
+            var volDiskExtents = GetVolumeDiskExtents(safeFileHandle, localDevicePath);
+
+            if (volDiskExtents.HasValue)
+
+               foreach (var extent in volDiskExtents.Value.Extents)
+
+                  physicalDrives.Add((int) extent.DiskNumber);
+         }
+         finally
+         {
+            if (disposeHandle && null != safeFileHandle && !safeFileHandle.IsClosed)
+               safeFileHandle.Close();
+         }
+
+         return physicalDrives;
       }
    }
 }

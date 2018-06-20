@@ -76,19 +76,30 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(pDiskInfo.DosDeviceName, pDiskInfo.PhysicalDeviceObjectName);
 
 
-            // PartitionNumber should be -1 for CDRom.
+            // PartitionNumber should be 0 for logical drive on dynamic disk.
 
-            if (pDiskInfo.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.DeviceType.CDRom)
-               Assert.AreEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+            if (pDiskInfo.StoragePartitionInfo.OnDynamicDisk)
+               Assert.AreNotEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
 
-            // PartitionNumber should be 0 for device.
             else
-               Assert.AreEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+            {
+               // PartitionNumber should be -1 for CDRom.
+
+               if (pDiskInfo.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.DeviceType.CDRom)
+                  Assert.AreEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+
+               // PartitionNumber should be > 0 for logical drive because it is not the device.
+               else
+                  Assert.AreEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+            }
 
 
-            // TotalSize should always match for device.
+            // TotalSize depends on dynamic disk on device.
 
-            Assert.AreEqual(pDiskInfo.StorageDeviceInfo.TotalSize, pDiskInfo.StoragePartitionInfo.TotalSize);
+            if (pDiskInfo.StoragePartitionInfo.OnDynamicDisk)
+               Assert.AreNotEqual(pDiskInfo.StorageDeviceInfo.TotalSize, pDiskInfo.StoragePartitionInfo.TotalSize);
+            else
+               Assert.AreEqual(pDiskInfo.StorageDeviceInfo.TotalSize, pDiskInfo.StoragePartitionInfo.TotalSize);
 
 
             // Show all partition information.

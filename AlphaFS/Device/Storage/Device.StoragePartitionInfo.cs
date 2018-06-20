@@ -62,17 +62,15 @@ namespace Alphaleonis.Win32.Device
          MediaType = (StorageMediaType) disk.Geometry.MediaType;
 
          PartitionCount = (int) drive.PartitionCount;
-
-
+         
          MbrSignature = disk.PartitionInformation.MbrSignature;
 
          GptDiskId = disk.PartitionInformation.DiskId;
          
-         PartitionStyle = (PartitionStyle) disk.PartitionInformation.PartitionStyle;
-
          TotalSize = disk.DiskSize;
          
-
+         PartitionStyle = (PartitionStyle) disk.PartitionInformation.PartitionStyle;
+         
          switch (PartitionStyle)
          {
             case PartitionStyle.Gpt:
@@ -123,17 +121,7 @@ namespace Alphaleonis.Win32.Device
                }
 
                break;
-
-
-            default:
-               Console.WriteLine();
-               break;
          }
-         
-
-         OnDynamicDisk = null != GptPartitionInfo && GptPartitionInfo.Any(partition => partition.PartitionType == PartitionType.LdmData || partition.PartitionType == PartitionType.LdmMetadata) ||
-                           
-                         null != MbrPartitionInfo && MbrPartitionInfo.Any(partition => partition.DiskPartitionType == DiskPartitionType.Ldm);
       }
 
       #endregion // Constructors
@@ -215,7 +203,15 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary><c>true</c> if the partition is on a dynamic disk.</summary>
-      public bool OnDynamicDisk { get; private set; }
+      public bool OnDynamicDisk
+      {
+         get
+         {
+            return null != GptPartitionInfo && GptPartitionInfo.Any(partition => partition.PartitionType == PartitionType.LdmData || partition.PartitionType == PartitionType.LdmMetadata) ||
+
+                   null != MbrPartitionInfo && MbrPartitionInfo.Any(partition => partition.DiskPartitionType == DiskPartitionType.Ldm);
+         }
+      }
       
 
       /// <summary>Contains partition information specific to master boot record (MBR) disks.</summary>

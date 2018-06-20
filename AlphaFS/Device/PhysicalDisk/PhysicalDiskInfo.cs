@@ -169,13 +169,12 @@ namespace Alphaleonis.Win32.Device
          bool isVolume;
          bool isDevice;
 
-         if (!getByDeviceNumber && Utils.IsNullOrWhiteSpace(devicePath) && null != deviceInfo)
+         if (null != deviceInfo)
             devicePath = deviceInfo.DevicePath;
 
          var localDevicePath = FileSystemHelper.GetValidatedDevicePath(getByDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : devicePath, out isDrive, out isVolume, out isDevice);
 
-         if (isDrive)
-            localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
+         localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
 
          string physicalDriveNumberPath = null;
          
@@ -191,14 +190,23 @@ namespace Alphaleonis.Win32.Device
          if (!SetDeviceInfoDataFromDeviceNumber(isElevated, deviceNumber, deviceInfo))
             return;
 
-         var dosDeviceName = isDrive ? Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false)) : null;
-
 
          // If physicalDriveNumberPath != null, the drive is opened using: "\\.\PhysicalDriveX" path format
          // which is the device, not the volume/logical drive.
 
          localDevicePath = FileSystemHelper.GetValidatedDevicePath(physicalDriveNumberPath ?? localDevicePath, out isDrive, out isVolume, out isDevice);
 
+         
+         AddDeviceInfoData(isElevated, deviceNumber, localDevicePath);
+
+         UpdateDeviceInfodata(isElevated, isDevice, localDevicePath);
+
+         PopulatePhysicalDisk(isElevated);
+      }
+
+
+      private void AddDeviceInfoData(bool isElevated, int deviceNumber, string localDevicePath)
+      {
          DosDeviceName = Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false));
 
 
@@ -208,49 +216,6 @@ namespace Alphaleonis.Win32.Device
 
             StoragePartitionInfo = Local.GetStoragePartitionInfo(safeFileHandle, deviceNumber, localDevicePath);
          }
-         
-
-         PopulatePhysicalDisk(isElevated);
-
-
-         // Update device/partition TotalSize property when applicable.
-         //
-         // The Win32 API to retrieve the total size of the device requires an elevated process or the TotalSize is 0.
-         // The Win32 API to retrieve the total size of the device partition does not require elevation, so use that value.
-
-         if (StoragePartitionInfo.OnDynamicDisk && null != dosDeviceName)
-         {
-            StorageDeviceInfo.TotalSize = new DiskSpaceInfo(dosDeviceName, false, true, true).TotalNumberOfBytes;
-
-            // 2018-0620 TODO: The StorageDeviceInfo.PartitionNumber is 0, which is wrong; it should be the partition number.
-         }
-
-         else if (!isElevated && StorageDeviceInfo.TotalSize == 0 && null != StoragePartitionInfo)
-
-            StorageDeviceInfo.TotalSize = isDevice ? StoragePartitionInfo.TotalSize : new DiskSpaceInfo(dosDeviceName ?? localDevicePath, false, true, true).TotalNumberOfBytes;
-      }
-      
-
-      private bool SetDeviceInfoDataFromDeviceNumber(bool isElevated, int deviceNumber, DeviceInfo deviceInfo)
-      {
-         if (null == deviceInfo)
-            foreach (var device in Local.EnumerateDevicesCore(null, new[] {DeviceGuid.Disk, DeviceGuid.CDRom}, false))
-            {
-               string unusedDevicePath;
-
-               var storageDeviceInfo = Local.GetStorageDeviceInfo(isElevated, true, deviceNumber, device.DevicePath, out unusedDevicePath);
-
-               if (null != storageDeviceInfo)
-               {
-                  deviceInfo = device;
-                  break;
-               }
-            }
-
-
-         DeviceInfo = deviceInfo;
-
-         return null != DeviceInfo;
       }
 
 
@@ -298,10 +263,61 @@ namespace Alphaleonis.Win32.Device
 
          LogicalDrives = _logicalDriveCollection;
       }
+
+
+      [SecurityCritical]
+      private bool SetDeviceInfoDataFromDeviceNumber(bool isElevated, int deviceNumber, DeviceInfo deviceInfo)
+      {
+         if (null == deviceInfo)
+            foreach (var device in Local.EnumerateDevicesCore(null, new[] {DeviceGuid.Disk, DeviceGuid.CDRom}, false))
+            {
+               string unusedDevicePath;
+
+               var storageDeviceInfo = Local.GetStorageDeviceInfo(isElevated, true, deviceNumber, device.DevicePath, out unusedDevicePath);
+
+               if (null != storageDeviceInfo)
+               {
+                  deviceInfo = device;
+                  break;
+               }
+            }
+
+
+         DeviceInfo = deviceInfo;
+
+         return null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.DevicePath);
+      }
+
+
+      [SecurityCritical]
+      private void UpdateDeviceInfodata(bool isElevated, bool isDevice, string localDevicePath)
+      {
+         if (StoragePartitionInfo.OnDynamicDisk)
+         {
+            // At this point, PartitionNumber is 0 which points to the device.
+            // Get the user data partition information.
+
+            foreach (var partition in StoragePartitionInfo.GptPartitionInfo)
+            {
+               if (partition.PartitionType == PartitionType.LdmData)
+               {
+                  StorageDeviceInfo.PartitionNumber = partition.PartitionNumber;
+
+                  StorageDeviceInfo.TotalSize = partition.PartitionLength;
+
+                  break;
+               }
+            }
+         }
+
+         else if (!isElevated && StorageDeviceInfo.TotalSize == 0 && null != StoragePartitionInfo)
+
+            StorageDeviceInfo.TotalSize = isDevice ? StoragePartitionInfo.TotalSize : new DiskSpaceInfo(localDevicePath, false, true, true).TotalNumberOfBytes;
+      }
+
+
       
-
-
-
+      
       /// <summary>Returns the "FriendlyName" of the physical disk.</summary>
       /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()

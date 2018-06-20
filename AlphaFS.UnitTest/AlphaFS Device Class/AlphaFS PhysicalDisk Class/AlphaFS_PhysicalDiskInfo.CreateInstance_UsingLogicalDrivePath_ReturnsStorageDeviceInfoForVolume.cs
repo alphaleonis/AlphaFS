@@ -84,27 +84,30 @@ namespace AlphaFS.UnitTest
             Assert.AreNotEqual(pDiskInfo.DosDeviceName, pDiskInfo.PhysicalDeviceObjectName);
 
 
-            // (It seems that, not 100% sure) PartitionNumber should be 0 for logical drive on dynamic disk.
+            // PartitionNumber should be -1 for CDRom.
 
-            if (pDiskInfo.StoragePartitionInfo.OnDynamicDisk)
-               Assert.AreEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+            if (pDiskInfo.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.DeviceType.CDRom)
+               Assert.AreEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
 
+            // PartitionNumber should be > 0 for logical drive because it is not the device.
             else
-            {
-               // PartitionNumber should be -1 for CDRom.
-
-               if (pDiskInfo.StorageDeviceInfo.DeviceType == Alphaleonis.Win32.Device.DeviceType.CDRom)
-                  Assert.AreEqual(-1, pDiskInfo.StorageDeviceInfo.PartitionNumber);
-
-               // PartitionNumber should be > 0 for logical drive because it is not the device.
-               else
-                  Assert.AreNotEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
-            }
-
+               Assert.AreNotEqual(0, pDiskInfo.StorageDeviceInfo.PartitionNumber);
+            
 
             Assert.AreEqual(pDiskInfo.StorageDeviceInfo.DeviceNumber, pDiskInfo.StorageAdapterInfo.DeviceNumber);
 
             Assert.AreEqual(pDiskInfo.StorageDeviceInfo.DeviceNumber, pDiskInfo.StoragePartitionInfo.DeviceNumber);
+
+
+            // Show all partition information.
+
+            if (null != pDiskInfo.StoragePartitionInfo && null != pDiskInfo.StoragePartitionInfo.GptPartitionInfo)
+               foreach (var partition in pDiskInfo.StoragePartitionInfo.GptPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
+
+            if (null != pDiskInfo.StoragePartitionInfo && null != pDiskInfo.StoragePartitionInfo.MbrPartitionInfo)
+               foreach (var partition in pDiskInfo.StoragePartitionInfo.MbrPartitionInfo)
+                  UnitTestConstants.Dump(partition, true);
 
 
             Console.WriteLine();
