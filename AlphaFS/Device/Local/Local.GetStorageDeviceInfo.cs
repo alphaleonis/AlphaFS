@@ -46,11 +46,11 @@ namespace Alphaleonis.Win32.Device
          // Accessing a volume like: "\\.\D" on a dynamic disk fails with ERROR_INVALID_FUNCTION.
          // On retry, the drive is accessed using the: "\\.\PhysicalDriveX" path format which is the device, not the volume/logical drive.
 
-         using (var safeHandle = OpenDevice(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
+         using (var safeFileHandle = OpenDevice(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
          {
             int lastError;
 
-            using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, localDevicePath, out lastError))
+            using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeFileHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, localDevicePath, out lastError))
             {
                if (null != safeBuffer)
                {
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Device
                   if (getByDeviceNumber && deviceNumber != storageDeviceInfo.DeviceNumber)
                      return null;
 
-                  SetStorageDeviceInfoData(isElevated, safeHandle, localDevicePath, storageDeviceInfo);
+                  SetStorageDeviceInfoData(isElevated, safeFileHandle, localDevicePath, storageDeviceInfo);
 
 
                   if (!localDevicePath.StartsWith(Path.PhysicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Device
 
                if (!retry && !isDevice && lastError == Win32Errors.ERROR_INVALID_FUNCTION)
                {
-                  var volDiskExtents = GetVolumeDiskExtents(safeHandle, localDevicePath);
+                  var volDiskExtents = GetVolumeDiskExtents(safeFileHandle, localDevicePath);
 
                   if (volDiskExtents.HasValue)
                      foreach (var extent in volDiskExtents.Value.Extents)

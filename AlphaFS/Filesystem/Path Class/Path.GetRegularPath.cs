@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          return path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) || path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase) ||
-                path.StartsWith(PhysicalDrivePrefix, StringComparison.OrdinalIgnoreCase) || !path.StartsWith(LongPathPrefix, StringComparison.Ordinal)
+                !path.StartsWith(LongPathPrefix, StringComparison.Ordinal)
 
             ? path
             : (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase) ? UncPrefix + path.Substring(LongPathUncPrefix.Length) : path.Substring(LongPathPrefix.Length));

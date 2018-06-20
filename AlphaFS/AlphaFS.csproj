@@ -202,7 +202,6 @@
     <Compile Include="Device\Local\Local.GetStorageAdapterInfo.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.ContainsVolume.cs" />
-    <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo_Properties.cs" />
     <Compile Include="Device\Local\Local.SetStorageDeviceInfoData.cs" />
     <Compile Include="Device\Local\Local.GetDiskGeometryEx.cs" />
     <Compile Include="Device\Storage\Device.StorageMbrPartitionInfo.cs" />
@@ -744,7 +743,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

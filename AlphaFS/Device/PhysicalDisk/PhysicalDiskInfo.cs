@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Security;
@@ -87,6 +88,77 @@ namespace Alphaleonis.Win32.Device
       #endregion // Constructors
 
 
+      #region Properties
+
+      /// <summary>An initialized <see cref="Filesystem.DeviceInfo"/> instance.</summary>
+      private DeviceInfo DeviceInfo { get; set; }
+
+
+      /// <summary>The <see cref="Filesystem.DeviceInfo.DeviceDescription"/>.</summary>
+      public string DeviceDescription
+      {
+         get { return null != DeviceInfo ? DeviceInfo.DeviceDescription : null; }
+      }
+
+
+      /// <summary>The path to the device.</summary>
+      /// <returns>Returns a string that represents the path to the device.
+      ///   A drive path such as: <c>C:</c>, <c>D:\</c>,
+      ///   a volume <see cref="Guid"/> path such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c>
+      ///   or a <see cref="Filesystem.DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c> string.
+      /// </returns>
+      public string DevicePath
+      {
+         get { return null != DeviceInfo ? DeviceInfo.DevicePath : null; }
+      }
+
+
+      /// <summary>The Win32 Device name.</summary>
+      public string DosDeviceName { get; private set; }
+
+
+      /// <summary>An <see cref="Array"/> of logical drives that are located on the physical disk or <c>null</c> when no entries found.</summary>
+      public IEnumerable<string> LogicalDrives { get; private set; }
+
+
+      /// <summary>The <see cref="Filesystem.DeviceInfo.FriendlyName"/>.</summary>
+      public string Name
+      {
+         get { return null != DeviceInfo ? DeviceInfo.FriendlyName : null; }
+      }
+
+
+      /// <summary>An <see cref="Array"/> of partition index numbers that are located on the physical disk or <c>null</c> when no entries found.</summary>
+      public IEnumerable<int> PartitionIndexes { get; private set; }
+
+
+      /// <summary>The <see cref="Filesystem.DeviceInfo.PhysicalDeviceObjectName"/> (PDO) information provided by a device's firmware to Windows.</summary>
+      public string PhysicalDeviceObjectName
+      {
+         get { return null != DeviceInfo ? DeviceInfo.PhysicalDeviceObjectName : null; }
+      }
+
+
+      /// <summary>The storage device adapter information. Retrieving this information requires an elevated state.</summary>
+      public StorageAdapterInfo StorageAdapterInfo { get; private set; }
+
+
+      /// <summary>The storage device information.</summary>
+      public StorageDeviceInfo StorageDeviceInfo { get; private set; }
+
+
+      /// <summary>The storage device partition information.</summary>
+      public StoragePartitionInfo StoragePartitionInfo { get; private set; }
+
+
+      /// <summary>An <see cref="Array"/> of volume <see cref="Guid"/> strings of volumes that are located on the physical disk or <c>null</c> when no entries found.</summary>
+      public IEnumerable<string> VolumeGuids { get; private set; }
+
+      #endregion // Properties
+
+
+      #region Methods
+
       [SecurityCritical]
       private void CreatePhysicalDiskInfoInstance(int deviceNumber, string devicePath, StorageDeviceInfo storageDeviceInfo, DeviceInfo deviceInfo)
       {
@@ -141,12 +213,17 @@ namespace Alphaleonis.Win32.Device
          PopulatePhysicalDisk(isElevated);
 
 
+         // Update device/partition TotalSize property when applicable.
+         //
          // The Win32 API to retrieve the total size of the device requires an elevated process or the TotalSize is 0.
          // The Win32 API to retrieve the total size of the device partition does not require elevation, so use that value.
 
          if (StoragePartitionInfo.OnDynamicDisk && null != dosDeviceName)
-
+         {
             StorageDeviceInfo.TotalSize = new DiskSpaceInfo(dosDeviceName, false, true, true).TotalNumberOfBytes;
+
+            // 2018-0620 TODO: The StorageDeviceInfo.PartitionNumber is 0, which is wrong; it should be the partition number.
+         }
 
          else if (!isElevated && StorageDeviceInfo.TotalSize == 0 && null != StoragePartitionInfo)
 
@@ -283,5 +360,7 @@ namespace Alphaleonis.Win32.Device
       {
          return !(left == right);
       }
+
+      #endregion // Methods
    }
 }

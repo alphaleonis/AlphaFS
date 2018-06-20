@@ -72,6 +72,15 @@ namespace Alphaleonis.Win32
          if (null != writePath)
             writePath = Path.GetCleanExceptionPath(writePath);
 
+         
+         if (errorCode == Win32Errors.ERROR_PATH_NOT_FOUND || errorCode == Win32Errors.ERROR_FILE_NOT_FOUND)
+         {
+            if (null != readPath && readPath.StartsWith(Path.PhysicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
+
+               errorCode = Win32Errors.ERROR_NOT_READY;
+         }
+
+
          var errorMessage = string.Format(CultureInfo.InvariantCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message.Trim().TrimEnd('.').Trim());
         
 
