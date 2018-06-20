@@ -20,13 +20,10 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
-using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {
@@ -94,43 +91,6 @@ namespace Alphaleonis.Win32.Device
 
 
          return null;
-      }
-
-
-      /// <returns>Returns an <see cref="IEnumerable{Int}"/> of physical drive device numbers used by the specified <paramref name="localDevicePath"/> volume.</returns>
-      /// <exception cref="Exception"/>
-      /// <param name="safeFileHandle">An initialized <see cref="SafeFileHandle"/> instance.</param>
-      /// <param name="localDevicePath">
-      ///    <para>A drive path such as: <c>\\.\C:</c></para>
-      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
-      /// </param>
-      [SecurityCritical]
-      internal static IEnumerable<int> GetDeviceNumbersForVolume(SafeFileHandle safeFileHandle, string localDevicePath)
-      {
-         var physicalDrives = new Collection<int>();
-
-         var disposeHandle = null == safeFileHandle;
-         
-         try
-         {
-            if (null == safeFileHandle)
-               safeFileHandle = OpenDevice(localDevicePath, NativeMethods.FILE_ANY_ACCESS);
-            
-            var volDiskExtents = GetVolumeDiskExtents(safeFileHandle, localDevicePath);
-
-            if (volDiskExtents.HasValue)
-
-               foreach (var extent in volDiskExtents.Value.Extents)
-
-                  physicalDrives.Add((int) extent.DiskNumber);
-         }
-         finally
-         {
-            if (disposeHandle && null != safeFileHandle && !safeFileHandle.IsClosed)
-               safeFileHandle.Close();
-         }
-
-         return physicalDrives;
       }
    }
 }
