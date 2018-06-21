@@ -20,18 +20,17 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {
    public static partial class Local
    {
-      // /// <remarks>When this method is called from a non-elevated state, the <see cref="StorageDeviceInfo.TotalSize"/> property always returns <c>0</c>.</remarks>
-      
-
       /// <returns>Returns a <see cref="StorageDeviceInfo"/> instance that represent the storage device that is related to <paramref name="devicePath"/>.</returns>
       /// <exception cref="Exception"/>
       [SecurityCritical]
@@ -45,13 +44,12 @@ namespace Alphaleonis.Win32.Device
 
          int lastError;
 
-         // Accessing a volume like: "\\.\D" on a dynamic disk fails with ERROR_INVALID_FUNCTION.
-         // On retry, the drive is accessed using the: "\\.\PhysicalDriveX" path format which is the device, not the volume/logical drive.
+         // On retry, the drive is accessed using "\\.\PhysicalDriveX" path format which is the device, not the volume/logical drive.
 
          using (var safeFileHandle = OpenDevice(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
 
          using (var safeBuffer = GetDeviceIoData<NativeMethods.STORAGE_DEVICE_NUMBER>(safeFileHandle, NativeMethods.IoControlCode.IOCTL_STORAGE_GET_DEVICE_NUMBER, localDevicePath, out lastError))
-
+         {
             if (null != safeBuffer)
             {
                var storageDeviceInfo = new StorageDeviceInfo(safeBuffer.PtrToStructure<NativeMethods.STORAGE_DEVICE_NUMBER>());
@@ -69,28 +67,40 @@ namespace Alphaleonis.Win32.Device
             }
 
 
-         // A logical drive path on a dynamic disk like \\.\D: fails.
+            // A logical drive path on a dynamic disk like "\\.\D:" fails.
 
-         if (!retry && !isDevice && lastError == Win32Errors.ERROR_INVALID_FUNCTION)
-         {
-            foreach (var physicalDeviceNumber in GetDeviceNumbersForVolume(null, localDevicePath))
-            {
-               if (getByDeviceNumber && deviceNumber != physicalDeviceNumber)
-                  continue;
+            if (!retry && !isDevice && lastError == Win32Errors.ERROR_INVALID_FUNCTION)
+               foreach (var physicalDeviceNumber in GetDeviceNumbersForVolume(safeFileHandle, localDevicePath))
+               {
+                  if (getByDeviceNumber && deviceNumber != physicalDeviceNumber)
+                     continue;
 
-               // By opening the device as PhysicalDriveX, StorageDeviceInfo.PartitionNumber = 0.
+                  // StorageDeviceInfo.PartitionNumber = 0 when opening the device as "\\.\PhysicalDriveX".
 
-               localDevicePath = Path.PhysicalDrivePrefix + physicalDeviceNumber.ToString(CultureInfo.InvariantCulture);
+                  localDevicePath = Path.PhysicalDrivePrefix + physicalDeviceNumber.ToString(CultureInfo.InvariantCulture);
 
-               isDevice = true;
-               retry = true;
+                  isDevice = true;
+                  retry = true;
 
-               goto Retry;
-            }
+                  goto Retry;
+               }
          }
 
-
          return null;
+      }
+
+
+      /// <returns>Returns an <see cref="IEnumerable{Int}"/> of physical drive device numbers used by the specified <paramref name="safeFileHandle"/> volume.</returns>
+      [SecurityCritical]
+      private static IEnumerable<int> GetDeviceNumbersForVolume(SafeFileHandle safeFileHandle, string pathForException)
+      {
+         var volDiskExtents = GetVolumeDiskExtents(safeFileHandle, pathForException);
+
+         if (volDiskExtents.HasValue)
+
+            foreach (var extent in volDiskExtents.Value.Extents)
+
+               yield return (int) extent.DiskNumber;
       }
    }
 }

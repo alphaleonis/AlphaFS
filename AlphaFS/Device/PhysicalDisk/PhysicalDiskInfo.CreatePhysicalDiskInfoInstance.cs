@@ -35,6 +35,7 @@ namespace Alphaleonis.Win32.Device
       {
          var isElevated = ProcessContext.IsElevatedProcess;
          var getByDeviceNumber = deviceNumber > -1;
+         string physicalDriveNumberPath = null;
 
          bool isDrive;
          bool isVolume;
@@ -47,8 +48,7 @@ namespace Alphaleonis.Win32.Device
 
          localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
 
-         string physicalDriveNumberPath = null;
-         
+
          // The StorageDeviceInfo is always needed as it contains the device- and partition number.
 
          StorageDeviceInfo = storageDeviceInfo ?? Local.GetStorageDeviceInfo(isElevated, isDevice, deviceNumber, localDevicePath, out physicalDriveNumberPath);
@@ -68,15 +68,11 @@ namespace Alphaleonis.Win32.Device
          localDevicePath = FileSystemHelper.GetValidatedDevicePath(physicalDriveNumberPath ?? localDevicePath, out isDrive, out isVolume, out isDevice);
 
          
-         AddDeviceInfoData(isElevated, deviceNumber, localDevicePath);
-
-         UpdateDeviceInfodata(isElevated, isDevice, localDevicePath);
-
-         PopulatePhysicalDisk(isElevated);
+         AddDeviceInfoData(isElevated, isDevice, deviceNumber, localDevicePath);
       }
 
 
-      private void AddDeviceInfoData(bool isElevated, int deviceNumber, string localDevicePath)
+      private void AddDeviceInfoData(bool isElevated, bool isDevice, int deviceNumber, string localDevicePath)
       {
          DosDeviceName = Volume.QueryDosDevice(Path.GetRegularPathCore(localDevicePath, GetFullPathOptions.None, false));
 
@@ -87,6 +83,11 @@ namespace Alphaleonis.Win32.Device
 
             StoragePartitionInfo = Local.GetStoragePartitionInfo(safeFileHandle, deviceNumber, localDevicePath);
          }
+
+
+         UpdateDevicePartitionData(isElevated, isDevice, localDevicePath);
+
+         PopulatePhysicalDisk(isElevated);
       }
 
 
@@ -161,12 +162,12 @@ namespace Alphaleonis.Win32.Device
 
 
       [SecurityCritical]
-      private void UpdateDeviceInfodata(bool isElevated, bool isDevice, string localDevicePath)
+      private void UpdateDevicePartitionData(bool isElevated, bool isDevice, string localDevicePath)
       {
          if (StoragePartitionInfo.OnDynamicDisk)
          {
-            // At this point, PartitionNumber is 0 which points to the device.
-            // Get the user data partition information.
+            // At this point, PartitionNumber = 0 which points to the device.
+            // Get the user data partition; the partition that normally occupies most of the disk space.
 
             foreach (var partition in StoragePartitionInfo.GptPartitionInfo)
             {

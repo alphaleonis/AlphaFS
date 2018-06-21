@@ -297,5 +297,17 @@ namespace Alphaleonis.Win32.Device
       internal static extern bool SetupDiGetDeviceRegistryProperty(SafeHandle deviceInfoSet, ref SP_DEVINFO_DATA deviceInfoData, SPDRP property, IntPtr propertyRegDataType, SafeGlobalMemoryBufferHandle propertyBuffer, [MarshalAs(UnmanagedType.U4)] uint propertyBufferSize, IntPtr requiredSize);
 
       #endregion // SetupDiXxx
+
+
+      /// <summary>Retrieves the current power state of the specified device. This function cannot be used to query the power state of a display device.</summary>
+      /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.</returns>
+      /// <remarks>
+      ///   Minimum supported client: Windows XP [desktop apps only]
+      ///   Minimum supported server: Windows Server 2003 [desktop apps only]
+      /// </remarks>
+      [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
+      [return: MarshalAs(UnmanagedType.Bool)]
+      internal static extern bool GetDevicePowerState(SafeHandle hDevice, out bool pfOn);
    }
 }

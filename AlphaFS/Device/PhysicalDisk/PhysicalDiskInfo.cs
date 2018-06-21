@@ -131,6 +131,14 @@ namespace Alphaleonis.Win32.Device
       }
 
 
+      /// <summary>Retrieves the current power state of the device.</summary>
+      /// <remarks>This property is not cached.</remarks>
+      public bool PowerStateEnabled
+      {
+         get { return !Utils.IsNullOrWhiteSpace(DevicePath) && Local.GetDevicePowerState(DevicePath); }
+      }
+
+
       /// <summary>The storage device adapter information.</summary>
       public StorageAdapterInfo StorageAdapterInfo { get; private set; }
 

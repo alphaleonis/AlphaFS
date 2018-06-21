@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Initializes an empty StorageDeviceInfo instance.</summary>
       public StorageDeviceInfo()
       {
-         DeviceType = Device.DeviceType.Unknown;
+         DeviceType = DeviceType.Unknown;
 
          DeviceNumber = -1;
 
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Device
 
       internal StorageDeviceInfo(NativeMethods.STORAGE_DEVICE_NUMBER device) : this()
       {
-         DeviceType = device.DeviceType;
+         DeviceType = (DeviceType) device.DeviceType;
 
          DeviceNumber = device.DeviceNumber;
 
@@ -111,8 +111,6 @@ namespace Alphaleonis.Win32.Device
       /// <summary>The serial number of the physical disk. If the physical disk has no serial number <c>null</c> is returned.</summary>
       public string SerialNumber { get; internal set; }
 
-
-      // /// <summary>The total size of the physical disk or <c>0</c> if the process is not elevated or the device is a controller.</summary>
 
       /// <summary>The total size of the physical disk.</summary>
       public long TotalSize { get; internal set; }

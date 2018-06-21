@@ -20,49 +20,29 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Security;
-using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {
    public static partial class Local
    {
-      /// <returns>Returns an <see cref="IEnumerable{Int}"/> of physical drive device numbers used by the specified <paramref name="localDevicePath"/> volume.</returns>
-      /// <exception cref="Exception"/>
-      /// <param name="safeFileHandle">An initialized <see cref="SafeFileHandle"/> instance.</param>
-      /// <param name="localDevicePath">
-      ///    <para>A drive path such as: <c>\\.\C:</c></para>
+      /// <summary>[AlphaFS] Retrieves the current power state for the specified <paramref name="devicePath"/> storage device.</summary>
+      /// <returns>Returns <c>true</c> if the storage device is in the working state; otherwise, <c>false</c>.</returns>
+      /// <param name="devicePath">
+      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
       ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      ///    <para>A <see cref="Filesystem.DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
       /// </param>
       [SecurityCritical]
-      private static IEnumerable<int> GetDeviceNumbersForVolume(SafeFileHandle safeFileHandle, string localDevicePath)
+      public static bool GetDevicePowerState(string devicePath)
       {
-         var physicalDrives = new Collection<int>();
-
-         var disposeHandle = null == safeFileHandle;
-         
-         try
+         using (var safeFileHandle = OpenDevice(FileSystemHelper.GetLocalDevicePath(devicePath), NativeMethods.FILE_ANY_ACCESS))
          {
-            if (null == safeFileHandle)
-               safeFileHandle = OpenDevice(localDevicePath, NativeMethods.FILE_ANY_ACCESS);
-            
-            var volDiskExtents = GetVolumeDiskExtents(safeFileHandle, localDevicePath);
+            bool isOn;
 
-            if (volDiskExtents.HasValue)
-
-               foreach (var extent in volDiskExtents.Value.Extents)
-
-                  physicalDrives.Add((int) extent.DiskNumber);
+            return NativeMethods.GetDevicePowerState(safeFileHandle, out isOn) && isOn;
          }
-         finally
-         {
-            if (disposeHandle && null != safeFileHandle && !safeFileHandle.IsClosed)
-               safeFileHandle.Close();
-         }
-
-         return physicalDrives;
       }
    }
 }

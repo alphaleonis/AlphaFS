@@ -31,250 +31,250 @@ namespace Alphaleonis.Win32.Device
       /// <summary>Indicates an unknown storage device type.</summary>
       None = 0,
 
-      /// <summary>FILE_DEVICE_BEEP parameter.</summary>
-      Beep = NativeMethods.DEVICE_TYPE.FILE_DEVICE_BEEP,
+      /// <summary>BEEP parameter.</summary>
+      Beep = NativeMethods.FILE_DEVICE.BEEP,
 
-      /// <summary>FILE_DEVICE_CD_ROM parameter.</summary>
-      CDRom = NativeMethods.DEVICE_TYPE.FILE_DEVICE_CD_ROM, // .NET DriveInfo.DriveType property also uses "CDRom" instead of "CdRom".
+      /// <summary>CD_ROM parameter.</summary>
+      CDRom = NativeMethods.FILE_DEVICE.CD_ROM, // .NET DriveInfo.DriveType property also uses "CDRom" instead of "CdRom".
 
-      /// <summary>FILE_DEVICE_CD_ROM_FILE_SYSTEM parameter.</summary>
-      CDRomFileSystem = NativeMethods.DEVICE_TYPE.FILE_DEVICE_CD_ROM_FILE_SYSTEM,
+      /// <summary>CD_ROM_FILE_SYSTEM parameter.</summary>
+      CDRomFileSystem = NativeMethods.FILE_DEVICE.CD_ROM_FILE_SYSTEM,
 
-      /// <summary>FILE_DEVICE_CONTROLLER parameter.</summary>
-      Controller = NativeMethods.DEVICE_TYPE.FILE_DEVICE_CONTROLLER,
+      /// <summary>CONTROLLER parameter.</summary>
+      Controller = NativeMethods.FILE_DEVICE.CONTROLLER,
 
-      /// <summary>FILE_DEVICE_DATALINK parameter.</summary>
-      DataLink = NativeMethods.DEVICE_TYPE.FILE_DEVICE_DATALINK,
+      /// <summary>DATALINK parameter.</summary>
+      DataLink = NativeMethods.FILE_DEVICE.DATALINK,
 
-      /// <summary>FILE_DEVICE_DFS parameter.</summary>
+      /// <summary>DFS parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
-      Dfs = NativeMethods.DEVICE_TYPE.FILE_DEVICE_DFS,
+      Dfs = NativeMethods.FILE_DEVICE.DFS,
 
-      /// <summary>FILE_DEVICE_DISK parameter.</summary>
-      Disk = NativeMethods.DEVICE_TYPE.FILE_DEVICE_DISK,
+      /// <summary>DISK parameter.</summary>
+      Disk = NativeMethods.FILE_DEVICE.DISK,
 
-      /// <summary>FILE_DEVICE_DISK_FILE_SYSTEM parameter.</summary>
-      DiskFileSystem = NativeMethods.DEVICE_TYPE.FILE_DEVICE_DISK_FILE_SYSTEM,
+      /// <summary>DISK_FILE_SYSTEM parameter.</summary>
+      DiskFileSystem = NativeMethods.FILE_DEVICE.DISK_FILE_SYSTEM,
 
-      /// <summary>FILE_DEVICE_FILE_SYSTEM parameter.</summary>
-      FileSystem = NativeMethods.DEVICE_TYPE.FILE_DEVICE_FILE_SYSTEM,
+      /// <summary>FILE_SYSTEM parameter.</summary>
+      FileSystem = NativeMethods.FILE_DEVICE.FILE_SYSTEM,
 
-      /// <summary>FILE_DEVICE_INPORT_PORT parameter.</summary>
-      InPort = NativeMethods.DEVICE_TYPE.FILE_DEVICE_INPORT_PORT,
+      /// <summary>INPORT_PORT parameter.</summary>
+      InPort = NativeMethods.FILE_DEVICE.INPORT_PORT,
 
-      /// <summary>FILE_DEVICE_KEYBOARD parameter.</summary>
-      Keyboard = NativeMethods.DEVICE_TYPE.FILE_DEVICE_KEYBOARD,
+      /// <summary>KEYBOARD parameter.</summary>
+      Keyboard = NativeMethods.FILE_DEVICE.KEYBOARD,
 
-      /// <summary>FILE_DEVICE_MAILSLOT parameter.</summary>
-      MailSlot = NativeMethods.DEVICE_TYPE.FILE_DEVICE_MAILSLOT,
+      /// <summary>MAILSLOT parameter.</summary>
+      MailSlot = NativeMethods.FILE_DEVICE.MAILSLOT,
 
-      /// <summary>FILE_DEVICE_MIDI_IN parameter.</summary>
-      MidiIn = NativeMethods.DEVICE_TYPE.FILE_DEVICE_MIDI_IN,
+      /// <summary>MIDI_IN parameter.</summary>
+      MidiIn = NativeMethods.FILE_DEVICE.MIDI_IN,
 
-      /// <summary>FILE_DEVICE_MIDI_OUT parameter.</summary>
-      MidiOut = NativeMethods.DEVICE_TYPE.FILE_DEVICE_MIDI_OUT,
+      /// <summary>MIDI_OUT parameter.</summary>
+      MidiOut = NativeMethods.FILE_DEVICE.MIDI_OUT,
 
-      /// <summary>FILE_DEVICE_MOUSE parameter.</summary>
-      Mouse = NativeMethods.DEVICE_TYPE.FILE_DEVICE_MOUSE,
+      /// <summary>MOUSE parameter.</summary>
+      Mouse = NativeMethods.FILE_DEVICE.MOUSE,
 
-      /// <summary>FILE_DEVICE_MULTI_UNC_PROVIDER parameter.</summary>
+      /// <summary>MULTI_UNC_PROVIDER parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Multi")]
-      MultiUncProvider = NativeMethods.DEVICE_TYPE.FILE_DEVICE_MULTI_UNC_PROVIDER,
+      MultiUncProvider = NativeMethods.FILE_DEVICE.MULTI_UNC_PROVIDER,
 
-      /// <summary>FILE_DEVICE_NAMED_PIPE parameter.</summary>
-      NamedPipe = NativeMethods.DEVICE_TYPE.FILE_DEVICE_NAMED_PIPE,
+      /// <summary>NAMED_PIPE parameter.</summary>
+      NamedPipe = NativeMethods.FILE_DEVICE.NAMED_PIPE,
 
-      /// <summary>FILE_DEVICE_NETWORK parameter.</summary>
-      Network = NativeMethods.DEVICE_TYPE.FILE_DEVICE_NETWORK,
+      /// <summary>NETWORK parameter.</summary>
+      Network = NativeMethods.FILE_DEVICE.NETWORK,
 
-      /// <summary>FILE_DEVICE_NETWORK_BROWSER parameter.</summary>
-      NetworkBrowser = NativeMethods.DEVICE_TYPE.FILE_DEVICE_NETWORK_BROWSER,
+      /// <summary>NETWORK_BROWSER parameter.</summary>
+      NetworkBrowser = NativeMethods.FILE_DEVICE.NETWORK_BROWSER,
 
-      /// <summary>FILE_DEVICE_NETWORK_FILE_SYSTEM parameter.</summary>
-      NetworkFileSystem = NativeMethods.DEVICE_TYPE.FILE_DEVICE_NETWORK_FILE_SYSTEM,
+      /// <summary>NETWORK_FILE_SYSTEM parameter.</summary>
+      NetworkFileSystem = NativeMethods.FILE_DEVICE.NETWORK_FILE_SYSTEM,
 
-      /// <summary>FILE_DEVICE_NULL parameter.</summary>
-      NullDevice = NativeMethods.DEVICE_TYPE.FILE_DEVICE_NULL,
+      /// <summary>NULL parameter.</summary>
+      NullDevice = NativeMethods.FILE_DEVICE.NULL,
 
-      /// <summary>FILE_DEVICE_PARALLEL_PORT parameter.</summary>
-      ParallelPort = NativeMethods.DEVICE_TYPE.FILE_DEVICE_PARALLEL_PORT,
+      /// <summary>PARALLEL_PORT parameter.</summary>
+      ParallelPort = NativeMethods.FILE_DEVICE.PARALLEL_PORT,
 
-      /// <summary>FILE_DEVICE_PHYSICAL_NETCARD parameter.</summary>
-      PhysicalNetCard = NativeMethods.DEVICE_TYPE.FILE_DEVICE_PHYSICAL_NETCARD,
+      /// <summary>PHYSICAL_NETCARD parameter.</summary>
+      PhysicalNetCard = NativeMethods.FILE_DEVICE.PHYSICAL_NETCARD,
 
-      /// <summary>FILE_DEVICE_PRINTER parameter.</summary>
-      Printer = NativeMethods.DEVICE_TYPE.FILE_DEVICE_PRINTER,
+      /// <summary>PRINTER parameter.</summary>
+      Printer = NativeMethods.FILE_DEVICE.PRINTER,
 
-      /// <summary>FILE_DEVICE_SCANNER parameter.</summary>
-      Scanner = NativeMethods.DEVICE_TYPE.FILE_DEVICE_SCANNER,
+      /// <summary>SCANNER parameter.</summary>
+      Scanner = NativeMethods.FILE_DEVICE.SCANNER,
 
-      /// <summary>FILE_DEVICE_SERIAL_MOUSE_PORT parameter.</summary>
-      SerialMousePort = NativeMethods.DEVICE_TYPE.FILE_DEVICE_SERIAL_MOUSE_PORT,
+      /// <summary>SERIAL_MOUSE_PORT parameter.</summary>
+      SerialMousePort = NativeMethods.FILE_DEVICE.SERIAL_MOUSE_PORT,
 
-      /// <summary>FILE_DEVICE_SERIAL_PORT parameter.</summary>
-      SerialPort = NativeMethods.DEVICE_TYPE.FILE_DEVICE_SERIAL_PORT,
+      /// <summary>SERIAL_PORT parameter.</summary>
+      SerialPort = NativeMethods.FILE_DEVICE.SERIAL_PORT,
 
-      /// <summary>FILE_DEVICE_SCREEN parameter.</summary>
-      Screen = NativeMethods.DEVICE_TYPE.FILE_DEVICE_SCREEN,
+      /// <summary>SCREEN parameter.</summary>
+      Screen = NativeMethods.FILE_DEVICE.SCREEN,
 
-      /// <summary>FILE_DEVICE_SOUND parameter.</summary>
-      Sound = NativeMethods.DEVICE_TYPE.FILE_DEVICE_SOUND,
+      /// <summary>SOUND parameter.</summary>
+      Sound = NativeMethods.FILE_DEVICE.SOUND,
 
-      /// <summary>FILE_DEVICE_STREAMS parameter.</summary>
-      Streams = NativeMethods.DEVICE_TYPE.FILE_DEVICE_STREAMS,
+      /// <summary>STREAMS parameter.</summary>
+      Streams = NativeMethods.FILE_DEVICE.STREAMS,
 
-      /// <summary>FILE_DEVICE_TAPE parameter.</summary>
-      Tape = NativeMethods.DEVICE_TYPE.FILE_DEVICE_TAPE,
+      /// <summary>TAPE parameter.</summary>
+      Tape = NativeMethods.FILE_DEVICE.TAPE,
 
-      /// <summary>FILE_DEVICE_TAPE_FILE_SYSTEM parameter.</summary>
-      TapeFileSystem = NativeMethods.DEVICE_TYPE.FILE_DEVICE_TAPE_FILE_SYSTEM,
+      /// <summary>TAPE_FILE_SYSTEM parameter.</summary>
+      TapeFileSystem = NativeMethods.FILE_DEVICE.TAPE_FILE_SYSTEM,
 
-      /// <summary>FILE_DEVICE_TRANSPORT parameter.</summary>
-      Transport = NativeMethods.DEVICE_TYPE.FILE_DEVICE_TRANSPORT,
+      /// <summary>TRANSPORT parameter.</summary>
+      Transport = NativeMethods.FILE_DEVICE.TRANSPORT,
 
-      /// <summary>FILE_DEVICE_UNKNOWN parameter.</summary>
-      Unknown = NativeMethods.DEVICE_TYPE.FILE_DEVICE_UNKNOWN,
+      /// <summary>UNKNOWN parameter.</summary>
+      Unknown = NativeMethods.FILE_DEVICE.UNKNOWN,
 
-      /// <summary>FILE_DEVICE_VIDEO parameter.</summary>
-      Video = NativeMethods.DEVICE_TYPE.FILE_DEVICE_VIDEO,
+      /// <summary>VIDEO parameter.</summary>
+      Video = NativeMethods.FILE_DEVICE.VIDEO,
 
-      /// <summary>FILE_DEVICE_VIRTUAL_DISK parameter.</summary>
-      VirtualDisk = NativeMethods.DEVICE_TYPE.FILE_DEVICE_VIRTUAL_DISK,
+      /// <summary>VIRTUAL_DISK parameter.</summary>
+      VirtualDisk = NativeMethods.FILE_DEVICE.VIRTUAL_DISK,
 
-      /// <summary>FILE_DEVICE_WAVE_IN parameter.</summary>
-      WaveIn = NativeMethods.DEVICE_TYPE.FILE_DEVICE_WAVE_IN,
+      /// <summary>WAVE_IN parameter.</summary>
+      WaveIn = NativeMethods.FILE_DEVICE.WAVE_IN,
 
-      /// <summary>FILE_DEVICE_WAVE_OUT parameter.</summary>
-      WaveOut = NativeMethods.DEVICE_TYPE.FILE_DEVICE_WAVE_OUT,
+      /// <summary>WAVE_OUT parameter.</summary>
+      WaveOut = NativeMethods.FILE_DEVICE.WAVE_OUT,
 
-      /// <summary>FILE_DEVICE_8042_PORT parameter.</summary>
-      Port8042 = NativeMethods.DEVICE_TYPE.FILE_DEVICE_8042_PORT,
+      /// <summary>8042_PORT parameter.</summary>
+      Port8042 = NativeMethods.FILE_DEVICE.PORT_8042,
 
-      /// <summary>FILE_DEVICE_NETWORK_REDIRECTOR parameter.</summary>
-      NetworkRedirector = NativeMethods.DEVICE_TYPE.FILE_DEVICE_NETWORK_REDIRECTOR,
+      /// <summary>NETWORK_REDIRECTOR parameter.</summary>
+      NetworkRedirector = NativeMethods.FILE_DEVICE.NETWORK_REDIRECTOR,
 
-      /// <summary>FILE_DEVICE_BATTERY parameter.</summary>
-      Battery = NativeMethods.DEVICE_TYPE.FILE_DEVICE_BATTERY,
+      /// <summary>BATTERY parameter.</summary>
+      Battery = NativeMethods.FILE_DEVICE.BATTERY,
 
-      /// <summary>FILE_DEVICE_BUS_EXTENDER parameter.</summary>
-      BusExtender = NativeMethods.DEVICE_TYPE.FILE_DEVICE_BUS_EXTENDER,
+      /// <summary>BUS_EXTENDER parameter.</summary>
+      BusExtender = NativeMethods.FILE_DEVICE.BUS_EXTENDER,
 
-      /// <summary>FILE_DEVICE_MODEM parameter.</summary>
-      Modem = NativeMethods.DEVICE_TYPE.FILE_DEVICE_MODEM,
+      /// <summary>MODEM parameter.</summary>
+      Modem = NativeMethods.FILE_DEVICE.MODEM,
 
-      /// <summary>FILE_DEVICE_VDM parameter.</summary>
+      /// <summary>VDM parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vdm")]
-      Vdm = NativeMethods.DEVICE_TYPE.FILE_DEVICE_VDM,
+      Vdm = NativeMethods.FILE_DEVICE.VDM,
 
-      /// <summary>FILE_DEVICE_MASS_STORAGE parameter.</summary>
-      MassStorage = NativeMethods.DEVICE_TYPE.FILE_DEVICE_MASS_STORAGE,
+      /// <summary>MASS_STORAGE parameter.</summary>
+      MassStorage = NativeMethods.FILE_DEVICE.MASS_STORAGE,
 
-      /// <summary>FILE_DEVICE_SMB parameter.</summary>
+      /// <summary>SMB parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Smb")]
-      Smb = NativeMethods.DEVICE_TYPE.FILE_DEVICE_SMB,
+      Smb = NativeMethods.FILE_DEVICE.SMB,
 
-      /// <summary>FILE_DEVICE_KS parameter.</summary>
-      KS = NativeMethods.DEVICE_TYPE.FILE_DEVICE_KS,
+      /// <summary>KS parameter.</summary>
+      KS = NativeMethods.FILE_DEVICE.KS,
 
-      /// <summary>FILE_DEVICE_CHANGER parameter.</summary>
-      Changer = NativeMethods.DEVICE_TYPE.FILE_DEVICE_CHANGER,
+      /// <summary>CHANGER parameter.</summary>
+      Changer = NativeMethods.FILE_DEVICE.CHANGER,
 
-      /// <summary>FILE_DEVICE_SMARTCARD parameter.</summary>
-      Smartcard = NativeMethods.DEVICE_TYPE.FILE_DEVICE_SMARTCARD,
+      /// <summary>SMARTCARD parameter.</summary>
+      Smartcard = NativeMethods.FILE_DEVICE.SMARTCARD,
 
-      /// <summary>FILE_DEVICE_ACPI parameter.</summary>
+      /// <summary>ACPI parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Acpi")]
-      Acpi = NativeMethods.DEVICE_TYPE.FILE_DEVICE_ACPI,
+      Acpi = NativeMethods.FILE_DEVICE.ACPI,
 
-      /// <summary>FILE_DEVICE_DVD parameter.</summary>
+      /// <summary>DVD parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dvd")]
-      Dvd = NativeMethods.DEVICE_TYPE.FILE_DEVICE_DVD,
+      Dvd = NativeMethods.FILE_DEVICE.DVD,
 
-      /// <summary>FILE_DEVICE_FULLSCREEN_VIDEO parameter.</summary>
+      /// <summary>FULLSCREEN_VIDEO parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fullscreen")]
-      FullscreenVideo = NativeMethods.DEVICE_TYPE.FILE_DEVICE_FULLSCREEN_VIDEO,
+      FullscreenVideo = NativeMethods.FILE_DEVICE.FULLSCREEN_VIDEO,
 
-      /// <summary>FILE_DEVICE_DFS_FILE_SYSTEM parameter.</summary>
+      /// <summary>DFS_FILE_SYSTEM parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
-      DfsFileSystem = NativeMethods.DEVICE_TYPE.FILE_DEVICE_DFS_FILE_SYSTEM,
+      DfsFileSystem = NativeMethods.FILE_DEVICE.DFS_FILE_SYSTEM,
 
-      /// <summary>FILE_DEVICE_DFS_VOLUME parameter.</summary>
+      /// <summary>DFS_VOLUME parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
-      DfsVolume = NativeMethods.DEVICE_TYPE.FILE_DEVICE_DFS_VOLUME,
+      DfsVolume = NativeMethods.FILE_DEVICE.DFS_VOLUME,
 
-      /// <summary>FILE_DEVICE_SERENUM parameter.</summary>
+      /// <summary>SERENUM parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Serenum")]
-      Serenum = NativeMethods.DEVICE_TYPE.FILE_DEVICE_SERENUM,
+      Serenum = NativeMethods.FILE_DEVICE.SERENUM,
 
-      /// <summary>FILE_DEVICE_TERMSRV parameter.</summary>
+      /// <summary>TERMSRV parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Termsrv")]
-      Termsrv = NativeMethods.DEVICE_TYPE.FILE_DEVICE_TERMSRV,
+      Termsrv = NativeMethods.FILE_DEVICE.TERMSRV,
 
-      /// <summary>FILE_DEVICE_KSEC parameter.</summary>
-      KSec = NativeMethods.DEVICE_TYPE.FILE_DEVICE_KSEC,
+      /// <summary>KSEC parameter.</summary>
+      KSec = NativeMethods.FILE_DEVICE.KSEC,
 
-      /// <summary>FILE_DEVICE_FIPS parameter.</summary>
+      /// <summary>FIPS parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fips")]
-      Fips = NativeMethods.DEVICE_TYPE.FILE_DEVICE_FIPS,
+      Fips = NativeMethods.FILE_DEVICE.FIPS,
 
-      /// <summary>FILE_DEVICE_INFINIBAND parameter.</summary>
+      /// <summary>INFINIBAND parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infiniband")]
-      Infiniband = NativeMethods.DEVICE_TYPE.FILE_DEVICE_INFINIBAND,
+      Infiniband = NativeMethods.FILE_DEVICE.INFINIBAND,
 
-      /// <summary>FILE_DEVICE_VMBUS parameter.</summary>
+      /// <summary>VMBUS parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vm")]
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Vm")]
-      VmBus = NativeMethods.DEVICE_TYPE.FILE_DEVICE_VMBUS,
+      VmBus = NativeMethods.FILE_DEVICE.VMBUS,
 
-      /// <summary>FILE_DEVICE_CRYPT_PROVIDER parameter.</summary>
-      CryptProvider = NativeMethods.DEVICE_TYPE.FILE_DEVICE_CRYPT_PROVIDER,
+      /// <summary>CRYPT_PROVIDER parameter.</summary>
+      CryptProvider = NativeMethods.FILE_DEVICE.CRYPT_PROVIDER,
 
-      /// <summary>FILE_DEVICE_WPD parameter.</summary>
+      /// <summary>WPD parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wpd")]
-      Wpd = NativeMethods.DEVICE_TYPE.FILE_DEVICE_WPD,
+      Wpd = NativeMethods.FILE_DEVICE.WPD,
 
-      /// <summary>FILE_DEVICE_BLUETOOTH parameter.</summary>
-      Bluetooth = NativeMethods.DEVICE_TYPE.FILE_DEVICE_BLUETOOTH,
+      /// <summary>BLUETOOTH parameter.</summary>
+      Bluetooth = NativeMethods.FILE_DEVICE.BLUETOOTH,
 
-      /// <summary>FILE_DEVICE_MT_COMPOSITE parameter.</summary>
+      /// <summary>MT_COMPOSITE parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Mt")]
-      MtComposite = NativeMethods.DEVICE_TYPE.FILE_DEVICE_MT_COMPOSITE,
+      MtComposite = NativeMethods.FILE_DEVICE.MT_COMPOSITE,
 
-      /// <summary>FILE_DEVICE_MT_TRANSPORT parameter.</summary>
-      MTTransport = NativeMethods.DEVICE_TYPE.FILE_DEVICE_MT_TRANSPORT,
+      /// <summary>MT_TRANSPORT parameter.</summary>
+      MTTransport = NativeMethods.FILE_DEVICE.MT_TRANSPORT,
 
-      /// <summary>FILE_DEVICE_BIOMETRIC parameter.</summary>
-      Biometric = NativeMethods.DEVICE_TYPE.FILE_DEVICE_BIOMETRIC,
+      /// <summary>BIOMETRIC parameter.</summary>
+      Biometric = NativeMethods.FILE_DEVICE.BIOMETRIC,
 
-      /// <summary>FILE_DEVICE_PMI parameter.</summary>
+      /// <summary>PMI parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pmi")]
-      Pmi = NativeMethods.DEVICE_TYPE.FILE_DEVICE_PMI,
+      Pmi = NativeMethods.FILE_DEVICE.PMI,
 
-      /// <summary>FILE_DEVICE_EHSTOR parameter.</summary>
+      /// <summary>EHSTOR parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ehstor")]
-      Ehstor = NativeMethods.DEVICE_TYPE.FILE_DEVICE_EHSTOR,
+      Ehstor = NativeMethods.FILE_DEVICE.EHSTOR,
 
-      /// <summary>FILE_DEVICE_DEVAPI parameter.</summary>
+      /// <summary>DEVAPI parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Devapi")]
-      Devapi = NativeMethods.DEVICE_TYPE.FILE_DEVICE_DEVAPI,
+      Devapi = NativeMethods.FILE_DEVICE.DEVAPI,
 
-      /// <summary>FILE_DEVICE_GPIO parameter.</summary>
+      /// <summary>GPIO parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpio")]
-      Gpio = NativeMethods.DEVICE_TYPE.FILE_DEVICE_GPIO,
+      Gpio = NativeMethods.FILE_DEVICE.GPIO,
 
-      /// <summary>FILE_DEVICE_USBEX parameter.</summary>
+      /// <summary>USBEX parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Usbex")]
-      Usbex = NativeMethods.DEVICE_TYPE.FILE_DEVICE_USBEX,
+      Usbex = NativeMethods.FILE_DEVICE.USBEX,
 
-      /// <summary>FILE_DEVICE_CONSOLE parameter.</summary>
-      Console = NativeMethods.DEVICE_TYPE.FILE_DEVICE_CONSOLE,
+      /// <summary>CONSOLE parameter.</summary>
+      Console = NativeMethods.FILE_DEVICE.CONSOLE,
 
-      /// <summary>FILE_DEVICE_NFP parameter.</summary>
+      /// <summary>NFP parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nfp")]
-      Nfp = NativeMethods.DEVICE_TYPE.FILE_DEVICE_NFP,
+      Nfp = NativeMethods.FILE_DEVICE.NFP,
 
-      /// <summary>FILE_DEVICE_SYSENV parameter.</summary>
+      /// <summary>SYSENV parameter.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sysenv")]
-      Sysenv = NativeMethods.DEVICE_TYPE.FILE_DEVICE_SYSENV
+      Sysenv = NativeMethods.FILE_DEVICE.SYSENV
    }
 }

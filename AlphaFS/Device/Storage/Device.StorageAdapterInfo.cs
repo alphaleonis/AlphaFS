@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Device
          BusType = (StorageBusType) adapter.BusType;
 
          AcceleratedTransfer = adapter.AcceleratedTransfer;
-
+         
          AdapterScansDown = adapter.AdapterScansDown;
 
          AdapterUsesPio = adapter.AdapterUsesPio;

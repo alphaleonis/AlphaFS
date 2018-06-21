@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Device
 
                if (lastError == Win32Errors.ERROR_NOT_READY ||
 
-                   // A logical drive path like \\.\D: fails on a dynamic disk.
+                   // A logical drive path like "\\.\D:" fails on a dynamic disk.
                    lastError == Win32Errors.ERROR_INVALID_FUNCTION ||
 
                    // Request device number from a DeviceGuid.Image device.

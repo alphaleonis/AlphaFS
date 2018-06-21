@@ -30,20 +30,19 @@ using System.Security;
 using Alphaleonis.Win32;
 using Alphaleonis.Win32.Device;
 using Alphaleonis.Win32.Security;
-using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 
 namespace Alphaleonis
 {
    internal static class Utils
    {
-      internal static T CopyFrom<T>(T source) where T : new()
-      {
-         var destination = new T();
+      //internal static T CopyFrom<T>(T source) where T : new()
+      //{
+      //   var destination = new T();
 
-         CopyTo(source, destination);
+      //   CopyTo(source, destination);
 
-         return destination;
-      }
+      //   return destination;
+      //}
 
 
       internal static void CopyTo<T>(T source, T destination)
@@ -81,7 +80,7 @@ namespace Alphaleonis
             case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
 
                if (bufferSize == 0)
-                  bufferSize = NativeMethods.DefaultFileBufferSize / 32; // 128
+                  bufferSize = Win32.Filesystem.NativeMethods.DefaultFileBufferSize / 32; // 128
 
                bufferSize *= 2;
                break;
@@ -306,34 +305,34 @@ namespace Alphaleonis
 
       internal static uint GetHighOrderDword(long highPart)
       {
-         return (uint)((highPart >> 32) & 0xFFFFFFFF);
+         return (uint) ((highPart >> 32) & 0xFFFFFFFF);
       }
 
 
       internal static uint GetLowOrderDword(long lowPart)
       {
-         return (uint)(lowPart & 0xFFFFFFFF);
+         return (uint) (lowPart & 0xFFFFFFFF);
       }
 
 
       internal static long LuidToLong(LUID luid)
       {
-         var high = (ulong)luid.HighPart << 32;
-         var low = (ulong)luid.LowPart & 0x00000000FFFFFFFF;
+         var high = (ulong) luid.HighPart << 32;
+         var low = (ulong) luid.LowPart & 0x00000000FFFFFFFF;
 
-         return unchecked((long)(high | low));
+         return unchecked((long) (high | low));
       }
 
 
       internal static LUID LongToLuid(long lluid)
       {
-         return new LUID { HighPart = (uint)(lluid >> 32), LowPart = (uint)(lluid & 0xFFFFFFFF) };
+         return new LUID {HighPart = (uint) (lluid >> 32), LowPart = (uint) (lluid & 0xFFFFFFFF)};
       }
 
 
       internal static long ToLong(uint highPart, uint lowPart)
       {
-         return ((long)highPart << 32) | ((long)lowPart & 0xFFFFFFFF);
+         return ((long) highPart << 32) | ((long) lowPart & 0xFFFFFFFF);
       }
 
       #endregion // Bitmasking
