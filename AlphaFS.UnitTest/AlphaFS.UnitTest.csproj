@@ -144,6 +144,9 @@
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.EnumeratePhysicalDisks_ReturnsStorageDeviceInfoForDevice.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PortableDevice Class\AlphaFS_Device.EnumeratePortableDevices.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PortableDevice Class\AlphaFS_Device.EnumeratePortableDevices_OnlyDevicesUsingMTP.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PortableDevice Class\AlphaFS_PortableDeviceInfoTest.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_DeviceTest.GetDevicePowerState.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfo.CreateInstance_UsingDevicePathFromSystemDrive_ReturnsStorageDeviceInfoForDevice.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfo.CreateInstance_UsingVolumePathFromSystemDrive_ReturnsStorageDeviceInfoForVolume.cs" />

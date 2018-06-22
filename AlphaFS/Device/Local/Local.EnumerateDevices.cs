@@ -322,9 +322,7 @@ namespace Alphaleonis.Win32.Device
          deviceInfo.LocationInformation = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.LocationInformation);
 
          deviceInfo.LocationPaths = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.LocationPaths);
-
-         deviceInfo.Manufacturer = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.Manufacturer);
-
+         
          deviceInfo.Service = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.Service);
       }
 
@@ -337,7 +335,9 @@ namespace Alphaleonis.Win32.Device
          deviceInfo.DeviceDescription = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.DeviceDescription);
          
          deviceInfo.FriendlyName = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.FriendlyName);
-         
+
+         deviceInfo.Manufacturer = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.Manufacturer);
+
          deviceInfo.PhysicalDeviceObjectName = GetDeviceRegistryProperty(safeHandle, infoData, NativeMethods.SPDRP.PhysicalDeviceObjectName);
       }
    }

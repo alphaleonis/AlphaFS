@@ -197,15 +197,33 @@
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
     <Compile Include="Device\Local\Device.Local.cs" />
+    <Compile Include="Device\Local\Local.EnumeratePortableDeviceDirectories.cs" />
+    <Compile Include="Device\Local\Local.EnumeratePortableDevices.cs" />
     <Compile Include="Device\Local\Local.GetDevicePowerState.cs" />
     <Compile Include="Device\Local\Local.GetStoragePartitionInfo.cs" />
     <Compile Include="Device\Local\Local.GetStorageDeviceInfo.cs" />
     <Compile Include="Device\Local\Local.GetStorageAdapterInfo.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.cs" />
+    <Compile Include="Device\Native Other\WPD_POWER_SOURCES.cs" />
+    <Compile Include="Device\Native Other\WPD_DEVICE_TYPES.cs" />
+    <Compile Include="Device\Native Other\WPD_STORAGE_TYPE_VALUES.cs" />
+    <Compile Include="Device\Native Other\WPD_DEVICE_TRANSPORTS.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.CreatePhysicalDiskInfoInstance.cs" />
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.ContainsVolume.cs" />
     <Compile Include="Device\Local\Local.SetStorageDeviceInfoData.cs" />
     <Compile Include="Device\Local\Local.GetDiskGeometryEx.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceConstants.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceDirectoryInfo.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceFileInfo.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceFileSystemInfo.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceInfo.Delete.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceInfo.SetDeviceProperties.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceInfo.SetStorageProperties.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceInfo.CreatePortableDeviceInstance.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceInfo_Enumerate.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceInfo_Transfer.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceInfo_Connect.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageMbrPartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageGptPartitionInfo.cs" />
     <Compile Include="Device\Storage\Device.StoragePartitionInfo.cs" />
@@ -226,6 +244,11 @@
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetLinkTarget.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.DeleteDirectoryJunction.cs" />
     <Compile Include="Device\FileSystemHelper\FileSystemHelper.CreateDirectoryJunction.cs" />
+    <Compile Include="Device\Structures, Enumerations\PortableDevicePowerSource.cs" />
+    <Compile Include="Device\Structures, Enumerations\PortableDeviceProtocol.cs" />
+    <Compile Include="Device\Structures, Enumerations\PortableDeviceStorageType.cs" />
+    <Compile Include="Device\Structures, Enumerations\PortableDeviceTransportType.cs" />
+    <Compile Include="Device\Structures, Enumerations\PortableDeviceType.cs" />
     <Compile Include="Device\Volume\Volume.DeleteDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.QueryDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.GetDriveFormat.cs" />
@@ -733,7 +756,26 @@
     <Compile Include="Filesystem\Directory Class\Directory.EncryptedDirectoryRaw.cs" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <COMReference Include="PortableDeviceApiLib">
+      <Guid>{1F001332-1A57-4934-BE31-AFFC99F4EE0A}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="PortableDeviceTypesLib">
+      <Guid>{2B00BA2F-E750-4BEB-9235-97142EDE1D3E}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -744,7 +786,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
