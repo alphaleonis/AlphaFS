@@ -25,28 +25,30 @@ using System.IO;
 using System.Security;
 using Alphaleonis.Win32.Filesystem;
 using Path = Alphaleonis.Win32.Filesystem.Path;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using DirectoryInfo = System.IO.DirectoryInfo;
+using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
-using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
-using FileSystemInfo = Alphaleonis.Win32.Filesystem.FileSystemInfo;
 
 namespace Alphaleonis.Win32.Device
 {
    /// <summary>Provides properties and instance methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="T:FileStream"/> objects. This class cannot be inherited.</summary>
-   [SerializableAttribute]
+   [Serializable]
    public sealed class PortableDeviceFileInfo : PortableDeviceFileSystemInfo
    {
-      #region Constructors
+      #region Fields
 
-      #region PortableDeviceFileInfo
+      private long _length = -1;
+
+      #endregion // Fields
+
+
+      #region Constructors
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceFileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fullName"></param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public PortableDeviceFileInfo(string fullName)
       {
-         InitializeInternal(false, fullName, null);
+         InitializeCore(false, fullName, null);
 
          Name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fullName, false), false);
       }
@@ -57,7 +59,7 @@ namespace Alphaleonis.Win32.Device
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public PortableDeviceFileInfo(string objectId, string name)
       {
-         InitializeInternal(false, objectId, null);
+         InitializeCore(false, objectId, null);
 
          Name = name;
       }
@@ -69,14 +71,99 @@ namespace Alphaleonis.Win32.Device
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public PortableDeviceFileInfo(string objectId, string name, string fullName)
       {
-         InitializeInternal(false, objectId, fullName);
+         InitializeCore(false, objectId, fullName);
 
          Name = name;
       }
 
-      #endregion // PortableDeviceFileInfo
-
       #endregion // Constructors
+      
+
+      #region Properties
+
+      #region .NET
+
+      /// <summary>Gets an instance of the parent directory.</summary>
+      /// <returns>A <see cref="T:DirectoryInfo"/> object representing the parent directory of this file.</returns>
+      /// <remarks>To get the parent directory as a string, use the DirectoryName property.</remarks>
+      public DirectoryInfo Directory
+      {
+         get
+         {
+            var dirName = !Utils.IsNullOrWhiteSpace(DirectoryName) ? DirectoryName : PortableDeviceConstants.DeviceObjectId;
+
+            return null != dirName ? new DirectoryInfo(null, dirName, PathFormat.FullPath) : null;
+         }
+      }
+
+
+      /// <summary>Gets the directory's full path.</summary>
+      /// <returns>The directory's full path.</returns>
+      public string DirectoryName
+      {
+         get { return Path.GetDirectoryName(FullPath); }
+      }
+
+      
+      /// <summary>Gets a value indicating whether the file exists.</summary>
+      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
+      public override bool Exists
+      {
+         get { return EntryInfo != null && !EntryInfo.IsDirectory; }
+      }
+
+
+      /// <summary>Gets or sets a value that determines if the current file is read only.</summary>
+      /// <returns><c>true</c> if the current file is read only, <c>false</c> otherwise.</returns>
+      public bool IsReadOnly
+      {
+         get
+         {
+            return Attributes == (FileAttributes) (-1) || (Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly;
+         }
+
+         set
+         {
+            var fileInfo = this;
+
+            fileInfo.Attributes = value ? fileInfo.Attributes | FileAttributes.ReadOnly : fileInfo.Attributes & ~FileAttributes.ReadOnly;
+         }
+      }
+
+      
+      /// <summary>Gets the size, in bytes, of the current file.</summary>
+      /// <returns>The size of the current file in bytes.</returns>
+      public long Length
+      {
+         get
+         {
+            if (_length == -1)
+               Refresh();
+
+            //_length = null != EntryInfo  ? EntryInfo.FileSize : -1;
+
+            return _length;
+         }
+
+         internal set
+         {
+            _length = value;
+         }
+      }
+
+
+      /// <summary>Gets the name of the file.</summary>
+      /// <returns>The name of the file.</returns>
+      /// <remarks>
+      /// The name of the file includes the file extension.
+      /// When first called, PortableDeviceFileInfo calls Refresh and caches information about the file. On subsequent calls, you must call Refresh to get the latest copy of the information.
+      /// </remarks>
+      public override string Name { get; internal set; }
+
+      #endregion // .NET
+
+      #endregion // Properties
+
 
       #region Methods
 
@@ -114,6 +201,7 @@ namespace Alphaleonis.Win32.Device
 
       #endregion // .NET
 
+
       #region AlphaFS
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
@@ -135,6 +223,7 @@ namespace Alphaleonis.Win32.Device
 
       #endregion // CopyTo
 
+
       #region Delete
 
       #region .NET
@@ -152,6 +241,7 @@ namespace Alphaleonis.Win32.Device
       }
 
       #endregion // .NET
+
 
       #region AlphaFS
 
@@ -172,6 +262,7 @@ namespace Alphaleonis.Win32.Device
 
       #endregion // Delete
 
+
       #region MoveTo
 
       #region .NET
@@ -189,6 +280,7 @@ namespace Alphaleonis.Win32.Device
       }
 
       #endregion // .NET
+
 
       #region AlphaFS
 
@@ -210,7 +302,6 @@ namespace Alphaleonis.Win32.Device
 
       #endregion // MoveTo
 
-      #region Refresh
 
       #region .NET
 
@@ -221,9 +312,16 @@ namespace Alphaleonis.Win32.Device
          base.Refresh();
       }
 
+
+      /// <summary>Returns the path as a string.</summary>
+      /// <returns>The path.</returns>
+      public override string ToString()
+      {
+         return DisplayPath;
+      }
+
       #endregion // .NET
 
-      #endregion // Refresh
 
       #region Replace
 
@@ -258,9 +356,8 @@ namespace Alphaleonis.Win32.Device
 
       #endregion // .NET
 
-      #region AlphaFS
 
-      #region IsFullPath
+      #region AlphaFS
 
       /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="T:PortableDeviceFileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
@@ -296,34 +393,14 @@ namespace Alphaleonis.Win32.Device
          return new PortableDeviceFileInfo(null);
       }
 
-      #endregion // IsFullPath
-
       #endregion // AlphaFS
 
       #endregion // Replace
 
-      #region ToString
-
-      #region .NET
-
-      /// <summary>Returns the path as a string.</summary>
-      /// <returns>The path.</returns>
-      public override string ToString()
-      {
-         return DisplayPath;
-      }
-
       #endregion // .NET
 
-      #endregion // ToString
-
-      #endregion // .NET
 
       #region AlphaFS
-
-      #region Unified Internals
-
-      #region CopyToMoveToInternal
 
       /// <summary>[AlphaFS] Unified method CopyToMoveToInternal() to copy an existing file to a new file, allowing the overwriting of an existing file.</summary>
       /// <param name="isMove"><c>true</c> indicates a file move, <c>false</c> indicates a file copy.</param>
@@ -349,7 +426,7 @@ namespace Alphaleonis.Win32.Device
       private PortableDeviceFileInfo CopyToMoveToInternal(bool isMove, string destFileName, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine copyProgress, object userProgressData, bool? isFullPath)
       {
          return null;
-         
+
          //string destFileNameLp = isFullPath == null
          //   ? destFileName
          //   : (bool)isFullPath
@@ -374,121 +451,8 @@ namespace Alphaleonis.Win32.Device
          //return isMove ? null : new PortableDeviceFileInfo(null);
       }
 
-      #endregion // CopyToMoveToInternal
-
-      #endregion // Unified Internals
-
       #endregion // AlphaFS
 
       #endregion // Methods
-
-      #region Properties
-
-      #region .NET
-
-      #region Directory
-
-      /// <summary>Gets an instance of the parent directory.</summary>
-      /// <returns>A <see cref="T:DirectoryInfo"/> object representing the parent directory of this file.</returns>
-      /// <remarks>To get the parent directory as a string, use the DirectoryName property.</remarks>
-      public DirectoryInfo Directory
-      {
-         get
-         {
-            return null;
-            
-            //string dirName = !Utils.IsNullOrWhiteSpace(DirectoryName)
-            //   ? DirectoryName
-            //   : PortableDeviceConstants.DeviceObjectId;
-
-            //return dirName == null ? null : new DirectoryInfo(null, dirName, false);
-         }
-      }
-
-      #endregion // Directory
-
-      #region DirectoryName
-
-      /// <summary>Gets the directory's full path.</summary>
-      /// <returns>The directory's full path.</returns>
-      public string DirectoryName
-      {
-         get { return Path.GetDirectoryName(FullPath); }
-      }
-
-      #endregion // DirectoryName
-
-      #region Exists
-
-      /// <summary>Gets a value indicating whether the file exists.</summary>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      public override bool Exists
-      {
-         //get { return (EntryInfo != null && !EntryInfo.IsDirectory); }
-         get { return true; }
-      }
-
-      #endregion // Exists
-
-      #region IsReadOnly
-
-      /// <summary>Gets or sets a value that determines if the current file is read only.</summary>
-      /// <returns><c>true</c> if the current file is read only, <c>false</c> otherwise.</returns>
-      public bool IsReadOnly
-      {
-         get
-         {
-            return Attributes == (FileAttributes)(-1) || (Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly;
-         }
-
-         set
-         {
-            PortableDeviceFileInfo fileInfo = this;
-            fileInfo.Attributes = value
-               ? (fileInfo.Attributes | FileAttributes.ReadOnly)
-               : (fileInfo.Attributes & ~FileAttributes.ReadOnly);
-         }
-      }
-
-      #endregion // IsReadOnly
-
-      #region Length
-
-      private long _length = -1;
-
-      /// <summary>Gets the size, in bytes, of the current file.</summary>
-      /// <returns>The size of the current file in bytes.</returns>
-      public long Length
-      {
-         get
-         {
-            if (_length == -1)
-               Refresh();
-
-            _length = EntryInfo != null ? EntryInfo.FileSize : -1;
-
-            return _length;
-         }
-
-         internal set { _length = value; }
-      }
-
-      #endregion // Length
-
-      #region Name
-
-      /// <summary>Gets the name of the file.</summary>
-      /// <returns>The name of the file.</returns>
-      /// <remarks>
-      /// The name of the file includes the file extension.
-      /// When first called, PortableDeviceFileInfo calls Refresh and caches information about the file. On subsequent calls, you must call Refresh to get the latest copy of the information.
-      /// </remarks>
-      public override string Name { get; internal set; }
-   
-      #endregion // Name
-
-      #endregion // .NET
-
-      #endregion // Properties
    }
 }

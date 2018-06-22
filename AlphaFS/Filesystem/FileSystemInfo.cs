@@ -34,6 +34,9 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Fields
 
+      private FileSystemEntryInfo _entryInfo;
+
+
       #region .NET
 
       /// <summary>Represents the fully qualified path of the file or directory.</summary>
@@ -123,10 +126,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       public DateTime CreationTime
       {
-         [SecurityCritical]
-         get { return CreationTimeUtc.ToLocalTime(); }
-         [SecurityCritical]
-         set { CreationTimeUtc = value.ToUniversalTime(); }
+         [SecurityCritical] get { return CreationTimeUtc.ToLocalTime(); }
+
+         [SecurityCritical] set { CreationTimeUtc = value.ToUniversalTime(); }
       }
 
 
@@ -355,8 +357,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns the path as a string.</summary>
       protected internal string DisplayPath { get; protected set; }
 
-
-      private FileSystemEntryInfo _entryInfo;
+      
       /// <summary>[AlphaFS] Gets the instance of the <see cref="FileSystemEntryInfo"/> class.</summary>
       public FileSystemEntryInfo EntryInfo
       {

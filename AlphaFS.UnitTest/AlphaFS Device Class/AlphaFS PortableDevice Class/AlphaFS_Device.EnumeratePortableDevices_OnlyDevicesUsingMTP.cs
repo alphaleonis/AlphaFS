@@ -40,51 +40,43 @@ namespace AlphaFS.UnitTest
 
          // false: All  WPD devices that use UMS.
          // true : Only WPD devices that use MTP.
-         var mtpOnly = true;
+         const bool mtpOnly = true;
+         
 
-
-         foreach (var pdi in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect, mtpOnly).OrderBy(p => p.DeviceType).ThenBy(p => p.FriendlyName))
+         foreach (var portableDeviceInfo in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect, mtpOnly).OrderBy(p => p.DeviceType).ThenBy(p => p.FriendlyName))
          {
-            Console.WriteLine("#{0:000}\tInput Portable Device Path: [{1}]", ++deviceCount, pdi.DeviceId);
+            Console.WriteLine("#{0:000}\tInput Portable Device Path: [{1}]", ++deviceCount, portableDeviceInfo.DeviceId);
 
 
             if (!autoConnect)
             {
                if (!mtpOnly)
                {
-                  Assert.IsFalse(pdi.IsConnected, "The portable device is connected, but it is not expected.");
+                  Assert.IsFalse(portableDeviceInfo.IsConnected, "The portable device is connected, but it is not expected.");
 
-                  pdi.Connect();
+                  portableDeviceInfo.Connect();
                }
             }
 
 
-            UnitTestConstants.Dump(pdi);
+            UnitTestConstants.Dump(portableDeviceInfo);
 
-            Assert.IsTrue(pdi.IsConnected, "The portable device is not connected, but it is expected.");
+            Assert.IsTrue(portableDeviceInfo.IsConnected, "The portable device is not connected, but it is expected.");
 
 
-            //// Enumerate
+            // Enumerate
 
-            //Console.WriteLine("\nEnumerating all storages and contents from portable device: [{0}]", pdi.FriendlyName);
-
-            ////int cnt = 0;
-            //foreach (var pdfsi in pdi.EnumerateFileSystemEntries(null, "*", System.IO.SearchOption.AllDirectories).OrderBy(p => !p.IsDirectory).ThenBy(p => p.FullName))
-            //{
-            //   UnitTestConstants.Dump(pdfsi);
-            //}
-
-            ////   string fileSize = NativeMethods.UnitSizeToText((pdfsi.IsDirectory) ? 0 : ((PortableDeviceFileInfo) pdfsi).Length);
-
-            ////   Console.WriteLine("\t#{0:000}\t[{1}]  ID: [{2}]\tParent ID: [{3}]\tSize: [{4}]\tName: [{5}]\tFullName: [{6}]",
-            ////    ++cnt, pdfsi.IsDirectory ? "Directory" : "File", pdfsi.Id, pdfsi.ParentId, fileSize, pdfsi.Name, pdfsi.FullName);
-            ////}
-            //Console.WriteLine();
+            Console.WriteLine("\n\tEnumerating root folders from portable device.");
             
+            foreach (var pdfse in portableDeviceInfo.EnumerateFileSystemEntries().OrderBy(fse => !fse.IsDirectory).ThenBy(fse => fse.FullName))
+            {
+               UnitTestConstants.Dump(pdfse, true);
+            }
 
-            pdi.Disconnect();
+
+            portableDeviceInfo.Disconnect();
                
-            Assert.IsFalse(pdi.IsConnected, "The portable device is connected, but it is not expected.");
+            Assert.IsFalse(portableDeviceInfo.IsConnected, "The portable device is connected, but it is not expected.");
          }
 
 

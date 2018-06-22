@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Device
       /// </remarks>
       public PortableDeviceDirectoryInfo(string fullName)
       {
-         InitializeInternal(true, fullName, null);
+         InitializeCore(true, fullName, null);
 
          Name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fullName, false), false);
       }
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Device
       /// </remarks>
       internal PortableDeviceDirectoryInfo(string objectId, string name)
       {
-         InitializeInternal(true, objectId, null);
+         InitializeCore(true, objectId, null);
 
          Name = name;
       }
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Device
       /// </remarks>
       internal PortableDeviceDirectoryInfo(string objectId, string name, string fullName)
       {
-         InitializeInternal(true, objectId, fullName);
+         InitializeCore(true, objectId, fullName);
 
          Name = name;
       }
@@ -570,7 +570,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Refreshes the state of the object.</summary>
       [SecurityCritical]
-      public new void Refresh()
+      public void Refresh()
       {
          base.Refresh();
       }

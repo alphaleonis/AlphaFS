@@ -31,8 +31,6 @@ namespace Alphaleonis.Win32.Device
          string stringValue;
 
 
-         Protocol = PortableDeviceProtocol.Unknown;
-
          try
          {
             devicePropertyValues.GetStringValue(ref PortableDeviceConstants.DeviceProtocol, out stringValue);
@@ -66,7 +64,7 @@ namespace Alphaleonis.Win32.Device
          try
          {
             devicePropertyValues.GetStringValue(ref PortableDeviceConstants.DeviceFirmwareVersion, out stringValue);
-            FirmwareVersion = stringValue;
+            FirmwareVersion = stringValue ?? string.Empty;
          }
          catch { FirmwareVersion = string.Empty; }
 
@@ -74,7 +72,7 @@ namespace Alphaleonis.Win32.Device
          try
          {
             devicePropertyValues.GetStringValue(ref PortableDeviceConstants.DeviceSerialNumber, out stringValue);
-            SerialNumber = stringValue;
+            SerialNumber = stringValue ?? string.Empty;
          }
          catch { SerialNumber = string.Empty; }
 
@@ -89,7 +87,7 @@ namespace Alphaleonis.Win32.Device
          try
          {
             devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.DeviceType, out uintValue);
-            DeviceType = (PortableDeviceType)uintValue;
+            DeviceType = (PortableDeviceType) uintValue;
          }
          catch { DeviceType = PortableDeviceType.Unknown; }
 
@@ -97,7 +95,7 @@ namespace Alphaleonis.Win32.Device
          try
          {
             devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.DevicePowerSource, out uintValue);
-            PowerSource = (PortableDevicePowerSource)uintValue;
+            PowerSource = (PortableDevicePowerSource) uintValue;
          }
          catch { PowerSource = PortableDevicePowerSource.Unknown; }
 
@@ -105,7 +103,7 @@ namespace Alphaleonis.Win32.Device
          try
          {
             devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.DeviceTransportType, out uintValue);
-            TransportType = (PortableDeviceTransportType)uintValue;
+            TransportType = (PortableDeviceTransportType) uintValue;
          }
          catch { TransportType = PortableDeviceTransportType.Unspecified; }
 

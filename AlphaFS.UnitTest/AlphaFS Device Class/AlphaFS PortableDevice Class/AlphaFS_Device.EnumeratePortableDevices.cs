@@ -40,33 +40,43 @@ namespace AlphaFS.UnitTest
 
          // false: All  WPD devices that use UMS.
          // true : Only WPD devices that use MTP.
-         var mtpOnly = false;
+         const bool mtpOnly = false;
 
 
-         foreach (var pdi in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect, mtpOnly).OrderBy(p => p.DeviceType).ThenBy(p => p.FriendlyName))
+         foreach (var portableDeviceInfo in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect, mtpOnly).OrderBy(p => p.DeviceType).ThenBy(p => p.FriendlyName))
          {
-            Console.WriteLine("#{0:000}\tInput Portable Device Path: [{1}]", ++deviceCount, pdi.DeviceId);
+            Console.WriteLine("#{0:000}\tInput Portable Device Path: [{1}]", ++deviceCount, portableDeviceInfo.DeviceId);
 
 
             if (!autoConnect)
             {
                if (!mtpOnly)
                {
-                  Assert.IsFalse(pdi.IsConnected, "The portable device is connected, but it is not expected.");
+                  Assert.IsFalse(portableDeviceInfo.IsConnected, "The portable device is connected, but it is not expected.");
 
-                  pdi.Connect();
+                  portableDeviceInfo.Connect();
                }
             }
 
 
-            UnitTestConstants.Dump(pdi);
+            UnitTestConstants.Dump(portableDeviceInfo);
 
-            Assert.IsTrue(pdi.IsConnected, "The portable device is not connected, but it is expected.");
-            
+            Assert.IsTrue(portableDeviceInfo.IsConnected, "The portable device is not connected, but it is expected.");
 
-            pdi.Disconnect();
+
+            // Enumerate
+
+            Console.WriteLine("\n\tEnumerating root folders from portable device.");
+
+            foreach (var pdfse in portableDeviceInfo.EnumerateFileSystemEntries(false).OrderBy(fse => !fse.IsDirectory).ThenBy(fse => fse.FullName))
+            {
+               UnitTestConstants.Dump(pdfse, true);
+            }
+
+
+            portableDeviceInfo.Disconnect();
                
-            Assert.IsFalse(pdi.IsConnected, "The portable device is connected, but it is not expected.");
+            Assert.IsFalse(portableDeviceInfo.IsConnected, "The portable device is connected, but it is not expected.");
 
 
             Console.WriteLine();

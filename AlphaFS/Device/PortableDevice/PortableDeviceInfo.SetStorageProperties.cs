@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Device
          try
          {
             devicePropertyValues.GetStringValue(ref PortableDeviceConstants.StorageDescription, out stringValue);
-            StorageDescription = stringValue;
+            StorageDescription = stringValue ?? string.Empty;
          }
          catch { StorageDescription = string.Empty; }
 
@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Device
          try
          {
             devicePropertyValues.GetStringValue(ref PortableDeviceConstants.StorageFileSystemType, out stringValue);
-            StorageFileSystemType = stringValue;
+            StorageFileSystemType = stringValue ?? string.Empty;
          }
          catch { StorageFileSystemType = string.Empty; }
 
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Device
          try
          {
             devicePropertyValues.GetStringValue(ref PortableDeviceConstants.StorageSerialNumber, out stringValue);
-            StorageSerialNumber = stringValue;
+            StorageSerialNumber = stringValue ?? string.Empty;
          }
          catch { StorageSerialNumber = string.Empty; }
 

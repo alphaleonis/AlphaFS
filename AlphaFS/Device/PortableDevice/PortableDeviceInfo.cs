@@ -76,6 +76,9 @@ namespace Alphaleonis.Win32.Device
       {
          _mtpOnly = mtpOnly;
 
+         DeviceType = PortableDeviceType.Unknown;
+         PowerSource = PortableDevicePowerSource.Unknown;
+
          _deviceInfo = deviceInfo ?? new DeviceInfo();
 
          PortableDevice = new PortableDeviceClass();
