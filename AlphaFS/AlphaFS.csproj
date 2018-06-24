@@ -214,13 +214,13 @@
     <Compile Include="Device\Local\Local.SetStorageDeviceInfoData.cs" />
     <Compile Include="Device\Local\Local.GetDiskGeometryEx.cs" />
     <Compile Include="Device\PortableDevice\PortableDeviceConstants.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceDirectoryInfo.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceFileInfo.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceFileSystemInfo.cs" />
+    <Compile Include="Device\PortableDevice\WpdDirectoryInfo.cs" />
+    <Compile Include="Device\PortableDevice\WpdFileInfo.cs" />
+    <Compile Include="Device\PortableDevice\WpdFileSystemInfo.cs" />
     <Compile Include="Device\PortableDevice\PortableDeviceInfo.EnumerateFileSystemEntryInfoCore.cs" />
     <Compile Include="Device\PortableDevice\PortableDeviceInfo.Delete.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo.SetDeviceProperties.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo.SetStorageProperties.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceInfo.PopulateDeviceProperties.cs" />
+    <Compile Include="Device\PortableDevice\PortableDeviceInfo.PopulateStorageProperties.cs" />
     <Compile Include="Device\PortableDevice\PortableDeviceInfo.CreatePortableDeviceInstance.cs" />
     <Compile Include="Device\PortableDevice\Local.EnumerateFileSystemEntries.cs" />
     <Compile Include="Device\PortableDevice\PortableDeviceInfo_Transfer.cs" />
@@ -788,7 +788,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

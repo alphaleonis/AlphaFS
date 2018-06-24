@@ -22,6 +22,7 @@
 using PortableDeviceApiLib;
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Alphaleonis.Win32.Filesystem;
 
@@ -34,7 +35,7 @@ namespace Alphaleonis.Win32.Device
    {
       #region Fields
 
-      private static readonly FileVersionInfo ProductVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+      //private static readonly FileVersionInfo ProductVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
       private readonly bool _mtpOnly;
 
       // The underlying <see cref="_deviceInfo"/> instance of the Portable Device.
@@ -45,31 +46,38 @@ namespace Alphaleonis.Win32.Device
 
       #region Constructors
 
-      /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceInfo"/> class, which acts as a wrapper for a portable device (WPD) file system object path.</summary>
-      /// <param name="deviceId">The ID of the Portable Device in the format \\?\usb#vid_...</param>
-      /// <remarks>The <paramref name="deviceId"/> is the same as the <see cref="T:DeviceInfo.DevicePath"/> property.</remarks>
-      public PortableDeviceInfo(string deviceId) : this((DeviceInfo) null, false, false)
+      private PortableDeviceInfo()
       {
+
       }
 
 
-      /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceInfo"/> class, which acts as a wrapper for a portable device (WPD) file system object path.</summary>
-      /// <param name="deviceId">The ID of the Portable Device in the format \\?\usb#vid_...</param>
-      /// <param name="connect"><c>true</c> connects to the Portable Device as soon as the instance is created. <c>false</c> does not connect to the device. Use method <see cref="M:Connect()"/> to manually connect.</param>
-      /// <remarks>The <paramref name="deviceId"/> is the same as the <see cref="T:DeviceInfo.DevicePath"/> property.</remarks>
-      public PortableDeviceInfo(string deviceId, bool connect) : this((DeviceInfo) null, connect, false)
-      {
-      }
+      ///// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceInfo"/> class, which acts as a wrapper for a portable device (WPD) file system object path.</summary>
+      ///// <param name="deviceId">The ID of the Portable Device in the format \\?\usb#vid_...</param>
+      ///// <remarks>The <paramref name="deviceId"/> is the same as the <see cref="T:DeviceInfo.DevicePath"/> property.</remarks>
+      //public PortableDeviceInfo(string deviceId) : this((DeviceInfo) null, false, false)
+      //{
+      //}
 
 
-      /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceInfo"/> class, which acts as a wrapper for a portable device (WPD) file system object path.</summary>
-      /// <param name="deviceId">The ID of the Portable Device in the format \\?\usb#vid_...</param>
-      /// <param name="connect"><c>true</c> connects to the Portable Device as soon as the instance is created. <c>false</c> does not connect to the device. Use method <see cref="M:Connect()"/> to manually connect.</param>
-      /// <param name="mtpOnly"><c>true</c> to only enumerate WPD devices using the <see cref="PortableDeviceProtocol.MediaTransferProtocol"/>.</param>
-      /// <remarks>The <paramref name="deviceId"/> is the same as the <see cref="T:DeviceInfo.DevicePath"/> property.</remarks>
-      public PortableDeviceInfo(string deviceId, bool connect, bool mtpOnly) : this((DeviceInfo) null, connect, mtpOnly)
-      {
-      }
+      ///// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceInfo"/> class, which acts as a wrapper for a portable device (WPD) file system object path.</summary>
+      ///// <param name="deviceId">The ID of the Portable Device in the format \\?\usb#vid_...</param>
+      ///// <param name="connect"><c>true</c> connects to the Portable Device as soon as the instance is created. <c>false</c> does not connect to the device. Use method <see cref="M:Connect()"/> to manually connect.</param>
+      ///// <remarks>The <paramref name="deviceId"/> is the same as the <see cref="T:DeviceInfo.DevicePath"/> property.</remarks>
+      //public PortableDeviceInfo(string deviceId, bool connect) : this((DeviceInfo) null, connect, false)
+      //{
+      //}
+
+
+      ///// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceInfo"/> class, which acts as a wrapper for a portable device (WPD) file system object path.</summary>
+      ///// <param name="deviceId">The ID of the Portable Device in the format \\?\usb#vid_...</param>
+      ///// <param name="connect"><c>true</c> connects to the Portable Device as soon as the instance is created. <c>false</c> does not connect to the device. Use method <see cref="M:Connect()"/> to manually connect.</param>
+      ///// <param name="mtpOnly"><c>true</c> to only enumerate WPD devices using the <see cref="PortableDeviceProtocol.MediaTransferProtocol"/>.</param>
+      ///// <remarks>The <paramref name="deviceId"/> is the same as the <see cref="T:DeviceInfo.DevicePath"/> property.</remarks>
+      //[SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "mtp")]
+      //public PortableDeviceInfo(string deviceId, bool connect, bool mtpOnly) : this((DeviceInfo) null, connect, mtpOnly)
+      //{
+      //}
 
 
       internal PortableDeviceInfo(DeviceInfo deviceInfo, bool connect, bool mtpOnly)
@@ -77,7 +85,7 @@ namespace Alphaleonis.Win32.Device
          _mtpOnly = mtpOnly;
 
          DeviceType = PortableDeviceType.Unknown;
-         PowerSource = PortableDevicePowerSource.Unknown;
+         DevicePowerSource = PortableDevicePowerSource.Unknown;
 
          _deviceInfo = deviceInfo ?? new DeviceInfo();
 
@@ -94,11 +102,7 @@ namespace Alphaleonis.Win32.Device
 
 
       #region Properties
-
-      /// <summary>Indicates the Portable Device type.</summary>
-      public PortableDeviceType DeviceType { get; private set; }
-
-
+      
       /// <summary>The ID of the Portable Device.</summary>
       public string DeviceId
       {
@@ -115,25 +119,25 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>The firmware version for the Portable Device.</summary>
-      public string FirmwareVersion { get; private set; }
+      public string DeviceFirmwareVersion { get; private set; }
 
 
       /// <summary>The Friendly Name of the Portable Device.</summary>
-      public string FriendlyName
+      public string DeviceFriendlyName
       {
          get { return null != _deviceInfo ? _deviceInfo.FriendlyName : string.Empty; }
       }
 
 
       /// <summary>The Manufacturer of the Portable Device.</summary>
-      public string Manufacturer
+      public string DeviceManufacturer
       {
          get { return null != _deviceInfo ? _deviceInfo.Manufacturer : string.Empty; }
       }
 
 
       /// <summary>The model name of the Portable Device.</summary>
-      public string Model
+      public string DeviceModel
       {
          get { return null != _deviceInfo ? _deviceInfo.DeviceDescription : string.Empty; }
       }
@@ -143,19 +147,23 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>A value from 0 to 100 that indicates the power level of the Portable Device battery, with 0 being none, and 100 being fully charged.</summary>
-      public int PowerLevel { get; private set; }
+      public int DevicePowerLevel { get; private set; }
 
 
       /// <summary>A <see cref="T:PortableDevicePowerSource"/> enumeration that indicates the power source of the Portable Device.</summary>
-      public PortableDevicePowerSource PowerSource { get; private set; }
+      public PortableDevicePowerSource DevicePowerSource { get; private set; }
 
 
       /// <summary>The protocol that is being used by the Portable Device.</summary>
-      public PortableDeviceProtocol Protocol { get; private set; }
+      public PortableDeviceProtocol DeviceProtocol { get; private set; }
 
 
       /// <summary>The serial number of the Portable Device.</summary>
-      public string SerialNumber { get; private set; }
+      public string DeviceSerialNumber { get; private set; }
+
+
+      /// <summary>Indicates the Portable Device type.</summary>
+      public PortableDeviceType DeviceType { get; private set; }
 
 
       /// <summary>The total storage capacity, in bytes.</summary>
@@ -220,7 +228,7 @@ namespace Alphaleonis.Win32.Device
       /// <returns>Returns a string that represents this instance.</returns>
       public override string ToString()
       {
-         return FriendlyName;
+         return DeviceFriendlyName;
       }
 
 
@@ -237,13 +245,13 @@ namespace Alphaleonis.Win32.Device
          return null != other &&
                 other.DeviceId == DeviceId &&
                 other.DeviceType == DeviceType &&
-                other.FirmwareVersion == FirmwareVersion &&
-                other.FriendlyName == FriendlyName &&
-                other.Manufacturer == Manufacturer &&
-                other.Model == Model &&
+                other.DeviceFirmwareVersion == DeviceFirmwareVersion &&
+                other.DeviceFriendlyName == DeviceFriendlyName &&
+                other.DeviceManufacturer == DeviceManufacturer &&
+                other.DeviceModel == DeviceModel &&
                 other.PortableDevice == PortableDevice &&
-                other.Protocol == Protocol &&
-                other.SerialNumber == SerialNumber &&
+                other.DeviceProtocol == DeviceProtocol &&
+                other.DeviceSerialNumber == DeviceSerialNumber &&
                 other.StorageCapacity == StorageCapacity &&
                 other.StorageSerialNumber == StorageSerialNumber &&
                 other.StorageType == StorageType &&
@@ -259,10 +267,10 @@ namespace Alphaleonis.Win32.Device
          {
             return DeviceType.GetHashCode() +
                    (null != DeviceId ? DeviceId.GetHashCode() : 0) +
-                   (null != FirmwareVersion ? FirmwareVersion.GetHashCode() : 0) +
-                   (null != Manufacturer ? Manufacturer.GetHashCode() : 0) +
-                   (null != Model ? Model.GetHashCode() : 0) +
-                   (null != SerialNumber ? SerialNumber.GetHashCode() : 0) +
+                   (null != DeviceFirmwareVersion ? DeviceFirmwareVersion.GetHashCode() : 0) +
+                   (null != DeviceManufacturer ? DeviceManufacturer.GetHashCode() : 0) +
+                   (null != DeviceModel ? DeviceModel.GetHashCode() : 0) +
+                   (null != DeviceSerialNumber ? DeviceSerialNumber.GetHashCode() : 0) +
                    (null != StorageSerialNumber ? StorageSerialNumber.GetHashCode() : 0);
          }
       }

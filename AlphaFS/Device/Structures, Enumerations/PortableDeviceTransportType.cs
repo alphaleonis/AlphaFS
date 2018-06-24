@@ -19,6 +19,8 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Alphaleonis.Win32.Device
 {
    /// <summary>Specifies the inheritance relationship for a service.</summary>
@@ -28,6 +30,7 @@ namespace Alphaleonis.Win32.Device
       Unspecified = NativeMethods.WPD_DEVICE_TRANSPORTS.WPD_DEVICE_TRANSPORT_UNSPECIFIED,
 
       /// <summary>The device is connected through Universal Serial Bus (USB).</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Usb")]
       Usb = NativeMethods.WPD_DEVICE_TRANSPORTS.WPD_DEVICE_TRANSPORT_USB,
 
       /// <summary>The device is connected through Internet Protocol (IP).</summary>

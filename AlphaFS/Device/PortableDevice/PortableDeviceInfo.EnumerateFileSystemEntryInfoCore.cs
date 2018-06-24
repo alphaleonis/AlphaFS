@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using Alphaleonis.Win32.Filesystem;
@@ -35,7 +34,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Returns an enumerable collection of file- and directory names from the root of the device.</summary>
       /// <returns>An enumerable collection of file-system entries from the root of the device.</returns>
       [SecurityCritical]
-      public IEnumerable<PortableDeviceFileSystemInfo> EnumerateFileSystemEntries()
+      public IEnumerable<WpdFileSystemInfo> EnumerateFileSystemEntries()
       {
          return EnumerateFileSystemEntryInfoCore(this, null, null, false, null);
       }
@@ -44,7 +43,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Returns an enumerable collection of file- and directory names from the root of the device.</summary>
       /// <returns>An enumerable collection of file-system entries from the root of the device.</returns>
       [SecurityCritical]
-      public IEnumerable<PortableDeviceFileSystemInfo> EnumerateFileSystemEntries(bool recurse)
+      public IEnumerable<WpdFileSystemInfo> EnumerateFileSystemEntries(bool recurse)
       {
          return EnumerateFileSystemEntryInfoCore(this, null, null, recurse, null);
       }
@@ -55,7 +54,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="objectId">The ID of the directory to search.</param>
       /// <param name="recurse"></param>
       [SecurityCritical]
-      public IEnumerable<PortableDeviceFileSystemInfo> EnumerateFileSystemEntries(string objectId, bool recurse)
+      public IEnumerable<WpdFileSystemInfo> EnumerateFileSystemEntries(string objectId, bool recurse)
       {
          return EnumerateFileSystemEntryInfoCore(this, null, objectId, recurse, null);
       }
@@ -72,7 +71,7 @@ namespace Alphaleonis.Win32.Device
       ///    <c>false</c> files will be returned.
       ///    <c>null</c> both folders and files will be returned.
       /// </param>
-      internal static IEnumerable<PortableDeviceFileSystemInfo> EnumerateFileSystemEntryInfoCore(PortableDeviceInfo portableDeviceInfo, IPortableDeviceContent deviceContent, string objectId, bool recurse, bool? getFolders)
+      internal static IEnumerable<WpdFileSystemInfo> EnumerateFileSystemEntryInfoCore(PortableDeviceInfo portableDeviceInfo, IPortableDeviceContent deviceContent, string objectId, bool recurse, bool? getFolders)
       {
          if (null == portableDeviceInfo)
             throw new ArgumentNullException("portableDeviceInfo");
@@ -127,7 +126,7 @@ namespace Alphaleonis.Win32.Device
                      continue;
 
 
-                  var pdfsi = GetFileSystemInfo(deviceProperties, childName, portableDeviceInfo.Protocol == PortableDeviceProtocol.Mtp);
+                  var pdfsi = GetFileSystemInfo(deviceProperties, childName, portableDeviceInfo.DeviceProtocol == PortableDeviceProtocol.Mtp);
 
                   if (pdfsi.IsDirectory && recurse)
                      dirs.Enqueue(childName);
@@ -166,8 +165,8 @@ namespace Alphaleonis.Win32.Device
       /// <param name="deviceProperties">The instance of properties from the Portable Device instance.</param>
       /// <param name="objectId">The object ID to retrieve the properties from.</param>
       /// <param name="mtpOnly"><c>true></c> The Portable Device uses the MTP protocol.</param>
-      /// <returns>Returns a <see cref="T:PortableDeviceFileSystemInfo"/> instance.</returns>
-      private static PortableDeviceFileSystemInfo GetFileSystemInfo(IPortableDeviceProperties deviceProperties, string objectId, bool mtpOnly)
+      /// <returns>Returns a <see cref="T:WpdFileSystemInfo"/> instance.</returns>
+      private static WpdFileSystemInfo GetFileSystemInfo(IPortableDeviceProperties deviceProperties, string objectId, bool mtpOnly)
       {
          if (null == deviceProperties)
             throw new ArgumentNullException("deviceProperties");
@@ -238,19 +237,19 @@ namespace Alphaleonis.Win32.Device
             objectProperties.GetUnsignedLargeIntegerValue(ref PortableDeviceConstants.ObjectSize, out objectSize);
 
 
-         // Full path equals the objectId on devices using UMS (USB disks).
+         // Full path equals the objectId on devices using the UMS protocol (USB disks).
 
          var fullPath = mtpOnly ? GetFullPath(deviceProperties, objectId) : objectId;
 
 
          return isFolder
-            ? (PortableDeviceFileSystemInfo) new PortableDeviceDirectoryInfo(objectId, objectName, fullPath)
+            ? (WpdFileSystemInfo) new WpdDirectoryInfo(objectId, objectName, fullPath)
             {
                ContentType = objectContentType,
                OriginalFileName = objectOriginalFileName,
                ParentId = objectParentId,
             }
-            : new PortableDeviceFileInfo(objectId, objectName, fullPath)
+            : new WpdFileInfo(objectId, objectName, fullPath)
             {
                ContentType = objectContentType,
                OriginalFileName = objectOriginalFileName,

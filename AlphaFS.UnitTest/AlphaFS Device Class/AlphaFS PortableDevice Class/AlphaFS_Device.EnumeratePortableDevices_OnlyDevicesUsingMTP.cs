@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
          const bool mtpOnly = true;
          
 
-         foreach (var portableDeviceInfo in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect, mtpOnly).OrderBy(p => p.DeviceType).ThenBy(p => p.FriendlyName))
+         foreach (var portableDeviceInfo in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect, mtpOnly).OrderBy(p => p.DeviceType).ThenBy(p => p.DeviceFriendlyName))
          {
             Console.WriteLine("#{0:000}\tInput Portable Device Path: [{1}]", ++deviceCount, portableDeviceInfo.DeviceId);
 
@@ -66,13 +66,33 @@ namespace AlphaFS.UnitTest
 
             // Enumerate
 
-            Console.WriteLine("\n\tEnumerating root folders from portable device.");
-            
-            foreach (var pdfse in portableDeviceInfo.EnumerateFileSystemEntries().OrderBy(fse => !fse.IsDirectory).ThenBy(fse => fse.FullName))
+            var maxItems = 50;
+
+            Console.WriteLine("\n\tEnumerating the first {0} items from the portable device.\n", maxItems);
+
+
+            var fseCount = 0;
+            long totalSize = 0;
+
+            foreach (var pdfse in portableDeviceInfo.EnumerateFileSystemEntries(true))
             {
-               UnitTestConstants.Dump(pdfse, true);
+               var fileInfo = pdfse as Alphaleonis.Win32.Device.WpdFileInfo;
+
+               if (null != fileInfo)
+                  totalSize += fileInfo.Length;
+
+               Console.WriteLine("\t\t#{0:000} [{1}] [{2}]", ++fseCount, pdfse.IsDirectory ? "Folder" : "File  ", pdfse.FullName);
+
+
+               //portableDeviceInfo.DisplayProperties(pdfse.Id);
+
+
+               if (fseCount == maxItems)
+                  break;
             }
 
+            Console.WriteLine("\n\t\tTotal file size: [{0}]\n", Alphaleonis.Utils.UnitSizeToText(totalSize));
+            
 
             portableDeviceInfo.Disconnect();
                

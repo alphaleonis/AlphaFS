@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Device
 {
    /// <summary>Provides properties and instance methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="T:FileStream"/> objects. This class cannot be inherited.</summary>
    [Serializable]
-   public sealed class PortableDeviceFileInfo : PortableDeviceFileSystemInfo
+   public sealed class WpdFileInfo : WpdFileSystemInfo
    {
       #region Fields
 
@@ -43,33 +43,33 @@ namespace Alphaleonis.Win32.Device
 
       #region Constructors
 
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceFileInfo"/> class, which acts as a wrapper for a file path.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdFileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fullName"></param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public PortableDeviceFileInfo(string fullName)
+      public WpdFileInfo(string fullName)
       {
          InitializeCore(false, fullName, null);
 
          Name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fullName, false), false);
       }
 
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceFileInfo"/> class, which acts as a wrapper for a file path.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdFileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="objectId">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <param name="name"></param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public PortableDeviceFileInfo(string objectId, string name)
+      public WpdFileInfo(string objectId, string name)
       {
          InitializeCore(false, objectId, null);
 
          Name = name;
       }
 
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceFileInfo"/> class, which acts as a wrapper for a file path.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdFileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="objectId">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <param name="name"></param>
       /// <param name="fullName"></param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public PortableDeviceFileInfo(string objectId, string name, string fullName)
+      public WpdFileInfo(string objectId, string name, string fullName)
       {
          InitializeCore(false, objectId, fullName);
 
@@ -156,7 +156,7 @@ namespace Alphaleonis.Win32.Device
       /// <returns>The name of the file.</returns>
       /// <remarks>
       /// The name of the file includes the file extension.
-      /// When first called, PortableDeviceFileInfo calls Refresh and caches information about the file. On subsequent calls, you must call Refresh to get the latest copy of the information.
+      /// When first called, WpdFileInfo calls Refresh and caches information about the file. On subsequent calls, you must call Refresh to get the latest copy of the information.
       /// </remarks>
       public override string Name { get; internal set; }
 
@@ -178,10 +178,10 @@ namespace Alphaleonis.Win32.Device
       /// <returns>A new file with a fully qualified path.</returns>
       /// <remarks>Use the CopyTo method to allow overwriting of an existing file.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public PortableDeviceFileInfo CopyTo(string destFileName)
+      public WpdFileInfo CopyTo(string destFileName)
       {
          return CopyToMoveToInternal(false, destFileName, CopyOptions.FailIfExists, null, null, null, false);
       }
@@ -191,10 +191,10 @@ namespace Alphaleonis.Win32.Device
       /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; otherwise, <c>false</c>.</param>
       /// <returns>A new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <c>true</c>. If the file exists and <paramref name="overwrite"/> is <c>false</c>, an <see cref="T:System.IO.IOException"/> is thrown.</returns>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public PortableDeviceFileInfo CopyTo(string destFileName, bool overwrite)
+      public WpdFileInfo CopyTo(string destFileName, bool overwrite)
       {
          return CopyToMoveToInternal(false, destFileName, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, false);
       }
@@ -211,10 +211,10 @@ namespace Alphaleonis.Win32.Device
       /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
       /// <returns>A new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <c>true</c>. If the file exists and <paramref name="overwrite"/> is <c>false</c>, an <see cref="T:System.IO.IOException"/> is thrown.</returns>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public PortableDeviceFileInfo CopyTo(string destFileName, bool overwrite, CopyMoveProgressRoutine copyProgress, object userProgressData)
+      public WpdFileInfo CopyTo(string destFileName, bool overwrite, CopyMoveProgressRoutine copyProgress, object userProgressData)
       {
          return CopyToMoveToInternal(false, destFileName, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, copyProgress, userProgressData, false);
       }
@@ -230,7 +230,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Permanently deletes a file.</summary>
       /// <remarks>If the file does not exist, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       public override void Delete()
       {
          File.DeleteFileCore(null, FullName, false, PathFormat.FullPath);
@@ -248,7 +248,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Permanently deletes a file.</summary>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="T:FileAttributes"/> of the file.</param>
       /// <remarks>If the file does not exist, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       public void Delete(bool ignoreReadOnly)
       {
          File.DeleteFileCore(null, FullName, ignoreReadOnly, PathFormat.FullPath);
@@ -271,7 +271,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="destFileName">The path to move the file to, which can specify a different file name.</param>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public void MoveTo(string destFileName)
@@ -290,7 +290,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public void MoveTo(string destFileName, CopyMoveProgressRoutine moveProgress, object userProgressData)
@@ -305,12 +305,12 @@ namespace Alphaleonis.Win32.Device
 
       #region .NET
 
-      /// <summary>Refreshes the state of the object.</summary>
-      [SecurityCritical]
-      public new void Refresh()
-      {
-         base.Refresh();
-      }
+      ///// <summary>Refreshes the state of the object.</summary>
+      //[SecurityCritical]
+      //public void Refresh()
+      //{
+      //   base.Refresh();
+      //}
 
 
       /// <summary>Returns the path as a string.</summary>
@@ -327,29 +327,29 @@ namespace Alphaleonis.Win32.Device
 
       #region .NET
 
-      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="T:PortableDeviceFileInfo"/> object, deleting the original file, and creating a backup of the replaced file.</summary>
+      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="T:WpdFileInfo"/> object, deleting the original file, and creating a backup of the replaced file.</summary>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
       /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
-      /// <returns>A <see cref="T:PortableDeviceFileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:PortableDeviceFileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:PortableDeviceFileInfo"/> object that describes the overwritten file.</remarks>
+      /// <returns>A <see cref="T:WpdFileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
+      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:WpdFileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:WpdFileInfo"/> object that describes the overwritten file.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      public PortableDeviceFileInfo Replace(string destinationFileName, string destinationBackupFileName)
+      public WpdFileInfo Replace(string destinationFileName, string destinationBackupFileName)
       {
          return Replace(destinationFileName, destinationBackupFileName, false, false);
       }
 
-      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="T:PortableDeviceFileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
+      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="T:WpdFileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
       /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
       /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
-      /// <returns>A <see cref="T:PortableDeviceFileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:PortableDeviceFileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:PortableDeviceFileInfo"/> object that describes the overwritten file.</remarks>
+      /// <returns>A <see cref="T:WpdFileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
+      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:WpdFileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:WpdFileInfo"/> object that describes the overwritten file.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      public PortableDeviceFileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
+      public WpdFileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
          return Replace(destinationFileName, destinationBackupFileName, ignoreMetadataErrors, false);
       }
@@ -359,7 +359,7 @@ namespace Alphaleonis.Win32.Device
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="T:PortableDeviceFileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
+      /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="T:WpdFileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
       /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
       /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
@@ -368,12 +368,12 @@ namespace Alphaleonis.Win32.Device
       /// <para><c>false</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A <see cref="T:PortableDeviceFileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:PortableDeviceFileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:PortableDeviceFileInfo"/> object that describes the overwritten file.</remarks>
+      /// <returns>A <see cref="T:WpdFileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
+      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:WpdFileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:WpdFileInfo"/> object that describes the overwritten file.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      public PortableDeviceFileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
+      public WpdFileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
       {
          //string destinationFileNameLp = isFullPath == null
          //   ? destinationFileName
@@ -390,7 +390,7 @@ namespace Alphaleonis.Win32.Device
 
          //File.ReplaceInternal(null, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, null);
 
-         return new PortableDeviceFileInfo(null);
+         return new WpdFileInfo(null);
       }
 
       #endregion // AlphaFS
@@ -414,16 +414,16 @@ namespace Alphaleonis.Win32.Device
       /// <para><c>false</c> <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="destFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>When <paramref name="isMove"/> is <c>false</c> a new <see cref="T:PortableDeviceFileInfo"/> instance with a fully qualified path. Otherwise <c>null</c> is returned.</returns>
+      /// <returns>When <paramref name="isMove"/> is <c>false</c> a new <see cref="T:WpdFileInfo"/> instance with a fully qualified path. Otherwise <c>null</c> is returned.</returns>
       /// <remarks>The attributes of the original file are retained in the copied file.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <remarks>This Move method works across disk volumes, and it does not throw an exception if the source and destination are
       /// the same. Note that if you attempt to replace a file by moving a file of the same name into that directory, you
       /// get an IOException. You cannot use the Move method to overwrite an existing file.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      private PortableDeviceFileInfo CopyToMoveToInternal(bool isMove, string destFileName, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine copyProgress, object userProgressData, bool? isFullPath)
+      private WpdFileInfo CopyToMoveToInternal(bool isMove, string destFileName, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine copyProgress, object userProgressData, bool? isFullPath)
       {
          return null;
 
@@ -448,7 +448,7 @@ namespace Alphaleonis.Win32.Device
          //   Reset();
          //}
 
-         //return isMove ? null : new PortableDeviceFileInfo(null);
+         //return isMove ? null : new WpdFileInfo(null);
       }
 
       #endregion // AlphaFS

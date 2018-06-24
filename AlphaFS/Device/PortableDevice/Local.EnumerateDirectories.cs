@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Device
    {
       /// <summary>[AlphaFS] Returns an enumerable collection of directory names in a specified path.</summary>
       /// <param name="portableDeviceInfo">The <see cref="T:PortableDeviceInfo"/> instance of the Portable Device.</param>
-      public static IEnumerable<PortableDeviceFileSystemInfo> EnumerateDirectories(PortableDeviceInfo portableDeviceInfo)
+      public static IEnumerable<WpdFileSystemInfo> EnumerateDirectories(PortableDeviceInfo portableDeviceInfo)
       {
          return PortableDeviceInfo.EnumerateFileSystemEntryInfoCore(portableDeviceInfo, null, null, false, true);
       }
@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Returns an enumerable collection of directory names in a specified path.</summary>
       /// <param name="portableDeviceInfo">The <see cref="T:PortableDeviceInfo"/> instance of the Portable Device.</param>
       /// <param name="recurse"></param>
-      public static IEnumerable<PortableDeviceFileSystemInfo> EnumerateDirectories(PortableDeviceInfo portableDeviceInfo, bool recurse)
+      public static IEnumerable<WpdFileSystemInfo> EnumerateDirectories(PortableDeviceInfo portableDeviceInfo, bool recurse)
       {
          return PortableDeviceInfo.EnumerateFileSystemEntryInfoCore(portableDeviceInfo, null, null, recurse, true);
       }
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="portableDeviceInfo">The <see cref="T:PortableDeviceInfo"/> instance of the Portable Device.</param>
       /// <param name="objectId">The ID of the directory to search.</param>
       /// <param name="recurse"></param>
-      public static IEnumerable<PortableDeviceFileSystemInfo> EnumerateDirectories(PortableDeviceInfo portableDeviceInfo, string objectId, bool recurse)
+      public static IEnumerable<WpdFileSystemInfo> EnumerateDirectories(PortableDeviceInfo portableDeviceInfo, string objectId, bool recurse)
       {
          return PortableDeviceInfo.EnumerateFileSystemEntryInfoCore(portableDeviceInfo, null, objectId, recurse, true);
       }

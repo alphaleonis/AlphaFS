@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Device
       #region Client Properties
 
       /// <summary>WPD_CLIENT_NAME</summary>
-      internal static readonly Guid ClientGuid = new Guid(0x204D9F0C, 0x2292, 0x4080, 0x9F, 0x42, 0x40, 0x66, 0x4E, 0x70, 0xF8, 0x59);
+      private static readonly Guid ClientGuid = new Guid(0x204D9F0C, 0x2292, 0x4080, 0x9F, 0x42, 0x40, 0x66, 0x4E, 0x70, 0xF8, 0x59);
 
       /// <summary>WPD_CLIENT_NAME</summary>
       internal static _tagpropertykey ClientName = new _tagpropertykey {fmtid = ClientGuid, pid = 2};
@@ -65,25 +65,25 @@ namespace Alphaleonis.Win32.Device
       /// <summary>("DEVICE") DeviceObjectId  - The generic ID of a Portable Device. </summary>
       internal const string DeviceObjectId = "DEVICE";
 
-      /// <summary>WPD_DEVICE_SYNC_PARTNER</summary>
-      internal static Guid DeviceSyncPartner = new Guid(0x26D4979A, 0xE643, 0x4626, 0x9E, 0x2B, 0x73, 0x6D, 0xC0, 0xC9, 0x2F, 0xDC);
+      /// <summary>WPD_DEVICE_SYNC_PARTNER: A human-readable description of a device's synchronization partner. This is a device, application, or server that the device communicates with to maintain a common state or group of files between both partners.</summary>
+      private static readonly Guid DeviceSyncPartner = new Guid(0x26D4979A, 0xE643, 0x4626, 0x9E, 0x2B, 0x73, 0x6D, 0xC0, 0xC9, 0x2F, 0xDC);
 
-      /// <summary>WPD_DEVICE_FIRMWARE_VERSION</summary>
+      /// <summary>WPD_DEVICE_FIRMWARE_VERSION: The firmware version for the device.</summary>
       internal static _tagpropertykey DeviceFirmwareVersion = new _tagpropertykey {fmtid = DeviceSyncPartner, pid = 3};
 
-      /// <summary>WPD_DEVICE_POWER_LEVEL</summary>
+      /// <summary>WPD_DEVICE_POWER_LEVEL: A value from 0 to 100 that indicates the power level of the device battery, with 0 being none, and 100 being fully charged.</summary>
       internal static _tagpropertykey DevicePowerLevel = new _tagpropertykey {fmtid = DeviceSyncPartner, pid = 4};
 
-      /// <summary>WPD_DEVICE_POWER_SOURCE</summary>
+      /// <summary>WPD_DEVICE_POWER_SOURCE: A WPD_POWER_SOURCES enumeration that indicates the power source of the device.</summary>
       internal static _tagpropertykey DevicePowerSource = new _tagpropertykey {fmtid = DeviceSyncPartner, pid = 5};
 
-      /// <summary>WPD_DEVICE_PROTOCOL</summary>
+      /// <summary>WPD_DEVICE_PROTOCOL: The device protocol that is being used.</summary>
       internal static _tagpropertykey DeviceProtocol = new _tagpropertykey {fmtid = DeviceSyncPartner, pid = 6};
 
-      /// <summary>WPD_DEVICE_SERIAL_NUMBER</summary>
+      /// <summary>WPD_DEVICE_SERIAL_NUMBER: The serial number of the device.</summary>
       internal static _tagpropertykey DeviceSerialNumber = new _tagpropertykey {fmtid = DeviceSyncPartner, pid = 9};
 
-      /// <summary>WPD_DEVICE_TYPE</summary>
+      /// <summary>WPD_DEVICE_TYPE: Indicates the device type. Applications use this property for representation purposes only. Functional characteristics of the device are decided through functional objects.</summary>
       internal static _tagpropertykey DeviceType = new _tagpropertykey {fmtid = DeviceSyncPartner, pid = 15};
 
       /// <summary>WPD_DEVICE_TRANSPORT</summary>
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Device
       #region Object Properties
 
       /// <summary>ObjectGuid</summary>
-      internal static Guid ObjectGuid = new Guid(0xEF6B490D, 0x5CD8, 0x437A, 0xAF, 0xFC, 0xDA, 0x8B, 0x60, 0xEE, 0x4A, 0x3C);
+      private static readonly Guid ObjectGuid = new Guid(0xEF6B490D, 0x5CD8, 0x437A, 0xAF, 0xFC, 0xDA, 0x8B, 0x60, 0xEE, 0x4A, 0x3C);
 
       /// <summary>(2) WPD_OBJECT_ID - A string ID that uniquely identifies the object on the device. This ID need not be stored across sessions.</summary>
       internal static _tagpropertykey ObjectId = new _tagpropertykey {fmtid = ObjectGuid, pid = 2}; // WPD_OBJECT_ID
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Device
       #region Storage Properties
 
       /// <summary/>
-      internal static Guid StorageGuid = new Guid(0x01A3057A, 0x74D6, 0x4E80, 0xBE, 0xA7, 0xDC, 0x4C, 0x21, 0x2C, 0xE5, 0x0A);
+      private static readonly Guid StorageGuid = new Guid(0x01A3057A, 0x74D6, 0x4E80, 0xBE, 0xA7, 0xDC, 0x4C, 0x21, 0x2C, 0xE5, 0x0A);
 
       /// <summary>WPD_STORAGE_TYPE</summary>
       internal static _tagpropertykey StorageType = new _tagpropertykey {fmtid = StorageGuid, pid = 2};
@@ -197,8 +197,6 @@ namespace Alphaleonis.Win32.Device
 
 
       #region Content Type
-
-      // http://www.getcodesamples.com/src/2DA5B5AE/F13C10CC
 
       ///// <summary>WPD_CONTENT_TYPE_APPOINTMENT - An object that describes its type as <see cref="T:ContentTypeAppointment"/> represents an appointment in a calendar.</summary>
       //internal static Guid ContentTypeAppointment = new Guid(0x0FED060E, 0x8793, 0x4B1E, 0x90, 0xC9, 0x48, 0xAC, 0x38, 0x9A, 0xC6, 0x31);

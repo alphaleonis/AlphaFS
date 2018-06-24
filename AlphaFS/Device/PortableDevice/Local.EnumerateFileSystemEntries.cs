@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Device
       /// <returns>An enumerable collection of file-system entries from the root of the device.</returns>
       /// <param name="portableDeviceInfo">The <see cref="T:PortableDeviceInfo"/> instance of the Portable Device.</param>
       [SecurityCritical]
-      public static IEnumerable<PortableDeviceFileSystemInfo> EnumerateFileSystemEntries(PortableDeviceInfo portableDeviceInfo)
+      public static IEnumerable<WpdFileSystemInfo> EnumerateFileSystemEntries(PortableDeviceInfo portableDeviceInfo)
       {
          return PortableDeviceInfo.EnumerateFileSystemEntryInfoCore(portableDeviceInfo, null, null, false, null);
       }
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="portableDeviceInfo">The <see cref="T:PortableDeviceInfo"/> instance of the Portable Device.</param>
       /// <param name="recurse"></param>
       [SecurityCritical]
-      public static IEnumerable<PortableDeviceFileSystemInfo> EnumerateFileSystemEntries(PortableDeviceInfo portableDeviceInfo, bool recurse)
+      public static IEnumerable<WpdFileSystemInfo> EnumerateFileSystemEntries(PortableDeviceInfo portableDeviceInfo, bool recurse)
       {
          return PortableDeviceInfo.EnumerateFileSystemEntryInfoCore(portableDeviceInfo, null, null, recurse, null);
       }
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="objectId">The ID of the directory to search.</param>
       /// <param name="recurse"></param>
       [SecurityCritical]
-      public static IEnumerable<PortableDeviceFileSystemInfo> EnumerateFileSystemEntries(PortableDeviceInfo portableDeviceInfo, string objectId, bool recurse)
+      public static IEnumerable<WpdFileSystemInfo> EnumerateFileSystemEntries(PortableDeviceInfo portableDeviceInfo, string objectId, bool recurse)
       {
          return PortableDeviceInfo.EnumerateFileSystemEntryInfoCore(portableDeviceInfo, null, objectId, recurse, null);
       }

@@ -19,6 +19,8 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Alphaleonis.Win32.Device
 {
    /// <summary>The protocols used by a Windows Portable Device.</summary>
@@ -27,10 +29,11 @@ namespace Alphaleonis.Win32.Device
       /// <summary>Unknown.</summary>
       Unknown = 0,
 
-      /// <summary>USB Mass Storage.</summary>
+      /// <summary>USB Mass Storage</summary>
       Ums = 1,
 
-      /// <summary>Media Transfer Protocol.</summary>
+      /// <summary>Media Transfer Protocol</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mtp")]
       Mtp = 2
    }
 }

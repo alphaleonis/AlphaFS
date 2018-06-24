@@ -23,62 +23,59 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using System.Security;
 using System.Security.AccessControl;
 using Alphaleonis.Win32.Filesystem;
 using Path = Alphaleonis.Win32.Filesystem.Path;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using File = Alphaleonis.Win32.Filesystem.File;
 using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
 using FileSystemInfo = Alphaleonis.Win32.Filesystem.FileSystemInfo;
 
 namespace Alphaleonis.Win32.Device
 {
    /// <summary>Exposes instance methods for creating, moving, and enumerating through directories and subdirectories. This class cannot be inherited.</summary>
-   [SerializableAttribute]
-   public sealed class PortableDeviceDirectoryInfo : PortableDeviceFileSystemInfo
+   [Serializable]
+   public sealed class WpdDirectoryInfo : WpdFileSystemInfo
    {
       #region Constructors
 
-      #region PortableDeviceDirectoryInfo
+      #region WpdDirectoryInfo
 
-      /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceDirectoryInfo"/> class on the specified path.</summary>
-      /// <param name="fullName">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceDirectoryInfo"/>.</param>
+      /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/> class on the specified path.</summary>
+      /// <param name="fullName">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/>.</param>
       /// <remarks>
       /// This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.
       /// The path parameter can be a file name, including a file on a Universal Naming Convention (UNC) share.
       /// </remarks>
-      public PortableDeviceDirectoryInfo(string fullName)
+      public WpdDirectoryInfo(string fullName)
       {
          InitializeCore(true, fullName, null);
 
          Name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fullName, false), false);
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceDirectoryInfo"/> class on the specified path.</summary>
-      /// <param name="objectId">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceDirectoryInfo"/>.</param>
+      /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/> class on the specified path.</summary>
+      /// <param name="objectId">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/>.</param>
       /// <param name="name"></param>
       /// <remarks>
       /// This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.
       /// The path parameter can be a file name, including a file on a Universal Naming Convention (UNC) share.
       /// </remarks>
-      internal PortableDeviceDirectoryInfo(string objectId, string name)
+      internal WpdDirectoryInfo(string objectId, string name)
       {
          InitializeCore(true, objectId, null);
 
          Name = name;
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceDirectoryInfo"/> class on the specified path.</summary>
-      /// <param name="objectId">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceDirectoryInfo"/>.</param>
+      /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/> class on the specified path.</summary>
+      /// <param name="objectId">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/>.</param>
       /// <param name="name"></param>
       /// <param name="fullName"></param>
       /// <remarks>
       /// This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.
       /// The path parameter can be a file name, including a file on a Universal Naming Convention (UNC) share.
       /// </remarks>
-      internal PortableDeviceDirectoryInfo(string objectId, string name, string fullName)
+      internal WpdDirectoryInfo(string objectId, string name, string fullName)
       {
          InitializeCore(true, objectId, fullName);
 
@@ -88,13 +85,13 @@ namespace Alphaleonis.Win32.Device
       #region AlphaFS
 
       /// <summary>[AlphaFS] Special internal implementation.</summary>
-      /// <param name="fullName">The full path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.PortableDeviceDirectoryInfo"/>.</param>
+      /// <param name="fullName">The full path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/>.</param>
       /// <param name="junk1">Not used.</param>
       /// <param name="junk2">Not used.</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
       [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "junk1")]
       [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "junk2")]
-      private PortableDeviceDirectoryInfo(string fullName, bool junk1, bool junk2)
+      private WpdDirectoryInfo(string fullName, bool junk1, bool junk2)
       {
          IsDirectory = true;
 
@@ -107,7 +104,7 @@ namespace Alphaleonis.Win32.Device
 
       #endregion // AlphaFS
 
-      #endregion // PortableDeviceDirectoryInfo
+      #endregion // WpdDirectoryInfo
 
       #endregion // Constructors
 
@@ -121,7 +118,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Creates a directory.</summary>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
       public void Create()
       {
@@ -131,7 +128,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>Creates a directory using a <see cref="T:System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity)
@@ -146,7 +143,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Creates a directory using a <see cref="T:System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void Create(bool compress)
@@ -158,7 +155,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity, bool compress)
@@ -174,7 +171,7 @@ namespace Alphaleonis.Win32.Device
 
       #region .NET
 
-      /// <summary>Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:PortableDeviceDirectoryInfo"/> class.</summary>
+      /// <summary>Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:WpdDirectoryInfo"/> class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
       /// <returns>The last directory specified in <paramref name="path"/>.</returns>
       /// <remarks>
@@ -182,14 +179,14 @@ namespace Alphaleonis.Win32.Device
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      public PortableDeviceDirectoryInfo CreateSubdirectory(string path)
+      public WpdDirectoryInfo CreateSubdirectory(string path)
       {
          return CreateSubdirectoryInternal(path, null, null, false);
       }
 
-      /// <summary>Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:PortableDeviceDirectoryInfo"/> class.</summary>
+      /// <summary>Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:WpdDirectoryInfo"/> class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
       /// <param name="directorySecurity">The <see cref="T:DirectorySecurity"/> security to apply.</param>
       /// <returns>The last directory specified in <paramref name="path"/>.</returns>
@@ -198,9 +195,9 @@ namespace Alphaleonis.Win32.Device
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      public PortableDeviceDirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity)
+      public WpdDirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity)
       {
          return CreateSubdirectoryInternal(path, null, directorySecurity, false);
       }
@@ -209,7 +206,7 @@ namespace Alphaleonis.Win32.Device
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:PortableDeviceDirectoryInfo"/> class.</summary>
+      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:WpdDirectoryInfo"/> class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>The last directory specified in <paramref name="path"/>.</returns>
@@ -218,14 +215,14 @@ namespace Alphaleonis.Win32.Device
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      public PortableDeviceDirectoryInfo CreateSubdirectory(string path, bool compress)
+      public WpdDirectoryInfo CreateSubdirectory(string path, bool compress)
       {
          return CreateSubdirectoryInternal(path, null, null, compress);
       }
 
-      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:PortableDeviceDirectoryInfo"/> class.</summary>
+      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:WpdDirectoryInfo"/> class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
@@ -235,15 +232,15 @@ namespace Alphaleonis.Win32.Device
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      public PortableDeviceDirectoryInfo CreateSubdirectory(string path, string templatePath, bool compress)
+      public WpdDirectoryInfo CreateSubdirectory(string path, string templatePath, bool compress)
       {
          return CreateSubdirectoryInternal(path, templatePath, null, compress);
       }
 
 
-      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:PortableDeviceDirectoryInfo"/> class.</summary>
+      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:WpdDirectoryInfo"/> class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
       /// <param name="directorySecurity">The <see cref="T:DirectorySecurity"/> security to apply.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
@@ -253,14 +250,14 @@ namespace Alphaleonis.Win32.Device
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      public PortableDeviceDirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity, bool compress)
+      public WpdDirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity, bool compress)
       {
          return CreateSubdirectoryInternal(path, null, directorySecurity, compress);
       }
 
-      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:PortableDeviceDirectoryInfo"/> class.</summary>
+      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:WpdDirectoryInfo"/> class.</summary>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
@@ -271,9 +268,9 @@ namespace Alphaleonis.Win32.Device
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      public PortableDeviceDirectoryInfo CreateSubdirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
+      public WpdDirectoryInfo CreateSubdirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
          return CreateSubdirectoryInternal(path, templatePath, directorySecurity, compress);
       }
@@ -286,8 +283,8 @@ namespace Alphaleonis.Win32.Device
 
       #region .NET
 
-      /// <summary>Deletes this <see cref="T:PortableDeviceDirectoryInfo"/> if it is empty.</summary>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <summary>Deletes this <see cref="T:WpdDirectoryInfo"/> if it is empty.</summary>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
       public override void Delete()
       {
@@ -295,13 +292,13 @@ namespace Alphaleonis.Win32.Device
          Reset();
       }
 
-      /// <summary>Deletes this instance of a <see cref="T:PortableDeviceDirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
+      /// <summary>Deletes this instance of a <see cref="T:WpdDirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
       /// <param name="recursive"><c>true</c> to delete this directory, its subdirectories, and all files; otherwise, <c>false</c>.</param>
       /// <remarks>
-      /// If the <see cref="T:PortableDeviceDirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="T:PortableDeviceDirectoryInfo"/> even if <paramref name="recursive"/> is <c>false</c>.
-      /// Attempting to delete a <see cref="T:PortableDeviceDirectoryInfo"/> that is not empty when <paramref name="recursive"/> is <c>false</c> throws an <see cref="T:IOException"/>.
+      /// If the <see cref="T:WpdDirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="T:WpdDirectoryInfo"/> even if <paramref name="recursive"/> is <c>false</c>.
+      /// Attempting to delete a <see cref="T:WpdDirectoryInfo"/> that is not empty when <paramref name="recursive"/> is <c>false</c> throws an <see cref="T:IOException"/>.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
       public void Delete(bool recursive)
       {
@@ -313,14 +310,14 @@ namespace Alphaleonis.Win32.Device
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Deletes this instance of a <see cref="T:PortableDeviceDirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
+      /// <summary>[AlphaFS] Deletes this instance of a <see cref="T:WpdDirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
       /// <param name="recursive"><c>true</c> to delete this directory, its subdirectories, and all files; otherwise, <c>false</c>.</param>
       /// <param name="ignoreReadOnly"><c>true</c> ignores read only attribute of files and directories.</param>
       /// <remarks>
-      /// If the <see cref="T:PortableDeviceDirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="T:PortableDeviceDirectoryInfo"/> even if recursive is <c>false</c>.
-      /// Attempting to delete a <see cref="T:PortableDeviceDirectoryInfo"/> that is not empty when recursive is false throws an <see cref="T:IOException"/>.
+      /// If the <see cref="T:WpdDirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="T:WpdDirectoryInfo"/> even if recursive is <c>false</c>.
+      /// Attempting to delete a <see cref="T:WpdDirectoryInfo"/> that is not empty when recursive is false throws an <see cref="T:IOException"/>.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly)
       {
@@ -339,20 +336,20 @@ namespace Alphaleonis.Win32.Device
       /// <summary>Returns an enumerable collection of directory information in the current directory.</summary>
       /// <returns>An enumerable collection of directories in the current directory.</returns>
       [SecurityCritical]
-      public IEnumerable<PortableDeviceDirectoryInfo> EnumerateDirectories()
+      public IEnumerable<WpdDirectoryInfo> EnumerateDirectories()
       {
          return null;
-         //return Directory.EnumerateFileSystemEntryInfosInternal<PortableDeviceDirectoryInfo>(null, null, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, null);
+         //return Directory.EnumerateFileSystemEntryInfosInternal<WpdDirectoryInfo>(null, null, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, null);
       }
 
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern.</summary>
       /// <param name="searchPattern">The search string to match against the names of directories. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
       /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
-      public IEnumerable<PortableDeviceDirectoryInfo> EnumerateDirectories(string searchPattern)
+      public IEnumerable<WpdDirectoryInfo> EnumerateDirectories(string searchPattern)
       {
          return null;
-         //return Directory.EnumerateFileSystemEntryInfosInternal<PortableDeviceDirectoryInfo>(null, null, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, null);
+         //return Directory.EnumerateFileSystemEntryInfosInternal<WpdDirectoryInfo>(null, null, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, null);
       }
 
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern and search subdirectory option.</summary>
@@ -360,14 +357,14 @@ namespace Alphaleonis.Win32.Device
       /// <param name="searchOption">One of the enumeration values that specifies whether the search operation should include only the current directory or all subdirectories. The default value is <see cref="T:SearchOption.TopDirectoryOnly"/>.</param>
       /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
-      public IEnumerable<PortableDeviceDirectoryInfo> EnumerateDirectories(string searchPattern, SearchOption searchOption)
+      public IEnumerable<WpdDirectoryInfo> EnumerateDirectories(string searchPattern, SearchOption searchOption)
       {
          DirectoryEnumerationOptions enumOptions = DirectoryEnumerationOptions.FilesAndFolders;
          if (searchOption == SearchOption.AllDirectories)
             enumOptions |= DirectoryEnumerationOptions.Recursive;
 
          return null;
-         //return Directory.EnumerateFileSystemEntryInfosInternal<PortableDeviceDirectoryInfo>(null, null, searchPattern, enumOptions, null);
+         //return Directory.EnumerateFileSystemEntryInfosInternal<WpdDirectoryInfo>(null, null, searchPattern, enumOptions, null);
       }
 
       #endregion // .NET
@@ -465,9 +462,9 @@ namespace Alphaleonis.Win32.Device
 
       #region .NET
 
-      /// <summary>Gets a <see cref="T:DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the directory described by the current PortableDeviceDirectoryInfo object.</summary>
+      /// <summary>Gets a <see cref="T:DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the directory described by the current WpdDirectoryInfo object.</summary>
       /// <returns>A <see cref="T:DirectorySecurity"/> object that encapsulates the access control rules for the directory.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
       public DirectorySecurity GetAccessControl()
       {
@@ -475,10 +472,10 @@ namespace Alphaleonis.Win32.Device
          //return File.GetAccessControlInternal<DirectorySecurity>(true, null, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, null);
       }
 
-      /// <summary>Gets a <see cref="T:DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the directory described by the current <see cref="T:PortableDeviceDirectoryInfo"/> object.</summary>
+      /// <summary>Gets a <see cref="T:DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the directory described by the current <see cref="T:WpdDirectoryInfo"/> object.</summary>
       /// <param name="includeSections">One of the <see cref="T:AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
       /// <returns>A <see cref="T:DirectorySecurity"/> object that encapsulates the access control rules for the file described by the path parameter.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
       public DirectorySecurity GetAccessControl(AccessControlSections includeSections)
       {
@@ -494,11 +491,11 @@ namespace Alphaleonis.Win32.Device
 
       #region .NET
 
-      /// <summary>Moves a <see cref="T:PortableDeviceDirectoryInfo"/> instance and its contents to a new path.</summary>
+      /// <summary>Moves a <see cref="T:WpdDirectoryInfo"/> instance and its contents to a new path.</summary>
       /// <param name="destDirName">The name and path to which to move this directory. The destination cannot be another disk volume or a directory with the identical name. It can be an existing directory to which you want to add this directory as a subdirectory.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before moving the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
@@ -511,13 +508,13 @@ namespace Alphaleonis.Win32.Device
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Moves a <see cref="T:PortableDeviceDirectoryInfo"/> instance and its contents to a new path.</summary>
+      /// <summary>[AlphaFS] Moves a <see cref="T:WpdDirectoryInfo"/> instance and its contents to a new path.</summary>
       /// <param name="destDirName">The path to the new location for sourcePath.</param>
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
@@ -526,14 +523,14 @@ namespace Alphaleonis.Win32.Device
          CopyToMoveToInternal(true, destDirName, false, null, overwrite ? MoveOptions.None : MoveOptions.CopyAllowed, null, null, false);
       }
 
-      /// <summary>[AlphaFS] Moves a <see cref="T:PortableDeviceDirectoryInfo"/> instance and its contents to a new path.</summary>
+      /// <summary>[AlphaFS] Moves a <see cref="T:WpdDirectoryInfo"/> instance and its contents to a new path.</summary>
       /// <param name="destDirName">The destination directory path, of type string</param>
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
       /// <param name="preserveSecurity"><c>true</c> Preserves ACLs information.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
@@ -542,7 +539,7 @@ namespace Alphaleonis.Win32.Device
          CopyToMoveToInternal(true, destDirName, preserveSecurity, null, overwrite ? MoveOptions.None : MoveOptions.CopyAllowed, null, null, false);
       }
 
-      /// <summary>[AlphaFS] Moves a <see cref="T:PortableDeviceDirectoryInfo"/> instance and its contents to a new path.</summary>
+      /// <summary>[AlphaFS] Moves a <see cref="T:WpdDirectoryInfo"/> instance and its contents to a new path.</summary>
       /// <param name="destDirName">The destination directory path, of type string</param>
       /// <param name="moveOptions">Flags that specify how the file is to be move. This parameter can be <c>null</c>.</param>
       /// <param name="preserveSecurity"><c>true</c> Preserves ACLs information.</param>
@@ -551,7 +548,7 @@ namespace Alphaleonis.Win32.Device
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
@@ -568,12 +565,12 @@ namespace Alphaleonis.Win32.Device
 
       #region .NET
 
-      /// <summary>Refreshes the state of the object.</summary>
-      [SecurityCritical]
-      public void Refresh()
-      {
-         base.Refresh();
-      }
+      ///// <summary>Refreshes the state of the object.</summary>
+      //[SecurityCritical]
+      //public void Refresh()
+      //{
+      //   base.Refresh();
+      //}
 
       #endregion // .NET
 
@@ -583,9 +580,9 @@ namespace Alphaleonis.Win32.Device
 
       #region .NET
 
-      /// <summary>Applies access control list (ACL) entries described by a <see cref="T:DirectorySecurity"/> object to the directory described by the current PortableDeviceDirectoryInfo object.</summary>
+      /// <summary>Applies access control list (ACL) entries described by a <see cref="T:DirectorySecurity"/> object to the directory described by the current WpdDirectoryInfo object.</summary>
       /// <param name="directorySecurity">A <see cref="T:DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity)
@@ -593,10 +590,10 @@ namespace Alphaleonis.Win32.Device
          //File.SetAccessControlInternal(null, null, directorySecurity, AccessControlSections.All, null);
       }
 
-      /// <summary>Applies access control list (ACL) entries described by a <see cref="T:DirectorySecurity"/> object to the directory described by the current PortableDeviceDirectoryInfo object.</summary>
+      /// <summary>Applies access control list (ACL) entries described by a <see cref="T:DirectorySecurity"/> object to the directory described by the current WpdDirectoryInfo object.</summary>
       /// <param name="directorySecurity">A <see cref="T:DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
       /// <param name="includeSections">One or more of the <see cref="T:AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity, AccessControlSections includeSections)
@@ -632,11 +629,11 @@ namespace Alphaleonis.Win32.Device
       /// <param name="destDirName">The destination directory path, of type string</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public PortableDeviceDirectoryInfo CopyTo(string destDirName)
+      public WpdDirectoryInfo CopyTo(string destDirName)
       {
          return CopyToMoveToInternal(false, destDirName, false, CopyOptions.FailIfExists, null, null, null, false);
       }
@@ -646,11 +643,11 @@ namespace Alphaleonis.Win32.Device
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Copy will fail on existing directories or files.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public PortableDeviceDirectoryInfo CopyTo(string destDirName, bool overwrite)
+      public WpdDirectoryInfo CopyTo(string destDirName, bool overwrite)
       {
          return CopyToMoveToInternal(false, destDirName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, false);
       }
@@ -661,11 +658,11 @@ namespace Alphaleonis.Win32.Device
       /// <param name="preserveSecurity"><c>true</c> Preserves ACLs information.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public PortableDeviceDirectoryInfo CopyTo(string destDirName, bool overwrite, bool preserveSecurity)
+      public WpdDirectoryInfo CopyTo(string destDirName, bool overwrite, bool preserveSecurity)
       {
          return CopyToMoveToInternal(false, destDirName, preserveSecurity, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, false);
       }
@@ -678,11 +675,11 @@ namespace Alphaleonis.Win32.Device
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public PortableDeviceDirectoryInfo CopyTo(string destDirName, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressRoutine copyProgress, object userProgressData)
+      public WpdDirectoryInfo CopyTo(string destDirName, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressRoutine copyProgress, object userProgressData)
       {
          return CopyToMoveToInternal(false, destDirName, preserveSecurity, copyOptions, null, copyProgress, userProgressData, false);
       }
@@ -691,7 +688,7 @@ namespace Alphaleonis.Win32.Device
 
       #region DeleteEmpty
 
-      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="T:PortableDeviceDirectoryInfo"/> instance.</summary>
+      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="T:WpdDirectoryInfo"/> instance.</summary>
       [SecurityCritical]
       public void DeleteEmpty()
       {
@@ -699,7 +696,7 @@ namespace Alphaleonis.Win32.Device
          Reset();
       }
 
-      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="T:PortableDeviceDirectoryInfo"/> instance.</summary>
+      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="T:WpdDirectoryInfo"/> instance.</summary>
       /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
       [SecurityCritical]
       public void DeleteEmpty(bool recursive)
@@ -708,7 +705,7 @@ namespace Alphaleonis.Win32.Device
          Reset();
       }
 
-      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="T:PortableDeviceDirectoryInfo"/> instance.</summary>
+      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="T:WpdDirectoryInfo"/> instance.</summary>
       /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="T:FileAttributes"/> of empty directories.</param>
       [SecurityCritical]
@@ -743,20 +740,20 @@ namespace Alphaleonis.Win32.Device
 
       #region CreateSubdirectoryInternal
 
-      /// <summary>[AlphaFS] Unified method CreateSubdirectory() to create a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the PortableDeviceDirectoryInfo class.</summary>
+      /// <summary>[AlphaFS] Unified method CreateSubdirectory() to create a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the WpdDirectoryInfo class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume or Universal Naming Convention (UNC) name.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="directorySecurity">The <see cref="T:DirectorySecurity"/> security to apply.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
-      /// <returns>The last directory specified in path as an <see cref="T:PortableDeviceDirectoryInfo"/> object.</returns>
+      /// <returns>The last directory specified in path as an <see cref="T:WpdDirectoryInfo"/> object.</returns>
       /// <remarks>
       /// Any and all directories specified in path are created, unless some part of path is invalid.
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      private PortableDeviceDirectoryInfo CreateSubdirectoryInternal(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
+      private WpdDirectoryInfo CreateSubdirectoryInternal(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
          //string pathLp = Path.CombineInternal(false, null, path);
 
@@ -783,16 +780,16 @@ namespace Alphaleonis.Win32.Device
       /// <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>When <paramref name="isMove"/> is <c>true</c> <c>null</c> is returned. Otherwise copy; a new <see cref="T:PortableDeviceDirectoryInfo"/> instance with a fully qualified path returned.</returns>
+      /// <returns>When <paramref name="isMove"/> is <c>true</c> <c>null</c> is returned. Otherwise copy; a new <see cref="T:WpdDirectoryInfo"/> instance with a fully qualified path returned.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before copying/moving the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <remarks>This Move method works across disk volumes, and it does not throw an exception if the source and destination are
       /// the same. Note that if you attempt to replace a file by moving a file of the same name into that directory, you
       /// get an IOException. You cannot use the Move method to overwrite an existing file.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="Exception"/>
       [SecurityCritical]
-      private PortableDeviceDirectoryInfo CopyToMoveToInternal(bool isMove, string destinationPath, bool preserveSecurity, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine copyProgress, object userProgressData, bool? isfullName)
+      private WpdDirectoryInfo CopyToMoveToInternal(bool isMove, string destinationPath, bool preserveSecurity, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine copyProgress, object userProgressData, bool? isfullName)
       {
          return null;
          
@@ -822,7 +819,7 @@ namespace Alphaleonis.Win32.Device
 //            Reset();
 //         }
 
-//         return isMove ? null : new PortableDeviceDirectoryInfo(null);
+//         return isMove ? null : new WpdDirectoryInfo(null);
       }
 
       #endregion // CopyToMoveToInternal
@@ -851,7 +848,7 @@ namespace Alphaleonis.Win32.Device
 
       #region Name
 
-      /// <summary>Gets the name of this <see cref="T:PortableDeviceDirectoryInfo"/> instance.</summary>
+      /// <summary>Gets the name of this <see cref="T:WpdDirectoryInfo"/> instance.</summary>
       /// <returns>The directory name.</returns>
       /// <remarks>Returns only the name of the directory, such as "Bin". To get the full path, such as "c:\public\Bin", use the FullName property.</remarks>
       public override string Name { get; internal set; }
@@ -862,7 +859,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Gets the parent directory of a specified subdirectory.</summary>
       /// <returns>The parent directory, or <c>null</c> if the path is null or if the file path denotes a root (such as "\", "C:", or * "\\server\share").</returns>
-      public PortableDeviceDirectoryInfo Parent
+      public WpdDirectoryInfo Parent
       {
          get
          {
@@ -872,7 +869,7 @@ namespace Alphaleonis.Win32.Device
                path = Path.RemoveTrailingDirectorySeparator(FullPath, false);
 
             string dirName = Path.GetDirectoryName(path);
-            return dirName == null ? null : new PortableDeviceDirectoryInfo(dirName, true, true);
+            return dirName == null ? null : new WpdDirectoryInfo(dirName, true, true);
          }
       }
 
@@ -882,7 +879,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Gets the root portion of the directory.</summary>
       /// <returns>An object that represents the root of the directory.</returns>
-      public PortableDeviceDirectoryInfo Root
+      public WpdDirectoryInfo Root
       {
          get
          {
@@ -891,7 +888,7 @@ namespace Alphaleonis.Win32.Device
             if (Utils.IsNullOrWhiteSpace(root))
                root = PortableDeviceConstants.DeviceObjectId;
             
-            return new PortableDeviceDirectoryInfo(root, FullPath);
+            return new WpdDirectoryInfo(root, FullPath);
          }
       }
 

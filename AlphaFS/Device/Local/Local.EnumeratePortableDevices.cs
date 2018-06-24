@@ -20,6 +20,7 @@
  */
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Security;
 
 namespace Alphaleonis.Win32.Device
@@ -49,6 +50,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="connect"><c>true</c> connects to the Portable Device as soon as the instance is created. <c>false</c> does not connect to the device. Use method <see cref="M:Connect()"/> to manually connect.</param>
       /// <param name="mtpOnly"><c>true</c> only enumerates device that use the <see cref="T:PortableDeviceProtocol.MediaTransferProtocol"/>.</param>
       /// <returns>Returns <see cref="T:IEnumerable{PortableDeviceInfo}"/> instances of type <see cref="T:DeviceGuid.WpdDevice"/> on the Computer.</returns>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "mtp")]
       [SecurityCritical]
       public static IEnumerable<PortableDeviceInfo> EnumeratePortableDevices(bool connect, bool mtpOnly)
       {
@@ -65,7 +67,7 @@ namespace Alphaleonis.Win32.Device
          {
             var portableDeviceInfo = new PortableDeviceInfo(device, connect, mtpOnly);
 
-            if (mtpOnly && portableDeviceInfo.Protocol != PortableDeviceProtocol.Mtp)
+            if (mtpOnly && portableDeviceInfo.DeviceProtocol != PortableDeviceProtocol.Mtp)
                continue;
 
             yield return portableDeviceInfo;

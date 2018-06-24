@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
          const bool mtpOnly = false;
 
 
-         foreach (var portableDeviceInfo in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect, mtpOnly).OrderBy(p => p.DeviceType).ThenBy(p => p.FriendlyName))
+         foreach (var portableDeviceInfo in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect, mtpOnly).OrderBy(p => p.DeviceType).ThenBy(p => p.DeviceFriendlyName))
          {
             Console.WriteLine("#{0:000}\tInput Portable Device Path: [{1}]", ++deviceCount, portableDeviceInfo.DeviceId);
 

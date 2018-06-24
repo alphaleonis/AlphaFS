@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
 using PortableDeviceApiLib;
 using IPortableDeviceValues = PortableDeviceApiLib.IPortableDeviceValues;
 
@@ -28,6 +29,7 @@ namespace Alphaleonis.Win32.Device
    {
       /// <summary>Gets the properties of the Portable Device.</summary>
       /// <remarks>This method retrieves the Microsoft Required properties as well as some Recommended- and Optional properties.</remarks>
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       private bool CreatePortableDeviceInstance()
       {
          IPortableDeviceContent deviceContent;
@@ -43,7 +45,7 @@ namespace Alphaleonis.Win32.Device
          deviceProperties.GetValues(PortableDeviceConstants.DeviceObjectId, null, out devicePropertyValues);
 
 
-         if (SetDeviceProperties(devicePropertyValues))
+         if (PopulateDeviceProperties(devicePropertyValues))
          {
             uint fetched = 0;
             string objectId = null;
@@ -68,7 +70,7 @@ namespace Alphaleonis.Win32.Device
 
             deviceProperties.GetValues(objectId, null, out devicePropertyValues);
 
-            SetStorageProperties(devicePropertyValues);
+            PopulateStorageProperties(devicePropertyValues);
 
             return true;
          }

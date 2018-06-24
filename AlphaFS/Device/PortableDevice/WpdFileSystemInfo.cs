@@ -31,10 +31,10 @@ using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace Alphaleonis.Win32.Device
 {
-   /// <summary>Provides the base class for both <see cref="T:PortableDeviceFileInfo"/> and <see cref="T:PortableDeviceDirectoryInfo"/> objects.</summary>
+   /// <summary>Provides the base class for both <see cref="T:WpdFileInfo"/> and <see cref="T:WpdDirectoryInfo"/> objects.</summary>
    [Serializable]
    [ComVisible(true)]
-   public abstract class PortableDeviceFileSystemInfo : MarshalByRefObject
+   public abstract class WpdFileSystemInfo : MarshalByRefObject
    {
       #region Fields
 
@@ -410,7 +410,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="left">A.</param>
       /// <param name="right">B.</param>
       /// <returns>The result of the operator.</returns>
-      public static bool operator ==(PortableDeviceFileSystemInfo left, PortableDeviceFileSystemInfo right)
+      public static bool operator ==(WpdFileSystemInfo left, WpdFileSystemInfo right)
       {
          return ReferenceEquals(left, null) && ReferenceEquals(right, null) ||
                 !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
@@ -421,7 +421,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="left">A.</param>
       /// <param name="right">B.</param>
       /// <returns>The result of the operator.</returns>
-      public static bool operator !=(PortableDeviceFileSystemInfo left, PortableDeviceFileSystemInfo right)
+      public static bool operator !=(WpdFileSystemInfo left, WpdFileSystemInfo right)
       {
          return !(left == right);
       }
@@ -431,7 +431,7 @@ namespace Alphaleonis.Win32.Device
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Refreshes the current <see cref="FileSystemInfo"/> instance (<see cref="PortableDeviceDirectoryInfo"/> or <see cref="PortableDeviceFileInfo"/>) with a new destination path.</summary>
+      /// <summary>[AlphaFS] Refreshes the current <see cref="FileSystemInfo"/> instance (<see cref="WpdDirectoryInfo"/> or <see cref="WpdFileInfo"/>) with a new destination path.</summary>
       internal void UpdateSourcePath(string destinationPath, string destinationPathLp)
       {
          FullPath = null != destinationPathLp ? Path.GetRegularPathCore(FullName, GetFullPathOptions.None, false) : null;
@@ -444,7 +444,7 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>Refreshes the state of the <see cref="PortableDeviceFileSystemInfo"/> EntryInfo instance.</summary>
+      /// <summary>Refreshes the state of the <see cref="WpdFileSystemInfo"/> EntryInfo instance.</summary>
       /// <remarks>
       ///   <para>FileSystemInfo.RefreshEntryInfo() takes a snapshot of the file from the current file system.</para>
       ///   <para>Refresh cannot correct the underlying file system even if the file system returns incorrect or outdated information.</para>

@@ -19,13 +19,16 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+using System.Diagnostics.CodeAnalysis;
 using IPortableDeviceValues = PortableDeviceApiLib.IPortableDeviceValues;
 
 namespace Alphaleonis.Win32.Device
 {
    public sealed partial class PortableDeviceInfo
    {
-      private bool SetDeviceProperties(IPortableDeviceValues devicePropertyValues)
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+      private bool PopulateDeviceProperties(IPortableDeviceValues devicePropertyValues)
       {
          uint uintValue;
          string stringValue;
@@ -35,27 +38,28 @@ namespace Alphaleonis.Win32.Device
          {
             devicePropertyValues.GetStringValue(ref PortableDeviceConstants.DeviceProtocol, out stringValue);
 
-            switch (stringValue.ToUpperInvariant())
+            if (null != stringValue)
             {
-               case PortableDeviceConstants.MassStorageClassProtocol:
-                  Protocol = PortableDeviceProtocol.Ums;
-                  break;
+               if (stringValue.Equals(PortableDeviceConstants.MassStorageClassProtocol, StringComparison.OrdinalIgnoreCase))
 
-               case PortableDeviceConstants.MediaTransferProtocol:
-                  Protocol = PortableDeviceProtocol.Mtp;
-                  break;
+                  DeviceProtocol = PortableDeviceProtocol.Ums;
+
+
+               else if (stringValue.Equals(PortableDeviceConstants.MediaTransferProtocol, StringComparison.OrdinalIgnoreCase))
+
+                  DeviceProtocol = PortableDeviceProtocol.Mtp;
             }
          }
          catch { return false; }
 
 
-         if (_mtpOnly && Protocol != PortableDeviceProtocol.Mtp)
+         if (_mtpOnly && DeviceProtocol != PortableDeviceProtocol.Mtp)
             return false;
 
 
          #region Required Properties
 
-         // No try/catch since these properties are required, assume that these properties are present.
+         // No try/catch since these properties are required, so assume that these properties are present.
          // DeviceObjectId
          // Manufacturer
          // Model
@@ -64,17 +68,17 @@ namespace Alphaleonis.Win32.Device
          try
          {
             devicePropertyValues.GetStringValue(ref PortableDeviceConstants.DeviceFirmwareVersion, out stringValue);
-            FirmwareVersion = stringValue ?? string.Empty;
+            DeviceFirmwareVersion = stringValue ?? string.Empty;
          }
-         catch { FirmwareVersion = string.Empty; }
+         catch { DeviceFirmwareVersion = string.Empty; }
 
 
          try
          {
             devicePropertyValues.GetStringValue(ref PortableDeviceConstants.DeviceSerialNumber, out stringValue);
-            SerialNumber = stringValue ?? string.Empty;
+            DeviceSerialNumber = stringValue ?? string.Empty;
          }
-         catch { SerialNumber = string.Empty; }
+         catch { DeviceSerialNumber = string.Empty; }
 
          #endregion // Required Properties
 
@@ -83,21 +87,20 @@ namespace Alphaleonis.Win32.Device
 
          // FriendlyName
 
-
          try
          {
-            devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.DeviceType, out uintValue);
-            DeviceType = (PortableDeviceType) uintValue;
+            devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.DevicePowerLevel, out uintValue);
+            DevicePowerLevel = (int) uintValue;
          }
-         catch { DeviceType = PortableDeviceType.Unknown; }
+         catch { DevicePowerLevel = -1; }
 
 
          try
          {
             devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.DevicePowerSource, out uintValue);
-            PowerSource = (PortableDevicePowerSource) uintValue;
+            DevicePowerSource = (PortableDevicePowerSource) uintValue;
          }
-         catch { PowerSource = PortableDevicePowerSource.Unknown; }
+         catch { DevicePowerSource = PortableDevicePowerSource.Unknown; }
 
 
          try
@@ -106,6 +109,14 @@ namespace Alphaleonis.Win32.Device
             TransportType = (PortableDeviceTransportType) uintValue;
          }
          catch { TransportType = PortableDeviceTransportType.Unspecified; }
+
+
+         try
+         {
+            devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.DeviceType, out uintValue);
+            DeviceType = (PortableDeviceType) uintValue;
+         }
+         catch { DeviceType = PortableDeviceType.Unknown; }
 
          #endregion // Recommended Properties
 

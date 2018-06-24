@@ -35,14 +35,14 @@ namespace Alphaleonis.Win32.Device
          // MSDN: The application is not required to send any key/value pairs. However, sending data might improve performance.
          // Typical key/value pairs include the application name, major and minor version, and build number.
 
-         // Setup client information that identifies the application to the device. 
-         var clientInfo = (IPortableDeviceValues) new PortableDeviceValuesClass();
          
-         clientInfo.SetStringValue(ref PortableDeviceConstants.ClientName, ProductVersion.ProductName);
-         clientInfo.SetUnsignedIntegerValue(ref PortableDeviceConstants.ClientMajorVersion, (uint) ProductVersion.ProductMajorPart);
-         clientInfo.SetUnsignedIntegerValue(ref PortableDeviceConstants.ClientMinorVersion, (uint) ProductVersion.ProductMinorPart);
+         //var clientInfo = (IPortableDeviceValues) new PortableDeviceValuesClass();
+         //clientInfo.SetStringValue(ref PortableDeviceConstants.ClientName, ProductVersion.ProductName);
+         //clientInfo.SetUnsignedIntegerValue(ref PortableDeviceConstants.ClientMajorVersion, (uint) ProductVersion.ProductMajorPart);
+         //clientInfo.SetUnsignedIntegerValue(ref PortableDeviceConstants.ClientMinorVersion, (uint) ProductVersion.ProductMinorPart);
+         //clientInfo.SetUnsignedIntegerValue(ref PortableDeviceConstants.ClientRevision, 0);
 
-         PortableDevice.Open(DeviceId, clientInfo);
+         PortableDevice.Open(DeviceId, (IPortableDeviceValues) new PortableDeviceValuesClass());
 
          IsConnected = CreatePortableDeviceInstance();
       }

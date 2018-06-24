@@ -19,30 +19,18 @@
  *  THE SOFTWARE. 
  */
 
-using System;
+using System.Diagnostics.CodeAnalysis;
 using IPortableDeviceValues = PortableDeviceApiLib.IPortableDeviceValues;
 
 namespace Alphaleonis.Win32.Device
 {
    public sealed partial class PortableDeviceInfo
    {
-      private void SetStorageProperties(IPortableDeviceValues devicePropertyValues)
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+      private void PopulateStorageProperties(IPortableDeviceValues devicePropertyValues)
       {
          ulong ulongValue;
          string stringValue;
-
-
-         #region Recommended Properties
-
-         try
-         {
-            float floatValue;
-            devicePropertyValues.GetFloatValue(ref PortableDeviceConstants.DevicePowerLevel, out floatValue);
-            PowerLevel = Convert.ToInt32(floatValue);
-         }
-         catch { PowerLevel = -1; }
-
-         #endregion // Recommended Properties
 
 
          try
