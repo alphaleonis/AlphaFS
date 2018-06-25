@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_EnumeratePortableDevices()
+      public void AlphaFS_Device_PortableDevice_EnumeratePortableDevices()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
@@ -67,14 +67,14 @@ namespace AlphaFS.UnitTest
             var fseCount = 0;
             long totalSize = 0;
 
-            foreach (var pdfse in portableDeviceInfo.EnumerateFileSystemEntries(true))
+            foreach (var pdfsi in portableDeviceInfo.EnumerateFileSystemEntries(true))
             {
-               var fileInfo = pdfse as Alphaleonis.Win32.Device.WpdFileInfo;
+               var fileInfo = pdfsi as Alphaleonis.Win32.Device.WpdFileInfo;
 
                if (null != fileInfo)
                   totalSize += fileInfo.Length;
 
-               Console.WriteLine("\t\t#{0:000} [{1}] [{2}]", ++fseCount, pdfse.IsDirectory ? "Folder" : "File  ", pdfse.FullName);
+               Console.WriteLine("\t\t#{0:000} [{1}] ID: [{2}]\t\tFullPath: [{3}]", ++fseCount, pdfsi.IsDirectory ? "Folder" : "File  ", pdfsi.ObjectId, pdfsi.FullName);
 
 
                if (fseCount == maxItems)

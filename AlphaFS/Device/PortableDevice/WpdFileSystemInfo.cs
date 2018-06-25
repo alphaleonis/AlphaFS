@@ -32,6 +32,7 @@ using Path = Alphaleonis.Win32.Filesystem.Path;
 namespace Alphaleonis.Win32.Device
 {
    /// <summary>Provides the base class for both <see cref="T:WpdFileInfo"/> and <see cref="T:WpdDirectoryInfo"/> objects.</summary>
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wpd")]
    [Serializable]
    [ComVisible(true)]
    public abstract class WpdFileSystemInfo : MarshalByRefObject
@@ -45,7 +46,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Represents the fully qualified path of the file or directory.</summary>
       /// <remarks>
-      ///   <para>Classes derived from <see cref="Filesystem.FileSystemInfo"/> can use the FullPath field</para>
+      ///   <para>Classes derived from <see cref="WpdFileSystemInfo"/> can use the FullPath field</para>
       ///   <para>to determine the full path of the object being manipulated.</para>
       /// </remarks>
       [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
@@ -70,14 +71,14 @@ namespace Alphaleonis.Win32.Device
       internal Filesystem.NativeMethods.WIN32_FILE_ATTRIBUTE_DATA Win32AttributeData;
 
       #endregion // Fields
-      
+
 
       #region Properties
 
       #region .NET
 
       /// <summary>Gets or sets the attributes for the current file or directory.</summary>
-      /// <returns><see cref="T:System.IO.FileAttributes"/> of the current <see cref="T:FileSystemInfo"/>.</returns>
+      /// <returns><see cref="T:System.IO.FileAttributes"/> of the current <see cref="T:WpdFileSystemInfo"/>.</returns>
       public FileAttributes Attributes
       {
          [SecurityCritical]
@@ -106,7 +107,7 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>Gets or sets the creation time of the current file or directory.</summary>
-      /// <returns>The creation date and time of the current <see cref="T:FileSystemInfo"/> object.</returns>
+      /// <returns>The creation date and time of the current <see cref="T:WpdFileSystemInfo"/> object.</returns>
       /// <remarks>This value is expressed in local time.</remarks>
       public DateTime CreationTime
       {
@@ -117,7 +118,7 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>Gets or sets the creation time, in coordinated universal time (UTC), of the current file or directory.</summary>
-      /// <returns>The creation date and time in UTC format of the current <see cref="T:FileSystemInfo"/> object.</returns>
+      /// <returns>The creation date and time in UTC format of the current <see cref="T:WpdFileSystemInfo"/> object.</returns>
       /// <remarks>This value is expressed in UTC time.</remarks>
       [ComVisible(false)]
       public DateTime CreationTimeUtc
@@ -149,7 +150,11 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>Gets a value indicating whether the file or directory exists.</summary>
       /// <returns><c>true</c> if the file or directory exists; otherwise, <c>false</c>.</returns>
-      /// <remarks>The <see cref="T:Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file or directory exists. This can occur in situations that raise exceptions such as passing a directory- or file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file or directory.</remarks>
+      /// <remarks>
+      ///   The <see cref="T:Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file or directory exists.
+      ///   This can occur in situations that raise exceptions such as passing a directory- or file name with invalid characters or too many characters,
+      ///   a failing or missing disk, or if the caller does not have permission to read the file or directory.
+      /// </remarks>
       public abstract bool Exists { get; }
 
 
@@ -173,8 +178,8 @@ namespace Alphaleonis.Win32.Device
       /// <summary>Gets or sets the time the current file or directory was last accessed.</summary>
       /// <returns>The time that the current file or directory was last accessed.</returns>
       /// <remarks>This value is expressed in local time.</remarks>
-      /// <remarks>When first called, <see cref="T:FileSystemInfo"/> calls Refresh and returns the cached information on APIs to get attributes and so on. On subsequent calls, you must call Refresh to get the latest copy of the information. 
-      /// If the file described in the <see cref="T:FileSystemInfo"/> object does not exist, this property will return 12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time. 
+      /// <remarks>When first called, <see cref="T:WpdFileSystemInfo"/> calls Refresh and returns the cached information on APIs to get attributes and so on. On subsequent calls, you must call Refresh to get the latest copy of the information. 
+      /// If the file described in the <see cref="T:WpdFileSystemInfo"/> object does not exist, this property will return 12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time. 
       /// </remarks>
       public DateTime LastAccessTime
       {
@@ -189,8 +194,8 @@ namespace Alphaleonis.Win32.Device
       /// <summary>Gets or sets the time, in coordinated universal time (UTC), that the current file or directory was last accessed.</summary>
       /// <returns>The UTC time that the current file or directory was last accessed.</returns>
       /// <remarks>This value is expressed in UTC time.</remarks>
-      /// <remarks>When first called, <see cref="T:FileSystemInfo"/> calls Refresh and returns the cached information on APIs to get attributes and so on. On subsequent calls, you must call Refresh to get the latest copy of the information. 
-      /// If the file described in the <see cref="T:FileSystemInfo"/> object does not exist, this property will return 12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time. 
+      /// <remarks>When first called, <see cref="T:WpdFileSystemInfo"/> calls Refresh and returns the cached information on APIs to get attributes and so on. On subsequent calls, you must call Refresh to get the latest copy of the information. 
+      /// If the file described in the <see cref="T:WpdFileSystemInfo"/> object does not exist, this property will return 12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time. 
       /// </remarks>
       [ComVisible(false)]
       public DateTime LastAccessTimeUtc
@@ -315,10 +320,8 @@ namespace Alphaleonis.Win32.Device
       public Guid ContentType { get; internal set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public string Id { get; set; }
+      /// <summary>The object ID of the instance.</summary>
+      public string ObjectId { get; set; }
 
 
       /// <summary>
@@ -486,7 +489,7 @@ namespace Alphaleonis.Win32.Device
          if (Utils.IsNullOrWhiteSpace(objectId))
             objectId = NativeMethods.DeviceObjectId;
 
-         Id = objectId;
+         ObjectId = objectId;
 
          //FullPath = !Utils.IsNullOrWhiteSpace(fullPath) ? fullPath : objectId;
          FullPath = fullPath;
@@ -495,9 +498,7 @@ namespace Alphaleonis.Win32.Device
 
          OriginalPath = objectId;
 
-         DisplayPath = OriginalPath.Length != 2 || OriginalPath[1] != Path.VolumeSeparatorChar
-            ? OriginalPath
-            : Path.CurrentDirectoryPrefix;
+         DisplayPath = OriginalPath.Length != 2 || OriginalPath[1] != Path.VolumeSeparatorChar ? OriginalPath : Path.CurrentDirectoryPrefix;
       }
 
       #endregion // AlphaFS

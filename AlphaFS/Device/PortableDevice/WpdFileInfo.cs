@@ -31,8 +31,9 @@ using File = Alphaleonis.Win32.Filesystem.File;
 namespace Alphaleonis.Win32.Device
 {
    /// <summary>Provides properties and instance methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="T:FileStream"/> objects. This class cannot be inherited.</summary>
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wpd")]
    [Serializable]
-   public sealed class WpdFileInfo : WpdFileSystemInfo
+   public sealed partial class WpdFileInfo : WpdFileSystemInfo
    {
       #region Fields
 
@@ -46,23 +47,19 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdFileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fullName"></param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public WpdFileInfo(string fullName)
+      public WpdFileInfo(string fullName) : this(null, Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fullName, false), false), fullName)
       {
-         InitializeCore(false, fullName, null);
-
-         Name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fullName, false), false);
       }
+
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdFileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="objectId">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <param name="name"></param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public WpdFileInfo(string objectId, string name)
+      public WpdFileInfo(string objectId, string name) : this(objectId, name, null)
       {
-         InitializeCore(false, objectId, null);
-
-         Name = name;
       }
+
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdFileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="objectId">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>

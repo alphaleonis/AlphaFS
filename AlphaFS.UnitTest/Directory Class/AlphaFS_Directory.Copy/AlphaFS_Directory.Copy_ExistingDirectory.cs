@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Copy_ExistingDirectory_LocalAndNetwork_Success()
       {
          AlphaFS_Directory_Copy_ExistingDirectory(false);
          AlphaFS_Directory_Copy_ExistingDirectory(true);

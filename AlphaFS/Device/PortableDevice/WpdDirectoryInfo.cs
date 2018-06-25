@@ -33,12 +33,11 @@ using FileSystemInfo = Alphaleonis.Win32.Filesystem.FileSystemInfo;
 namespace Alphaleonis.Win32.Device
 {
    /// <summary>Exposes instance methods for creating, moving, and enumerating through directories and subdirectories. This class cannot be inherited.</summary>
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wpd")]
    [Serializable]
    public sealed class WpdDirectoryInfo : WpdFileSystemInfo
    {
       #region Constructors
-
-      #region WpdDirectoryInfo
 
       /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/> class on the specified path.</summary>
       /// <param name="fullName">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/>.</param>
@@ -46,12 +45,10 @@ namespace Alphaleonis.Win32.Device
       /// This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.
       /// The path parameter can be a file name, including a file on a Universal Naming Convention (UNC) share.
       /// </remarks>
-      public WpdDirectoryInfo(string fullName)
+      public WpdDirectoryInfo(string fullName) : this(null, Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fullName, false), false), fullName)
       {
-         InitializeCore(true, fullName, null);
-
-         Name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fullName, false), false);
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/> class on the specified path.</summary>
       /// <param name="objectId">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/>.</param>
@@ -60,12 +57,10 @@ namespace Alphaleonis.Win32.Device
       /// This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.
       /// The path parameter can be a file name, including a file on a Universal Naming Convention (UNC) share.
       /// </remarks>
-      internal WpdDirectoryInfo(string objectId, string name)
+      private WpdDirectoryInfo(string objectId, string name) : this(objectId, name, null)
       {
-         InitializeCore(true, objectId, null);
-
-         Name = name;
       }
+
 
       /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/> class on the specified path.</summary>
       /// <param name="objectId">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/>.</param>
@@ -82,8 +77,7 @@ namespace Alphaleonis.Win32.Device
          Name = name;
       }
 
-      #region AlphaFS
-
+      
       /// <summary>[AlphaFS] Special internal implementation.</summary>
       /// <param name="fullName">The full path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.WpdDirectoryInfo"/>.</param>
       /// <param name="junk1">Not used.</param>
@@ -102,11 +96,80 @@ namespace Alphaleonis.Win32.Device
          DisplayPath = GetDisplayName(OriginalPath);
       }
 
-      #endregion // AlphaFS
-
-      #endregion // WpdDirectoryInfo
-
       #endregion // Constructors
+      
+
+      #region Properties
+
+      #region .NET
+
+      #region Exists
+
+      /// <summary>Gets a value indicating whether the directory exists.</summary>
+      /// <returns><c>true</c> if the directory exists; otherwise, <c>false</c>.</returns>
+      public override bool Exists
+      {
+         //get { return (EntryInfo != null && EntryInfo.IsDirectory); }
+         get { return true; }
+      }
+
+      #endregion // Exists
+
+
+      #region Name
+
+      /// <summary>Gets the name of this <see cref="T:WpdDirectoryInfo"/> instance.</summary>
+      /// <returns>The directory name.</returns>
+      /// <remarks>Returns only the name of the directory, such as "Bin". To get the full path, such as "c:\public\Bin", use the FullName property.</remarks>
+      public override string Name { get; internal set; }
+
+      #endregion // Name
+
+
+      #region Parent
+
+      /// <summary>Gets the parent directory of a specified subdirectory.</summary>
+      /// <returns>The parent directory, or <c>null</c> if the path is null or if the file path denotes a root (such as "\", "C:", or * "\\server\share").</returns>
+      public WpdDirectoryInfo Parent
+      {
+         get
+         {
+            string path = FullPath;
+
+            if (path.Length > 3)
+               path = Path.RemoveTrailingDirectorySeparator(FullPath, false);
+
+            string dirName = Path.GetDirectoryName(path);
+            return dirName == null ? null : new WpdDirectoryInfo(dirName, true, true);
+         }
+      }
+
+      #endregion // Parent
+
+
+      #region Root
+
+      /// <summary>Gets the root portion of the directory.</summary>
+      /// <returns>An object that represents the root of the directory.</returns>
+      public WpdDirectoryInfo Root
+      {
+         get
+         {
+            string root = Path.GetPathRoot(FullPath, false);
+
+            if (Utils.IsNullOrWhiteSpace(root))
+               root = NativeMethods.DeviceObjectId;
+            
+            return new WpdDirectoryInfo(root, FullPath);
+         }
+      }
+
+      #endregion // Root
+
+      #endregion // .NET
+
+      #endregion // Properties
+
 
       #region Methods
 
@@ -758,7 +821,7 @@ namespace Alphaleonis.Win32.Device
          //string pathLp = Path.CombineInternal(false, null, path);
 
          //if (string.Compare(null, 0, pathLp, 0, null.Length, StringComparison.OrdinalIgnoreCase) != 0)
-            //throw new ArgumentException("Invalid SubPath", pathLp);
+         //throw new ArgumentException("Invalid SubPath", pathLp);
 
          return null; //Directory.CreateDirectoryInternal(null, pathLp, templatePath, directorySecurity, compress, true);
       }
@@ -792,34 +855,34 @@ namespace Alphaleonis.Win32.Device
       private WpdDirectoryInfo CopyToMoveToInternal(bool isMove, string destinationPath, bool preserveSecurity, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine copyProgress, object userProgressData, bool? isfullName)
       {
          return null;
-         
-
-//         string destinationPathLp = isfullName == null
-//            ? destinationPath
-//            : (bool) isfullName
-//               ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
-//#if NET35
-//               : Path.GetFullPathInternal(null, destinationPath, true, false, false, true, false, true, false);
-//#else
-//               : Path.GetFullPathInternal(null, destinationPath, true, true, false, true, false, true, false);
-//#endif
 
 
-//         //Directory.CopyMoveInternal(isMove, null, null, destinationPathLp, preserveSecurity, copyOptions, moveOptions, copyProgress, userProgressData, null, null);
+         //         string destinationPathLp = isfullName == null
+         //            ? destinationPath
+         //            : (bool) isfullName
+         //               ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
+         //#if NET35
+         //               : Path.GetFullPathInternal(null, destinationPath, true, false, false, true, false, true, false);
+         //#else
+         //               : Path.GetFullPathInternal(null, destinationPath, true, true, false, true, false, true, false);
+         //#endif
 
-//         if (isMove)
-//         {
-//            //null = destinationPathLp;
-//            FullPath = Path.GetRegularPathInternal(destinationPathLp, false, false, false, false);
 
-//            OriginalPath = destinationPath;
-//            DisplayPath = GetDisplayName(OriginalPath);
+         //         //Directory.CopyMoveInternal(isMove, null, null, destinationPathLp, preserveSecurity, copyOptions, moveOptions, copyProgress, userProgressData, null, null);
 
-//            // Flush any cached information about the file.
-//            Reset();
-//         }
+         //         if (isMove)
+         //         {
+         //            //null = destinationPathLp;
+         //            FullPath = Path.GetRegularPathInternal(destinationPathLp, false, false, false, false);
 
-//         return isMove ? null : new WpdDirectoryInfo(null);
+         //            OriginalPath = destinationPath;
+         //            DisplayPath = GetDisplayName(OriginalPath);
+
+         //            // Flush any cached information about the file.
+         //            Reset();
+         //         }
+
+         //         return isMove ? null : new WpdDirectoryInfo(null);
       }
 
       #endregion // CopyToMoveToInternal
@@ -829,73 +892,5 @@ namespace Alphaleonis.Win32.Device
       #endregion // AlphaFS
 
       #endregion // Methods
-
-      #region Properties
-
-      #region .NET
-
-      #region Exists
-
-      /// <summary>Gets a value indicating whether the directory exists.</summary>
-      /// <returns><c>true</c> if the directory exists; otherwise, <c>false</c>.</returns>
-      public override bool Exists
-      {
-         //get { return (EntryInfo != null && EntryInfo.IsDirectory); }
-         get { return true; }
-      }
-
-      #endregion // Exists
-
-      #region Name
-
-      /// <summary>Gets the name of this <see cref="T:WpdDirectoryInfo"/> instance.</summary>
-      /// <returns>The directory name.</returns>
-      /// <remarks>Returns only the name of the directory, such as "Bin". To get the full path, such as "c:\public\Bin", use the FullName property.</remarks>
-      public override string Name { get; internal set; }
-
-      #endregion // Name
-
-      #region Parent
-
-      /// <summary>Gets the parent directory of a specified subdirectory.</summary>
-      /// <returns>The parent directory, or <c>null</c> if the path is null or if the file path denotes a root (such as "\", "C:", or * "\\server\share").</returns>
-      public WpdDirectoryInfo Parent
-      {
-         get
-         {
-            string path = FullPath;
-
-            if (path.Length > 3)
-               path = Path.RemoveTrailingDirectorySeparator(FullPath, false);
-
-            string dirName = Path.GetDirectoryName(path);
-            return dirName == null ? null : new WpdDirectoryInfo(dirName, true, true);
-         }
-      }
-
-      #endregion // Parent
-
-      #region Root
-
-      /// <summary>Gets the root portion of the directory.</summary>
-      /// <returns>An object that represents the root of the directory.</returns>
-      public WpdDirectoryInfo Root
-      {
-         get
-         {
-            string root = Path.GetPathRoot(FullPath, false);
-
-            if (Utils.IsNullOrWhiteSpace(root))
-               root = NativeMethods.DeviceObjectId;
-            
-            return new WpdDirectoryInfo(root, FullPath);
-         }
-      }
-
-      #endregion // Root
-
-      #endregion // .NET
-
-      #endregion // Properties
    }
 }

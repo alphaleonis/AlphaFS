@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Enumerates all available Windows Portable Devices (WPD) on the local host, that use the <see cref="T:PortableDeviceProtocol.MediaTransferProtocol"/>.</summary>
       /// <param name="connect"><c>true</c> connects to the Portable Device as soon as the instance is created. <c>false</c> does not connect to the device. Use method <see cref="M:Connect()"/> to manually connect.</param>
       /// <returns>Returns <see cref="T:IEnumerable{PortableDeviceInfo}"/> instances of type <see cref="T:DeviceGuid.WpdDevice"/> on the Computer.</returns>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "mtp")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mtp")]
       [SecurityCritical]
       public static IEnumerable<PortableDeviceInfo> EnumeratePortableMtpDevices(bool connect)
       {
