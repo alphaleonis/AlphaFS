@@ -21,8 +21,6 @@
 
 using PortableDeviceApiLib;
 using System;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Alphaleonis.Win32.Filesystem;
 
@@ -40,6 +38,10 @@ namespace Alphaleonis.Win32.Device
 
       // The underlying <see cref="_deviceInfo"/> instance of the Portable Device.
       private readonly DeviceInfo _deviceInfo;
+
+
+      private readonly AssemblyName _product;
+      private readonly Version _version;
 
       #endregion // Fields
 
@@ -82,6 +84,9 @@ namespace Alphaleonis.Win32.Device
 
       internal PortableDeviceInfo(DeviceInfo deviceInfo, bool connect, bool mtpOnly)
       {
+         _product = Assembly.GetExecutingAssembly().GetName();
+         _version = _product.Version;
+
          _mtpOnly = mtpOnly;
 
          DeviceType = PortableDeviceType.Unknown;
@@ -103,7 +108,7 @@ namespace Alphaleonis.Win32.Device
 
       #region Properties
       
-      /// <summary>The ID of the Portable Device.</summary>
+      /// <summary>The PnP Device ID (<see cref="DeviceInfo.DevicePath"/>) of the Portable Device.</summary>
       public string DeviceId
       {
          get
@@ -177,8 +182,8 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>Indicates the total storage capacity in objects, for example the available slots on a SIM card.</summary>
-      public long StorageCapacityInObjects { get; private set; }
+      ///// <summary>Indicates the total storage capacity in objects, for example the available slots on a SIM card.</summary>
+      //public long WPD_STORAGE_CAPACITY_IN_OBJECTS { get; private set; }
 
 
       /// <summary>A human-readable description of the storage.</summary>
@@ -200,12 +205,12 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>The number of additional objects that can be written to the device. For example, if a device only allows a single object, this would be zero if the object already existed.</summary>
-      public long StorageFreeSpaceInObjects { get; private set; }
+      ///// <summary>The number of additional objects that can be written to the device. For example, if a device only allows a single object, this would be zero if the object already existed.</summary>
+      //public long WPD_STORAGE_FREE_SPACE_IN_OBJECTS { get; private set; }
 
 
-      /// <summary>Specifies the maximum size of a single object (in bytes) that can be placed on this storage.</summary>
-      public long StorageMaxObjectSize { get; private set; }
+      ///// <summary>Specifies the maximum size of a single object (in bytes) that can be placed on this storage.</summary>
+      //public long WPD_STORAGE_MAX_OBJECT_SIZE { get; private set; }
 
 
       /// <summary>A vendor-specific serial number for the storage.</summary>

@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System.Reflection;
 using PortableDeviceTypesLib;
 using IPortableDeviceValues = PortableDeviceApiLib.IPortableDeviceValues;
 
@@ -35,14 +36,15 @@ namespace Alphaleonis.Win32.Device
          // MSDN: The application is not required to send any key/value pairs. However, sending data might improve performance.
          // Typical key/value pairs include the application name, major and minor version, and build number.
 
-         
-         //var clientInfo = (IPortableDeviceValues) new PortableDeviceValuesClass();
-         //clientInfo.SetStringValue(ref PortableDeviceConstants.ClientName, ProductVersion.ProductName);
-         //clientInfo.SetUnsignedIntegerValue(ref PortableDeviceConstants.ClientMajorVersion, (uint) ProductVersion.ProductMajorPart);
-         //clientInfo.SetUnsignedIntegerValue(ref PortableDeviceConstants.ClientMinorVersion, (uint) ProductVersion.ProductMinorPart);
-         //clientInfo.SetUnsignedIntegerValue(ref PortableDeviceConstants.ClientRevision, 0);
 
-         PortableDevice.Open(DeviceId, (IPortableDeviceValues) new PortableDeviceValuesClass());
+         var clientInfo = (IPortableDeviceValues) new PortableDeviceValuesClass();
+
+         clientInfo.SetStringValue(ref NativeMethods.WPD_CLIENT_NAME, _product.Name);
+         clientInfo.SetUnsignedIntegerValue(ref NativeMethods.WPD_CLIENT_MAJOR_VERSION, (uint) _version.Major);
+         clientInfo.SetUnsignedIntegerValue(ref NativeMethods.WPD_CLIENT_MINOR_VERSION, (uint) _version.Minor);
+         clientInfo.SetUnsignedIntegerValue(ref NativeMethods.WPD_CLIENT_REVISION, (uint) _version.Revision);
+
+         PortableDevice.Open(DeviceId, clientInfo);
 
          IsConnected = CreatePortableDeviceInstance();
       }

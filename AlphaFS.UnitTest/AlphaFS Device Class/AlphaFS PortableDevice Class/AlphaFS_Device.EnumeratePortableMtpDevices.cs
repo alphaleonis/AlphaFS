@@ -31,31 +31,23 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_EnumeratePortableDevices_OnlyDevicesUsingMTP()
+      public void AlphaFS_Device_EnumeratePortableMtpDevices()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
          var deviceCount = 0;
          var autoConnect = false;
 
-         // false: All  WPD devices that use UMS.
-         // true : Only WPD devices that use MTP.
-         const bool mtpOnly = true;
-         
-
-         foreach (var portableDeviceInfo in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect, mtpOnly).OrderBy(p => p.DeviceType).ThenBy(p => p.DeviceFriendlyName))
+         foreach (var portableDeviceInfo in Alphaleonis.Win32.Device.Local.EnumeratePortableMtpDevices(autoConnect).OrderBy(p => p.DeviceType).ThenBy(p => p.DeviceFriendlyName))
          {
             Console.WriteLine("#{0:000}\tInput Portable Device Path: [{1}]", ++deviceCount, portableDeviceInfo.DeviceId);
 
 
             if (!autoConnect)
             {
-               if (!mtpOnly)
-               {
-                  Assert.IsFalse(portableDeviceInfo.IsConnected, "The portable device is connected, but it is not expected.");
+               Assert.IsTrue(portableDeviceInfo.IsConnected, "The portable device is connected, but it is not expected.");
 
-                  portableDeviceInfo.Connect();
-               }
+               portableDeviceInfo.Connect();
             }
 
 
@@ -66,7 +58,7 @@ namespace AlphaFS.UnitTest
 
             // Enumerate
 
-            var maxItems = 50;
+            const int maxItems = 50;
 
             Console.WriteLine("\n\tEnumerating the first {0} items from the portable device.\n", maxItems);
 
@@ -82,9 +74,6 @@ namespace AlphaFS.UnitTest
                   totalSize += fileInfo.Length;
 
                Console.WriteLine("\t\t#{0:000} [{1}] [{2}]", ++fseCount, pdfse.IsDirectory ? "Folder" : "File  ", pdfse.FullName);
-
-
-               //portableDeviceInfo.DisplayProperties(pdfse.Id);
 
 
                if (fseCount == maxItems)

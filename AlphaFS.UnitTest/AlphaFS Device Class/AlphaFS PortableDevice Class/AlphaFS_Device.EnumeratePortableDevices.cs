@@ -38,24 +38,17 @@ namespace AlphaFS.UnitTest
          var deviceCount = 0;
          var autoConnect = false;
 
-         // false: All  WPD devices that use UMS.
-         // true : Only WPD devices that use MTP.
-         const bool mtpOnly = false;
 
-
-         foreach (var portableDeviceInfo in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect, mtpOnly).OrderBy(p => p.DeviceType).ThenBy(p => p.DeviceFriendlyName))
+         foreach (var portableDeviceInfo in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect).OrderBy(p => p.DeviceType).ThenBy(p => p.DeviceFriendlyName))
          {
             Console.WriteLine("#{0:000}\tInput Portable Device Path: [{1}]", ++deviceCount, portableDeviceInfo.DeviceId);
 
 
             if (!autoConnect)
             {
-               if (!mtpOnly)
-               {
-                  Assert.IsFalse(portableDeviceInfo.IsConnected, "The portable device is connected, but it is not expected.");
+               Assert.IsFalse(portableDeviceInfo.IsConnected, "The portable device is connected, but it is not expected.");
 
-                  portableDeviceInfo.Connect();
-               }
+               portableDeviceInfo.Connect();
             }
 
 
@@ -66,20 +59,34 @@ namespace AlphaFS.UnitTest
 
             // Enumerate
 
-            Console.WriteLine("\n\tEnumerating root folders from portable device.");
+            const int maxItems = 50;
 
-            foreach (var pdfse in portableDeviceInfo.EnumerateFileSystemEntries(false).OrderBy(fse => !fse.IsDirectory).ThenBy(fse => fse.FullName))
+            Console.WriteLine("\n\tEnumerating the first {0} items from the portable device.\n", maxItems);
+
+
+            var fseCount = 0;
+            long totalSize = 0;
+
+            foreach (var pdfse in portableDeviceInfo.EnumerateFileSystemEntries(true))
             {
-               UnitTestConstants.Dump(pdfse, true);
+               var fileInfo = pdfse as Alphaleonis.Win32.Device.WpdFileInfo;
+
+               if (null != fileInfo)
+                  totalSize += fileInfo.Length;
+
+               Console.WriteLine("\t\t#{0:000} [{1}] [{2}]", ++fseCount, pdfse.IsDirectory ? "Folder" : "File  ", pdfse.FullName);
+
+
+               if (fseCount == maxItems)
+                  break;
             }
+
+            Console.WriteLine("\n\t\tTotal file size: [{0}]\n", Alphaleonis.Utils.UnitSizeToText(totalSize));
 
 
             portableDeviceInfo.Disconnect();
-               
+
             Assert.IsFalse(portableDeviceInfo.IsConnected, "The portable device is connected, but it is not expected.");
-
-
-            Console.WriteLine();
          }
 
 

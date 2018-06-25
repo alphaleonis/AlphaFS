@@ -97,13 +97,13 @@ namespace Alphaleonis.Win32.Device
 
          //IPortableDeviceValues clientInfo = (IPortableDeviceValues) new PortableDeviceValues();
 
-         //clientInfo.SetStringValue(ref WindowsPortableDeviceConstants.ObjectParentId, parentObjectId);
-         //clientInfo.SetUnsignedLargeIntegerValue(ref WindowsPortableDeviceConstants.ObjectSize, (ulong)File.GetSizeInternal(null, null, path, false));
+         //clientInfo.SetStringValue(ref WindowsNativeMethods.WPD_OBJECT_PARENT_ID, parentObjectId);
+         //clientInfo.SetUnsignedLargeIntegerValue(ref WindowsNativeMethods.WPD_OBJECT_SIZE, (ulong)File.GetSizeInternal(null, null, path, false));
 
          //string fileName = Path.GetFileName(path);
 
-         //clientInfo.SetStringValue(ref WindowsPortableDeviceConstants.ObjectOriginalFileName, fileName);
-         //clientInfo.SetStringValue(ref WindowsPortableDeviceConstants.ObjectName, fileName);
+         //clientInfo.SetStringValue(ref WindowsNativeMethods.WPD_OBJECT_ORIGINAL_FILE_NAME, fileName);
+         //clientInfo.SetStringValue(ref WindowsNativeMethods.WPD_OBJECT_NAME, fileName);
 
          //#endregion // Get Properties
 

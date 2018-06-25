@@ -36,16 +36,16 @@ namespace Alphaleonis.Win32.Device
 
          try
          {
-            devicePropertyValues.GetStringValue(ref PortableDeviceConstants.DeviceProtocol, out stringValue);
+            devicePropertyValues.GetStringValue(ref NativeMethods.WPD_DEVICE_PROTOCOL, out stringValue);
 
             if (null != stringValue)
             {
-               if (stringValue.Equals(PortableDeviceConstants.MassStorageClassProtocol, StringComparison.OrdinalIgnoreCase))
+               if (stringValue.Equals(NativeMethods.MassStorageClassProtocol, StringComparison.OrdinalIgnoreCase))
 
                   DeviceProtocol = PortableDeviceProtocol.Ums;
 
 
-               else if (stringValue.Equals(PortableDeviceConstants.MediaTransferProtocol, StringComparison.OrdinalIgnoreCase))
+               else if (stringValue.Equals(NativeMethods.MediaTransferProtocol, StringComparison.OrdinalIgnoreCase))
 
                   DeviceProtocol = PortableDeviceProtocol.Mtp;
             }
@@ -59,7 +59,6 @@ namespace Alphaleonis.Win32.Device
 
          #region Required Properties
 
-         // No try/catch since these properties are required, so assume that these properties are present.
          // DeviceObjectId
          // Manufacturer
          // Model
@@ -67,7 +66,7 @@ namespace Alphaleonis.Win32.Device
 
          try
          {
-            devicePropertyValues.GetStringValue(ref PortableDeviceConstants.DeviceFirmwareVersion, out stringValue);
+            devicePropertyValues.GetStringValue(ref NativeMethods.WPD_DEVICE_FIRMWARE_VERSION, out stringValue);
             DeviceFirmwareVersion = stringValue ?? string.Empty;
          }
          catch { DeviceFirmwareVersion = string.Empty; }
@@ -75,7 +74,7 @@ namespace Alphaleonis.Win32.Device
 
          try
          {
-            devicePropertyValues.GetStringValue(ref PortableDeviceConstants.DeviceSerialNumber, out stringValue);
+            devicePropertyValues.GetStringValue(ref NativeMethods.WPD_DEVICE_SERIAL_NUMBER, out stringValue);
             DeviceSerialNumber = stringValue ?? string.Empty;
          }
          catch { DeviceSerialNumber = string.Empty; }
@@ -89,7 +88,7 @@ namespace Alphaleonis.Win32.Device
 
          try
          {
-            devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.DevicePowerLevel, out uintValue);
+            devicePropertyValues.GetUnsignedIntegerValue(ref NativeMethods.WPD_DEVICE_POWER_LEVEL, out uintValue);
             DevicePowerLevel = (int) uintValue;
          }
          catch { DevicePowerLevel = -1; }
@@ -97,7 +96,7 @@ namespace Alphaleonis.Win32.Device
 
          try
          {
-            devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.DevicePowerSource, out uintValue);
+            devicePropertyValues.GetUnsignedIntegerValue(ref NativeMethods.WPD_DEVICE_POWER_SOURCE, out uintValue);
             DevicePowerSource = (PortableDevicePowerSource) uintValue;
          }
          catch { DevicePowerSource = PortableDevicePowerSource.Unknown; }
@@ -105,19 +104,19 @@ namespace Alphaleonis.Win32.Device
 
          try
          {
-            devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.DeviceTransportType, out uintValue);
-            TransportType = (PortableDeviceTransportType) uintValue;
-         }
-         catch { TransportType = PortableDeviceTransportType.Unspecified; }
-
-
-         try
-         {
-            devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.DeviceType, out uintValue);
+            devicePropertyValues.GetUnsignedIntegerValue(ref NativeMethods.WPD_DEVICE_TYPE, out uintValue);
             DeviceType = (PortableDeviceType) uintValue;
          }
          catch { DeviceType = PortableDeviceType.Unknown; }
 
+
+         try
+         {
+            devicePropertyValues.GetUnsignedIntegerValue(ref NativeMethods.WPD_DEVICE_TRANSPORT, out uintValue);
+            TransportType = (PortableDeviceTransportType) uintValue;
+         }
+         catch { TransportType = PortableDeviceTransportType.Unspecified; }
+         
          #endregion // Recommended Properties
 
 

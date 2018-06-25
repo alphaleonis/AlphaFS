@@ -35,23 +35,23 @@ namespace Alphaleonis.Win32.Device
 
          try
          {
-            devicePropertyValues.GetUnsignedLargeIntegerValue(ref PortableDeviceConstants.StorageCapacity, out ulongValue);
+            devicePropertyValues.GetUnsignedLargeIntegerValue(ref NativeMethods.WPD_STORAGE_CAPACITY, out ulongValue);
             StorageCapacity = (long) ulongValue;
          }
          catch { StorageCapacity = -1; }
 
 
-         try
-         {
-            devicePropertyValues.GetUnsignedLargeIntegerValue(ref PortableDeviceConstants.StorageCapacityInObjects, out ulongValue);
-            StorageCapacityInObjects = (long) ulongValue;
-         }
-         catch { StorageCapacityInObjects = -1; }
+         //try
+         //{
+         //   devicePropertyValues.GetUnsignedLargeIntegerValue(ref NativeMethods.WPD_STORAGE_CAPACITY_IN_OBJECTS, out ulongValue);
+         //   WPD_STORAGE_CAPACITY_IN_OBJECTS = (long) ulongValue;
+         //}
+         //catch { WPD_STORAGE_CAPACITY_IN_OBJECTS = -1; }
 
 
          try
          {
-            devicePropertyValues.GetStringValue(ref PortableDeviceConstants.StorageDescription, out stringValue);
+            devicePropertyValues.GetStringValue(ref NativeMethods.WPD_STORAGE_DESCRIPTION, out stringValue);
             StorageDescription = stringValue ?? string.Empty;
          }
          catch { StorageDescription = string.Empty; }
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Device
 
          try
          {
-            devicePropertyValues.GetStringValue(ref PortableDeviceConstants.StorageFileSystemType, out stringValue);
+            devicePropertyValues.GetStringValue(ref NativeMethods.WPD_STORAGE_FILE_SYSTEM_TYPE, out stringValue);
             StorageFileSystemType = stringValue ?? string.Empty;
          }
          catch { StorageFileSystemType = string.Empty; }
@@ -67,31 +67,31 @@ namespace Alphaleonis.Win32.Device
 
          try
          {
-            devicePropertyValues.GetUnsignedLargeIntegerValue(ref PortableDeviceConstants.StorageFreeSpaceInBytes, out ulongValue);
+            devicePropertyValues.GetUnsignedLargeIntegerValue(ref NativeMethods.WPD_STORAGE_FREE_SPACE_IN_BYTES, out ulongValue);
             StorageFreeSpaceInBytes = (long) ulongValue;
          }
          catch { StorageFreeSpaceInBytes = -1; }
          
 
-         try
-         {
-            devicePropertyValues.GetUnsignedLargeIntegerValue(ref PortableDeviceConstants.StorageFreeSpaceInObjects, out ulongValue);
-            StorageFreeSpaceInObjects = (long) ulongValue;
-         }
-         catch { StorageFreeSpaceInObjects = -1; }
+         //try
+         //{
+         //   devicePropertyValues.GetUnsignedLargeIntegerValue(ref NativeMethods.WPD_STORAGE_FREE_SPACE_IN_OBJECTS, out ulongValue);
+         //   WPD_STORAGE_FREE_SPACE_IN_OBJECTS = (long) ulongValue;
+         //}
+         //catch { WPD_STORAGE_FREE_SPACE_IN_OBJECTS = -1; }
          
 
-         try
-         {
-            devicePropertyValues.GetUnsignedLargeIntegerValue(ref PortableDeviceConstants.StorageMaxObjectSize, out ulongValue);
-            StorageMaxObjectSize = (long) ulongValue;
-         }
-         catch { StorageMaxObjectSize = -1; }
+         //try
+         //{
+         //   devicePropertyValues.GetUnsignedLargeIntegerValue(ref NativeMethods.WPD_STORAGE_MAX_OBJECT_SIZE, out ulongValue);
+         //   WPD_STORAGE_MAX_OBJECT_SIZE = (long) ulongValue;
+         //}
+         //catch { WPD_STORAGE_MAX_OBJECT_SIZE = -1; }
 
 
          try
          {
-            devicePropertyValues.GetStringValue(ref PortableDeviceConstants.StorageSerialNumber, out stringValue);
+            devicePropertyValues.GetStringValue(ref NativeMethods.WPD_STORAGE_SERIAL_NUMBER, out stringValue);
             StorageSerialNumber = stringValue ?? string.Empty;
          }
          catch { StorageSerialNumber = string.Empty; }
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Device
          try
          {
             uint uintValue;
-            devicePropertyValues.GetUnsignedIntegerValue(ref PortableDeviceConstants.StorageType, out uintValue);
+            devicePropertyValues.GetUnsignedIntegerValue(ref NativeMethods.WPD_STORAGE_TYPE, out uintValue);
             StorageType = (PortableDeviceStorageType) uintValue;
          }
          catch { StorageType = PortableDeviceStorageType.Undefined; }

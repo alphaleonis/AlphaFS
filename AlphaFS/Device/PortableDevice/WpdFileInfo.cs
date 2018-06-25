@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Device
       {
          get
          {
-            var dirName = !Utils.IsNullOrWhiteSpace(DirectoryName) ? DirectoryName : PortableDeviceConstants.DeviceObjectId;
+            var dirName = !Utils.IsNullOrWhiteSpace(DirectoryName) ? DirectoryName : NativeMethods.DeviceObjectId;
 
             return null != dirName ? new DirectoryInfo(null, dirName, PathFormat.FullPath) : null;
          }

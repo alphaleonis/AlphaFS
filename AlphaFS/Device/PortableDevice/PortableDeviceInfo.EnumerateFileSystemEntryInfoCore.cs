@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Device
 
          var dirs = new Queue<string>(1000);
 
-         dirs.Enqueue(!Utils.IsNullOrWhiteSpace(objectId) ? objectId : PortableDeviceConstants.DeviceObjectId);
+         dirs.Enqueue(!Utils.IsNullOrWhiteSpace(objectId) ? objectId : NativeMethods.DeviceObjectId);
 
 
          IPortableDeviceProperties deviceProperties;
@@ -172,69 +172,69 @@ namespace Alphaleonis.Win32.Device
             throw new ArgumentNullException("deviceProperties");
 
          if (Utils.IsNullOrWhiteSpace(objectId))
-            objectId = PortableDeviceConstants.DeviceObjectId;
+            objectId = NativeMethods.DeviceObjectId;
 
          var keys = (IPortableDeviceKeyCollection) new PortableDeviceTypesLib.PortableDeviceKeyCollectionClass();
 
-         keys.Add(PortableDeviceConstants.ObjectContentType);
-         keys.Add(PortableDeviceConstants.ObjectName);
-         keys.Add(PortableDeviceConstants.ObjectOriginalFileName);
-         keys.Add(PortableDeviceConstants.ObjectParentId);
-         keys.Add(PortableDeviceConstants.ObjectSize);
+         keys.Add(NativeMethods.WPD_OBJECT_CONTENT_TYPE);
+         keys.Add(NativeMethods.WPD_OBJECT_NAME);
+         keys.Add(NativeMethods.WPD_OBJECT_ORIGINAL_FILE_NAME);
+         keys.Add(NativeMethods.WPD_OBJECT_PARENT_ID);
+         keys.Add(NativeMethods.WPD_OBJECT_SIZE);
 
          IPortableDeviceValues objectProperties;
          deviceProperties.GetValues(objectId, keys, out objectProperties);
 
 
-         // ObjectContentType
+         // WPD_OBJECT_CONTENT_TYPE
 
          Guid objectContentType;
-         objectProperties.GetGuidValue(ref PortableDeviceConstants.ObjectContentType, out objectContentType);
+         objectProperties.GetGuidValue(ref NativeMethods.WPD_OBJECT_CONTENT_TYPE, out objectContentType);
 
-         var isFolder = objectContentType == PortableDeviceConstants.ContentTypeFolder || objectContentType == PortableDeviceConstants.ContentTypeFunctionalObject;
+         var isFolder = objectContentType == NativeMethods.WPD_CONTENT_TYPE_FOLDER || objectContentType == NativeMethods.WPD_CONTENT_TYPE_FUNCTIONAL_OBJECT;
 
 
-         // ObjectParentId
+         // WPD_OBJECT_PARENT_ID
 
          string objectParentId;
 
          // Querying from the device root always return an empty string
          // because the FriendlyName is normally the assigned drive letter, such as USB disks.
-         objectProperties.GetStringValue(ref PortableDeviceConstants.ObjectParentId, out objectParentId);
+         objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_PARENT_ID, out objectParentId);
 
 
-         // ObjectName
+         // WPD_OBJECT_NAME
 
          string objectName;
 
-         objectProperties.GetStringValue(ref PortableDeviceConstants.ObjectName, out objectName);
+         objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_NAME, out objectName);
 
 
-         // ObjectOriginalFileName
+         // WPD_OBJECT_ORIGINAL_FILE_NAME
 
          string objectOriginalFileName;
 
-         if (objectId.Equals(PortableDeviceConstants.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
+         if (objectId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
 
-            objectProperties.GetStringValue(ref PortableDeviceConstants.ObjectName, out objectOriginalFileName);
+            objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_NAME, out objectOriginalFileName);
 
          else
          {
-            if (objectParentId.Equals(PortableDeviceConstants.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
+            if (objectParentId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
 
-               objectProperties.GetStringValue(ref PortableDeviceConstants.ObjectName, out objectOriginalFileName);
+               objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_NAME, out objectOriginalFileName);
 
             else
-               objectProperties.GetStringValue(ref PortableDeviceConstants.ObjectOriginalFileName, out objectOriginalFileName);
+               objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_ORIGINAL_FILE_NAME, out objectOriginalFileName);
          }
 
 
-         // ObjectSize
+         // WPD_OBJECT_SIZE
 
          ulong objectSize = 0;
 
          if (!isFolder)
-            objectProperties.GetUnsignedLargeIntegerValue(ref PortableDeviceConstants.ObjectSize, out objectSize);
+            objectProperties.GetUnsignedLargeIntegerValue(ref NativeMethods.WPD_OBJECT_SIZE, out objectSize);
 
 
          // Full path equals the objectId on devices using the UMS protocol (USB disks).
@@ -275,16 +275,16 @@ namespace Alphaleonis.Win32.Device
 
          // No need to drill down if we are already at the device root.
 
-         if (objectId.Length == 0 || objectId.Equals(PortableDeviceConstants.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
+         if (objectId.Length == 0 || objectId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
 
-            return PortableDeviceConstants.DeviceObjectId;
+            return NativeMethods.DeviceObjectId;
 
 
          var keys = (IPortableDeviceKeyCollection) new PortableDeviceTypesLib.PortableDeviceKeyCollectionClass();
 
-         keys.Add(PortableDeviceConstants.ObjectName);
-         keys.Add(PortableDeviceConstants.ObjectOriginalFileName);
-         keys.Add(PortableDeviceConstants.ObjectParentId);
+         keys.Add(NativeMethods.WPD_OBJECT_NAME);
+         keys.Add(NativeMethods.WPD_OBJECT_ORIGINAL_FILE_NAME);
+         keys.Add(NativeMethods.WPD_OBJECT_PARENT_ID);
 
 
          var folderFullPath = new Stack<string>(1000);
@@ -298,46 +298,46 @@ namespace Alphaleonis.Win32.Device
             //deviceProperties.GetValues(objectId, null, out objectProperties);
             deviceProperties.GetValues(objectId, keys, out objectProperties);
 
-            // ObjectName            : ".com.exent.android"        (as shown on enumeration)
-            // ObjectOriginalFileName: ".com.exent.android.shared" (as shown in Explorer)
+            // WPD_OBJECT_NAME            : ".com.exent.android"        (as shown on enumeration)
+            // WPD_OBJECT_ORIGINAL_FILE_NAME: ".com.exent.android.shared" (as shown in Explorer)
 
             string objectName;
 
-            // ObjectParentId
+            // WPD_OBJECT_PARENT_ID
 
             string objectParentId;
 
             // Querying from the device root always return an empty string
             // because the FriendlyName is normally the assigned drive letter, such as USB disks.
-            objectProperties.GetStringValue(ref PortableDeviceConstants.ObjectParentId, out objectParentId);
+            objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_PARENT_ID, out objectParentId);
 
 
             // The Try/Catch construct will slow things down, better use a couple of if/then constructs.
 
-            //try { objectProperties.GetStringValue(ref WindowsPortableDeviceConstants.ObjectOriginalFileName, out objectName); }
-            //catch { objectProperties.GetStringValue(ref WindowsPortableDeviceConstants.ObjectName, out objectName); }
+            //try { objectProperties.GetStringValue(ref WindowsNativeMethods.WPD_OBJECT_ORIGINAL_FILE_NAME, out objectName); }
+            //catch { objectProperties.GetStringValue(ref WindowsNativeMethods.WPD_OBJECT_NAME, out objectName); }
 
-            // Querying from the device root for ObjectOriginalFileName, throws an Exception.
+            // Querying from the device root for WPD_OBJECT_ORIGINAL_FILE_NAME, throws an Exception.
 
-            if (objectId.Equals(PortableDeviceConstants.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
+            if (objectId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
 
-               objectProperties.GetStringValue(ref PortableDeviceConstants.ObjectName, out objectName);
+               objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_NAME, out objectName);
 
             else
             {
-               if (objectParentId.Equals(PortableDeviceConstants.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
+               if (objectParentId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
 
-                  objectProperties.GetStringValue(ref PortableDeviceConstants.ObjectName, out objectName);
+                  objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_NAME, out objectName);
 
                else
-                  objectProperties.GetStringValue(ref PortableDeviceConstants.ObjectOriginalFileName, out objectName);
+                  objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_ORIGINAL_FILE_NAME, out objectName);
             }
 
 
             if (!Utils.IsNullOrWhiteSpace(objectName))
                folderFullPath.Push(objectName);
 
-            isDeviceRoot = objectParentId.Length == 0 || objectId.Equals(PortableDeviceConstants.DeviceObjectId, StringComparison.OrdinalIgnoreCase);
+            isDeviceRoot = objectParentId.Length == 0 || objectId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase);
 
             objectId = objectParentId;
          }
@@ -364,8 +364,8 @@ namespace Alphaleonis.Win32.Device
       //   if (Utils.IsNullOrWhiteSpace(objectId))
       //      throw new ArgumentNullException("objectId");
 
-      //   if (objectId.Length == 0 || objectId.Equals(PortableDeviceConstants.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
-      //      return PortableDeviceConstants.DeviceObjectId;
+      //   if (objectId.Length == 0 || objectId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
+      //      return NativeMethods.DeviceObjectId;
 
       //   IPortableDeviceValues objectProperties;
       //   string objectParentId;
@@ -374,7 +374,7 @@ namespace Alphaleonis.Win32.Device
 
       //   // Querying from the device root always return an empty string
       //   // because the FriendlyName is normally the assigned drive letter, such as USB disks.
-      //   objectProperties.GetStringValue(ref PortableDeviceConstants.ObjectParentId, out objectParentId);
+      //   objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_PARENT_ID, out objectParentId);
 
       //   return objectParentId;
       //}

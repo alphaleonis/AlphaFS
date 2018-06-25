@@ -204,7 +204,7 @@
     <Compile Include="Device\Local\Local.GetStoragePartitionInfo.cs" />
     <Compile Include="Device\Local\Local.GetStorageDeviceInfo.cs" />
     <Compile Include="Device\Local\Local.GetStorageAdapterInfo.cs" />
-    <Compile Include="Device\Native Methods\NativeMethods.cs" />
+    <Compile Include="Device\Native Methods\NativeMethods.Constants.cs" />
     <Compile Include="Device\Native Other\WPD_POWER_SOURCES.cs" />
     <Compile Include="Device\Native Other\WPD_DEVICE_TYPES.cs" />
     <Compile Include="Device\Native Other\WPD_STORAGE_TYPE_VALUES.cs" />
@@ -213,7 +213,7 @@
     <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.ContainsVolume.cs" />
     <Compile Include="Device\Local\Local.SetStorageDeviceInfoData.cs" />
     <Compile Include="Device\Local\Local.GetDiskGeometryEx.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceConstants.cs" />
+    <Compile Include="Device\Native Methods\NativeMethods.PortableDevice.Constants.cs" />
     <Compile Include="Device\PortableDevice\WpdDirectoryInfo.cs" />
     <Compile Include="Device\PortableDevice\WpdFileInfo.cs" />
     <Compile Include="Device\PortableDevice\WpdFileSystemInfo.cs" />
