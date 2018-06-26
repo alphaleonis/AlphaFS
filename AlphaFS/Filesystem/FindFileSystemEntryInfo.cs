@@ -496,11 +496,8 @@ namespace Alphaleonis.Win32.Filesystem
                         dirs.Enqueue(Path.AddTrailingDirectorySeparator(pathLp + fileName, false));
 
 
-                     if (null == res)
-                        continue;
-
-                     yield return res;
-
+                     if (null != res)
+                        yield return res;
 
                   } while (
 
@@ -561,7 +558,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                if (null == handle)
                {
-                  // InputPath might be a logical drive such as: <c>C:\</c>, "D:\".
+                  // InputPath might be a logical drive such as: "C:\", "D:\".
 
                   var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
 

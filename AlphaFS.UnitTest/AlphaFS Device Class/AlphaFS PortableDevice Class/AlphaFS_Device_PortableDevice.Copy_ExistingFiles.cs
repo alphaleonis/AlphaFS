@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
 
                   // Enumerate files.
 
-                  const int maxItems = 10;
+                  const int maxItems = 5;
                   fileCount = 0;
                   var fseCount = 0;
                   long totalSize = 0;

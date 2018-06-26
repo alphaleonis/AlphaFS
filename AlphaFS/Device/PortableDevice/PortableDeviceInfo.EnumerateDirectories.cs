@@ -22,6 +22,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Device
 {

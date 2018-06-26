@@ -159,7 +159,7 @@ namespace Alphaleonis.Win32.Device
             throw new ArgumentNullException("destinationPath");
 
          if (destinationPath.Trim().Length == 0)
-            throw new ArgumentException("destinationPath");
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "destinationPath");
 
          if (null == resources)
          {
@@ -187,6 +187,8 @@ namespace Alphaleonis.Win32.Device
             fileSourceStream = (System.Runtime.InteropServices.ComTypes.IStream) fileOutStream;
 
 
+            // Property fileInfo.OriginalFileName also contains the file extension, if any.
+
             var fileFullName = Path.GetExtendedLengthPathCore(transaction, Path.CombineCore(false, destinationPath, fileInfo.OriginalFileName), PathFormat.FullPath, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
             using (var safeFileHandle = File.CreateFileCore(transaction, fileFullName, ExtendedFileAttributes.Normal, null, FileMode.CreateNew, FileSystemRights.CreateFiles, FileShare.None, false, false, PathFormat.LongFullPath))
@@ -194,10 +196,12 @@ namespace Alphaleonis.Win32.Device
             using (var fileStream = new FileStream(safeFileHandle, FileAccess.Write, (int) optimalBufferSize))
             {
                var buffer = new byte[optimalBufferSize];
-               int bytesRead;
+               bool writeFinished;
 
                do
                {
+                  int bytesRead;
+
                   using (var safeBuffer = new SafeGlobalMemoryBufferHandle(buffer.Length))
                   {
                      fileSourceStream.Read(buffer, safeBuffer.Capacity, safeBuffer.DangerousGetHandle());
@@ -208,7 +212,9 @@ namespace Alphaleonis.Win32.Device
                   if (bytesRead > 0)
                      fileStream.Write(buffer, 0, bytesRead);
 
-               } while (bytesRead > 0);
+                  writeFinished = bytesRead < buffer.Length;
+
+               } while (!writeFinished);
             }
          }
          finally

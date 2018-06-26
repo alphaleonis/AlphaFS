@@ -218,7 +218,6 @@
     <Compile Include="Device\PortableDevice\PortableDeviceInfo.EnumerateFiles.cs" />
     <Compile Include="Device\PortableDevice\WpdDirectoryInfo.cs" />
     <Compile Include="Device\PortableDevice\WpdFileInfo.cs" />
-    <Compile Include="Device\PortableDevice\WpdFileSystemInfo.cs" />
     <Compile Include="Device\PortableDevice\PortableDeviceInfo.EnumerateFileSystemEntries.cs" />
     <Compile Include="Device\PortableDevice\PortableDeviceInfo.Delete.cs" />
     <Compile Include="Device\PortableDevice\PortableDeviceInfo.PopulateDeviceProperties.cs" />
@@ -580,6 +579,7 @@
     <Compile Include="Filesystem\Structures, Enumerations\StreamId.cs" />
     <Compile Include="Filesystem\Native Other\SymbolicLinkTarget.cs" />
     <Compile Include="Filesystem\Native Other\SymbolicLinkType.cs" />
+    <Compile Include="Filesystem\WpdFileSystemInfo.cs" />
     <Compile Include="OperatingSystem\IsAtLeast.cs" />
     <Compile Include="OperatingSystem\EnumOsName.cs" />
     <Compile Include="OperatingSystem\EnumProcessorArchitecture.cs" />
@@ -790,7 +790,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

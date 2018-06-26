@@ -20,6 +20,7 @@
  */
 
 using System.Collections.Generic;
+using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Device
 {

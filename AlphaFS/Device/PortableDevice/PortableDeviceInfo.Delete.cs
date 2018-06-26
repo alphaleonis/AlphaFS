@@ -19,11 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Runtime.InteropServices;
-using PortableDeviceApiLib;
-using IPortableDeviceValues = PortableDeviceApiLib.IPortableDeviceValues;
-
 namespace Alphaleonis.Win32.Device
 {
    public sealed partial class PortableDeviceInfo

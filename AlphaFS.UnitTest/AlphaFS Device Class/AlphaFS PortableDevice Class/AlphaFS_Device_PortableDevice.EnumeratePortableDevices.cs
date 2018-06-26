@@ -69,7 +69,7 @@ namespace AlphaFS.UnitTest
 
             foreach (var pdfsi in portableDeviceInfo.EnumerateFileSystemEntries(true))
             {
-               var fileInfo = pdfsi as Alphaleonis.Win32.Device.WpdFileInfo;
+               var fileInfo = pdfsi as Alphaleonis.Win32.Filesystem.WpdFileInfo;
 
                if (null != fileInfo)
                   totalSize += fileInfo.Length;

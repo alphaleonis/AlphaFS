@@ -23,12 +23,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security;
-using Alphaleonis.Win32.Filesystem;
-using Path = Alphaleonis.Win32.Filesystem.Path;
-using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
-using File = Alphaleonis.Win32.Filesystem.File;
 
-namespace Alphaleonis.Win32.Device
+namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides properties and instance methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="T:FileStream"/> objects. This class cannot be inherited.</summary>
    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wpd")]
@@ -37,6 +33,7 @@ namespace Alphaleonis.Win32.Device
    {
       #region Fields
 
+      private string _name;
       private long _length = -1;
 
       #endregion // Fields
@@ -70,7 +67,7 @@ namespace Alphaleonis.Win32.Device
       {
          InitializeCore(false, objectId, fullName);
 
-         Name = name;
+         _name = name;
       }
 
       #endregion // Constructors
@@ -83,13 +80,13 @@ namespace Alphaleonis.Win32.Device
       /// <summary>Gets an instance of the parent directory.</summary>
       /// <returns>A <see cref="T:DirectoryInfo"/> object representing the parent directory of this file.</returns>
       /// <remarks>To get the parent directory as a string, use the DirectoryName property.</remarks>
-      public DirectoryInfo Directory
+      public WpdDirectoryInfo Directory
       {
          get
          {
-            var dirName = !Utils.IsNullOrWhiteSpace(DirectoryName) ? DirectoryName : NativeMethods.WPD_DEVICE_OBJECT_ID;
+            var dirName = !Utils.IsNullOrWhiteSpace(DirectoryName) ? DirectoryName : Device.NativeMethods.WPD_DEVICE_OBJECT_ID;
 
-            return null != dirName ? new DirectoryInfo(null, dirName, PathFormat.FullPath) : null;
+            return null != dirName ? new WpdDirectoryInfo(dirName) : null;
          }
       }
 
@@ -106,7 +103,8 @@ namespace Alphaleonis.Win32.Device
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       public override bool Exists
       {
-         get { return EntryInfo != null && !EntryInfo.IsDirectory; }
+         //get { return EntryInfo != null && !EntryInfo.IsDirectory; }
+         get { return true; }
       }
 
 
@@ -155,7 +153,10 @@ namespace Alphaleonis.Win32.Device
       /// The name of the file includes the file extension.
       /// When first called, WpdFileInfo calls Refresh and caches information about the file. On subsequent calls, you must call Refresh to get the latest copy of the information.
       /// </remarks>
-      public override string Name { get; internal set; }
+      public override string Name
+      {
+         get { return _name; }
+      }
 
       #endregion // .NET
 
@@ -166,148 +167,22 @@ namespace Alphaleonis.Win32.Device
 
       #region .NET
 
-      #region CopyTo
-
-      #region .NET
-
-      /// <summary>Copies an existing file to a new file, disallowing the overwriting of an existing file.</summary>
-      /// <param name="destFileName">The name of the new file to copy to.</param>
-      /// <returns>A new file with a fully qualified path.</returns>
-      /// <remarks>Use the CopyTo method to allow overwriting of an existing file.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="Exception"/>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
-      [SecurityCritical]
-      public WpdFileInfo CopyTo(string destFileName)
-      {
-         return CopyToMoveToInternal(false, destFileName, CopyOptions.FailIfExists, null, null, null, false);
-      }
-
-      /// <summary>Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
-      /// <param name="destFileName">The name of the new file to copy to.</param>
-      /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; otherwise, <c>false</c>.</param>
-      /// <returns>A new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <c>true</c>. If the file exists and <paramref name="overwrite"/> is <c>false</c>, an <see cref="T:System.IO.IOException"/> is thrown.</returns>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="Exception"/>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
-      [SecurityCritical]
-      public WpdFileInfo CopyTo(string destFileName, bool overwrite)
-      {
-         return CopyToMoveToInternal(false, destFileName, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, false);
-      }
-
-      #endregion // .NET
-
-
-      #region AlphaFS
-
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
-      /// <param name="destFileName">The name of the new file to copy to.</param>
-      /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; otherwise, <c>false</c>.</param>
-      /// <param name="copyProgress"><para>This parameter can be <c>null</c>. A callback function that is called each time another portion of the file has been copied.</para></param>
-      /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
-      /// <returns>A new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <c>true</c>. If the file exists and <paramref name="overwrite"/> is <c>false</c>, an <see cref="T:System.IO.IOException"/> is thrown.</returns>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="Exception"/>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
-      [SecurityCritical]
-      public WpdFileInfo CopyTo(string destFileName, bool overwrite, CopyMoveProgressRoutine copyProgress, object userProgressData)
-      {
-         return CopyToMoveToInternal(false, destFileName, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, copyProgress, userProgressData, false);
-      }
-
-      #endregion // AlphaFS
-
-      #endregion // CopyTo
-
-
-      #region Delete
-
-      #region .NET
-
       /// <summary>Permanently deletes a file.</summary>
       /// <remarks>If the file does not exist, this method does nothing.</remarks>
       /// <exception cref="Exception"/>
       public override void Delete()
       {
-         File.DeleteFileCore(null, FullName, false, PathFormat.FullPath);
-
+         //File.DeleteFileCore(null, FullName, false, PathFormat.FullPath);
          //File.DeleteFileInternal(null, null, false, null);
-
-         Reset();
       }
 
-      #endregion // .NET
 
-
-      #region AlphaFS
-
-      /// <summary>[AlphaFS] Permanently deletes a file.</summary>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="T:FileAttributes"/> of the file.</param>
-      /// <remarks>If the file does not exist, this method does nothing.</remarks>
-      /// <exception cref="Exception"/>
-      public void Delete(bool ignoreReadOnly)
-      {
-         File.DeleteFileCore(null, FullName, ignoreReadOnly, PathFormat.FullPath);
-
-         //File.DeleteFileInternal(null, null, ignoreReadOnly, null);
-
-         Reset();
-      }
-
-      #endregion // AlphaFS
-
-      #endregion // Delete
-
-
-      #region MoveTo
-
-      #region .NET
-
-      /// <summary>Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <param name="destFileName">The path to move the file to, which can specify a different file name.</param>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="Exception"/>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
+      /// <summary>Refreshes the state of the object.</summary>
       [SecurityCritical]
-      public void MoveTo(string destFileName)
+      public new void Refresh()
       {
-         CopyToMoveToInternal(true, destFileName, null, MoveOptions.None, null, null, false);
+         base.Refresh();
       }
-
-      #endregion // .NET
-
-
-      #region AlphaFS
-
-      /// <summary>[AlphaFS] Moves a FileyInfo instance and its contents to a new path.</summary>
-      /// <param name="destFileName">The path to the new location for sourceFileName.</param>
-      /// <param name="moveProgress"><para>This parameter can be <c>null</c>. A callback function that is called each time another portion of the file has been moved.</para></param>
-      /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="Exception"/>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
-      [SecurityCritical]
-      public void MoveTo(string destFileName, CopyMoveProgressRoutine moveProgress, object userProgressData)
-      {
-         CopyToMoveToInternal(true, destFileName, null, MoveOptions.None, moveProgress, userProgressData, false);
-      }
-
-      #endregion // AlphaFS
-
-      #endregion // MoveTo
-
-
-      #region .NET
-
-      ///// <summary>Refreshes the state of the object.</summary>
-      //[SecurityCritical]
-      //public void Refresh()
-      //{
-      //   base.Refresh();
-      //}
 
 
       /// <summary>Returns the path as a string.</summary>
@@ -318,137 +193,6 @@ namespace Alphaleonis.Win32.Device
       }
 
       #endregion // .NET
-
-
-      #region Replace
-
-      #region .NET
-
-      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="T:WpdFileInfo"/> object, deleting the original file, and creating a backup of the replaced file.</summary>
-      /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
-      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
-      /// <returns>A <see cref="T:WpdFileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:WpdFileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:WpdFileInfo"/> object that describes the overwritten file.</remarks>
-      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="Exception"/>
-      [SecurityCritical]
-      public WpdFileInfo Replace(string destinationFileName, string destinationBackupFileName)
-      {
-         return Replace(destinationFileName, destinationBackupFileName, false, false);
-      }
-
-      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="T:WpdFileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
-      /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
-      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
-      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
-      /// <returns>A <see cref="T:WpdFileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:WpdFileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:WpdFileInfo"/> object that describes the overwritten file.</remarks>
-      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="Exception"/>
-      [SecurityCritical]
-      public WpdFileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
-      {
-         return Replace(destinationFileName, destinationBackupFileName, ignoreMetadataErrors, false);
-      }
-
-      #endregion // .NET
-
-
-      #region AlphaFS
-
-      /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="T:WpdFileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
-      /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
-      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
-      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
-      /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      /// <returns>A <see cref="T:WpdFileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:WpdFileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:WpdFileInfo"/> object that describes the overwritten file.</remarks>
-      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="Exception"/>
-      [SecurityCritical]
-      public WpdFileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
-      {
-         //string destinationFileNameLp = isFullPath == null
-         //   ? destinationFileName
-         //   : (bool)isFullPath
-         //      ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
-         //      : Path.GetFullPathInternal(null, destinationFileName, true, false, false, true, false, true, false);
-
-         //// Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
-         //string destinationBackupFileNameLp = isFullPath == null
-         //   ? destinationBackupFileName
-         //   : (bool)isFullPath
-         //      ? Path.GetLongPathInternal(destinationBackupFileName, false, false, false, false)
-         //      : Path.GetFullPathInternal(null, destinationBackupFileName, true, false, false, true, false, true, false);
-
-         //File.ReplaceInternal(null, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, null);
-
-         return new WpdFileInfo(null);
-      }
-
-      #endregion // AlphaFS
-
-      #endregion // Replace
-
-      #endregion // .NET
-
-
-      #region AlphaFS
-
-      /// <summary>[AlphaFS] Unified method CopyToMoveToInternal() to copy an existing file to a new file, allowing the overwriting of an existing file.</summary>
-      /// <param name="isMove"><c>true</c> indicates a file move, <c>false</c> indicates a file copy.</param>
-      /// <param name="destFileName"><para>A full path string to the destination directory</para></param>
-      /// <param name="copyOptions"><para>This parameter can be <c>null</c>. Use <see cref="T:CopyOptions"/> to specify how the file is to be copied.</para></param>
-      /// <param name="moveOptions"><para>This parameter can be <c>null</c>. Use <see cref="T:MoveOptions"/> that specify how the file is to be moved.</para></param>
-      /// <param name="copyProgress"><para>This parameter can be <c>null</c>. A callback function that is called each time another portion of the file has been copied.</para></param>
-      /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
-      /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="destFileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="destFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      /// <returns>When <paramref name="isMove"/> is <c>false</c> a new <see cref="T:WpdFileInfo"/> instance with a fully qualified path. Otherwise <c>null</c> is returned.</returns>
-      /// <remarks>The attributes of the original file are retained in the copied file.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <remarks>This Move method works across disk volumes, and it does not throw an exception if the source and destination are
-      /// the same. Note that if you attempt to replace a file by moving a file of the same name into that directory, you
-      /// get an IOException. You cannot use the Move method to overwrite an existing file.
-      /// </remarks>
-      /// <exception cref="Exception"/>
-      [SecurityCritical]
-      private WpdFileInfo CopyToMoveToInternal(bool isMove, string destFileName, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine copyProgress, object userProgressData, bool? isFullPath)
-      {
-         return null;
-
-         //string destFileNameLp = isFullPath == null
-         //   ? destFileName
-         //   : (bool)isFullPath
-         //   ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-         //   : Path.GetFullPathInternal(null, destFileName, true, false, false, true, false, true, false);
-
-         //File.CopyMoveInternal(isMove, null, null, destFileNameLp, false, copyOptions, moveOptions, copyProgress, userProgressData, null);
-
-         //if (isMove)
-         //{
-         //   FullPath = Path.GetRegularPathInternal(destFileNameLp, false, false, false, false);
-
-         //   OriginalPath = destFileName;
-         //   DisplayPath = OriginalPath;
-
-         //   Name = Path.GetFileName(destFileNameLp, true);
-
-         //   // Flush any cached information about the file.
-         //   Reset();
-         //}
-
-         //return isMove ? null : new WpdFileInfo(null);
-      }
-
-      #endregion // AlphaFS
 
       #endregion // Methods
    }

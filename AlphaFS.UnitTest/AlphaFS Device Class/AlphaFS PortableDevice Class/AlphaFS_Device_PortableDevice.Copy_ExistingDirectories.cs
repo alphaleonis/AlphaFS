@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
 
                   // Enumerate folders.
 
-                  const int maxItems = 10;
+                  const int maxItems = 3;
                   folderCount = 0;
                   var fseCount = 0;
 
@@ -64,6 +64,9 @@ namespace AlphaFS.UnitTest
 
                      ++folderCount;
 
+
+                     UnitTestConstants.Dump(directoryInfo);
+                     
 
                      // Copy folders from portable device to local.
 

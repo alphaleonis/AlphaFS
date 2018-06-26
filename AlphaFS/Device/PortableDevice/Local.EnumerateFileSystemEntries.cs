@@ -19,12 +19,9 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Collections.Generic;
 using System.Security;
-using System.Text;
 using Alphaleonis.Win32.Filesystem;
-using PortableDeviceApiLib;
 
 namespace Alphaleonis.Win32.Device
 {

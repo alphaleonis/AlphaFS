@@ -33,10 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
    public abstract class FileSystemInfo : MarshalByRefObject
    {
       #region Fields
-
-      private FileSystemEntryInfo _entryInfo;
-
-
+      
       #region .NET
 
       /// <summary>Represents the fully qualified path of the file or directory.</summary>
@@ -54,12 +51,15 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
 
+      private FileSystemEntryInfo _entryInfo;
+
+
       // We use this field in conjunction with the Refresh methods, if we succeed
       // we store a zero, on failure we store the HResult in it so that we can
       // give back a generic error back.
       [NonSerialized]
       internal int DataInitialised = -1;
-
+      
 
       // The pre-cached FileSystemInfo information.
       [NonSerialized]
@@ -177,9 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>
-      ///   Gets a value indicating whether the file or directory exists.
-      /// </summary>
+      /// <summary>Gets a value indicating whether the file or directory exists.</summary>
       /// <remarks>
       ///   <para>The <see cref="Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the
       ///   specified file or directory exists.</para>
@@ -191,9 +189,7 @@ namespace Alphaleonis.Win32.Filesystem
       public abstract bool Exists { get; }
 
 
-      /// <summary>
-      ///   Gets the string representing the extension part of the file.
-      /// </summary>
+      /// <summary>Gets the string representing the extension part of the file.</summary>
       /// <remarks>
       ///   <para>The Extension property returns the <see cref="FileSystemInfo"/> extension, including the period (.).</para>
       ///   <para>For example, for a file c:\NewFile.txt, this property returns ".txt".</para>
@@ -205,9 +201,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>
-      ///   Gets the full path of the directory or file.
-      /// </summary>
+      /// <summary>Gets the full path of the directory or file.</summary>
       /// <value>A string containing the full path.</value>
       public virtual string FullName
       {
@@ -334,10 +328,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>
-      ///   For files, gets the name of the file. For directories, gets the name of the last directory in the hierarchy if a hierarchy exists.
-      ///   <para>Otherwise, the Name property gets the name of the directory.</para>
-      /// </summary>
+      /// <summary>For files, gets the name of the file. For directories, gets the name of the last directory in the hierarchy if a hierarchy exists. Otherwise, the Name property gets the name of the directory.</summary>
       /// <remarks>
       ///   <para>For a directory, Name returns only the name of the parent directory, such as Dir, not c:\Dir.</para>
       ///   <para>For a subdirectory, Name returns only the name of the subdirectory, such as Sub1, not c:\Dir\Sub1.</para>
@@ -354,7 +345,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>Returns the path as a string.</summary>
+      /// <summary>[AlphaFS] Returns the path as a string.</summary>
       protected internal string DisplayPath { get; protected set; }
 
       
@@ -393,7 +384,7 @@ namespace Alphaleonis.Win32.Filesystem
       protected bool IsDirectory { get; set; }
 
 
-      /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>
+      /// <summary>[AlphaFS] The full path of the file system object in Unicode (LongPath) format.</summary>
       protected string LongFullName { get; set; }
 
 
@@ -558,9 +549,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          OriginalPath = FullPath.Length == 2 && FullPath[1] == Path.VolumeSeparatorChar ? Path.CurrentDirectoryPrefix : path;
 
-         DisplayPath = OriginalPath.Length != 2 || OriginalPath[1] != Path.VolumeSeparatorChar
-            ? Path.GetRegularPathCore(OriginalPath, GetFullPathOptions.None, false)
-            : Path.CurrentDirectoryPrefix;
+         DisplayPath = OriginalPath.Length != 2 || OriginalPath[1] != Path.VolumeSeparatorChar ? Path.GetRegularPathCore(OriginalPath, GetFullPathOptions.None, false) : Path.CurrentDirectoryPrefix;
       }
 
 

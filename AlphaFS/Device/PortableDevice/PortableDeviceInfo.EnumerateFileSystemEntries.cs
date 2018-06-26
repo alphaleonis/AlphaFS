@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Device
             throw new ArgumentNullException("portableDeviceInfo");
 
          if (null == portableDeviceInfo.PortableDevice)
-            throw new ArgumentNullException("portableDevice");
+            throw new ArgumentNullException("portableDeviceInfo.PortableDevice");
 
 
          // If no deviceContent is supplied, start at the root of the device.
@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Device
             yield break;
 
 
-         var dirs = new Queue<string>(1000);
+         var dirs = new Queue<string>(Filesystem.NativeMethods.DefaultFileBufferSize);
 
          dirs.Enqueue(!Utils.IsNullOrWhiteSpace(objectId) ? objectId : NativeMethods.WPD_DEVICE_OBJECT_ID);
 
@@ -101,26 +101,19 @@ namespace Alphaleonis.Win32.Device
          {
             // FindFirstFile()
             IEnumPortableDeviceObjectIDs objectIds;
-
-            //try { deviceContent.EnumObjects(0, dirs.Dequeue(), null, out objectIds); }
-            //catch { }
-
+            
             deviceContent.EnumObjects(0, dirs.Dequeue(), null, out objectIds);
 
 
-            uint retrieved;
+            uint retrieved = 0;
+
             do
             {
-               retrieved = 0;
-
                if (null != objectIds)
                {
                   string childName;
 
                   objectIds.Next(1, out childName, ref retrieved);
-
-                  //try { objectIds.Next(1, out childName, ref retrieved); }
-                  //catch { }
 
                   if (retrieved == 0)
                      continue;
@@ -170,6 +163,7 @@ namespace Alphaleonis.Win32.Device
       {
          if (null == deviceProperties)
             throw new ArgumentNullException("deviceProperties");
+
 
          if (Utils.IsNullOrWhiteSpace(objectId))
             objectId = NativeMethods.WPD_DEVICE_OBJECT_ID;
