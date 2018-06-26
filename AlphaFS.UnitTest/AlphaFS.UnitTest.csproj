@@ -144,6 +144,7 @@
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.EnumeratePhysicalDisks_ReturnsStorageDeviceInfoForDevice.cs" />
+    <Compile Include="AlphaFS Device Class\AlphaFS PortableDevice Class\AlphaFS_Device_PortableDevice.Copy_ExistingDirectories.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PortableDevice Class\AlphaFS_Device_PortableDevice.Copy_ExistingFiles.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PortableDevice Class\AlphaFS_Device_PortableDevice.EnumeratePortableDevices.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS PortableDevice Class\AlphaFS_Device_PortableDevice.EnumeratePortableMtpDevices.cs" />

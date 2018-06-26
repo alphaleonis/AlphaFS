@@ -103,11 +103,18 @@ namespace Alphaleonis.Win32.Device
             Disconnect();
       }
 
+
+      /// <summary><see cref="PortableDeviceInfo"/> class destructor.</summary>
+      ~PortableDeviceInfo()
+      {
+         Dispose(false);
+      }
+
       #endregion // Constructors
 
 
       #region Properties
-      
+
       /// <summary>The PnP Device ID (<see cref="DeviceInfo.DevicePath"/>) of the Portable Device.</summary>
       public string DeviceId
       {
@@ -119,8 +126,8 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>Indicates the Portable Device's connection status.</summary>
-      /// <remarks>Set to internal as this is a snapshot state.</remarks>
-      internal bool IsConnected { get; private set; }
+      /// <remarks></remarks>
+      public bool IsConnected { get; private set; }
 
 
       /// <summary>The firmware version for the Portable Device.</summary>
@@ -299,6 +306,28 @@ namespace Alphaleonis.Win32.Device
       {
          return !(left == right);
       }
+
+
+      #region Disposable Members
+      
+      /// <summary>Releases all resources used by the <see cref="PortableDeviceInfo"/> class.</summary>
+      public void Dispose()
+      {
+         Dispose(true);
+         GC.SuppressFinalize(this);
+      }
+
+
+      private void Dispose(bool isDisposing)
+      {
+         if (isDisposing)
+         {
+            Disconnect();
+            PortableDevice = null;
+         }
+      }
+
+      #endregion // Disposable Members
 
       #endregion // Methods
    }

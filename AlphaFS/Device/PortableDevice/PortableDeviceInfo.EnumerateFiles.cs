@@ -38,6 +38,7 @@ namespace Alphaleonis.Win32.Device
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names from the root of the device.</summary>
       /// <returns>An enumerable collection of file-system entries from the root of the device.</returns>
+      /// <param name="recurse"><c>true</c> to recurse into subdirectories.</param>
       [SecurityCritical]
       public IEnumerable<WpdFileInfo> EnumerateFiles(bool recurse)
       {
@@ -48,7 +49,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances in a specified path.</summary>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="objectId"/>.</returns>
       /// <param name="objectId">The ID of the directory to search.</param>
-      /// <param name="recurse"></param>
+      /// <param name="recurse"><c>true</c> to recurse into subdirectories.</param>
       [SecurityCritical]
       public IEnumerable<WpdFileInfo> EnumerateFiles(string objectId, bool recurse)
       {

@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Device
 
          #region Required Properties
 
-         // DeviceObjectId
+         // WPD_DEVICE_OBJECT_ID
          // Manufacturer
          // Model
 

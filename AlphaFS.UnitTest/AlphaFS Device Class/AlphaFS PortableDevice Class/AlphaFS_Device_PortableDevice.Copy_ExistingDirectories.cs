@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_PortableDevice_Copy_ExistingFiles()
+      public void AlphaFS_Device_PortableDevice_Copy_ExistingDirectories()
       {
          using (var tempRoot = new TemporaryDirectory(false))
          {
             var folder = tempRoot.CreateDirectory();
             
             var deviceCount = 0;
-            var fileCount = 0;
+            var folderCount = 0;
             const bool autoConnect = true;
 
             foreach (var portableDeviceInfo in Alphaleonis.Win32.Device.Local.EnumeratePortableDevices(autoConnect).OrderBy(p => p.DeviceType).ThenBy(p => p.DeviceFriendlyName))
@@ -51,38 +51,35 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine();
 
 
-                  // Enumerate files.
+                  // Enumerate folders.
 
                   const int maxItems = 10;
-                  fileCount = 0;
+                  folderCount = 0;
                   var fseCount = 0;
-                  long totalSize = 0;
 
 
-                  foreach (var fileInfo in portableDeviceInfo.EnumerateFiles(true))
+                  foreach (var directoryInfo in portableDeviceInfo.EnumerateDirectories(true))
                   {
-                     Console.WriteLine("\t\t#{0:000} ID: [{1}]\t\tFullName: [{2}]", ++fseCount, fileInfo.ObjectId, fileInfo.FullName);
+                     Console.WriteLine("\t\t#{0:000} ID: [{1}]\t\tFullName: [{2}]", ++fseCount, directoryInfo.ObjectId, directoryInfo.FullName);
 
-                     ++fileCount;
-
-                     totalSize += fileInfo.Length;
+                     ++folderCount;
 
 
-                     // Copy files from portable device to local.
+                     // Copy folders from portable device to local.
 
-                     portableDeviceInfo.CopyFile(fileInfo, folder.FullName);
+                     portableDeviceInfo.CopyDirectory(directoryInfo, folder.FullName);
                   
 
                      if (fseCount == maxItems)
                         break;
                   }
 
-                  Console.WriteLine("\n\t\tCopied {0} files.  Total file size: [{1}]", fileCount, Alphaleonis.Utils.UnitSizeToText(totalSize));
+                  Console.WriteLine("\n\t\tCopied {0} directories.", folderCount);
                   Console.WriteLine("\t\tDestination Directory Path: [{0}]\n", folder.FullName);
                }
 
 
-            Assert.IsTrue(fileCount > 0, "No files copied from the portable device, but it is expected.");
+            Assert.IsTrue(folderCount > 0, "No directories copied from the portable device, but it is expected.");
          }
       }
    }

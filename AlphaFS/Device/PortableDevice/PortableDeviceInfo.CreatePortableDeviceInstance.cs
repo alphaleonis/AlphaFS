@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Device
 
          // The GetValues method retrieves a list of specified properties from a specified object on a device.
          // 2nd argument null to get all properties of the device.
-         deviceProperties.GetValues(NativeMethods.DeviceObjectId, null, out devicePropertyValues);
+         deviceProperties.GetValues(NativeMethods.WPD_DEVICE_OBJECT_ID, null, out devicePropertyValues);
 
 
          if (PopulateDeviceProperties(devicePropertyValues))
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Device
 
                IEnumPortableDeviceObjectIDs objectIds;
 
-               deviceContent.EnumObjects(0, NativeMethods.DeviceObjectId, null, out objectIds);
+               deviceContent.EnumObjects(0, NativeMethods.WPD_DEVICE_OBJECT_ID, null, out objectIds);
 
                if (null != objectIds)
                   objectIds.Next(1, out objectId, ref fetched);

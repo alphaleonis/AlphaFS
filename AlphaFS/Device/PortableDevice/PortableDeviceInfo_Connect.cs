@@ -19,13 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-using System.Reflection;
+using System;
 using PortableDeviceTypesLib;
 using IPortableDeviceValues = PortableDeviceApiLib.IPortableDeviceValues;
 
 namespace Alphaleonis.Win32.Device
 {
-   public sealed partial class PortableDeviceInfo
+   public sealed partial class PortableDeviceInfo : IDisposable
    {
       /// <summary>Connects to the Portable Device.</summary>
       public void Connect()
@@ -53,12 +53,11 @@ namespace Alphaleonis.Win32.Device
       /// <summary>Disconnects from the Portable Device.</summary>
       public void Disconnect()
       {
-         if (!IsConnected)
-            return;
-
-         PortableDevice.Close();
-
-         IsConnected = false;
+         if (null != PortableDevice)
+         {
+            PortableDevice.Close();
+            IsConnected = false;
+         }
       }
    }
 }

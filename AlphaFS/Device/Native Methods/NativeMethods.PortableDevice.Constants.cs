@@ -56,8 +56,8 @@ namespace Alphaleonis.Win32.Device
 
       #region Device Properties
 
-      /// <summary>("DEVICE") DeviceObjectId  - The generic ID of a Portable Device. </summary>
-      internal const string DeviceObjectId = "DEVICE";
+      /// <summary>The generic ID of a portable device. </summary>
+      internal const string WPD_DEVICE_OBJECT_ID = "DEVICE";
 
       /// <summary>A human-readable description of a device's synchronization partner. This is a device, application, or server that the device communicates with to maintain a common state or group of files between both partners.</summary>
       private static readonly Guid WPD_DEVICE_SYNC_PARTNER = new Guid(0x26D4979A, 0xE643, 0x4626, 0x9E, 0x2B, 0x73, 0x6D, 0xC0, 0xC9, 0x2F, 0xDC);

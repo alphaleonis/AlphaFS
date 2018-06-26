@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Device
 
          var dirs = new Queue<string>(1000);
 
-         dirs.Enqueue(!Utils.IsNullOrWhiteSpace(objectId) ? objectId : NativeMethods.DeviceObjectId);
+         dirs.Enqueue(!Utils.IsNullOrWhiteSpace(objectId) ? objectId : NativeMethods.WPD_DEVICE_OBJECT_ID);
 
 
          IPortableDeviceProperties deviceProperties;
@@ -172,7 +172,7 @@ namespace Alphaleonis.Win32.Device
             throw new ArgumentNullException("deviceProperties");
 
          if (Utils.IsNullOrWhiteSpace(objectId))
-            objectId = NativeMethods.DeviceObjectId;
+            objectId = NativeMethods.WPD_DEVICE_OBJECT_ID;
 
          var keys = (IPortableDeviceKeyCollection) new PortableDeviceTypesLib.PortableDeviceKeyCollectionClass();
 
@@ -214,13 +214,13 @@ namespace Alphaleonis.Win32.Device
 
          string objectOriginalFileName;
 
-         if (objectId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
+         if (objectId.Equals(NativeMethods.WPD_DEVICE_OBJECT_ID, StringComparison.OrdinalIgnoreCase))
 
             objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_NAME, out objectOriginalFileName);
 
          else
          {
-            if (objectParentId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
+            if (objectParentId.Equals(NativeMethods.WPD_DEVICE_OBJECT_ID, StringComparison.OrdinalIgnoreCase))
 
                objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_NAME, out objectOriginalFileName);
 
@@ -275,9 +275,9 @@ namespace Alphaleonis.Win32.Device
 
          // No need to drill down if we are already at the device root.
 
-         if (objectId.Length == 0 || objectId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
+         if (objectId.Length == 0 || objectId.Equals(NativeMethods.WPD_DEVICE_OBJECT_ID, StringComparison.OrdinalIgnoreCase))
 
-            return NativeMethods.DeviceObjectId;
+            return NativeMethods.WPD_DEVICE_OBJECT_ID;
 
 
          var keys = (IPortableDeviceKeyCollection) new PortableDeviceTypesLib.PortableDeviceKeyCollectionClass();
@@ -319,13 +319,13 @@ namespace Alphaleonis.Win32.Device
 
             // Querying from the device root for WPD_OBJECT_ORIGINAL_FILE_NAME, throws an Exception.
 
-            if (objectId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
+            if (objectId.Equals(NativeMethods.WPD_DEVICE_OBJECT_ID, StringComparison.OrdinalIgnoreCase))
 
                objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_NAME, out objectName);
 
             else
             {
-               if (objectParentId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
+               if (objectParentId.Equals(NativeMethods.WPD_DEVICE_OBJECT_ID, StringComparison.OrdinalIgnoreCase))
 
                   objectProperties.GetStringValue(ref NativeMethods.WPD_OBJECT_NAME, out objectName);
 
@@ -337,7 +337,7 @@ namespace Alphaleonis.Win32.Device
             if (!Utils.IsNullOrWhiteSpace(objectName))
                folderFullPath.Push(objectName);
 
-            isDeviceRoot = objectParentId.Length == 0 || objectId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase);
+            isDeviceRoot = objectParentId.Length == 0 || objectId.Equals(NativeMethods.WPD_DEVICE_OBJECT_ID, StringComparison.OrdinalIgnoreCase);
 
             objectId = objectParentId;
          }
@@ -364,8 +364,8 @@ namespace Alphaleonis.Win32.Device
       //   if (Utils.IsNullOrWhiteSpace(objectId))
       //      throw new ArgumentNullException("objectId");
 
-      //   if (objectId.Length == 0 || objectId.Equals(NativeMethods.DeviceObjectId, StringComparison.OrdinalIgnoreCase))
-      //      return NativeMethods.DeviceObjectId;
+      //   if (objectId.Length == 0 || objectId.Equals(NativeMethods.WPD_DEVICE_OBJECT_ID, StringComparison.OrdinalIgnoreCase))
+      //      return NativeMethods.WPD_DEVICE_OBJECT_ID;
 
       //   IPortableDeviceValues objectProperties;
       //   string objectParentId;

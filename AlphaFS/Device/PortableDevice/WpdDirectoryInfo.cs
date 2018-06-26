@@ -158,7 +158,7 @@ namespace Alphaleonis.Win32.Device
             string root = Path.GetPathRoot(FullPath, false);
 
             if (Utils.IsNullOrWhiteSpace(root))
-               root = NativeMethods.DeviceObjectId;
+               root = NativeMethods.WPD_DEVICE_OBJECT_ID;
             
             return new WpdDirectoryInfo(root, FullPath);
          }

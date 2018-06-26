@@ -487,7 +487,7 @@ namespace Alphaleonis.Win32.Device
          //   throw new ArgumentNullException("fullPath");
 
          if (Utils.IsNullOrWhiteSpace(objectId))
-            objectId = NativeMethods.DeviceObjectId;
+            objectId = NativeMethods.WPD_DEVICE_OBJECT_ID;
 
          ObjectId = objectId;
 
