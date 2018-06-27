@@ -12,13 +12,15 @@ Version 2.3  (2018-XX-XX)
 ### Improvements
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
+- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath property`.
 
 ### Breaking Changes
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
+- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath property`.
 
 
-Version 2.2.3  (2018-XX-XX)
+Version 2.2.3  (2018-06-14)
 -------------
 
 ### Bugs Fixed

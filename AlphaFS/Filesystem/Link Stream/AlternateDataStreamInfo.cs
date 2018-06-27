@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -30,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructor
 
-      internal AlternateDataStreamInfo(string fullPath, NativeMethods.WIN32_FIND_STREAM_DATA findData) : this()
+      internal AlternateDataStreamInfo(string fullPath, NativeMethods.WIN32_FIND_STREAM_DATA findData)
       {
          StreamName = ParseStreamName(findData.cStreamName);
          Size = findData.StreamSize;
@@ -55,13 +56,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets the full path to the stream.</summary>
       /// <remarks>
       ///   This is a path in long path format that can be passed to <see cref="O:Alphaleonis.Win32.Filesystem.File.Open"/> to open the stream if
-      ///   <see cref="PathFormat.FullPath"/> or
-      ///   <see cref="PathFormat.LongFullPath"/> is specified.
+      ///   <see cref="PathFormat.FullPath"/> or <see cref="PathFormat.LongFullPath"/> is specified.
       /// </remarks>
       /// <value>The full path to the stream in long path format.</value>
       public string FullPath
       {
-         get { return _fullPath + Path.StreamSeparator + StreamName + Path.StreamDataLabel; }
+         get { return string.Format(CultureInfo.InvariantCulture, "{0}{1}", _fullPath, !Utils.IsNullOrWhiteSpace(StreamName) ? Path.StreamSeparator + StreamName : string.Empty); }
       }
 
       #endregion // Public Properties
@@ -82,31 +82,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       public override bool Equals(object obj)
       {
-         if (obj is AlternateDataStreamInfo)
-         {
-            var other = (AlternateDataStreamInfo) obj;
-            return StreamName.Equals(other.StreamName, StringComparison.OrdinalIgnoreCase) && Size.Equals(other.Size);
-         }
+         if (obj == null || GetType() != obj.GetType())
+            return false;
 
-         return false;
+         var other = (AlternateDataStreamInfo) obj;
+
+         return null != other &&
+                null != other.StreamName && other.StreamName.Equals(StreamName, StringComparison.OrdinalIgnoreCase) &&
+                null != other.FullPath && other.FullPath.Equals(FullPath, StringComparison.OrdinalIgnoreCase) &&
+                other.Size.Equals(Size);
       }
 
-      /// <summary>Equality operator.</summary>
-      /// <param name="first">The first operand.</param>
-      /// <param name="second">The second operand.</param>
-      /// <returns>The result of the operation.</returns>
-      public static bool operator ==(AlternateDataStreamInfo first, AlternateDataStreamInfo second)
+      /// <summary>Implements the operator ==</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator ==(AlternateDataStreamInfo left, AlternateDataStreamInfo right)
       {
-         return first.Equals(second);
+         return left.Equals(right);
       }
 
-      /// <summary>Inequality operator.</summary>
-      /// <param name="first">The first operand.</param>
-      /// <param name="second">The second operand.</param>
-      /// <returns>The result of the operation.</returns>
-      public static bool operator !=(AlternateDataStreamInfo first, AlternateDataStreamInfo second)
+      /// <summary>Implements the operator !=</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator !=(AlternateDataStreamInfo left, AlternateDataStreamInfo right)
       {
-         return !first.Equals(second);
+         return !(left == right);
       }
 
       #endregion // Public Methods
