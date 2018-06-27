@@ -51,7 +51,7 @@ namespace AlphaFS.UnitTest
             var allStreams = new[] {myStream, myStream2};
             var streamStringContent = "(1) Computer: [" + Environment.MachineName + "]" + "\tHello there, " + Environment.UserName;
 
-            Console.WriteLine("\nA directory is created and {0} streams are added.", allStreams.Length.ToString(CultureInfo.CurrentCulture));
+            Console.WriteLine("\n\tA directory is created and {0} streams are added.", allStreams.Length.ToString(CultureInfo.CurrentCulture));
             
             var di = new Alphaleonis.Win32.Filesystem.DirectoryInfo(folder);
             di.Create();
@@ -80,10 +80,11 @@ namespace AlphaFS.UnitTest
 
 
             var newNumberofStreams = Alphaleonis.Win32.Filesystem.Directory.EnumerateAlternateDataStreams(folder).Count();
-            Console.WriteLine("\n\nNew stream count: [{0}]", newNumberofStreams);
+            Console.WriteLine("\n\tNew stream count: [{0}]", newNumberofStreams);
 
 
             // Enumerate all streams from the folder.
+
             foreach (var stream in di.EnumerateAlternateDataStreams())
             {
                UnitTestConstants.Dump(stream);
@@ -93,6 +94,7 @@ namespace AlphaFS.UnitTest
 
 
             // Show the contents of our streams.
+
             Console.WriteLine();
             foreach (var streamName in allStreams)
             {
@@ -107,26 +109,10 @@ namespace AlphaFS.UnitTest
             }
 
 
-
-
-            // Show DirectoryInfo instance data of the streams.
-
-            var dirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(stream1Name, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
-
-            Console.WriteLine();
-            UnitTestConstants.Dump(dirInfo);
-
-
-
-            // Show FileInfo instance data of the streams.
+            // Check FileInfo instance data of the streams.
 
             var fileInfo1 = new Alphaleonis.Win32.Filesystem.FileInfo(stream1Name, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
             var fileInfo2 = new Alphaleonis.Win32.Filesystem.FileInfo(stream2Name, Alphaleonis.Win32.Filesystem.PathFormat.LongFullPath);
-
-            Console.WriteLine();
-            UnitTestConstants.Dump(fileInfo1);
-            UnitTestConstants.Dump(fileInfo2);
-
 
             Assert.AreEqual(myStream, fileInfo1.Name);
             Assert.AreEqual(myStream2, fileInfo2.Name);
