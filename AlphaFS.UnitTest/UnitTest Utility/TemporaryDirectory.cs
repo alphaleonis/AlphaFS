@@ -246,7 +246,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      /// <summary> Enables or disables deny access for the current User.</summary>
+      /// <summary>Enables or disables deny access for the current User.</summary>
       public void SetDirectoryDenyPermission(bool enable, string folderFullPath)
       {
          // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗

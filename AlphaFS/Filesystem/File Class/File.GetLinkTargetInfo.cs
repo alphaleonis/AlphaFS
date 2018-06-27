@@ -103,7 +103,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static LinkTargetInfo GetLinkTargetInfoCore(KernelTransaction transaction, string reparsePath, bool continueOnException, PathFormat pathFormat)
       {
-         var eAttributes = ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics;
+         // Codacy: The value of a static readonly field is computed at runtime while the value of a const field is calculated at compile time, which improves performance.
+
+         const ExtendedFileAttributes eAttributes = ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics;
 
 
          using (var safeHandle = CreateFileCore(transaction, reparsePath, eAttributes, null, FileMode.Open, 0, FileShare.ReadWrite, pathFormat != PathFormat.LongFullPath, continueOnException, pathFormat))

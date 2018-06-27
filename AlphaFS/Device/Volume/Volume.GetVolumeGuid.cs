@@ -70,14 +70,10 @@ namespace Alphaleonis.Win32.Filesystem
          }
          finally
          {
-            var lastError = (uint)Marshal.GetLastWin32Error();
+            var lastError = (uint) Marshal.GetLastWin32Error();
 
             switch (lastError)
             {
-               case Win32Errors.ERROR_INVALID_NAME:
-                  NativeError.ThrowException(lastError, volumeMountPoint);
-                  break;
-
                case Win32Errors.ERROR_MORE_DATA:
                   // (1) When GetVolumeNameForVolumeMountPoint() succeeds, lastError is set to Win32Errors.ERROR_MORE_DATA.
                   break;

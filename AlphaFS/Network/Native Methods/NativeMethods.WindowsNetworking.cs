@@ -27,7 +27,7 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Network
 {
-   internal partial class NativeMethods
+   internal static partial class NativeMethods
    {
       /// <summary>The WNetCancelConnection function cancels an existing network connection. You can also call the function to remove remembered network connections that are not currently connected.</summary>
       /// <returns>

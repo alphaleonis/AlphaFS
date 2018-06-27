@@ -25,73 +25,76 @@ using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Network
 {
-   /// <summary>The INetworkConnection interface represents a single network connection.</summary>
-   [ComImport, TypeLibType(0x1040), Guid("DCB00005-570F-4A9B-8D69-199FDBA5723B")]
-   internal interface INetworkConnection
+   internal static partial class NativeMethods
    {
-      // Do not change the order of these interface members.
-
-
-      /// <summary>The GetNetwork method returns the network associated with the connection.</summary>
-      /// <returns>Returns S_OK if the method succeeds.</returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-      [return: MarshalAs(UnmanagedType.Interface)]
-      INetwork GetNetwork();
-
-
-      /// <summary>The IsConnected property specifies if the associated network connection has network connectivity.</summary>
-      /// <returns>If TRUE, this network connection has connectivity; if FALSE, it does not.</returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      bool IsConnected
+      /// <summary>The INetworkConnection interface represents a single network connection.</summary>
+      [ComImport, TypeLibType(0x1040), Guid("DCB00005-570F-4A9B-8D69-199FDBA5723B")]
+      internal interface INetworkConnection
       {
+         // Do not change the order of these interface members.
+
+
+         /// <summary>The GetNetwork method returns the network associated with the connection.</summary>
+         /// <returns>Returns S_OK if the method succeeds.</returns>
+         /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+         /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         get;
-      }
+         [return: MarshalAs(UnmanagedType.Interface)]
+         INetwork GetNetwork();
 
 
-      /// <summary>The IsConnectedToInternet property specifies if the associated network connection has internet connectivity.</summary>
-      /// <returns>If TRUE, this network connection has connectivity to the Internet; if FALSE, it does not.</returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      bool IsConnectedToInternet
-      {
+         /// <summary>The IsConnected property specifies if the associated network connection has network connectivity.</summary>
+         /// <returns>If TRUE, this network connection has connectivity; if FALSE, it does not.</returns>
+         /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+         /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+         bool IsConnected
+         {
+            [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+            get;
+         }
+
+
+         /// <summary>The IsConnectedToInternet property specifies if the associated network connection has internet connectivity.</summary>
+         /// <returns>If TRUE, this network connection has connectivity to the Internet; if FALSE, it does not.</returns>
+         /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+         /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+         bool IsConnectedToInternet
+         {
+            [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+            get;
+         }
+
+
+         /// <summary>The GetConnectivity method returns the connectivity state of the network connection.</summary>
+         /// <returns>Returns S_OK if the method succeeds.</returns>
+         /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+         /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
          [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-         get;
+         ConnectivityStates GetConnectivity();
+
+
+         /// <summary>The GetConnectionId method returns the Connection ID associated with this network connection.</summary>
+         /// <returns>Returns S_OK if the method succeeds.</returns>
+         /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+         /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+         [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+         Guid GetConnectionId();
+
+
+         /// <summary>The GetAdapterId method returns the ID of the network adapter used by this connection. </summary>
+         /// <returns>Returns S_OK if the method succeeds.</returns>
+         /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+         /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+         [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+         Guid GetAdapterId();
+
+
+         /// <summary>The GetDomainType method returns the domain type of the network connection.</summary>
+         /// <returns>Returns S_OK if the method succeeds.</returns>
+         /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
+         /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+         [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+         DomainType GetDomainType();
       }
-
-
-      /// <summary>The GetConnectivity method returns the connectivity state of the network connection.</summary>
-      /// <returns>Returns S_OK if the method succeeds.</returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-      ConnectivityStates GetConnectivity();
-
-
-      /// <summary>The GetConnectionId method returns the Connection ID associated with this network connection.</summary>
-      /// <returns>Returns S_OK if the method succeeds.</returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-      Guid GetConnectionId();
-
-
-      /// <summary>The GetAdapterId method returns the ID of the network adapter used by this connection. </summary>
-      /// <returns>Returns S_OK if the method succeeds.</returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-      Guid GetAdapterId();
-
-
-      /// <summary>The GetDomainType method returns the domain type of the network connection.</summary>
-      /// <returns>Returns S_OK if the method succeeds.</returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
-      [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-      DomainType GetDomainType();
    }
 }

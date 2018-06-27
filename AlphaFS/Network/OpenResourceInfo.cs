@@ -34,7 +34,6 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Create an OpenResourceInfo instance.</summary>
       internal OpenResourceInfo(string hostName, NativeMethods.FILE_INFO_3 fileInfo)
       {
-         Host = hostName;
          HostName = hostName;
          Id = fileInfo.fi3_id;
          Permissions = fileInfo.fi3_permissions;
@@ -66,12 +65,13 @@ namespace Alphaleonis.Win32.Network
          return Id.ToString(CultureInfo.InvariantCulture);
       }
 
+
       #endregion // Methods
 
-      
       #region Properties
 
       /// <summary>The local or remote Host.</summary>
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       [Obsolete("Use HostName")]
       public string Host { get; private set; }
 

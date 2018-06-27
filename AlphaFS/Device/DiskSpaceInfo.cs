@@ -75,7 +75,10 @@ namespace Alphaleonis.Win32.Filesystem
       public DiskSpaceInfo(string drivePath, bool? spaceInfoType, bool refresh, bool continueOnException) : this(drivePath)
       {
          if (spaceInfoType == null)
-            _initGetSpaceInfo = _initGetClusterInfo = true;
+         {
+            _initGetSpaceInfo = true;
+            _initGetClusterInfo = true;
+         }
 
          else
          {

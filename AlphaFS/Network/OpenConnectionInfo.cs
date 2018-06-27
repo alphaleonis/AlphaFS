@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Alphaleonis.Win32.Filesystem;
 
@@ -41,13 +42,11 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Create an OpenConnectionInfo instance.</summary>
       internal OpenConnectionInfo(string hostName, NativeMethods.CONNECTION_INFO_1 connectionInfo)
       {
-         Host = hostName;
          HostName = hostName;
          Id = connectionInfo.coni1_id;
          ShareType = connectionInfo.coni1_type;
          TotalOpenFiles = connectionInfo.coni1_num_opens;
          TotalUsers = connectionInfo.coni1_num_users;
-         ConnectedSeconds = connectionInfo.coni1_time;
          ConnectedTime = TimeSpan.FromSeconds(connectionInfo.coni1_time);
          UserName = connectionInfo.coni1_username;
          NetName = connectionInfo.oni1_netname;
@@ -65,12 +64,13 @@ namespace Alphaleonis.Win32.Network
          return Id.ToString(CultureInfo.InvariantCulture);
       }
 
+
       #endregion // Methods
 
-      
       #region Properties
 
       /// <summary>The local or remote Host.</summary>
+      [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       [Obsolete("Use HostName")]
       public string Host { get; private set; }
 
@@ -90,6 +90,7 @@ namespace Alphaleonis.Win32.Network
       public long TotalUsers { get; private set; }
 
       /// <summary>Specifies the number of seconds that the connection has been established.</summary>
+      [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       [Obsolete("Use ConnectedTime property.")]
       public long ConnectedSeconds { get; private set; }
 

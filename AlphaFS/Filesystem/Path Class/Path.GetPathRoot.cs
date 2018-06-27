@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetPathRoot(string path, bool checkInvalidPathChars)
       {
-         if (path == null)
+         if (null == path)
             return null;
 
          if (path.Trim().Length == 0)
@@ -67,15 +67,15 @@ namespace Alphaleonis.Win32.Filesystem
          var pathRp = GetRegularPathCore(path,checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None, false);
 
          var rootLengthPath = GetRootLength(path, false);
+
          var rootLengthPathRp = GetRootLength(pathRp, false);
 
 
          // Check if pathRp is an empty string.
-         if (rootLengthPathRp == 0)
-         {
-            if (path.StartsWith(LongPathPrefix, StringComparison.Ordinal))
-               return GetLongPathCore(path.Substring(0, rootLengthPath), GetFullPathOptions.None);
-         }
+
+         if (rootLengthPathRp == 0 && path.StartsWith(LongPathPrefix, StringComparison.Ordinal))
+
+            return GetLongPathCore(path.Substring(0, rootLengthPath), GetFullPathOptions.None);
 
 
          return path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase) ? GetLongPathCore(pathRp.Substring(0, rootLengthPathRp), GetFullPathOptions.None) : path.Substring(0, rootLengthPath);

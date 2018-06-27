@@ -105,9 +105,12 @@ namespace AlphaFS.UnitTest
             }
          }
 
+
          Console.WriteLine();
 
-         Assert.IsTrue(testOk);
+
+         if (!testOk)
+            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
       }
    }
 }

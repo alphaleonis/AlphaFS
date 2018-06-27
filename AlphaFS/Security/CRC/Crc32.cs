@@ -32,11 +32,10 @@ namespace Alphaleonis.Win32.Security
 {
    /// <summary>Implements a 32-bit CRC hash algorithm compatible with Zip etc.</summary>
    /// <remarks>
-   /// Crc32 should only be used for backward compatibility with older file formats
-   /// and algorithms. It is not secure enough for new applications.
-   /// If you need to call multiple times for the same data either use the HashAlgorithm
-   /// interface or remember that the result of one Compute call needs to be ~ (XOR) before
-   /// being passed in as the seed for the next Compute call.
+   ///   Crc32 should only be used for backward compatibility with older file formats and algorithms.
+   ///   It is not secure enough for new applications. If you need to call multiple times for the same data
+   ///   either use the HashAlgorithm interface or remember that the result of one Compute call needs to be ~ (XOR)
+   ///   before being passed in as the seed for the next Compute call.
    /// </remarks>
    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crc")]
    internal sealed class Crc32 : HashAlgorithm
@@ -45,17 +44,16 @@ namespace Alphaleonis.Win32.Security
       private const uint DefaultSeed = 0xffffffffu;
 
       private uint m_hash;
-      private static uint[] s_defaultTable;
       private readonly uint m_seed;
       private readonly uint[] m_table;
+      private static uint[] s_defaultTable;
+      
 
-      /// <summary>
-      /// Initializes a new instance of Crc32.
-      /// </summary>
-      public Crc32() 
-         : this(DefaultPolynomial, DefaultSeed)
+      /// <summary>Initializes a new instance of Crc32.</summary>
+      public Crc32() : this(DefaultPolynomial, DefaultSeed)
       {
       }
+
 
       /// <summary>Initializes a new instance of Crc32.</summary>
       /// <param name="polynomial">The polynomial.</param>
@@ -63,17 +61,17 @@ namespace Alphaleonis.Win32.Security
       private Crc32(uint polynomial, uint seed)
       {
          m_table = InitializeTable(polynomial);
-         m_seed = m_hash = seed;
+         m_seed = seed;
+         m_hash = seed;
       }
 
-      /// <summary>
-      /// Initializes an implementation of the
-      /// <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.
-      /// </summary>
+
+      /// <summary>Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.</summary>
       public override void Initialize()
       {
          m_hash = m_seed;
       }
+
 
       /// <summary>When overridden in a derived class, routes data written to the object into the hash algorithm for computing the hash.</summary>
       /// <param name="array">The input to compute the hash code for..</param>
@@ -84,20 +82,16 @@ namespace Alphaleonis.Win32.Security
          m_hash = CalculateHash(m_table, m_hash, array, ibStart, cbSize);
       }
 
-      /// <summary>
-      /// Finalizes the hash computation after the last data is processed by the cryptographic stream
-      /// object.
-      /// </summary>
-      /// <returns>
-      /// This method finalizes any partial computation and returns the correct hash value for the data
-      /// stream.
-      /// </returns>
+
+      /// <summary>Finalizes the hash computation after the last data is processed by the cryptographic stream object.</summary>
+      /// <returns>This method finalizes any partial computation and returns the correct hash value for the data stream.</returns>
       protected override byte[] HashFinal()
       {
          var hashBuffer = UInt32ToBigEndianBytes(~m_hash);
          HashValue = hashBuffer;
          return hashBuffer;
       }
+
 
       /// <summary>Gets the size, in bits, of the computed hash code.</summary>
       /// <value>The size, in bits, of the computed hash code.</value>
@@ -106,23 +100,24 @@ namespace Alphaleonis.Win32.Security
          get { return 32; }
       }
 
+
       /// <summary>Initializes the table.</summary>
-      /// <param name="polynomial">The polynomial.</param>
       /// <returns>The table.</returns>
+      /// <param name="polynomial">The polynomial.</param>
       private static uint[] InitializeTable(uint polynomial)
       {
          if (polynomial == DefaultPolynomial && s_defaultTable != null)
             return s_defaultTable;
 
          var createTable = new uint[256];
+
          for (var i = 0; i < 256; i++)
          {
             var entry = (uint) i;
+
             for (var j = 0; j < 8; j++)
-               if ((entry & 1) == 1)
-                  entry = (entry >> 1) ^ polynomial;
-               else
-                  entry = entry >> 1;
+               entry = (entry & 1) == 1 ? (entry >> 1) ^ polynomial : entry >> 1;
+
             createTable[i] = entry;
          }
 
@@ -132,13 +127,14 @@ namespace Alphaleonis.Win32.Security
          return createTable;
       }
 
+
       /// <summary>Calculates the hash.</summary>
+      /// <returns>The calculated hash.</returns>
       /// <param name="table">The table.</param>
       /// <param name="seed">The seed.</param>
       /// <param name="buffer">The buffer.</param>
       /// <param name="start">The start.</param>
       /// <param name="size">The size.</param>
-      /// <returns>The calculated hash.</returns>
       private static uint CalculateHash(uint[] table, uint seed, IList<byte> buffer, int start, int size)
       {
          var hash = seed;
@@ -149,9 +145,10 @@ namespace Alphaleonis.Win32.Security
          return hash;
       }
 
+
       /// <summary>Int 32 to big endian bytes.</summary>
-      /// <param name="uint32">The second uint 3.</param>
       /// <returns>A byte[].</returns>
+      /// <param name="uint32">The second uint 3.</param>
       private static byte[] UInt32ToBigEndianBytes(uint uint32)
       {
          var result = BitConverter.GetBytes(uint32);
