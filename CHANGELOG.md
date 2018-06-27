@@ -8,18 +8,21 @@ Version 2.3  (2018-XX-XX)
 
 - Issue #451: Add overloaded method for `File.GetSize` to retrieve the size of all streams.  
 - Issue #454: Add method `Directory.GetSize` to return the size of all alternate data streams of the specified directory and its files.
+- Issue #459: Modify method `Directory.CreateDirectoryCore` to return `null` as well as `DirectoryInfo` instance.
+- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath property`.
 
 ### Improvements
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
-- Issue #459: Modify method `Directory.CreateDirectoryCore` to return null as well as DirectoryInfo instance.
+- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath property`.
 
 ### Breaking Changes
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
+- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath property`.
 
 
-Version 2.2.3  (2018-XX-XX)
+Version 2.2.3  (2018-06-14)
 -------------
 
 ### Bugs Fixed
@@ -48,7 +51,7 @@ Version 2.2.2  (2018-06-05)
 
 - Issue #149: Split unit-tests.
 - Fixed all Sandcastle Help File Builder warnings.
-- Because of bug fixes, the correct source-/destination folder is now shown in exceptions thrown from `Directory`/`File.Copy`/`Move` methods, instead of always showing the source folder path.
+- Because of bug fixes, the correct source-/destination folder is now shown in exceptions thrown from Directory/File.Copy/Move methods, instead of always showing the source folder path.
 - Improved some unit tests that would fail when a removable drive is already removed but there's still a cached reference.
 
 
@@ -57,7 +60,7 @@ Version 2.2.1  (2018-04-05)
 
 ### Bugs Fixed
 
-- Issue #433: `Directory.ExistsDriveOrFolderOrFile` fails on global root path, so a simple file copy from a shadow copy fails with "`device GLOBALROOT not ready`" (Thx CyberSinh)
+- Issue #433: Directory.ExistsDriveOrFolderOrFile fails on global root path, so a simple file copy from a shadow copy fails with "device GLOBALROOT not ready" (Thx CyberSinh)
 
 
 Version 2.2  (2018-03-25)
@@ -81,7 +84,7 @@ Version 2.2  (2018-03-25)
 - Issue #374: Initializing `DriveInfo` instance with only a letter throws `System.ArgumentException`.
 - Issue #375: What is the expected result of `Path.LocalToUnc()` ?  (Thx damiarnold)
 - Issue #376: `Path.LocalToUnc(path, true)` does not return UNC path in long path form.  (Thx damiarnold) 
-- Issue #379: `Path.LocalToUnc()` is not handling trailing directory separators for mapped drives.  (Thx damiarnold)
+- Issue #379: `Path.LocalToUnc()` isn't handling trailing directory separators for mapped drives.  (Thx damiarnold)
 - Issue #381: Change property `ByHandleFileInfo.VolumeSerialNumber` from `int` to `long`.
 - Issue #386: `Network.Host.EnumerateDrives()` returns invalid data.
 - Issue #400: `Directory.CopyDeleteCore` creates destination folder when source folder does not exist.
@@ -118,7 +121,7 @@ Version 2.2  (2018-03-25)
 - Issue #275: Improve methods `Directory/File.CopyMoveCore`: Eliminate recursion.
 - Issue #277: `Directory.DeleteDirectoryCore()`: Eliminate recursion.
 - Issue #278: `Directory.DeleteEmptySubdirectoriesCore()`: Eliminate recursion.
-- Issue #303: `Path.Constants.cs`: Do not use `CurrentCulture`  (Thx HugoRoss)
+- Issue #303: `Path.Constants.cs`: Don't use `CurrentCulture`  (Thx HugoRoss)
 - Issue #306: Include `ShareInfoLevel.Info502` and set as a fallback in `GetShareInfoCore()`  (Thx damiarnold)
 - Issue #326: Add parameter `bool preserveDates` and created overloaded `Directory.Copy` methods to support this.
 - Issue #331: Rename method `File/Directory.TransferTimestamps` to `CopyTimestamps`.
@@ -160,7 +163,7 @@ Version 2.1.3 (2017-06-05)
 ### Bugs Fixed
 
 - Issue #288: `Directory.Exists` on root drive problem has come back with recent updates  (Thx warrenlbrown)
-- Issue #289: `Alphaleonis.Win32.Network.Host.GetShareInfo` does not work since 2.1.0  (Thx Schoolmonkey/damiarnold)
+- Issue #289: `Alphaleonis.Win32.Network.Host.GetShareInfo` doesn't work since 2.1.0  (Thx Schoolmonkey/damiarnold)
 - Issue #296: Folder rename (casing) throws IOException with HResult `ERROR_SAME_DRIVE`  (Thx doormalena)
 - Issue #297: Incorrect domain returned from `Host.EnumerateDomainDfsRoot` when specifying domain  (Thx damiarnold)
 - Issue #299: `FileInfo.MoveTo` and `DirectoryInfo.MoveTo` throw `ArgumentNullException` on empty destination path  (Thx doormalena)
@@ -196,8 +199,8 @@ Version 2.1  (2016-09-29)
 - Issue #112: Add `CreationTimeUtc`, `LastAccessTimeUtc` and `LastWriteTimeUtc` to "Info" classes.
 - Issue #119: Fix `Path.IsLocalPath()` issues.
 - Issue #125: AlphaFS is now CLSCompliant.
-- Issue #127: Modify method `Volume.QueryDosDevice()` so that is does not rely on `Path.IsLocalPath()` anymore.
-- Issue #130: Modify method `Path.LocalToUnc()` so that is does not rely on `Path.IsLocalPath()` anymore.
+- Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
+- Issue #130: Modify method `Path.LocalToUnc()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #131: Modify method `Path.GetPathRoot()` to handle UNC paths in long path format.
 - Issue #132: Modify method `VolumeInfo()` constructor to better handle input paths.
 - Issue #133: Add missing unit test `Host.GetHostShareFromPath()`.
@@ -236,7 +239,7 @@ Version 2.1  (2016-09-29)
 
 ### Bugs Fixed
 
-- Issue #50 : `Path.GetLongPath()` does not prefix on <c>C:\</c>, should it?
+- Issue #50 : `Path.GetLongPath()` does not prefix on "C:\", should it?
 - Issue #60 : Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`.
 - Issue #160: `File.CreateSymbolicLink()` creates shortcut with no target.  (Thx martin-john-green)
 - Issue #162: `File.AppendAllLines()` concatenates content into one line.  (Thx pavelhritonenko)
@@ -246,7 +249,7 @@ Version 2.1  (2016-09-29)
 - Issue #176: At `DirectoryInfo.GetFileSystemInfos()`, Long path prefix of GLOBALROOT path is missing.  (Thx diontools)
 - Issue #179: `Path.GetFileName()` with an empty string throws an exception.  (Thx brutaldev)
 - Issue #180: Network connects methods hangs in Windows service when credentials fail.  (Thx brutaldev)
-- Issue #181: `File.OpenWrite()` should create file if it does not exist.  (Thomas Levesque)
+- Issue #181: `File.OpenWrite()` should create file if it doesn't exist.  (Thomas Levesque)
 - Issue #183: Add `SafeFileHandle` null check for BackupFileStream.Dispose.  (Thx diontools)
 - Issue #185: Correct pinvoke signatures of `CreateSymbolicLink()` and `CreateSymbolicLinkTransacted()` functions.
 - Issue #196: Replace usage of `ExtendedFileAttributes.None` with `ExtendedFileAttributes.Normal`.
@@ -265,7 +268,7 @@ Version 2.1  (2016-09-29)
 - Issue #242: `File.Open(file, System.IO.FileMode.Append)` does not append.
 - Issue #244: `File.Copy(src, dst, true)` does not respect `FILE_ATTRIBUTE_READONLY`.
 - Issue #246: Using `Directory.EnumerateFileSystemEntries()` recursively with a relative path may fail.
-- Issue #248: `Directory.Move()` throws `FileNotFoundException` instead of `DirectoryNotFoundException` when source folder does not exist.
+- Issue #248: `Directory.Move()` throws `FileNotFoundException` instead of `DirectoryNotFoundException` when source folder doesn't exist.
 - Issue #249: Change `File.GetHashCore()` `.ToString("X2")` to `.ToString("X2", CultureInfo.InvariantCulture)`.
 - Issue #252: Correct `FileSystemEntryInfos.FullPath` property when input path is a dot (current directory).
 - Issue #253: Apply `Dispose()` to method `File.GetHashCore()`.
