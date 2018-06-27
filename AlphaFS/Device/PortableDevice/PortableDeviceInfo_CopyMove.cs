@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
@@ -150,6 +151,7 @@ namespace Alphaleonis.Win32.Device
       /// <param name="fileInfo">An initialized <see cref="WpdFileInfo"/> instance referencing the file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory or an existing file.</param>
       /// <param name="transaction">The transaction.</param>
+      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle")]
       internal void CopyFileCore(IPortableDeviceResources resources, WpdFileInfo fileInfo, string destinationPath, KernelTransaction transaction)
       {
          if (null == fileInfo)
@@ -196,25 +198,38 @@ namespace Alphaleonis.Win32.Device
             using (var fileStream = new FileStream(safeFileHandle, FileAccess.Write, (int) optimalBufferSize))
             {
                var buffer = new byte[optimalBufferSize];
-               bool writeFinished;
+               var bufferSize = buffer.Length;
 
-               do
+               using (var safeBuffer = new SafeGlobalMemoryBufferHandle(bufferSize))
                {
-                  int bytesRead;
+                  var success = false;
+                  safeBuffer.DangerousAddRef(ref success);
 
-                  using (var safeBuffer = new SafeGlobalMemoryBufferHandle(buffer.Length))
+                  if (success)
                   {
-                     fileSourceStream.Read(buffer, safeBuffer.Capacity, safeBuffer.DangerousGetHandle());
+                     var handle = safeBuffer.DangerousGetHandle();
+                     int bytesRead;
 
-                     bytesRead = safeBuffer.ReadInt32();
+                     do
+                     {
+                        fileSourceStream.Read(buffer, bufferSize, handle);
+
+                        bytesRead = safeBuffer.ReadInt32();
+
+                        if (bytesRead > 0)
+                           fileStream.Write(buffer, 0, bytesRead);
+
+                     } while (!(bytesRead < bufferSize));
+
+
+                     // When debugging from VS, throws: "System.Runtime.InteropServices.SEHException: External component has thrown an exception."
+
+                     //Filesystem.NativeMethods.CloseHandle(handle);
+
+
+                     safeBuffer.DangerousRelease();
                   }
-
-                  if (bytesRead > 0)
-                     fileStream.Write(buffer, 0, bytesRead);
-
-                  writeFinished = bytesRead < buffer.Length;
-
-               } while (!writeFinished);
+               }
             }
          }
          finally

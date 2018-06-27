@@ -42,6 +42,7 @@ namespace Alphaleonis.Win32.Device
 
       private readonly AssemblyName _product;
       private readonly Version _version;
+      private string _dosDeviceName;
 
       #endregion // Fields
 
@@ -93,7 +94,7 @@ namespace Alphaleonis.Win32.Device
          DevicePowerSource = PortableDevicePowerSource.Unknown;
 
          _deviceInfo = deviceInfo ?? new DeviceInfo();
-
+         
          PortableDevice = new PortableDeviceClass();
 
          if (connect || mtpOnly)
@@ -178,6 +179,13 @@ namespace Alphaleonis.Win32.Device
       public PortableDeviceType DeviceType { get; private set; }
 
 
+      /// <summary>The Win32 device name.</summary>
+      public string DosDeviceName
+      {
+         get { return null == _deviceInfo ? string.Empty : _dosDeviceName ?? (_dosDeviceName = Volume.QueryDosDevice(Path.GetRegularPathCore(_deviceInfo.DevicePath, GetFullPathOptions.None, false))); }
+      }
+
+
       /// <summary>The total storage capacity, in bytes.</summary>
       public long StorageCapacity { get; private set; }
 
@@ -229,7 +237,7 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>The transport supported by the device, such as USB, IP, or Bluetooth.</summary>
-      public PortableDeviceTransportType TransportType { get; private  set; }
+      public PortableDeviceTransportType TransportType { get; private set; }
 
       #endregion // Properties
 

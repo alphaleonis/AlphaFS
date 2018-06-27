@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Device
 
          using (var safeFileHandle = Local.OpenDevice(localDevicePath, isElevated ? FileSystemRights.Read : NativeMethods.FILE_ANY_ACCESS))
          {
-            StorageAdapterInfo = Local.GetStorageAdapterInfo(safeFileHandle, deviceNumber, localDevicePath, DeviceInfo.BusReportedDeviceDescription);
+            StorageAdapterInfo = Local.GetStorageAdapterInfo(safeFileHandle, deviceNumber, localDevicePath, _deviceInfo.BusReportedDeviceDescription);
 
             StoragePartitionInfo = Local.GetStoragePartitionInfo(safeFileHandle, deviceNumber, localDevicePath);
          }
@@ -155,7 +155,7 @@ namespace Alphaleonis.Win32.Device
             }
 
 
-         DeviceInfo = deviceInfo;
+         _deviceInfo = deviceInfo;
 
          return null != deviceInfo && !Utils.IsNullOrWhiteSpace(deviceInfo.DevicePath);
       }

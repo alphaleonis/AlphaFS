@@ -61,7 +61,7 @@ namespace AlphaFS.UnitTest
 
                   foreach (var fileInfo in portableDeviceInfo.EnumerateFiles(true))
                   {
-                     Console.WriteLine("\t\t#{0:000} ID: [{1}]\t\tFullName: [{2}]", ++fseCount, fileInfo.ObjectId, fileInfo.FullName);
+                     Console.WriteLine("\t\t#{0:000} ID: [{1}]\t\tSize: [{2:N0} bytes]\t\tFullName: [{3}]", ++fseCount, fileInfo.ObjectId, fileInfo.Length, fileInfo.FullName);
 
                      ++fileCount;
 
@@ -77,8 +77,8 @@ namespace AlphaFS.UnitTest
                         break;
                   }
 
-                  Console.WriteLine("\n\t\tCopied {0} files.  Total file size: [{1}]", fileCount, Alphaleonis.Utils.UnitSizeToText(totalSize));
-                  Console.WriteLine("\t\tDestination Directory Path: [{0}]\n", folder.FullName);
+
+                  Console.WriteLine("\n\t\tCopied {0} files.  Total file size: [{1}]\n", fileCount, Alphaleonis.Utils.UnitSizeToText(totalSize));
                }
 
 

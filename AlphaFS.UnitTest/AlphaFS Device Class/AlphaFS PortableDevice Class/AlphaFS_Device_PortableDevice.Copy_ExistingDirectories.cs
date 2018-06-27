@@ -64,10 +64,7 @@ namespace AlphaFS.UnitTest
 
                      ++folderCount;
 
-
-                     UnitTestConstants.Dump(directoryInfo);
                      
-
                      // Copy folders from portable device to local.
 
                      portableDeviceInfo.CopyDirectory(directoryInfo, folder.FullName);
@@ -77,8 +74,8 @@ namespace AlphaFS.UnitTest
                         break;
                   }
 
-                  Console.WriteLine("\n\t\tCopied {0} directories.", folderCount);
-                  Console.WriteLine("\t\tDestination Directory Path: [{0}]\n", folder.FullName);
+
+                  Console.WriteLine("\n\t\tCopied {0} directories.\n", folderCount);
                }
 
 

@@ -62,8 +62,8 @@ namespace Alphaleonis.Win32.Device
 
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory names in a specified path.</summary>
-      /// <param name="portableDeviceInfo">The <see cref="T:PortableDeviceInfo"/> instance of the Portable Device.</param>
-      /// <param name="deviceContent">A Portable Device Content instance. If <c>null</c> is specified the <paramref name="deviceContent"/> is retrieved from the <paramref name="portableDeviceInfo"/> instance.</param>
+      /// <param name="portableDeviceInfo">The <see cref="T:PortableDeviceInfo"/> instance of the portable device.</param>
+      /// <param name="deviceContent">A portable device Content instance. If <c>null</c> is specified the <paramref name="deviceContent"/> is retrieved from the <paramref name="portableDeviceInfo"/> instance.</param>
       /// <param name="objectId">The ID of the directory to search.</param>
       /// <param name="recurse"></param>
       /// <param name="getFolders">
@@ -154,10 +154,10 @@ namespace Alphaleonis.Win32.Device
       }
 
 
-      /// <summary>[AlphaFS] Retrieves the properties of a file system object from the Portable Device.</summary>
-      /// <param name="deviceProperties">The instance of properties from the Portable Device instance.</param>
+      /// <summary>[AlphaFS] Retrieves the properties of a file system object from the portable device.</summary>
+      /// <param name="deviceProperties">The instance of properties from the portable device instance.</param>
       /// <param name="objectId">The object ID to retrieve the properties from.</param>
-      /// <param name="mtpOnly"><c>true></c> The Portable Device uses the MTP protocol.</param>
+      /// <param name="mtpOnly"><c>true></c> The portable device uses the MTP protocol.</param>
       /// <returns>Returns a <see cref="T:WpdFileSystemInfo"/> instance.</returns>
       private static WpdFileSystemInfo GetFileSystemInfo(IPortableDeviceProperties deviceProperties, string objectId, bool mtpOnly)
       {

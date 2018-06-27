@@ -54,38 +54,14 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.Dump(portableDeviceInfo);
 
             Assert.IsTrue(portableDeviceInfo.IsConnected, "The portable device is not connected, but it is expected.");
-
-
-            // Enumerate
-
-            const int maxItems = 50;
-
-            Console.WriteLine("\n\tEnumerating the first {0} items from the portable device.\n", maxItems);
-
-
-            var fseCount = 0;
-            long totalSize = 0;
-
-            foreach (var pdfsi in portableDeviceInfo.EnumerateFileSystemEntries(true))
-            {
-               var fileInfo = pdfsi as Alphaleonis.Win32.Filesystem.WpdFileInfo;
-
-               if (null != fileInfo)
-                  totalSize += fileInfo.Length;
-
-               Console.WriteLine("\t\t#{0:000} [{1}] ID: [{2}]\t\tFullPath: [{3}]", ++fseCount, pdfsi.IsDirectory ? "Folder" : "File  ", pdfsi.ObjectId, pdfsi.FullName);
-
-
-               if (fseCount == maxItems)
-                  break;
-            }
-
-            Console.WriteLine("\n\t\tTotal file size: [{0}]\n", Alphaleonis.Utils.UnitSizeToText(totalSize));
             
 
             portableDeviceInfo.Disconnect();
                
             Assert.IsFalse(portableDeviceInfo.IsConnected, "The portable device is connected, but it is not expected.");
+            
+
+            Console.WriteLine();
          }
 
 

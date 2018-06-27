@@ -24,10 +24,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
+using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides the base class for both <see cref="WpdFileInfo"/> and <see cref="WpdDirectoryInfo"/> objects.</summary>
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wpd")]
    [Serializable]
    [ComVisible(true)]
    public abstract class WpdFileSystemInfo : MarshalByRefObject
@@ -51,6 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
 
+      [NonSerialized]
       private FileSystemEntryInfo _entryInfo;
 
 
@@ -370,6 +373,7 @@ namespace Alphaleonis.Win32.Filesystem
             return _entryInfo;
          }
 
+         [SecurityCritical]
          internal set
          {
             _entryInfo = value;
@@ -383,15 +387,19 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] The initial "IsDirectory" indicator that was passed to the constructor.</summary>
-      protected internal bool IsDirectory { get; set; }
+      protected internal bool IsDirectory { get; internal set; }
+
+
+      /// <summary>[AlphaFS] Should return <c>true</c> for portable devices that use the <see cref="PortableDeviceProtocol.Ums"/> protocol; otherwise, <c>false</c>.</summary>
+      protected internal bool IsFilesystem { get; private set; }
 
 
       /// <summary>[AlphaFS] The full path of the file system object in Unicode (LongPath) format.</summary>
-      protected string LongFullName { get; set; }
+      protected string LongFullName { get; private set; }
 
 
       /// <summary>[AlphaFS] Represents the KernelTransaction that was passed to the constructor.</summary>
-      protected KernelTransaction Transaction { get; set; }
+      protected KernelTransaction Transaction { get; private set; }
 
 
       /// <summary>
@@ -401,19 +409,19 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] The object ID of the instance.</summary>
-      public string ObjectId { get; set; }
+      public string ObjectId { get; private set; }
 
 
       /// <summary>
       /// 
       /// </summary>
-      public string OriginalFileName { get; set; }
+      public string OriginalFileName { get; internal set; }
 
 
       /// <summary>
       /// 
       /// </summary>
-      public string ParentId { get; set; }
+      public string ParentId { get; internal set; }
 
 
       ///// <summary>

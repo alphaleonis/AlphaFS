@@ -51,6 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
 
+      [NonSerialized]
       private FileSystemEntryInfo _entryInfo;
 
 
@@ -59,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       // give back a generic error back.
       [NonSerialized]
       internal int DataInitialised = -1;
-      
+
 
       // The pre-cached FileSystemInfo information.
       [NonSerialized]
@@ -381,7 +382,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] The initial "IsDirectory" indicator that was passed to the constructor.</summary>
-      protected bool IsDirectory { get; set; }
+      protected internal bool IsDirectory { get; internal set; }
 
 
       /// <summary>[AlphaFS] The full path of the file system object in Unicode (LongPath) format.</summary>

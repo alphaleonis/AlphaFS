@@ -34,6 +34,9 @@ namespace Alphaleonis.Win32.Device
    {
       #region Fields
 
+      /// <summary>An initialized <see cref="DeviceInfo"/> instance.</summary>
+      private DeviceInfo _deviceInfo; //{ get; set; }
+
       private Collection<int> _partitionIndexCollection;
       private Collection<string> _volumeGuidCollection;
       private Collection<string> _logicalDriveCollection;
@@ -86,22 +89,18 @@ namespace Alphaleonis.Win32.Device
 
 
       #region Properties
-
-      /// <summary>An initialized <see cref="Filesystem.DeviceInfo"/> instance.</summary>
-      private DeviceInfo DeviceInfo { get; set; }
-
-
+      
       /// <summary>The device description.</summary>
       public string DeviceDescription
       {
-         get { return null != DeviceInfo ? DeviceInfo.DeviceDescription : string.Empty; }
+         get { return null != _deviceInfo ? _deviceInfo.DeviceDescription : string.Empty; }
       }
 
 
       /// <summary>The device path.</summary>
       public string DevicePath
       {
-         get { return null != DeviceInfo ? DeviceInfo.DevicePath : string.Empty; }
+         get { return null != _deviceInfo ? _deviceInfo.DevicePath : string.Empty; }
       }
 
 
@@ -116,7 +115,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>The device (friendly) name.</summary>
       public string Name
       {
-         get { return null != DeviceInfo ? DeviceInfo.FriendlyName : string.Empty; }
+         get { return null != _deviceInfo ? _deviceInfo.FriendlyName : string.Empty; }
       }
 
 
@@ -127,7 +126,7 @@ namespace Alphaleonis.Win32.Device
       /// <summary>The device (PDO) information provided by a device's firmware to Windows.</summary>
       public string PhysicalDeviceObjectName
       {
-         get { return null != DeviceInfo ? DeviceInfo.PhysicalDeviceObjectName : string.Empty; }
+         get { return null != _deviceInfo ? _deviceInfo.PhysicalDeviceObjectName : string.Empty; }
       }
 
 
