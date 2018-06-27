@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Network
 
          else
          {
-            foreach (INetwork network in Manager.GetNetworks(networkConnectivityLevels))
+            foreach (NativeMethods.INetwork network in Manager.GetNetworks(networkConnectivityLevels))
 
                yield return new NetworkInfo(network);
          }

@@ -31,14 +31,14 @@ namespace Alphaleonis.Win32.Network
    {
       #region Private Fields
 
-      private readonly INetworkConnection _networkConnection;
+      private readonly NativeMethods.INetworkConnection _networkConnection;
 
       #endregion // Private Fields
 
 
       #region Constructors
 
-      internal NetworkConnectionInfo(INetworkConnection networkConnection)
+      internal NetworkConnectionInfo(NativeMethods.INetworkConnection networkConnection)
       {
          _networkConnection = networkConnection;
       }

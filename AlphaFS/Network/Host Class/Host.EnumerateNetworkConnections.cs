@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Network
 
          else
          {
-            foreach (INetworkConnection networkConnection in Manager.GetNetworkConnections())
+            foreach (NativeMethods.INetworkConnection networkConnection in Manager.GetNetworkConnections())
 
                yield return new NetworkConnectionInfo(networkConnection);
          }

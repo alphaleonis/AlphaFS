@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary> [AlphaFS] 
+      /// <summary>[AlphaFS] 
       ///   Retrieves information about the amount of space that is available on a disk volume, which is the total amount of space, the total
       ///   amount of free space, and the total amount of free space available to the user that is associated with the calling thread.
       /// </summary>

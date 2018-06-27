@@ -59,24 +59,30 @@ namespace Alphaleonis.Win32.Filesystem
          if (path == null)
             throw new ArgumentNullException("path");
 
-         if (!allowEmpty && (path.Length == 0 || Utils.IsNullOrWhiteSpace(path)))
+         if (!allowEmpty && (path.Trim().Length == 0 || Utils.IsNullOrWhiteSpace(path)))
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
          if (options != GetFullPathOptions.None)
             path = ApplyFullPathOptions(path, options);
 
 
-         return path.StartsWith(DosDeviceUncPrefix, StringComparison.OrdinalIgnoreCase)
+         if (path.StartsWith(DosDeviceUncPrefix, StringComparison.OrdinalIgnoreCase))
+            return UncPrefix + path.Substring(DosDeviceUncPrefix.Length);
 
-            ? UncPrefix + path.Substring(DosDeviceUncPrefix.Length)
-            : (path.StartsWith(NonInterpretedPathPrefix, StringComparison.Ordinal)
 
-               ? path.Substring(NonInterpretedPathPrefix.Length)
-               : (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) || path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase) ||
+         if (path.StartsWith(LogicalDrivePrefix, StringComparison.Ordinal))
+            return path.Substring(LogicalDrivePrefix.Length);
 
-                  !path.StartsWith(LongPathPrefix, StringComparison.Ordinal)
-                  ? path
-                  : (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase) ? UncPrefix + path.Substring(LongPathUncPrefix.Length) : path.Substring(LongPathPrefix.Length))));
+
+         if (path.StartsWith(NonInterpretedPathPrefix, StringComparison.Ordinal))
+            return path.Substring(NonInterpretedPathPrefix.Length);
+
+
+         return path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) || path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase) ||
+                !path.StartsWith(LongPathPrefix, StringComparison.Ordinal)
+
+            ? path
+            : (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase) ? UncPrefix + path.Substring(LongPathUncPrefix.Length) : path.Substring(LongPathPrefix.Length));
       }
    }
 }

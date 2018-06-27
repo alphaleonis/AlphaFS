@@ -920,7 +920,8 @@ namespace Alphaleonis.Win32.Filesystem
          {
             moveOptions = null;
 
-            isCopy = emulateMove = true;
+            isCopy = true;
+            emulateMove = true;
             copyOptions = CopyOptions.None;
          }
 

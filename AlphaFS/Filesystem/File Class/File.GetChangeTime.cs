@@ -209,7 +209,7 @@ namespace Alphaleonis.Win32.Filesystem
          finally
          {
             // Handle is ours, dispose.
-            if (!callerHandle && null != safeFileHandle)
+            if (!callerHandle && null != safeFileHandle && !safeFileHandle.IsClosed)
                safeFileHandle.Close();
          }
       }

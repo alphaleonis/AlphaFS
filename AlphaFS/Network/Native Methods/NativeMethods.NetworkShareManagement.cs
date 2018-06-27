@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   internal partial class NativeMethods
+   internal static partial class NativeMethods
    {
       /// <summary>Lists all connections made to a shared resource on the server or all connections established from a particular computer.</summary>
       /// <returns>

@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] StreamSeparator = ':' Provides a platform-specific Stream-name character.</summary>
-      public static readonly char StreamSeparatorChar = ':';
+      public const char StreamSeparatorChar = ':';
 
       /// <summary>[AlphaFS] StreamSeparator = ':' Provides a platform-specific Stream-name string.</summary>
       public static readonly string StreamSeparator = StreamSeparatorChar.ToString(CultureInfo.InvariantCulture);

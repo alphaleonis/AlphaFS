@@ -23,23 +23,24 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Net.NetworkInformation;
 
 namespace Alphaleonis.Win32.Network
 {
    /// <summary>Represents a network on the local machine. It can also represent a collection of network connections with a similar network signature.</summary>
-   public class NetworkInfo
+   [Serializable]
+   public class NetworkInfo : IEquatable<NetworkInfo>
    {
       #region Private Fields
 
-      private readonly INetwork _network;
+      [NonSerialized]
+      private readonly NativeMethods.INetwork _network;
 
       #endregion // Private Fields
 
 
       #region Constructors
 
-      internal NetworkInfo(INetwork network)
+      internal NetworkInfo(NativeMethods.INetwork network)
       {
          _network = network;
       }
@@ -53,9 +54,6 @@ namespace Alphaleonis.Win32.Network
       public NetworkCategory Category
       {
          get { return _network.GetCategory(); }
-
-         // Should we allow this in AlphaFS?
-         // set { _network.SetCategory(value); }
       }
 
 
@@ -66,7 +64,7 @@ namespace Alphaleonis.Win32.Network
          {
             foreach (var connection in _network.GetNetworkConnections())
 
-               yield return new NetworkConnectionInfo((INetworkConnection) connection);
+               yield return new NetworkConnectionInfo((NativeMethods.INetworkConnection) connection);
          }
       }
 
@@ -186,7 +184,7 @@ namespace Alphaleonis.Win32.Network
 
 
       #region Methods
-
+      
       /// <summary>Returns storage device as: "VendorId ProductId DeviceType DeviceNumber:PartitionNumber".</summary>
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
@@ -194,22 +192,6 @@ namespace Alphaleonis.Win32.Network
          var description = !Utils.IsNullOrWhiteSpace(Description) && !Equals(Name, Description) ? " (" + Description + ")" : string.Empty;
 
          return null != Name ? string.Format(CultureInfo.CurrentCulture, "{0}{1}, {2}", Name, description, Category) : GetType().Name;
-      }
-
-
-      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
-      /// <param name="obj">Another object to compare to.</param>
-      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
-      public override bool Equals(object obj)
-      {
-         if (null == obj || GetType() != obj.GetType())
-            return false;
-
-         var other = obj as NetworkInfo;
-
-         return null != other &&
-                Equals(NetworkId, other.NetworkId) &&
-                Equals(Category, other.Category);
       }
 
 
@@ -224,23 +206,17 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      /// <summary>Implements the operator ==</summary>
-      /// <param name="left">A.</param>
-      /// <param name="right">B.</param>
-      /// <returns>The result of the operator.</returns>
-      public static bool operator ==(NetworkInfo left, NetworkInfo right)
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="other">Another <see cref="NetworkInfo"/> instance to compare to.</param>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
+      public bool Equals(NetworkInfo other)
       {
-         return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
-      }
-
-
-      /// <summary>Implements the operator !=</summary>
-      /// <param name="left">A.</param>
-      /// <param name="right">B.</param>
-      /// <returns>The result of the operator.</returns>
-      public static bool operator !=(NetworkInfo left, NetworkInfo right)
-      {
-         return !(left == right);
+         return null != other && GetType() == other.GetType() &&
+                Equals(DomainType, other.DomainType) &&
+                Equals(NetworkId, other.NetworkId) &&
+                Equals(Category, other.Category) &&
+                Equals(CreationTime, other.CreationTime) &&
+                Equals(ConnectionTime, other.ConnectionTime);
       }
 
       #endregion // Methods
