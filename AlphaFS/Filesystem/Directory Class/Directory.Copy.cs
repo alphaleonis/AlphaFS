@@ -705,13 +705,16 @@ namespace Alphaleonis.Win32.Filesystem
          pathFormat = PathFormat.LongFullPath;
          
          var cmr = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, isCopy, !isFile, preserveDates, emulateMove);
-         
+
+         // Calling start on a running Stopwatch is a no-op.
+         cmr.Stopwatch.Start();
+
 
          if (isCopy)
          {
             // Copy folder SymbolicLinks.
             // Cannot be done by CopyFileEx() so emulate this.
-            
+
             if (File.HasCopySymbolicLink(copyOptions))
             {
                var lvi = File.GetLinkTargetInfoCore(transaction, sourcePathLp, true, pathFormat);
@@ -761,7 +764,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          
-         cmr._stopwatch.Stop();
+         cmr.Stopwatch.Stop();
 
          return cmr;
       }

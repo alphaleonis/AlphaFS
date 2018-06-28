@@ -32,11 +32,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Fields
 
-      [NonSerialized]
-      private readonly string _fullPath;
-
-      [NonSerialized]
-      private readonly string _streamName;
+      [NonSerialized] private readonly string _fullPath;
+      [NonSerialized] private readonly string _streamName;
       
       #endregion // Fields
 
@@ -47,28 +44,15 @@ namespace Alphaleonis.Win32.Filesystem
       {
          _fullPath = fullPath;
 
-         _streamName = ParseStreamName(findData.cStreamName);
-
          Size = findData.StreamSize;
+
+         _streamName = ParseStreamName(findData.cStreamName);
       }
 
       #endregion // Constructor
 
 
       #region Properties
-
-      /// <summary>Gets the name of the alternate data stream.</summary>
-      /// <remarks>This value is an empty string for the default stream (:$DATA), and for any other data stream it contains the name of the stream.</remarks>
-      /// <value>The name of the stream.</value>
-      public string StreamName
-      {
-         get { return _streamName; }
-      }
-
-
-      /// <summary>Gets the size of the stream.</summary>      
-      public long Size { get; private set; }
-      
 
       /// <summary>Gets the full path to the stream.</summary>
       /// <remarks>
@@ -80,6 +64,19 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get { return string.Format(CultureInfo.InvariantCulture, "{0}{1}", _fullPath, !Utils.IsNullOrWhiteSpace(StreamName) ? Path.StreamSeparator + StreamName : string.Empty); }
       }
+      
+
+      /// <summary>Gets the size of the stream.</summary>      
+      public long Size { get; private set; }
+
+
+      /// <summary>Gets the name of the alternate data stream.</summary>
+      /// <remarks>This value is an empty string for the default stream (:$DATA), and for any other data stream it contains the name of the stream.</remarks>
+      /// <value>The name of the stream.</value>
+      public string StreamName
+      {
+         get { return _streamName; }
+      }
 
       #endregion // Properties
 
@@ -90,10 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
       public override int GetHashCode()
       {
-         unchecked
-         {
-            return (!Utils.IsNullOrWhiteSpace(StreamName) ? StreamName.GetHashCode() : 0) + (!Utils.IsNullOrWhiteSpace(FullPath) ? FullPath.GetHashCode() : 0);
-         }
+         return Utils.CombineHashCodesOf(StreamName, FullPath);
       }
       
 

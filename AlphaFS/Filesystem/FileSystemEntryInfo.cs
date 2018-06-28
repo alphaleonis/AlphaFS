@@ -32,6 +32,16 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    public sealed class FileSystemEntryInfo
    {
+      #region Fields
+
+      private string _fullPath;
+      private string _longFullPath;
+
+      #endregion // Fields
+
+
+      #region Constructor
+
       /// <summary>Initializes a new instance of the <see cref="FileSystemEntryInfo"/> class.</summary>
       /// <param name="findData">The NativeMethods.WIN32_FIND_DATA structure.</param>
       internal FileSystemEntryInfo(NativeMethods.WIN32_FIND_DATA findData)
@@ -39,19 +49,10 @@ namespace Alphaleonis.Win32.Filesystem
          Win32FindData = findData;
       }
 
+      #endregion // Constructor
 
 
-
-      /// <summary>Returns the <see cref="FullPath"/> of the FileSystemEntryInfo instance.</summary>
-      /// <returns>Returns the <see cref="FullPath"/> of the FileSystemEntryInfo instance.</returns>
-      public override string ToString()
-      {
-         return FullPath;
-      }
-
-
-
-
+      #region Properties
 
       /// <summary>The instance 8.3 version of the filename.</summary>
       public string AlternateFileName
@@ -103,8 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
          get { return NativeMethods.ToLong(Win32FindData.nFileSizeHigh, Win32FindData.nFileSizeLow); }
       }
 
-
-      private string _fullPath;
+      
       /// <summary>The instance full path.</summary>
       public string FullPath
       {
@@ -260,7 +260,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private string _longFullPath;
       /// <summary>The instance full path in long path format.</summary>
       public string LongFullPath
       {
@@ -279,5 +278,27 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The instance internal WIN32 FIND Data</summary>
       internal NativeMethods.WIN32_FIND_DATA Win32FindData { get; private set; }
+
+      #endregion // Properties
+
+
+      #region Methods
+
+      /// <summary>Returns the <see cref="FullPath"/> of the FileSystemEntryInfo instance.</summary>
+      /// <returns>Returns the <see cref="FullPath"/> of the FileSystemEntryInfo instance.</returns>
+      public override string ToString()
+      {
+         return FullPath;
+      }
+
+
+      /// <summary>Serves as a hash function for a particular type.</summary>
+      /// <returns>A hash code for the current Object.</returns>
+      public override int GetHashCode()
+      {
+         return Utils.CombineHashCodesOf(FullPath, LongFullPath);
+      }
+
+      #endregion // Methods
    }
 }

@@ -465,10 +465,7 @@ namespace Alphaleonis.Win32.Network
       /// <returns>A hash code for the current Object.</returns>
       public override int GetHashCode()
       {
-         unchecked
-         {
-            return (!Utils.IsNullOrWhiteSpace(HostName) ? HostName.GetHashCode() : BytesTransmitted.GetHashCode()) + StatisticsStartTime.GetHashCode();
-         }
+         return Utils.CombineHashCodesOf(HostName, BytesTransmitted, StatisticsStartTime);
       }
       
 

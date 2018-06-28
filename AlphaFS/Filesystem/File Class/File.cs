@@ -19,8 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides static methods for the creation, copying, deletion, moving, and opening of a single file, and aids in the creation of FileStream objects.</summary>

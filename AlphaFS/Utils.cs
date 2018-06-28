@@ -112,8 +112,8 @@ namespace Alphaleonis
          {
             var hash = 17;
 
-            hash = hash * 23 + (null != arg1 ? arg1.GetHashCode() : 0);
-            hash = hash * 23 + (null != arg2 ? arg2.GetHashCode() : 0);
+            hash = hash * 23 + (!Equals(arg1, default(T1)) ? arg1.GetHashCode() : 0);
+            hash = hash * 23 + (!Equals(arg2, default(T2)) ? arg2.GetHashCode() : 0);
 
             return hash;
          }
@@ -126,16 +126,16 @@ namespace Alphaleonis
          {
             var hash = CombineHashCodesOf(arg1, arg2);
 
-            hash = hash * 23 + (null != arg3 ? arg3.GetHashCode() : 0);
+            hash = hash * 23 + (!Equals(arg3, default(T3)) ? arg3.GetHashCode() : 0);
 
             return hash;
          }
       }
 
 
-      public static int CombineHashCodesOf<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
-      {
-         return CombineHashCodesOf(CombineHashCodesOf(arg1, arg2), CombineHashCodesOf(arg3, arg4));
-      }
+      //public static int CombineHashCodesOf<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+      //{
+      //   return CombineHashCodesOf(CombineHashCodesOf(arg1, arg2), CombineHashCodesOf(arg3, arg4));
+      //}
    }
 }
