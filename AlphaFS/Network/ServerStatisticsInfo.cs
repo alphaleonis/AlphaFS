@@ -231,7 +231,7 @@ namespace Alphaleonis.Win32.Network
             return (!Utils.IsNullOrWhiteSpace(HostName) ? HostName.GetHashCode() : BytesSent.GetHashCode()) + StatisticsStartTime.GetHashCode();
          }
       }
-
+      
 
       /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
       /// <param name="other">Another <see cref="ServerStatisticsInfo"/> instance to compare to.</param>
@@ -243,6 +243,38 @@ namespace Alphaleonis.Win32.Network
                 Equals(BytesSent, other.BytesSent) &&
                 Equals(BytesReceived, other.BytesReceived) &&
                 Equals(StatisticsStartTimeUtc, other.StatisticsStartTimeUtc);
+      }
+
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="obj">Another object to compare to.</param>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
+      public override bool Equals(object obj)
+      {
+         var other = obj as ServerStatisticsInfo;
+
+         return null != other && Equals(other);
+      }
+
+
+      /// <summary>Implements the operator ==</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator ==(ServerStatisticsInfo left, ServerStatisticsInfo right)
+      {
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) ||
+                !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
+      }
+
+
+      /// <summary>Implements the operator !=</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator !=(ServerStatisticsInfo left, ServerStatisticsInfo right)
+      {
+         return !(left == right);
       }
 
       #endregion // Methods

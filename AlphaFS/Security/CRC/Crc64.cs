@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Security
       }
 
 
-      /// <summary>Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.</summary>
+      /// <summary>Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm"/> class.</summary>
       public override void Initialize()
       {
          m_hash = m_seed;
