@@ -14,12 +14,14 @@ Version 2.3  (2018-XX-XX)
 ### Improvements
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
-- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath property`.
+- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath` property.
+- Issue #462: Add `IEquatable<T>` to applicable info classes.
+- Issue #463: Add `[Serializable]` attribute to applicable info classes.
 
 ### Breaking Changes
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
-- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath property`.
+- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath` property.
 
 
 Version 2.2.3  (2018-06-14)

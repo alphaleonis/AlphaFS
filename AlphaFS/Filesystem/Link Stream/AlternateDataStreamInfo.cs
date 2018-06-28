@@ -27,42 +27,32 @@ namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Information about an alternate data stream.</summary>  
    /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.EnumerateAlternateDataStreams"/> 
-   public struct AlternateDataStreamInfo
+   [Serializable]
+   public struct AlternateDataStreamInfo : IEquatable<AlternateDataStreamInfo>
    {
       #region Fields
 
-      private readonly string _streamName;
-      private readonly string _fullPath;
-
-      #endregion // Private Fields
+      [NonSerialized] private readonly string _fullPath;
+      [NonSerialized] private readonly string _streamName;
+      
+      #endregion // Fields
 
 
       #region Constructor
 
       internal AlternateDataStreamInfo(string fullPath, NativeMethods.WIN32_FIND_STREAM_DATA findData)
       {
-         _streamName = ParseStreamName(findData.cStreamName);
+         _fullPath = fullPath;
 
          Size = findData.StreamSize;
 
-         _fullPath = fullPath;
+         _streamName = ParseStreamName(findData.cStreamName);
       }
 
       #endregion // Constructor
 
-      #region Public Properties
 
-      /// <summary>Gets the name of the alternate data stream.</summary>
-      /// <remarks>This value is an empty string for the default stream (:$DATA), and for any other data stream it contains the name of the stream.</remarks>
-      /// <value>The name of the stream.</value>
-      public string StreamName
-      {
-         get { return _streamName; }
-      }
-
-      /// <summary>Gets the size of the stream.</summary>      
-      public long Size { get; private set; }
-
+      #region Properties
 
       /// <summary>Gets the full path to the stream.</summary>
       /// <remarks>
@@ -74,37 +64,57 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get { return string.Format(CultureInfo.InvariantCulture, "{0}{1}", _fullPath, !Utils.IsNullOrWhiteSpace(StreamName) ? Path.StreamSeparator + StreamName : string.Empty); }
       }
+      
 
-      #endregion // Public Properties
+      /// <summary>Gets the size of the stream.</summary>      
+      public long Size { get; private set; }
 
-      #region Public Methods
+
+      /// <summary>Gets the name of the alternate data stream.</summary>
+      /// <remarks>This value is an empty string for the default stream (:$DATA), and for any other data stream it contains the name of the stream.</remarks>
+      /// <value>The name of the stream.</value>
+      public string StreamName
+      {
+         get { return _streamName; }
+      }
+
+      #endregion // Properties
+
+
+      #region Methods
 
       /// <summary>Returns the hash code for this instance.</summary>
       /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
       public override int GetHashCode()
       {
-         return StreamName.GetHashCode();
+         return Utils.CombineHashCodesOf(StreamName, FullPath);
       }
+      
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="other">Another <see cref="AlternateDataStreamInfo"/> instance to compare to.</param>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
+      public bool Equals(AlternateDataStreamInfo other)
+      {
+         return GetType() == other.GetType() &&
+                Equals(StreamName, other.StreamName) &&
+                Equals(FullPath, other.FullPath) &&
+                Equals(Size, other.Size);
+      }
+
 
       /// <summary>Indicates whether this instance and a specified object are equal.</summary>
       /// <param name="obj">The object to compare with the current instance.</param>
       /// <returns>
-      ///   true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false.
+      ///   true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
       /// </returns>
       public override bool Equals(object obj)
       {
-         if (obj == null || GetType() != obj.GetType())
-            return false;
-
-         var other = (AlternateDataStreamInfo) obj;
-
-         return null != other &&
-                null != other.StreamName && other.StreamName.Equals(StreamName, StringComparison.OrdinalIgnoreCase) &&
-                null != other.FullPath && other.FullPath.Equals(FullPath, StringComparison.OrdinalIgnoreCase) &&
-                other.Size.Equals(Size);
+         return obj is AlternateDataStreamInfo && Equals((AlternateDataStreamInfo) obj);
       }
 
-      /// <summary>Implements the operator ==</summary>
+
+      // <summary>Implements the operator ==</summary>
       /// <param name="left">A.</param>
       /// <param name="right">B.</param>
       /// <returns>The result of the operator.</returns>
@@ -112,6 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return left.Equals(right);
       }
+
 
       /// <summary>Implements the operator !=</summary>
       /// <param name="left">A.</param>
@@ -122,7 +133,8 @@ namespace Alphaleonis.Win32.Filesystem
          return !(left == right);
       }
 
-      #endregion // Public Methods
+      #endregion // Methods
+
 
       #region Private Methods
 

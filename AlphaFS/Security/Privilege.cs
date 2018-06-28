@@ -220,10 +220,16 @@ namespace Alphaleonis.Win32.Security
 
       #endregion // System Privileges
 
+      
+      #region Fields
 
       private readonly string _name;
       private readonly string _systemName;
 
+      #endregion // Fields
+
+
+      #region Constructors
 
       /// <summary>Create a new <see cref="Privilege"/> instance, representing the specified privilege on the specified system.</summary>
       /// <param name="systemName">Name of the system.</param>
@@ -250,6 +256,10 @@ namespace Alphaleonis.Win32.Security
          _name = name;
       }
 
+      #endregion // Constructors
+      
+
+      #region Properties
 
       /// <summary>Gets the system name identifying this privilege.</summary>
       /// <value>The system name identifying this privilege.</value>
@@ -258,34 +268,36 @@ namespace Alphaleonis.Win32.Security
          get { return _name; }
       }
 
+      #endregion // Properties
+
+      
+      #region Methods
 
       /// <summary>Retrieves the display name that represents this privilege.</summary>
       /// <returns>The display name that represents this privilege.</returns>
       [SecurityCritical]
       public string LookupDisplayName()
       {
-         uint languageId;
          const uint initialCapacity = 10;
-         var displayNameCapacity = initialCapacity;
-         var displayName = new StringBuilder((int)displayNameCapacity);
+         var bufferSize = initialCapacity;
+         var displayName = new StringBuilder((int) bufferSize);
+         uint languageId;
 
+      Retry:
 
-         var success = NativeMethods.LookupPrivilegeDisplayName(_systemName, _name, ref displayName, ref displayNameCapacity, out languageId);
+         var success = NativeMethods.LookupPrivilegeDisplayName(_systemName, _name, ref displayName, ref bufferSize, out languageId);
 
          var lastError = Marshal.GetLastWin32Error();
          if (!success)
          {
             if (lastError == Win32Errors.ERROR_INSUFFICIENT_BUFFER)
             {
-               displayName = new StringBuilder((int)displayNameCapacity + 1);
+               displayName = new StringBuilder((int) bufferSize + 1);
 
-               success = NativeMethods.LookupPrivilegeDisplayName(_systemName, _name, ref displayName, ref displayNameCapacity, out languageId);
-
-               lastError = Marshal.GetLastWin32Error();
+               goto Retry;
             }
 
-            if (!success)
-               NativeError.ThrowException(lastError, _name);
+            NativeError.ThrowException(lastError, _name);
          }
 
 
@@ -312,48 +324,66 @@ namespace Alphaleonis.Win32.Security
       }
 
 
-      /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
-      /// <param name="other">An object to compare with this object.</param>
-      /// <returns><c>true</c> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <c>false</c>.</returns>
-      public bool Equals(Privilege other)
-      {
-         return null != other && _name.Equals(other._name, StringComparison.OrdinalIgnoreCase) &&
-                (null == _systemName && null == other._systemName || null != _systemName &&
-                 _systemName.Equals(other._systemName, StringComparison.OrdinalIgnoreCase));
-      }
-
-
-      /// <summary>Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>.</summary>
-      /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="System.Object"/>.</param>
-      /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>; otherwise, <c>false</c>.</returns>
-      /// <exception cref="NullReferenceException"/>
-      public override bool Equals(object obj)
-      {
-         if (null == obj || GetType() != obj.GetType())
-            return false;
-
-         var other = obj as Privilege;
-
-         return null != other && _name.Equals(other._name, StringComparison.OrdinalIgnoreCase) &&
-                (null == _systemName && null == other._systemName || null != _systemName &&
-                 _systemName.Equals(other._systemName, StringComparison.OrdinalIgnoreCase));
-      }
-
-
       /// <summary>Serves as a hash function for a particular type.</summary>
-      /// <returns>Returns a hash code for the current Object.</returns>
+      /// <returns>A hash code for the current Object.</returns>
       public override int GetHashCode()
       {
-         return null != _name ? _name.GetHashCode() : 0;
+         return !Utils.IsNullOrWhiteSpace(Name) ? Name.GetHashCode() : 0;
       }
 
 
       /// <summary>Returns the system name for this privilege.</summary>
       /// <remarks>This is equivalent to <see cref="Privilege.Name"/>.</remarks>
-      /// <returns>Returns a <see cref="System.String"/> that represents the current <see cref="System.Object"/>.</returns>
+      /// <returns>A <see cref="System.String"/> that represents the current <see cref="object"/>.</returns>
       public override string ToString()
       {
-         return _name;
+         return Name;
       }
+
+
+      /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+      /// <param name="other">An object to compare with this object.</param>
+      /// <returns><c>true</c> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <c>false</c>.</returns>
+      public bool Equals(Privilege other)
+      {
+         return null != other && GetType() == other.GetType() &&
+                Equals(Name, other.Name) &&
+                Equals(_systemName, other._systemName);
+      }
+
+
+      /// <summary>Determines whether the specified <see cref="object"/> is equal to the current <see cref="object"/>.</summary>
+      /// <param name="obj">The <see cref="object"/> to compare with the current <see cref="object"/>.</param>
+      /// <returns><c>true</c> if the specified <see cref="object"/> is equal to the current <see cref="object"/>; otherwise, <c>false</c>.</returns>
+      /// <exception cref="NullReferenceException"/>
+      public override bool Equals(object obj)
+      {
+         var other = obj as Privilege;
+
+         return null != other && Equals(other);
+      }
+
+
+      /// <summary>Implements the operator ==</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator ==(Privilege left, Privilege right)
+      {
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) ||
+                !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
+      }
+
+
+      /// <summary>Implements the operator !=</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator !=(Privilege left, Privilege right)
+      {
+         return !(left == right);
+      }
+      
+      #endregion // Methods
    }
 }

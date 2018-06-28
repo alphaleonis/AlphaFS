@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Alphaleonis.Win32.Filesystem;
 
@@ -63,12 +64,13 @@ namespace Alphaleonis.Win32.Network
          return Id.ToString(CultureInfo.InvariantCulture);
       }
 
+
       #endregion // Methods
 
-      
       #region Properties
 
       /// <summary>The local or remote Host.</summary>
+      [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       [Obsolete("Use HostName")]
       public string Host
       {
@@ -91,6 +93,7 @@ namespace Alphaleonis.Win32.Network
       public long TotalUsers { get; private set; }
 
       /// <summary>Specifies the number of seconds that the connection has been established.</summary>
+      [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       [Obsolete("Use ConnectedTime property.")]
       public long ConnectedSeconds
       {

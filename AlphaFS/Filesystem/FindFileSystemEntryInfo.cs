@@ -496,8 +496,15 @@ namespace Alphaleonis.Win32.Filesystem
                         dirs.Enqueue(Path.AddTrailingDirectorySeparator(pathLp + fileName, false));
 
 
-                     if (null == res)
+                     // Codacy: When constraints have not been applied to restrict a generic type parameter to be a reference type, then a value type,
+                     // such as a struct, could also be passed. In such cases, comparing the type parameter to null would always be false,
+                     // because a struct can be empty, but never null. If a value type is truly what's expected, then the comparison should use default().
+                     // If it's not, then constraints should be added so that no value type can be passed.
+
+                     if (Equals(res, default(T)))
+                     //if (null == res)
                         continue;
+                     
 
                      yield return res;
 

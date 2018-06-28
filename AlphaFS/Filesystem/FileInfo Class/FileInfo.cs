@@ -31,7 +31,11 @@ namespace Alphaleonis.Win32.Filesystem
    [Serializable]
    public sealed partial class FileInfo : FileSystemInfo
    {
-      private string _name;
+      #region Fields
+
+      [NonSerialized] private string _name;
+
+      #endregion // Fields
 
 
       #region Constructors

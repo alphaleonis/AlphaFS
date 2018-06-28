@@ -34,17 +34,21 @@ namespace Alphaleonis.Win32.Security
    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crc")]
    internal class Crc64 : HashAlgorithm
    {
-      private static ulong[] Table;
       private const ulong Iso3309Polynomial = 0xD800000000000000;
       private const ulong DefaultSeed = 0x0;
-      private readonly ulong[] m_table;
-      private readonly ulong m_seed;
+
+
       private ulong m_hash;
+      private readonly ulong m_seed;
+      private readonly ulong[] m_table;
+      private static ulong[] s_defaultTable;
+
 
       /// <summary>Initializes a new instance of <see cref="Crc64"/> </summary>
       public Crc64() : this(Iso3309Polynomial, DefaultSeed)
       {
       }
+
 
       /// <summary>Initializes a new instance of <see cref="Crc64"/>.</summary>
       /// <param name="polynomial">The polynomial.</param>
@@ -52,17 +56,17 @@ namespace Alphaleonis.Win32.Security
       private Crc64(ulong polynomial, ulong seed)
       {
          m_table = InitializeTable(polynomial);
-         m_seed = m_hash = seed;
+         m_seed = seed;
+         m_hash = seed;
       }
 
-      /// <summary>
-      /// Initializes an implementation of the
-      /// <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.
-      /// </summary>
+
+      /// <summary>Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm"/> class.</summary>
       public override void Initialize()
       {
          m_hash = m_seed;
       }
+
 
       /// <summary>When overridden in a derived class, routes data written to the object into the hash algorithm for computing the hash.</summary>
       /// <param name="array">The input to compute the hash code for..</param>
@@ -73,14 +77,9 @@ namespace Alphaleonis.Win32.Security
          m_hash = CalculateHash(m_hash, m_table, array, ibStart, cbSize);
       }
 
-      /// <summary>
-      /// Finalizes the hash computation after the last data is processed by the cryptographic stream
-      /// object.
-      /// </summary>
-      /// <returns>
-      /// This method finalizes any partial computation and returns the correct hash value for the data
-      /// stream.
-      /// </returns>
+
+      /// <summary>Finalizes the hash computation after the last data is processed by the cryptographic stream object.</summary>
+      /// <returns>This method finalizes any partial computation and returns the correct hash value for the data stream.</returns>
       protected override byte[] HashFinal()
       {
          var hashBuffer = UInt64ToBigEndianBytes(m_hash);
@@ -95,13 +94,52 @@ namespace Alphaleonis.Win32.Security
          get { return 64; }
       }
 
+
+      /// <summary>Initializes the table.</summary>
+      /// <returns>The table.</returns>
+      /// <param name="polynomial">The polynomial.</param>
+      private static ulong[] InitializeTable(ulong polynomial)
+      {
+         if (polynomial == Iso3309Polynomial && s_defaultTable != null)
+            return s_defaultTable;
+
+         var createTable = CreateTable(polynomial);
+
+         if (polynomial == Iso3309Polynomial)
+            s_defaultTable = createTable;
+
+         return createTable;
+      }
+
+
+      /// <summary>Creates a table.</summary>
+      /// <returns>A new array of ulong.</returns>
+      /// <param name="polynomial">The polynomial.</param>
+      private static ulong[] CreateTable(ulong polynomial)
+      {
+         var createTable = new ulong[256];
+
+         for (var i = 0; i < 256; ++i)
+         {
+            var entry = (ulong)i;
+
+            for (var j = 0; j < 8; ++j)
+               entry = (entry & 1) == 1 ? (entry >> 1) ^ polynomial : entry >> 1;
+
+            createTable[i] = entry;
+         }
+
+         return createTable;
+      }
+
+
       /// <summary>Calculates the hash.</summary>
+      /// <returns>The calculated hash.</returns>
       /// <param name="seed">The seed.</param>
       /// <param name="table">The table.</param>
       /// <param name="buffer">The buffer.</param>
       /// <param name="start">The start.</param>
       /// <param name="size">The size.</param>
-      /// <returns>The calculated hash.</returns>
       private static ulong CalculateHash(ulong seed, ulong[] table, IList<byte> buffer, int start, int size)
       {
          var hash = seed;
@@ -115,9 +153,10 @@ namespace Alphaleonis.Win32.Security
          return hash;
       }
 
+
       /// <summary>Int 64 to big endian bytes.</summary>
+      /// <returns>A byte[].</returns>
       /// <param name="value">The value.</param>
-      /// <returns>Returns a byte[].</returns>
       private static byte[] UInt64ToBigEndianBytes(ulong value)
       {
          var result = BitConverter.GetBytes(value);
@@ -126,41 +165,6 @@ namespace Alphaleonis.Win32.Security
             Array.Reverse(result);
 
          return result;
-      }
-
-      /// <summary>Initializes the table.</summary>
-      /// <param name="polynomial">The polynomial.</param>
-      /// <returns>Returns an ulong[].</returns>
-      private static ulong[] InitializeTable(ulong polynomial)
-      {
-         if (polynomial == Iso3309Polynomial && Table != null)
-            return Table;
-
-         var createTable = CreateTable(polynomial);
-
-         if (polynomial == Iso3309Polynomial)
-            Table = createTable;
-
-         return createTable;
-      }
-
-      /// <summary>Creates a table.</summary>
-      /// <param name="polynomial">The polynomial.</param>
-      /// <returns>Returns a new array of ulong.</returns>
-      private static ulong[] CreateTable(ulong polynomial)
-      {
-         var createTable = new ulong[256];
-         for (var i = 0; i < 256; ++i)
-         {
-            var entry = (ulong) i;
-
-            for (var j = 0; j < 8; ++j)
-               entry = (entry & 1) == 1 ? (entry >> 1) ^ polynomial : entry >> 1;
-
-            createTable[i] = entry;
-         }
-
-         return createTable;
       }
    }
 }

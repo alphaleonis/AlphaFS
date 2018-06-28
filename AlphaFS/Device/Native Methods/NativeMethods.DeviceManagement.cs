@@ -308,6 +308,6 @@ namespace Alphaleonis.Win32.Device
       [SuppressMessage("Microsoft.Security", "CA2118:ReviewSuppressUnmanagedCodeSecurityUsage"), SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode), SuppressUnmanagedCodeSecurity]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetDevicePowerState(SafeHandle hDevice, out bool pfOn);
+      internal static extern bool GetDevicePowerState(SafeHandle hDevice, [MarshalAs(UnmanagedType.Bool)] out bool pfOn);
    }
 }

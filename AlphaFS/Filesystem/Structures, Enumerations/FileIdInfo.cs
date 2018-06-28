@@ -28,10 +28,16 @@ namespace Alphaleonis.Win32.Filesystem
    [Serializable]
    public struct FileIdInfo : IComparable, IComparable<FileIdInfo>, IEquatable<FileIdInfo>
    {
+      #region Fields
+
       [NonSerialized] private readonly long _volumeSerialNumber;
       [NonSerialized] private readonly long _fileIdHighPart;
       [NonSerialized] private readonly long _fileIdLowPart;
 
+      #endregion // Fields
+
+
+      #region Constructors
 
       internal FileIdInfo(NativeMethods.BY_HANDLE_FILE_INFORMATION fibh)
       {
@@ -52,8 +58,10 @@ namespace Alphaleonis.Win32.Filesystem
          ArrayToLong(fi.FileId, 8, 8, out _fileIdHighPart);
       }
 
+      #endregion // Constructors
 
 
+      #region Methods
 
       /// <summary>Construct the value stored in a byte array ordered in Little-Endian.</summary>
       /// <param name="fileId">The array containing the bytes.</param>
@@ -100,38 +108,72 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Determines whether the specified <see cref="System.Object" />, is equal to this instance.</summary>
-      /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
-      /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
-      public override bool Equals(object obj)
+      /// <summary>Returns a <see cref="string"/> that represents this instance.</summary>
+      /// <returns>A <see cref="string"/> that represents this instance.</returns>
+      public override string ToString()
       {
-         return obj is FileIdInfo && Equals((FileIdInfo)obj);
+         unchecked
+         {
+            // The identifier is composed of 64-bit volume serial number and 128-bit file system entry identifier.
+
+            return string.Format(CultureInfo.InvariantCulture, "{0}-{1}-{2} : {3}-{4}-{5}",
+
+               ((uint) (_volumeSerialNumber >> 32)).ToString("X", CultureInfo.InvariantCulture),
+               ((ushort) (_volumeSerialNumber >> 16)).ToString("X", CultureInfo.InvariantCulture),
+               ((ushort) _volumeSerialNumber).ToString("X", CultureInfo.InvariantCulture),
+
+               _fileIdHighPart.ToString("X", CultureInfo.InvariantCulture),
+               ((uint) (_fileIdLowPart >> 32)).ToString("X", CultureInfo.InvariantCulture),
+               ((uint) _fileIdLowPart).ToString("X", CultureInfo.InvariantCulture));
+         }
+      }
+
+
+      /// <summary>Returns a hash code for this instance.</summary>
+      /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
+      public override int GetHashCode()
+      {
+         unchecked
+         {
+            // _fileIdHighPart is 0 on NTFS and should be often 0 on ReFS, thus ignore it.
+
+            return (int) _fileIdLowPart ^ ((int) (_fileIdLowPart >> 32) | (int) _volumeSerialNumber);
+         }
       }
 
 
       /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
       /// <param name="other">An object to compare with this object.</param>
-      /// <returns>true if the current object is equal to the <paramref name="other" /> parameter; otherwise, <c>false</c>.</returns>
+      /// <returns>true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.</returns>
       public bool Equals(FileIdInfo other)
       {
          return _fileIdLowPart == other._fileIdLowPart && _fileIdHighPart == other._fileIdHighPart && _volumeSerialNumber == other._volumeSerialNumber;
       }
 
 
-      /// <summary>Indicates whether the values of two specified <see cref="FileIdInfo" /> objects are equal.</summary>
+      /// <summary>Determines whether the specified <see cref="object" />, is equal to this instance.</summary>
+      /// <param name="obj">The <see cref="object"/> to compare with this instance.</param>
+      /// <returns><c>true</c> if the specified <see cref="object"/> is equal to this instance; otherwise, <c>false</c>.</returns>
+      public override bool Equals(object obj)
+      {
+         return obj is FileIdInfo && Equals((FileIdInfo) obj);
+      }
+      
+
+      /// <summary>Indicates whether the values of two specified <see cref="FileIdInfo"/> objects are equal.</summary>
       /// <param name="first">The first object to compare.</param>
       /// <param name="second">The second object to compare.</param>
-      /// <returns>true if <paramref name="first" /> and <paramref name="second" /> are equal; otherwise, <c>false</c>.</returns>
+      /// <returns>true if <paramref name="first"/> and <paramref name="second"/> are equal; otherwise, false.</returns>
       public static bool operator ==(FileIdInfo first, FileIdInfo second)
       {
          return first._fileIdLowPart == second._fileIdLowPart && first._fileIdHighPart == second._fileIdHighPart && first._volumeSerialNumber == second._volumeSerialNumber;
       }
 
 
-      /// <summary>Indicates whether the values of two specified <see cref="FileIdInfo" /> objects are not equal.</summary>
+      /// <summary>Indicates whether the values of two specified <see cref="FileIdInfo"/> objects are not equal.</summary>
       /// <param name="first">The first object to compare.</param>
       /// <param name="second">The second object to compare.</param>
-      /// <returns>true if <paramref name="first" /> and <paramref name="second" /> are not equal; otherwise, <c>false</c>.</returns>
+      /// <returns>true if <paramref name="first"/> and <paramref name="second"/> are not equal; otherwise, false.</returns>
       public static bool operator !=(FileIdInfo first, FileIdInfo second)
       {
          return first._fileIdLowPart != second._fileIdLowPart || first._fileIdHighPart != second._fileIdHighPart || first._volumeSerialNumber != second._volumeSerialNumber;
@@ -161,38 +203,6 @@ namespace Alphaleonis.Win32.Filesystem
          return first._volumeSerialNumber > second._volumeSerialNumber || first._fileIdHighPart > second._fileIdHighPart || first._fileIdLowPart > second._fileIdLowPart;
       }
 
-
-      /// <summary>Returns a hash code for this instance.</summary>
-      /// <returns>Returns a hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
-      public override int GetHashCode()
-      {
-         unchecked
-         {
-            // _fileIdHighPart is 0 on NTFS and should be often 0 on ReFS, thus ignore it.
-
-            return (int)_fileIdLowPart ^ ((int)(_fileIdLowPart >> 32) | (int)_volumeSerialNumber);
-         }
-      }
-
-
-      /// <summary>Returns a <see cref="string" /> that represents this instance.</summary>
-      /// <returns>Returns a <see cref="string" /> that represents this instance.</returns>
-      public override string ToString()
-      {
-         unchecked
-         {
-            // The identifier is composed of 64-bit volume serial number and 128-bit file system entry identifier.
-
-            return string.Format(CultureInfo.InvariantCulture, "{0}-{1}-{2} : {3}-{4}-{5}",
-
-               ((uint) (_volumeSerialNumber >> 32)).ToString("X", CultureInfo.InvariantCulture),
-               ((ushort) (_volumeSerialNumber >> 16)).ToString("X", CultureInfo.InvariantCulture),
-               ((ushort) _volumeSerialNumber).ToString("X", CultureInfo.InvariantCulture),
-
-               _fileIdHighPart.ToString("X", CultureInfo.InvariantCulture),
-               ((uint) (_fileIdLowPart >> 32)).ToString("X", CultureInfo.InvariantCulture),
-               ((uint) _fileIdLowPart).ToString("X", CultureInfo.InvariantCulture));
-         }
-      }
+      #endregion // Methods
    }
 }

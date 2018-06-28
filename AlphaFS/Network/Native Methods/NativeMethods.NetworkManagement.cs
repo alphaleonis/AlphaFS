@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Network
 {
-   internal partial class NativeMethods
+   internal static partial class NativeMethods
    {
       /// <summary>The NetServerDiskEnum function retrieves a list of disk drives on a server.</summary>
       /// <returns>

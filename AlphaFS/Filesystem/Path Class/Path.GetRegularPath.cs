@@ -64,11 +64,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (options != GetFullPathOptions.None)
             path = ApplyFullPathOptions(path, options);
-         
+
 
          if (path.StartsWith(DosDeviceUncPrefix, StringComparison.OrdinalIgnoreCase))
             return UncPrefix + path.Substring(DosDeviceUncPrefix.Length);
          
+
+
 
          if (path.StartsWith(LogicalDrivePrefix, StringComparison.Ordinal))
             return path.Substring(LogicalDrivePrefix.Length);

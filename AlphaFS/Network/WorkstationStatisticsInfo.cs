@@ -26,10 +26,16 @@ namespace Alphaleonis.Win32.Network
 {
    /// <summary>Contains operating statistics for the Workstation service.</summary>
    [Serializable]
-   public sealed class WorkstationStatisticsInfo
+   public sealed class WorkstationStatisticsInfo : IEquatable<WorkstationStatisticsInfo>
    {
+      #region Fields
+
       [NonSerialized] private NativeMethods.STAT_WORKSTATION_0 _workstationStat;
 
+      #endregion // Fields
+
+
+      #region Constructors
 
       /// <summary>Create a WorkstationStatisticsInfo instance from the local host.</summary>
       public WorkstationStatisticsInfo() : this(Environment.MachineName, null)
@@ -56,6 +62,8 @@ namespace Alphaleonis.Win32.Network
          else
             Refresh();
       }
+
+      #endregion // Constructors
 
 
       #region Properties
@@ -453,25 +461,35 @@ namespace Alphaleonis.Win32.Network
       }
 
 
+      /// <summary>Serves as a hash function for a particular type.</summary>
+      /// <returns>A hash code for the current Object.</returns>
+      public override int GetHashCode()
+      {
+         return Utils.CombineHashCodesOf(HostName, BytesTransmitted, StatisticsStartTime);
+      }
+      
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="other">Another <see cref="WorkstationStatisticsInfo"/> instance to compare to.</param>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
+      public bool Equals(WorkstationStatisticsInfo other)
+      {
+         return null != other && GetType() == other.GetType() &&
+                Equals(HostName, other.HostName) &&
+                Equals(BytesTransmitted, other.BytesTransmitted) &&
+                Equals(BytesReceived, other.BytesReceived) &&
+                Equals(StatisticsStartTimeUtc, other.StatisticsStartTimeUtc);
+      }
+
+
       /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
       /// <param name="obj">Another object to compare to.</param>
       /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
       public override bool Equals(object obj)
       {
-         if (null == obj || GetType() != obj.GetType())
-            return false;
-
          var other = obj as WorkstationStatisticsInfo;
 
-         return null != other && null != other.HostName && other.HostName.Equals(HostName, StringComparison.OrdinalIgnoreCase) && other.StatisticsStartTimeUtc.Equals(StatisticsStartTimeUtc);
-      }
-
-
-      /// <summary>Serves as a hash function for a particular type.</summary>
-      /// <returns>Returns a hash code for the current Object.</returns>
-      public override int GetHashCode()
-      {
-         return null != HostName ? HostName.GetHashCode() : 0;
+         return null != other && Equals(other);
       }
 
 
@@ -481,7 +499,8 @@ namespace Alphaleonis.Win32.Network
       /// <returns>The result of the operator.</returns>
       public static bool operator ==(WorkstationStatisticsInfo left, WorkstationStatisticsInfo right)
       {
-         return ReferenceEquals(left, null) && ReferenceEquals(right, null) || !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) ||
+                !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
       }
 
 
