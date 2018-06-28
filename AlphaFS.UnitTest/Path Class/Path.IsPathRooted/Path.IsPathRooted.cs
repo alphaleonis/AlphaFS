@@ -39,7 +39,7 @@ namespace AlphaFS.UnitTest
          {
             var action = Alphaleonis.Win32.Filesystem.Path.IsPathRooted(path);
 
-            Console.WriteLine("\tIsPathRooted: [{0}]\t\tInput Path: [{1}]", action, path);
+            Console.WriteLine("\t[{0}]\t\tInput Path: [{1}]", action, path);
 
 
             Assert.AreEqual(System.IO.Path.IsPathRooted(path), action);

@@ -331,9 +331,10 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          using ((fileSystemRights & (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_SACL_SECURITY_INFORMATION) != 0 || (fileSystemRights & (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_DACL_SECURITY_INFORMATION) != 0 ? new PrivilegeEnabler(Privilege.Security) : null)
+
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
          {
-            var safeHandle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
+            var safeFileHandle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
                // CreateFile() / CreateFileTransacted()
                // 2013-01-13: MSDN confirms LongPath usage.
@@ -344,25 +345,25 @@ namespace Alphaleonis.Win32.Filesystem
 
             var lastError = Marshal.GetLastWin32Error();
 
-            Utils.IsValidHandle(safeHandle, lastError, pathLp, !continueOnException);
+            Utils.IsValidHandle(safeFileHandle, lastError, pathLp, !continueOnException);
 
 
             if (isAppend)
             {
-               var success = NativeMethods.SetFilePointerEx(safeHandle, 0, IntPtr.Zero, SeekOrigin.End);
+               var success = NativeMethods.SetFilePointerEx(safeFileHandle, 0, IntPtr.Zero, SeekOrigin.End);
 
                lastError = Marshal.GetLastWin32Error();
 
                if (!success)
                {
-                  if (!safeHandle.IsClosed)
-                     safeHandle.Close();
+                  if (!safeFileHandle.IsClosed)
+                     safeFileHandle.Close();
 
                   NativeError.ThrowException(lastError, path);
                }
             }
 
-            return safeHandle;
+            return safeFileHandle;
          }
       }
 

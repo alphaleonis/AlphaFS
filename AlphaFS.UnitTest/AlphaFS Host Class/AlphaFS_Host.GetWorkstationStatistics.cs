@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -29,11 +30,15 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Host_GetWorkstationStatistics_Local_Success()
+      public void AlphaFS_Host_GetWorkstationStatistics_Success()
       {
          UnitTestConstants.PrintUnitTestHeader(false);
 
-         var workstationStat = Alphaleonis.Win32.Network.Host.GetWorkstationStatistics();
+         var host = Environment.MachineName;
+
+         Console.WriteLine("Input Host Name: [{0}]", host);
+
+         var workstationStat = Alphaleonis.Win32.Network.Host.GetWorkstationStatistics(host);
 
          UnitTestConstants.Dump(workstationStat);
       }

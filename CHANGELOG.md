@@ -8,18 +8,19 @@ Version 2.3  (2018-XX-XX)
 
 - Issue #451: Add overloaded method for `File.GetSize` to retrieve the size of all streams.  
 - Issue #454: Add method `Directory.GetSize` to return the size of all alternate data streams of the specified directory and its files.
-- Issue #459: Modify method `Directory.CreateDirectoryCore` to return `null` as well as `DirectoryInfo` instance.
-- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath property`.
 
 ### Improvements
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
-- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath property`.
+- Issue #459: Modify method `Directory.CreateDirectoryCore` to return `null` as well as `DirectoryInfo` instance.
+- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath` property.
+- Issue #462: Add `IEquatable<T>` to applicable info classes.
+- Issue #463: Add `[Serializable]` attribute to applicable info classes.
 
 ### Breaking Changes
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
-- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath property`.
+- Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath` property.
 
 
 Version 2.2.3  (2018-06-14)

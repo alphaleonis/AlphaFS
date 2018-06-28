@@ -65,12 +65,13 @@ namespace Alphaleonis.Win32.Network
          return Id.ToString(CultureInfo.InvariantCulture);
       }
 
+
       #endregion // Methods
 
-      
       #region Properties
 
       /// <summary>The local or remote Host.</summary>
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       [Obsolete("Use HostName")]
       public string Host
       {

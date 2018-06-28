@@ -789,6 +789,9 @@ namespace Alphaleonis.Win32.Filesystem
          preserveDates = preserveDates && isCopy && !isFolder;
 
 
+         // Calling start on a running Stopwatch is a no-op.
+         cmr.Stopwatch.Start();
+
          #endregion // Setup
 
 
@@ -848,7 +851,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (isSingleFileAction)
-            cmr._stopwatch.Stop();
+            cmr.Stopwatch.Stop();
 
 
          return cmr;

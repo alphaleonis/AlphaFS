@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Fields
 
-      [NonSerialized] internal readonly Stopwatch _stopwatch;
+      [NonSerialized] internal Stopwatch Stopwatch;
 
       #endregion // Private Fields
       
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          IsCopy = true;
 
-         _stopwatch = Stopwatch.StartNew();
+         Stopwatch = new Stopwatch();
       }
 
 
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Indicates the duration of the Copy or Move action.</summary>
       public TimeSpan Duration
       {
-         get { return TimeSpan.FromMilliseconds(_stopwatch.Elapsed.TotalMilliseconds); }
+         get { return TimeSpan.FromMilliseconds(Stopwatch.Elapsed.TotalMilliseconds); }
       }
       
 

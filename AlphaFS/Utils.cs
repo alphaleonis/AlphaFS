@@ -45,26 +45,26 @@ namespace Alphaleonis
       //}
 
 
-      internal static void CopyTo<T>(T source, T destination)
-      {
-         // Properties listed here should not be overwritten by the physical disk template.
+      //internal static void CopyTo<T>(T source, T destination)
+      //{
+      //   // Properties listed here should not be overwritten by the physical disk template.
 
-         //var excludedProps = new[] {"PartitionNumber"};
+      //   //var excludedProps = new[] {"PartitionNumber"};
 
 
-         //var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite && !excludedProps.Any(prop => prop.Equals(x.Name))).ToArray();
+      //   //var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite && !excludedProps.Any(prop => prop.Equals(x.Name))).ToArray();
 
-         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite).ToArray();
+      //   var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite).ToArray();
 
-         var dstProps = srcProps.ToArray();
+      //   var dstProps = srcProps.ToArray();
 
-         foreach (var srcProp in srcProps)
-         {
-            var dstProp = dstProps.First(x => x.Name.Equals(srcProp.Name));
+      //   foreach (var srcProp in srcProps)
+      //   {
+      //      var dstProp = dstProps.First(x => x.Name.Equals(srcProp.Name));
 
-            dstProp.SetValue(destination, srcProp.GetValue(source, null), null);
-         }
-      }
+      //      dstProp.SetValue(destination, srcProp.GetValue(source, null), null);
+      //   }
+      //}
 
 
       [SecurityCritical]
@@ -268,34 +268,34 @@ namespace Alphaleonis
       }
 
 
-      //internal static int CombineHashCodesOf<T1, T2>(T1 arg1, T2 arg2)
-      //{
-      //   unchecked
-      //   {
-      //      var hash = 17;
+      public static int CombineHashCodesOf<T1, T2>(T1 arg1, T2 arg2)
+      {
+         unchecked
+         {
+            var hash = 17;
 
-      //      hash = hash * 23 + (null != arg1 ? arg1.GetHashCode() : 0);
-      //      hash = hash * 23 + (null != arg2 ? arg2.GetHashCode() : 0);
+            hash = hash * 23 + (!Equals(arg1, default(T1)) ? arg1.GetHashCode() : 0);
+            hash = hash * 23 + (!Equals(arg2, default(T2)) ? arg2.GetHashCode() : 0);
 
-      //      return hash;
-      //   }
-      //}
-
-
-      //internal static int CombineHashCodesOf<T1, T2, T3>(T1 arg1, T2 arg2, T3 arg3)
-      //{
-      //   unchecked
-      //   {
-      //      var hash = CombineHashCodesOf(arg1, arg2);
-
-      //      hash = hash * 23 + (null != arg3 ? arg3.GetHashCode() : 0);
-
-      //      return hash;
-      //   }
-      //}
+            return hash;
+         }
+      }
 
 
-      //internal static int CombineHashCodesOf<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+      public static int CombineHashCodesOf<T1, T2, T3>(T1 arg1, T2 arg2, T3 arg3)
+      {
+         unchecked
+         {
+            var hash = CombineHashCodesOf(arg1, arg2);
+
+            hash = hash * 23 + (!Equals(arg3, default(T3)) ? arg3.GetHashCode() : 0);
+
+            return hash;
+         }
+      }
+
+
+      //public static int CombineHashCodesOf<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
       //{
       //   return CombineHashCodesOf(CombineHashCodesOf(arg1, arg2), CombineHashCodesOf(arg3, arg4));
       //}

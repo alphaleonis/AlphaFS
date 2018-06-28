@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Fields
 
-      private string _name;
+      [NonSerialized] private string _name;
 
       #endregion // Fields
 

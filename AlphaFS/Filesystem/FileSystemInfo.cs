@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// <summary>Provides the base class for both <see cref="FileInfo"/> and <see cref="DirectoryInfo"/> objects.</summary>
    [Serializable]
    [ComVisible(true)]
-   public abstract class FileSystemInfo : MarshalByRefObject
+   public abstract class FileSystemInfo : MarshalByRefObject, IEquatable<FileSystemInfo>
    {
       #region Fields
       
@@ -55,16 +55,13 @@ namespace Alphaleonis.Win32.Filesystem
       private FileSystemEntryInfo _entryInfo;
 
 
-      // We use this field in conjunction with the Refresh methods, if we succeed
-      // we store a zero, on failure we store the HResult in it so that we can
-      // give back a generic error back.
-      [NonSerialized]
-      internal int DataInitialised = -1;
+      // We use this field in conjunction with the Refresh methods, if we succeed we store a zero,
+      // on failure we store the HResult in it so that we can give back a generic error back.
+      [NonSerialized] internal int DataInitialised = -1;
 
 
       // The pre-cached FileSystemInfo information.
-      [NonSerialized]
-      internal NativeMethods.WIN32_FILE_ATTRIBUTE_DATA Win32AttributeData;
+      [NonSerialized] internal NativeMethods.WIN32_FILE_ATTRIBUTE_DATA Win32AttributeData;
 
       #endregion // Fields
 
@@ -434,6 +431,28 @@ namespace Alphaleonis.Win32.Filesystem
          // "Alphaleonis.Win32.Filesystem.FileSystemInfo"
          return GetType().ToString();
       }
+      
+
+      /// <summary>Serves as a hash function for a particular type.</summary>
+      /// <returns>A hash code for the current Object.</returns>
+      public override int GetHashCode()
+      {
+         return null != FullName ? FullName.GetHashCode() : 0;
+      }
+
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="other">Another <see cref="FileSystemInfo"/> instance to compare to.</param>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
+      public bool Equals(FileSystemInfo other)
+      {
+         return null != other && GetType() == other.GetType() &&
+                Equals(Name, other.Name) &&
+                Equals(FullName, other.FullName) &&
+                Equals(Attributes, other.Attributes) &&
+                Equals(CreationTimeUtc, other.CreationTimeUtc) &&
+                Equals(LastWriteTimeUtc, other.LastWriteTimeUtc);
+      }
 
 
       /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
@@ -441,23 +460,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
       public override bool Equals(object obj)
       {
-         if (obj == null || GetType() != obj.GetType())
-            return false;
-
          var other = obj as FileSystemInfo;
 
-         return null != other && null != other.Name &&
-                other.FullName.Equals(FullName, StringComparison.OrdinalIgnoreCase) && other.Attributes.Equals(Attributes) &&
-                other.CreationTimeUtc.Equals(CreationTimeUtc) && other.LastWriteTimeUtc.Equals(LastWriteTimeUtc);
+         return null != other && Equals(other);
       }
 
-
-      /// <summary>Serves as a hash function for a particular type.</summary>
-      /// <returns>Returns a hash code for the current Object.</returns>
-      public override int GetHashCode()
-      {
-         return null != FullName ? FullName.GetHashCode() : 0;
-      }
 
       /// <summary>Implements the operator ==</summary>
       /// <param name="left">A.</param>
@@ -468,6 +475,7 @@ namespace Alphaleonis.Win32.Filesystem
          return ReferenceEquals(left, null) && ReferenceEquals(right, null) ||
                 !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
       }
+
 
       /// <summary>Implements the operator !=</summary>
       /// <param name="left">A.</param>
