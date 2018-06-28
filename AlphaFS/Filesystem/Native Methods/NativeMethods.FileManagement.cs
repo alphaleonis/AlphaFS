@@ -788,7 +788,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Restart Manager
 
-      //private const int RmRebootReasonNone = 0;
       private const int CCH_RM_MAX_APP_NAME = 255;
       private const int CCH_RM_MAX_SVC_NAME = 63;
 

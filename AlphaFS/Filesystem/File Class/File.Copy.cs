@@ -1070,13 +1070,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (pathFormat == PathFormat.RelativePath)
          {
-            if (Utils.IsNullOrWhiteSpace(sourcePath))
+            if (null == sourcePath)
                throw new ArgumentNullException("sourcePath");
 
 
             // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
 
-            if (!delayUntilReboot && Utils.IsNullOrWhiteSpace(destinationPath))
+            if (!delayUntilReboot && null == destinationPath)
                throw new ArgumentNullException("destinationPath");
 
 

@@ -323,8 +323,8 @@ namespace Alphaleonis.Win32.Filesystem
             return (T) (object) null;
 
 
-         // Determine yield.
-         if (null != fileName && !(_nameFilter == null || _nameFilter != null && _nameFilter.IsMatch(fileName)))
+         // Determine yield from name filtering.
+         if (null != fileName && !(null == _nameFilter || null != _nameFilter && _nameFilter.IsMatch(fileName)))
             return (T) (object) null;
 
 
@@ -503,7 +503,6 @@ namespace Alphaleonis.Win32.Filesystem
                      // If it's not, then constraints should be added so that no value type can be passed.
 
                      if (Equals(res, default(T)))
-                     //if (null == res)
                         continue;
                      
 

@@ -308,7 +308,6 @@ namespace Alphaleonis.Win32.Filesystem
                   // Now it is safe to delete the actual directory.
                   if (fsei.IsMountPoint)
                      DeleteJunctionCore(transaction, fsei, null, false, pathFormat);
-                     //Volume.DeleteVolumeMountPointCore(transaction, fsei.LongFullPath, false, true, pathFormat);
 
                   dirs.Push(fsei.LongFullPath);
                }
@@ -327,7 +326,6 @@ namespace Alphaleonis.Win32.Filesystem
          // Now it is safe to delete the actual directory.
          if (fsEntryInfo.IsMountPoint)
             DeleteJunctionCore(transaction, fsEntryInfo, null, false, pathFormat);
-            //Volume.DeleteVolumeMountPointCore(transaction, fsEntryInfo.LongFullPath, false, true, pathFormat);
 
          DeleteDirectoryCore(transaction, fsEntryInfo.LongFullPath, ignoreReadOnly, continueOnNotFound);
       }

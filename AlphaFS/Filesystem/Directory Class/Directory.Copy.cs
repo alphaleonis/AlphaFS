@@ -877,7 +877,8 @@ namespace Alphaleonis.Win32.Filesystem
       private static void ValidateAndUpdateCopyMoveAction(string sourcePathLp, string destinationPathLp, CopyOptions? copyOptions, MoveOptions? moveOptions, out CopyOptions? newCopyOptions, out MoveOptions? newMoveOptions, out bool isCopy, out bool emulateMove)
       {
          // Determine if a Move action or Copy action-fallback is possible.
-         isCopy = emulateMove = false;
+         isCopy = false;
+         emulateMove = false;
 
 
          // Compare the root part of both paths.

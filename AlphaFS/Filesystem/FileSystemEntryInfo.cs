@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// </summary>
    [Serializable]
    [SecurityCritical]
-   public sealed class FileSystemEntryInfo
+   public sealed class FileSystemEntryInfo : IEquatable<FileSystemEntryInfo>
    {
       #region Fields
 
@@ -299,6 +299,51 @@ namespace Alphaleonis.Win32.Filesystem
          return Utils.CombineHashCodesOf(FullPath, LongFullPath);
       }
 
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="other">Another <see cref="FileSystemInfo"/> instance to compare to.</param>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
+      public bool Equals(FileSystemEntryInfo other)
+      {
+         return null != other && GetType() == other.GetType() &&
+                Equals(FileName, other.FileName) &&
+                Equals(FullPath, other.FullPath) &&
+                Equals(Attributes, other.Attributes) &&
+                Equals(CreationTimeUtc, other.CreationTimeUtc) &&
+                Equals(LastAccessTimeUtc, other.LastAccessTimeUtc);
+      }
+
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="obj">Another object to compare to.</param>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
+      public override bool Equals(object obj)
+      {
+         var other = obj as FileSystemEntryInfo;
+
+         return null != other && Equals(other);
+      }
+
+
+      /// <summary>Implements the operator ==</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator ==(FileSystemEntryInfo left, FileSystemEntryInfo right)
+      {
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) ||
+                !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
+      }
+
+
+      /// <summary>Implements the operator !=</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator !=(FileSystemEntryInfo left, FileSystemEntryInfo right)
+      {
+         return !(left == right);
+      }
       #endregion // Methods
    }
 }

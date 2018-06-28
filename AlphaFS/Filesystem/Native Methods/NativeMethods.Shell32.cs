@@ -67,34 +67,12 @@ namespace Alphaleonis.Win32.Filesystem
          /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
          void Init(Shell32.AssociationAttributes flags, [MarshalAs(UnmanagedType.LPWStr)] string pszAssoc, IntPtr hkProgid, IntPtr hwnd);
 
-         //[return: MarshalAs(UnmanagedType.U4)]
-         //uint Init(Shell32.AssociationAttributes flags, [MarshalAs(UnmanagedType.LPWStr)] string pszAssoc, IntPtr hkProgid, IntPtr hwnd);
 
          /// <summary>Searches for and retrieves a file or protocol association-related string from the registry.</summary>
          /// <returns>A standard COM error value, including the following: S_OK, E_POINTER, S_FALSE</returns>
          /// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
          /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
          void GetString(Shell32.AssociationAttributes flags, Shell32.AssociationString str, [MarshalAs(UnmanagedType.LPWStr)] string pwszExtra, StringBuilder pwszOut, [MarshalAs(UnmanagedType.I4)] out int pcchOut);
-
-         //[return: MarshalAs(UnmanagedType.U4)]
-         //void GetString(Shell32.AssociationAttributes flags, Shell32.AssociationString str, [MarshalAs(UnmanagedType.LPWStr)] string pwszExtra, StringBuilder pwszOut, [MarshalAs(UnmanagedType.I4)] out int pcchOut);
-
-         ///// <summary>Searches for and retrieves a file or protocol association-related key from the registry.</summary>
-         ///// <returns>If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</returns>
-         ///// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
-         ///// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
-         //[return: MarshalAs(UnmanagedType.U4)]
-         //uint GetKey(Shell32.AssociationAttributes flags, Shell32.AssociationKey str, [MarshalAs(UnmanagedType.LPWStr)] string pwszExtra, out UIntPtr phkeyOut);
-
-         ///// <summary>Searches for and retrieves file or protocol association-related binary data from the registry.</summary>
-         ///// <returns>If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</returns>
-         ///// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
-         ///// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
-         //[return: MarshalAs(UnmanagedType.U4)]
-         //uint GetData(Shell32.AssociationAttributes flags, Shell32.AssociationData data, [MarshalAs(UnmanagedType.LPWStr)] string pwszExtra, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 4)] out byte[] pvOut, [MarshalAs(UnmanagedType.I4)] out int pcbOut);
-
-         ///// <summary>This method is not implemented.</summary>
-         //void GetEnum();
       }
 
       #endregion // IQueryAssociations
