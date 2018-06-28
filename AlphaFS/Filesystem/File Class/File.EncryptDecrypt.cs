@@ -113,10 +113,16 @@ namespace Alphaleonis.Win32.Filesystem
          // MSDN: If lpFileName specifies a read-only file, the function fails and GetLastError returns ERROR_FILE_READ_ONLY.
 
          var attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(null, path, pathFormat, true);
+
          var isReadOnly = (attrs.dwFileAttributes & FileAttributes.ReadOnly) != 0;
+
          if (isReadOnly)
-            SetAttributesCore(null, isFolder, path, attrs.dwFileAttributes &= ~FileAttributes.ReadOnly, pathFormat);
-         
+         {
+            var fileAttr = attrs.dwFileAttributes &= ~FileAttributes.ReadOnly; // Remove ReadOnly attribute..
+
+            SetAttributesCore(null, isFolder, path, fileAttr, pathFormat);
+         }
+
 
          // EncryptFile() / DecryptFile()
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.

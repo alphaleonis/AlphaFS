@@ -305,7 +305,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
       [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      public struct FileInfo
+      internal struct FileInfo
       {
          /// <summary>A handle to the icon that represents the file.</summary>
          /// <remarks>Caller is responsible for destroying this handle with DestroyIcon() when no longer needed.</remarks>
@@ -543,7 +543,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Retrieves information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
-      /// <returns>A <see cref="Shell32.FileInfo"/> struct instance.</returns>
+      /// <returns>A <see cref="FileInfo"/> struct instance.</returns>
       /// <remarks>
       /// <para>You should call this function from a background thread.</para>
       /// <para>Failure to do so could cause the UI to stop responding.</para>
@@ -790,7 +790,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Retrieve information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
-      /// <returns>A <see cref="Shell32.FileInfo"/> struct instance.</returns>
+      /// <returns>A <see cref="FileInfo"/> struct instance.</returns>
       /// <remarks>
       /// <para>You should call this function from a background thread.</para>
       /// <para>Failure to do so could cause the UI to stop responding.</para>

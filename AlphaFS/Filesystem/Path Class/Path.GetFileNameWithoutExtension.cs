@@ -52,8 +52,8 @@ namespace Alphaleonis.Win32.Filesystem
          int pathIndex;
 
          path = GetFileName(path, checkInvalidPathChars);
-
-         return null != path ? ((pathIndex = path.LastIndexOf('.')) == -1 ? path : path.Substring(0, pathIndex)) : null;
+         
+         return null != path ? ((pathIndex = path.LastIndexOf(ExtensionSeparatorChar)) == -1 ? path : path.Substring(0, pathIndex)) : null;
       }
    }
 }
