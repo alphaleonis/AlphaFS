@@ -305,7 +305,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
       [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct FileInfo
+      public struct FileInfo
       {
          /// <summary>A handle to the icon that represents the file.</summary>
          /// <remarks>Caller is responsible for destroying this handle with DestroyIcon() when no longer needed.</remarks>
