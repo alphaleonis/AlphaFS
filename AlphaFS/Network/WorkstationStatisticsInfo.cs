@@ -470,7 +470,7 @@ namespace Alphaleonis.Win32.Network
             return (!Utils.IsNullOrWhiteSpace(HostName) ? HostName.GetHashCode() : BytesTransmitted.GetHashCode()) + StatisticsStartTime.GetHashCode();
          }
       }
-
+      
 
       /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
       /// <param name="other">Another <see cref="WorkstationStatisticsInfo"/> instance to compare to.</param>
@@ -482,6 +482,38 @@ namespace Alphaleonis.Win32.Network
                 Equals(BytesTransmitted, other.BytesTransmitted) &&
                 Equals(BytesReceived, other.BytesReceived) &&
                 Equals(StatisticsStartTimeUtc, other.StatisticsStartTimeUtc);
+      }
+
+
+      /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
+      /// <param name="obj">Another object to compare to.</param>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
+      public override bool Equals(object obj)
+      {
+         var other = obj as WorkstationStatisticsInfo;
+
+         return null != other && Equals(other);
+      }
+
+
+      /// <summary>Implements the operator ==</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator ==(WorkstationStatisticsInfo left, WorkstationStatisticsInfo right)
+      {
+         return ReferenceEquals(left, null) && ReferenceEquals(right, null) ||
+                !ReferenceEquals(left, null) && !ReferenceEquals(right, null) && left.Equals(right);
+      }
+
+
+      /// <summary>Implements the operator !=</summary>
+      /// <param name="left">A.</param>
+      /// <param name="right">B.</param>
+      /// <returns>The result of the operator.</returns>
+      public static bool operator !=(WorkstationStatisticsInfo left, WorkstationStatisticsInfo right)
+      {
+         return !(left == right);
       }
 
       #endregion // Methods

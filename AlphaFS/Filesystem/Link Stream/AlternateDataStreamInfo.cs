@@ -68,8 +68,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the size of the stream.</summary>      
       public long Size { get; private set; }
-
-
       
 
       /// <summary>Gets the full path to the stream.</summary>
@@ -92,27 +90,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
       public override int GetHashCode()
       {
-         return StreamName.GetHashCode();
+         unchecked
+         {
+            return (!Utils.IsNullOrWhiteSpace(StreamName) ? StreamName.GetHashCode() : 0) + (!Utils.IsNullOrWhiteSpace(FullPath) ? FullPath.GetHashCode() : 0);
+         }
       }
-
-
-      /// <summary>Indicates whether this instance and a specified object are equal.</summary>
-      /// <param name="obj">The object to compare with the current instance.</param>
-      /// <returns>
-      ///   true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false.
-      /// </returns>
-      public override bool Equals(object obj)
-      {
-         if (obj == null || GetType() != obj.GetType())
-            return false;
-
-         var other = (AlternateDataStreamInfo)obj;
-
-         return null != other.StreamName && other.StreamName.Equals(StreamName, StringComparison.OrdinalIgnoreCase) &&
-                null != other.FullPath && other.FullPath.Equals(FullPath, StringComparison.OrdinalIgnoreCase) &&
-                other.Size.Equals(Size);
-      }
-
+      
 
       /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
       /// <param name="other">Another <see cref="AlternateDataStreamInfo"/> instance to compare to.</param>
@@ -123,6 +106,17 @@ namespace Alphaleonis.Win32.Filesystem
                 Equals(StreamName, other.StreamName) &&
                 Equals(FullPath, other.FullPath) &&
                 Equals(Size, other.Size);
+      }
+
+
+      /// <summary>Indicates whether this instance and a specified object are equal.</summary>
+      /// <param name="obj">The object to compare with the current instance.</param>
+      /// <returns>
+      ///   true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
+      /// </returns>
+      public override bool Equals(object obj)
+      {
+         return obj is AlternateDataStreamInfo && Equals((AlternateDataStreamInfo) obj);
       }
 
 
