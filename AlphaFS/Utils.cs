@@ -336,5 +336,9 @@ namespace Alphaleonis
       }
 
       #endregion // Bitmasking
+      public static int CombineHashCodesOf<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+      {
+         return CombineHashCodesOf(CombineHashCodesOf(arg1, arg2), CombineHashCodesOf(arg3, arg4));
+      }
    }
 }

@@ -372,7 +372,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             DataInitialised = value == null ? -1 : 0;
 
-            if (DataInitialised == 0)
+            if (DataInitialised == 0 && null != _entryInfo)
                Win32AttributeData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA(_entryInfo.Win32FindData);
          }
       }
@@ -451,7 +451,7 @@ namespace Alphaleonis.Win32.Filesystem
                 Equals(FullName, other.FullName) &&
                 Equals(Attributes, other.Attributes) &&
                 Equals(CreationTimeUtc, other.CreationTimeUtc) &&
-                Equals(LastWriteTimeUtc, other.LastWriteTimeUtc);
+                Equals(LastAccessTimeUtc, other.LastAccessTimeUtc);
       }
 
 
