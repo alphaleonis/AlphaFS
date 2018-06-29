@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         return CopyMoveCore(0, null, transaction, sourcePath, destinationPath, false, null, MoveOptions.None, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(0, 0, transaction, sourcePath, destinationPath, false, null, MoveOptions.None, null, null, PathFormat.RelativePath);
       }
 
 
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(0, null, transaction, sourcePath, destinationPath, false, null, MoveOptions.None, null, null, pathFormat);
+         return CopyMoveCore(0, 0, transaction, sourcePath, destinationPath, false, null, MoveOptions.None, null, null, pathFormat);
       }
 
 
@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
-         return CopyMoveCore(0, null, transaction, sourcePath, destinationPath, false, null, moveOptions, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(0, 0, transaction, sourcePath, destinationPath, false, null, moveOptions, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.</summary>
@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(0, null, transaction, sourcePath, destinationPath, false, null, moveOptions, null, null, pathFormat);
+         return CopyMoveCore(0, 0, transaction, sourcePath, destinationPath, false, null, moveOptions, null, null, pathFormat);
       }
 
 
@@ -146,7 +146,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(0, null, transaction, sourcePath, destinationPath, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(0, 0, transaction, sourcePath, destinationPath, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
 
@@ -176,7 +176,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(0, null, transaction, sourcePath, destinationPath, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(0, 0, transaction, sourcePath, destinationPath, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
       }
    }
 }

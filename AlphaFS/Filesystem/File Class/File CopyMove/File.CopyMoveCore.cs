@@ -25,6 +25,7 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -54,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">A <see cref="TimeSpan"/> that specifies the wait time between retries.</param>
+      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="driveChecked"></param>
       /// <param name="isFolder">Specifies that <paramref name="sourcePath"/> and <paramref name="destinationPath"/> is either a file or directory.</param>
@@ -69,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(int retry, TimeSpan? retryTimeout, KernelTransaction transaction, bool driveChecked, bool isFolder, string sourcePath, string destinationPath,
+      internal static CopyMoveResult CopyMoveCore(int retry, int retryTimeout, KernelTransaction transaction, bool driveChecked, bool isFolder, string sourcePath, string destinationPath,
          
          CopyOptions? copyOptions, MoveOptions? moveOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult, PathFormat pathFormat)
       {
@@ -181,11 +182,25 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (!copyMoveRes.IsCanceled)
             {
-               if (RestartCopyMoveOrThrowException(lastError, isFolder, isMove, transaction, sourcePathLp, destinationPathLp, moveOptions))
+               var attemptRetry = retry > 0 && retryTimeout > 0;
 
-                  // The folder/file read-only was removed, so restart the Copy or Move action.
+               for (var attempts = attemptRetry ? retry : 1;; attempts--)
+               {
+                  if (RestartCopyMoveOrThrowException(attemptRetry, lastError, isFolder, isMove, transaction, sourcePathLp, destinationPathLp, moveOptions))
+                  {
+                     // The folder/file read-only was removed, so restart the Copy or Move action.
 
-                  goto startCopyMove;
+                     goto startCopyMove;
+                  }
+
+
+                  if (attemptRetry)
+                  {
+                     Thread.Sleep(retryTimeout * 1000);
+
+                     attemptRetry = attempts > 1;
+                  }
+               }
             }
          }
 
@@ -198,9 +213,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          return copyMoveResult;
       }
-
-
-
+      
 
       private static bool CopyMoveNative(KernelTransaction transaction, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine,
          
@@ -248,7 +261,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      private static bool RestartCopyMoveOrThrowException(int lastError, bool isFolder, bool isMove, KernelTransaction transaction, string sourcePathLp, string destinationPathLp, MoveOptions? moveOptions)
+      private static bool RestartCopyMoveOrThrowException(bool attemptRetry, int lastError, bool isFolder, bool isMove, KernelTransaction transaction, string sourcePathLp, string destinationPathLp, MoveOptions? moveOptions)
       {
          var restart = false;
          var srcExists = ExistsCore(transaction, isFolder, sourcePathLp, PathFormat.LongFullPath);
@@ -289,7 +302,9 @@ namespace Alphaleonis.Win32.Filesystem
             case Win32Errors.ERROR_FILE_EXISTS:    // On files.
                lastError = (int) (isFolder ? Win32Errors.ERROR_ALREADY_EXISTS : Win32Errors.ERROR_FILE_EXISTS);
 
-               NativeError.ThrowException(lastError, null, destinationPathLp);
+               if (!attemptRetry)
+                  NativeError.ThrowException(lastError, null, destinationPathLp);
+
                break;
 
 
@@ -307,7 +322,7 @@ namespace Alphaleonis.Win32.Filesystem
                // Directory.Move()
                // MSDN: .NET 3.5+: IOException: destDirName already exists.
 
-               if (destIsFolder && dstExists)
+               if (destIsFolder && dstExists && !attemptRetry)
                   NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destinationPathLp);
 
 
@@ -319,7 +334,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // Directory.Move()
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive). 
 
-                  if (!srcExists)
+                  if (!srcExists && !attemptRetry)
                      NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourcePathLp);
                }
 
@@ -343,7 +358,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                   // Directory exists with the same name as the file.
-                  if (dstExists && !isFolder && destIsFolder)
+                  if (dstExists && !isFolder && destIsFolder && !attemptRetry)
                      NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
 
 
@@ -365,7 +380,9 @@ namespace Alphaleonis.Win32.Filesystem
                         // MSDN: .NET 3.5+: UnauthorizedAccessException: destinationPath is read-only.
                         // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                         // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                        throw new FileReadOnlyException(destinationPathLp);
+
+                        if (!attemptRetry)
+                           throw new FileReadOnlyException(destinationPathLp);
                      }
                   }
                }
@@ -374,7 +391,9 @@ namespace Alphaleonis.Win32.Filesystem
                // MSDN: .NET 3.5+: An I/O error has occurred. 
                // File.Copy(): IOException: destinationPath exists and overwrite is false.
                // File.Move(): The destination file already exists or sourcePath was not found.
-               NativeError.ThrowException(lastError, null, fileNameLp);
+
+               if (!attemptRetry)
+                  NativeError.ThrowException(lastError, null, fileNameLp);
 
                break;
          }

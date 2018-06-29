@@ -44,12 +44,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">A <see cref="TimeSpan"/> that specifies the wait time between retries.</param>
+      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
       [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(int retry, TimeSpan? retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath)
+      public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath)
       {
          return CopyMoveCore(retry, retryTimeout, transaction, false, false, sourcePath, destinationPath, null, MoveOptions.CopyAllowed, false, null, null, null, PathFormat.RelativePath);
       }
@@ -72,13 +72,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">A <see cref="TimeSpan"/> that specifies the wait time between retries.</param>
+      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(int retry, TimeSpan? retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
+      public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
          return CopyMoveCore(retry, retryTimeout, transaction, false, false, sourcePath, destinationPath, null, MoveOptions.CopyAllowed, false, null, null, null, pathFormat);
       }
@@ -101,13 +101,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">A <see cref="TimeSpan"/> that specifies the wait time between retries.</param>
+      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(int retry, TimeSpan? retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions)
+      public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
          return CopyMoveCore(retry, retryTimeout, transaction, false, false, sourcePath, destinationPath, null, moveOptions, false, null, null, null, PathFormat.RelativePath);
       }
@@ -130,14 +130,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">A <see cref="TimeSpan"/> that specifies the wait time between retries.</param>
+      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(int retry, TimeSpan? retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
+      public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
          return CopyMoveCore(retry, retryTimeout, transaction, false, false, sourcePath, destinationPath, null, moveOptions, false, null, null, null, pathFormat);
       }
@@ -160,7 +160,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">A <see cref="TimeSpan"/> that specifies the wait time between retries.</param>
+      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
@@ -168,7 +168,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(int retry, TimeSpan? retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveCore(retry, retryTimeout, transaction, false, false, sourcePath, destinationPath, null, moveOptions, false, progressHandler, userProgressData, null, PathFormat.RelativePath);
       }
@@ -191,7 +191,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">A <see cref="TimeSpan"/> that specifies the wait time between retries.</param>
+      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
@@ -200,7 +200,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static CopyMoveResult MoveTransacted(int retry, TimeSpan? retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveCore(retry, retryTimeout, transaction, false, false, sourcePath, destinationPath, null, moveOptions, false, progressHandler, userProgressData, null, pathFormat);
       }

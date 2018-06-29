@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">A <see cref="TimeSpan"/> that specifies the wait time between retries.</param>
+      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
@@ -56,8 +56,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(int retry, TimeSpan? retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveDates,
-
+      internal static CopyMoveResult CopyMoveCore(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveDates,
+         
          CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string sourcePathLp;
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      internal static void CopyDeleteDirectoryCore(int retry, TimeSpan? retryTimeout, KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove,
+      internal static void CopyDeleteDirectoryCore(int retry, int retryTimeout, KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove,
          
          CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult)
       {
