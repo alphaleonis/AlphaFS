@@ -219,11 +219,25 @@
     <Compile Include="Device\Volume\Volume.DeleteVolumeMountPoint.cs" />
     <Compile Include="Device\Volume\Volume.DefineDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.EnumerateVolumes.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.CopyTransacted_Retry.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.Copy_Retry.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.CopyTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.CopyMoveCore.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.MoveTransacted_Retry.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.Move_Retry.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.MoveTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.ExistsDrive.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateLogicalDrives.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetSize.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.CopyTransacted_Retry.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.Copy_Retry.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.CopyTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.CopyMoveCore.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.MoveTransacted_Retry.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.Move_Retry.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.MoveTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\File Class\File.FileAttributeLogic.cs" />
@@ -232,11 +246,11 @@
     <Compile Include="Filesystem\Link Stream\BackupStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileInfoByHandle.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.Move.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.Move.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnableCompression.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.DisableCompression.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Decompress.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.Copy.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.Copy.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CountFileSystemObjects.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.ExistsJunction.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.DeleteJunction.cs" />
@@ -338,7 +352,7 @@
     <Compile Include="Filesystem\Exceptions\DirectoryReadOnlyException.cs" />
     <Compile Include="Filesystem\Exceptions\DirectoryNotEmptyException.cs" />
     <Compile Include="Filesystem\Exceptions\FileReadOnlyException.cs" />
-    <Compile Include="Filesystem\File Class\File.Move.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.Move.cs" />
     <Compile Include="Filesystem\File Class\File.Decompress.cs" />
     <Compile Include="Filesystem\File Class\File.GetHash.cs" />
     <Compile Include="Filesystem\File Class\File.EncryptedFileRaw.cs" />
@@ -350,7 +364,7 @@
     <Compile Include="Filesystem\File Class\File.Delete.cs" />
     <Compile Include="Filesystem\File Class\File.EncryptDecrypt.cs" />
     <Compile Include="Filesystem\File Class\File.CreateText.cs" />
-    <Compile Include="Filesystem\File Class\File.Copy.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.Copy.cs" />
     <Compile Include="Filesystem\File Class\File.GetProcessForFileLock.cs" />
     <Compile Include="Filesystem\File Class\File.IsLocked.cs" />
     <Compile Include="Filesystem\File Class\File.CopyTimestamps.cs" />
@@ -671,7 +685,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
