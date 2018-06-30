@@ -28,6 +28,149 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
+      internal struct CopyMoveArguments
+      {
+         public int Retry;
+         public int RetryTimeout;
+         public KernelTransaction Transaction;
+         public string SourcePath;
+         public string DestinationPath;
+         public bool PreserveDates;
+         public CopyOptions? CopyOptions;
+         public MoveOptions? MoveOptions;
+         public CopyMoveProgressRoutine ProgressHandler;
+         public object UserProgressData;
+         public PathFormat PathFormat;
+
+
+         internal string SourcePathLp;
+         internal string DestinationPathLp;
+         internal bool IsCopy;
+         internal bool EmulateMove;
+         internal bool DelayUntilReboot;
+         internal bool DeleteOnStartup;
+      }
+
+
+      internal static CopyMoveResult CopyMoveCore(CopyMoveArguments cma)
+      {
+         string sourcePathLp;
+         string destinationPathLp;
+         bool isCopy;
+
+         // A Move action fallback using Copy + Delete.
+         bool emulateMove;
+
+         // A file or folder will be deleted or renamed on Computer startup.
+         bool delayUntilReboot;
+         bool deleteOnStartup;
+
+
+         cma = File.ValidateAndUpdatePathsAndOptions(cma);
+
+         //File.ValidateAndUpdatePathsAndOptions(transaction, sourcePath, destinationPath, copyOptions, moveOptions, pathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
+
+
+         // Directory.Move is applicable to both folders and files.
+         var isFile = File.ExistsCore(cma.Transaction, false, cma.SourcePathLp, PathFormat.LongFullPath);
+
+
+         // Check for local or network drives, such as: "C:" or "\\server\c$" (but not for "\\?\GLOBALROOT\").
+         if (!cma.SourcePathLp.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+            ExistsDriveOrFolderOrFile(cma.Transaction, cma.SourcePathLp, !isFile, (int) Win32Errors.NO_ERROR, true, false);
+
+
+         // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
+         if (!cma.DelayUntilReboot)
+            ExistsDriveOrFolderOrFile(cma.Transaction, cma.DestinationPathLp, !isFile, (int) Win32Errors.NO_ERROR, true, false);
+
+
+         // Process Move action options, possible fallback to Copy action.
+         if (!cma.IsCopy && !cma.DeleteOnStartup)
+            cma = ValidateAndUpdateCopyMoveAction(cma);
+
+         //ValidateAndUpdateCopyMoveAction(sourcePathLp, destinationPathLp, copyOptions, moveOptions, out copyOptions, out moveOptions, out isCopy, out emulateMove);
+         
+
+         var copyMoveResult = new CopyMoveResult(cma, !isFile);
+
+         //var copyMoveResult = new CopyMoveResult(sourcePath, destinationPath, isCopy, !isFile, preserveDates, emulateMove);
+
+
+         // Calling start on a running Stopwatch is a no-op.
+         copyMoveResult.Stopwatch.Start();
+
+
+         if (cma.IsCopy)
+         {
+            // Copy folder SymbolicLinks.
+            // Cannot be done by CopyFileEx() so emulate this.
+
+            if (File.HasCopySymbolicLink(cma.CopyOptions))
+            {
+               var lvi = File.GetLinkTargetInfoCore(cma.Transaction, cma.SourcePathLp, true, cma.PathFormat);
+
+               if (null != lvi)
+               {
+                  File.CreateSymbolicLinkCore(cma.Transaction, cma.DestinationPathLp, lvi.SubstituteName, SymbolicLinkTarget.Directory, cma.PathFormat);
+
+                  copyMoveResult.TotalFolders = 1;
+               }
+            }
+
+            else
+            {
+               if (isFile)
+                  File.CopyMoveCore(cma, true, false, null, null, copyMoveResult);
+
+               //File.CopyMoveCore(retry, retryTimeout, transaction, true, false, sourcePathLp, destinationPathLp, copyOptions, null, preserveDates, progressHandler, userProgressData, copyMoveResult, PathFormat.LongFullPath);
+
+               else
+                  CopyDeleteDirectoryCore(cma, copyMoveResult);
+
+                  //CopyDeleteDirectoryCore(retry, retryTimeout, transaction, sourcePathLp, destinationPathLp, preserveDates, emulateMove, copyOptions, progressHandler, userProgressData, copyMoveResult);
+            }
+         }
+
+         // Move
+         else
+         {
+            // AlphaFS feature to overcome a MoveFileXxx limitation.
+            // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
+
+            if (!isFile && !cma.DelayUntilReboot && File.CanOverwrite(cma.MoveOptions))
+
+               DeleteDirectoryCore(cma.Transaction, null, cma.DestinationPathLp, true, true, true, cma.PathFormat);
+
+
+            // 2017-06-07: A large target directory will probably create a progress-less delay in UI.
+            // One way to get around this is to perform the delete in the File.CopyMove method.
+
+
+            // Moves a file or directory, including its children.
+            // Copies an existing directory, including its children to a new directory.
+
+            File.CopyMoveCore(cma, true, !isFile, null, null, copyMoveResult);
+            
+            //File.CopyMoveCore(retry, retryTimeout, cma.Transaction, true, !isFile, sourcePathLp, destinationPathLp, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, copyMoveResult, pathFormat);
+
+
+            // If the move happened on the same drive, we have no knowledge of the number of files/folders.
+            // However, we do know that the one folder was moved successfully.
+
+            if (copyMoveResult.ErrorCode == Win32Errors.NO_ERROR)
+               copyMoveResult.TotalFolders = 1;
+         }
+
+
+         copyMoveResult.Stopwatch.Stop();
+
+         return copyMoveResult;
+      }
+
+
+
+
       /// <summary>[AlphaFS] Copy/move a Non-/Transacted file or directory including its children to a new location, <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
@@ -56,9 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveDates,
-         
-         CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      internal static CopyMoveResult CopyMoveCore(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string sourcePathLp;
          string destinationPathLp;
@@ -162,11 +303,109 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      internal static void CopyDeleteDirectoryCore(CopyMoveArguments cma, CopyMoveResult copyMoveResult)
+      {
+         var dirs = new Queue<string>(NativeMethods.DefaultFileBufferSize);
+
+         dirs.Enqueue(cma.SourcePathLp);
 
 
-      internal static void CopyDeleteDirectoryCore(int retry, int retryTimeout, KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove,
-         
-         CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult)
+         while (dirs.Count > 0)
+         {
+            var srcLp = dirs.Dequeue();
+
+            // TODO 2018-01-09: Not 100% yet with local + UNC paths.
+            var dstLp = srcLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);
+
+
+            // Traverse the source folder, processing files and folders.
+
+            foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, cma.Transaction, srcLp, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath))
+            {
+               var fseiSourcePath = fseiSource.LongFullPath;
+               var fseiDestinationPath = Path.CombineCore(false, dstLp, fseiSource.FileName);
+
+
+               if (fseiSource.IsDirectory)
+               {
+                  CreateDirectoryCore(true, cma.Transaction, fseiDestinationPath, null, null, false, PathFormat.LongFullPath);
+
+                  copyMoveResult.TotalFolders++;
+
+                  dirs.Enqueue(fseiSourcePath);
+               }
+
+
+               // File.
+               else
+               {
+                  // Ensure the file's parent directory exists.
+
+                  var parentFolder = GetParentCore(cma.Transaction, fseiDestinationPath, PathFormat.LongFullPath);
+
+                  if (null != parentFolder)
+                  {
+                     var fileParentFolder = Path.GetLongPathCore(parentFolder.FullName, GetFullPathOptions.None);
+
+                     CreateDirectoryCore(true, cma.Transaction, fileParentFolder, null, null, false, PathFormat.LongFullPath);
+                  }
+
+
+                  // File count is done in File.CopyMoveCore method.
+
+                  //File.CopyMoveCore(cma, true, false, fseiSourcePath, fseiDestinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, copyMoveResult, PathFormat.LongFullPath);
+                  
+                  File.CopyMoveCore(cma, true, false, fseiSourcePath, fseiDestinationPath, copyMoveResult);
+
+                  //File.CopyMoveCore(retry, retryTimeout, cma.Transaction, true, false, fseiSourcePath, fseiDestinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, copyMoveResult, PathFormat.LongFullPath);
+
+                  if (copyMoveResult.IsCanceled)
+                  {
+                     // Break while loop.
+                     dirs.Clear();
+
+                     // Break foreach loop.
+                     break;
+                  }
+
+
+                  if (copyMoveResult.ErrorCode == Win32Errors.NO_ERROR)
+                  {
+                     copyMoveResult.TotalBytes += fseiSource.FileSize;
+
+                     if (cma.EmulateMove)
+                        File.DeleteFileCore(cma.Transaction, fseiSourcePath, true, PathFormat.LongFullPath);
+                  }
+               }
+            }
+         }
+
+
+         if (copyMoveResult.ErrorCode == Win32Errors.NO_ERROR)
+         {
+            if (cma.PreserveDates)
+            {
+               // TODO 2018-01-09: Not 100% yet with local + UNC paths.
+               var dstLp = cma.SourcePathLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);
+
+
+               // Traverse the source folder, processing subfolders.
+
+               foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, cma.Transaction, cma.SourcePathLp, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath))
+
+                  File.CopyTimestampsCore(cma.Transaction, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
+
+               // TODO: When enabled on Computer, FindFirstFile will change the last accessed time.
+            }
+
+
+            if (cma.EmulateMove)
+               DeleteDirectoryCore(cma.Transaction, null, cma.SourcePathLp, true, true, true, PathFormat.LongFullPath);
+         }
+      }
+
+
+      internal static void CopyDeleteDirectoryCore(int retry, int retryTimeout, KernelTransaction transaction, string sourcePathLp, string destinationPathLp, bool preserveDates, bool emulateMove, CopyOptions? copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult)
       {
          var dirs = new Queue<string>(NativeMethods.DefaultFileBufferSize);
 
@@ -264,8 +503,79 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      /// <summary>Determines if a Move action or Copy action-fallback is possible.</summary>
+      private static CopyMoveArguments ValidateAndUpdateCopyMoveAction(CopyMoveArguments cma)
+      {
+         // Compare the root part of both paths.
+
+         var equalRootPaths = Path.GetPathRoot(cma.SourcePathLp, false).Equals(Path.GetPathRoot(cma.DestinationPathLp, false), StringComparison.OrdinalIgnoreCase);
 
 
+         // Method Volume.IsSameVolume() returns true when both paths refer to the same volume, even if one of the paths is a UNC path.
+         // For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
+
+         var isSameVolume = equalRootPaths || Volume.IsSameVolume(cma.SourcePathLp, cma.DestinationPathLp);
+
+
+         var isMove = isSameVolume && equalRootPaths;
+
+         if (!isMove)
+         {
+            // A Move() can be emulated by using Copy() and Delete(), but only if the MoveOptions.CopyAllowed flag is set.
+
+            isMove = File.AllowEmulate(cma.MoveOptions);
+
+
+            // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
+
+            if (!isMove)
+               NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, cma.SourcePathLp, cma.DestinationPathLp);
+         }
+
+
+         // The MoveFileXxx methods fail when:
+         // - A directory is being moved;
+         // - One of the paths is a UNC path, even though both paths refer to the same volume.
+         //   For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
+
+         if (isMove)
+         {
+            var srcIsUncPath = Path.IsUncPathCore(cma.SourcePathLp, false, false);
+            var dstIsUncPath = Path.IsUncPathCore(cma.DestinationPathLp, false, false);
+
+            isMove = srcIsUncPath == dstIsUncPath;
+         }
+
+
+         isMove = isMove && isSameVolume && equalRootPaths;
+
+
+         if (isMove)
+         {
+            cma.CopyOptions = null;
+
+            cma.IsCopy = false;
+            cma.EmulateMove = false;
+         }
+
+         
+         // Emulate Move().
+
+         else
+         {
+            cma.MoveOptions = null;
+
+            cma.IsCopy = true;
+            cma.EmulateMove = true;
+
+            cma.CopyOptions = CopyOptions.None;
+         }
+
+
+         return cma;
+      }
+
+      
       private static void ValidateAndUpdateCopyMoveAction(string sourcePathLp, string destinationPathLp, CopyOptions? copyOptions, MoveOptions? moveOptions, out CopyOptions? newCopyOptions, out MoveOptions? newMoveOptions, out bool isCopy, out bool emulateMove)
       {
          // Determine if a Move action or Copy action-fallback is possible.

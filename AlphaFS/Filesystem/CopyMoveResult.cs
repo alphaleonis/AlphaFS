@@ -54,6 +54,18 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      internal CopyMoveResult(Directory.CopyMoveArguments cma, bool isFolder) : this(cma.SourcePath, cma.DestinationPath)
+      {
+         IsEmulatedMove = cma.EmulateMove;
+
+         IsCopy = cma.IsCopy;
+
+         IsDirectory = isFolder;
+
+         TimestampsCopied = cma.PreserveDates;
+      }
+
+
       /// <summary>Initializes a CopyMoveResult instance for the Copy or Move action.
       /// <remarks>Normally there is no need to manually call this constructor.</remarks>
       /// </summary>

@@ -47,7 +47,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = CopyOptions.FailIfExists,
+            PathFormat = PathFormat.RelativePath
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
       
 
@@ -69,7 +77,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, pathFormat);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = CopyOptions.FailIfExists,
+            PathFormat = pathFormat
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
 
@@ -91,7 +107,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, bool overwrite)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists,
+            PathFormat = PathFormat.RelativePath
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -114,7 +138,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, bool overwrite, PathFormat pathFormat)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists,
+            PathFormat = pathFormat
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
 
@@ -137,7 +169,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, copyOptions, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = copyOptions,
+            PathFormat = PathFormat.RelativePath
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, copyOptions, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -161,7 +201,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, copyOptions, null, null, null, pathFormat);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = copyOptions,
+            PathFormat = pathFormat
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, copyOptions, null, null, null, pathFormat);
       }
 
       
@@ -185,7 +233,16 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = copyOptions,
+            PreserveDates = preserveDates,
+            PathFormat = PathFormat.RelativePath
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, PathFormat.RelativePath);
       }
 
 
@@ -210,7 +267,16 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, pathFormat);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = copyOptions,
+            PreserveDates = preserveDates,
+            PathFormat = pathFormat
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, preserveDates, copyOptions, null, null, null, pathFormat);
       }
       
 
@@ -236,7 +302,17 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = copyOptions,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = PathFormat.RelativePath
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
 
@@ -263,7 +339,17 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = copyOptions,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = pathFormat
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, false, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
 
 
@@ -290,7 +376,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = copyOptions,
+            PreserveDates = preserveDates,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = PathFormat.RelativePath
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
 
@@ -318,7 +415,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(0, 0, null, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = copyOptions,
+            PreserveDates = preserveDates,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = pathFormat
+         });
+
+         //return CopyMoveCore(0, 0, null, sourcePath, destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
    }
 }
