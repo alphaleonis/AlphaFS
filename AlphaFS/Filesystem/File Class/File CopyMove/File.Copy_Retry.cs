@@ -152,7 +152,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(int retry, int retryTimeout, string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         //return CopyMoveCore(new Directory.CopyMoveArguments
+         //return CopyMoveCore(new CopyMoveArguments
          //{
          //   Retry = retry,
          //   RetryTimeout = retryTimeout,

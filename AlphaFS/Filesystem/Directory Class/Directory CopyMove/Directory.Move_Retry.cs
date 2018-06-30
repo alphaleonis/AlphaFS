@@ -46,7 +46,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(int retry, int retryTimeout, string sourcePath, string destinationPath)
       {
-         CopyMoveCore(retry, retryTimeout, null, sourcePath, destinationPath, false, null, MoveOptions.None, null, null, PathFormat.RelativePath);
+         CopyMoveCore(new CopyMoveArguments
+         {
+            Retry = retry,
+            RetryTimeout = retryTimeout,
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = MoveOptions.None,
+            PathFormat = PathFormat.RelativePath
+         });
       }
 
 
@@ -71,7 +79,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(int retry, int retryTimeout, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(retry, retryTimeout, null, sourcePath, destinationPath, false, null, MoveOptions.None, null, null, pathFormat);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            Retry = retry,
+            RetryTimeout = retryTimeout,
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = MoveOptions.None,
+            PathFormat = pathFormat
+         });
       }
 
 
@@ -96,7 +112,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(int retry, int retryTimeout, string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
-         return CopyMoveCore(retry, retryTimeout, null, sourcePath, destinationPath, false, null, moveOptions, null, null, PathFormat.RelativePath);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            Retry = retry,
+            RetryTimeout = retryTimeout,
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = moveOptions,
+            PathFormat = PathFormat.RelativePath
+         });
       }
 
 
@@ -122,7 +146,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(int retry, int retryTimeout, string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(retry, retryTimeout, null, sourcePath, destinationPath, false, null, moveOptions, null, null, pathFormat);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            Retry = retry,
+            RetryTimeout = retryTimeout,
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = moveOptions,
+            PathFormat = pathFormat
+         });
       }
 
 
@@ -151,7 +183,17 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(int retry, int retryTimeout, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(retry, retryTimeout, null, sourcePath, destinationPath, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativePath);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            Retry = retry,
+            RetryTimeout = retryTimeout,
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = moveOptions,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = PathFormat.RelativePath
+         });
       }
 
 
@@ -181,7 +223,17 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(int retry, int retryTimeout, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(retry, retryTimeout, null, sourcePath, destinationPath, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            Retry = retry,
+            RetryTimeout = retryTimeout,
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = moveOptions,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = pathFormat
+         });
       }
    }
 }

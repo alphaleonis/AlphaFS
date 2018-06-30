@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
       // Symbolic Link Effects on File Systems Functions: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365682(v=vs.85).aspx
-
+      
 
       /// <summary>Copy/move a Non-/Transacted file or directory including its children to a new location, <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.
@@ -70,9 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(int retry, int retryTimeout, KernelTransaction transaction, bool driveChecked, bool isFolder, string sourcePath, string destinationPath,
-         
-         CopyOptions? copyOptions, MoveOptions? moveOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult, PathFormat pathFormat)
+      internal static CopyMoveResult CopyMoveCore(int retry, int retryTimeout, KernelTransaction transaction, bool driveChecked, bool isFolder, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, CopyMoveResult copyMoveResult, PathFormat pathFormat)
       {
          #region Setup
 
@@ -215,9 +213,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
 
-      private static bool CopyMoveNative(KernelTransaction transaction, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine,
-         
-         CopyOptions? copyOptions, MoveOptions? moveOptions, out bool cancel, out int lastError)
+      private static bool CopyMoveNative(KernelTransaction transaction, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine, CopyOptions? copyOptions, MoveOptions? moveOptions, out bool cancel, out int lastError)
       {
          cancel = false;
 
@@ -257,9 +253,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          return success;
       }
-
-
-
+      
 
       private static bool RestartCopyMoveOrThrowException(bool attemptRetry, int lastError, bool isFolder, bool isMove, KernelTransaction transaction, string sourcePathLp, string destinationPathLp, MoveOptions? moveOptions)
       {
@@ -402,13 +396,9 @@ namespace Alphaleonis.Win32.Filesystem
          return restart;
       }
 
-
-
-
+      
       [SuppressMessage("Microsoft.Performance", "CA1820:TestForEmptyStringsUsingStringLength")]
-      internal static void ValidateAndUpdatePathsAndOptions(KernelTransaction transaction, string sourcePath, string destinationPath,
-         
-         CopyOptions? copyOptions, MoveOptions? moveOptions, PathFormat pathFormat, out string sourcePathLp, out string destinationPathLp, out bool isCopy, out bool emulateMove, out bool delayUntilReboot, out bool deleteOnStartup)
+      internal static void ValidateAndUpdatePathsAndOptions(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, PathFormat pathFormat, out string sourcePathLp, out string destinationPathLp, out bool isCopy, out bool emulateMove, out bool delayUntilReboot, out bool deleteOnStartup)
       {
          if (sourcePath == string.Empty)
             throw new ArgumentException("Empty sourcePath name is not legal.");
@@ -475,9 +465,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
       }
-
-
-
+      
 
       private static bool VerifyDelayUntilReboot(string sourcePath, MoveOptions? moveOptions, PathFormat pathFormat)
       {
@@ -497,6 +485,84 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          return delayUntilReboot;
+      }
+
+
+
+
+      [SuppressMessage("Microsoft.Performance", "CA1820:TestForEmptyStringsUsingStringLength")]
+      internal static CopyMoveArguments ValidateAndUpdatePathsAndOptions(CopyMoveArguments cma)
+      {
+         if (cma.SourcePath == string.Empty)
+            throw new ArgumentException("Empty sourcePath name is not legal.");
+
+         if (cma.DestinationPath == string.Empty)
+            throw new ArgumentException("Empty destinationPath name is not legal.");
+
+
+         // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
+         // Do not use StringComparison.OrdinalIgnoreCase to allow renaming a folder with different casing.
+
+         if (null != cma.SourcePath && cma.SourcePath.Equals(cma.DestinationPath, StringComparison.Ordinal))
+            NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, cma.DestinationPath);
+
+
+         cma.SourcePathLp = cma.SourcePath;
+         cma.DestinationPathLp = cma.DestinationPath;
+
+         cma.IsCopy = IsCopyAction(cma.CopyOptions, cma.MoveOptions);
+
+         var isMove = !cma.IsCopy;
+         cma.EmulateMove = false;
+
+         cma.DelayUntilReboot = isMove && VerifyDelayUntilReboot(cma.SourcePathLp, cma.MoveOptions, cma.PathFormat);
+
+         // When destinationPath is null, the file or folder needs to be removed on Computer startup.
+         cma.DeleteOnStartup = cma.DelayUntilReboot && null == cma.DestinationPath;
+
+
+         if (cma.PathFormat == PathFormat.RelativePath)
+         {
+            if (null == cma.SourcePath)
+               throw new ArgumentNullException("sourcePath");
+
+
+            // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
+
+            if (!cma.DelayUntilReboot && null == cma.DestinationPath)
+               throw new ArgumentNullException("destinationPath");
+
+
+
+
+            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
+            // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
+
+
+            const GetFullPathOptions fullPathOptions = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
+
+            // Check for local or network drives, such as: "C:" or "\\server\c$" (but not for "\\?\GLOBALROOT\").
+            if (!cma.SourcePath.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+               Path.CheckSupportedPathFormat(cma.SourcePath, true, true);
+
+               cma.SourcePathLp = Path.GetExtendedLengthPathCore(cma.Transaction, cma.SourcePath, cma.PathFormat, fullPathOptions);
+            }
+
+
+            if (!cma.DeleteOnStartup)
+            {
+               Path.CheckSupportedPathFormat(cma.DestinationPath, true, true);
+
+               cma.DestinationPathLp = Path.GetExtendedLengthPathCore(cma.Transaction, cma.DestinationPath, cma.PathFormat, fullPathOptions);
+            }
+
+
+            cma.PathFormat = PathFormat.LongFullPath;
+         }
+
+
+         return cma;
       }
    }
 }

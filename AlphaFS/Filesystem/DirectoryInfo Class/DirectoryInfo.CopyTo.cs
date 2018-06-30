@@ -403,7 +403,18 @@ namespace Alphaleonis.Win32.Filesystem
       {
          longFullPath = Path.GetExtendedLengthPathCore(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         return Directory.CopyMoveCore(0, 0, Transaction, LongFullName, longFullPath, preserveDates, copyOptions, moveOptions, progressHandler, userProgressData, PathFormat.LongFullPath);
+         return Directory.CopyMoveCore(new CopyMoveArguments
+         {
+            Transaction = Transaction,
+            SourcePath = LongFullName,
+            DestinationPath = longFullPath,
+            CopyOptions = copyOptions,
+            MoveOptions = moveOptions,
+            PreserveDates = preserveDates,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = PathFormat.LongFullPath
+         });
       }
    }
 }
