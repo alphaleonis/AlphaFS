@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Destination File Path: [{0}]", fileDst);
 
 
-            // Set destination file read-only attribute so that a System.UnauthorizedAccessException is triggered.
+            // Set destination file read-only attribute so that a System.UnauthorizedAccessException is triggered on file copy.
 
             System.IO.File.SetAttributes(fileDst, System.IO.FileAttributes.ReadOnly);
 

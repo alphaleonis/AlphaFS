@@ -92,7 +92,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine();
 
 
-                  Assert.AreEqual(Alphaleonis.Win32.Win32Errors.NO_ERROR, cmr.ErrorCode);
+                  Assert.AreEqual((int) Alphaleonis.Win32.Win32Errors.NO_ERROR, cmr.ErrorCode);
 
 
                   testOk = true;
