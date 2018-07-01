@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
             return false;
 
 
-         var drive = GetDirectoryRootCore(transaction, path, PathFormat.FullPath);
+         var drive = GetDirectoryRootCore(transaction, path, Path.IsPathRooted(path) ? PathFormat.FullPath : PathFormat.RelativePath);
 
          var driveExists = null != drive && File.ExistsCore(transaction, true, drive, PathFormat.FullPath);
 

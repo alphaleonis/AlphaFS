@@ -47,11 +47,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static CopyMoveResult CopyMoveCore(CopyMoveArguments cma)
       {
-         string unusedSourcePathLp;
-         string unusedDestinationPathLp;
+         string unusedSourcePath;
+         string unusedDestinationPath;
 
-         cma = File.ValidateAndUpdatePathsAndOptions(cma, true, out unusedSourcePathLp, out unusedDestinationPathLp);
-         //cma = File.ValidateAndUpdatePathsAndOptions(cma);
+         cma = File.ValidateAndUpdatePathsAndOptions(cma, cma.SourcePath, cma.DestinationPath, out unusedSourcePath, out unusedDestinationPath);
 
 
          // Directory.Move is applicable to both folders and files.
@@ -106,7 +105,9 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
 
+
          // Move
+
          else
          {
             // AlphaFS feature to overcome a MoveFileXxx limitation.

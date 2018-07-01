@@ -25,7 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AlphaFS.UnitTest
 {
    /// <summary>This is a test class for Directory and is intended to contain all CreateDirectory Unit Tests.</summary>
-   public partial class CopyTest
+   public partial class MoveTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 

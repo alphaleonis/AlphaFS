@@ -600,7 +600,17 @@ namespace Alphaleonis.Win32.Filesystem
       {
          longFullPath = Path.GetExtendedLengthPathCore(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         return File.CopyMoveCore(0, 0, Transaction, false, false, LongFullName, longFullPath, copyOptions, moveOptions, preserveDates, progressHandler, userProgressData, null, PathFormat.LongFullPath);
+         return File.CopyMoveCore(new CopyMoveArguments
+         {
+            Transaction = Transaction,
+            CopyOptions = copyOptions,
+            MoveOptions = moveOptions,
+            PreserveDates = preserveDates,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = PathFormat.LongFullPath
+
+         }, false, false, LongFullName, longFullPath, null);
       }
 
 
