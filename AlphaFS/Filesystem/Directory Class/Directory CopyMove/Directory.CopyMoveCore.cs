@@ -21,16 +21,37 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
+      /// <summary>[AlphaFS] Copy/move a Non-/Transacted file or directory including its children to a new location, <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="cma.moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       [SecurityCritical]
       internal static CopyMoveResult CopyMoveCore(CopyMoveArguments cma)
       {
-         cma = File.ValidateAndUpdatePathsAndOptions(cma);
+         string unusedSourcePathLp;
+         string unusedDestinationPathLp;
+
+         cma = File.ValidateAndUpdatePathsAndOptions(cma, true, out unusedSourcePathLp, out unusedDestinationPathLp);
+         //cma = File.ValidateAndUpdatePathsAndOptions(cma);
 
 
          // Directory.Move is applicable to both folders and files.
@@ -78,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
             else
             {
                if (isFile)
-                  File.CopyMoveCore(cma.Retry, cma.RetryTimeout, cma.Transaction, true, false, cma.SourcePathLp, cma.DestinationPathLp, cma.CopyOptions, null, cma.PreserveDates, cma.ProgressHandler, cma.UserProgressData, copyMoveResult, PathFormat.LongFullPath);
+                  File.CopyMoveCore(cma, true, false, cma.SourcePathLp, cma.DestinationPathLp, copyMoveResult);
 
                else
                   CopyDeleteDirectoryCore(cma, copyMoveResult);
@@ -101,7 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Moves a file or directory, including its children.
             // Copies an existing directory, including its children to a new directory.
 
-            File.CopyMoveCore(cma.Retry, cma.RetryTimeout, cma.Transaction, true, !isFile, cma.SourcePathLp, cma.DestinationPathLp, cma.CopyOptions, cma.MoveOptions, cma.PreserveDates, cma.ProgressHandler, cma.UserProgressData, copyMoveResult, cma.PathFormat);
+            File.CopyMoveCore(cma, true, !isFile, cma.SourcePathLp, cma.DestinationPathLp, copyMoveResult);
 
 
             // If the move happened on the same drive, we have no knowledge of the number of files/folders.
@@ -169,7 +190,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   // File count is done in File.CopyMoveCore method.
 
-                  File.CopyMoveCore(cma.Retry, cma.RetryTimeout, cma.Transaction, true, false, fseiSourcePath, fseiDestinationPath, cma.CopyOptions, null, cma.PreserveDates, cma.ProgressHandler, cma.UserProgressData, copyMoveResult, PathFormat.LongFullPath);
+                  File.CopyMoveCore(cma, true, false, fseiSourcePath, fseiDestinationPath, copyMoveResult);
 
                   if (copyMoveResult.IsCanceled)
                   {

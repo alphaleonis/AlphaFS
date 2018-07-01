@@ -401,10 +401,10 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void ValidateAndUpdatePathsAndOptions(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, PathFormat pathFormat, out string sourcePathLp, out string destinationPathLp, out bool isCopy, out bool emulateMove, out bool delayUntilReboot, out bool deleteOnStartup)
       {
          if (sourcePath == string.Empty)
-            throw new ArgumentException("Empty sourcePath name is not legal.");
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "sourcePath");
 
          if (destinationPath == string.Empty)
-            throw new ArgumentException("Empty destinationPath name is not legal.");
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "destinationPath");
 
 
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
@@ -490,14 +490,178 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
+
+      /// <summary>Copy/move a Non-/Transacted file or directory including its children to a new location, <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file, unless
+      ///   <paramref name="cma.MoveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
+      ///   <para>This Move method works across disk volumes, and it does not throw an exception if the
+      ///   source and destination are the same. </para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into
+      ///   that directory, you get an IOException.</para>
+      /// </remarks>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+      [SecurityCritical]
+      internal static void CopyMoveCore(CopyMoveArguments cma, bool driveChecked, bool isFolder, string sourcePath, string destinationPath, CopyMoveResult copyMoveResult)
+      {
+         #region Setup
+
+         string sourcePathLp;
+         string destinationPathLp;
+         bool isCopy;
+
+         // A Move action fallback using Copy + Delete.
+         bool emulateMove;
+
+         // A file or folder will be deleted or renamed on Computer startup.
+         bool delayUntilReboot;
+         bool deleteOnStartup;
+
+
+         //cma = ValidateAndUpdatePathsAndOptions(cma, false, out sourcePathLp, out destinationPathLp);
+
+         ValidateAndUpdatePathsAndOptions(cma.Transaction, sourcePath, destinationPath, cma.CopyOptions, cma.MoveOptions, cma.PathFormat, out sourcePathLp, out destinationPathLp, out isCopy, out emulateMove, out delayUntilReboot, out deleteOnStartup);
+
+
+         if (!driveChecked)
+         {
+            // Check for local or network drives, such as: "C:" or "\\server\c$" (but not for "\\?\GLOBALROOT\").
+            if (!sourcePathLp.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+               Directory.ExistsDriveOrFolderOrFile(cma.Transaction, sourcePathLp, isFolder, (int) Win32Errors.NO_ERROR, true, false);
+
+
+            // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
+            if (!delayUntilReboot)
+               Directory.ExistsDriveOrFolderOrFile(cma.Transaction, destinationPathLp, isFolder, (int) Win32Errors.NO_ERROR, true, false);
+         }
+
+
+         // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
+         // Otherwise, the copy/move operation will continue to completion.
+         bool cancel;
+
+         var raiseException = null == cma.ProgressHandler;
+
+
+         // Setup callback function for progress notifications.
+
+         var routine = !raiseException
+
+            ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, streamNumber, callbackReason, sourceFile, destinationFile, data) =>
+
+               cma.ProgressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, (int) streamNumber, callbackReason, cma.UserProgressData)
+
+            : (NativeMethods.NativeCopyMoveProgressRoutine) null;
+
+
+         var copyMoveRes = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, isCopy, isFolder, cma.PreserveDates, emulateMove);
+
+         var isMove = !isCopy;
+         var isSingleFileAction = null == copyMoveResult && !isFolder || copyMoveRes.IsFile;
+
+         cma.PreserveDates = cma.PreserveDates && isCopy && !isFolder;
+
+
+         // Calling start on a running Stopwatch is a no-op.
+         copyMoveRes.Stopwatch.Start();
+
+         #endregion // Setup
+
+
+      startCopyMove:
+
+         copyMoveRes.ErrorCode = (int) Win32Errors.NO_ERROR;
+
+         int lastError;
+
+
+         if (CopyMoveNative(cma.Transaction, isMove, sourcePathLp, destinationPathLp, routine, cma.CopyOptions, cma.MoveOptions, out cancel, out lastError))
+         {
+            if (!isFolder)
+               copyMoveRes.TotalFiles++;
+
+
+            //// Reset file system object attributes to ReadOnly.
+            //if (HasReplaceExisting(moveOptions))
+            //   SetAttributesCore(isFolder, transaction, destinationPathLp, FileAttributes.ReadOnly, PathFormat.LongFullPath);
+
+
+            if (isSingleFileAction)
+               // We take an extra hit by getting the file size for a single file Copy or Move action.
+               copyMoveRes.TotalBytes = GetSizeCore(cma.Transaction, null, destinationPathLp, false, PathFormat.LongFullPath);
+
+
+            if (cma.PreserveDates)
+               CopyTimestampsCore(cma.Transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
+         }
+
+
+         // Copy/Move action failed or canceled.
+         else
+         {
+            // MSDN: If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
+            // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
+            // In this case, the partially copied destination file is deleted.
+            //
+            // If lpProgressRoutine returns PROGRESS_STOP due to the user stopping the operation,
+            // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
+            // In this case, the partially copied destination file is left intact.
+
+
+            copyMoveRes.ErrorCode = lastError;
+
+            copyMoveRes.IsCanceled = lastError == Win32Errors.ERROR_REQUEST_ABORTED;
+
+            if (!copyMoveRes.IsCanceled)
+            {
+               var attemptRetry = cma.Retry > 0 && cma.RetryTimeout > 0;
+
+               for (var attempts = attemptRetry ? cma.Retry : 1; ; attempts--)
+               {
+                  if (RestartCopyMoveOrThrowException(attemptRetry, lastError, isFolder, isMove, cma.Transaction, sourcePathLp, destinationPathLp, cma.MoveOptions))
+                  {
+                     // The folder/file read-only was removed, so restart the Copy or Move action.
+
+                     goto startCopyMove;
+                  }
+
+
+                  if (attemptRetry)
+                  {
+                     Thread.Sleep(cma.RetryTimeout * 1000);
+
+                     attemptRetry = attempts > 1;
+                  }
+               }
+            }
+         }
+
+
+         if (isSingleFileAction)
+            copyMoveRes.Stopwatch.Stop();
+      }
+
+
+
       [SuppressMessage("Microsoft.Performance", "CA1820:TestForEmptyStringsUsingStringLength")]
       internal static CopyMoveArguments ValidateAndUpdatePathsAndOptions(CopyMoveArguments cma)
       {
          if (cma.SourcePath == string.Empty)
-            throw new ArgumentException("Empty sourcePath name is not legal.");
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "cma.sourcePath");
 
          if (cma.DestinationPath == string.Empty)
-            throw new ArgumentException("Empty destinationPath name is not legal.");
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "cma.destinationPath");
 
 
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
@@ -517,7 +681,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          cma.DelayUntilReboot = isMove && VerifyDelayUntilReboot(cma.SourcePathLp, cma.MoveOptions, cma.PathFormat);
 
-         // When destinationPath is null, the file or folder needs to be removed on Computer startup.
+         // When destinationPath is null, the file/folder needs to be removed on Computer startup.
          cma.DeleteOnStartup = cma.DelayUntilReboot && null == cma.DestinationPath;
 
 
@@ -532,7 +696,80 @@ namespace Alphaleonis.Win32.Filesystem
             if (!cma.DelayUntilReboot && null == cma.DestinationPath)
                throw new ArgumentNullException("destinationPath");
 
+            
+            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
+            // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
 
+
+            const GetFullPathOptions fullPathOptions = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
+
+            // Check for local or network drives, such as: "C:" or "\\server\c$" (but not for "\\?\GLOBALROOT\").
+            if (!cma.SourcePath.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+               Path.CheckSupportedPathFormat(cma.SourcePath, true, true);
+
+               cma.SourcePathLp = Path.GetExtendedLengthPathCore(cma.Transaction, cma.SourcePath, cma.PathFormat, fullPathOptions);
+            }
+
+
+            if (!cma.DeleteOnStartup)
+            {
+               Path.CheckSupportedPathFormat(cma.DestinationPath, true, true);
+
+               cma.DestinationPathLp = Path.GetExtendedLengthPathCore(cma.Transaction, cma.DestinationPath, cma.PathFormat, fullPathOptions);
+            }
+
+
+            cma.PathFormat = PathFormat.LongFullPath;
+         }
+
+
+         return cma;
+      }
+
+
+
+      [SuppressMessage("Microsoft.Performance", "CA1820:TestForEmptyStringsUsingStringLength")]
+      internal static CopyMoveArguments ValidateAndUpdatePathsAndOptions(CopyMoveArguments cma, bool isFolder, out string sourcePathLp, out string destinationPathLp)
+      {
+         if (cma.SourcePath == string.Empty)
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "cma.sourcePath");
+
+         if (cma.DestinationPath == string.Empty)
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "cma.destinationPath");
+
+
+         // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
+         // Do not use StringComparison.OrdinalIgnoreCase to allow renaming a folder with different casing.
+
+         if (null != cma.SourcePath && cma.SourcePath.Equals(cma.DestinationPath, StringComparison.Ordinal))
+            NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, cma.DestinationPath);
+
+
+         cma.SourcePathLp = cma.SourcePath;
+         cma.DestinationPathLp = cma.DestinationPath;
+
+         cma.IsCopy = IsCopyAction(cma.CopyOptions, cma.MoveOptions);
+
+         var isMove = !cma.IsCopy;
+         cma.EmulateMove = false;
+
+         cma.DelayUntilReboot = isMove && VerifyDelayUntilReboot(cma.SourcePathLp, cma.MoveOptions, cma.PathFormat);
+
+         // When destinationPath is null, the file/folder needs to be removed on Computer startup.
+         cma.DeleteOnStartup = cma.DelayUntilReboot && null == cma.DestinationPath;
+
+
+         if (cma.PathFormat == PathFormat.RelativePath)
+         {
+            if (null == cma.SourcePath)
+               throw new ArgumentNullException("sourcePath");
+
+
+            // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
+
+            if (!cma.DelayUntilReboot && null == cma.DestinationPath)
+               throw new ArgumentNullException("destinationPath");
 
 
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
@@ -561,6 +798,10 @@ namespace Alphaleonis.Win32.Filesystem
             cma.PathFormat = PathFormat.LongFullPath;
          }
 
+
+         sourcePathLp = null;
+
+         destinationPathLp = null;
 
          return cma;
       }
