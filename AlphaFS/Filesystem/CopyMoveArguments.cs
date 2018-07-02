@@ -39,8 +39,15 @@ namespace Alphaleonis.Win32.Filesystem
       internal string SourcePathLp;
       internal string DestinationPathLp;
       internal bool IsCopy;
+
+      /// <summary>A Move action fallback using Copy + Delete.</summary>
       internal bool EmulateMove;
+
+      /// <summary>A file/folder will be deleted or renamed on Computer startup.</summary>
       internal bool DelayUntilReboot;
+
       internal bool DeleteOnStartup;
+
+      internal bool PathsValidatedAndUpdated;
    }
 }

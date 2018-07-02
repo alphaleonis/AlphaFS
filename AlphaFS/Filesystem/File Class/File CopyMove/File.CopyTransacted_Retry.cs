@@ -54,8 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = CopyOptions.FailIfExists,
-            PathFormat = PathFormat.RelativePath
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -124,8 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists,
-            PathFormat = PathFormat.RelativePath
+            CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -196,8 +194,7 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = copyOptions,
-            PathFormat = PathFormat.RelativePath
+            CopyOptions = copyOptions
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -271,8 +268,7 @@ namespace Alphaleonis.Win32.Filesystem
             RetryTimeout = retryTimeout,
             Transaction = transaction,
             CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
-            PathFormat = PathFormat.RelativePath
+            PreserveDates = preserveDates
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -352,8 +348,7 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             CopyOptions = copyOptions,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = PathFormat.RelativePath
+            UserProgressData = userProgressData
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -439,8 +434,7 @@ namespace Alphaleonis.Win32.Filesystem
             CopyOptions = copyOptions,
             PreserveDates = preserveDates,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = PathFormat.RelativePath
+            UserProgressData = userProgressData
 
          }, false, false, sourcePath, destinationPath, null);
       }

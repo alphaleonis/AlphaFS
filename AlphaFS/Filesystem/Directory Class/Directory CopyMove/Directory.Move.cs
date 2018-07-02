@@ -50,8 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            MoveOptions = MoveOptions.None,
-            PathFormat = PathFormat.RelativePath
+            MoveOptions = MoveOptions.None
          });
       }
 
@@ -110,8 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            MoveOptions = moveOptions,
-            PathFormat = PathFormat.RelativePath
+            MoveOptions = moveOptions
          });
       }
 
@@ -175,8 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
             DestinationPath = destinationPath,
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = PathFormat.RelativePath
+            UserProgressData = userProgressData
          });
       }
 

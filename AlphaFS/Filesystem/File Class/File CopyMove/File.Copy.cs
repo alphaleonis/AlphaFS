@@ -49,8 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CopyMoveCore(new CopyMoveArguments
          {
-            CopyOptions = CopyOptions.FailIfExists,
-            PathFormat = PathFormat.RelativePath
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -77,8 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CopyMoveCore(new CopyMoveArguments
          {
-            CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists,
-            PathFormat = PathFormat.RelativePath
+            CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -168,8 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(new CopyMoveArguments
          {
-            CopyOptions = copyOptions,
-            PathFormat = PathFormat.RelativePath
+            CopyOptions = copyOptions
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -231,8 +228,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(new CopyMoveArguments
          {
             CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
-            PathFormat = PathFormat.RelativePath
+            PreserveDates = preserveDates
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -300,8 +296,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             CopyOptions = copyOptions,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = PathFormat.RelativePath
+            UserProgressData = userProgressData
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -375,8 +370,7 @@ namespace Alphaleonis.Win32.Filesystem
             CopyOptions = copyOptions,
             PreserveDates = preserveDates,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = PathFormat.RelativePath
+            UserProgressData = userProgressData
 
          }, false, false, sourcePath, destinationPath, null);
       }

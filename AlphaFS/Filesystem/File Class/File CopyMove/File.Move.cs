@@ -52,8 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CopyMoveCore(new CopyMoveArguments
          {
-            MoveOptions = MoveOptions.CopyAllowed,
-            PathFormat = PathFormat.RelativePath
+            MoveOptions = MoveOptions.CopyAllowed
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -116,8 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(new CopyMoveArguments
          {
-            MoveOptions = moveOptions,
-            PathFormat = PathFormat.RelativePath
+            MoveOptions = moveOptions
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -183,8 +181,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = PathFormat.RelativePath
+            UserProgressData = userProgressData
 
          }, false, false, sourcePath, destinationPath, null);
       }

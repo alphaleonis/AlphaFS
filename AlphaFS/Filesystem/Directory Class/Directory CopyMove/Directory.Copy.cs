@@ -51,8 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists,
-            PathFormat = PathFormat.RelativePath
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
       
@@ -107,8 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists,
-            PathFormat = PathFormat.RelativePath
+            CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists
          });
       }
 
@@ -165,8 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = copyOptions,
-            PathFormat = PathFormat.RelativePath
+            CopyOptions = copyOptions
          });
       }
 
@@ -226,8 +223,7 @@ namespace Alphaleonis.Win32.Filesystem
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
             CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
-            PathFormat = PathFormat.RelativePath
+            PreserveDates = preserveDates
          });
       }
 
@@ -292,8 +288,7 @@ namespace Alphaleonis.Win32.Filesystem
             DestinationPath = destinationPath,
             CopyOptions = copyOptions,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = PathFormat.RelativePath
+            UserProgressData = userProgressData
          });
       }
 
@@ -363,8 +358,7 @@ namespace Alphaleonis.Win32.Filesystem
             CopyOptions = copyOptions,
             PreserveDates = preserveDates,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = PathFormat.RelativePath
+            UserProgressData = userProgressData
          });
       }
 

@@ -54,8 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
-            MoveOptions = MoveOptions.CopyAllowed,
-            PathFormat = PathFormat.RelativePath
+            MoveOptions = MoveOptions.CopyAllowed
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -124,8 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
-            MoveOptions = moveOptions,
-            PathFormat = PathFormat.RelativePath
+            MoveOptions = moveOptions
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -199,8 +197,7 @@ namespace Alphaleonis.Win32.Filesystem
             RetryTimeout = retryTimeout,
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = PathFormat.RelativePath
+            UserProgressData = userProgressData
 
          }, false, false, sourcePath, destinationPath, null);
       }
