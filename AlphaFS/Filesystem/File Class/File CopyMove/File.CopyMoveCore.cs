@@ -55,14 +55,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(CopyMoveArguments cma, bool driveChecked, bool isFolder, string sourcePath, string destinationPath, CopyMoveResult copyMoveResult)
+      internal static CopyMoveResult CopyMoveCore(CopyMoveArguments cma, bool driveChecked, bool isFolder, string sourceFilePath, string destinationFilePath, CopyMoveResult copyMoveResult)
       {
          #region Setup
 
          string sourcePathLp;
          string destinationPathLp;
 
-         cma = ValidateAndUpdatePathsAndOptions(cma, sourcePath, destinationPath, out sourcePathLp, out destinationPathLp);
+         cma = ValidateAndUpdatePathsAndOptions(cma, sourceFilePath, destinationFilePath, out sourcePathLp, out destinationPathLp);
          
          if (!driveChecked)
          {
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
             : (NativeMethods.NativeCopyMoveProgressRoutine) null;
 
 
-         var copyMoveRes = copyMoveResult ?? new CopyMoveResult(sourcePath, destinationPath, cma.IsCopy, isFolder, cma.PreserveDates, cma.EmulateMove);
+         var copyMoveRes = copyMoveResult ?? new CopyMoveResult(sourceFilePath, destinationFilePath, cma.IsCopy, isFolder, cma.PreserveDates, cma.EmulateMove);
 
          var isMove = !cma.IsCopy;
 
@@ -121,11 +121,6 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (!isFolder)
                copyMoveRes.TotalFiles++;
-
-
-            //// Reset file system object attributes to ReadOnly.
-            //if (HasReplaceExisting(moveOptions))
-            //   SetAttributesCore(isFolder, transaction, destinationPathLp, FileAttributes.ReadOnly, PathFormat.LongFullPath);
 
 
             if (isSingleFileAction)
@@ -171,7 +166,8 @@ namespace Alphaleonis.Win32.Filesystem
 
                   if (attemptRetry)
                   {
-                     Thread.Sleep(cma.RetryTimeout * 1000);
+                     using (var waitEvent = new ManualResetEvent(false))
+                        waitEvent.WaitOne(cma.RetryTimeout * 1000);
 
                      attemptRetry = attempts > 1;
                   }
@@ -182,7 +178,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (isSingleFileAction)
             copyMoveRes.Stopwatch.Stop();
-
 
          copyMoveResult = copyMoveRes;
 
@@ -229,27 +224,6 @@ namespace Alphaleonis.Win32.Filesystem
          //
          //    szDstFile\0\0              : indicates that the file szDstFile is to be deleted on reboot.
          //    szSrcFile\0szDstFile\0     : indicates that szSrcFile is to be renamed szDstFile on reboot.
-      }
-      
-
-      private static bool VerifyDelayUntilReboot(string sourcePath, MoveOptions? moveOptions, PathFormat pathFormat)
-      {
-         var delayUntilReboot = HasDelayUntilReboot(moveOptions);
-
-         if (delayUntilReboot)
-         {
-            if (AllowEmulate(moveOptions))
-               throw new ArgumentException(Resources.MoveOptionsDelayUntilReboot_Not_Allowed_With_MoveOptionsCopyAllowed, "moveOptions");
-
-
-            // MoveFileXxx: (lpExistingFileName) If dwFlags specifies MOVEFILE_DELAY_UNTIL_REBOOT,
-            // the file cannot exist on a remote share, because delayed operations are performed before the network is available.
-
-            if (Path.IsUncPathCore(sourcePath, pathFormat != PathFormat.LongFullPath, false))
-               throw new ArgumentException(Resources.MoveOptionsDelayUntilReboot_Not_Allowed_With_NetworkPath, "moveOptions");
-         }
-
-         return delayUntilReboot;
       }
    }
 }

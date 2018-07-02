@@ -43,8 +43,8 @@ namespace AlphaFS.UnitTest
 
          var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
 
-         var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source File";
-         var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination File";
+         var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source File.txt";
+         var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination File.txt";
 
          if (isNetwork)
          {

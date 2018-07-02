@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Security;
@@ -27,6 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
+      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       private static bool RestartCopyMoveOrThrowException(bool attemptRetry, int lastError, bool isFolder, bool isMove, CopyMoveArguments cma, string sourcePathLp, string destinationPathLp)
       {
@@ -77,6 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             default:
                var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+
                FillAttributeInfoCore(cma.Transaction, destinationPathLp, ref attrs, false, false);
 
                var destIsFolder = IsDirectory(attrs.dwFileAttributes);

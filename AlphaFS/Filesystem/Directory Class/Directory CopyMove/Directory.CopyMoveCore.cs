@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Directory.Move is applicable to both folders and files.
-         var isFile = File.ExistsCore(cma.Transaction, false, cma.SourcePath, PathFormat.LongFullPath);
+         var isFile = File.ExistsCore(cma.Transaction, false, cma.SourcePathLp, PathFormat.LongFullPath);
 
 
          // Check for local or network drives, such as: "C:" or "\\server\c$" (but not for "\\?\GLOBALROOT\").
@@ -113,7 +113,9 @@ namespace Alphaleonis.Win32.Filesystem
             // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
 
             if (!isFile && !cma.DelayUntilReboot && File.CanOverwrite(cma.MoveOptions))
+
                DeleteDirectoryCore(cma.Transaction, null, cma.DestinationPathLp, true, true, true, cma.PathFormat);
+
 
             // 2017-06-07: A large target directory will probably create a progress-less delay in UI.
             // One way to get around this is to perform the delete in the File.CopyMove method.

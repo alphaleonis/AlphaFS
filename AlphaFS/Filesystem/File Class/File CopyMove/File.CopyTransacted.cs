@@ -80,7 +80,8 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(new CopyMoveArguments
          {
             Transaction = transaction,
-            CopyOptions = CopyOptions.FailIfExists
+            CopyOptions = CopyOptions.FailIfExists,
+            PathFormat = pathFormat
 
          }, false, false, sourcePath, destinationPath, null);
       }

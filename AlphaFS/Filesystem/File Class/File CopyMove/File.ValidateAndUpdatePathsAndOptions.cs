@@ -27,18 +27,17 @@ namespace Alphaleonis.Win32.Filesystem
    {
       internal static CopyMoveArguments ValidateAndUpdatePathsAndOptions(CopyMoveArguments cma, string sourcePath, string destinationPath, out string sourcePathLp, out string destinationPathLp)
       {
+         sourcePathLp = sourcePath;
+         destinationPathLp = destinationPath;
+
          if (cma.PathsValidatedAndUpdated)
-         {
-            sourcePathLp = sourcePath;
-            destinationPathLp = destinationPath;
             return cma;
-         }
 
 
-         if (sourcePath == string.Empty)
+         if (null != sourcePath && sourcePath.Trim().Length == 0)
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "sourcePath");
 
-         if (destinationPath == string.Empty)
+         if (null != destinationPath && destinationPath.Trim().Length == 0)
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "destinationPath");
 
 
@@ -47,10 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (null != sourcePath && sourcePath.Equals(destinationPath, StringComparison.Ordinal))
             NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPath);
-
-
-         sourcePathLp = sourcePath;
-         destinationPathLp = destinationPath;
+         
 
          cma.IsCopy = IsCopyAction(cma.CopyOptions, cma.MoveOptions);
 
@@ -59,11 +55,11 @@ namespace Alphaleonis.Win32.Filesystem
 
          cma.DelayUntilReboot = isMove && VerifyDelayUntilReboot(sourcePath, cma.MoveOptions, cma.PathFormat);
 
-         // When destinationPath is null, the file or folder needs to be removed on Computer startup.
+         // When destinationPath is null, the file/folder needs to be removed on Computer startup.
          cma.DeleteOnStartup = cma.DelayUntilReboot && null == destinationPath;
 
 
-         if (cma.PathFormat == PathFormat.RelativePath)
+         if (cma.PathFormat != PathFormat.LongFullPath)
          {
             if (null == sourcePath)
                throw new ArgumentNullException("sourcePath");
@@ -113,6 +109,27 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          return cma;
+      }
+
+
+      private static bool VerifyDelayUntilReboot(string sourcePath, MoveOptions? moveOptions, PathFormat pathFormat)
+      {
+         var delayUntilReboot = HasDelayUntilReboot(moveOptions);
+
+         if (delayUntilReboot)
+         {
+            if (AllowEmulate(moveOptions))
+               throw new ArgumentException(Resources.MoveOptionsDelayUntilReboot_Not_Allowed_With_MoveOptionsCopyAllowed, "moveOptions");
+
+
+            // MoveFileXxx: (lpExistingFileName) If dwFlags specifies MOVEFILE_DELAY_UNTIL_REBOOT,
+            // the file cannot exist on a remote share, because delayed operations are performed before the network is available.
+
+            if (Path.IsUncPathCore(sourcePath, pathFormat != PathFormat.LongFullPath, false))
+               throw new ArgumentException(Resources.MoveOptionsDelayUntilReboot_Not_Allowed_With_NetworkPath, "moveOptions");
+         }
+
+         return delayUntilReboot;
       }
    }
 }

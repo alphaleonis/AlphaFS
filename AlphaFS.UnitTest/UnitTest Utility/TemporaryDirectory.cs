@@ -356,26 +356,18 @@ namespace AlphaFS.UnitTest
             if (isDisposing)
                System.IO.Directory.Delete(Directory.FullName, true);
          }
-         catch (Exception ex)
+         catch
          {
-            Console.WriteLine("\n\nDelete TemporaryDirectory: [{0}]. Error: [{1}]", Directory.FullName, ex.Message.Replace(Environment.NewLine, string.Empty));
-            Console.Write("Retry using AlphaFS... ");
-
             try
             {
                var dirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(Directory.FullName, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
-               if (dirInfo.Exists)
-               {
-                  dirInfo.Delete(true, true);
-                  Console.WriteLine("Success.");
-               }
 
-               else
-                  Console.WriteLine("TemporaryDirectory was already removed.");
+               if (dirInfo.Exists)
+                  dirInfo.Delete(true, true);
             }
-            catch (Exception ex2)
+            catch (Exception ex)
             {
-               Console.WriteLine("Delete failure TemporaryDirectory. Error: {0}", ex2.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("TemporaryDirectory delete failure. Error: {0}", ex.Message.Replace(Environment.NewLine, string.Empty));
             }
          }
       }

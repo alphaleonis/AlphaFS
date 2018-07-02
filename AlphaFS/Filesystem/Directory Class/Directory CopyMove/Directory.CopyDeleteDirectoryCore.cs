@@ -40,15 +40,15 @@ namespace Alphaleonis.Win32.Filesystem
 
             // TODO 2018-01-09: Not 100% yet with local + UNC paths.
             var dstLp = srcLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);
-
+            
 
             // Traverse the source folder, processing files and folders.
 
             foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, cma.Transaction, srcLp, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath))
             {
                var fseiSourcePath = fseiSource.LongFullPath;
-               var fseiDestinationPath = Path.CombineCore(false, dstLp, fseiSource.FileName);
 
+               var fseiDestinationPath = Path.CombineCore(false, dstLp, fseiSource.FileName);
 
                if (fseiSource.IsDirectory)
                {
@@ -65,14 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   // Ensure the file's parent directory exists.
 
-                  var parentFolder = GetParentCore(cma.Transaction, fseiDestinationPath, PathFormat.LongFullPath);
-
-                  if (null != parentFolder)
-                  {
-                     var fileParentFolder = Path.GetLongPathCore(parentFolder.FullName, GetFullPathOptions.None);
-
-                     CreateDirectoryCore(true, cma.Transaction, fileParentFolder, null, null, false, PathFormat.LongFullPath);
-                  }
+                  CreateDirectoryCore(true, cma.Transaction, dstLp, null, null, false, PathFormat.LongFullPath);
 
 
                   // File count is done in File.CopyMoveCore method.

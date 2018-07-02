@@ -81,7 +81,7 @@ namespace AlphaFS.UnitTest
                      break;
 
 
-                  // Copy all folders from "\Program Files".
+                  // Copy folders from "\Program Files".
 
                   var folderCopy = System.IO.Path.Combine(folder.FullName, System.IO.Path.GetFileName(fsi.FullName));
 

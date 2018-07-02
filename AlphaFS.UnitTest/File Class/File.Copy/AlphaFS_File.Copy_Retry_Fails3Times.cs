@@ -21,46 +21,60 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Diagnostics;
+using System.Threading;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class MoveTest
+   public partial class CopyTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Move_NonExistingDestinationLogicalDrive_ThrowsDeviceNotReadyException()
+      public void AlphaFS_File_Copy_Retry_Fails3Times_LocalAndNetwork()
       {
-         AlphaFS_Directory_Move_NonExistingDestinationLogicalDrive_ThrowsDeviceNotReadyException(false);
-         AlphaFS_Directory_Move_NonExistingDestinationLogicalDrive_ThrowsDeviceNotReadyException(true);
+         AlphaFS_File_Copy_Retry_Fails3Times(false);
+         AlphaFS_File_Copy_Retry_Fails3Times(true);
       }
 
 
-      private void AlphaFS_Directory_Move_NonExistingDestinationLogicalDrive_ThrowsDeviceNotReadyException(bool isNetwork)
+      private void AlphaFS_File_Copy_Retry_Fails3Times(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
+            var fileSrc = tempRoot.CreateFile().FullName;
+            var fileDst = tempRoot.CreateFile().FullName;
 
-            var srcFolder = System.IO.Path.Combine(tempRoot.Directory.FullName, "NonExisting Source Folder");
-            var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination Folder";
-
-            if (isNetwork)
-            {
-               srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
-               dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
-            }
-
-            Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
-            Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
+            Console.WriteLine("Destination File Path: [{0}]", fileDst);
 
 
-            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, dstFolder, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed));
+            // Set destination file read-only attribute so that a System.UnauthorizedAccessException is triggered on file copy.
 
-            Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The directory exists, but is expected not to.");
+            System.IO.File.SetAttributes(fileDst, System.IO.FileAttributes.ReadOnly);
+
+
+            // Copy file with retry enabled.
+
+            var retry = 3;
+            var retryTimeout = 3;
+
+
+            var sw = Stopwatch.StartNew();
+
+            UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.File.Copy(retry, retryTimeout, fileSrc, fileDst, Alphaleonis.Win32.Filesystem.CopyOptions.None));
+
+            sw.Stop();
+
+
+            var waitTime = retry * retryTimeout;
+
+            Console.WriteLine("\n\tTotal wait time: retry * retryTimeout = [{0}] seconds.", waitTime);
+
+
+            Assert.AreEqual(waitTime, sw.Elapsed.Seconds);
          }
-
+         
          Console.WriteLine();
       }
    }

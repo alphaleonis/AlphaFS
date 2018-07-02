@@ -46,6 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       private CopyMoveResult(string source, string destination)
       {
          Source = source;
+
          Destination = destination;
 
          IsCopy = true;
@@ -80,6 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
          IsEmulatedMove = emulatedMove;
 
          IsCopy = isCopy;
+
          IsDirectory = isFolder;
 
          TimestampsCopied = preserveDates;

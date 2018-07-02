@@ -647,7 +647,8 @@ namespace Alphaleonis.Win32.Filesystem
                   finally
                   {
                      _context = IntPtr.Zero;
-                     SafeFileHandle.Close();
+
+                     NativeMethods.CloseSafeHandle(SafeFileHandle);
                   }
                }
             }
