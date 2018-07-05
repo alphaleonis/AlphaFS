@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(CopyMoveArguments cma, bool driveChecked, bool isFolder, string sourceFilePath, string destinationFilePath, CopyMoveResult copyMoveResult)
+      internal static CopyMoveResult CopyMoveCore(ErrorHandler errorFilter, bool retry, CopyMoveArguments cma, bool driveChecked, bool isFolder, string sourceFilePath, string destinationFilePath, CopyMoveResult copyMoveResult)
       {
          #region Setup
 
@@ -98,12 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
          var isSingleFileAction = null == copyMoveResult && !isFolder || copyMoveRes.IsFile;
 
          cma.PreserveDates = cma.PreserveDates && cma.IsCopy && !isFolder;
-         
 
-         
-         var errorFilter = null != cma.DirectoryEnumerationFilters && null != cma.DirectoryEnumerationFilters.ErrorFilter ? cma.DirectoryEnumerationFilters.ErrorFilter : null;
-
-         var retry = null != errorFilter && (cma.DirectoryEnumerationFilters.ErrorRetry > 0 || cma.DirectoryEnumerationFilters.ErrorRetryTimeout > 0) || cma.Retry > 0 || cma.RetryTimeout > 0;
 
          var attempts = 1;
          var retryTimeout = 0;
@@ -112,13 +107,8 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (null != errorFilter)
             {
-               if (cma.DirectoryEnumerationFilters.ErrorRetry <= 0)
-                  cma.DirectoryEnumerationFilters.ErrorRetry = 2;
-
-               if (cma.DirectoryEnumerationFilters.ErrorRetryTimeout <= 0)
-                  cma.DirectoryEnumerationFilters.ErrorRetryTimeout = 10;
-
                attempts += cma.DirectoryEnumerationFilters.ErrorRetry;
+
                retryTimeout = cma.DirectoryEnumerationFilters.ErrorRetryTimeout;
             }
 
@@ -131,6 +121,7 @@ namespace Alphaleonis.Win32.Filesystem
                   cma.RetryTimeout = 10;
 
                attempts += cma.Retry;
+
                retryTimeout = cma.RetryTimeout;
             }
          }

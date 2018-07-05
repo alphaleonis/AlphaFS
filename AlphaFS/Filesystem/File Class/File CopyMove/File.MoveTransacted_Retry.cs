@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         return CopyMoveCore(new CopyMoveArguments
+         return CopyMoveCore(null, true, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments
+         return CopyMoveCore(null, true, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -124,7 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
-         return CopyMoveCore(new CopyMoveArguments
+         return CopyMoveCore(null, true, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -161,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments
+         return CopyMoveCore(null, true, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -200,7 +200,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(new CopyMoveArguments
+         return CopyMoveCore(null, true, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -241,7 +241,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(int retry, int retryTimeout, KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments
+         return CopyMoveCore(null, true, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,

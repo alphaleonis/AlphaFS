@@ -75,6 +75,19 @@ namespace Alphaleonis.Win32.Filesystem
 
          var copyMoveResult = new CopyMoveResult(cma, !isFile);
 
+         var errorFilter = null != cma.DirectoryEnumerationFilters && null != cma.DirectoryEnumerationFilters.ErrorFilter ? cma.DirectoryEnumerationFilters.ErrorFilter : null;
+
+         var retry = null != errorFilter && (cma.DirectoryEnumerationFilters.ErrorRetry > 0 || cma.DirectoryEnumerationFilters.ErrorRetryTimeout > 0);
+
+         if (retry)
+         {
+            if (cma.DirectoryEnumerationFilters.ErrorRetry <= 0)
+               cma.DirectoryEnumerationFilters.ErrorRetry = 2;
+
+            if (cma.DirectoryEnumerationFilters.ErrorRetryTimeout <= 0)
+               cma.DirectoryEnumerationFilters.ErrorRetryTimeout = 10;
+         }
+
 
          // Calling start on a running Stopwatch is a no-op.
          copyMoveResult.Stopwatch.Start();
@@ -102,10 +115,10 @@ namespace Alphaleonis.Win32.Filesystem
             else
             {
                if (isFile)
-                  File.CopyMoveCore(cma, true, false, cma.SourcePathLp, cma.DestinationPathLp, copyMoveResult);
+                  File.CopyMoveCore(errorFilter, retry, cma, true, false, cma.SourcePathLp, cma.DestinationPathLp, copyMoveResult);
 
                else
-                  CopyDeleteDirectoryCore(cma, copyMoveResult);
+                  CopyEmulateMoveDirectoryCore(cma, copyMoveResult);
             }
          }
 
@@ -129,7 +142,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Moves a file or directory, including its children.
             // Copies an existing directory, including its children to a new directory.
 
-            File.CopyMoveCore(cma, true, !isFile, cma.SourcePathLp, cma.DestinationPathLp, copyMoveResult);
+            File.CopyMoveCore(errorFilter, retry, cma, true, !isFile, cma.SourcePathLp, cma.DestinationPathLp, copyMoveResult);
 
 
             // If the move happened on the same drive, we have no knowledge of the number of files/folders.

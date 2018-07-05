@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath)
       {
-         CopyMoveCore(new CopyMoveArguments
+         CopyMoveCore(null, false, new CopyMoveArguments
          {
             MoveOptions = MoveOptions.CopyAllowed
 
@@ -82,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments
+         return CopyMoveCore(null, false, new CopyMoveArguments
          {
             MoveOptions = MoveOptions.CopyAllowed,
             PathFormat = pathFormat
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
-         return CopyMoveCore(new CopyMoveArguments
+         return CopyMoveCore(null, false, new CopyMoveArguments
          {
             MoveOptions = moveOptions
 
@@ -144,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments
+         return CopyMoveCore(null, false, new CopyMoveArguments
          {
             MoveOptions = moveOptions,
             PathFormat = pathFormat
@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(new CopyMoveArguments
+         return CopyMoveCore(null, false, new CopyMoveArguments
          {
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
@@ -213,7 +213,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments
+         return CopyMoveCore(null, false, new CopyMoveArguments
          {
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
