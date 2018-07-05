@@ -22,6 +22,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 
 namespace AlphaFS.UnitTest
 {
@@ -51,8 +53,8 @@ namespace AlphaFS.UnitTest
             var existingFileSrc = System.IO.Path.Combine(folderSrc, "ExistingFile.txt");
             var existingFileDst = System.IO.Path.Combine(folderDst, "ExistingFile.txt");
 
-            System.IO.File.WriteAllText(existingFileSrc, string.Empty);
-            System.IO.File.WriteAllText(existingFileDst, string.Empty);
+            System.IO.File.WriteAllText(existingFileSrc, DateTime.Now.ToString(CultureInfo.CurrentCulture));
+            System.IO.File.WriteAllText(existingFileDst, DateTime.Now.ToString(CultureInfo.CurrentCulture));
 
             
             // Set destination file read-only attribute so that a System.UnauthorizedAccessException is triggered on folder copy.
@@ -66,51 +68,58 @@ namespace AlphaFS.UnitTest
 
             var errorCount = 0;
 
-            var filters = new Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
+            using (var cancelSource = new CancellationTokenSource())
             {
-               ErrorRetry = 2,
-
-               ErrorRetryTimeout = 3,
-
-               ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
+               var filters = new Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
                {
-                  // Report Exception.
-                  Console.WriteLine("\tErrorFilter: Attempt #{0:N0}: ({1}) {2}: [{3}]", ++errorCount, errorCode, errorMessage, pathProcessed);
+                  // Used to abort the enumeration.
+                  CancellationToken = cancelSource.Token,
 
-                  if (errorCount == 2)
+                  ErrorRetry = 2,
+
+                  ErrorRetryTimeout = 3,
+
+                  ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
                   {
-                     System.IO.File.SetAttributes(pathProcessed, System.IO.FileAttributes.Normal);
+                     // Report Exception.
+                     Console.WriteLine("\tErrorFilter: Attempt #{0:N0}: ({1}) {2}: [{3}]", ++errorCount, errorCode, errorMessage, pathProcessed);
+
+                     if (errorCount == 2)
+                     {
+                        System.IO.File.SetAttributes(pathProcessed, System.IO.FileAttributes.Normal);
+                     }
+
+                     // Return true to continue, false to throw the Exception.
+                     return true;
                   }
+               };
 
-                  // Return true to continue, false to throw the Exception.
-                  return true;
+
+               Alphaleonis.Win32.Filesystem.CopyMoveResult cmr = null;
+               var sw = Stopwatch.StartNew();
+
+               try
+               {
+                  cmr = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.None, filters);
                }
-            };
+               catch { }
 
+               sw.Stop();
 
-            Alphaleonis.Win32.Filesystem.CopyMoveResult cmr = null;
-            var sw = Stopwatch.StartNew();
-
-            try
-            {
-               cmr = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.None, filters);
 
                UnitTestConstants.Dump(cmr);
 
                Assert.IsNotNull(cmr);
                Assert.AreEqual(0, cmr.ErrorCode);
-               Assert.AreEqual(3, cmr.Retries);
+               Assert.AreEqual(2, cmr.Retries);
+
+
+               var waitTime = filters.ErrorRetry * filters.ErrorRetryTimeout;
+
+               Assert.AreEqual(6, waitTime);
+               Assert.AreEqual(6, sw.Elapsed.Seconds);
+               Assert.AreEqual(2, errorCount);
             }
-            catch { }
-
-            sw.Stop();
-
-
-            var waitTime = filters.ErrorRetry * filters.ErrorRetryTimeout;
-
-            Assert.AreEqual(6, waitTime);
-            Assert.AreEqual(6, sw.Elapsed.Seconds);
-            Assert.AreEqual(2, errorCount);
          }
          
          Console.WriteLine();

@@ -207,8 +207,12 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (retry)
                {
-                  using (var waitEvent = new ManualResetEvent(false))
-                     waitEvent.WaitOne(retryTimeout * 1000);
+                  if (null != errorFilter && null != cma.DirectoryEnumerationFilters.CancellationToken)
+                     cma.DirectoryEnumerationFilters.CancellationToken.WaitHandle.WaitOne(retryTimeout * 1000);
+
+                  else
+                     using (var waitEvent = new ManualResetEvent(false))
+                        waitEvent.WaitOne(retryTimeout * 1000);
                }
             }
          }

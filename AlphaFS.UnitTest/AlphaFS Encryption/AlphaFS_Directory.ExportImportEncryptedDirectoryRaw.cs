@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
@@ -44,7 +45,7 @@ namespace AlphaFS.UnitTest
             // Create an encrypted file to use for testing.
             var inputDir = System.IO.Path.Combine(tempRoot.Directory.FullName, "testDir");
             System.IO.Directory.CreateDirectory(inputDir);
-            System.IO.File.WriteAllText(System.IO.Path.Combine(inputDir, "test.txt"), "Test file");
+            System.IO.File.WriteAllText(System.IO.Path.Combine(inputDir, "test.txt"), DateTime.Now.ToString(CultureInfo.CurrentCulture));
 
 
             Alphaleonis.Win32.Filesystem.Directory.Encrypt(inputDir, false);
