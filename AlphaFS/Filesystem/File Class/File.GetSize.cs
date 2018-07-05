@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path)
       {
-         return GetSizeCore(transaction, null, path, false, PathFormat.RelativePath);
+         return GetSizeCore(null, transaction, path, false, PathFormat.RelativePath);
       }
 
 
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetSizeCore(transaction, null, path, false, pathFormat);
+         return GetSizeCore(null, transaction, path, false, pathFormat);
       }
 
 
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path, bool sizeOfAllStreams)
       {
-         return GetSizeCore(transaction, null, path, sizeOfAllStreams, PathFormat.RelativePath);
+         return GetSizeCore(null, transaction, path, sizeOfAllStreams, PathFormat.RelativePath);
       }
 
 
@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path, bool sizeOfAllStreams, PathFormat pathFormat)
       {
-         return GetSizeCore(transaction, null, path, sizeOfAllStreams, pathFormat);
+         return GetSizeCore(null, transaction, path, sizeOfAllStreams, pathFormat);
       }
 
 
@@ -130,23 +130,21 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(SafeFileHandle handle)
       {
-         return GetSizeCore(null, handle, null, false, PathFormat.LongFullPath);
+         return GetSizeCore(handle, null, null, false, PathFormat.LongFullPath);
       }
-
-
 
 
       /// <summary>Retrieves the size of the specified file.</summary>
       /// <returns>The file size of the first or all streams, in bytes.</returns>
       /// <remarks>Use either <paramref name="path"/> or <paramref name="safeFileHandle"/>, not both.</remarks>
-      /// <param name="transaction">The transaction.</param>
       /// <param name="safeFileHandle">The <see cref="SafeFileHandle"/> to the file.</param>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static long GetSizeCore(KernelTransaction transaction, SafeFileHandle safeFileHandle, string path, bool sizeOfAllStreams, PathFormat pathFormat)
+      internal static long GetSizeCore(SafeFileHandle safeFileHandle, KernelTransaction transaction, string path, bool sizeOfAllStreams, PathFormat pathFormat)
       {
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 

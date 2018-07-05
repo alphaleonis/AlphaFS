@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
                   cma.DirectoryEnumerationFilters.ErrorRetry = 2;
 
                if (cma.DirectoryEnumerationFilters.ErrorRetryTimeout <= 0)
-                  cma.DirectoryEnumerationFilters.ErrorRetryTimeout = 3;
+                  cma.DirectoryEnumerationFilters.ErrorRetryTimeout = 10;
 
                attempts += cma.DirectoryEnumerationFilters.ErrorRetry;
                retryTimeout = cma.DirectoryEnumerationFilters.ErrorRetryTimeout;
@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
                   cma.Retry = 2;
 
                if (cma.RetryTimeout <= 0)
-                  cma.RetryTimeout = 3;
+                  cma.RetryTimeout = 10;
 
                attempts += cma.Retry;
                retryTimeout = cma.RetryTimeout;
@@ -161,15 +161,13 @@ namespace Alphaleonis.Win32.Filesystem
                   copyMoveRes.TotalFiles++;
 
 
+               // We take an extra hit by getting the file size for a single file Copy or Move action.
                if (isSingleFileAction)
-               {
-                  // We take an extra hit by getting the file size for a single file Copy or Move action.
-                  copyMoveRes.TotalBytes = GetSizeCore(cma.Transaction, null, destinationPathLp, true, PathFormat.LongFullPath);
+                  copyMoveRes.TotalBytes = GetSizeCore(null, cma.Transaction, destinationPathLp, true, PathFormat.LongFullPath);
 
 
-                  if (cma.PreserveDates)
-                     CopyTimestampsCore(cma.Transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
-               }
+               if (cma.PreserveDates)
+                  CopyTimestampsCore(cma.Transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
 
 
                break;
@@ -198,6 +196,9 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (!cancel)
             {
+               if (retry)
+                  copyMoveRes.Retries++;
+
                retry = attempts > 0;
 
                // Remove any read-only/hidden attribute, which might also fail.
@@ -205,8 +206,10 @@ namespace Alphaleonis.Win32.Filesystem
                RestartMoveOrThrowException(retry, lastError, isFolder, isMove, cma, sourcePathLp, destinationPathLp);
 
                if (retry)
+               {
                   using (var waitEvent = new ManualResetEvent(false))
                      waitEvent.WaitOne(retryTimeout * 1000);
+               }
             }
          }
 

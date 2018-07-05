@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
                var dstLp = cma.SourcePathLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);
 
 
-               // Traverse the source folder, processing subfolders.
+               // Traverse the source folder, processing only folders.
 
                foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, cma.Transaction, cma.SourcePathLp, Path.WildcardStarMatchAll, null, null, cma.DirectoryEnumerationFilters, PathFormat.LongFullPath))
 

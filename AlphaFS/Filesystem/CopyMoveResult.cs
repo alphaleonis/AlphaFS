@@ -51,6 +51,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          IsCopy = true;
 
+         Retries = 0;
+
          Stopwatch = new Stopwatch();
       }
 
@@ -141,6 +143,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>When <c>true</c> the action was a Move, Copy otherwise.</summary>
       /// <value><c>true</c> when the action was a Move. Otherwise a Copy action was performed.</value>
       public bool IsMove { get { return !IsCopy; } }
+
+
+      /// <summary>The total number of retry attempts.</summary>
+      public long Retries { get; internal set; }
 
 
       /// <summary>Indicates the source file or directory.</summary>

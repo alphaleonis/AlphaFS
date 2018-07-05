@@ -22,7 +22,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
-using System.Threading;
 
 namespace AlphaFS.UnitTest
 {
@@ -32,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_UsingErrorFilterRetryFails2Times_ThrowsUnauthorizedAccessException_LocalAndNetwork()
+      public void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterNoRetry_ThrowsUnauthorizedAccessException_LocalAndNetwork()
       {
-         AlphaFS_Directory_Copy_UsingErrorFilterRetryFails2Times_ThrowsUnauthorizedAccessException(false);
-         AlphaFS_Directory_Copy_UsingErrorFilterRetryFails2Times_ThrowsUnauthorizedAccessException(true);
+         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterNoRetry_ThrowsUnauthorizedAccessException(false);
+         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterNoRetry_ThrowsUnauthorizedAccessException(true);
       }
 
-
-      private void AlphaFS_Directory_Copy_UsingErrorFilterRetryFails2Times_ThrowsUnauthorizedAccessException(bool isNetwork)
+      
+      private void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterNoRetry_ThrowsUnauthorizedAccessException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -55,24 +54,18 @@ namespace AlphaFS.UnitTest
             System.IO.File.WriteAllText(existingFileSrc, string.Empty);
             System.IO.File.WriteAllText(existingFileDst, string.Empty);
 
-            
-            // Set destination file read-only attribute so that a System.UnauthorizedAccessException is triggered on folder copy.
 
-            System.IO.File.SetAttributes(existingFileDst, System.IO.FileAttributes.ReadOnly);
+            // Set destination file hidden attribute so that a System.UnauthorizedAccessException is triggered on folder copy.
 
-
+            System.IO.File.SetAttributes(existingFileDst, System.IO.FileAttributes.Hidden);
 
 
-            // Copy folder with retry enabled.
+
 
             var errorCount = 0;
 
             var filters = new Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
             {
-               ErrorRetry = 2,
-
-               ErrorRetryTimeout = 3,
-
                ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
                {
                   // Report Exception.
@@ -93,8 +86,8 @@ namespace AlphaFS.UnitTest
 
             var waitTime = filters.ErrorRetry * filters.ErrorRetryTimeout;
 
-            Assert.AreEqual(waitTime, sw.Elapsed.Seconds);
-
+            Assert.AreEqual(0, waitTime);
+            Assert.AreEqual(0, sw.Elapsed.Seconds);
             Assert.AreEqual(errorCount, 1 + filters.ErrorRetry);
          }
          

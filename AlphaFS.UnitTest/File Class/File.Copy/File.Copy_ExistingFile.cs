@@ -48,15 +48,18 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Dst File Path: [{0}]", fileCopy);
             
 
-            Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy);
-            
+            var cmr = Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
+
+            UnitTestConstants.Dump(cmr);
+
 
             Assert.IsTrue(System.IO.File.Exists(fileCopy), "The file does not exists, but is expected to.");
-
-
+            
             Assert.AreEqual(fileSource.Length, new System.IO.FileInfo(fileCopy).Length, "The file sizes do no match, but are expected to.");
 
             Assert.IsTrue(System.IO.File.Exists(fileSource.FullName), "The original file does not exist, but is expected to.");
+
+            Assert.AreEqual(0, cmr.Retries);
          }
          
          Console.WriteLine();
