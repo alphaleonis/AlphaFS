@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -75,17 +76,12 @@ namespace Alphaleonis.Win32.Filesystem
             if (!cma.DelayUntilReboot)
                Directory.ExistsDriveOrFolderOrFile(cma.Transaction, destinationPathLp, isFolder, (int) Win32Errors.NO_ERROR, true, false);
          }
-
-
-         // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
-         // Otherwise, the copy/move operation will continue to completion.
-         bool cancel;
-
-         var raiseException = null == cma.ProgressHandler;
-
+         
 
          // Setup callback function for progress notifications.
 
+         var raiseException = null == cma.ProgressHandler;
+         
          var routine = !raiseException
 
             ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, streamNumber, callbackReason, sourceFile, destinationFile, data) =>
@@ -102,6 +98,42 @@ namespace Alphaleonis.Win32.Filesystem
          var isSingleFileAction = null == copyMoveResult && !isFolder || copyMoveRes.IsFile;
 
          cma.PreserveDates = cma.PreserveDates && cma.IsCopy && !isFolder;
+         
+
+         
+         var errorFilter = null != cma.DirectoryEnumerationFilters && null != cma.DirectoryEnumerationFilters.ErrorFilter ? cma.DirectoryEnumerationFilters.ErrorFilter : null;
+
+         var retry = null != errorFilter && (cma.DirectoryEnumerationFilters.ErrorRetry > 0 || cma.DirectoryEnumerationFilters.ErrorRetryTimeout > 0) || cma.Retry > 0 || cma.RetryTimeout > 0;
+
+         var attempts = 1;
+         var retryTimeout = 0;
+
+         if (retry)
+         {
+            if (null != errorFilter)
+            {
+               if (cma.DirectoryEnumerationFilters.ErrorRetry <= 0)
+                  cma.DirectoryEnumerationFilters.ErrorRetry = 2;
+
+               if (cma.DirectoryEnumerationFilters.ErrorRetryTimeout <= 0)
+                  cma.DirectoryEnumerationFilters.ErrorRetryTimeout = 3;
+
+               attempts += cma.DirectoryEnumerationFilters.ErrorRetry;
+               retryTimeout = cma.DirectoryEnumerationFilters.ErrorRetryTimeout;
+            }
+
+            else
+            {
+               if (cma.Retry <= 0)
+                  cma.Retry = 2;
+
+               if (cma.RetryTimeout <= 0)
+                  cma.RetryTimeout = 3;
+
+               attempts += cma.Retry;
+               retryTimeout = cma.RetryTimeout;
+            }
+         }
 
 
          // Calling start on a running Stopwatch is a no-op.
@@ -110,72 +142,75 @@ namespace Alphaleonis.Win32.Filesystem
          #endregion // Setup
 
 
-      startCopyMove:
-
-         copyMoveRes.ErrorCode = (int) Win32Errors.NO_ERROR;
-
-         int lastError;
-
-
-         if (CopyMoveNative(cma, isMove, sourcePathLp, destinationPathLp, routine, out cancel, out lastError))
+         while (attempts-- > 0)
          {
-            if (!isFolder)
-               copyMoveRes.TotalFiles++;
+            // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
+            // Otherwise, the copy/move operation will continue to completion.
+            bool cancel;
+
+            copyMoveRes.ErrorCode = (int) Win32Errors.NO_ERROR;
+
+            copyMoveRes.IsCanceled = false;
+
+            int lastError;
+            
+
+            if (CopyMoveNative(cma, isMove, sourcePathLp, destinationPathLp, routine, out cancel, out lastError))
+            {
+               if (!isFolder)
+                  copyMoveRes.TotalFiles++;
 
 
-            if (isSingleFileAction)
-               // We take an extra hit by getting the file size for a single file Copy or Move action.
-               copyMoveRes.TotalBytes = GetSizeCore(cma.Transaction, null, destinationPathLp, true, PathFormat.LongFullPath);
+               if (isSingleFileAction)
+               {
+                  // We take an extra hit by getting the file size for a single file Copy or Move action.
+                  copyMoveRes.TotalBytes = GetSizeCore(cma.Transaction, null, destinationPathLp, true, PathFormat.LongFullPath);
 
 
-            if (cma.PreserveDates)
-               CopyTimestampsCore(cma.Transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
-         }
+                  if (cma.PreserveDates)
+                     CopyTimestampsCore(cma.Transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
+               }
 
 
-         // Copy/Move action failed or canceled.
+               break;
+            }
 
-         else
-         {
-            // MSDN: If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
-            // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
-            // In this case, the partially copied destination file is deleted.
-            //
-            // If lpProgressRoutine returns PROGRESS_STOP due to the user stopping the operation,
-            // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
-            // In this case, the partially copied destination file is left intact.
 
+            // The Copy/Move action failed or is canceled.
 
             copyMoveRes.ErrorCode = lastError;
 
-            copyMoveRes.IsCanceled = lastError == Win32Errors.ERROR_REQUEST_ABORTED;
+            copyMoveRes.IsCanceled = cancel;
 
-            if (!copyMoveRes.IsCanceled)
+            
+            // Report the Exception back to the caller.
+            if (null != errorFilter)
             {
-               var attemptRetry = cma.Retry > 0 && cma.RetryTimeout > 0;
+               var continueCopyMove = errorFilter(lastError, new Win32Exception(lastError).Message,Path.GetCleanExceptionPath(destinationPathLp));
 
-               for (var attempts = attemptRetry ? cma.Retry : 1; ; attempts--)
+               if (!continueCopyMove)
                {
-                  if (RestartCopyMoveOrThrowException(attemptRetry, lastError, isFolder, isMove, cma, sourcePathLp, destinationPathLp))
-                  {
-                     // The file/folder read-only attribute is removed, restart the Copy/Move action.
-
-                     goto startCopyMove;
-                  }
-
-
-                  if (attemptRetry)
-                  {
-                     using (var waitEvent = new ManualResetEvent(false))
-                        waitEvent.WaitOne(cma.RetryTimeout * 1000);
-
-                     attemptRetry = attempts > 1;
-                  }
+                  copyMoveRes.IsCanceled = true;
+                  break;
                }
+            }
+
+
+            if (!cancel)
+            {
+               retry = attempts > 0;
+
+               // Remove any read-only/hidden attribute, which might also fail.
+
+               RestartMoveOrThrowException(retry, lastError, isFolder, isMove, cma, sourcePathLp, destinationPathLp);
+
+               if (retry)
+                  using (var waitEvent = new ManualResetEvent(false))
+                     waitEvent.WaitOne(retryTimeout * 1000);
             }
          }
 
-
+         
          if (isSingleFileAction)
             copyMoveRes.Stopwatch.Stop();
 
@@ -211,6 +246,15 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          return success;
+
+
+         // MSDN: If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
+         // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
+         // In this case, the partially copied destination file is deleted.
+         //
+         // If lpProgressRoutine returns PROGRESS_STOP due to the user stopping the operation,
+         // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
+         // In this case, the partially copied destination file is left intact.
 
 
          // Note: MoveFileXxx fails if one of the paths is a UNC path, even though both paths refer to the same volume.

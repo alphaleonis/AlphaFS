@@ -46,6 +46,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static CopyMoveResult CopyMoveCore(CopyMoveArguments cma)
       {
+         #region Setup
+
          string unusedSourcePath;
          string unusedDestinationPath;
 
@@ -73,8 +75,11 @@ namespace Alphaleonis.Win32.Filesystem
 
          var copyMoveResult = new CopyMoveResult(cma, !isFile);
 
+
          // Calling start on a running Stopwatch is a no-op.
          copyMoveResult.Stopwatch.Start();
+
+         #endregion // Setup
 
 
          if (cma.IsCopy)
@@ -84,11 +89,11 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (File.HasCopySymbolicLink(cma.CopyOptions))
             {
-               var lvi = File.GetLinkTargetInfoCore(cma.Transaction, cma.SourcePathLp, true, cma.PathFormat);
+               var lvi = File.GetLinkTargetInfoCore(cma.Transaction, cma.SourcePathLp, true, PathFormat.LongFullPath);
 
                if (null != lvi)
                {
-                  File.CreateSymbolicLinkCore(cma.Transaction, cma.DestinationPathLp, lvi.SubstituteName, SymbolicLinkTarget.Directory, cma.PathFormat);
+                  File.CreateSymbolicLinkCore(cma.Transaction, cma.DestinationPathLp, lvi.SubstituteName, SymbolicLinkTarget.Directory, PathFormat.LongFullPath);
 
                   copyMoveResult.TotalFolders = 1;
                }
@@ -114,7 +119,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (!isFile && !cma.DelayUntilReboot && File.CanOverwrite(cma.MoveOptions))
 
-               DeleteDirectoryCore(cma.Transaction, null, cma.DestinationPathLp, true, true, true, cma.PathFormat);
+               DeleteDirectoryCore(cma.Transaction, null, cma.DestinationPathLp, true, true, true, PathFormat.LongFullPath);
 
 
             // 2017-06-07: A large target directory will probably create a progress-less delay in UI.

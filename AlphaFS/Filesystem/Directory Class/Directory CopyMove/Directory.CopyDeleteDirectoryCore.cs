@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // Traverse the source folder, processing files and folders.
 
-            foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, cma.Transaction, srcLp, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath))
+            foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, cma.Transaction, srcLp, Path.WildcardStarMatchAll, null, null, cma.DirectoryEnumerationFilters, PathFormat.LongFullPath))
             {
                var fseiSourcePath = fseiSource.LongFullPath;
 
@@ -59,8 +59,6 @@ namespace Alphaleonis.Win32.Filesystem
                   dirs.Enqueue(fseiSourcePath);
                }
 
-
-               // File.
                else
                {
                   // Ensure the file's parent directory exists.
@@ -80,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // Break foreach loop.
                      break;
                   }
-
+                  
 
                   if (copyMoveResult.ErrorCode == Win32Errors.NO_ERROR)
                   {
@@ -104,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                // Traverse the source folder, processing subfolders.
 
-               foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, cma.Transaction, cma.SourcePathLp, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath))
+               foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, cma.Transaction, cma.SourcePathLp, Path.WildcardStarMatchAll, null, null, cma.DirectoryEnumerationFilters, PathFormat.LongFullPath))
 
                   File.CopyTimestampsCore(cma.Transaction, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
 

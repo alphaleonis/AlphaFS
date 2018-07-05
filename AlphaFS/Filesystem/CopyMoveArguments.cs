@@ -35,6 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       public object UserProgressData;
       public PathFormat PathFormat;
 
+      internal DirectoryEnumerationFilters DirectoryEnumerationFilters;
 
       internal string SourcePathLp;
       internal string DestinationPathLp;

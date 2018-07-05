@@ -31,51 +31,41 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_Retry_Fails3Times_LocalAndNetwork()
+      public void AlphaFS_File_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException_LocalAndNetwork()
       {
-         AlphaFS_Directory_Copy_Retry_Fails3Times(false);
-         AlphaFS_Directory_Copy_Retry_Fails3Times(true);
+         AlphaFS_File_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(false);
+         AlphaFS_File_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(true);
       }
 
 
-      private void AlphaFS_Directory_Copy_Retry_Fails3Times(bool isNetwork)
+      private void AlphaFS_File_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folderSrc = tempRoot.CreateDirectory().FullName;
-            var folderDst = tempRoot.CreateDirectory().FullName;
+            var fileSrc = tempRoot.CreateFile().FullName;
+            var fileDst = tempRoot.CreateFile().FullName;
 
-            Console.WriteLine("Destination Directory Path: [{0}]", folderDst);
-
-
-            // Set destination folder read-only attribute so that a System.UnauthorizedAccessException is triggered on folder copy.
-
-            var existingFileSrc = new System.IO.FileInfo(System.IO.Path.Combine(folderSrc, "ExistingFile.txt"));
-            var existingFileDst = new System.IO.FileInfo(System.IO.Path.Combine(folderDst, "ExistingFile.txt"));
-
-            using (existingFileSrc.Create()) { }
-            using (existingFileDst.Create()) { }
-
-            System.IO.File.SetAttributes(existingFileDst.FullName, System.IO.FileAttributes.ReadOnly);
+            Console.WriteLine("Destination File Path: [{0}]", fileDst);
 
 
-            // Copy folder with retry enabled.
+            // Set destination file read-only attribute so that a System.UnauthorizedAccessException is triggered on file copy.
 
-            var retry = 3;
+            System.IO.File.SetAttributes(fileDst, System.IO.FileAttributes.ReadOnly);
+
+
+            // Copy file with retry enabled.
+
+            var retry = 2;
             var retryTimeout = 3;
-
-
+            
             var sw = Stopwatch.StartNew();
 
-            UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.Directory.Copy(retry, retryTimeout, folderSrc, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.None));
+            UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.File.Copy(retry, retryTimeout, fileSrc, fileDst, Alphaleonis.Win32.Filesystem.CopyOptions.None));
 
             sw.Stop();
 
 
             var waitTime = retry * retryTimeout;
-
-            Console.WriteLine("\n\tTotal wait time: retry * retryTimeout = [{0}] seconds.", waitTime);
-
 
             Assert.AreEqual(waitTime, sw.Elapsed.Seconds);
          }

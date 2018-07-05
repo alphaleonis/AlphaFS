@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      private static bool RestartCopyMoveOrThrowException(bool attemptRetry, int lastError, bool isFolder, bool isMove, CopyMoveArguments cma, string sourcePathLp, string destinationPathLp)
+      private static bool RestartMoveOrThrowException(bool retry, int lastError, bool isFolder, bool isMove, CopyMoveArguments cma, string sourcePathLp, string destinationPathLp)
       {
          var restart = false;
          var srcExists = ExistsCore(cma.Transaction, isFolder, sourcePathLp, PathFormat.LongFullPath);
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
             case Win32Errors.ERROR_FILE_EXISTS:    // On files.
                lastError = (int)(isFolder ? Win32Errors.ERROR_ALREADY_EXISTS : Win32Errors.ERROR_FILE_EXISTS);
 
-               if (!attemptRetry)
+               if (!retry)
                   NativeError.ThrowException(lastError, null, destinationPathLp);
 
                break;
@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
                // Directory.Move()
                // MSDN: .NET 3.5+: IOException: destDirName already exists.
 
-               if (destIsFolder && dstExists && !attemptRetry)
+               if (destIsFolder && dstExists && !retry)
                   NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destinationPathLp);
 
 
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // Directory.Move()
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive). 
 
-                  if (!srcExists && !attemptRetry)
+                  if (!srcExists && !retry)
                      NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourcePathLp);
                }
 
@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                   // Directory exists with the same name as the file.
-                  if (dstExists && !isFolder && destIsFolder && !attemptRetry)
+                  if (dstExists && !isFolder && destIsFolder && !retry)
                      NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
 
 
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                         // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
 
-                        if (!attemptRetry)
+                        if (!retry)
                            throw new FileReadOnlyException(destinationPathLp);
                      }
                   }
@@ -162,7 +162,7 @@ namespace Alphaleonis.Win32.Filesystem
                // File.Copy(): IOException: destinationPath exists and overwrite is false.
                // File.Move(): The destination file already exists or sourcePath was not found.
 
-               if (!attemptRetry)
+               if (!retry)
                   NativeError.ThrowException(lastError, null, fileNameLp);
 
                break;
