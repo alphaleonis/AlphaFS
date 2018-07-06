@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_Copy_ExistingFile_UsingGlobalRootAsSourcePath_LocalAndNetwork_Success()
+      public void AlphaFS_File_Copy_UsingGlobalRootAsSourcePath_LocalAndNetwork_Success()
       {
-         AlphaFS_File_Copy_ExistingFile_UsingGlobalRootAsSourcePath(false);
-         AlphaFS_File_Copy_ExistingFile_UsingGlobalRootAsSourcePath(true);
+         AlphaFS_File_Copy_UsingGlobalRootAsSourcePath(false);
+         AlphaFS_File_Copy_UsingGlobalRootAsSourcePath(true);
       } 
 
 
-      private void AlphaFS_File_Copy_ExistingFile_UsingGlobalRootAsSourcePath(bool isNetwork)
+      private void AlphaFS_File_Copy_UsingGlobalRootAsSourcePath(bool isNetwork)
       {
          var testOk = false;
          

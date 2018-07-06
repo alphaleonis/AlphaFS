@@ -25,7 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      internal static CopyMoveArguments ValidateAndUpdatePathsAndOptions(CopyMoveArguments cma, string sourcePath, string destinationPath, out string sourcePathLp, out string destinationPathLp)
+      internal static CopyMoveArguments ValidateCopyMoveArguments(CopyMoveArguments cma, string sourcePath, string destinationPath, out string sourcePathLp, out string destinationPathLp)
       {
          sourcePathLp = sourcePath;
          destinationPathLp = destinationPath;
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // When destinationPath is null, the file/folder needs to be removed on Computer startup.
          cma.DeleteOnStartup = cma.DelayUntilReboot && null == destinationPath;
-
+         
 
          if (cma.PathFormat != PathFormat.LongFullPath)
          {
@@ -96,6 +96,14 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
 
+            cma.PreserveDates = HasPreserveDates(cma.CopyOptions);
+
+            // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile.
+
+            if (cma.PreserveDates)
+               cma.CopyOptions &= ~CopyOptions.PreserveDates;
+
+
             cma.PathFormat = PathFormat.LongFullPath;
 
             cma.PathsValidatedAndUpdated = true;
@@ -118,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (delayUntilReboot)
          {
-            if (AllowEmulate(moveOptions))
+            if (HasCopyAllowed(moveOptions))
                throw new ArgumentException(Resources.MoveOptionsDelayUntilReboot_Not_Allowed_With_MoveOptionsCopyAllowed, "moveOptions");
 
 

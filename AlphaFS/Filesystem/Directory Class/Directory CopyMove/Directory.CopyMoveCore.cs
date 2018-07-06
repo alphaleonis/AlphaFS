@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
          string unusedSourcePath;
          string unusedDestinationPath;
 
-         cma = File.ValidateAndUpdatePathsAndOptions(cma, cma.SourcePath, cma.DestinationPath, out unusedSourcePath, out unusedDestinationPath);
+         cma = File.ValidateCopyMoveArguments(cma, cma.SourcePath, cma.DestinationPath, out unusedSourcePath, out unusedDestinationPath);
 
 
          // Directory.Move is applicable to both folders and files.
@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
             // AlphaFS feature to overcome a MoveFileXxx limitation.
             // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
 
-            if (!isFile && !cma.DelayUntilReboot && File.CanOverwrite(cma.MoveOptions))
+            if (!isFile && !cma.DelayUntilReboot && File.HasReplaceExisting(cma.MoveOptions))
 
                DeleteDirectoryCore(cma.Transaction, null, cma.DestinationPathLp, true, true, true, PathFormat.LongFullPath);
 
@@ -181,7 +181,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!isMove)
          {
             // A Move() can be emulated by using Copy() and Delete(), but only if the MoveOptions.CopyAllowed flag is set.
-            isMove = File.AllowEmulate(cma.MoveOptions);
+            isMove = File.HasCopyAllowed(cma.MoveOptions);
 
             // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
             if (!isMove)

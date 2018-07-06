@@ -232,7 +232,7 @@
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyTransacted_Retry.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.MoveTransacted_Retry.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.Move_Retry.cs" />
-    <Compile Include="Filesystem\File Class\File CopyMove\File.ValidateAndUpdatePathsAndOptions.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.ValidateCopyMoveArguments.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.RestartMoveOrThrowException.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyTransacted.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyMoveCore.cs" />

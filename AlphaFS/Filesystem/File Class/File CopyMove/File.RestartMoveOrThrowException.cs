@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
                      if (IsReadOnlyOrHidden(attrs.dwFileAttributes))
                      {
                         // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
-                        if (CanOverwrite(cma.MoveOptions))
+                        if (HasReplaceExisting(cma.MoveOptions))
                         {
                            // Reset file system object attributes.
                            SetAttributesCore(cma.Transaction, isFolder, destinationPathLp, FileAttributes.Normal, PathFormat.LongFullPath);

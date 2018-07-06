@@ -9,6 +9,9 @@ Version 2.3  (2018-XX-XX)
 - Issue #451: Add overloaded method for `File.GetSize` to retrieve the size of all streams.  
 - Issue #454: Add method `Directory.GetSize` to return the size of all alternate data streams of the specified directory and its files.
 - Issue #464: Add overloaded methods for `Directory.Copy/Move` supporting `DirectoryEnumerationFilters`.
+- Issue #465: Add overloaded methods for `File.Copy/Move` supporting retry.
+- Issue #466: Add properties `ErrorRetry` and `ErrorRetryTimeout` to `DirectoryEnumerationFilters` class.
+- Issue #467: Add property `CopyOptions.PreserveDates`.
 
 ### Improvements
 

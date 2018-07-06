@@ -159,7 +159,7 @@
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_ExistingFileAsDirectoryeName_PropertyExistsShouldbeFalse.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptySourceFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptyDestFileNameAsPath_ThrowsArgumentException.cs" />
-    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_ExistingFile_UsingGlobalRootAsSourcePath.cs" />
+    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_UsingGlobalRootAsSourcePath.cs" />
     <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_RetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_NullDestFileNameAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_NullSourceFileNameAsPath_ThrowsArgumentNullException.cs" />
@@ -259,7 +259,7 @@
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_NonExistingDestinationLogicalDrive_ThrowsDeviceNotReadyException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UserExplicitDenyOnDestinationFolder_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_Overwrite_DestinationFileAlreadyExists.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ExistingDirectory.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_NonExistingSourceDirectory_ThrowsDirectoryNotFoundException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_NonExistingSourceLogicalDrive_ThrowsDeviceNotReadyException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.CountFileSystemObjects\AlphaFS_Directory.CountFileSystemObjectsTest.cs" />
@@ -406,8 +406,8 @@
     <Compile Include="File Class\File_Append\File.AppendAllText_ThenReadAllLinesShouldReturnSameCollection.cs" />
     <Compile Include="File Class\File_Append\File.AppendAllLines_ThenReadAllLinesShouldReturnSameCollection.cs" />
     <Compile Include="File Class\File_Append\File.AppendTest.cs" />
-    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_ExistingFile_WithProgress.cs" />
-    <Compile Include="File Class\File.Copy\File.Copy_ExistingFile.cs" />
+    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_WithProgress.cs" />
+    <Compile Include="File Class\File.Copy\File.Copy.cs" />
     <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_NonExistingDestinationLogicalDrive_ThrowsDeviceNotReadyException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_DestinationFileIsReadOnly_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_NonExistingSourceFile_ThrowsFileNotFoundException.cs" />

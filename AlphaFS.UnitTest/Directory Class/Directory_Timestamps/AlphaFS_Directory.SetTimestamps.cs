@@ -64,6 +64,9 @@ namespace AlphaFS.UnitTest
             Alphaleonis.Win32.Filesystem.Directory.SetTimestamps(folder.FullName, creationTime, lastAccessTime, lastWriteTime);
 
 
+            UnitTestConstants.Dump(folder);
+
+
             Assert.AreEqual(System.IO.Directory.GetCreationTime(folder.FullName), creationTime);
             Assert.AreEqual(System.IO.Directory.GetLastAccessTime(folder.FullName), lastAccessTime);
             Assert.AreEqual(System.IO.Directory.GetLastWriteTime(folder.FullName), lastWriteTime);

@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
          string sourcePathLp;
          string destinationPathLp;
 
-         cma = ValidateAndUpdatePathsAndOptions(cma, sourceFilePath, destinationFilePath, out sourcePathLp, out destinationPathLp);
+         cma = ValidateCopyMoveArguments(cma, sourceFilePath, destinationFilePath, out sourcePathLp, out destinationPathLp);
          
          if (!driveChecked)
          {
@@ -97,7 +97,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          var isSingleFileAction = null == copyMoveResult && !isFolder || copyMoveRes.IsFile;
 
-         cma.PreserveDates = cma.PreserveDates && cma.IsCopy && !isFolder;
+
+         ////cma.PreserveDates = cma.PreserveDates && cma.IsCopy && !isFolder;
+         //if (isSingleFileAction && cma.IsCopy)
+         //{
+         //   cma.PreserveDates = HasPreserveDates(cma.CopyOptions);
+         //   cma.CopyOptions &= ~CopyOptions.PreserveDates;  // Remove.
+         //}
 
 
          var attempts = 1;

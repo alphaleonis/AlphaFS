@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Copy_ExistingFile_LocalAndNetwork_Success()
+      public void File_Copy_LocalAndNetwork_Success()
       {
-         File_Copy_ExistingFile(false);
-         File_Copy_ExistingFile(true);
+         File_Copy(false);
+         File_Copy(true);
       }
 
 
-      private void File_Copy_ExistingFile(bool isNetwork)
+      private void File_Copy(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

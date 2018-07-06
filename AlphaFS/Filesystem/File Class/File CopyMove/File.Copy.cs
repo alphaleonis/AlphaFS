@@ -276,8 +276,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      
-      /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
       /// <remarks>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -537,227 +537,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          }, false, false, sourcePath, destinationPath, null);
       }
-
-
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
-      /// <remarks>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The file to copy.</param>
-      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
-      [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
-      {
-         return CopyMoveCore(null, false, new CopyMoveArguments
-         {
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates
-
-         }, false, false, sourcePath, destinationPath, null);
-      }
-
-
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
-      /// <remarks>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The file to copy.</param>
-      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
-      {
-         return CopyMoveCore(null, false, new CopyMoveArguments
-         {
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
-            PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
-      }
-
-
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
-      /// <remarks>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The file to copy.</param>
-      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
-      [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, int retry, int retryTimeout)
-      {
-         return CopyMoveCore(null, true, new CopyMoveArguments
-         {
-            Retry = retry,
-            RetryTimeout = retryTimeout,
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates
-
-         }, false, false, sourcePath, destinationPath, null);
-      }
-
-
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
-      /// <remarks>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The file to copy.</param>
-      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, int retry, int retryTimeout, PathFormat pathFormat)
-      {
-         return CopyMoveCore(null, true, new CopyMoveArguments
-         {
-            Retry = retry,
-            RetryTimeout = retryTimeout,
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
-            PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
-      }
-
-
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
-      /// and the possibility of notifying the application of its progress through a callback function.
-      /// </summary>
-      /// <remarks>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The file to copy.</param>
-      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         return CopyMoveCore(null, true, new CopyMoveArguments
-         {
-            Retry = retry,
-            RetryTimeout = retryTimeout,
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
-            ProgressHandler = progressHandler,
-            UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
-      }
-
-
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
-      /// and the possibility of notifying the application of its progress through a callback function.
-      /// </summary>
-      /// <remarks>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The file to copy.</param>
-      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         return CopyMoveCore(null, true, new CopyMoveArguments
-         {
-            Retry = retry,
-            RetryTimeout = retryTimeout,
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
-            ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
-      }
-
+      
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.
@@ -829,83 +609,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          }, false, false, sourcePath, destinationPath, null);
       }
-
-
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
-      /// and the possibility of notifying the application of its progress through a callback function.
-      /// </summary>
-      /// <remarks>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The file to copy.</param>
-      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         return CopyMoveCore(null, false, new CopyMoveArguments
-         {
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
-            ProgressHandler = progressHandler,
-            UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
-      }
-
-
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
-      /// and the possibility of notifying the application of its progress through a callback function.
-      /// </summary>
-      /// <remarks>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="sourcePath">The file to copy.</param>
-      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         return CopyMoveCore(null, false, new CopyMoveArguments
-         {
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
-            ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
-      }
-
+      
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.
@@ -979,6 +683,148 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             CopyOptions = copyOptions,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = pathFormat
+
+         }, false, false, sourcePath, destinationPath, null);
+      }
+
+
+
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The file to copy.</param>
+      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
+      [SecurityCritical]
+      [Obsolete("Use other overload and add CopyOptions.PreserveDates enum flag.")]
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
+      {
+         return CopyMoveCore(null, false, new CopyMoveArguments
+         {
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates
+
+         }, false, false, sourcePath, destinationPath, null);
+      }
+
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The file to copy.</param>
+      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      [Obsolete("Use other overload and add CopyOptions.PreserveDates enum flag.")]
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
+      {
+         return CopyMoveCore(null, false, new CopyMoveArguments
+         {
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates,
+            PathFormat = pathFormat
+
+         }, false, false, sourcePath, destinationPath, null);
+      }
+
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The file to copy.</param>
+      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      [SecurityCritical]
+      [Obsolete("Use other overload and add CopyOptions.PreserveDates enum flag.")]
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveCore(null, false, new CopyMoveArguments
+         {
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData
+
+         }, false, false, sourcePath, destinationPath, null);
+      }
+
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The file to copy.</param>
+      /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      [Obsolete("Use other overload and add CopyOptions.PreserveDates enum flag.")]
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         return CopyMoveCore(null, false, new CopyMoveArguments
+         {
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat

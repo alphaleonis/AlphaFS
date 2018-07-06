@@ -267,8 +267,7 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -305,8 +304,7 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates,
             PathFormat = pathFormat
 
          }, false, false, sourcePath, destinationPath, null);
@@ -431,8 +429,7 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
 
@@ -475,8 +472,7 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = copyOptions,
-            PreserveDates = preserveDates,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
