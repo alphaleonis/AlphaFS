@@ -99,8 +99,8 @@ namespace AlphaFS.UnitTest
 
                var waitTime = filters.ErrorRetry * filters.ErrorRetryTimeout;
 
-               Assert.AreEqual(6, waitTime);
-               Assert.AreEqual(6, sw.Elapsed.Seconds);
+               Assert.AreEqual(6, waitTime, "The timeout is not what is expected.");
+               Assert.AreEqual(6, sw.Elapsed.Seconds, "The timeout is not what is expected.");
                Assert.AreEqual(errorCount, 1 + filters.ErrorRetry);
             }
          }

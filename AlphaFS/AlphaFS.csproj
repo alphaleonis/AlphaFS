@@ -230,7 +230,6 @@
     <Compile Include="Filesystem\Directory Class\Directory.GetSize.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyTransacted_Retry.cs" />
-    <Compile Include="Filesystem\File Class\File CopyMove\File.Copy_Retry.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.MoveTransacted_Retry.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.Move_Retry.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.ValidateAndUpdatePathsAndOptions.cs" />

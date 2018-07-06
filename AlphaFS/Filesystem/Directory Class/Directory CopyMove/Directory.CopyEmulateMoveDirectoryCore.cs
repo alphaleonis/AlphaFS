@@ -61,11 +61,6 @@ namespace Alphaleonis.Win32.Filesystem
 
                else
                {
-                  // Ensure the file's parent directory exists.
-
-                  CreateDirectoryCore(true, cma.Transaction, dstLp, null, null, false, PathFormat.LongFullPath);
-
-
                   // File count is done in File.CopyMoveCore method.
 
                   File.CopyMoveCore(errorFilter, retry, cma, true, false, fseiSourcePath, fseiDestinationPath, copyMoveResult);
@@ -92,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         if (copyMoveResult.ErrorCode == Win32Errors.NO_ERROR)
+         if (!copyMoveResult.IsCanceled && copyMoveResult.ErrorCode == Win32Errors.NO_ERROR)
          {
             if (cma.PreserveDates)
             {

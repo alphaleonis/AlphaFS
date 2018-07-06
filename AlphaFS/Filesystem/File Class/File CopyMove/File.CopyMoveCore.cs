@@ -144,7 +144,18 @@ namespace Alphaleonis.Win32.Filesystem
             copyMoveRes.IsCanceled = false;
 
             int lastError;
+
             
+            if (!cma.DelayUntilReboot)
+            {
+               // Ensure the file's parent directory exists.
+
+               var parentFolder = Directory.GetParentCore(cma.Transaction, destinationPathLp, PathFormat.LongFullPath);
+
+               if (null != parentFolder)
+                  parentFolder.Create();
+            }
+
 
             if (CopyMoveNative(cma, isMove, sourcePathLp, destinationPathLp, routine, out cancel, out lastError))
             {
@@ -199,7 +210,13 @@ namespace Alphaleonis.Win32.Filesystem
                if (retry)
                {
                   if (null != errorFilter && null != cma.DirectoryEnumerationFilters.CancellationToken)
-                     cma.DirectoryEnumerationFilters.CancellationToken.WaitHandle.WaitOne(retryTimeout * 1000);
+                  {
+                     if (cma.DirectoryEnumerationFilters.CancellationToken.WaitHandle.WaitOne(retryTimeout * 1000))
+                     {
+                        copyMoveRes.IsCanceled = true;
+                        break;
+                     }
+                  }
 
                   else
                      using (var waitEvent = new ManualResetEvent(false))

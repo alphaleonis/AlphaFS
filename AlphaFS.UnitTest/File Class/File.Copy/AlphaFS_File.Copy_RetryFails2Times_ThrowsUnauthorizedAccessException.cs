@@ -60,14 +60,14 @@ namespace AlphaFS.UnitTest
             
             var sw = Stopwatch.StartNew();
 
-            UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.File.Copy(retry, retryTimeout, fileSrc, fileDst, Alphaleonis.Win32.Filesystem.CopyOptions.None));
+            UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.File.Copy(fileSrc, fileDst, Alphaleonis.Win32.Filesystem.CopyOptions.None, retry, retryTimeout));
 
             sw.Stop();
 
 
             var waitTime = retry * retryTimeout;
 
-            Assert.AreEqual(waitTime, sw.Elapsed.Seconds);
+            Assert.AreEqual(waitTime, sw.Elapsed.Seconds, "The timeout is not what is expected.");
          }
          
          Console.WriteLine();
