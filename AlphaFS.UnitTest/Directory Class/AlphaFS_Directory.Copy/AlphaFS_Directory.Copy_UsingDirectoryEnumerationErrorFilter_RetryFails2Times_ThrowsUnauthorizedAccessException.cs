@@ -33,14 +33,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterRetryFails1Time_ThenSucceeds_LocalAndNetwork()
+      public void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_RetryFails2Times_ThrowsUnauthorizedAccessException_LocalAndNetwork()
       {
-         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterRetryFails1Time_ThenSucceeds(false);
-         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterRetryFails1Time_ThenSucceeds(true);
+         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_RetryFails2Times_ThrowsUnauthorizedAccessException(false);
+         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_RetryFails2Times_ThrowsUnauthorizedAccessException(true);
       }
 
 
-      private void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterRetryFails1Time_ThenSucceeds(bool isNetwork)
+      private void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_RetryFails2Times_ThrowsUnauthorizedAccessException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -84,41 +84,24 @@ namespace AlphaFS.UnitTest
                      // Report Exception.
                      Console.WriteLine("\tErrorFilter: Attempt #{0:N0}: ({1}) {2}: [{3}]", ++errorCount, errorCode, errorMessage, pathProcessed);
 
-                     if (errorCount == 2)
-                     {
-                        System.IO.File.SetAttributes(pathProcessed, System.IO.FileAttributes.Normal);
-                     }
-
                      // Return true to continue, false to throw the Exception.
                      return true;
                   }
                };
+               
 
-
-               Alphaleonis.Win32.Filesystem.CopyMoveResult cmr = null;
                var sw = Stopwatch.StartNew();
 
-               try
-               {
-                  cmr = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.None, filters);
-               }
-               catch { }
+               UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.None, filters));
 
                sw.Stop();
-
-
-               UnitTestConstants.Dump(cmr);
-
-               Assert.IsNotNull(cmr);
-               Assert.AreEqual(0, cmr.ErrorCode);
-               Assert.AreEqual(2, cmr.Retries);
 
 
                var waitTime = filters.ErrorRetry * filters.ErrorRetryTimeout;
 
                Assert.AreEqual(6, waitTime);
                Assert.AreEqual(6, sw.Elapsed.Seconds);
-               Assert.AreEqual(2, errorCount);
+               Assert.AreEqual(errorCount, 1 + filters.ErrorRetry);
             }
          }
          

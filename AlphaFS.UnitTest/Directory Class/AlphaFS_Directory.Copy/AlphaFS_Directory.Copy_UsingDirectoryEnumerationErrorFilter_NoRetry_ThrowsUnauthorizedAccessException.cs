@@ -14,7 +14,7 @@
  *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
  *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
  *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING F_ROM, 
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
  *  THE SOFTWARE. 
  */
@@ -23,7 +23,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Threading;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,14 +32,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterNoRetry_ThrowsUnauthorizedAccessException_LocalAndNetwork()
+      public void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException_LocalAndNetwork()
       {
-         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterNoRetry_ThrowsUnauthorizedAccessException(false);
-         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterNoRetry_ThrowsUnauthorizedAccessException(true);
+         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException(false);
+         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException(true);
       }
 
       
-      private void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilterNoRetry_ThrowsUnauthorizedAccessException(bool isNetwork)
+      private void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -66,37 +65,31 @@ namespace AlphaFS.UnitTest
 
             var errorCount = 0;
 
-            using (var cancelSource = new CancellationTokenSource())
-            { 
-               var filters = new Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
+            var filters = new Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
+            {
+               ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
                {
-                  // Used to abort the enumeration.
-                  CancellationToken = cancelSource.Token,
-
-                  ErrorFilter = delegate (int errorCode, string errorMessage, string pathProcessed)
-                  {
                   // Report Exception.
                   Console.WriteLine("\tErrorFilter: Attempt #{0:N0}: ({1}) {2}: [{3}]", ++errorCount, errorCode, errorMessage, pathProcessed);
 
                   // Return true to continue, false to throw the Exception.
                   return true;
-                  }
-               };
+               }
+            };
                
 
-               var sw = Stopwatch.StartNew();
+            var sw = Stopwatch.StartNew();
 
-               UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.None, filters));
+            UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.None, filters));
 
-               sw.Stop();
+            sw.Stop();
 
 
-               var waitTime = filters.ErrorRetry * filters.ErrorRetryTimeout;
+            var waitTime = filters.ErrorRetry * filters.ErrorRetryTimeout;
 
-               Assert.AreEqual(0, waitTime);
-               Assert.AreEqual(0, sw.Elapsed.Seconds);
-               Assert.AreEqual(errorCount, 1 + filters.ErrorRetry);
-            }
+            Assert.AreEqual(0, waitTime);
+            Assert.AreEqual(0, sw.Elapsed.Seconds);
+            Assert.AreEqual(errorCount, 1 + filters.ErrorRetry);
          }
          
          Console.WriteLine();

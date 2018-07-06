@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
                   File.CopyMoveCore(errorFilter, retry, cma, true, false, cma.SourcePathLp, cma.DestinationPathLp, copyMoveResult);
 
                else
-                  CopyEmulateMoveDirectoryCore(cma, copyMoveResult);
+                  CopyEmulateMoveDirectoryCore(errorFilter, retry, cma, copyMoveResult);
             }
          }
 

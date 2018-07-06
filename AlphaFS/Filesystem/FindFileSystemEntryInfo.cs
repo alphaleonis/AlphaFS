@@ -106,14 +106,6 @@ namespace Alphaleonis.Win32.Filesystem
 #endif
          }
 
-#if !NET35
-         if (null == CancellationToken)
-         {
-            OwnsCancellationToken = true;
-            CancellationToken = new CancellationToken();
-         }
-#endif
-
 
          if (isFolder)
          {
@@ -267,8 +259,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets or sets the cancellation token to abort the enumeration.</summary>
       /// <value>A <see cref="CancellationToken"/> instance.</value>
       private CancellationToken CancellationToken { get; set; }
-
-      private bool OwnsCancellationToken { get; set; }
 #endif
 
       #endregion // Properties
@@ -410,10 +400,6 @@ namespace Alphaleonis.Win32.Filesystem
             // Pass control to the ErrorHandler when set.
             if (null == ErrorHandler || !ErrorHandler((int) lastError, new Win32Exception((int) lastError).Message, regularPath))
             {
-               if (OwnsCancellationToken)
-                  NativeMethods.CloseSafeHandle(CancellationToken.WaitHandle.SafeWaitHandle);
-
-
                // When the ErrorHandler returns false, thrown the Exception.
                NativeError.ThrowException(lastError, regularPath);
             }
@@ -460,10 +446,10 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (
-#if !NET35
-               !CancellationToken.IsCancellationRequested &&
-#endif
                dirs.Count > 0
+#if !NET35
+               && !CancellationToken.IsCancellationRequested
+#endif
             )
             {
                // Removes the object at the beginning of your Queue.
@@ -538,10 +524,6 @@ namespace Alphaleonis.Win32.Filesystem
                      ThrowPossibleException((uint) lastError, pathLp);
                }
             }
-
-
-         if (OwnsCancellationToken)
-            NativeMethods.CloseSafeHandle(CancellationToken.WaitHandle.SafeWaitHandle);
       }
 
 

@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       [SecurityCritical]
-      internal static void CopyEmulateMoveDirectoryCore(CopyMoveArguments cma, CopyMoveResult copyMoveResult)
+      internal static void CopyEmulateMoveDirectoryCore(ErrorHandler errorFilter, bool retry, CopyMoveArguments cma, CopyMoveResult copyMoveResult)
       {
          var dirs = new Queue<string>(NativeMethods.DefaultFileBufferSize);
 
@@ -40,21 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // TODO 2018-01-09: Not 100% yet with local + UNC paths.
             var dstLp = srcLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);
-
-
-            var errorFilter = null != cma.DirectoryEnumerationFilters && null != cma.DirectoryEnumerationFilters.ErrorFilter ? cma.DirectoryEnumerationFilters.ErrorFilter : null;
-
-            var retry = null != errorFilter && (cma.DirectoryEnumerationFilters.ErrorRetry > 0 || cma.DirectoryEnumerationFilters.ErrorRetryTimeout > 0);
-
-            if (retry)
-            {
-               if (cma.DirectoryEnumerationFilters.ErrorRetry <= 0)
-                  cma.DirectoryEnumerationFilters.ErrorRetry = 2;
-
-               if (cma.DirectoryEnumerationFilters.ErrorRetryTimeout <= 0)
-                  cma.DirectoryEnumerationFilters.ErrorRetryTimeout = 10;
-            }
-
+            
 
             // Traverse the source folder, processing files and folders.
 
