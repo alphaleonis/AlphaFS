@@ -408,7 +408,7 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = Transaction,
             SourcePath = LongFullName,
             DestinationPath = longFullPath,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,

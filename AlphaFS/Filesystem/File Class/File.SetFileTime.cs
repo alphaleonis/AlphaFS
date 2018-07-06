@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time the file was created.</summary>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>      
       [SecurityCritical]
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time the file was created.</summary>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time the file was created.</summary>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>      
       [SecurityCritical]
@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -125,7 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time, in coordinated universal time (UTC), that the file was created.</summary>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>      
       [SecurityCritical]
@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the file was created.</summary>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the file was created.</summary>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -167,7 +167,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>      
       [SecurityCritical]
@@ -180,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -194,7 +194,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -214,7 +214,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>      
       [SecurityCritical]
@@ -226,7 +226,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -239,7 +239,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -257,7 +257,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>      
       [SecurityCritical]
@@ -270,7 +270,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -284,7 +284,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -305,7 +305,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time, in coordinated universal time (UTC), that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>      
       [SecurityCritical]
@@ -317,7 +317,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -330,7 +330,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -348,7 +348,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>      
       [SecurityCritical]
@@ -362,7 +362,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -376,7 +376,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -397,7 +397,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time that the specified file was last written to.</summary>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>      
       [SecurityCritical]
@@ -409,7 +409,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time that the specified file was last written to.</summary>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -422,7 +422,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time that the specified file was last written to.</summary>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -439,7 +439,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>      
       [SecurityCritical]
@@ -452,7 +452,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -466,7 +466,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -487,7 +487,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time, in coordinated universal time (UTC), that the specified file was last written to.</summary>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>      
       [SecurityCritical]
@@ -501,7 +501,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -516,7 +516,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -535,7 +535,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>      
       [SecurityCritical]
@@ -550,7 +550,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -566,7 +566,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -588,15 +588,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets all the date and time stamps for the specified file, at once.</summary>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -609,15 +609,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets all the date and time stamps for the specified file, at once.</summary>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>     
       [SecurityCritical]
@@ -629,15 +629,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets all the date and time stamps for the specified file, at once.</summary>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -652,15 +652,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -674,15 +674,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>      
       [SecurityCritical]
@@ -695,15 +695,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="lastAccessTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
       /// <param name="lastWriteTime">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -721,15 +721,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets all the date and time stamps, in coordinated universal time (UTC), for the specified file, at once.</summary>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -742,15 +742,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets all the date and time stamps, in coordinated universal time (UTC), for the specified file, at once.</summary>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>      
       [SecurityCritical]
@@ -762,15 +762,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets all the date and time stamps, in coordinated universal time (UTC), for the specified file, at once.</summary>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -785,15 +785,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -807,15 +807,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>      
       [SecurityCritical]
@@ -828,15 +828,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the dates and times information.</param>
       /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
       /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
@@ -849,6 +849,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // SetTimestampsUtc
 
+
       #region Internal Methods
 
       /// <summary>Set the date and time, in coordinated universal time (UTC), that the file or directory was created and/or last accessed and/or written to.</summary>
@@ -856,9 +857,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to set the date and time information.</param>
-      /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
+      /// <param name="creationTimeUtc">A <see cref="DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
+      /// <param name="lastAccessTimeUtc">A <see cref="DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
+      /// <param name="lastWriteTimeUtc">A <see cref="DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -873,13 +874,16 @@ namespace Alphaleonis.Win32.Filesystem
          if (modifyReparsePoint)
             attributes |= ExtendedFileAttributes.OpenReparsePoint;
 
-         using (var creationTime = SafeGlobalMemoryBufferHandle.FromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?)null))
-         using (var lastAccessTime = SafeGlobalMemoryBufferHandle.FromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))
-         using (var lastWriteTime = SafeGlobalMemoryBufferHandle.FromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?)null))
 
-         using (var safeHandle = CreateFileCore(transaction, path, attributes, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, false, pathFormat))
+         using (var creationTime = SafeGlobalMemoryBufferHandle.FromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?) null))
+
+         using (var lastAccessTime = SafeGlobalMemoryBufferHandle.FromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?) null))
+
+         using (var lastWriteTime = SafeGlobalMemoryBufferHandle.FromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?) null))
+
+         using (var safeFileHandle = CreateFileCore(transaction, path, attributes, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, false, pathFormat))
          {
-            var success = NativeMethods.SetFileTime(safeHandle, creationTime, lastAccessTime, lastWriteTime);
+            var success = NativeMethods.SetFileTime(safeFileHandle, creationTime, lastAccessTime, lastWriteTime);
 
             var lastError = Marshal.GetLastWin32Error();
             if (!success)

@@ -89,25 +89,35 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!copyMoveResult.IsCanceled && copyMoveResult.ErrorCode == Win32Errors.NO_ERROR)
          {
-            if (cma.PreserveDates)
-            {
-               // TODO 2018-01-09: Not 100% yet with local + UNC paths.
-               var dstLp = cma.SourcePathLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);
-
-
-               // Traverse the source folder, processing only folders.
-
-               foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, cma.Transaction, cma.SourcePathLp, Path.WildcardStarMatchAll, null, null, cma.DirectoryEnumerationFilters, PathFormat.LongFullPath))
-
-                  File.CopyTimestampsCore(cma.Transaction, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
-
-               // TODO: When enabled on Computer, FindFirstFile will change the last accessed time.
-            }
-
+            if (cma.CopyTimestamps)
+               CopyTimestamps(cma);
 
             if (cma.EmulateMove)
                DeleteDirectoryCore(cma.Transaction, null, cma.SourcePathLp, true, true, true, PathFormat.LongFullPath);
          }
+      }
+
+
+      private static void CopyTimestamps(CopyMoveArguments cma)
+      {
+         // TODO 2018-01-09: Not 100% yet with local + UNC paths.
+         var dstLp = cma.SourcePathLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);
+
+
+         // Traverse the source folder, processing only folders.
+
+         foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, cma.Transaction, cma.SourcePathLp, Path.WildcardStarMatchAll, null, null, cma.DirectoryEnumerationFilters, PathFormat.LongFullPath))
+         { 
+            File.CopyTimestampsCore(cma.Transaction, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
+         }
+
+         
+         // Process the root directory, the given path.
+
+         File.CopyTimestampsCore(cma.Transaction, cma.SourcePathLp, dstLp, false, PathFormat.LongFullPath);
+
+
+         // TODO: When enabled on Computer, FindFirstFile will change the last accessed time.
       }
    }
 }

@@ -713,12 +713,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.PreserveDates enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
          return CopyMoveCore(null, false, new CopyMoveArguments
          {
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -745,12 +745,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.PreserveDates enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
          return CopyMoveCore(null, false, new CopyMoveArguments
          {
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
             PathFormat = pathFormat
 
          }, false, false, sourcePath, destinationPath, null);
@@ -781,12 +781,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.PreserveDates enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveCore(null, false, new CopyMoveArguments
          {
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
 
@@ -819,12 +819,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.PreserveDates enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveCore(null, false, new CopyMoveArguments
          {
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat

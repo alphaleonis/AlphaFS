@@ -603,7 +603,7 @@ namespace Alphaleonis.Win32.Filesystem
          return File.CopyMoveCore(null, false, new CopyMoveArguments
          {
             Transaction = Transaction,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.PreserveDates : copyOptions & ~CopyOptions.PreserveDates,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,

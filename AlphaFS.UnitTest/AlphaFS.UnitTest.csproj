@@ -148,6 +148,7 @@
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_RetryFails1Time_ThenSucceeds.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_RetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_Timestamps.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_NoStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_WithStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ExistingDirectory_UsingGlobalRootAsSourcePath.cs" />

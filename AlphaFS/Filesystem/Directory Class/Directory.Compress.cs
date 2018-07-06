@@ -341,11 +341,17 @@ namespace Alphaleonis.Win32.Filesystem
          if (null == options)
             options = DirectoryEnumerationOptions.None;
 
-         // Traverse the source folder, processing files and folders.
-         foreach (var fsei in EnumerateFileSystemEntryInfosCore<string>(null, transaction, pathLp, searchPattern, null, options | DirectoryEnumerationOptions.AsLongPath, filters, PathFormat.LongFullPath))
-            Device.ToggleCompressionCore(transaction, fsei, compress, PathFormat.LongFullPath);
 
-         // Compress the root directory, the given path.
+         // Traverse the source folder, processing files/folders.
+
+         foreach (var fsei in EnumerateFileSystemEntryInfosCore<string>(null, transaction, pathLp, searchPattern, null, options | DirectoryEnumerationOptions.AsLongPath, filters, PathFormat.LongFullPath))
+         { 
+            Device.ToggleCompressionCore(transaction, fsei, compress, PathFormat.LongFullPath);
+         }
+
+
+         // Process the root directory, the given path.
+
          Device.ToggleCompressionCore(transaction, pathLp, compress, PathFormat.LongFullPath);
       }
    }

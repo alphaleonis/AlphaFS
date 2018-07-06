@@ -47,10 +47,10 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Checks if the <see cref="CopyOptions.PreserveDates"/> flag is specified.</summary>
-      internal static bool HasPreserveDates(CopyOptions? copyOptions)
+      /// <summary>Checks if the <see cref="CopyOptions.CopyTimestamps"/> flag is specified.</summary>
+      internal static bool HasCopyTimestamps(CopyOptions? copyOptions)
       {
-         return Utils.IsNotNull(copyOptions) && (copyOptions & CopyOptions.PreserveDates) != 0;
+         return Utils.IsNotNull(copyOptions) && (copyOptions & CopyOptions.CopyTimestamps) != 0;
       }
 
 

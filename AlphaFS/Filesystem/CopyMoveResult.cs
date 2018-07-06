@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          IsDirectory = isFolder;
 
-         TimestampsCopied = cma.PreserveDates;
+         TimestampsCopied = cma.CopyTimestamps;
       }
 
 

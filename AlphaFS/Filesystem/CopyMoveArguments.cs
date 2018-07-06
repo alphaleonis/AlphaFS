@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
       public KernelTransaction Transaction;
       public string SourcePath;
       public string DestinationPath;
-      public bool PreserveDates;
+      public bool CopyTimestamps;
       public CopyOptions? CopyOptions;
       public MoveOptions? MoveOptions;
       public CopyMoveProgressRoutine ProgressHandler;

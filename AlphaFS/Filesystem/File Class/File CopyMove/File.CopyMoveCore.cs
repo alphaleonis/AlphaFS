@@ -91,18 +91,18 @@ namespace Alphaleonis.Win32.Filesystem
             : (NativeMethods.NativeCopyMoveProgressRoutine) null;
 
 
-         var copyMoveRes = copyMoveResult ?? new CopyMoveResult(sourceFilePath, destinationFilePath, cma.IsCopy, isFolder, cma.PreserveDates, cma.EmulateMove);
+         var copyMoveRes = copyMoveResult ?? new CopyMoveResult(sourceFilePath, destinationFilePath, cma.IsCopy, isFolder, cma.CopyTimestamps, cma.EmulateMove);
 
          var isMove = !cma.IsCopy;
 
          var isSingleFileAction = null == copyMoveResult && !isFolder || copyMoveRes.IsFile;
 
 
-         ////cma.PreserveDates = cma.PreserveDates && cma.IsCopy && !isFolder;
+         ////cma.CopyTimestamps = cma.CopyTimestamps && cma.IsCopy && !isFolder;
          //if (isSingleFileAction && cma.IsCopy)
          //{
-         //   cma.PreserveDates = HasPreserveDates(cma.CopyOptions);
-         //   cma.CopyOptions &= ~CopyOptions.PreserveDates;  // Remove.
+         //   cma.CopyTimestamps = HasCopyTimestamps(cma.CopyOptions);
+         //   cma.CopyOptions &= ~CopyOptions.CopyTimestamps;  // Remove.
          //}
 
 
@@ -174,7 +174,7 @@ namespace Alphaleonis.Win32.Filesystem
                   copyMoveRes.TotalBytes = GetSizeCore(null, cma.Transaction, destinationPathLp, true, PathFormat.LongFullPath);
 
 
-               if (cma.PreserveDates)
+               if (cma.CopyTimestamps)
                   CopyTimestampsCore(cma.Transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
 
 

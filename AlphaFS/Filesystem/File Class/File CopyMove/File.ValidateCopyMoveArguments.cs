@@ -47,9 +47,19 @@ namespace Alphaleonis.Win32.Filesystem
          if (null != sourcePath && sourcePath.Equals(destinationPath, StringComparison.Ordinal))
             NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPath);
          
+         
+         if (!cma.CopyTimestamps)
+         {
+            cma.CopyTimestamps = HasCopyTimestamps(cma.CopyOptions);
+
+            // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile.
+
+            if (cma.CopyTimestamps)
+               cma.CopyOptions &= ~CopyOptions.CopyTimestamps;
+         }
+
 
          cma.IsCopy = IsCopyAction(cma.CopyOptions, cma.MoveOptions);
-
          var isMove = !cma.IsCopy;
          cma.EmulateMove = false;
 
@@ -94,15 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                cma.DestinationPathLp = Path.GetExtendedLengthPathCore(cma.Transaction, destinationPath, cma.PathFormat, fullPathOptions);
             }
-
-
-            cma.PreserveDates = HasPreserveDates(cma.CopyOptions);
-
-            // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile.
-
-            if (cma.PreserveDates)
-               cma.CopyOptions &= ~CopyOptions.PreserveDates;
-
+            
 
             cma.PathFormat = PathFormat.LongFullPath;
 

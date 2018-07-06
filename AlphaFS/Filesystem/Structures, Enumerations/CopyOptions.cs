@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       NoBuffering = NativeMethods.COPY_FILE_FLAGS.COPY_FILE_NO_BUFFERING,
 
 
-      /// <summary>The original (source) timestamps must be preserved.</summary>
-      PreserveDates = 8192
+      /// <summary>The original timestamps, the source, must be preserved.</summary>
+      CopyTimestamps = 8192
    }
 }
