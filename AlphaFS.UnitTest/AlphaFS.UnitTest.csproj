@@ -148,7 +148,6 @@
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_RetryFails1Time_ThenSucceeds.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_RetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_Timestamps.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_NoStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_WithStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ExistingDirectory_UsingGlobalRootAsSourcePath.cs" />
@@ -156,6 +155,7 @@
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_NullAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_NullAsPath_ThrowsArgumentNullException.cs" />
+    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.SetTimestamps_SymbolicLink.cs" />
     <Compile Include="File Class\AlphaFS_File_GetSize\AlphaFS_File.GetSize_AllStreams.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_ExistingFileAsDirectoryeName_PropertyExistsShouldbeFalse.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptySourceFileNameAsPath_ThrowsArgumentException.cs" />

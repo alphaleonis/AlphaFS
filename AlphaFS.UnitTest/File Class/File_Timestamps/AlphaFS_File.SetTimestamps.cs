@@ -56,9 +56,9 @@ namespace AlphaFS.UnitTest
 
             var rnd = new Random();
 
-            var creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            var lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            var lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+            var creationTime = tempRoot.GetRandomFileDate();
+            var lastAccessTime = tempRoot.GetRandomFileDate();
+            var lastWriteTime = tempRoot.GetRandomFileDate();
 
 
             Alphaleonis.Win32.Filesystem.File.SetTimestamps(file.FullName, creationTime, lastAccessTime, lastWriteTime);
@@ -76,9 +76,9 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(System.IO.File.GetLastWriteTime(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(symlinkPath));
 
 
-            creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+            creationTime = tempRoot.GetRandomFileDate();
+            lastAccessTime = tempRoot.GetRandomFileDate();
+            lastWriteTime = tempRoot.GetRandomFileDate();
 
 
             Alphaleonis.Win32.Filesystem.File.SetTimestampsUtc(file.FullName, creationTime, lastAccessTime, lastWriteTime);

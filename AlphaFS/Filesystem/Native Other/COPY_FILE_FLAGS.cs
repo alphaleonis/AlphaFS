@@ -23,7 +23,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Flags that specify how a file/directory is to be copied.</summary>
+      /// <summary>Flags that specify how a file or directory is to be copied.</summary>
       internal enum COPY_FILE_FLAGS
       {
          /// <summary>The copy operation fails immediately if the target file already exists.</summary>

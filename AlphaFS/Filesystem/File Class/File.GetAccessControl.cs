@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <typeparam name="T">Generic type parameter.</typeparam>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
-      /// <param name="path">The path to a file/directory containing a <see cref="FileSecurity"/>/<see cref="DirectorySecurity"/> object that describes the file's/directory's access control list (ACL) information.</param>
+      /// <param name="path">The path to a file or directory containing a <see cref="FileSecurity"/>/<see cref="DirectorySecurity"/> object that describes the file's/directory's access control list (ACL) information.</param>
       /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]

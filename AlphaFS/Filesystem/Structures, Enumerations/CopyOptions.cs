@@ -24,7 +24,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Flags that specify how a file/directory is to be copied.</summary>
+   /// <summary>Flags that specify how a file or directoryis to be copied.</summary>
    [Flags]
    public enum CopyOptions
    {

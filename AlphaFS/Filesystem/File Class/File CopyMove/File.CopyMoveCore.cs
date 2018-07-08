@@ -98,14 +98,6 @@ namespace Alphaleonis.Win32.Filesystem
          var isSingleFileAction = null == copyMoveResult && !isFolder || copyMoveRes.IsFile;
 
 
-         ////cma.CopyTimestamps = cma.CopyTimestamps && cma.IsCopy && !isFolder;
-         //if (isSingleFileAction && cma.IsCopy)
-         //{
-         //   cma.CopyTimestamps = HasCopyTimestamps(cma.CopyOptions);
-         //   cma.CopyOptions &= ~CopyOptions.CopyTimestamps;  // Remove.
-         //}
-
-
          var attempts = 1;
          var retryTimeout = 0;
 
@@ -165,19 +157,21 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (CopyMoveNative(cma, isMove, sourcePathLp, destinationPathLp, routine, out cancel, out lastError))
             {
-               if (!isFolder)
-                  copyMoveRes.TotalFiles++;
-
-
                // We take an extra hit by getting the file size for a single file Copy or Move action.
                if (isSingleFileAction)
                   copyMoveRes.TotalBytes = GetSizeCore(null, cma.Transaction, destinationPathLp, true, PathFormat.LongFullPath);
 
 
-               if (cma.CopyTimestamps)
-                  CopyTimestampsCore(cma.Transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
+               if (!isFolder)
+               {
+                  copyMoveRes.TotalFiles++;
 
+                  // Only set timestamps for files.
 
+                  if (cma.CopyTimestamps)
+                     CopyTimestampsCore(cma.Transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
+               }
+               
                break;
             }
 

@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -37,42 +36,54 @@ namespace AlphaFS.UnitTest
          AlphaFS_Directory_CopyTimestamps(true);
       }
 
-      
+
       private void AlphaFS_Directory_CopyTimestamps(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folderSrc = tempRoot.CreateDirectory();
-            var folderDst = tempRoot.CreateDirectory();
+            var folderSrc = tempRoot.CreateRecursiveRandomizedDatesAndAttributesTree(5);
+            var folderDst = tempRoot.RandomDirectoryFullPath;
 
             Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
-            Console.WriteLine("Src Directory Path: [{0}]", folderDst.FullName);
+            Console.WriteLine("Dst Directory Path: [{0}]", folderDst);
 
 
-            var rnd = new Random();
-
-            var year = DateTime.Now.Year;
-            var creationTime = new DateTime(rnd.Next(1971, year), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            var lastAccessTime = new DateTime(rnd.Next(1971, year), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            var lastWriteTime = new DateTime(rnd.Next(1971, year), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+            var creationTime = tempRoot.GetRandomFileDate();
+            var lastAccessTime = tempRoot.GetRandomFileDate();
+            var lastWriteTime = tempRoot.GetRandomFileDate();
 
 
             Alphaleonis.Win32.Filesystem.Directory.SetTimestamps(folderSrc.FullName, creationTime, lastAccessTime, lastWriteTime);
+
+
+            folderSrc.Refresh();
 
             Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(folderSrc.FullName), folderSrc.CreationTimeUtc);
             Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(folderSrc.FullName), folderSrc.LastAccessTimeUtc);
             Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(folderSrc.FullName), folderSrc.LastWriteTimeUtc);
 
 
-            Alphaleonis.Win32.Filesystem.Directory.CopyTimestamps(folderSrc.FullName, folderDst.FullName);
+            Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.CopyTimestamps);
 
 
-            UnitTestConstants.Dump(folderDst);
+            var dirInfoDst = new System.IO.DirectoryInfo(folderDst);
+
+            UnitTestConstants.Dump(dirInfoDst);
 
 
-            Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(folderSrc.FullName), folderDst.CreationTimeUtc);
-            Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(folderSrc.FullName), folderDst.LastAccessTimeUtc);
-            Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(folderSrc.FullName), folderDst.LastWriteTimeUtc);
+            Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(folderSrc.FullName), dirInfoDst.CreationTimeUtc);
+            Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(folderSrc.FullName), dirInfoDst.LastAccessTimeUtc);
+            Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(folderSrc.FullName), dirInfoDst.LastWriteTimeUtc);
+
+
+            // Compare the timestamps of all files and folders of the source and destination folders.
+
+            foreach (var fsei in Alphaleonis.Win32.Filesystem.Directory.EnumerateFileSystemEntryInfos<Alphaleonis.Win32.Filesystem.FileSystemEntryInfo>(dirInfoDst.FullName))
+            {
+               Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(fsei.FullPath), fsei.CreationTimeUtc);
+               Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(fsei.FullPath), fsei.LastAccessTimeUtc);
+               Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(fsei.FullPath), fsei.LastWriteTimeUtc);
+            }
          }
 
          Console.WriteLine();

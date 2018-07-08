@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!copyMoveResult.IsCanceled && copyMoveResult.ErrorCode == Win32Errors.NO_ERROR)
          {
             if (cma.CopyTimestamps)
-               CopyTimestamps(cma);
+               CopyFolderTimestamps(cma);
 
             if (cma.EmulateMove)
                DeleteDirectoryCore(cma.Transaction, null, cma.SourcePathLp, true, true, true, PathFormat.LongFullPath);
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private static void CopyTimestamps(CopyMoveArguments cma)
+      private static void CopyFolderTimestamps(CopyMoveArguments cma)
       {
          // TODO 2018-01-09: Not 100% yet with local + UNC paths.
          var dstLp = cma.SourcePathLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);

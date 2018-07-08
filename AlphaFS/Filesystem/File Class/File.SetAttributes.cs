@@ -127,7 +127,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>Sets the attributes for a Non-/Transacted file/directory.</summary>
+      /// <summary>Sets the attributes for a Non-/Transacted file or directory.</summary>
       /// <remarks>
       ///   Certain file attributes, such as <see cref="FileAttributes.Hidden"/> and <see cref="FileAttributes.ReadOnly"/>, can be combined.
       ///   Other attributes, such as <see cref="FileAttributes.Normal"/>, must be used alone.

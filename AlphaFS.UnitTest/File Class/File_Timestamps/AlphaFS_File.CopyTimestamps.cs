@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -46,15 +45,12 @@ namespace AlphaFS.UnitTest
             var fileDst = tempRoot.CreateFile();
 
             Console.WriteLine("Src File Path: [{0}]", fileSrc.FullName);
-            Console.WriteLine("Src File Path: [{0}]", fileDst.FullName);
+            Console.WriteLine("Dst File Path: [{0}]", fileDst.FullName);
 
 
-            var rnd = new Random();
-
-            var year = DateTime.Now.Year;
-            var creationTime = new DateTime(rnd.Next(1971, year), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            var lastAccessTime = new DateTime(rnd.Next(1971, year), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            var lastWriteTime = new DateTime(rnd.Next(1971, year), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+            var creationTime = tempRoot.GetRandomFileDate();
+            var lastAccessTime = tempRoot.GetRandomFileDate();
+            var lastWriteTime = tempRoot.GetRandomFileDate();
 
 
             Alphaleonis.Win32.Filesystem.File.SetTimestamps(fileSrc.FullName, creationTime, lastAccessTime, lastWriteTime);

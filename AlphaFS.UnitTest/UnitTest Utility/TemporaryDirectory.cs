@@ -218,7 +218,7 @@ namespace AlphaFS.UnitTest
 
       public DateTime GetRandomFileDate()
       {
-         var rnd = new Random();
+         var rnd = new Random(DateTime.Now.Millisecond);
          return new DateTime(rnd.Next(1971, DateTime.Now.Year), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
       }
 
