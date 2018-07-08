@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <returns>A <see cref="DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="safeFileHandle">An open handle to the file or directory from which to retrieve information.</param>
       [SecurityCritical]

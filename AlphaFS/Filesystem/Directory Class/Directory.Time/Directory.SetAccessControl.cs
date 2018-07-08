@@ -38,6 +38,19 @@ namespace Alphaleonis.Win32.Filesystem
          File.SetAccessControlCore(path, null, directorySecurity, AccessControlSections.All, PathFormat.RelativePath);
       }
 
+
+      /// <summary>[AlphaFS] Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
+      /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>
+      /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static void SetAccessControl(string path, DirectorySecurity directorySecurity, PathFormat pathFormat)
+      {
+         File.SetAccessControlCore(path, null, directorySecurity, AccessControlSections.All, pathFormat);
+      }
+
+
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
       /// <remarks>Note that unlike <see cref="System.IO.File.SetAccessControl"/> this method does <b>not</b> automatically
       /// determine what parts of the specified <see cref="DirectorySecurity"/> instance has been modified. Instead, the
@@ -54,17 +67,6 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
-      /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>
-      /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-      [SecurityCritical]
-      public static void SetAccessControl(string path, DirectorySecurity directorySecurity, PathFormat pathFormat)
-      {
-         File.SetAccessControlCore(path, null, directorySecurity, AccessControlSections.All, pathFormat);
-      }
-
-      /// <summary>[AlphaFS] Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
       /// <remarks>Note that unlike <see cref="System.IO.File.SetAccessControl"/> this method does <b>not</b> automatically
       /// determine what parts of the specified <see cref="DirectorySecurity"/> instance has been modified. Instead, the
       /// parameter <paramref name="includeSections"/> is used to specify what entries from <paramref name="directorySecurity"/> to apply to <paramref name="path"/>.</remarks>
@@ -78,8 +80,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.SetAccessControlCore(path, null, directorySecurity, includeSections, pathFormat);
       }
-
-
+      
+      
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
       /// <param name="handle">A <see cref="SafeFileHandle"/> to a file to add or remove access control list (ACL) entries from.</param>
       /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
@@ -89,6 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.SetAccessControlCore(null, handle, directorySecurity, AccessControlSections.All, PathFormat.LongFullPath);
       }
+      
 
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
       /// <param name="handle">A <see cref="SafeFileHandle"/> to a file to add or remove access control list (ACL) entries from.</param>

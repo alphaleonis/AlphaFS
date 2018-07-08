@@ -24,30 +24,28 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public static partial class File
+   public static partial class Directory
    {
-      /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
-      /// <returns>A <see cref="DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
+      /// <returns>A <see cref="DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file for which to obtain creation date and time information.</param>
+      /// <param name="path">The directory for which to obtain access date and time information.</param>
       [SecurityCritical]
-      public static DateTime GetChangeTimeTransacted(KernelTransaction transaction, string path)
+      public static DateTime GetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path)
       {
-         return GetChangeTimeCore(transaction, null, path, false, PathFormat.RelativePath);
+         return File.GetLastAccessTimeCore(transaction, path, true, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
-      /// <returns>A <see cref="DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
+      /// <returns>A <see cref="DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file for which to obtain creation date and time information.</param>
+      /// <param name="path">The directory for which to obtain access date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetChangeTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetChangeTimeCore(transaction, null, path, false, pathFormat);
+         return File.GetLastAccessTimeCore(transaction, path, true, pathFormat);
       }
    }
 }

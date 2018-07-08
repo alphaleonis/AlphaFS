@@ -24,30 +24,28 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public static partial class File
+   public static partial class Directory
    {
-      /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
-      /// <returns>A <see cref="DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
+      /// <returns>A <see cref="DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file for which to obtain creation date and time information.</param>
+      /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       [SecurityCritical]
-      public static DateTime GetChangeTimeTransacted(KernelTransaction transaction, string path)
+      public static DateTime GetChangeTimeUtcTransacted(KernelTransaction transaction, string path)
       {
-         return GetChangeTimeCore(transaction, null, path, false, PathFormat.RelativePath);
+         return File.GetChangeTimeCore(transaction, null, path, true, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
-      /// <returns>A <see cref="DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
+      /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
+      /// <returns>A <see cref="DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file for which to obtain creation date and time information.</param>
+      /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetChangeTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetChangeTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetChangeTimeCore(transaction, null, path, false, pathFormat);
+         return File.GetChangeTimeCore(transaction, null, path, true, pathFormat);
       }
    }
 }
