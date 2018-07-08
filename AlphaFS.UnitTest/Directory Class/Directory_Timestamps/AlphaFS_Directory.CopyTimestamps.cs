@@ -42,32 +42,37 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder1 = tempRoot.CreateDirectoryRandomizedAttributes();
+            var folderSrc = tempRoot.CreateDirectory();
+            var folderDst = tempRoot.CreateDirectory();
 
-            Thread.Sleep(1500);
-
-            var folder2 = tempRoot.CreateDirectoryRandomizedAttributes();
-            
-
-            Console.WriteLine("Input Directory1 Path: [{0}]", folder1.FullName);
-            Console.WriteLine("Input Directory2 Path: [{0}]", folder2.FullName);
+            Console.WriteLine("Src Directory Path: [{0}]", folderSrc.FullName);
+            Console.WriteLine("Src Directory Path: [{0}]", folderDst.FullName);
 
 
-            Assert.AreNotEqual(System.IO.Directory.GetCreationTime(folder1.FullName), System.IO.Directory.GetCreationTime(folder2.FullName));
-            Assert.AreNotEqual(System.IO.Directory.GetLastAccessTime(folder1.FullName), System.IO.Directory.GetLastAccessTime(folder2.FullName));
-            Assert.AreNotEqual(System.IO.Directory.GetLastWriteTime(folder1.FullName), System.IO.Directory.GetLastWriteTime(folder2.FullName));
-            
+            var rnd = new Random();
 
-            Alphaleonis.Win32.Filesystem.Directory.CopyTimestamps(folder1.FullName, folder2.FullName);
-
-
-            UnitTestConstants.Dump(folder1);
-            UnitTestConstants.Dump(folder2);
+            var year = DateTime.Now.Year;
+            var creationTime = new DateTime(rnd.Next(1971, year), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+            var lastAccessTime = new DateTime(rnd.Next(1971, year), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+            var lastWriteTime = new DateTime(rnd.Next(1971, year), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
 
 
-            Assert.AreEqual(System.IO.Directory.GetCreationTime(folder1.FullName), System.IO.Directory.GetCreationTime(folder2.FullName));
-            Assert.AreEqual(System.IO.Directory.GetLastAccessTime(folder1.FullName), System.IO.Directory.GetLastAccessTime(folder2.FullName));
-            Assert.AreEqual(System.IO.Directory.GetLastWriteTime(folder1.FullName), System.IO.Directory.GetLastWriteTime(folder2.FullName));
+            Alphaleonis.Win32.Filesystem.Directory.SetTimestamps(folderSrc.FullName, creationTime, lastAccessTime, lastWriteTime);
+
+            Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(folderSrc.FullName), folderSrc.CreationTimeUtc);
+            Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(folderSrc.FullName), folderSrc.LastAccessTimeUtc);
+            Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(folderSrc.FullName), folderSrc.LastWriteTimeUtc);
+
+
+            Alphaleonis.Win32.Filesystem.Directory.CopyTimestamps(folderSrc.FullName, folderDst.FullName);
+
+
+            UnitTestConstants.Dump(folderDst);
+
+
+            Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(folderSrc.FullName), folderDst.CreationTimeUtc);
+            Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(folderSrc.FullName), folderDst.LastAccessTimeUtc);
+            Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(folderSrc.FullName), folderDst.LastWriteTimeUtc);
          }
 
          Console.WriteLine();

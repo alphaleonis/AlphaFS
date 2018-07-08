@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
          
          // Process the root directory, the given path.
 
-         File.CopyTimestampsCore(cma.Transaction, cma.SourcePathLp, dstLp, false, PathFormat.LongFullPath);
+         File.CopyTimestampsCore(cma.Transaction, cma.SourcePathLp, cma.DestinationPathLp, false, PathFormat.LongFullPath);
 
 
          // TODO: When enabled on Computer, FindFirstFile will change the last accessed time.
