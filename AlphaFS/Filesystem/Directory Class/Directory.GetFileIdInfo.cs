@@ -19,12 +19,44 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
+      #region Obsolete
+
+      /// <summary>[AlphaFS] Gets the unique identifier for a directory. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
+      /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
+      /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a directory can change over time.</remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the directory.</param>
+      [Obsolete("Use GetFileIdInfoTransacted method.")]
+      [SecurityCritical]
+      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path)
+      {
+         return File.GetFileIdInfoCore(transaction, true, path, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Gets the unique identifier for a directory. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
+      /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
+      /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a directory can change over time.</remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the directory.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [Obsolete("Use GetFileIdInfoTransacted method.")]
+      [SecurityCritical]
+      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         return File.GetFileIdInfoCore(transaction, true, path, pathFormat);
+      }
+
+      #endregion // Obsolete
+
+
       /// <summary>[AlphaFS] Gets the unique identifier for a directory. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
       /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a directory can change over time.</remarks>
@@ -32,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileIdInfo GetFileIdInfo(string path)
       {
-         return File.GetFileIdInfoCore(null, path, PathFormat.RelativePath);
+         return File.GetFileIdInfoCore(null, true, path, PathFormat.RelativePath);
       }
 
 
@@ -44,10 +76,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileIdInfo GetFileIdInfo(string path, PathFormat pathFormat)
       {
-         return File.GetFileIdInfoCore(null, path, pathFormat);
+         return File.GetFileIdInfoCore(null, true, path, pathFormat);
       }
-
-
 
 
       /// <summary>[AlphaFS] Gets the unique identifier for a directory. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
@@ -56,9 +86,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
       [SecurityCritical]
-      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path)
+      public static FileIdInfo GetFileIdInfoTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetFileIdInfoCore(transaction, path, PathFormat.RelativePath);
+         return File.GetFileIdInfoCore(transaction, true, path, PathFormat.RelativePath);
       }
 
 
@@ -69,9 +99,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileIdInfo GetFileIdInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetFileIdInfoCore(transaction, path, pathFormat);
+         return File.GetFileIdInfoCore(transaction, true, path, pathFormat);
       }
    }
 }

@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.IO;
 using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
@@ -29,6 +30,37 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
+      #region Obsolete
+
+      /// <summary>[AlphaFS] Gets the unique identifier for a file. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
+      /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
+      /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the file.</param>
+      [Obsolete("Use GetFileIdInfoTransacted method.")]
+      [SecurityCritical]
+      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path)
+      {
+         return GetFileIdInfoCore(transaction, false, path, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Gets the unique identifier for a file. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
+      /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
+      /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [Obsolete("Use GetFileIdInfoTransacted method.")]
+      [SecurityCritical]
+      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         return GetFileIdInfoCore(transaction, false, path, pathFormat);
+      }
+
+      #endregion // Obsolete
+
+
       /// <summary>[AlphaFS] Gets the unique identifier for a file. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
       /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
@@ -36,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileIdInfo GetFileIdInfo(string path)
       {
-         return GetFileIdInfoCore(null, path, PathFormat.RelativePath);
+         return GetFileIdInfoCore(null, false, path, PathFormat.RelativePath);
       }
 
 
@@ -48,10 +80,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileIdInfo GetFileIdInfo(string path, PathFormat pathFormat)
       {
-         return GetFileIdInfoCore(null, path, pathFormat);
+         return GetFileIdInfoCore(null, false, path, pathFormat);
       }
-
-
 
 
       /// <summary>[AlphaFS] Gets the unique identifier for a file. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
@@ -60,9 +90,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       [SecurityCritical]
-      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path)
+      public static FileIdInfo GetFileIdInfoTransacted(KernelTransaction transaction, string path)
       {
-         return GetFileIdInfoCore(transaction, path, PathFormat.RelativePath);
+         return GetFileIdInfoCore(transaction, false, path, PathFormat.RelativePath);
       }
 
 
@@ -73,12 +103,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static FileIdInfo GetFileIdTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileIdInfo GetFileIdInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetFileIdInfoCore(transaction, path, pathFormat);
+         return GetFileIdInfoCore(transaction, false, path, pathFormat);
       }
-
-
 
 
       /// <summary>[AlphaFS] Retrieves file information for the specified <see cref="SafeFileHandle"/>.</summary>
@@ -104,23 +132,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
       /// <param name="transaction">The transaction.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static FileIdInfo GetFileIdInfoCore(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static FileIdInfo GetFileIdInfoCore(KernelTransaction transaction, bool isFolder, string path, PathFormat pathFormat)
       {
-         using (var handle = CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
+         using (var handle = CreateFileCore(transaction, isFolder, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
          {
             if (NativeMethods.IsAtLeastWindows8)
             {
                // ReFS is supported.
                using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.FILE_ID_INFO))))
                {
-                  var success = NativeMethods.GetFileInformationByHandleEx(handle, NativeMethods.FILE_INFO_BY_HANDLE_CLASS.FILE_ID_INFO, safeBuffer, (uint) safeBuffer.Capacity);
+                  var success = NativeMethods.GetFileInformationByHandleEx(handle, NativeMethods.FILE_INFO_BY_HANDLE_CLASS.FILE_ID_INFO, safeBuffer, (uint)safeBuffer.Capacity);
 
                   var lastError = Marshal.GetLastWin32Error();
                   if (!success)
-                     NativeError.ThrowException(lastError, path);
+                     NativeError.ThrowException(lastError, isFolder, path);
 
                   return new FileIdInfo(safeBuffer.PtrToStructure<NativeMethods.FILE_ID_INFO>(0));
                }

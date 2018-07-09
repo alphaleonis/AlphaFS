@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -81,43 +82,55 @@ namespace Alphaleonis.Win32.Filesystem
 
 
 
-      /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
+      /// <summary>[AlphaFS] Copies the date and timestamps for the specified existing files.</summary>
       /// <remarks>This method does not change last access time for the source file.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath)
       {
-         CopyTimestampsCore(null, sourcePath, destinationPath, false, PathFormat.RelativePath);
+         CopyTimestampsCore(null, false, sourcePath, destinationPath, false, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
+      /// <summary>[AlphaFS] Copies the date and timestamps for the specified existing files.</summary>
       /// <remarks>This method does not change last access time for the source file.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         CopyTimestampsCore(null, sourcePath, destinationPath, false, pathFormat);
+         CopyTimestampsCore(null, false, sourcePath, destinationPath, false, pathFormat);
       }
 
 
-      /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
+      /// <summary>[AlphaFS] Copies the date and timestamps for the specified existing files.</summary>
       /// <remarks>This method does not change last access time for the source file.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath, bool modifyReparsePoint)
       {
-         CopyTimestampsCore(null, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
+         CopyTimestampsCore(null, false, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
+      /// <summary>[AlphaFS] Copies the date and timestamps for the specified existing files.</summary>
       /// <remarks>This method does not change last access time for the source file.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
@@ -125,26 +138,32 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestamps(string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         CopyTimestampsCore(null, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
+         CopyTimestampsCore(null, false, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
       }
 
 
 
 
-      /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
+      /// <summary>[AlphaFS] Copies the date and timestamps for the specified existing files.</summary>
       /// <remarks>This method does not change last access time for the source file.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         CopyTimestampsCore(transaction, sourcePath, destinationPath, false, PathFormat.RelativePath);
+         CopyTimestampsCore(transaction, false, sourcePath, destinationPath, false, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
+      /// <summary>[AlphaFS] Copies the date and timestamps for the specified existing files.</summary>
       /// <remarks>This method does not change last access time for the source file.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
@@ -152,12 +171,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         CopyTimestampsCore(transaction, sourcePath, destinationPath, false, pathFormat);
+         CopyTimestampsCore(transaction, false, sourcePath, destinationPath, false, pathFormat);
       }
 
 
-      /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
+      /// <summary>[AlphaFS] Copies the date and timestamps for the specified existing files.</summary>
       /// <remarks>This method does not change last access time for the source file.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
@@ -165,12 +187,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool modifyReparsePoint)
       {
-         CopyTimestampsCore(transaction, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
+         CopyTimestampsCore(transaction, false, sourcePath, destinationPath, modifyReparsePoint, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
+      /// <summary>[AlphaFS] Copies the date and timestamps for the specified existing files.</summary>
       /// <remarks>This method does not change last access time for the source file.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
@@ -179,26 +204,32 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CopyTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         CopyTimestampsCore(transaction, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
+         CopyTimestampsCore(transaction, false, sourcePath, destinationPath, modifyReparsePoint, pathFormat);
       }
 
 
-      /// <summary>Transfer the date and time stamps for the specified files and directories.</summary>
+      /// <summary>Copies the date and timestamps for the specified files and directories.</summary>
       /// <remarks>
       ///   <para>This method does not change last access time for the source file.</para>
       ///   <para>This method uses BackupSemantics flag to get Timestamp changed for directories.</para>
       /// </remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
+      /// <param name="isFolder">Specifies that <paramref name="sourcePath"/> is a file or directory.</param>
       /// <param name="sourcePath">The source path.</param>
       /// <param name="destinationPath">The destination path.</param>
       /// <param name="modifyReparsePoint">If <c>true</c>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="destinationPath"/> does not refer to a reparse point.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void CopyTimestampsCore(KernelTransaction transaction, string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)
+      internal static void CopyTimestampsCore(KernelTransaction transaction, bool isFolder, string sourcePath, string destinationPath, bool modifyReparsePoint, PathFormat pathFormat)
       {
          var attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, sourcePath, pathFormat, true);
 
-         SetFsoDateTimeCore(transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.ftCreationTime),
+         SetFsoDateTimeCore(transaction, isFolder, destinationPath, DateTime.FromFileTimeUtc(attrs.ftCreationTime),
+
             DateTime.FromFileTimeUtc(attrs.ftLastAccessTime), DateTime.FromFileTimeUtc(attrs.ftLastWriteTime), modifyReparsePoint, pathFormat);
       }
    }

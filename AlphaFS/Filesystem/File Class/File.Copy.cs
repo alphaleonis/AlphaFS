@@ -816,7 +816,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             if (preserveDates)
-               CopyTimestampsCore(transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
+               CopyTimestampsCore(transaction, false, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
          }
 
 
@@ -938,7 +938,7 @@ namespace Alphaleonis.Win32.Filesystem
             case Win32Errors.ERROR_FILE_EXISTS:    // On files.
                lastError = (int) (isFolder ? Win32Errors.ERROR_ALREADY_EXISTS : Win32Errors.ERROR_FILE_EXISTS);
 
-               NativeError.ThrowException(lastError, null, destinationPathLp);
+               NativeError.ThrowException(lastError, (string) null, destinationPathLp);
                break;
 
 
@@ -978,7 +978,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (!isFolder)
                {
-                  using (var safeHandle = CreateFileCore(transaction, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, false, PathFormat.LongFullPath))
+                  using (var safeHandle = CreateFileCore(transaction, false, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, false, PathFormat.LongFullPath))
                      if (null != safeHandle)
                         fileNameLp = sourcePathLp;
                }
@@ -993,7 +993,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   // Directory exists with the same name as the file.
                   if (dstExists && !isFolder && destIsFolder)
-                     NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
+                     NativeError.ThrowException(lastError, (string) null, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
 
 
                   if (isMove)
@@ -1023,7 +1023,7 @@ namespace Alphaleonis.Win32.Filesystem
                // MSDN: .NET 3.5+: An I/O error has occurred. 
                // File.Copy(): IOException: destinationPath exists and overwrite is false.
                // File.Move(): The destination file already exists or sourcePath was not found.
-               NativeError.ThrowException(lastError, null, fileNameLp);
+               NativeError.ThrowException(lastError, (string) null, fileNameLp);
 
                break;
          }

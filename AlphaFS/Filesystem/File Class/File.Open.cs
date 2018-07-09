@@ -999,7 +999,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            safeHandle = CreateFileCore(transaction, path, attributes, security, mode, rights, share, true, false, pathFormat);
+            safeHandle = CreateFileCore(transaction, false, path, attributes, security, mode, rights, share, true, false, pathFormat);
 
             return new FileStream(safeHandle, access, bufferSize ?? NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
          }
