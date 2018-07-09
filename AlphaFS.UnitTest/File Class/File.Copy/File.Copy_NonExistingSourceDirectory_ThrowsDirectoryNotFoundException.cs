@@ -39,24 +39,26 @@ namespace AlphaFS.UnitTest
 
       private void File_Copy_NonExistingSourceDirectory_ThrowsDirectoryNotFoundException(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         
-         var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source Folder\NonExisting Source File";
-         var dstFolder = UnitTestConstants.SysDrive + @"\NonExisting Destination Folder\NonExisting Destination File";
-
-         if (isNetwork)
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
-            dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
+            var srcFolder = System.IO.Path.Combine(tempRoot.Directory.FullName, "NonExisting Source Folder", "NonExisting Source File.txt");
+            var dstFolder = System.IO.Path.Combine(tempRoot.Directory.FullName, "NonExisting Destination Folder", "NonExisting Destination File.txt");
+
+            if (isNetwork)
+            {
+               srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
+               dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
+            }
+
+            Console.WriteLine("Src File Path: [{0}]", srcFolder);
+            Console.WriteLine("Dst File Path: [{0}]", dstFolder);
+
+
+            UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => System.IO.File.Copy(srcFolder, dstFolder), srcFolder);
+
+            UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, dstFolder), srcFolder);
          }
-         
-         Console.WriteLine("Src File Path: [{0}]", srcFolder);
-         Console.WriteLine("Dst File Path: [{0}]", dstFolder);
 
-
-         UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => System.IO.File.Copy(srcFolder, dstFolder), srcFolder);
-
-         UnitTestAssert.ThrowsException<System.IO.DirectoryNotFoundException>(() => Alphaleonis.Win32.Filesystem.File.Copy(srcFolder, dstFolder), srcFolder);
 
          Console.WriteLine();
       }

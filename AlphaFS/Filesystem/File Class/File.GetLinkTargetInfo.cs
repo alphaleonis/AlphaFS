@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
          const ExtendedFileAttributes eAttributes = ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics;
 
 
-         using (var safeHandle = CreateFileCore(transaction, reparsePath, eAttributes, null, FileMode.Open, 0, FileShare.ReadWrite, pathFormat != PathFormat.LongFullPath, continueOnException, pathFormat))
+         using (var safeHandle = CreateFileCore(transaction, false, reparsePath, eAttributes, null, FileMode.Open, 0, FileShare.ReadWrite, pathFormat != PathFormat.LongFullPath, continueOnException, pathFormat))
 
             return null != safeHandle ? FileSystemHelper.GetLinkTargetInfo(safeHandle, reparsePath) : null;
       }

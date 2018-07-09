@@ -19,23 +19,21 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Flags that specify how the file is to be copied. This parameter can be a combination of the following values.</summary>
-      [Flags]
+      /// <summary>Flags that specify how a file or directory is to be copied.</summary>
       internal enum COPY_FILE_FLAGS
       {
          /// <summary>The copy operation fails immediately if the target file already exists.</summary>
          COPY_FILE_FAIL_IF_EXISTS = 1,
 
 
-         /// <summary>Progress of the copy is tracked in the target file in case the copy fails. The failed copy can be restarted at a later time
-         /// by specifying the same values for existing file name and new file name as those used in the call that failed. This can significantly
-         /// slow down the copy operation as the new file may be flushed multiple times during the copy operation.
+         /// <summary>
+         ///   Progress of the copy is tracked in the target file in case the copy fails. The failed copy can be restarted at a later time by specifying the same values
+         ///   forexisting file name and new file name as those used in the call that failed. This can significantly slow down the copy operation as the new file may be
+         ///   flushed multiple times during the copy operation.
          /// </summary>
          COPY_FILE_RESTARTABLE = 2,
 

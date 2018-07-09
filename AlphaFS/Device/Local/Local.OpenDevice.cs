@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Device
          // When opening a volume or floppy disk, the dwShareMode parameter must have the FILE_SHARE_WRITE flag.
 
 
-         return File.CreateFileCore(null, devicePath, ExtendedFileAttributes.Normal | ExtendedFileAttributes.NoBuffering, null, FileMode.Open, fileSystemRights, FileShare.ReadWrite, false, false, PathFormat.LongFullPath);
+         return File.CreateFileCore(null, null, devicePath, ExtendedFileAttributes.Normal | ExtendedFileAttributes.NoBuffering, null, FileMode.Open, fileSystemRights, FileShare.ReadWrite, false, false, PathFormat.LongFullPath);
       }
    }
 }
