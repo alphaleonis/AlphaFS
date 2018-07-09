@@ -49,6 +49,15 @@ namespace Alphaleonis.Win32
       }
 
 
+      public static void ThrowException(int errorCode, bool? isFolder, string readPath)
+      {
+         if (errorCode == Win32Errors.ERROR_FILE_NOT_FOUND && null != isFolder && (bool) isFolder)
+            errorCode = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+
+         ThrowException((uint) errorCode, readPath, null);
+      }
+
+
       public static void ThrowException(uint errorCode, string readPath)
       {
          ThrowException(errorCode, readPath, null);

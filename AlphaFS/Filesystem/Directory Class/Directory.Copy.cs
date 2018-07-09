@@ -856,7 +856,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, transaction, sourcePathLp, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath))
 
-                  File.CopyTimestampsCore(transaction, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
+                  File.CopyTimestampsCore(transaction, true, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
 
                // TODO: When enabled on Computer, FindFirstFile will change the last accessed time.
             }

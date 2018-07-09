@@ -22,6 +22,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -37,40 +38,29 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\t\tNothing to dump because the instance is null.");
             return;
          }
-         
+
 
          var allProperties = TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => null != descriptor).ToArray();
 
 
          // Determine widest property name, for layout.
-         var width = allProperties.Select(prop => prop.Name.Length).Concat(new[] {0}).Max();
+         var width = allProperties.Select(prop => prop.Name.Length).Concat(new[] { 0 }).Max();
 
          var count = 0;
          var template = "\t{0}#{1:000}\t{2, " + -width + "} = [{3}]";
-         
+
          Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
 
 
          foreach (var descriptor in allProperties)
-         {
-            string propValue;
-
             try
             {
-               propValue = Write(descriptor.GetValue(obj));
+               Console.WriteLine(template, indent ? "\t" : string.Empty, ++count, descriptor.Name, Write(descriptor.GetValue(obj)) ?? "NULL");
             }
             catch (Exception ex)
             {
-               // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, "  ");
+               Console.WriteLine(template, indent ? "\t" : string.Empty, ++count, descriptor.Name, ex.Message.Replace(Environment.NewLine, "  "));
             }
-
-
-            if (null == propValue)
-               propValue = "NULL";
-
-            Console.WriteLine(template, indent ? "\t" : string.Empty, ++count, descriptor.Name, propValue);
-         }
       }
 
 
@@ -85,7 +75,7 @@ namespace AlphaFS.UnitTest
 
          long number;
          if (long.TryParse(value.ToString(), out number))
-            return value.ToString();
+            return number.ToString("N0", CultureInfo.CurrentCulture);
 
 
          var objectType = value as IEnumerable;

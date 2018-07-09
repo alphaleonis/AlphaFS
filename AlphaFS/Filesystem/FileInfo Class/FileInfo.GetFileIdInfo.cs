@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Security;
 
@@ -30,10 +31,22 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
       /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+      [Obsolete("Use GetFileIdInfo method.")]
       [SecurityCritical]
       public FileIdInfo GetFileId()
       {
-         return File.GetFileIdInfoCore(Transaction, LongFullName, PathFormat.LongFullPath);
+         return File.GetFileIdInfoCore(Transaction, false, LongFullName, PathFormat.LongFullPath);
+      }
+
+
+      /// <summary>[AlphaFS] Gets the unique identifier for the file. The identifier is composed of a 64-bit volume serial number and 128-bit file system entry identifier.</summary>
+      /// <returns>A <see cref="FileIdInfo"/> instance containing the requested information.</returns>
+      /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
+      [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+      [SecurityCritical]
+      public FileIdInfo GetFileIdInfo()
+      {
+         return File.GetFileIdInfoCore(Transaction, false, LongFullName, PathFormat.LongFullPath);
       }
    }
 }

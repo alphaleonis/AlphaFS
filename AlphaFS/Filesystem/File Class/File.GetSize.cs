@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-            safeHandle = CreateFileCore(transaction, pathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, false, PathFormat.LongFullPath);
+            safeHandle = CreateFileCore(transaction, false, pathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, false, PathFormat.LongFullPath);
          }
 
 

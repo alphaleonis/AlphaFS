@@ -338,7 +338,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void ToggleCompressionCore(KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {
-         using (var handle = File.CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, false, pathFormat))
+         using (var handle = File.CreateFileCore(transaction, null, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, false, pathFormat))
 
             InvokeIoControlUnknownSize(handle, NativeMethods.FSCTL_SET_COMPRESSION, compress ? 1 : 0);
       }

@@ -259,15 +259,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification =
          "False positive")]
       [SecurityCritical]
-      internal static FileStream CreateFileStreamCore(KernelTransaction transaction, string path,
-         ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access,
-         FileShare share, int bufferSize, PathFormat pathFormat)
+      internal static FileStream CreateFileStreamCore(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, int bufferSize, PathFormat pathFormat)
       {
          SafeFileHandle safeHandle = null;
 
          try
          {
-            safeHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, true, false, pathFormat);
+            safeHandle = CreateFileCore(transaction, false, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, true, false, pathFormat);
 
             return new FileStream(safeHandle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
          }
@@ -292,21 +290,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="Exception"/>
       /// <param name="transaction">The transaction.</param>
+      /// <param name="isFolder">When <c>true</c> indicates the sources is a directory, <c>false</c> indicates a file and <c>null</c> specifies a physical device.</param>
       /// <param name="path">The path and name of the file or directory to create.</param>
       /// <param name="attributes">One of the <see cref="ExtendedFileAttributes"/> values that describes how to create or overwrite the file or directory.</param>
       /// <param name="fileSecurity">A <see cref="FileSecurity"/> instance that determines the access control and audit security for the file or directory.</param>
       /// <param name="fileMode">A <see cref="FileMode"/> constant that determines how to open or create the file or directory.</param>
       /// <param name="fileSystemRights">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file or directory.</param>
       /// <param name="fileShare">A <see cref="FileShare"/> constant that determines how the file or directory will be shared by processes.</param>
-      /// <param name="checkPath">.</param>
-      /// <param name="continueOnException">
-      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
-      ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
-      /// </param>
+      /// <param name="checkPath"></param>
+      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown as a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
       /// <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      internal static SafeFileHandle CreateFileCore(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, bool continueOnException, PathFormat pathFormat)
+      internal static SafeFileHandle CreateFileCore(KernelTransaction transaction, bool? isFolder, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, bool continueOnException, PathFormat pathFormat)
       {
          if (checkPath && pathFormat == PathFormat.RelativePath)
 
@@ -331,10 +327,11 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (null != fileSecurity)
-            fileSystemRights |= (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_SACL_SECURITY_INFORMATION;
+            fileSystemRights |= (FileSystemRights)SECURITY_INFORMATION.UNPROTECTED_SACL_SECURITY_INFORMATION;
 
 
-         using ((fileSystemRights & (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_SACL_SECURITY_INFORMATION) != 0 || (fileSystemRights & (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_DACL_SECURITY_INFORMATION) != 0 ? new PrivilegeEnabler(Privilege.Security) : null)
+         using ((fileSystemRights & (FileSystemRights)SECURITY_INFORMATION.UNPROTECTED_SACL_SECURITY_INFORMATION) != 0 || (fileSystemRights & (FileSystemRights) SECURITY_INFORMATION.UNPROTECTED_DACL_SECURITY_INFORMATION) != 0 ? new PrivilegeEnabler(Privilege.Security) : null)
+
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
          {
             var safeHandle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -343,12 +340,13 @@ namespace Alphaleonis.Win32.Filesystem
                // 2013-01-13: MSDN confirms LongPath usage.
 
                ? NativeMethods.CreateFile(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero)
+
                : NativeMethods.CreateFileTransacted(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero, transaction.SafeHandle, IntPtr.Zero, IntPtr.Zero);
 
 
             var lastError = Marshal.GetLastWin32Error();
 
-            NativeMethods.IsValidHandle(safeHandle, lastError, pathLp, !continueOnException);
+            NativeMethods.CloseHandleAndPossiblyThrowException(safeHandle, lastError, isFolder, path, !continueOnException);
 
 
             if (isAppend)
@@ -359,10 +357,9 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (!success)
                {
-                  if (!safeHandle.IsClosed)
-                     safeHandle.Close();
+                  NativeMethods.CloseHandleAndPossiblyThrowException(safeHandle, lastError, isFolder, path, !continueOnException);
 
-                  NativeError.ThrowException(lastError, path);
+                  return null;
                }
             }
 
