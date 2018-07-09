@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -53,16 +53,17 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -86,17 +87,18 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, PathFormat pathFormat)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, null, null, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, null, null, pathFormat);
       }
+      
 
-
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -120,17 +122,18 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, DirectoryEnumerationOptions options)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, options,  null, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, options,  null, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -154,18 +157,19 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, options,  null, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, options,  null, pathFormat);
       }
+      
 
-
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -189,6 +193,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -197,13 +202,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern)
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, null, null, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, null, null, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -227,6 +233,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -236,13 +243,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, PathFormat pathFormat)
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, null, null, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, null, null, pathFormat);
       }
+      
 
-
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -266,6 +274,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -275,13 +284,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions options)
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, options,  null, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, options,  null, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -305,6 +315,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -315,13 +326,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, options,  null, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, options,  null, pathFormat);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -345,17 +357,18 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, DirectoryEnumerationFilters filters)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, DirectoryEnumerationFilters filters)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, null, filters, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, null, filters, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -379,18 +392,19 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, null, filters, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, null, filters, pathFormat);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -414,18 +428,19 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, options,  filters, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, options,  filters, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -449,19 +464,20 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, Path.WildcardStarMatchAll, null, options,  filters, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, Path.WildcardStarMatchAll, null, options,  filters, pathFormat);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -485,6 +501,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -495,13 +512,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationFilters filters)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationFilters filters)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, null, filters, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, null, filters, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -525,6 +542,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -536,13 +554,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, null, filters, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, null, filters, pathFormat);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -566,6 +584,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -577,13 +596,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, options,  filters, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, options,  filters, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{T}"/> collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <returns>The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -607,6 +626,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    </item>
       /// </list>
       /// </typeparam>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -619,9 +639,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       [Obsolete("Argument searchPattern is obsolete. The DirectoryEnumerationFilters argument provides better filter criteria.")]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfosTransacted<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<T>(null, null, path, searchPattern, null, options,  filters, pathFormat);
+         return EnumerateFileSystemEntryInfosCore<T>(null, transaction, path, searchPattern, null, options,  filters, pathFormat);
       }
    }
 }
