@@ -310,6 +310,7 @@
     <Compile Include="Filesystem\Directory Class\Directory.Time\Directory.SetLastWriteTimeTransacted.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
     <Compile Include="Device\Local\Local.OpenDevice.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyTransacted_Retry.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.MoveTransacted_Retry.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.Move_Retry.cs" />
@@ -323,6 +324,7 @@
     <Compile Include="Filesystem\File Class\File.CreateFileStreamCore.cs" />
     <Compile Include="Filesystem\File Class\File.CreateFileCore.cs" />
     <Compile Include="Filesystem\File Class\File.cs" />
+    <Compile Include="Filesystem\File Class\File.GetFileIdInfoCore.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfoTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\File Class\File.FileAttributeLogic.cs" />
@@ -358,7 +360,7 @@
     <Compile Include="Filesystem\File Class\File.Time\File.SetFsoDateTimeCore.cs" />
     <Compile Include="Filesystem\File Class\File.Time\File.SetCreationTimeUtcTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.Time\File.SetTimestampsUtcTransacted.cs" />
-    <Compile Include="Filesystem\FileInfo Class\FileInfo.GetFileId.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\Link Stream\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\Link Stream\BackupStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
@@ -865,7 +867,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

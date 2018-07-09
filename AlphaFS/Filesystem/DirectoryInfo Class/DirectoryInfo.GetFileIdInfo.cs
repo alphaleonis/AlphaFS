@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a directory can change over time.</remarks>
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
-      public FileIdInfo GetFileId()
+      public FileIdInfo GetFileIdInfo()
       {
          return File.GetFileIdInfoCore(Transaction, true, LongFullName, PathFormat.LongFullPath);
       }
