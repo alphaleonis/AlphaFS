@@ -193,7 +193,7 @@ namespace Alphaleonis.Win32.Device
 
             var fileFullName = Path.GetExtendedLengthPathCore(transaction, Path.CombineCore(false, destinationPath, fileInfo.OriginalFileName), PathFormat.FullPath, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-            using (var safeFileHandle = File.CreateFileCore(transaction, fileFullName, ExtendedFileAttributes.Normal, null, FileMode.CreateNew, FileSystemRights.CreateFiles, FileShare.None, false, false, PathFormat.LongFullPath))
+            using (var safeFileHandle = File.CreateFileCore(transaction, false, fileFullName, ExtendedFileAttributes.Normal, null, FileMode.CreateNew, FileSystemRights.CreateFiles, FileShare.None, false, false, PathFormat.LongFullPath))
 
             using (var fileStream = new FileStream(safeFileHandle, FileAccess.Write, (int) optimalBufferSize))
             {
