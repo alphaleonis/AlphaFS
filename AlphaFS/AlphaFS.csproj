@@ -250,6 +250,14 @@
     <Compile Include="Device\Volume\Volume.DefineDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.EnumerateVolumes.cs" />
     <Compile Include="Filesystem\CopyMoveArguments.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateAlternateDataStreamsTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateDirectoriesTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileIdBothDirectoryInfoCore.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileIdBothDirectoryInfoTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFilesTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntriesTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntryInfosCore.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntryInfosTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory_CopyMove\Directory.CopyFolderTimestamps.cs" />
     <Compile Include="Filesystem\Directory Class\Directory_CopyMove\Directory.CopyEmulateMoveDirectoryCore.cs" />
     <Compile Include="Filesystem\Directory Class\Directory_CopyMove\Directory.CopyTransacted.cs" />
@@ -846,7 +854,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
