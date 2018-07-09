@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static FileIdInfo GetFileIdInfoCore(KernelTransaction transaction, bool isFolder, string path, PathFormat pathFormat)
       {
-         using (var handle = CreateFileCore(transaction, false, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
+         using (var handle = CreateFileCore(transaction, isFolder, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
          {
             if (NativeMethods.IsAtLeastWindows8)
             {
