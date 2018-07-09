@@ -308,7 +308,6 @@
     <Compile Include="Filesystem\Directory Class\Directory.Time\Directory.SetLastWriteTimeUtcTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Time\Directory.SetLastWriteTimeUtc.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Time\Directory.SetLastWriteTimeTransacted.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileId.cs" />
     <Compile Include="Device\Local\Local.OpenDevice.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyTransacted_Retry.cs" />
@@ -867,7 +866,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
