@@ -58,42 +58,5 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Device.ToggleCompressionCore(null, true, path, false, pathFormat);
       }
-
-
-
-
-      /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
-      /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory. However, newly created files and directories will be uncompressed.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path to a directory to decompress.</param>
-      [SecurityCritical]
-      public static void DisableCompressionTransacted(KernelTransaction transaction, string path)
-      {
-         Device.ToggleCompressionCore(transaction, true, path, false, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
-      /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory. However, newly created files and directories will be uncompressed.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <param name="path">A path to a directory to decompress.</param>
-      [SecurityCritical]
-      public static void DisableCompressionTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         Device.ToggleCompressionCore(transaction, true, path, false, pathFormat);
-      }
    }
 }

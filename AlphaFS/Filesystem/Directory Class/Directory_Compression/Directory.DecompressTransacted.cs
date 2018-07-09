@@ -35,144 +35,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      [SecurityCritical]
-      public static void Decompress(string path)
-      {
-         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, null, null, false, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items (non recursive).</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static void Decompress(string path, PathFormat pathFormat)
-      {
-         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, null, null, false, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      [SecurityCritical]
-      public static void Decompress(string path, DirectoryEnumerationOptions options)
-      {
-         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, options, null, false, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static void Decompress(string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
-      {
-         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, options, null, false, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items (non recursive).</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="filters">The specification of custom filters to be used in the process.</param>
-      [SecurityCritical]
-      public static void Decompress(string path, DirectoryEnumerationFilters filters)
-      {
-         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, null, filters, false, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items (non recursive).</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <param name="filters">The specification of custom filters to be used in the process.</param>
-      [SecurityCritical]
-      public static void Decompress(string path, DirectoryEnumerationFilters filters, PathFormat pathFormat)
-      {
-         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, null, filters, false, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      /// <param name="filters">The specification of custom filters to be used in the process.</param>
-      [SecurityCritical]
-      public static void Decompress(string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
-      {
-         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, options, filters, false, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      /// <param name="filters">The specification of custom filters to be used in the process.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static void Decompress(string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
-      {
-         CompressDecompressCore(null, path, Path.WildcardStarMatchAll, options, filters, false, pathFormat);
-      }
-      
-
-
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items (non recursive).</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       [SecurityCritical]
@@ -198,9 +60,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CompressDecompressCore(transaction, path, Path.WildcardStarMatchAll, null, null, false, pathFormat);
       }
+      
 
-      
-      
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
