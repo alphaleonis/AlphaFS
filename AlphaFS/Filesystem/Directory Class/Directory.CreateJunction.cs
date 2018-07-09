@@ -445,7 +445,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Copy the target date and time stamps to the directory junction.
          if (copyTargetTimestamps)
-            File.CopyTimestampsCore(transaction, directoryPath, junctionPath, true, pathFormat);
+            File.CopyTimestampsCore(transaction, true, directoryPath, junctionPath, true, pathFormat);
 
 
          return junctionPath;
@@ -454,7 +454,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       private static SafeFileHandle OpenDirectoryJunction(KernelTransaction transaction, string junctionPath, PathFormat pathFormat)
       {
-         return File.CreateFileCore(transaction, junctionPath, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.OpenReparsePoint, null, FileMode.Open, FileSystemRights.WriteData, FileShare.ReadWrite, false, false, pathFormat);
+         return File.CreateFileCore(transaction, true, junctionPath, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.OpenReparsePoint, null, FileMode.Open, FileSystemRights.WriteData, FileShare.ReadWrite, false, false, pathFormat);
       }
    }
 }

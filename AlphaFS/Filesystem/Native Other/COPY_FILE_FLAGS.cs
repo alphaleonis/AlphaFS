@@ -23,45 +23,34 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      public enum COPY_FILE_FLAGS
+      /// <summary>Flags that specify how a file or directory is to be copied.</summary>
+      internal enum COPY_FILE_FLAGS
       {
-         /// <summary>COPY_FILE_FAIL_IF_EXISTS
-         /// <para>The copy operation fails immediately if the target file already exists.</para>
-         /// </summary>
+         /// <summary>The copy operation fails immediately if the target file already exists.</summary>
          COPY_FILE_FAIL_IF_EXISTS = 1,
 
 
-         /// <summary>COPY_FILE_RESTARTABLE
-         /// <para>
-         /// Progress of the copy is tracked in the target file in case the copy fails. The failed copy can be restarted at a later time by specifying the same values
-         /// forexisting file name and new file name as those used in the call that failed. This can significantly slow down the copy operation as the new file may be
-         /// flushed multiple times during the copy operation.
-         /// </para>
+         /// <summary>
+         ///   Progress of the copy is tracked in the target file in case the copy fails. The failed copy can be restarted at a later time by specifying the same values
+         ///   forexisting file name and new file name as those used in the call that failed. This can significantly slow down the copy operation as the new file may be
+         ///   flushed multiple times during the copy operation.
          /// </summary>
          COPY_FILE_RESTARTABLE = 2,
 
 
-         /// <summary>COPY_FILE_OPEN_SOURCE_FOR_WRITE
-         /// <para>The file is copied and the original file is opened for write access.</para>
-         /// </summary>
+         /// <summary>The file is copied and the original file is opened for write access.</summary>
          COPY_FILE_OPEN_SOURCE_FOR_WRITE = 4,
 
 
-         /// <summary>COPY_FILE_ALLOW_DECRYPTED_DESTINATION
-         /// <para>An attempt to copy an encrypted file will succeed even if the destination copy cannot be encrypted.</para>
-         /// </summary>
+         /// <summary>An attempt to copy an encrypted file will succeed even if the destination copy cannot be encrypted.</summary>
          COPY_FILE_ALLOW_DECRYPTED_DESTINATION = 8,
 
 
-         /// <summary>COPY_FILE_COPY_SYMLINK
-         /// <para>If the source file is a symbolic link, the destination file is also a symbolic link pointing to the same file that the source symbolic link is pointing to.</para>
-         /// </summary>
+         /// <summary>If the source file is a symbolic link, the destination file is also a symbolic link pointing to the same file that the source symbolic link is pointing to.</summary>
          COPY_FILE_COPY_SYMLINK = 2048,
 
 
-         /// <summary>COPY_FILE_NO_BUFFERING
-         /// <para>The copy operation is performed using unbuffered I/O, bypassing system I/O cache resources. Recommended for very large file transfers.</para>
-         /// </summary>
+         /// <summary>The copy operation is performed using unbuffered I/O, bypassing system I/O cache resources. Recommended for very large file transfers.</summary>
          COPY_FILE_NO_BUFFERING = 4096
       }
    }

@@ -209,7 +209,7 @@ namespace Alphaleonis.Win32.Filesystem
             // "The directory-enumeration functions report the last-updated metadata, which may not correspond to the actual metadata if the directory entry is stale. 
 
 
-            streamSizes.Add(sizeOfAllStreams ? File.FindAllStreamsCore(transaction, fsei.LongFullPath) : File.GetSizeCore(transaction, null, fsei.LongFullPath, false, PathFormat.LongFullPath));
+            streamSizes.Add(sizeOfAllStreams ? File.FindAllStreamsCore(transaction, fsei.LongFullPath) : File.GetSizeCore(null, transaction, fsei.LongFullPath, false, PathFormat.LongFullPath));
          }
 
 

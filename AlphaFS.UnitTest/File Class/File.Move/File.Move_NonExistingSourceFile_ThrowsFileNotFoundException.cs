@@ -41,8 +41,8 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         var srcFile = UnitTestConstants.SysDrive + @"\NonExisting Source File";
-         var dstFile = UnitTestConstants.SysDrive + @"\NonExisting Destination File";
+         var srcFile = UnitTestConstants.SysDrive + @"\NonExisting Source File.txt";
+         var dstFile = UnitTestConstants.SysDrive + @"\NonExisting Destination File.txt";
 
          Console.WriteLine("Src File Path: [{0}]", srcFile);
          Console.WriteLine("Dst File Path: [{0}]", dstFile);

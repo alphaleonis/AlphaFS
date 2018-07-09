@@ -39,27 +39,28 @@ namespace AlphaFS.UnitTest
 
       private void AlphaFS_Directory_Move_NonExistingDestinationLogicalDrive_ThrowsDeviceNotReadyException(bool isNetwork)
       {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-         
-         var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
-         
-         var srcFolder = UnitTestConstants.SysDrive + @"\NonExisting Source Folder";
-         var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination Folder";
-
-         if (isNetwork)
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
-            dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
+            var nonExistingDriveLetter = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter();
+
+            var srcFolder = System.IO.Path.Combine(tempRoot.Directory.FullName, "NonExisting Source Folder");
+            var dstFolder = nonExistingDriveLetter + @":\NonExisting Destination Folder";
+
+            if (isNetwork)
+            {
+               srcFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(srcFolder);
+               dstFolder = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(dstFolder);
+            }
+
+            Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
+            Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
+
+
+            UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, dstFolder, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed));
+
+            Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The directory exists, but is expected not to.");
          }
 
-         Console.WriteLine("Src Directory Path: [{0}]", srcFolder);
-         Console.WriteLine("Dst Directory Path: [{0}]", dstFolder);
-
-
-         UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.DeviceNotReadyException>(() => Alphaleonis.Win32.Filesystem.Directory.Move(srcFolder, dstFolder, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed));
-
-         Assert.IsFalse(System.IO.Directory.Exists(dstFolder), "The directory exists, but is expected not to.");
-         
          Console.WriteLine();
       }
    }

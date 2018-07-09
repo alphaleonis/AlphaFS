@@ -30,13 +30,13 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void CompareTimestamps_NonExistingDirectory_Local_Success()
+      public void Directory_CompareTimestamps_NonExistingDirectory_Local_Success()
       {
-         CompareTimestamps_NonExistingDirectory();
+         Directory_CompareTimestamps_NonExistingDirectory();
       }
 
 
-      private void CompareTimestamps_NonExistingDirectory()
+      private void Directory_CompareTimestamps_NonExistingDirectory()
       {
          using (var tempRoot = new TemporaryDirectory())
          {

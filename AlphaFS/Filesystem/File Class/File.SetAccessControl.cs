@@ -124,9 +124,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <param name="path">A file/directory to add or remove access control list (ACL) entries from. This parameter This parameter may be <c>null</c>.</param>
+      /// <param name="path">A file or directory to add or remove access control list (ACL) entries from. This parameter This parameter may be <c>null</c>.</param>
       /// <param name="handle">A <see cref="SafeFileHandle"/> to add or remove access control list (ACL) entries from. This parameter This parameter may be <c>null</c>.</param>
-      /// <param name="objectSecurity">A <see cref="FileSecurity"/>/<see cref="DirectorySecurity"/> object that describes an ACL entry to apply to the file/directory described by the <paramref name="path"/>/<paramref name="handle"/> parameter.</param>
+      /// <param name="objectSecurity">A <see cref="FileSecurity"/>/<see cref="DirectorySecurity"/> object that describes an ACL entry to apply to the file or directory described by the <paramref name="path"/>/<paramref name="handle"/> parameter.</param>
       /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]

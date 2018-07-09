@@ -69,6 +69,14 @@ namespace Alphaleonis.Win32.Filesystem
       public ErrorHandler ErrorFilter { get; set; }
 
 
+      /// <summary>The number of retries, excluding the first attempt. Default is <c>0</c>.</summary>
+      public int ErrorRetry { get; set; }
+
+
+      /// <summary>The wait time in seconds between retries. Default is <c>10</c> seconds.</summary>
+      public int ErrorRetryTimeout { get; set; }
+
+
 #if !NET35
       /// <summary>Gets or sets the cancellation token to abort the enumeration.</summary>
       /// <value>A <see cref="CancellationToken"/> instance.</value>
