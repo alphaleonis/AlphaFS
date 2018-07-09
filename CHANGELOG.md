@@ -4,11 +4,6 @@ Changelog
 Version 2.3  (2018-XX-XX)
 -------------
 
-### Bugs Fixed
-
-- Issue #468: Method `Directory.CopyTimestamps` should throw `DirectoryNotFoundException`.
-- Issue #469: Method `Directory.GetFileIdInfo` should throw `DirectoryNotFoundException`.
-
 ### New Features
 
 - Issue #451: Add overloaded method for `File.GetSize` to retrieve the size of all streams.  
@@ -31,6 +26,15 @@ Version 2.3  (2018-XX-XX)
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
 - Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath` property.
+
+
+Version 2.2.4  (2018-XX-XX)
+-------------
+
+### Bugs Fixed
+
+- Issue #468: Method `Directory.CopyTimestamps` should throw `DirectoryNotFoundException`.
+- Issue #469: Method `Directory.GetFileIdInfo` should throw `DirectoryNotFoundException`.
 
 
 Version 2.2.3  (2018-06-14)
