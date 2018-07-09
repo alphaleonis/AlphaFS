@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Fields
 
-      [NonSerialized] internal Stopwatch Stopwatch;
+      [NonSerialized] internal readonly Stopwatch Stopwatch;
 
       #endregion // Private Fields
       
@@ -46,11 +46,26 @@ namespace Alphaleonis.Win32.Filesystem
       private CopyMoveResult(string source, string destination)
       {
          Source = source;
+
          Destination = destination;
 
          IsCopy = true;
 
+         Retries = 0;
+
          Stopwatch = new Stopwatch();
+      }
+
+
+      internal CopyMoveResult(CopyMoveArguments cma, bool isFolder) : this(cma.SourcePath, cma.DestinationPath)
+      {
+         IsEmulatedMove = cma.EmulateMove;
+
+         IsCopy = cma.IsCopy;
+
+         IsDirectory = isFolder;
+
+         TimestampsCopied = cma.CopyTimestamps;
       }
 
 
@@ -68,6 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
          IsEmulatedMove = emulatedMove;
 
          IsCopy = isCopy;
+
          IsDirectory = isFolder;
 
          TimestampsCopied = preserveDates;
@@ -127,6 +143,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>When <c>true</c> the action was a Move, Copy otherwise.</summary>
       /// <value><c>true</c> when the action was a Move. Otherwise a Copy action was performed.</value>
       public bool IsMove { get { return !IsCopy; } }
+
+
+      /// <summary>The total number of retry attempts.</summary>
+      public long Retries { get; internal set; }
 
 
       /// <summary>Indicates the source file or directory.</summary>

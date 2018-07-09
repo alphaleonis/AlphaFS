@@ -153,6 +153,9 @@
     <Compile Include="AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_PhysicalDiskInfo.CreateInstance_UsingPhysicalDriveNumber_ReturnsStorageDeviceInfoForDevice.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_RegularDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_RetryFails1Time_ThenSucceeds.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_RetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_NoStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_WithStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ExistingDirectory_UsingGlobalRootAsSourcePath.cs" />
@@ -160,11 +163,14 @@
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_NullAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_NullAsPath_ThrowsArgumentNullException.cs" />
+    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.CopyTimestamps.cs" />
+    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.SetTimestamps_SymbolicLink.cs" />
     <Compile Include="File Class\AlphaFS_File_GetSize\AlphaFS_File.GetSize_AllStreams.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.CreateInstance\DirectoryInfo.CreateInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptySourceFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptyDestFileNameAsPath_ThrowsArgumentException.cs" />
-    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_ExistingFile_UsingGlobalRootAsSourcePath.cs" />
+    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_UsingGlobalRootAsSourcePath.cs" />
+    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_RetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_NullDestFileNameAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_NullSourceFileNameAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
@@ -263,7 +269,7 @@
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_NonExistingDestinationLogicalDrive_ThrowsDeviceNotReadyException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UserExplicitDenyOnDestinationFolder_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_Overwrite_DestinationFileAlreadyExists.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ExistingDirectory.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_NonExistingSourceDirectory_ThrowsDirectoryNotFoundException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_NonExistingSourceLogicalDrive_ThrowsDeviceNotReadyException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.CountFileSystemObjects\AlphaFS_Directory.CountFileSystemObjectsTest.cs" />
@@ -355,7 +361,7 @@
     <Compile Include="Directory Class\Directory_Enumeration\AlphaFS_Directory.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Directory Class\Directory.Exists\AlphaFS_Directory.Exists_WithLeadingOrTrailingSpace.cs" />
     <Compile Include="Directory Class\Directory_AccessControl\Directory.GetAccessControl.cs" />
-    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.CopyTimestamps.cs" />
+    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.Copy_UsingCopyOptionsCopyTimestampFlag.cs" />
     <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.SetTimestamps.cs" />
     <Compile Include="Directory Class\Directory_Timestamps\Directory_Timestamps_CompareTimestamps_NonExistingDirectory.cs" />
     <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.GetChangeTime.cs" />
@@ -410,8 +416,8 @@
     <Compile Include="File Class\File_Append\File.AppendAllText_ThenReadAllLinesShouldReturnSameCollection.cs" />
     <Compile Include="File Class\File_Append\File.AppendAllLines_ThenReadAllLinesShouldReturnSameCollection.cs" />
     <Compile Include="File Class\File_Append\File.AppendTest.cs" />
-    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_ExistingFile_WithProgress.cs" />
-    <Compile Include="File Class\File.Copy\File.Copy_ExistingFile.cs" />
+    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_WithProgress.cs" />
+    <Compile Include="File Class\File.Copy\File.Copy.cs" />
     <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_NonExistingDestinationLogicalDrive_ThrowsDeviceNotReadyException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_DestinationFileIsReadOnly_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_NonExistingSourceFile_ThrowsFileNotFoundException.cs" />

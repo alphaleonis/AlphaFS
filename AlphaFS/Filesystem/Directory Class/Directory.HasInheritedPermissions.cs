@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
          var rsd = new RawSecurityDescriptor(rawBytes, 0);
 
 
-         // "Include inheritable permissions from this object's parent" is unchecked
+         // "Include inheritable permissions from this object's parent" is unchecked.
          var inheritanceDisabled = (rsd.ControlFlags & ControlFlags.DiscretionaryAclProtected) == ControlFlags.DiscretionaryAclProtected;
 
          return !inheritanceDisabled;

@@ -81,7 +81,7 @@ namespace AlphaFS.UnitTest
                      break;
 
 
-                  // Copy all folders from "\Program Files".
+                  // Copy folders from "\Program Files".
 
                   var folderCopy = System.IO.Path.Combine(folder.FullName, System.IO.Path.GetFileName(fsi.FullName));
 
@@ -95,7 +95,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine();
 
 
-                  Assert.AreEqual(0, cmr.ErrorCode);
+                  Assert.AreEqual((int) Alphaleonis.Win32.Win32Errors.NO_ERROR, cmr.ErrorCode);
 
 
                   foundShadowCopy = true;

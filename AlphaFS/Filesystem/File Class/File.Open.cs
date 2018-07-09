@@ -19,11 +19,12 @@
  *  THE SOFTWARE. 
  */
 
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Win32.SafeHandles;
 using System.IO;
 using System.Security;
 using System.Security.AccessControl;
+using FileStream = System.IO.FileStream;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -36,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
-      /// <returns>Returns a <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
+      /// <returns>A <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode)
       {
@@ -47,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to open.</param>
       /// <param name="mode">A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
       /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the file.</param>
-      /// <returns>Returns an unshared <see cref="FileStream"/> that provides access to the specified file, with the specified mode and access.</returns>
+      /// <returns>An unshared <see cref="FileStream"/> that provides access to the specified file, with the specified mode and access.</returns>
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access)
       {
@@ -59,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="mode">A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
       /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the file.</param>
       /// <param name="share">A <see cref="FileShare"/> value specifying the type of access other threads have to the file.</param>
-      /// <returns>Returns a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
+      /// <returns>A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share)
       {
@@ -76,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   of existing files are retained or overwritten.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
+      /// <returns>A <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, PathFormat pathFormat)
       {
@@ -212,7 +213,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>
       ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
       ///   access and the specified sharing option.
-      /// </returns>
+      /// </returns>      
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes)
       {
@@ -481,7 +482,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents
       ///   of existing files are retained or overwritten.
       /// </param>
-      /// <returns>Returns a <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
+      /// <returns>A <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
       [SecurityCritical]
       public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode)
       {
@@ -496,7 +497,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   of existing files are retained or overwritten.
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
+      /// <returns>A <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
       [SecurityCritical]
       public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, PathFormat pathFormat)
       {
@@ -566,7 +567,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the file.</param>
       /// <param name="share">A <see cref="FileShare"/> value specifying the type of access other threads have to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
+      /// <returns>A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
       [SecurityCritical]
       public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, PathFormat pathFormat)
       {
@@ -993,17 +994,18 @@ namespace Alphaleonis.Win32.Filesystem
                          : 0);
 
 
-         SafeFileHandle safeFileHandle = null;
+         SafeFileHandle safeHandle = null;
 
          try
          {
-            safeFileHandle = CreateFileCore(transaction, path, attributes, security, mode, rights, share, true, false, pathFormat);
+            safeHandle = CreateFileCore(transaction, false, path, attributes, security, mode, rights, share, true, false, pathFormat);
 
-            return new FileStream(safeFileHandle, access, bufferSize ?? NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
+            return new FileStream(safeHandle, access, bufferSize ?? NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
          }
          catch
          {
-            Utils.IsValidHandle(safeFileHandle, false);
+            if (null != safeHandle && !safeHandle.IsClosed)
+               safeHandle.Close();
 
             throw;
          }

@@ -27,16 +27,9 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
       /// <summary>Checks if the <see cref="MoveOptions.CopyAllowed"/> flag is specified.</summary>
-      internal static bool AllowEmulate(MoveOptions? moveOptions)
+      internal static bool HasCopyAllowed(MoveOptions? moveOptions)
       {
          return Utils.IsNotNull(moveOptions) && (moveOptions & MoveOptions.CopyAllowed) != 0;
-      }
-
-
-      /// <summary>Checks if the <see cref="MoveOptions.ReplaceExisting"/> flag is specified.</summary>
-      internal static bool CanOverwrite(MoveOptions? moveOptions)
-      {
-         return Utils.IsNotNull(moveOptions) && (moveOptions & MoveOptions.ReplaceExisting) != 0;
       }
 
 
@@ -54,10 +47,17 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Checks that the <see cref="FileAttributes"/> instance is valid.</summary>
-      internal static bool HasValidAttributes(FileAttributes fileAttributes)
+      /// <summary>Checks if the <see cref="CopyOptions.CopyTimestamp"/> flag is specified.</summary>
+      internal static bool HasCopyTimestamps(CopyOptions? copyOptions)
       {
-         return Utils.IsNotNull(fileAttributes) && !fileAttributes.Equals(NativeMethods.InvalidFileAttributes);
+         return Utils.IsNotNull(copyOptions) && (copyOptions & CopyOptions.CopyTimestamp) != 0;
+      }
+
+
+      /// <summary>Checks if the <see cref="MoveOptions.ReplaceExisting"/> flag is specified.</summary>
+      internal static bool HasReplaceExisting(MoveOptions? moveOptions)
+      {
+         return Utils.IsNotNull(moveOptions) && (moveOptions & MoveOptions.ReplaceExisting) != 0;
       }
 
 
@@ -74,6 +74,15 @@ namespace Alphaleonis.Win32.Filesystem
             throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
 
          return isCopy;
+      }
+      
+
+
+
+      /// <summary>Checks that the <see cref="FileAttributes"/> instance is valid.</summary>
+      internal static bool HasValidAttributes(FileAttributes fileAttributes)
+      {
+         return Utils.IsNotNull(fileAttributes) && !fileAttributes.Equals(NativeMethods.InvalidFileAttributes);
       }
 
 

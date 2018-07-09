@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -42,32 +41,34 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var file1 = tempRoot.CreateFileRandomizedAttributes();
+            var fileSrc = tempRoot.CreateFile();
+            var fileDst = tempRoot.CreateFile();
 
-            Thread.Sleep(1500);
-
-            var file2 = tempRoot.CreateFileRandomizedAttributes();
-            
-
-            Console.WriteLine("Input File1 Path: [{0}]", file1.FullName);
-            Console.WriteLine("Input File2 Path: [{0}]", file2.FullName);
+            Console.WriteLine("Src File Path: [{0}]", fileSrc.FullName);
+            Console.WriteLine("Dst File Path: [{0}]", fileDst.FullName);
 
 
-            Assert.AreNotEqual(System.IO.File.GetCreationTime(file1.FullName), System.IO.File.GetCreationTime(file2.FullName));
-            Assert.AreNotEqual(System.IO.File.GetLastAccessTime(file1.FullName), System.IO.File.GetLastAccessTime(file2.FullName));
-            Assert.AreNotEqual(System.IO.File.GetLastWriteTime(file1.FullName), System.IO.File.GetLastWriteTime(file2.FullName));
+            var creationTime = tempRoot.GetRandomFileDate();
+            var lastAccessTime = tempRoot.GetRandomFileDate();
+            var lastWriteTime = tempRoot.GetRandomFileDate();
 
 
-            Alphaleonis.Win32.Filesystem.File.CopyTimestamps(file1.FullName, file2.FullName);
+            Alphaleonis.Win32.Filesystem.File.SetTimestamps(fileSrc.FullName, creationTime, lastAccessTime, lastWriteTime);
+
+            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(fileSrc.FullName), fileSrc.CreationTimeUtc);
+            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(fileSrc.FullName), fileSrc.LastAccessTimeUtc);
+            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(fileSrc.FullName), fileSrc.LastWriteTimeUtc);
 
 
-            UnitTestConstants.Dump(file1);
-            UnitTestConstants.Dump(file2);
+            Alphaleonis.Win32.Filesystem.File.CopyTimestamps(fileSrc.FullName, fileDst.FullName);
 
 
-            Assert.AreEqual(System.IO.File.GetCreationTime(file1.FullName), System.IO.File.GetCreationTime(file2.FullName));
-            Assert.AreEqual(System.IO.File.GetLastAccessTime(file1.FullName), System.IO.File.GetLastAccessTime(file2.FullName));
-            Assert.AreEqual(System.IO.File.GetLastWriteTime(file1.FullName), System.IO.File.GetLastWriteTime(file2.FullName));
+            UnitTestConstants.Dump(fileDst);
+
+
+            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(fileSrc.FullName), fileDst.CreationTimeUtc);
+            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(fileSrc.FullName), fileDst.LastAccessTimeUtc);
+            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(fileSrc.FullName), fileDst.LastWriteTimeUtc);
          }
 
          Console.WriteLine();

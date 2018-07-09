@@ -105,11 +105,6 @@ namespace Alphaleonis.Win32.Filesystem
 #endif
          }
 
-#if !NET35
-         if (null == CancellationToken)
-            CancellationToken = new CancellationToken();
-#endif
-
 
          if (isFolder)
          {
@@ -403,9 +398,10 @@ namespace Alphaleonis.Win32.Filesystem
 
             // Pass control to the ErrorHandler when set.
             if (null == ErrorHandler || !ErrorHandler((int) lastError, new Win32Exception((int) lastError).Message, regularPath))
-
+            {
                // When the ErrorHandler returns false, thrown the Exception.
                NativeError.ThrowException(lastError, regularPath);
+            }
          }
       }
 
@@ -449,10 +445,10 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (
-#if !NET35
-               !CancellationToken.IsCancellationRequested &&
-#endif
                dirs.Count > 0
+#if !NET35
+               && !CancellationToken.IsCancellationRequested
+#endif
             )
             {
                // Removes the object at the beginning of your Queue.
