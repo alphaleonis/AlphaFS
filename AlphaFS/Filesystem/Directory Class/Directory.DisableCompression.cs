@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DisableCompression(string path)
       {
-         Device.ToggleCompressionCore(null, false, path, false, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(null, true, path, false, PathFormat.RelativePath);
       }
 
 
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DisableCompression(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(null, false, path, false, pathFormat);
+         Device.ToggleCompressionCore(null, true, path, false, pathFormat);
       }
 
 
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DisableCompressionTransacted(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionCore(transaction, false, path, false, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(transaction, true, path, false, PathFormat.RelativePath);
       }
 
 
@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DisableCompressionTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(transaction, false, path, false, pathFormat);
+         Device.ToggleCompressionCore(transaction, true, path, false, pathFormat);
       }
    }
 }
