@@ -851,7 +851,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
          return CopyMoveCore(new CopyMoveArguments
@@ -859,7 +859,7 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp
          });
       }
 
@@ -884,7 +884,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
          return CopyMoveCore(new CopyMoveArguments
@@ -892,7 +892,7 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             PathFormat = pathFormat
          });
       }
@@ -920,7 +920,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveCore(new CopyMoveArguments
@@ -928,7 +928,7 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
          });
@@ -958,7 +958,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveCore(new CopyMoveArguments
@@ -966,7 +966,7 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
@@ -994,7 +994,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, DirectoryEnumerationFilters filters)
       {
          return CopyMoveCore(new CopyMoveArguments
@@ -1002,7 +1002,7 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             DirectoryEnumerationFilters = filters
          });
       }
@@ -1029,7 +1029,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="filters">The specification of custom filters to be used in the process.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
          return CopyMoveCore(new CopyMoveArguments
@@ -1037,7 +1037,7 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             DirectoryEnumerationFilters = filters,
             PathFormat = pathFormat
          });
@@ -1067,7 +1067,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, DirectoryEnumerationFilters filters, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveCore(new CopyMoveArguments
@@ -1075,7 +1075,7 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             DirectoryEnumerationFilters = filters
@@ -1107,7 +1107,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      [Obsolete("Use other overload and add CopyOptions.CopyTimestamps enum flag.")]
+      [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, DirectoryEnumerationFilters filters, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveCore(new CopyMoveArguments
@@ -1115,7 +1115,7 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             DirectoryEnumerationFilters = filters,

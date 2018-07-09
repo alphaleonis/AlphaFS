@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
                lastError = (int)(isFolder ? Win32Errors.ERROR_ALREADY_EXISTS : Win32Errors.ERROR_FILE_EXISTS);
 
                if (!retry)
-                  NativeError.ThrowException(lastError, null, destinationPathLp);
+                  NativeError.ThrowException(lastError, isFolder, destinationPathLp);
 
                break;
 
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (!isFolder)
                {
-                  using (var safeHandle = CreateFileCore(cma.Transaction, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, false, PathFormat.LongFullPath))
+                  using (var safeHandle = CreateFileCore(cma.Transaction, false, sourcePathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, 0, FileShare.Read, false, false, PathFormat.LongFullPath))
                      if (null != safeHandle)
                         fileNameLp = sourcePathLp;
                }
@@ -129,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   // Directory exists with the same name as the file.
                   if (dstExists && !isFolder && destIsFolder && !retry)
-                     NativeError.ThrowException(lastError, null, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
+                     NativeError.ThrowException(lastError, false, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
 
 
                   if (isMove)
@@ -163,7 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
                // File.Move(): The destination file already exists or sourcePath was not found.
 
                if (!retry)
-                  NativeError.ThrowException(lastError, null, fileNameLp);
+                  NativeError.ThrowException(lastError, isFolder, fileNameLp);
 
                break;
          }

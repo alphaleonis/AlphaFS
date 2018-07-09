@@ -220,11 +220,14 @@
     <Compile Include="Device\Volume\Volume.DefineDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.EnumerateVolumes.cs" />
     <Compile Include="Filesystem\CopyMoveArguments.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.CopyFolderTimestamps.cs" />
     <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.CopyEmulateMoveDirectoryCore.cs" />
     <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.CopyTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.CopyMoveCore.cs" />
     <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.MoveTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CopyTimestampsTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.ExistsDrive.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetFileIdInfoTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateLogicalDrives.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetSize.cs" />
@@ -258,7 +261,12 @@
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyTransacted.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyMoveCore.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.MoveTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File.CopyTimestampsCore.cs" />
+    <Compile Include="Filesystem\File Class\File.CopyTimestampsTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File.CreateFileStreamCore.cs" />
+    <Compile Include="Filesystem\File Class\File.CreateFileCore.cs" />
     <Compile Include="Filesystem\File Class\File.cs" />
+    <Compile Include="Filesystem\File Class\File.GetFileIdInfoTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\File Class\File.FileAttributeLogic.cs" />
     <Compile Include="Filesystem\File Class\File.Time\File.GetChangeTimeCore.cs" />
@@ -737,7 +745,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

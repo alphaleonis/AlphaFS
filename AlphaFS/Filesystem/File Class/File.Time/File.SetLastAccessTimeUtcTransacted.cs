@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc)
       {
-         SetFsoDateTimeCore(transaction, path, null, lastAccessTimeUtc, null, false, PathFormat.RelativePath);
+         SetFsoDateTimeCore(transaction, false, path, null, lastAccessTimeUtc, null, false, PathFormat.RelativePath);
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeCore(transaction, path, null, lastAccessTimeUtc, null, false, pathFormat);
+         SetFsoDateTimeCore(transaction, false, path, null, lastAccessTimeUtc, null, false, pathFormat);
       }
 
 
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         SetFsoDateTimeCore(transaction, path, null, lastAccessTimeUtc, null, modifyReparsePoint, pathFormat);
+         SetFsoDateTimeCore(transaction, false, path, null, lastAccessTimeUtc, null, modifyReparsePoint, pathFormat);
       }
    }
 }

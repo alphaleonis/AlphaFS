@@ -155,7 +155,7 @@ namespace Alphaleonis.Win32.Filesystem
          var callerHandle = null != safeFileHandle;
 
          if (!callerHandle)
-            safeFileHandle = CreateFileCore(transaction, pathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, false, PathFormat.LongFullPath);
+            safeFileHandle = CreateFileCore(transaction, false, pathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, false, PathFormat.LongFullPath);
          
          long fileSize;
 

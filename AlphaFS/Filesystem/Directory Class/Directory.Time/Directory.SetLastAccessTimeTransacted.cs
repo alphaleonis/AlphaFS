@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime)
       {
-         File.SetFsoDateTimeCore(transaction, path, null, lastAccessTime.ToUniversalTime(), null, false, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(transaction, false, path, null, lastAccessTime.ToUniversalTime(), null, false, PathFormat.RelativePath);
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(transaction, path, null, lastAccessTime.ToUniversalTime(), null, false, pathFormat);
+         File.SetFsoDateTimeCore(transaction, false, path, null, lastAccessTime.ToUniversalTime(), null, false, pathFormat);
       }
 
 
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime, bool modifyReparsePoint)
       {
-         File.SetFsoDateTimeCore(transaction, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(transaction, false, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, PathFormat.RelativePath);
       }
 
 
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(transaction, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, pathFormat);
+         File.SetFsoDateTimeCore(transaction, false, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, pathFormat);
       }
    }
 }

@@ -4,6 +4,11 @@ Changelog
 Version 2.3  (2018-XX-XX)
 -------------
 
+### Bugs Fixed
+
+- Issue #468: Method `Directory.CopyTimestamps` should throw `DirectoryNotFoundException`.
+- Issue #469: Method `Directory.GetFileIdInfo` should throw `DirectoryNotFoundException`.
+
 ### New Features
 
 - Issue #451: Add overloaded method for `File.GetSize` to retrieve the size of all streams.  
@@ -20,6 +25,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath` property.
 - Issue #462: Add `IEquatable<T>` to applicable info classes.
 - Issue #463: Add `[Serializable]` attribute to applicable info classes.
+- Added missing overloaded methods regarding timestamps and symbolic links.
 
 ### Breaking Changes
 

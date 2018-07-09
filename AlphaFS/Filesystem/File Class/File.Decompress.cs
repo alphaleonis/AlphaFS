@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decompress(string path)
       {
-         Device.ToggleCompressionCore(null, path, false, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(null, false, path, false, PathFormat.RelativePath);
       }
 
 
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decompress(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(null, path, false, pathFormat);
+         Device.ToggleCompressionCore(null, false, path, false, pathFormat);
       }
 
 
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DecompressTransacted(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionCore(transaction, path, false, PathFormat.RelativePath);
+         Device.ToggleCompressionCore(transaction, false, path, false, PathFormat.RelativePath);
       }
 
 
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DecompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(transaction, path, false, pathFormat);
+         Device.ToggleCompressionCore(transaction, false, path, false, pathFormat);
       }
    }
 }

@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime)
       {
-         SetFsoDateTimeCore(transaction, path, null, lastAccessTime.ToUniversalTime(), null, false, PathFormat.RelativePath);
+         SetFsoDateTimeCore(transaction, false, path, null, lastAccessTime.ToUniversalTime(), null, false, PathFormat.RelativePath);
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeCore(transaction, path, null, lastAccessTime.ToUniversalTime(), null, false, pathFormat);
+         SetFsoDateTimeCore(transaction, false, path, null, lastAccessTime.ToUniversalTime(), null, false, pathFormat);
       }
 
 
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime, bool modifyReparsePoint)
       {
-         SetFsoDateTimeCore(transaction, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, PathFormat.RelativePath);
+         SetFsoDateTimeCore(transaction, false, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, PathFormat.RelativePath);
       }
 
 
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         SetFsoDateTimeCore(transaction, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, pathFormat);
+         SetFsoDateTimeCore(transaction, false, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, pathFormat);
       }
    }
 }

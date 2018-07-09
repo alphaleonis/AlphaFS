@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile.
 
             if (cma.CopyTimestamps)
-               cma.CopyOptions &= ~CopyOptions.CopyTimestamps;
+               cma.CopyOptions &= ~CopyOptions.CopyTimestamp;
          }
 
 

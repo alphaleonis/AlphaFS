@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime)
       {
-         File.SetFsoDateTimeCore(null, path, creationTime.ToUniversalTime(), null, null, false, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(null, false, path, creationTime.ToUniversalTime(), null, null, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(null, path, creationTime.ToUniversalTime(), null, null, false, pathFormat);
+         File.SetFsoDateTimeCore(null, false, path, creationTime.ToUniversalTime(), null, null, false, pathFormat);
       }
 
 
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime, bool modifyReparsePoint)
       {
-         File.SetFsoDateTimeCore(null, path, creationTime.ToUniversalTime(), null, null, modifyReparsePoint, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(null, false, path, creationTime.ToUniversalTime(), null, null, modifyReparsePoint, PathFormat.RelativePath);
       }
 
 
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(null, path, creationTime.ToUniversalTime(), null, null, modifyReparsePoint, pathFormat);
+         File.SetFsoDateTimeCore(null, false, path, creationTime.ToUniversalTime(), null, null, modifyReparsePoint, pathFormat);
       }
    }
 }

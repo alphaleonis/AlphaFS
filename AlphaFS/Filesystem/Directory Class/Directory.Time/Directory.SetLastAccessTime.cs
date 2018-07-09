@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime)
       {
-         File.SetFsoDateTimeCore(null, path, null, lastAccessTime.ToUniversalTime(), null, false, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(null, false, path, null, lastAccessTime.ToUniversalTime(), null, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(null, path, null, lastAccessTime.ToUniversalTime(), null, false, pathFormat);
+         File.SetFsoDateTimeCore(null, false, path, null, lastAccessTime.ToUniversalTime(), null, false, pathFormat);
       }
 
 
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime, bool modifyReparsePoint)
       {
-         File.SetFsoDateTimeCore(null, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(null, false, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, PathFormat.RelativePath);
       }
 
 
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(null, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, pathFormat);
+         File.SetFsoDateTimeCore(null, false, path, null, lastAccessTime.ToUniversalTime(), null, modifyReparsePoint, pathFormat);
       }
    }
 }

@@ -19,21 +19,29 @@
  *  THE SOFTWARE. 
  */
 
-using System.Security;
-
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class FileInfo
+   public static partial class Directory
    {
-      #region AlphaFS
-
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>      
-      [SecurityCritical]
-      public void Compress()
+      private static void CopyFolderTimestamps(CopyMoveArguments cma)
       {
-         Device.ToggleCompressionCore(Transaction, false, LongFullName, true, PathFormat.LongFullPath);
-      }
+         // TODO 2018-01-09: Not 100% yet with local + UNC paths.
+         var dstLp = cma.SourcePathLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);
 
-      #endregion // AlphaFS
+
+         // Traverse the source folder, processing only folders.
+
+         foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, cma.Transaction, cma.SourcePathLp, Path.WildcardStarMatchAll, null, null, cma.DirectoryEnumerationFilters, PathFormat.LongFullPath))
+
+            File.CopyTimestampsCore(cma.Transaction, true, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
+
+         
+         // Process the root directory, the given path.
+
+         File.CopyTimestampsCore(cma.Transaction, true, cma.SourcePathLp, cma.DestinationPathLp, false, PathFormat.LongFullPath);
+
+
+         // TODO: When enabled on Computer, FindFirstFile will change the last accessed time.
+      }
    }
 }

@@ -313,8 +313,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
-
       /// <summary>Compress/decompress Non-/Transacted files/directories.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -342,17 +340,16 @@ namespace Alphaleonis.Win32.Filesystem
             options = DirectoryEnumerationOptions.None;
 
 
-         // Traverse the source folder, processing files/folders.
+         // Traverse the source folder, processing files and folders.
 
-         foreach (var fsei in EnumerateFileSystemEntryInfosCore<string>(null, transaction, pathLp, searchPattern, null, options | DirectoryEnumerationOptions.AsLongPath, filters, PathFormat.LongFullPath))
-         { 
-            Device.ToggleCompressionCore(transaction, fsei, compress, PathFormat.LongFullPath);
-         }
+         foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, pathLp, searchPattern, null, options | DirectoryEnumerationOptions.AsLongPath, filters, PathFormat.LongFullPath))
+
+            Device.ToggleCompressionCore(transaction, fsei.IsDirectory, fsei.FullPath, compress, PathFormat.LongFullPath);
 
 
          // Process the root directory, the given path.
 
-         Device.ToggleCompressionCore(transaction, pathLp, compress, PathFormat.LongFullPath);
+         Device.ToggleCompressionCore(transaction, true, pathLp, compress, PathFormat.LongFullPath);
       }
    }
 }

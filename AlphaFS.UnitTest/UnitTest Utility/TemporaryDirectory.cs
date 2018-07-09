@@ -207,8 +207,14 @@ namespace AlphaFS.UnitTest
       }
 
 
-      /// <summary>Creates a recursive directory structure populated with subdirectories and files of random size and possibly with read-only and/or hidden attributes set.
-      /// The CreationTime, LastAccessTime and LastWriteTime might also be randomized.
+      /// <summary>Creates a recursive directory structure populated with subdirectories and files, possibly with randomized CreationTime, LastAccessTime and/or LastWriteTime.</summary>
+      public System.IO.DirectoryInfo CreateRecursiveRandomizedDatesTree(int level = 1)
+      {
+         return CreateTreeCore(null, level, true, true);
+      }
+
+      /// <summary>Creates a recursive directory structure populated with subdirectories and files, possibly with randomized CreationTime, LastAccessTime and/or LastWriteTime.
+      /// The file size, read-only and/or hidden attributes might also be randomized.
       /// </summary>
       public System.IO.DirectoryInfo CreateRecursiveRandomizedDatesAndAttributesTree(int level = 1)
       {

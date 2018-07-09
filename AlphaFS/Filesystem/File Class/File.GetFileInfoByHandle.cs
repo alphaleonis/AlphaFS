@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static ByHandleFileInfo GetFileInfoByHandleCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         using (var handle = CreateFileCore(transaction, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
+         using (var handle = CreateFileCore(transaction, false, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
 
             return GetFileInfoByHandle(handle);
       }

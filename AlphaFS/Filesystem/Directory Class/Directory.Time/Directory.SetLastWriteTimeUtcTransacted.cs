@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc)
       {
-         File.SetFsoDateTimeCore(transaction, path, null, null, lastWriteTimeUtc, false, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(transaction, false, path, null, null, lastWriteTimeUtc, false, PathFormat.RelativePath);
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(transaction, path, null, null, lastWriteTimeUtc, false, pathFormat);
+         File.SetFsoDateTimeCore(transaction, false, path, null, null, lastWriteTimeUtc, false, pathFormat);
       }
 
 
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc, bool modifyReparsePoint)
       {
-         File.SetFsoDateTimeCore(transaction, path, null, null, lastWriteTimeUtc, modifyReparsePoint, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(transaction, false, path, null, null, lastWriteTimeUtc, modifyReparsePoint, PathFormat.RelativePath);
       }
 
 
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(transaction, path, null, null, lastWriteTimeUtc, modifyReparsePoint, pathFormat);
+         File.SetFsoDateTimeCore(transaction, false, path, null, null, lastWriteTimeUtc, modifyReparsePoint, pathFormat);
       }
    }
 }

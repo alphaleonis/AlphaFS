@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // Only set timestamps for files.
 
                   if (cma.CopyTimestamps)
-                     CopyTimestampsCore(cma.Transaction, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
+                     CopyTimestampsCore(cma.Transaction, false, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
                }
                
                break;

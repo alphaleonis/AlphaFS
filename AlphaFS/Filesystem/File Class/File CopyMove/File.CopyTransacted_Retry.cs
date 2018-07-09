@@ -267,7 +267,7 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -304,7 +304,7 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             PathFormat = pathFormat
 
          }, false, false, sourcePath, destinationPath, null);
@@ -429,7 +429,7 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
 
@@ -472,7 +472,7 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamps : copyOptions & ~CopyOptions.CopyTimestamps,
+            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat

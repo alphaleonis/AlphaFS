@@ -43,6 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
             
 
             // Traverse the source folder, processing files and folders.
+            // No recursion is applied; a Queue is used instead.
 
             foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, cma.Transaction, srcLp, Path.WildcardStarMatchAll, null, null, cma.DirectoryEnumerationFilters, PathFormat.LongFullPath))
             {
@@ -95,29 +96,6 @@ namespace Alphaleonis.Win32.Filesystem
             if (cma.EmulateMove)
                DeleteDirectoryCore(cma.Transaction, null, cma.SourcePathLp, true, true, true, PathFormat.LongFullPath);
          }
-      }
-
-
-      private static void CopyFolderTimestamps(CopyMoveArguments cma)
-      {
-         // TODO 2018-01-09: Not 100% yet with local + UNC paths.
-         var dstLp = cma.SourcePathLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);
-
-
-         // Traverse the source folder, processing only folders.
-
-         foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, cma.Transaction, cma.SourcePathLp, Path.WildcardStarMatchAll, null, null, cma.DirectoryEnumerationFilters, PathFormat.LongFullPath))
-         { 
-            File.CopyTimestampsCore(cma.Transaction, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
-         }
-
-         
-         // Process the root directory, the given path.
-
-         File.CopyTimestampsCore(cma.Transaction, cma.SourcePathLp, cma.DestinationPathLp, false, PathFormat.LongFullPath);
-
-
-         // TODO: When enabled on Computer, FindFirstFile will change the last accessed time.
       }
    }
 }
