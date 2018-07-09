@@ -109,21 +109,28 @@ namespace Alphaleonis.Win32.Filesystem
          if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          uint fileSizeHigh;
-         uint fileSizeLow = transaction == null || !NativeMethods.IsAtLeastWindowsVista
+         var fileSizeLow = null == transaction || !NativeMethods.IsAtLeastWindowsVista
 
             // GetCompressedFileSize() / GetCompressedFileSizeTransacted()
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
             // 2017-05-30: GetCompressedFileSize() MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
             ? NativeMethods.GetCompressedFileSize(pathLp, out fileSizeHigh)
+
             : NativeMethods.GetCompressedFileSizeTransacted(pathLp, out fileSizeHigh, transaction.SafeHandle);
 
+         var lastError = Marshal.GetLastWin32Error();
+
+
          // If the function fails, and lpFileSizeHigh is NULL, the return value is INVALID_FILE_SIZE.
+
          if (fileSizeLow == Win32Errors.ERROR_INVALID_FILE_SIZE && fileSizeHigh == 0)
-            NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
+
+            NativeError.ThrowException(lastError, pathLp);
+
 
          return Utils.ToLong(fileSizeHigh, fileSizeLow);
       }
