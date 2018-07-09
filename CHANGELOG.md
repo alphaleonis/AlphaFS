@@ -16,7 +16,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #464: Add overloaded methods for `Directory.Copy/Move` supporting `DirectoryEnumerationFilters`.
 - Issue #465: Add overloaded methods for `File.Copy/Move` supporting retry.
 - Issue #466: Add properties `ErrorRetry` and `ErrorRetryTimeout` to `DirectoryEnumerationFilters` class.
-- Issue #467: Add property `CopyOptions.CopyTimestamps`.
+- Issue #467: Add property `CopyOptions.CopyTimestamp`.
 
 ### Improvements
 
