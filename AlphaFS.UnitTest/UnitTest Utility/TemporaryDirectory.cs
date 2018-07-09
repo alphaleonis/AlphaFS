@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
       #region Constructors
 
       public TemporaryDirectory() : this(false) { }
-      
+
 
       public TemporaryDirectory(bool isNetwork, string folderPrefix = null, string root = null)
       {
@@ -99,8 +99,8 @@ namespace AlphaFS.UnitTest
       {
          get { return System.IO.Path.Combine(Directory.FullName, System.IO.Path.GetFileNameWithoutExtension(RandomTxtFileName)); }
       }
-      
-      
+
+
       /// <summary>Returns a random string of 8 characters in length, possibly with diacritic characters.</summary>
       public string RandomString
       {
@@ -147,17 +147,15 @@ namespace AlphaFS.UnitTest
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with read-only and/or hidden attributes set.</summary>
       public System.IO.DirectoryInfo CreateDirectoryRandomizedAttributes()
       {
-         return CreateDirectoryCore(null, true, true);
+         return CreateDirectoryCore(null, false, true, true);
       }
 
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with read-only and/or hidden attributes set.</summary>
       public System.IO.DirectoryInfo CreateDirectoryRandomizedAttributes(string directoryNameSuffix)
       {
-         return CreateDirectoryCore(Directory.FullName + directoryNameSuffix, true, true);
+         return CreateDirectoryCore(Directory.FullName + directoryNameSuffix, false, true, true);
       }
-
-
 
 
       /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file.</summary>
@@ -167,86 +165,71 @@ namespace AlphaFS.UnitTest
       }
 
 
-      /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing file, possibly with read-only and/or hidden attributes set.</summary>
+      /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file, possibly with read-only and/or hidden attributes set.</summary>
       public System.IO.FileInfo CreateFileRandomizedAttributes()
       {
-         return CreateFileCore(null, true, true);
+         return CreateFileCore(null, false, true, true);
       }
 
 
-
-
-      /// <summary>Creates a directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>
+      /// <summary>Creates a directory structure populated with subdirectories and files of random size.</summary>
       public System.IO.DirectoryInfo CreateTree(int level = 1)
       {
          return CreateTreeCore(null, level);
       }
 
 
-      /// <summary>Creates a recursive directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>      
+      /// <summary>Creates a recursive directory structure populated with subdirectories and files of random size.</summary>      
       public System.IO.DirectoryInfo CreateRecursiveTree(int level = 1)
       {
          return CreateTreeCore(null, level, true);
       }
 
 
-      /// <summary>Creates a recursive directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>
+      /// <summary>Creates a recursive directory structure populated with subdirectories and files of random size.</summary>
       public System.IO.DirectoryInfo CreateRecursiveTree(int level, string rootFullPath)
       {
          return CreateTreeCore(rootFullPath, level, true);
       }
 
 
-      /// <summary>Creates a directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>
+      /// <summary>Creates a directory structure populated with subdirectories and files of random size and possibly with read-only and/or hidden attributes set.</summary>
       public System.IO.DirectoryInfo CreateRandomizedAttributesTree(int level = 1)
       {
-         return CreateTreeCore(null, level, false, true, true);
+         return CreateTreeCore(null, level, false, false, true, true);
       }
 
 
-      /// <summary>Creates a recursive directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size.</summary>
+      /// <summary>Creates a recursive directory structure populated with subdirectories and files of random size and possibly with read-only and/or hidden attributes set.</summary>
       public System.IO.DirectoryInfo CreateRecursiveRandomizedAttributesTree(int level = 1)
       {
-         return CreateTreeCore(null, level, true, true, true);
+         return CreateTreeCore(null, level, true, false, true, true);
       }
-      
-      
-      /// <summary>Creates an, optional recursive, directory structure of <param name="level"/> levels deep, populated with subdirectories and files with of random size and possibly with read-only and/or hidden attributes set.</summary>
-      private System.IO.DirectoryInfo CreateTreeCore(string rootFullPath, int level = 1, bool recurse = false, bool readOnly = false, bool hidden = false)
+
+
+      /// <summary>Creates a recursive directory structure populated with subdirectories and files, possibly with randomized CreationTime, LastAccessTime and/or LastWriteTime.</summary>
+      public System.IO.DirectoryInfo CreateRecursiveRandomizedDatesTree(int level = 1)
       {
-         var dirInfo = CreateDirectoryCore(rootFullPath, readOnly, hidden);
+         return CreateTreeCore(null, level, true, true);
+      }
 
-         var folderCount = 0;
-
-
-         for (var fsoCount = 0; fsoCount < level; fsoCount++)
-         {
-            folderCount++;
-
-            var fsoName = RandomString + "-" + fsoCount;
-
-            // Always create folder.
-            var di = CreateDirectoryCore(System.IO.Path.Combine(dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "Directory_{0}_directory", fsoName)), readOnly, hidden);
-
-            // Create file, every other iteration.
-            CreateFileCore(System.IO.Path.Combine(fsoCount % 2 == 0 ? di.FullName : dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "File_{0}_file.txt", fsoName)), readOnly, hidden);
-         }
-
-
-         if (recurse)
-         {
-            foreach (var folder in System.IO.Directory.EnumerateDirectories(dirInfo.FullName))
-               CreateTreeCore(folder, level, false, readOnly, hidden);
-         }
-
-
-         Assert.AreEqual(level, folderCount, "The number of folders does not equal the level folder-level, but is expected to.");
-
-         return dirInfo;
+      /// <summary>Creates a recursive directory structure populated with subdirectories and files, possibly with randomized CreationTime, LastAccessTime and/or LastWriteTime.
+      /// The file size, read-only and/or hidden attributes might also be randomized.
+      /// </summary>
+      public System.IO.DirectoryInfo CreateRecursiveRandomizedDatesAndAttributesTree(int level = 1)
+      {
+         return CreateTreeCore(null, level, true, true, true, true);
       }
 
 
-      /// <summary> Enables or disables deny access for the current User.</summary>
+      public DateTime GetRandomFileDate()
+      {
+         var rnd = new Random(DateTime.Now.Millisecond);
+         return new DateTime(rnd.Next(1971, DateTime.Now.Year), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+      }
+
+
+      /// <summary>Enables or disables deny access for the current User.</summary>
       public void SetDirectoryDenyPermission(bool enable, string folderFullPath)
       {
          // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
@@ -298,32 +281,81 @@ namespace AlphaFS.UnitTest
 
 
       /// <summary>Returns a <see cref="System.IO.DirectoryInfo"/> instance to an existing directory, possibly with read-only and/or hidden attributes set.</summary>
-      private System.IO.DirectoryInfo CreateDirectoryCore(string folderFullPath, bool readOnly = false, bool hidden = false)
+      private System.IO.DirectoryInfo CreateDirectoryCore(string folderFullPath, bool randomizedDates = false, bool readOnly = false, bool hidden = false)
       {
          var dirInfo = System.IO.Directory.CreateDirectory(!Alphaleonis.Utils.IsNullOrWhiteSpace(folderFullPath) ? folderFullPath : RandomDirectoryFullPath);
 
-         SetAttributes(dirInfo, readOnly, hidden);
+         SetRandomizedDates(dirInfo, randomizedDates);
+
+         SetReadOnlyAndOrHiddenAttributes(dirInfo, readOnly, hidden);
 
          return dirInfo;
       }
 
 
       /// <summary>Returns a <see cref="System.IO.FileInfo"/> instance to an existing file, possibly with read-only and/or hidden attributes set.</summary>
-      private System.IO.FileInfo CreateFileCore(string fileFullPath, bool readOnly = false, bool hidden = false)
+      private System.IO.FileInfo CreateFileCore(string fileFullPath, bool randomizedDates = false, bool readOnly = false, bool hidden = false)
       {
          var fileInfo = new System.IO.FileInfo(!Alphaleonis.Utils.IsNullOrWhiteSpace(fileFullPath) ? fileFullPath : RandomTxtFileFullPath);
 
-         // File size is min 0 bytes, level 1 MB.
          using (var fs = fileInfo.Create())
-            fs.SetLength(new Random(DateTime.UtcNow.Millisecond).Next(0, 1048576));
+            fs.SetLength(new Random(DateTime.UtcNow.Millisecond).Next(0, UnitTestConstants.OneMebibyte));
 
-         SetAttributes(fileInfo, readOnly, hidden);
+         SetRandomizedDates(fileInfo, randomizedDates);
+
+         SetReadOnlyAndOrHiddenAttributes(fileInfo, readOnly, hidden);
 
          return fileInfo;
       }
 
 
-      private static void SetAttributes(System.IO.FileSystemInfo fsi, bool readOnly = false, bool hidden = false)
+      /// <summary>Creates an, optional recursive, directory structure of <param name="level"/> levels deep, populated with subdirectories and files of random size and possibly with read-only and/or hidden attributes set.</summary>
+      private System.IO.DirectoryInfo CreateTreeCore(string rootFullPath, int level = 1, bool recurse = false, bool randomizedDates = false, bool readOnly = false, bool hidden = false)
+      {
+         var dirInfo = CreateDirectoryCore(rootFullPath, randomizedDates, readOnly, hidden);
+
+         var folderCount = 0;
+
+
+         for (var fsoCount = 0; fsoCount < level; fsoCount++)
+         {
+            folderCount++;
+
+            var fsoName = RandomString + "-" + fsoCount;
+
+            // Always create folder.
+            var di = CreateDirectoryCore(System.IO.Path.Combine(dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "Directory_{0}_directory", fsoName)), randomizedDates, readOnly, hidden);
+
+            // Create file, every other iteration.
+            CreateFileCore(System.IO.Path.Combine(fsoCount % 2 == 0 ? di.FullName : dirInfo.FullName, string.Format(CultureInfo.InvariantCulture, "File_{0}_file.txt", fsoName)), randomizedDates, readOnly, hidden);
+         }
+
+
+         if (recurse)
+         {
+            foreach (var folder in System.IO.Directory.EnumerateDirectories(dirInfo.FullName))
+               CreateTreeCore(folder, level, false, randomizedDates, readOnly, hidden);
+         }
+
+
+         Assert.AreEqual(level, folderCount, "The number of folders does not equal level argument, but is expected to.");
+
+         return dirInfo;
+      }
+
+
+      private void SetRandomizedDates(System.IO.FileSystemInfo fsi, bool randomizedDates = false)
+      {
+         if (randomizedDates && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
+         {
+            fsi.CreationTime = GetRandomFileDate();
+            fsi.LastAccessTime = GetRandomFileDate();
+            fsi.LastWriteTime = GetRandomFileDate();
+         }
+      }
+
+
+      private static void SetReadOnlyAndOrHiddenAttributes(System.IO.FileSystemInfo fsi, bool readOnly = false, bool hidden = false)
       {
          if (readOnly && new Random(DateTime.UtcNow.Millisecond).Next(0, 1000) % 2 == 0)
             fsi.Attributes |= System.IO.FileAttributes.ReadOnly;
@@ -357,26 +389,18 @@ namespace AlphaFS.UnitTest
             if (isDisposing)
                System.IO.Directory.Delete(Directory.FullName, true);
          }
-         catch (Exception ex)
+         catch
          {
-            Console.WriteLine("\n\nDelete TemporaryDirectory: [{0}]. Error: [{1}]", Directory.FullName, ex.Message.Replace(Environment.NewLine, string.Empty));
-            Console.Write("Retry using AlphaFS... ");
-
             try
             {
                var dirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(Directory.FullName, Alphaleonis.Win32.Filesystem.PathFormat.FullPath);
-               if (dirInfo.Exists)
-               {
-                  dirInfo.Delete(true, true);
-                  Console.WriteLine("Success.");
-               }
 
-               else
-                  Console.WriteLine("TemporaryDirectory was already removed.");
+               if (dirInfo.Exists)
+                  dirInfo.Delete(true, true);
             }
-            catch (Exception ex2)
+            catch (Exception ex)
             {
-               Console.WriteLine("Delete failure TemporaryDirectory. Error: {0}", ex2.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("TemporaryDirectory delete failure. Error: {0}", ex.Message.Replace(Environment.NewLine, string.Empty));
             }
          }
       }
