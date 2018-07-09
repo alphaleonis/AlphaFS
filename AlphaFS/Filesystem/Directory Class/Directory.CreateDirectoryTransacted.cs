@@ -24,15 +24,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security;
 using System.Security.AccessControl;
-using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      #region .NET
-
-      /// <summary>Creates all directories and subdirectories in the specified path unless they already exist.</summary>
+      /// <summary>[AlphaFS] Creates all directories and subdirectories in the specified path unless they already exist.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -40,32 +37,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path)
       {
-         return CreateDirectoryCore(false, null, path, null, null, false, PathFormat.RelativePath);
+         return CreateDirectoryCore(false, transaction, path, null, null, false, PathFormat.RelativePath);
       }
-
-
-      /// <summary>Creates all the directories in the specified path, unless the already exist, applying the specified Windows security.</summary>
-      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">The directory to create.</param>
-      /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-      [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity)
-      {
-         return CreateDirectoryCore(false, null, path, null, directorySecurity, false, PathFormat.RelativePath);
-      }
-
-      #endregion // .NET
 
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
@@ -76,13 +54,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return CreateDirectoryCore(false, null, path, null, null, false, pathFormat);
+         return CreateDirectoryCore(false, transaction, path, null, null, false, pathFormat);
       }
 
 
@@ -94,14 +73,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, bool compress)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, bool compress)
       {
-         return CreateDirectoryCore(false, null, path, null, null, compress, PathFormat.RelativePath);
+         return CreateDirectoryCore(false, transaction, path, null, null, compress, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -111,14 +92,34 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, bool compress, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryCore(false, null, path, null, null, compress, pathFormat);
+         return CreateDirectoryCore(false, transaction, path, null, null, compress, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Creates all the directories in the specified path, unless the already exist, applying the specified Windows security.</summary>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="directorySecurity">The access control to apply to the directory.</param>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity)
+      {
+         return CreateDirectoryCore(false, transaction, path, null, directorySecurity, false, PathFormat.RelativePath);
       }
 
 
@@ -130,14 +131,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, PathFormat pathFormat)
       {
-         return CreateDirectoryCore(false, null, path, null, directorySecurity, false, pathFormat);
+         return CreateDirectoryCore(false, transaction, path, null, directorySecurity, false, pathFormat);
       }
 
 
@@ -149,14 +151,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity, bool compress)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool compress)
       {
-         return CreateDirectoryCore(false, null, path, null, directorySecurity, compress, PathFormat.RelativePath);
+         return CreateDirectoryCore(false, transaction, path, null, directorySecurity, compress, PathFormat.RelativePath);
       }
 
 
@@ -168,15 +171,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryCore(false, null, path, null, directorySecurity, compress, pathFormat);
+         return CreateDirectoryCore(false, transaction, path, null, directorySecurity, compress, pathFormat);
       }
 
 
@@ -188,13 +192,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, string templatePath)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath)
       {
-         return CreateDirectoryCore(false, null, path, templatePath, null, false, PathFormat.RelativePath);
+         return CreateDirectoryCore(false, transaction, path, templatePath, null, false, PathFormat.RelativePath);
+      }
+
+      /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, PathFormat pathFormat)
+      {
+         return CreateDirectoryCore(false, transaction, path, templatePath, null, false, pathFormat);
       }
 
 
@@ -206,14 +230,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="compress">When <c>true</c> compresses the directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, string templatePath, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, bool compress)
       {
-         return CreateDirectoryCore(false, null, path, templatePath, null, false, pathFormat);
+         return CreateDirectoryCore(false, transaction, path, templatePath, null, compress, PathFormat.RelativePath);
       }
 
 
@@ -225,34 +250,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">The directory to create.</param>
-      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
-      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-      [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, string templatePath, bool compress)
-      {
-         return CreateDirectoryCore(false, null, path, templatePath, null, compress, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
-      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, string templatePath, bool compress, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryCore(false, null, path, templatePath, null, compress, pathFormat);
+         return CreateDirectoryCore(false, transaction, path, templatePath, null, compress, pathFormat);
       }
 
 
@@ -264,14 +271,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity)
       {
-         return CreateDirectoryCore(false, null, path, templatePath, directorySecurity, false, PathFormat.RelativePath);
+         return CreateDirectoryCore(false, transaction, path, templatePath, directorySecurity, false, PathFormat.RelativePath);
       }
 
 
@@ -283,15 +291,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, PathFormat pathFormat)
       {
-         return CreateDirectoryCore(false, null, path, templatePath, directorySecurity, false, pathFormat);
+         return CreateDirectoryCore(false, transaction, path, templatePath, directorySecurity, false, pathFormat);
       }
 
 
@@ -303,15 +312,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
-         return CreateDirectoryCore(false, null, path, templatePath, directorySecurity, compress, PathFormat.RelativePath);
+         return CreateDirectoryCore(false, transaction, path, templatePath, directorySecurity, compress, PathFormat.RelativePath);
       }
 
 
@@ -323,6 +333,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
@@ -330,9 +341,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryCore(false, null, path, templatePath, directorySecurity, compress, pathFormat);
+         return CreateDirectoryCore(false, transaction, path, templatePath, directorySecurity, compress, pathFormat);
       }
    }
 }

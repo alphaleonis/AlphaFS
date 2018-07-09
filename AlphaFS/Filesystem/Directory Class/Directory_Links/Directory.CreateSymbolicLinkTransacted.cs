@@ -28,51 +28,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      /// <summary>[AlphaFS] Creates a symbolic link  to a directory (similar to CMD command: "MKLINK /D").</summary>
-      /// <remarks>
-      ///   Symbolic links can point to a non-existent target.
-      ///   When creating a symbolic link, the operating system does not check to see if the target exists.
-      ///   Symbolic links are reparse points.
-      ///   There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.
-      ///   See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method from an elevated state.
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
-      /// <param name="symlinkDirectoryName">The name of the target for the symbolic link to be created.</param>
-      /// <param name="targetDirectoryName">The symbolic link to be created.</param>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
-      [SecurityCritical]
-      public static void CreateSymbolicLink(string symlinkDirectoryName, string targetDirectoryName)
-      {
-         File.CreateSymbolicLinkCore(null, symlinkDirectoryName, targetDirectoryName, SymbolicLinkTarget.Directory, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Creates a symbolic link  to a directory (similar to CMD command: "MKLINK /D").</summary>
-      /// <remarks>
-      ///   Symbolic links can point to a non-existent target.
-      ///   When creating a symbolic link, the operating system does not check to see if the target exists.
-      ///   Symbolic links are reparse points.
-      ///   There is a maximum of 31 reparse points (and therefore symbolic links) allowed in a particular path.
-      ///   See <see cref="Security.Privilege.CreateSymbolicLink"/> to run this method from an elevated state.
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
-      /// <param name="symlinkDirectoryName">The name of the target for the symbolic link to be created.</param>
-      /// <param name="targetDirectoryName">The symbolic link to be created.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
-      [SecurityCritical]
-      public static void CreateSymbolicLink(string symlinkDirectoryName, string targetDirectoryName, PathFormat pathFormat)
-      {
-         File.CreateSymbolicLinkCore(null, symlinkDirectoryName, targetDirectoryName, SymbolicLinkTarget.Directory, pathFormat);
-      }
-
-
       /// <summary>[AlphaFS] Creates a symbolic link (similar to CMD command: "MKLINK /D") to a directory as a transacted operation.</summary>
       /// <remarks>
       ///   Symbolic links can point to a non-existent target.
