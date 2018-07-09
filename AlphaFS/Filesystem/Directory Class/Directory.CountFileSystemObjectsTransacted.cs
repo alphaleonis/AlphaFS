@@ -36,12 +36,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public static long CountFileSystemObjects(string path, DirectoryEnumerationOptions options)
+      public static long CountFileSystemObjectsTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, null, path, Path.WildcardStarMatchAll, null, options, null, PathFormat.RelativePath).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(null, transaction, path, Path.WildcardStarMatchAll, null, options, null, PathFormat.RelativePath).Count();
       }
 
 
@@ -53,13 +54,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static long CountFileSystemObjects(string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      public static long CountFileSystemObjectsTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, null, path, Path.WildcardStarMatchAll, null, options, null, pathFormat).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(null, transaction, path, Path.WildcardStarMatchAll, null, options, null, pathFormat).Count();
       }
       
 
@@ -71,6 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -79,9 +82,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public static long CountFileSystemObjects(string path, string searchPattern, DirectoryEnumerationOptions options)
+      public static long CountFileSystemObjectsTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, null, path, searchPattern, null, options, null, PathFormat.RelativePath).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(null, transaction, path, searchPattern, null, options, null, PathFormat.RelativePath).Count();
       }
 
 
@@ -93,6 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -102,9 +106,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static long CountFileSystemObjects(string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      public static long CountFileSystemObjectsTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(null, null, path, searchPattern, null, options, null, pathFormat).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(null, transaction, path, searchPattern, null, options, null, pathFormat).Count();
       }
    }
 }

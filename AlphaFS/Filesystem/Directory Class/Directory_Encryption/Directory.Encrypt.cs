@@ -27,72 +27,71 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
-      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
+      /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">A path to a directory to compress.</param>
+      /// <param name="path">A path that describes a directory to encrypt.</param>
       [SecurityCritical]
-      public static void EnableCompression(string path)
+      public static void Encrypt(string path)
       {
-         Device.ToggleCompressionCore(null, true, path, true, PathFormat.RelativePath);
+         EncryptDecryptDirectoryCore(path, true, false, PathFormat.RelativePath);
       }
 
-      /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
-      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
+
+      /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">A path to a directory to compress.</param>
+      /// <param name="path">A path that describes a directory to encrypt.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void EnableCompression(string path, PathFormat pathFormat)
+      public static void Encrypt(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(null, true, path, true, pathFormat);
+         EncryptDecryptDirectoryCore(path, true, false, pathFormat);
       }
 
 
-
-
-      /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
-      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
+      /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path to a directory to compress.</param>
+      /// <param name="path">A path that describes a directory to encrypt.</param>
+      /// <param name="recursive"><c>true</c> to encrypt the directory recursively. <c>false</c> only encrypt the directory.</param>
       [SecurityCritical]
-      public static void EnableCompressionTransacted(KernelTransaction transaction, string path)
+      public static void Encrypt(string path, bool recursive)
       {
-         Device.ToggleCompressionCore(transaction, true, path, true, PathFormat.RelativePath);
+         EncryptDecryptDirectoryCore(path, true, recursive, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
-      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
+      /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path to a directory to compress.</param>
+      /// <param name="path">A path that describes a directory to encrypt.</param>
+      /// <param name="recursive"><c>true</c> to encrypt the directory recursively. <c>false</c> only encrypt the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void EnableCompressionTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void Encrypt(string path, bool recursive, PathFormat pathFormat)
       {
-         Device.ToggleCompressionCore(transaction, true, path, true, pathFormat);
+         EncryptDecryptDirectoryCore(path, true, recursive, pathFormat);
       }
    }
 }

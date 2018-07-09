@@ -19,81 +19,12 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      #region Export
-
-      /// <summary>[AlphaFS] Backs up (export) encrypted files. This is one of a group of Encrypted File System (EFS) functions that is
-      /// intended to implement backup and restore functionality, while maintaining files in their encrypted state.</summary>
-      /// <remarks>
-      ///   <para>
-      ///      The file being backed up is not decrypted; it is backed up in its encrypted state.
-      ///   </para>
-      ///   <para>
-      ///      If the caller does not have access to the key for the file, the caller needs
-      ///      <see cref="Security.Privilege.Backup"/> to export encrypted files. See
-      ///      <see cref="Security.PrivilegeEnabler"/>.
-      ///   </para>
-      ///   <para>
-      ///      To backup an encrypted file call one of the
-      ///      <see cref="O:Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw"/> overloads and specify the file to backup
-      ///      along with the destination stream of the backup data.
-      ///   </para>
-      ///   <para>
-      ///      This function is intended for the backup of only encrypted files; see <see cref="BackupFileStream"/> for backup
-      ///      of unencrypted files.
-      ///   </para>
-      /// </remarks>
-      /// <param name="fileName">The name of the file to be backed up.</param>
-      /// <param name="outputStream">The destination stream to which the backup data will be written.</param>
-      /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ImportEncryptedFileRaw"/>      
-      public static void ExportEncryptedFileRaw(string fileName, Stream outputStream)
-      {
-         ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, PathFormat.RelativePath, false);
-      }
-
-
-      /// <summary>[AlphaFS] Backs up (export) encrypted files. This is one of a group of Encrypted File System (EFS) functions that is
-      ///   intended to implement backup and restore functionality, while maintaining files in their encrypted state.</summary>
-      /// <remarks>
-      ///   <para>
-      ///      The file being backed up is not decrypted; it is backed up in its encrypted state.
-      ///   </para>
-      ///   <para>
-      ///      If the caller does not have access to the key for the file, the caller needs
-      ///      <see cref="Security.Privilege.Backup"/> to export encrypted files. See
-      ///      <see cref="Security.PrivilegeEnabler"/>.
-      ///   </para>
-      ///   <para>
-      ///      To backup an encrypted file call one of the
-      ///      <see cref="O:Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw"/> overloads and specify the file to backup
-      ///      along with the destination stream of the backup data.
-      ///   </para>
-      ///   <para>
-      ///      This function is intended for the backup of only encrypted files; see <see cref="BackupFileStream"/> for backup
-      ///      of unencrypted files.
-      ///   </para>
-      /// </remarks>
-      /// <param name="fileName">The name of the file to be backed up.</param>
-      /// <param name="outputStream">The destination stream to which the backup data will be written.</param>
-      /// <param name="pathFormat">The path format of the <paramref name="fileName"/> parameter.</param>
-      /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ImportEncryptedFileRaw"/>
-      public static void ExportEncryptedFileRaw(string fileName, Stream outputStream, PathFormat pathFormat)
-      {
-         ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, pathFormat, false);
-      }
-
-      #endregion // Export
-
-
-      #region Import
-
       /// <summary>[AlphaFS] Restores (import) encrypted files. This is one of a group of Encrypted File System (EFS) functions that is
       ///   intended to implement backup and restore functionality, while maintaining files in their encrypted state.</summary>
       /// <remarks>
@@ -117,8 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw"/>
       public static void ImportEncryptedFileRaw(Stream inputStream, string destinationFilePath)
       {
-         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath,
-            PathFormat.RelativePath, false);
+         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, PathFormat.RelativePath, false);
       }
 
 
@@ -204,90 +134,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static void ImportEncryptedFileRaw(Stream inputStream, string destinationFilePath, bool overwriteHidden, PathFormat pathFormat)
       {
          ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, pathFormat, overwriteHidden);
-      }
-
-      #endregion // Import
-
-
-
-
-      internal static void ImportExportEncryptedFileDirectoryRawCore(bool isExport, bool isFolder, Stream stream, string destinationPath, PathFormat pathFormat, bool overwriteHidden)
-      {
-         var destinationPathLp = Path.GetExtendedLengthPathCore(null, destinationPath, pathFormat, GetFullPathOptions.FullCheck | GetFullPathOptions.TrimEnd);
-
-         var mode = isExport ? NativeMethods.EncryptedFileRawMode.CreateForExport : NativeMethods.EncryptedFileRawMode.CreateForImport;
-
-         if (isFolder)
-            mode = mode | NativeMethods.EncryptedFileRawMode.CreateForDir;
-
-         if (overwriteHidden)
-            mode = mode | NativeMethods.EncryptedFileRawMode.OverwriteHidden;
-
-
-         // OpenEncryptedFileRaw()
-         // 2015-08-02: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-
-         SafeEncryptedFileRawHandle context;
-         var lastError = NativeMethods.OpenEncryptedFileRaw(destinationPathLp, mode, out context);
-
-         try
-         {
-            if (lastError != Win32Errors.ERROR_SUCCESS)
-               NativeError.ThrowException(lastError, destinationPathLp);
-
-
-            lastError = isExport
-               ? NativeMethods.ReadEncryptedFileRaw((pbData, pvCallbackContext, length) =>
-               {
-                  try
-                  {
-                     var data = new byte[length];
-
-                     Marshal.Copy(pbData, data, 0, (int) length);
-
-                     stream.Write(data, 0, (int) length);
-                  }
-                  catch (Exception ex)
-                  {
-                     return Marshal.GetHRForException(ex) & NativeMethods.OverflowExceptionBitShift;
-                  }
-
-                  return (int) Win32Errors.ERROR_SUCCESS;
-
-               }, IntPtr.Zero, context)
-
-
-               : NativeMethods.WriteEncryptedFileRaw((IntPtr pbData, IntPtr pvCallbackContext, ref uint length) =>
-               {
-                  try
-                  {
-                     var data = new byte[length];
-
-                     length = (uint) stream.Read(data, 0, (int) length);
-
-                     if (length == 0)
-                        return (int) Win32Errors.ERROR_SUCCESS;
-
-                     Marshal.Copy(data, 0, pbData, (int) length);
-                  }
-                  catch (Exception ex)
-                  {
-                     return Marshal.GetHRForException(ex) & NativeMethods.OverflowExceptionBitShift;
-                  }
-
-                  return (int) Win32Errors.ERROR_SUCCESS;
-
-               }, IntPtr.Zero, context);
-
-
-            if (lastError != Win32Errors.ERROR_SUCCESS)
-               NativeError.ThrowException(lastError, destinationPathLp);
-         }
-         finally
-         {
-            if (null != context && !context.IsClosed)
-               context.Dispose();
-         }
       }
    }
 }
