@@ -19,30 +19,39 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
-      /// <param name="path">The name of the file.</param>
-      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>      
+      /// <summary>Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <param name="path">A path that describes a file to encrypt.</param>
       [SecurityCritical]
-      public static FileEncryptionStatus GetEncryptionStatus(string path)
+      public static void Encrypt(string path)
       {
-         return GetEncryptionStatusCore(path, PathFormat.RelativePath);
+         EncryptDecryptFileCore(false, path, true, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>      
+      /// <summary>[AlphaFS] Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <param name="path">A path that describes a file to encrypt.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static FileEncryptionStatus GetEncryptionStatus(string path, PathFormat pathFormat)
+      public static void Encrypt(string path, PathFormat pathFormat)
       {
-         return GetEncryptionStatusCore(path, pathFormat);
+         EncryptDecryptFileCore(false, path, true, pathFormat);
       }
    }
 }

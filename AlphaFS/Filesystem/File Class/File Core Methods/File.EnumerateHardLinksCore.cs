@@ -22,76 +22,20 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      #region EnumerateHardlinks
-
-      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
-      [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinks(string path, PathFormat pathFormat)
-      {
-         return EnumerateHardlinksCore(null, path, pathFormat);
-      }
-
-      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
-      /// <param name="path">The name of the file.</param>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
-      [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinks(string path)
-      {
-         return EnumerateHardlinksCore(null, path, PathFormat.RelativePath);
-      }
-
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
       /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
-      [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinksTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return EnumerateHardlinksCore(transaction, path, pathFormat);
-      }
-
-      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file.</param>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
-      [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinksTransacted(KernelTransaction transaction, string path)
-      {
-         return EnumerateHardlinksCore(transaction, path, PathFormat.RelativePath);
-      }
-
-      #endregion // EnumerateHardlinks
-
-      #region Internal Methods
-
-      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
-      /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      internal static IEnumerable<string> EnumerateHardlinksCore(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static IEnumerable<string> EnumerateHardLinksCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(new Win32Exception((int) Win32Errors.ERROR_OLD_WIN_VERSION).Message);
@@ -105,13 +49,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       getFindFirstFileName:
 
-         using (var safeHandle = transaction == null
+         using (var safeHandle = null == transaction
 
             // FindFirstFileNameW() / FindFirstFileNameTransactedW() / FindNextFileNameW()
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
             // 2017-05-30: FindFirstFileNameW() MSDN confirms LongPath usage: Starting with Windows 10, version 1607
 
             ? NativeMethods.FindFirstFileNameW(pathLp, 0, out length, builder)
+
             : NativeMethods.FindFirstFileNameTransactedW(pathLp, 0, out length, builder, transaction.SafeHandle))
          {
             var lastError = Marshal.GetLastWin32Error();
@@ -163,8 +108,5 @@ namespace Alphaleonis.Win32.Filesystem
             } while (true);
          }
       }
-
-      #endregion // Internal Methods
-
    }
 }

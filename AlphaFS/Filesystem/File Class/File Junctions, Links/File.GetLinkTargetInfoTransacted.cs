@@ -25,24 +25,32 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
-      /// <param name="path">The name of the file.</param>
-      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>      
+      /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the reparse point.</param>
+      /// <returns>
+      ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
+      ///   or mount point pointed to by <paramref name="path"/>.
+      /// </returns>
       [SecurityCritical]
-      public static FileEncryptionStatus GetEncryptionStatus(string path)
+      public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path)
       {
-         return GetEncryptionStatusCore(path, PathFormat.RelativePath);
+         return GetLinkTargetInfoCore(transaction, path, false, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
-      /// <param name="path">The name of the file.</param>
+      /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the reparse point.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>      
+      /// <returns>
+      ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
+      ///   or mount point pointed to by <paramref name="path"/>.
+      /// </returns>
       [SecurityCritical]
-      public static FileEncryptionStatus GetEncryptionStatus(string path, PathFormat pathFormat)
+      public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetEncryptionStatusCore(path, pathFormat);
+         return GetLinkTargetInfoCore(transaction, path, false, pathFormat);
       }
    }
 }

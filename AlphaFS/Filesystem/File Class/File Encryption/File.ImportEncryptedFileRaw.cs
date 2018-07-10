@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw"/>
       public static void ImportEncryptedFileRaw(Stream inputStream, string destinationFilePath)
       {
-         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, PathFormat.RelativePath, false);
+         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, false, PathFormat.RelativePath);
       }
 
 
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw"/>
       public static void ImportEncryptedFileRaw(Stream inputStream, string destinationFilePath, PathFormat pathFormat)
       {
-         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, pathFormat, false);
+         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, false, pathFormat);
       }
 
 
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw"/>
       public static void ImportEncryptedFileRaw(Stream inputStream, string destinationFilePath, bool overwriteHidden)
       {
-         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, PathFormat.RelativePath, overwriteHidden);
+         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, overwriteHidden, PathFormat.RelativePath);
       }
 
 
@@ -133,7 +133,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw"/>
       public static void ImportEncryptedFileRaw(Stream inputStream, string destinationFilePath, bool overwriteHidden, PathFormat pathFormat)
       {
-         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, pathFormat, overwriteHidden);
+         ImportExportEncryptedFileDirectoryRawCore(false, false, inputStream, destinationFilePath, overwriteHidden, pathFormat);
       }
    }
 }
