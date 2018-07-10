@@ -23,7 +23,6 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading;
 
@@ -232,57 +231,6 @@ namespace Alphaleonis.Win32.Filesystem
          copyMoveResult = copyMoveRes;
 
          return copyMoveResult;
-      }
-
-
-      [SecurityCritical]
-      private static bool CopyMoveNative(CopyMoveArguments cma, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine, out bool cancel, out int lastError)
-      {
-         cancel = false;
-
-         var success = null == cma.Transaction || !NativeMethods.IsAtLeastWindowsVista
-
-            // CopyFileEx() / CopyFileTransacted() / MoveFileWithProgress() / MoveFileTransacted()
-            // 2013-04-15: MSDN confirms LongPath usage.
-
-
-            ? isMove
-               ? NativeMethods.MoveFileWithProgress(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) cma.MoveOptions)
-
-               : NativeMethods.CopyFileEx(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) cma.CopyOptions)
-
-            : isMove
-               ? NativeMethods.MoveFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) cma.MoveOptions, cma.Transaction.SafeHandle)
-
-               : NativeMethods.CopyFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) cma.CopyOptions, cma.Transaction.SafeHandle);
-
-
-         lastError = Marshal.GetLastWin32Error();
-
-
-         return success;
-
-
-         // MSDN: If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
-         // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
-         // In this case, the partially copied destination file is deleted.
-         //
-         // If lpProgressRoutine returns PROGRESS_STOP due to the user stopping the operation,
-         // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
-         // In this case, the partially copied destination file is left intact.
-
-
-         // Note: MoveFileXxx fails if one of the paths is a UNC path, even though both paths refer to the same volume.
-         // For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
-
-         // MoveFileXxx fails if it cannot access the registry. The function stores the locations of the files to be renamed at restart in the following registry value:
-         //
-         //    HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\PendingFileRenameOperations
-         //
-         // This registry value is of type REG_MULTI_SZ. Each rename operation stores one of the following NULL-terminated strings, depending on whether the rename is a delete or not:
-         //
-         //    szDstFile\0\0              : indicates that the file szDstFile is to be deleted on reboot.
-         //    szSrcFile\0szDstFile\0     : indicates that szSrcFile is to be renamed szDstFile on reboot.
       }
    }
 }
