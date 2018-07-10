@@ -23,20 +23,19 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Security;
+using SearchOption = System.IO.SearchOption;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      #region .NET
-
-      /// <summary>Returns the names of subdirectories (including their paths) in the specified directory.</summary>
-      /// <returns>Returns an array of the full names (including paths) of subdirectories in the specified path, or an empty array if no directories are found.</returns>
+      /// <summary>[AlphaFS] Returns the names of all files and subdirectories in the specified directory.</summary>
+      /// <returns>An string[] array of the names of files and subdirectories in the specified directory.</returns>
       /// <remarks>
-      ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
-      ///   <para>The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
-      ///     before the whole collection is returned; when you use GetDirectories, you must wait for the whole array of names to be returned before you can access the array.
-      ///     Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
+      ///   <para>The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
+      ///     you can start enumerating the collection of entries before the whole collection is returned; when you use GetFileSystemEntries,
+      ///     you must wait for the whole array of entries to be returned before you can access the array.
+      ///     Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       ///   </para>
       /// </remarks>
       /// <exception cref="ArgumentException"/>
@@ -45,21 +44,22 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">The directory to search.</param>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory for which file and subdirectory names are returned.</param>
       [SecurityCritical]
-      public static string[] GetDirectories(string path)
+      public static string[] GetFileSystemEntriesTransacted(KernelTransaction transaction, string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, null, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(null, transaction, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
 
-      /// <summary>Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.</summary>
-      /// <returns>Returns an array of the full names (including paths) of the subdirectories that match the search pattern in the specified directory, or an empty array if no directories are found.</returns>
+      /// <summary>[AlphaFS] Returns an array of file system entries that match the specified search criteria.</summary>
+      /// <returns>An string[] array of file system entries that match the specified search criteria.</returns>
       /// <remarks>
-      ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
-      ///   <para>The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
-      ///     before the whole collection is returned; when you use GetDirectories, you must wait for the whole array of names to be returned before you can access the array.
-      ///     Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
+      ///   <para>The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
+      ///     you can start enumerating the collection of entries before the whole collection is returned; when you use GetFileSystemEntries,
+      ///     you must wait for the whole array of entries to be returned before you can access the array.
+      ///     Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       ///   </para>
       /// </remarks>
       /// <exception cref="ArgumentException"/>
@@ -68,26 +68,27 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">The directory to search.</param>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to be searched.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
       ///   This parameter can contain a combination of valid literal path and wildcard
       ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       [SecurityCritical]
-      public static string[] GetDirectories(string path, string searchPattern)
+      public static string[] GetFileSystemEntriesTransacted(KernelTransaction transaction, string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(null, transaction, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
 
-      /// <summary>Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.</summary>
-      /// <returns>Returns an array of the full names (including paths) of the subdirectories that match the specified criteria, or an empty array if no directories are found.</returns>
+      /// <summary>[AlphaFS] Gets an array of all the file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
+      /// <returns>An string[] array of file system entries that match the specified search criteria.</returns>
       /// <remarks>
-      ///   <para>The names returned by this method are prefixed with the directory information provided in path.</para>
-      ///   <para>The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
-      ///     before the whole collection is returned; when you use GetDirectories, you must wait for the whole array of names to be returned before you can access the array.
-      ///     Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
+      ///   <para>The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
+      ///     you can start enumerating the collection of entries before the whole collection is returned; when you use GetFileSystemEntries,
+      ///     you must wait for the whole array of entries to be returned before you can access the array.
+      ///     Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       ///   </para>
       /// </remarks>
       /// <exception cref="ArgumentException"/>
@@ -96,6 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -107,11 +109,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   should include only the current directory or should include all subdirectories.
       /// </param>
       [SecurityCritical]
-      public static string[] GetDirectories(string path, string searchPattern, SearchOption searchOption)
+      public static string[] GetFileSystemEntriesTransacted(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(true, null, path, searchPattern, searchOption, null, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(null, transaction, path, searchPattern, searchOption, null, null, PathFormat.RelativePath).ToArray();
       }
-
-      #endregion // .NET
    }
 }

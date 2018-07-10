@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System.Linq;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -50,52 +49,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static bool IsEmpty(string directoryPath, PathFormat pathFormat)
       {
          return IsEmptyCore(null, directoryPath, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Determines whether the given directory is empty; i.e. it contains no files and no subdirectories.</summary>
-      /// <returns>
-      ///   <para>Returns <c>true</c> when the directory contains no file system objects.</para>
-      ///   <para>Returns <c>false</c> when directory contains at least one file system object.</para>
-      /// </returns>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="directoryPath">The path to the directory.</param>
-      [SecurityCritical]
-      public static bool IsEmptyTransacted(KernelTransaction transaction, string directoryPath)
-      {
-         return IsEmptyCore(transaction, directoryPath, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Determines whether the given directory is empty; i.e. it contains no files and no subdirectories.</summary>
-      /// <returns>
-      ///   <para>Returns <c>true</c> when the directory contains no file system objects.</para>
-      ///   <para>Returns <c>false</c> when directory contains at least one file system object.</para>
-      /// </returns>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="directoryPath">The path to the directory.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static bool IsEmptyTransacted(KernelTransaction transaction, string directoryPath, PathFormat pathFormat)
-      {
-         return IsEmptyCore(transaction, directoryPath, pathFormat);
-      }
-
-
-
-
-      /// <summary>[AlphaFS] Determines whether the given directory is empty; i.e. it contains no files and no subdirectories.</summary>
-      /// <returns>
-      ///   <para>Returns <c>true</c> when the directory contains no file system objects.</para>
-      ///   <para>Returns <c>false</c> when directory contains at least one file system object.</para>
-      /// </returns>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="directoryPath">The path to the directory.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      internal static bool IsEmptyCore(KernelTransaction transaction, string directoryPath, PathFormat pathFormat)
-      {
-         return !EnumerateFileSystemEntryInfosCore<string>(null, transaction, directoryPath, Path.WildcardStarMatchAll, null, null, null, pathFormat).Any();
       }
    }
 }

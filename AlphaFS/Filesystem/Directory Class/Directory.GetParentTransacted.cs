@@ -25,28 +25,26 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      #region .NET
-
-      /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
-      /// <param name="path">The path for which to retrieve the parent directory.</param>
+      /// <summary>[AlphaFS] Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
       /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path for which to retrieve the parent directory.</param>
       [SecurityCritical]
-      public static DirectoryInfo GetParent(string path)
+      public static DirectoryInfo GetParentTransacted(KernelTransaction transaction, string path)
       {
-         return GetParentCore(null, path, PathFormat.RelativePath);
+         return GetParentCore(transaction, path, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
+      /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
       /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DirectoryInfo GetParent(string path, PathFormat pathFormat)
+      public static DirectoryInfo GetParentTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetParentCore(null, path, pathFormat);
+         return GetParentCore(transaction, path, pathFormat);
       }
-
-      #endregion // .NET
    }
 }

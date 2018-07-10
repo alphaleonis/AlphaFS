@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -43,11 +43,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
       [SecurityCritical]
-      public static Dictionary<string, long> GetProperties(string path)
+      public static Dictionary<string, long> GetPropertiesTransacted(KernelTransaction transaction, string path)
       {
-         return GetPropertiesCore(null, path, null, PathFormat.RelativePath);
+         return GetPropertiesCore(transaction, path, null, PathFormat.RelativePath);
       }
 
 
@@ -58,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -66,12 +67,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static Dictionary<string, long> GetProperties(string path, PathFormat pathFormat)
+      public static Dictionary<string, long> GetPropertiesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetPropertiesCore(null, path, null, pathFormat);
+         return GetPropertiesCore(transaction, path, null, pathFormat);
       }
 
 
@@ -82,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -90,12 +92,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public static Dictionary<string, long> GetProperties(string path, DirectoryEnumerationOptions options)
+      public static Dictionary<string, long> GetPropertiesTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
       {
-         return GetPropertiesCore(null, path, options, PathFormat.RelativePath);
+         return GetPropertiesCore(transaction, path, options, PathFormat.RelativePath);
       }
 
 
@@ -106,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
       ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
       /// </summary>
-      /// <returns>Returns a dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -114,13 +117,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static Dictionary<string, long> GetProperties(string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      public static Dictionary<string, long> GetPropertiesTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return GetPropertiesCore(null, path, options, pathFormat);
+         return GetPropertiesCore(transaction, path, options, pathFormat);
       }
    }
 }

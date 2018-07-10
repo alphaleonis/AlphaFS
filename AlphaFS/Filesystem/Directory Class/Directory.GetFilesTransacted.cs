@@ -23,15 +23,14 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Security;
+using SearchOption = System.IO.SearchOption;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      #region .NET
-
-      /// <summary>Returns the names of files (including their paths) in the specified directory.</summary>
-      /// <returns>Returns an array of the full names (including paths) for the files in the specified directory, or an empty array if no files are found.</returns>
+      /// <summary>[AlphaFS] Returns the names of files (including their paths) in the specified directory.</summary>
+      /// <returns>An array of the full names (including paths) for the files in the specified directory, or an empty array if no files are found.</returns>
       /// <remarks>
       ///   <para>The returned file names are appended to the supplied <paramref name="path"/> parameter.</para>
       ///   <para>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</para>
@@ -46,16 +45,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       [SecurityCritical]
-      public static string[] GetFiles(string path)
+      public static string[] GetFilesTransacted(KernelTransaction transaction, string path)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, Path.WildcardStarMatchAll, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
 
-      /// <summary>Returns the names of files (including their paths) that match the specified search pattern in the specified directory.</summary>
-      /// <returns>Returns an array of the full names (including paths) for the files in the specified directory that match the specified search pattern, or an empty array if no files are found.</returns>
+      /// <summary>[AlphaFS] Returns the names of files (including their paths) that match the specified search pattern in the specified directory.</summary>
+      /// <returns>An array of the full names (including paths) for the files in the specified directory that match the specified search pattern, or an empty array if no files are found.</returns>
       /// <remarks>
       ///   <para>The returned file names are appended to the supplied <paramref name="path"/> parameter.</para>
       ///   <para>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</para>
@@ -70,6 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -77,14 +78,14 @@ namespace Alphaleonis.Win32.Filesystem
       ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       [SecurityCritical]
-      public static string[] GetFiles(string path, string searchPattern)
+      public static string[] GetFilesTransacted(KernelTransaction transaction, string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, null, null, null, PathFormat.RelativePath).ToArray();
       }
 
 
-      /// <summary>Returns the names of files (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.</summary>
-      /// <returns>Returns an array of the full names (including paths) for the files in the specified directory that match the specified search pattern and option, or an empty array if no files are found.</returns>
+      /// <summary>[AlphaFS] Returns the names of files (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.</summary>
+      /// <returns>An array of the full names (including paths) for the files in the specified directory that match the specified search pattern and option, or an empty array if no files are found.</returns>
       /// <remarks>
       ///   <para>The returned file names are appended to the supplied <paramref name="path"/> parameter.</para>
       ///   <para>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</para>
@@ -99,6 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -110,11 +112,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   should include only the current directory or should include all subdirectories.
       /// </param>
       [SecurityCritical]
-      public static string[] GetFiles(string path, string searchPattern, SearchOption searchOption)
+      public static string[] GetFilesTransacted(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfosCore<string>(false, null, path, searchPattern, searchOption, null, null, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosCore<string>(false, transaction, path, searchPattern, searchOption, null, null, PathFormat.RelativePath).ToArray();
       }
-
-      #endregion // .NET
    }
 }
