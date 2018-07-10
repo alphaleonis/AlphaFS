@@ -196,23 +196,14 @@
     <Compile Include="AssemblyVersionInfo.cs">
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
-    <Compile Include="Device\Local\Device.Local.cs" />
+    <Compile Include="Device\Local Class\Local.EnumeratePortableDevices.cs" />
     <Compile Include="Device\PortableDevice\Local.EnumerateFiles.cs" />
     <Compile Include="Device\PortableDevice\Local.EnumerateDirectories.cs" />
-    <Compile Include="Device\Local\Local.EnumeratePortableDevices.cs" />
-    <Compile Include="Device\Local\Local.GetDevicePowerState.cs" />
-    <Compile Include="Device\Local\Local.GetStoragePartitionInfo.cs" />
-    <Compile Include="Device\Local\Local.GetStorageDeviceInfo.cs" />
-    <Compile Include="Device\Local\Local.GetStorageAdapterInfo.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.Constants.cs" />
     <Compile Include="Device\Native Other\WPD_POWER_SOURCES.cs" />
     <Compile Include="Device\Native Other\WPD_DEVICE_TYPES.cs" />
     <Compile Include="Device\Native Other\WPD_STORAGE_TYPE_VALUES.cs" />
     <Compile Include="Device\Native Other\WPD_DEVICE_TRANSPORTS.cs" />
-    <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.CreatePhysicalDiskInfoInstance.cs" />
-    <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.ContainsVolume.cs" />
-    <Compile Include="Device\Local\Local.SetStorageDeviceInfoData.cs" />
-    <Compile Include="Device\Local\Local.GetDiskGeometryEx.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.PortableDevice.Constants.cs" />
     <Compile Include="Device\PortableDevice\PortableDeviceInfo.EnumerateDirectories.cs" />
     <Compile Include="Device\PortableDevice\PortableDeviceInfo.EnumerateFiles.cs" />
@@ -232,7 +223,6 @@
     <Compile Include="Device\Local Class\Local.GetStoragePartitionInfo.cs" />
     <Compile Include="Device\Local Class\Local.GetStorageDeviceInfo.cs" />
     <Compile Include="Device\Local Class\Local.GetStorageAdapterInfo.cs" />
-    <Compile Include="Device\Native Methods\NativeMethods.cs" />
     <Compile Include="Device\PhysicalDisk Class\PhysicalDiskInfo.CreatePhysicalDiskInfoInstance.cs" />
     <Compile Include="Device\PhysicalDisk Class\PhysicalDiskInfo.ContainsVolume.cs" />
     <Compile Include="Device\Local Class\Local.SetStorageDeviceInfoData.cs" />
@@ -247,44 +237,11 @@
     <Compile Include="Device\FilesystemHelper Class\FilesystemHelper.GetValidatedDevicePath.cs" />
     <Compile Include="Device\Storage\Device.StorageAdapterInfo.cs" />
     <Compile Include="Device\Storage\Device.StorageDeviceInfo.cs" />
-    <Compile Include="Device\Local\Local.EnumeratePhysicalDisks.cs" />
-    <Compile Include="Device\Local\Local.EnumerateDevices.cs" />
-    <Compile Include="Device\FileSystemHelper\FileSystemHelper.Compression.cs" />
-    <Compile Include="Device\PhysicalDisk\PhysicalDiskInfo.cs" />
-    <Compile Include="Device\DriveInfo\DriveInfo.GetFreeDriveLetter.cs" />
-    <Compile Include="Device\DriveInfo\DriveInfo.GetDeviceInfo.cs" />
-    <Compile Include="Device\DriveInfo\DriveInfo.EnumerateLogicalDrives.cs" />
-    <Compile Include="Device\FileSystemHelper\FileSystemHelper.GetLinkTarget.cs" />
-    <Compile Include="Device\FileSystemHelper\FileSystemHelper.DeleteDirectoryJunction.cs" />
-    <Compile Include="Device\FileSystemHelper\FileSystemHelper.CreateDirectoryJunction.cs" />
     <Compile Include="Device\Structures, Enumerations\PortableDevicePowerSource.cs" />
     <Compile Include="Device\Structures, Enumerations\PortableDeviceProtocol.cs" />
     <Compile Include="Device\Structures, Enumerations\PortableDeviceStorageType.cs" />
     <Compile Include="Device\Structures, Enumerations\PortableDeviceTransportType.cs" />
     <Compile Include="Device\Structures, Enumerations\PortableDeviceType.cs" />
-    <Compile Include="Device\Volume\Volume.DeleteDosDevice.cs" />
-    <Compile Include="Device\Volume\Volume.QueryDosDevice.cs" />
-    <Compile Include="Device\Volume\Volume.GetDriveFormat.cs" />
-    <Compile Include="Device\Volume\Volume.GetDriveNameForNtDeviceName.cs" />
-    <Compile Include="Device\Volume\Volume.DriveType.cs" />
-    <Compile Include="Device\Volume\Volume.DiskFreeSpace.cs" />
-    <Compile Include="Device\Volume\Volume.IsReady.cs" />
-    <Compile Include="Device\Volume\Volume.GetUniqueVolumeNameForPath.cs" />
-    <Compile Include="Device\Volume\Volume.GetVolumeDeviceName.cs" />
-    <Compile Include="Device\Volume\Volume.GetVolumeDisplayName.cs" />
-    <Compile Include="Device\Volume\Volume.GetVolumeGuid.cs" />
-    <Compile Include="Device\Volume\Volume.GetVolumeGuidForNtDeviceName.cs" />
-    <Compile Include="Device\Volume\Volume.GetVolumeInfo.cs" />
-    <Compile Include="Device\Volume\Volume.GetVolumePathName.cs" />
-    <Compile Include="Device\Volume\Volume.IsSameVolume.cs" />
-    <Compile Include="Device\Volume\Volume.IsVolume.cs" />
-    <Compile Include="Device\Volume\Volume.VolumeLabel.cs" />
-    <Compile Include="Device\Volume\Volume.SetVolumeMountPoint.cs" />
-    <Compile Include="Device\Volume\Volume.EnumerateVolumePathNames.cs" />
-    <Compile Include="Device\Volume\Volume.EnumerateVolumeMountPoints.cs" />
-    <Compile Include="Device\Volume\Volume.DeleteVolumeMountPoint.cs" />
-    <Compile Include="Device\Volume\Volume.DefineDosDevice.cs" />
-    <Compile Include="Device\Volume\Volume.EnumerateVolumes.cs" />
     <Compile Include="Device\Local Class\Local.EnumeratePhysicalDisks.cs" />
     <Compile Include="Device\Local Class\Local.EnumerateDevices.cs" />
     <Compile Include="Device\FilesystemHelper Class\FilesystemHelper.Compression.cs" />
@@ -983,7 +940,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
