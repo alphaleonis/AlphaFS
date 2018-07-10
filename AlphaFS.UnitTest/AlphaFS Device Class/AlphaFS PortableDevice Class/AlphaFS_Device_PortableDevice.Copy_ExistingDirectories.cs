@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Device_PortableDevice_Copy_ExistingDirectories()
+      public void AlphaFS_Device_PortableDevice_Copy_3ExistingDirectories()
       {
          using (var tempRoot = new TemporaryDirectory(false))
          {

@@ -197,27 +197,27 @@
       <DoTransformOnBuild>True</DoTransformOnBuild>
     </Compile>
     <Compile Include="Device\Local Class\Local.EnumeratePortableDevices.cs" />
-    <Compile Include="Device\PortableDevice\Local.EnumerateFiles.cs" />
-    <Compile Include="Device\PortableDevice\Local.EnumerateDirectories.cs" />
+    <Compile Include="Device\PortableDevice Class\Local.EnumerateFiles.cs" />
+    <Compile Include="Device\PortableDevice Class\Local.EnumerateDirectories.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.Constants.cs" />
     <Compile Include="Device\Native Other\WPD_POWER_SOURCES.cs" />
     <Compile Include="Device\Native Other\WPD_DEVICE_TYPES.cs" />
     <Compile Include="Device\Native Other\WPD_STORAGE_TYPE_VALUES.cs" />
     <Compile Include="Device\Native Other\WPD_DEVICE_TRANSPORTS.cs" />
     <Compile Include="Device\Native Methods\NativeMethods.PortableDevice.Constants.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo.EnumerateDirectories.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo.EnumerateFiles.cs" />
-    <Compile Include="Device\PortableDevice\WpdDirectoryInfo.cs" />
-    <Compile Include="Device\PortableDevice\WpdFileInfo.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo.EnumerateFileSystemEntries.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo.Delete.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo.PopulateDeviceProperties.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo.PopulateStorageProperties.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo.CreatePortableDeviceInstance.cs" />
-    <Compile Include="Device\PortableDevice\Local.EnumerateFileSystemEntries.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo_CopyMove.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo_Connect.cs" />
-    <Compile Include="Device\PortableDevice\PortableDeviceInfo.cs" />
+    <Compile Include="Device\PortableDevice Class\PortableDeviceInfo.EnumerateDirectories.cs" />
+    <Compile Include="Device\PortableDevice Class\PortableDeviceInfo.EnumerateFiles.cs" />
+    <Compile Include="Device\PortableDevice Class\WpdDirectoryInfo.cs" />
+    <Compile Include="Device\PortableDevice Class\WpdFileInfo.cs" />
+    <Compile Include="Device\PortableDevice Class\PortableDeviceInfo.EnumerateFileSystemEntries.cs" />
+    <Compile Include="Device\PortableDevice Class\PortableDeviceInfo.Delete.cs" />
+    <Compile Include="Device\PortableDevice Class\PortableDeviceInfo.PopulateDeviceProperties.cs" />
+    <Compile Include="Device\PortableDevice Class\PortableDeviceInfo.PopulateStorageProperties.cs" />
+    <Compile Include="Device\PortableDevice Class\PortableDeviceInfo.CreatePortableDeviceInstance.cs" />
+    <Compile Include="Device\PortableDevice Class\Local.EnumerateFileSystemEntries.cs" />
+    <Compile Include="Device\PortableDevice Class\PortableDeviceInfo_CopyMove.cs" />
+    <Compile Include="Device\PortableDevice Class\PortableDeviceInfo_Connect.cs" />
+    <Compile Include="Device\PortableDevice Class\PortableDeviceInfo.cs" />
     <Compile Include="Device\Local Class\Device.Local.cs" />
     <Compile Include="Device\Local Class\Local.GetDevicePowerState.cs" />
     <Compile Include="Device\Local Class\Local.GetStoragePartitionInfo.cs" />
@@ -940,7 +940,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
