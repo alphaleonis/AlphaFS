@@ -19,19 +19,27 @@
  *  THE SOFTWARE. 
  */
 
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Security;
+using System.Text;
+using StreamWriter = System.IO.StreamWriter;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public sealed partial class DirectoryInfo
+   public static partial class File
    {
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of instances for the directory.</summary>
-      /// <returns>Returns an <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of instances for the directory.</returns>
+      /// <summary>Creates or opens a file for writing <see cref="Encoding"/> encoded text.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to be opened for writing.</param>
+      /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>A <see cref="StreamWriter"/> that writes to the specified file using NativeMethods.DefaultFileBufferSize encoding.</returns>
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams()
+      internal static StreamWriter CreateTextCore(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return File.EnumerateAlternateDataStreamsCore(Transaction, true, LongFullName, PathFormat.LongFullPath);
+         return new StreamWriter(CreateFileStreamCore(transaction, path, ExtendedFileAttributes.SequentialScan, null, FileMode.Create, FileAccess.Write, FileShare.Read, NativeMethods.DefaultFileBufferSize, pathFormat), encoding);
       }
    }
 }

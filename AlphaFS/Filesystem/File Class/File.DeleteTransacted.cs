@@ -27,22 +27,24 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>Deletes the specified file.</summary>
+      /// <summary>[AlphaFS] Deletes the specified file.</summary>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static void Delete(string path)
+      public static void DeleteTransacted(KernelTransaction transaction, string path)
       {
-         DeleteFileCore(null, path, false, PathFormat.RelativePath);
+         DeleteFileCore(transaction, path, false, PathFormat.RelativePath);
       }
 
 
-      /// <summary>Deletes the specified file.</summary>
+      /// <summary>[AlphaFS] Deletes the specified file.</summary>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <exception cref="ArgumentException"/>
@@ -50,40 +52,42 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static void Delete(string path, PathFormat pathFormat)
+      public static void DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         DeleteFileCore(null, path, false, pathFormat);
+         DeleteFileCore(transaction, path, false, pathFormat);
       }
 
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
-      /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>      
+      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
+      /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>      
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static void Delete(string path, bool ignoreReadOnly)
+      public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
-         DeleteFileCore(null, path, ignoreReadOnly, PathFormat.RelativePath);
+         DeleteFileCore(transaction, path, ignoreReadOnly, PathFormat.RelativePath);
       }
 
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
-      /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static void Delete(string path, bool ignoreReadOnly, PathFormat pathFormat)
+      public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteFileCore(null, path, ignoreReadOnly, pathFormat);
+         DeleteFileCore(transaction, path, ignoreReadOnly, pathFormat);
       }
    }
 }

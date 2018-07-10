@@ -20,7 +20,6 @@
  */
 
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -33,74 +32,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path)
       {
-         return EnumerateAlternateDataStreamsCore(null, path, PathFormat.RelativePath);
+         return EnumerateAlternateDataStreamsCore(null, false, path, PathFormat.RelativePath);
       }
+
 
       /// <summary>[AlphaFS] Enumerates all altername datastreams of the specified file.</summary>
       /// <param name="path">The path to the file to enumerate streams of.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns an enumeration of <see cref="AlternateDataStreamInfo"/> instances.</returns>
+      /// <returns>An enumeration of <see cref="AlternateDataStreamInfo"/> instances.</returns>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path, PathFormat pathFormat)
       {
-         return EnumerateAlternateDataStreamsCore(null, path, pathFormat);
-      }
-
-      /// <summary>[AlphaFS] Enumerates all altername datastreams of the specified file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file to enumerate streams of.</param>
-      /// <returns>Returns an enumeration of <see cref="AlternateDataStreamInfo"/> instances.</returns>
-      [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path)
-      {
-         return EnumerateAlternateDataStreamsCore(transaction, path, PathFormat.RelativePath);
-      }
-
-      /// <summary>[AlphaFS] Enumerates all altername datastreams of the specified file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file to enumerate streams of.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns an enumeration of <see cref="AlternateDataStreamInfo"/> instances.</returns>
-      [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return EnumerateAlternateDataStreamsCore(transaction, path, pathFormat);
-      }
-
-
-
-
-      /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file or directory.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file or directory to enumerate streams of.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns an enumeration of <see cref="AlternateDataStreamInfo"/> instances.</returns>
-      [SecurityCritical]
-      internal static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsCore(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
-
-         using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
-         using (var safeFindFileHandle = FindFirstStreamNative(transaction, pathLp, buffer))
-         {
-            if (null != safeFindFileHandle)
-               while (true)
-               {
-                  yield return new AlternateDataStreamInfo(pathLp, buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0));
-
-                  var success = NativeMethods.FindNextStreamW(safeFindFileHandle, buffer);
-
-                  var lastError = Marshal.GetLastWin32Error();
-
-                  if (!success)
-                  {
-                     if (lastError == Win32Errors.ERROR_HANDLE_EOF)
-                        break;
-
-                     NativeError.ThrowException(lastError, pathLp);
-                  }
-               }
-         }
+         return EnumerateAlternateDataStreamsCore(null, false, path, pathFormat);
       }
    }
 }

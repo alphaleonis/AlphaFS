@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       [SecurityCritical]
-      internal static void CopyEmulateMoveDirectoryCore(ErrorHandler errorFilter, bool retry, CopyMoveArguments cma, CopyMoveResult copyMoveResult)
+      internal static void CopyMoveDirectoryCore(ErrorHandler errorFilter, bool retry, CopyMoveArguments cma, CopyMoveResult copyMoveResult)
       {
          var dirs = new Queue<string>(NativeMethods.DefaultFileBufferSize);
 

@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path)
       {
-         return File.EnumerateAlternateDataStreamsCore(null, path, PathFormat.RelativePath);
+         return File.EnumerateAlternateDataStreamsCore(null, true, path, PathFormat.RelativePath);
       }
 
 
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path, PathFormat pathFormat)
       {
-         return File.EnumerateAlternateDataStreamsCore(null, path, pathFormat);
+         return File.EnumerateAlternateDataStreamsCore(null, true, path, pathFormat);
       }
    }
 }

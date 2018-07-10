@@ -24,14 +24,28 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public sealed partial class DirectoryInfo
+   public static partial class File
    {
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of instances for the directory.</summary>
-      /// <returns>Returns an <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of instances for the directory.</returns>
+      /// <summary>[AlphaFS] Enumerates all altername datastreams of the specified file.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the file to enumerate streams of.</param>
+      /// <returns>An enumeration of <see cref="AlternateDataStreamInfo"/> instances.</returns>
       [SecurityCritical]
-      public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams()
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path)
       {
-         return File.EnumerateAlternateDataStreamsCore(Transaction, true, LongFullName, PathFormat.LongFullPath);
+         return EnumerateAlternateDataStreamsCore(transaction, false, path, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Enumerates all altername datastreams of the specified file.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the file to enumerate streams of.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>An enumeration of <see cref="AlternateDataStreamInfo"/> instances.</returns>
+      [SecurityCritical]
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         return EnumerateAlternateDataStreamsCore(transaction, false, path, pathFormat);
       }
    }
 }

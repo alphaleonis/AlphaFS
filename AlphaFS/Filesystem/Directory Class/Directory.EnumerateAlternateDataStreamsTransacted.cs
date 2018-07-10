@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path)
       {
-         return File.EnumerateAlternateDataStreamsCore(transaction, path, PathFormat.RelativePath);
+         return File.EnumerateAlternateDataStreamsCore(transaction, true, path, PathFormat.RelativePath);
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.EnumerateAlternateDataStreamsCore(transaction, path, pathFormat);
+         return File.EnumerateAlternateDataStreamsCore(transaction, true, path, pathFormat);
       }
    }
 }
