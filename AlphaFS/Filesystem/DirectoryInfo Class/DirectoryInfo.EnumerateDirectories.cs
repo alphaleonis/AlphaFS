@@ -44,6 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(true, Transaction, LongFullName, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath);
       }
 
+
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern.</summary>
       /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
@@ -62,6 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(true, Transaction, LongFullName, searchPattern, null, null, null, PathFormat.LongFullPath);
       }
+
 
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern and search subdirectory option.</summary>
       /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
@@ -88,8 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
 
-
-
+      
       /// <summary>[AlphaFS] Returns an enumerable collection of directory information in the current directory.</summary>
       /// <returns>An enumerable collection of directories in the current directory.</returns>
       /// <exception cref="ArgumentException"/>
@@ -105,7 +106,8 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosCore<DirectoryInfo>(true, Transaction, LongFullName, Path.WildcardStarMatchAll, null, options, null, PathFormat.LongFullPath);
       }
 
-      /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern.</summary>
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of directory information that matches a specified search pattern.</summary>
       /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>

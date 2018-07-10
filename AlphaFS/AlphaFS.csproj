@@ -310,6 +310,8 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Encryption\DirectoryInfo.EnableEncryption.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Encryption\DirectoryInfo.DisableEncryption.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Encryption\DirectoryInfo.Decrypt.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Links\DirectoryInfo.IsJunction.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Links\DirectoryInfo.ExistsJunction.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateSubdirectoryCore.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\File Class\File_CopyMove\File.CopyTransacted_Retry.cs" />
@@ -422,7 +424,6 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Compression\DirectoryInfo.Compress.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CountFileSystemObjects.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo CopyMove\DirectoryInfo.CopyTo.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.ToString.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.SetAccessControl.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileSystemInfos.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFiles.cs" />
@@ -807,7 +808,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

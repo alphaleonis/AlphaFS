@@ -179,5 +179,17 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       #endregion // Properties
+
+
+      #region Methods
+
+      /// <summary>Returns the original path that was passed by the user.</summary>
+      /// <returns>A string that represents this object.</returns>
+      public override string ToString()
+      {
+         return DisplayPath;
+      }
+
+      #endregion // Methods
    }
 }
