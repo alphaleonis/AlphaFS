@@ -29,18 +29,17 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the directory described by the current DirectoryInfo object.</summary>
-      /// <returns>Returns a <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory.</returns>
-
+      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory.</returns>
       [SecurityCritical]
       public DirectorySecurity GetAccessControl()
       {
          return File.GetAccessControlCore<DirectorySecurity>(true, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.LongFullPath);
       }
 
+
       /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the directory described by the current <see cref="DirectoryInfo"/> object.</summary>
       /// <param name="includeSections">One of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
-      /// <returns>Returns a <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the path parameter.</returns>
-
+      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the path parameter.</returns>
       [SecurityCritical]
       public DirectorySecurity GetAccessControl(AccessControlSections includeSections)
       {

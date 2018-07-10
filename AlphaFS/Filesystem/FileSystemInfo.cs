@@ -505,7 +505,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Refreshes the state of the <see cref="FileSystemEntryInfo"/> EntryInfo instance.</summary>
+      /// <summary>Refreshes the state of the <see cref="FileSystemEntryInfo"/> EntryInfo property.</summary>
       /// <remarks>
       ///   <para>FileSystemInfo.RefreshEntryInfo() takes a snapshot of the file from the current file system.</para>
       ///   <para>Refresh cannot correct the underlying file system even if the file system returns incorrect or outdated information.</para>

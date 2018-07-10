@@ -46,8 +46,9 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosCore<FileSystemInfo>(null, Transaction, LongFullName, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath);
       }
 
-      /// <summary>Returns an <see cref="IEnumerable{FileSystemInfo}"/> collection of file system information that matches a specified search pattern.</summary>
-      /// <returns>Returns an <see cref="IEnumerable{FileSystemInfo}"/> collection of file system information objects that matches <paramref name="searchPattern"/>.</returns>
+
+      /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern.</summary>
+      /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -66,8 +67,9 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosCore<FileSystemInfo>(null, Transaction, LongFullName, searchPattern, null, null, null, PathFormat.LongFullPath);
       }
 
-      /// <summary>Returns an <see cref="IEnumerable{FileSystemInfo}"/> collection of file system information that matches a specified search pattern and search subdirectory option.</summary>
-      /// <returns>Returns an <see cref="IEnumerable{FileSystemInfo}"/> collection of file system information objects that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
+
+      /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern and search subdirectory option.</summary>
+      /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -92,10 +94,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
 
-
-
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{FileSystemInfo}"/> collection of file system information in the current directory.</summary>
-      /// <returns>Returns an <see cref="IEnumerable{FileSystemInfo}"/> collection of file system information in the current directory. </returns>
+      
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system information in the current directory.</summary>
+      /// <returns>An enumerable collection of file system information in the current directory. </returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -110,8 +111,9 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosCore<FileSystemInfo>(null, Transaction, LongFullName, Path.WildcardStarMatchAll, null, options,  null, PathFormat.LongFullPath);
       }
 
-      /// <summary>[AlphaFS] Returns an <see cref="IEnumerable{FileSystemInfo}"/> collection of file system information that matches a specified search pattern.</summary>
-      /// <returns>Returns an <see cref="IEnumerable{FileSystemInfo}"/> collection of file system information objects that matches <paramref name="searchPattern"/>.</returns>
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system information that matches a specified search pattern.</summary>
+      /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
