@@ -62,21 +62,9 @@ namespace Alphaleonis.Win32.Filesystem
          string sourcePathLp;
          string destinationPathLp;
 
-         cma = ValidateCopyMoveArguments(cma, sourceFilePath, destinationFilePath, out sourcePathLp, out destinationPathLp);
+         cma = ValidateUpdateCopyMoveArguments(cma, driveChecked, false, sourceFilePath, destinationFilePath, out sourcePathLp, out destinationPathLp);
          
-         if (!driveChecked)
-         {
-            // Check for local or network drives, such as: "C:" or "\\server\c$" (but not for "\\?\GLOBALROOT\").
-            if (!sourcePathLp.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
-               Directory.ExistsDriveOrFolderOrFile(cma.Transaction, sourcePathLp, isFolder, (int) Win32Errors.NO_ERROR, true, false);
-
-
-            // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
-            if (!cma.DelayUntilReboot)
-               Directory.ExistsDriveOrFolderOrFile(cma.Transaction, destinationPathLp, isFolder, (int) Win32Errors.NO_ERROR, true, false);
-         }
          
-
          // Setup callback function for progress notifications.
 
          var raiseException = null == cma.ProgressHandler;
@@ -157,7 +145,9 @@ namespace Alphaleonis.Win32.Filesystem
             if (CopyMoveNative(cma, isMove, sourcePathLp, destinationPathLp, routine, out cancel, out lastError))
             {
                // We take an extra hit by getting the file size for a single file Copy or Move action.
+
                if (isSingleFileAction)
+
                   copyMoveRes.TotalBytes = GetSizeCore(null, cma.Transaction, destinationPathLp, true, PathFormat.LongFullPath);
 
 
@@ -168,6 +158,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // Only set timestamps for files.
 
                   if (cma.CopyTimestamps)
+
                      CopyTimestampsCore(cma.Transaction, false, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
                }
                

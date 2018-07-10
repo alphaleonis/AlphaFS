@@ -28,55 +28,55 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      #region .NET
-
-      /// <summary>Creates or opens a file for writing UTF-8 encoded text.</summary>
-      /// <param name="path">The file to be opened for writing.</param>
-      /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SecurityCritical]
-      public static StreamWriter CreateText(string path)
-      {
-         return CreateTextCore(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
-      }
-
-      #endregion // .NET
-
-
       /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to be opened for writing.</param>
+      /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      [SecurityCritical]
+      public static StreamWriter CreateTextTransacted(KernelTransaction transaction, string path)
+      {
+         return CreateTextCore(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Creates or opens a file for writing <see cref="Encoding"/> encoded text.</summary>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamWriter CreateText(string path, PathFormat pathFormat)
+      public static StreamWriter CreateTextTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return CreateTextCore(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
+         return CreateTextCore(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
 
       /// <summary>[AlphaFS] Creates or opens a file for writing <see cref="Encoding"/> encoded text.</summary>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
       /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamWriter CreateText(string path, Encoding encoding)
+      public static StreamWriter CreateTextTransacted(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return CreateTextCore(null, path, encoding, PathFormat.RelativePath);
+         return CreateTextCore(transaction, path, encoding, PathFormat.RelativePath);
       }
 
 
       /// <summary>[AlphaFS] Creates or opens a file for writing <see cref="Encoding"/> encoded text.</summary>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamWriter CreateText(string path, Encoding encoding, PathFormat pathFormat)
+      public static StreamWriter CreateTextTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return CreateTextCore(null, path, encoding, pathFormat);
+         return CreateTextCore(transaction, path, encoding, pathFormat);
       }
    }
 }

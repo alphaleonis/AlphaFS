@@ -19,36 +19,30 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+
 namespace Alphaleonis.Win32.Filesystem
 {
-   internal struct CopyMoveArguments
+   public static partial class File
    {
-      public int Retry;
-      public int RetryTimeout;
-      public KernelTransaction Transaction;
-      public string SourcePath;
-      public string DestinationPath;
-      public bool CopyTimestamps;
-      public CopyOptions? CopyOptions;
-      public MoveOptions? MoveOptions;
-      public CopyMoveProgressRoutine ProgressHandler;
-      public object UserProgressData;
-      public PathFormat PathFormat;
+      private static bool VerifyDelayUntilReboot(string sourcePath, MoveOptions? moveOptions, PathFormat pathFormat)
+      {
+         var delayUntilReboot = HasDelayUntilReboot(moveOptions);
 
-      internal DirectoryEnumerationFilters DirectoryEnumerationFilters;
+         if (delayUntilReboot)
+         {
+            if (HasCopyAllowed(moveOptions))
+               throw new ArgumentException(Resources.MoveOptionsDelayUntilReboot_Not_Allowed_With_MoveOptionsCopyAllowed, "moveOptions");
 
-      internal string SourcePathLp;
-      internal string DestinationPathLp;
-      internal bool IsCopy;
-      
-      /// <summary>A Move action fallback using Copy + Delete.</summary>
-      internal bool EmulateMove;
 
-      /// <summary>A file/folder will be deleted or renamed on Computer startup.</summary>
-      internal bool DelayUntilReboot;
+            // MoveFileXxx: (lpExistingFileName) If dwFlags specifies MOVEFILE_DELAY_UNTIL_REBOOT,
+            // the file cannot exist on a remote share, because delayed operations are performed before the network is available.
 
-      internal bool DeleteOnStartup;
+            if (Path.IsUncPathCore(sourcePath, pathFormat != PathFormat.LongFullPath, false))
+               throw new ArgumentException(Resources.MoveOptionsDelayUntilReboot_Not_Allowed_With_NetworkPath, "moveOptions");
+         }
 
-      internal bool PathsChecked;
+         return delayUntilReboot;
+      }
    }
 }

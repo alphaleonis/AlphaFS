@@ -28,25 +28,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      #region .NET
-
-      /// <summary>Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
-      /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
-      /// <exception cref="ArgumentNullException">path is null.</exception>
-      /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
-      /// <exception cref="NotSupportedException">path is in an invalid format.</exception>
-      /// <exception cref="UnauthorizedAccessException">The caller does not have the required permission.</exception>
-      /// <param name="path">The path to the file to append to.</param>
-      [SecurityCritical]
-      public static StreamWriter AppendText(string path)
-      {
-         return AppendTextCore(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
-      }
-
-      #endregion // .NET
-
-
       /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
       /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
       /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
@@ -54,12 +35,29 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
       /// <exception cref="NotSupportedException">path is in an invalid format.</exception>
       /// <exception cref="UnauthorizedAccessException">The caller does not have the required permission.</exception>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the file to append to.</param>
+      [SecurityCritical]
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path)
+      {
+         return AppendTextCore(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
+      }
+
+      
+      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
+      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
+      /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
+      /// <exception cref="ArgumentNullException">path is null.</exception>
+      /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
+      /// <exception cref="NotSupportedException">path is in an invalid format.</exception>
+      /// <exception cref="UnauthorizedAccessException">The caller does not have the required permission.</exception>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static StreamWriter AppendText(string path, PathFormat pathFormat)
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return AppendTextCore(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
+         return AppendTextCore(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
 
@@ -70,29 +68,31 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
       /// <exception cref="NotSupportedException">path is in an invalid format.</exception>
       /// <exception cref="UnauthorizedAccessException">The caller does not have the required permission.</exception>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the file to append to.</param>
+      /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
+      [SecurityCritical]
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path, Encoding encoding)
+      {
+         return AppendTextCore(transaction, path, encoding, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
+      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
+      /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
+      /// <exception cref="ArgumentNullException">path is null.</exception>
+      /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
+      /// <exception cref="NotSupportedException">path is in an invalid format.</exception>
+      /// <exception cref="UnauthorizedAccessException">The caller does not have the required permission.</exception>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static StreamWriter AppendText(string path, Encoding encoding, PathFormat pathFormat)
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return AppendTextCore(null, path, encoding, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <returns>A stream writer that appends UTF-8 encoded text to the specified file or to a new file.</returns>
-      /// <exception cref="ArgumentException">path is a zero-length string, contains only white space, or contains one or more invalid characters as defined by InvalidPathChars.</exception>
-      /// <exception cref="ArgumentNullException">path is null.</exception>
-      /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, the directory doesn’t exist or it is on an unmapped drive).</exception>
-      /// <exception cref="NotSupportedException">path is in an invalid format.</exception>
-      /// <exception cref="UnauthorizedAccessException">The caller does not have the required permission.</exception>
-      /// <param name="path">The path to the file to append to.</param>
-      /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      [SecurityCritical]
-      public static StreamWriter AppendText(string path, Encoding encoding)
-      {
-         return AppendTextCore(null, path, encoding, PathFormat.RelativePath);
+         return AppendTextCore(transaction, path, encoding, pathFormat);
       }
    }
 }
