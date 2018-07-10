@@ -26,40 +26,32 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
-      /// <returns>
-      ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
-      ///   or mount point pointed to by <paramref name="path"/>.
-      /// </returns>
+      /// <summary>[AlphaFS] Returns the volume information, root information, or both for the specified path.</summary>
+      /// <returns>The volume information, root information, or both for the specified path, or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotAReparsePointException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnrecognizedReparsePointException"/>
-      /// <param name="path">The path to the reparse point.</param>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path of a file or directory.</param>
       [SecurityCritical]
-      public static LinkTargetInfo GetLinkTargetInfo(string path)
+      public static string GetDirectoryRootTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetLinkTargetInfoCore(null, path, false, PathFormat.RelativePath);
+         return GetDirectoryRootCore(transaction, path, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
-      /// <returns>
-      ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
-      ///   or mount point pointed to by <paramref name="path"/>.
-      /// </returns>
+      /// <summary>[AlphaFS] Returns the volume information, root information, or both for the specified path.</summary>
+      /// <returns>The volume information, root information, or both for the specified path, or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotAReparsePointException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnrecognizedReparsePointException"/>
-      /// <param name="path">The path to the reparse point.</param>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path of a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static LinkTargetInfo GetLinkTargetInfo(string path, PathFormat pathFormat)
+      public static string GetDirectoryRootTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetLinkTargetInfoCore(null, path, false, pathFormat);
+         return GetDirectoryRootCore(transaction, path, pathFormat);
       }
    }
 }

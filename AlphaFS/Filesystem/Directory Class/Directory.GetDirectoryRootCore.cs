@@ -19,34 +19,39 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      #region .NET
-
-      /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
-      /// <param name="path">The path for which to retrieve the parent directory.</param>
-      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
-      [SecurityCritical]
-      public static DirectoryInfo GetParent(string path)
-      {
-         return GetParentCore(null, path, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
-      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
-      /// <param name="path">The path for which to retrieve the parent directory.</param>
+      /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
+      /// <returns>The volume information, root information, or both for the specified path, or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path of a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DirectoryInfo GetParent(string path, PathFormat pathFormat)
+      internal static string GetDirectoryRootCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetParentCore(null, path, pathFormat);
-      }
+         var pathLp = path;
 
-      #endregion // .NET
+         if (pathFormat != PathFormat.LongFullPath)
+         {
+            Path.CheckInvalidUncPath(path);
+
+            pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
+
+            pathLp = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false);
+         }
+         
+
+         var rootPath = Path.GetPathRoot(pathLp, false);
+
+         return Utils.IsNullOrWhiteSpace(rootPath) ? null : rootPath;
+      }
    }
 }

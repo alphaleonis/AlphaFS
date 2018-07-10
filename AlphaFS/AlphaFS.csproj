@@ -228,6 +228,23 @@
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntriesTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntryInfosCore.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntryInfosTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.ExistsTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetDirectoriesTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetDirectoryRootCore.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetDirectoryRootTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetFileInfoByHandleTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetFilesTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetFileSystemEntriesTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetFileSystemEntryInfoTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetLinkTargetInfoTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetParentCore.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetParentTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetPropertiesCore.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetPropertiesTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetSizeCore.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetSizeTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.IsEmptyCore.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.IsEmptyTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory_CopyMove\Directory.CopyFolderTimestamps.cs" />
     <Compile Include="Filesystem\Directory Class\Directory_CopyMove\Directory.CopyEmulateMoveDirectoryCore.cs" />
     <Compile Include="Filesystem\Directory Class\Directory_CopyMove\Directory.CopyTransacted.cs" />
@@ -253,6 +270,8 @@
     <Compile Include="Filesystem\Directory Class\Directory_Encryption\Directory.Decrypt.cs" />
     <Compile Include="Filesystem\Directory Class\Directory_Encryption\Directory.ExportEncryptedDirectoryRaw.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.SetCurrentDirectory.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory_Links\Directory.ExistsJunctionTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory_Links\Directory.ExistsJunctionCore.cs" />
     <Compile Include="Filesystem\Directory Class\Directory_Time\Directory.CopyTimestampsTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.ExistsDrive.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileIdInfoTransacted.cs" />
@@ -780,7 +799,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
