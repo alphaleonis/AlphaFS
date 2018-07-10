@@ -55,6 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosCore<FileSystemInfo>(null, Transaction, LongFullName, Path.WildcardStarMatchAll, null, null, null, PathFormat.LongFullPath).ToArray();
       }
 
+
       /// <summary>Retrieves an array of strongly typed <see cref="FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in path.
@@ -83,6 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return Directory.EnumerateFileSystemEntryInfosCore<FileSystemInfo>(null, Transaction, LongFullName, searchPattern, null, null, null, PathFormat.LongFullPath).ToArray();
       }
+
 
       /// <summary>Retrieves an array of strongly typed <see cref="FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
       /// <param name="searchPattern">
