@@ -25,9 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      #region .NET
-
-      /// <summary>Determines whether the given path refers to an existing directory on disk.</summary>
+      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
       /// <returns>
       ///   Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.
       ///   Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.
@@ -37,14 +35,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
       ///   a failing or missing disk, or if the caller does not have permission to read the file.
       /// </remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
       [SecurityCritical]
-      public static bool Exists(string path)
+      public static bool ExistsTransacted(KernelTransaction transaction, string path)
       {
-         return File.ExistsCore(null, true, path, PathFormat.RelativePath);
+         return File.ExistsCore(transaction, true, path, PathFormat.RelativePath);
       }
-
-      #endregion // .NET
 
 
       /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
@@ -57,12 +54,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
       ///   a failing or missing disk, or if the caller does not have permission to read the file.
       /// </remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static bool Exists(string path, PathFormat pathFormat)
+      public static bool ExistsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.ExistsCore(null, true, path, pathFormat);
+         return File.ExistsCore(transaction, true, path, pathFormat);
       }
    }
 }

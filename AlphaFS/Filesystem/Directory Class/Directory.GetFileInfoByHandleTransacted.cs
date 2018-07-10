@@ -20,43 +20,33 @@
  */
 
 using System.Security;
-using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
       /// <summary>[AlphaFS] Retrieves file information for the specified directory.</summary>
-      /// <returns>Returns a <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
+      /// <returns>A <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the directory ID for a directory can change over time.</remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
       [SecurityCritical]
-      public static ByHandleFileInfo GetFileInfoByHandle(string path)
+      public static ByHandleFileInfo GetFileInfoByHandleTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetFileInfoByHandleCore(null, path, PathFormat.RelativePath);
+         return File.GetFileInfoByHandleCore(transaction, path, PathFormat.RelativePath);
       }
 
 
       /// <summary>[AlphaFS] Retrieves file information for the specified directory.</summary>
-      /// <returns>Returns a <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
+      /// <returns>A <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
       /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the directory ID for a directory can change over time.</remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static ByHandleFileInfo GetFileInfoByHandle(string path, PathFormat pathFormat)
+      public static ByHandleFileInfo GetFileInfoByHandleTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetFileInfoByHandleCore(null, path, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Retrieves file information for the specified <see cref="SafeFileHandle"/>.</summary>
-      /// <returns>Returns a <see cref="ByHandleFileInfo"/> instance containing the requested information.</returns>
-      /// <remarks>Directory IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the directory ID for a directory can change over time.</remarks>
-      /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the open file or directory from which to retrieve the information.</param>
-      [SecurityCritical]
-      public static ByHandleFileInfo GetFileInfoByHandle(SafeFileHandle handle)
-      {
-         return File.GetFileInfoByHandle(handle);
+         return File.GetFileInfoByHandleCore(transaction, path, pathFormat);
       }
    }
 }

@@ -43,6 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="junctionPath">The path to test.</param>
+      [SecurityCritical]
       public static bool ExistsJunction(string junctionPath)
       {
          return ExistsJunctionCore(null, null, junctionPath, PathFormat.RelativePath);
@@ -66,102 +67,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="junctionPath">The path to test.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
       public static bool ExistsJunction(string junctionPath, PathFormat pathFormat)
       {
          return ExistsJunctionCore(null, null, junctionPath, pathFormat);
-      }
-
-
-
-
-      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory junction on disk.</summary>
-      /// <returns>
-      ///   Returns <c>true</c> if <paramref name="junctionPath"/> refers to an existing directory junction.
-      ///   Returns <c>false</c> if the directory junction does not exist or an error occurs when trying to determine if the specified file exists.
-      /// </returns>
-      /// <remarks>
-      ///   The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.
-      ///   This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
-      ///   a failing or missing disk, or if the caller does not have permission to read the file.
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="junctionPath">The path to test.</param>
-      public static bool ExistsJunction(KernelTransaction transaction, string junctionPath)
-      {
-         return ExistsJunctionCore(transaction, null, junctionPath, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory junction on disk.</summary>
-      /// <returns>
-      ///   Returns <c>true</c> if <paramref name="junctionPath"/> refers to an existing directory junction.
-      ///   Returns <c>false</c> if the directory junction does not exist or an error occurs when trying to determine if the specified file exists.
-      /// </returns>
-      /// <remarks>
-      ///   The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.
-      ///   This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
-      ///   a failing or missing disk, or if the caller does not have permission to read the file.
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="junctionPath">The path to test.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      public static bool ExistsJunction(KernelTransaction transaction, string junctionPath, PathFormat pathFormat)
-      {
-         return ExistsJunctionCore(transaction, null, junctionPath, pathFormat);
-      }
-
-
-
-
-      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory junction on disk.</summary>
-      /// <returns>
-      ///   Returns <c>true</c> if <paramref name="junctionPath"/> refers to an existing directory junction.
-      ///   Returns <c>false</c> if the directory junction does not exist or an error occurs when trying to determine if the specified file exists.
-      /// </returns>
-      /// <remarks>
-      ///   The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.
-      ///   This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
-      ///   a failing or missing disk, or if the caller does not have permission to read the file.
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="fsEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fsEntryInfo"/> or <paramref name="junctionPath"/>, not both.</param>
-      /// <param name="junctionPath">The path to test.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      internal static bool ExistsJunctionCore(KernelTransaction transaction, FileSystemEntryInfo fsEntryInfo, string junctionPath, PathFormat pathFormat)
-      {
-         if (null == fsEntryInfo)
-         {
-            if (pathFormat != PathFormat.LongFullPath)
-            {
-               Path.CheckSupportedPathFormat(junctionPath, true, true);
-
-               junctionPath = Path.GetExtendedLengthPathCore(transaction, junctionPath, pathFormat, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.RemoveTrailingDirectorySeparator);
-
-               pathFormat = PathFormat.LongFullPath;
-            }
-
-
-            fsEntryInfo = File.GetFileSystemEntryInfoCore(transaction, true, junctionPath, true, pathFormat);
-         }
-
-
-         return null != fsEntryInfo && fsEntryInfo.IsMountPoint;
       }
    }
 }

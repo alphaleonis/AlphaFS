@@ -25,28 +25,21 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      #region .NET
-
       /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
-      /// <param name="path">The path for which to retrieve the parent directory.</param>
       /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
-      [SecurityCritical]
-      public static DirectoryInfo GetParent(string path)
-      {
-         return GetParentCore(null, path, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
-      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DirectoryInfo GetParent(string path, PathFormat pathFormat)
+      internal static DirectoryInfo GetParentCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetParentCore(null, path, pathFormat);
-      }
+         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
 
-      #endregion // .NET
+         pathLp = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false);
+
+         var dirName = Path.GetDirectoryName(pathLp, false);
+
+         return !Utils.IsNullOrWhiteSpace(dirName) ? new DirectoryInfo(transaction, dirName, PathFormat.RelativePath) : null;
+      }
    }
 }

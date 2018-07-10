@@ -20,32 +20,35 @@
  */
 
 using System;
-using System.Globalization;
 using System.IO;
 using System.Security;
-using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      /// <summary>Deletes an NTFS directory junction.</summary>
-      /// <remarks>Only the directory junction is removed, not the target.</remarks>
-      /// <returns>A <see cref="DirectoryInfo"/> instance referencing the junction point.</returns>
+      /// <summary>Determines whether the given path refers to an existing directory junction on disk.</summary>
+      /// <returns>
+      ///   <para>Returns <c>true</c> if <paramref name="junctionPath"/> refers to an existing directory junction.</para>
+      ///   <para>Returns <c>false</c> if the directory junction does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      ///   <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
+      ///   <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
+      ///   <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
+      /// </remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="NotAReparsePointException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fsEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fsEntryInfo"/> or <paramref name="junctionPath"/>, not both.</param>
-      /// <param name="junctionPath">The path of the junction point to remove.</param>
-      /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
+      /// <param name="junctionPath">The path to test.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void DeleteJunctionCore(KernelTransaction transaction, FileSystemEntryInfo fsEntryInfo, string junctionPath, bool removeDirectory, PathFormat pathFormat)
+      internal static bool ExistsJunctionCore(KernelTransaction transaction, FileSystemEntryInfo fsEntryInfo, string junctionPath, PathFormat pathFormat)
       {
          if (null == fsEntryInfo)
          {
@@ -59,24 +62,11 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
 
-            fsEntryInfo = File.GetFileSystemEntryInfoCore(transaction, true, junctionPath, false, pathFormat);
-
-            if (!fsEntryInfo.IsMountPoint)
-               throw new NotAReparsePointException(string.Format(CultureInfo.InvariantCulture, Resources.Directory_Is_Not_A_MountPoint, fsEntryInfo.LongFullPath), (int) Win32Errors.ERROR_NOT_A_REPARSE_POINT);
+            fsEntryInfo = File.GetFileSystemEntryInfoCore(transaction, true, junctionPath, true, pathFormat);
          }
-         
-
-         pathFormat = PathFormat.LongFullPath;
 
 
-         // Remove the directory junction.
-         using (var safeHandle = OpenDirectoryJunction(transaction, fsEntryInfo.LongFullPath, pathFormat))
-            FileSystemHelper.DeleteDirectoryJunction(safeHandle);
-
-
-         // Optionally the folder itself, which should and must be empty.
-         if (removeDirectory)
-            DeleteDirectoryCore(transaction, fsEntryInfo, null, false, false, true, pathFormat);
+         return null != fsEntryInfo && fsEntryInfo.IsMountPoint;
       }
    }
 }

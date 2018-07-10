@@ -21,6 +21,7 @@
 
 using System;
 using System.IO;
+using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -40,6 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
+      [SecurityCritical]
       public static void DeleteJunction(string junctionPath)
       {
          DeleteJunctionCore(null, null, junctionPath, false, PathFormat.RelativePath);
@@ -61,6 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
       public static void DeleteJunction(string junctionPath, PathFormat pathFormat)
       {
          DeleteJunctionCore(null, null, junctionPath, false, pathFormat);
@@ -82,6 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
       /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
+      [SecurityCritical]
       public static void DeleteJunction(string junctionPath, bool removeDirectory)
       {
          DeleteJunctionCore(null, null, junctionPath, removeDirectory, PathFormat.RelativePath);
@@ -104,6 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="junctionPath">The path of the junction point to remove.</param>
       /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
       public static void DeleteJunction(string junctionPath, bool removeDirectory, PathFormat pathFormat)
       {
          DeleteJunctionCore(null, null, junctionPath, removeDirectory, pathFormat);
