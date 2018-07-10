@@ -20,32 +20,12 @@
  */
 
 using System.Security;
-using System.Transactions;
 using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="path">A path that describes a file to compress.</param>      
-      [SecurityCritical]
-      public static void Compress(string path)
-      {
-         FileSystemHelper.ToggleCompressionCore(null, false, path, true, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="path">A path that describes a file to compress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      [SecurityCritical]
-      public static void Compress(string path, PathFormat pathFormat)
-      {
-         FileSystemHelper.ToggleCompressionCore(null, false, path, true, pathFormat);
-      }
-      
-
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a file to compress.</param>      
