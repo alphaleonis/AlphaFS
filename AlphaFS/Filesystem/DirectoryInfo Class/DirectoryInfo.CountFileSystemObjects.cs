@@ -28,8 +28,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public sealed partial class DirectoryInfo
    {
-      #region AlphaFS
-
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <returns>The counted number of file system objects.</returns>
       /// <exception cref="ArgumentException"/>
@@ -44,6 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return Directory.EnumerateFileSystemEntryInfosCore<string>(null, Transaction, LongFullName, Path.WildcardStarMatchAll, null, options, null, PathFormat.LongFullPath).Count();
       }
+
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <returns>The counted number of file system objects.</returns>
@@ -65,6 +64,26 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosCore<string>(null, Transaction, LongFullName, searchPattern, null, options, null, PathFormat.LongFullPath).Count();
       }
 
-      #endregion // AlphaFS
+
+      /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
+      /// <returns>The counted number of file system objects.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="searchPattern">
+      ///   The search string to match against the names of directories in path.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
+      /// </param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SecurityCritical]
+      public long CountFileSystemObjects(string searchPattern, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters)
+      {
+         return Directory.EnumerateFileSystemEntryInfosCore<string>(null, Transaction, LongFullName, searchPattern, null, options, filters, PathFormat.LongFullPath).Count();
+      }
    }
 }
