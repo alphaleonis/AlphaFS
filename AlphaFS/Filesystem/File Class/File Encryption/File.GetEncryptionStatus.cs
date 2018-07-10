@@ -19,8 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -29,46 +27,22 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
       /// <param name="path">The name of the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
-      [SecurityCritical]
-      public static FileEncryptionStatus GetEncryptionStatus(string path, PathFormat pathFormat)
-      {
-         return GetEncryptionStatusCore(path, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
-      /// <param name="path">The name of the file.</param>
-      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
+      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>      
       [SecurityCritical]
       public static FileEncryptionStatus GetEncryptionStatus(string path)
       {
          return GetEncryptionStatusCore(path, PathFormat.RelativePath);
       }
 
-      /// <summary>Retrieves the encryption status of the specified file.</summary>
+
+      /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
+      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>      
       [SecurityCritical]
-      internal static FileEncryptionStatus GetEncryptionStatusCore(string path, PathFormat pathFormat)
+      public static FileEncryptionStatus GetEncryptionStatus(string path, PathFormat pathFormat)
       {
-         if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
-
-         string pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
-
-         FileEncryptionStatus status;
-
-         // FileEncryptionStatus()
-         // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-
-         if (!NativeMethods.FileEncryptionStatus(pathLp, out status))
-            NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
-
-         return status;
+         return GetEncryptionStatusCore(path, pathFormat);
       }
-
    }
 }

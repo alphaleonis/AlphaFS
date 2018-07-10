@@ -26,7 +26,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {
-   internal static partial class FileSystemHelper
+   internal static partial class FilesystemHelper
    {
       /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
       internal static void DeleteDirectoryJunction(SafeFileHandle safeFileHandle)

@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="outputStream">The destination stream to which the backup data will be written.</param>
       public static void ExportEncryptedDirectoryRaw(string fileName, Stream outputStream)
       {
-         File.ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, PathFormat.RelativePath, false);
+         File.ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, false, PathFormat.RelativePath);
       }
 
 
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">The path format of the <paramref name="fileName"/> parameter.</param>
       public static void ExportEncryptedDirectoryRaw(string fileName, Stream outputStream, PathFormat pathFormat)
       {
-         File.ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, pathFormat, false);
+         File.ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, false, pathFormat);
       }
    }
 }

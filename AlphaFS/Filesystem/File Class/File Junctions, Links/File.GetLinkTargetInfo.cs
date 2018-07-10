@@ -20,30 +20,35 @@
  */
 
 using System.Security;
-using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to compress.</param>      
+      /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
+      /// <param name="path">The path to the reparse point.</param>
+      /// <returns>
+      ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
+      ///   or mount point pointed to by <paramref name="path"/>.
+      /// </returns>
       [SecurityCritical]
-      public static void CompressTransacted(KernelTransaction transaction, string path)
+      public static LinkTargetInfo GetLinkTargetInfo(string path)
       {
-         FilesystemHelper.ToggleCompressionCore(transaction, false, path, true, PathFormat.RelativePath);
+         return GetLinkTargetInfoCore(null, path, false, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to compress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
+      /// <param name="path">The path to the reparse point.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>
+      ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
+      ///   or mount point pointed to by <paramref name="path"/>.
+      /// </returns>
       [SecurityCritical]
-      public static void CompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static LinkTargetInfo GetLinkTargetInfo(string path, PathFormat pathFormat)
       {
-         FilesystemHelper.ToggleCompressionCore(transaction, false, path, true, pathFormat);
+         return GetLinkTargetInfoCore(null, path, false, pathFormat);
       }
    }
 }

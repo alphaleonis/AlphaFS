@@ -29,7 +29,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Device
 {
-   internal static partial class FileSystemHelper
+   internal static partial class FilesystemHelper
    {
       /// <summary>[AlphaFS] Get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       /// <exception cref="NotAReparsePointException"/>

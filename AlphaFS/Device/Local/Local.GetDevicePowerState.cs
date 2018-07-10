@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       public static bool GetDevicePowerState(string devicePath)
       {
-         using (var safeFileHandle = OpenDevice(FileSystemHelper.GetLocalDevicePath(devicePath), NativeMethods.FILE_ANY_ACCESS))
+         using (var safeFileHandle = OpenDevice(FilesystemHelper.GetLocalDevicePath(devicePath), NativeMethods.FILE_ANY_ACCESS))
          {
             bool isOn;
 

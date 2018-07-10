@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
          CreateDirectoryCore(true, transaction, junctionPath, null, null, false, pathFormat);
 
          using (var safeHandle = OpenDirectoryJunction(transaction, junctionPath, pathFormat))
-            FileSystemHelper.CreateDirectoryJunction(safeHandle, directoryPath);
+            FilesystemHelper.CreateDirectoryJunction(safeHandle, directoryPath);
 
 
          // Copy the target date and time stamps to the directory junction.

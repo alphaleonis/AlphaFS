@@ -31,13 +31,13 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_CreateHardlink_And_EnumerateHardlinks_Local_Success()
+      public void AlphaFS_File_CreateHardLink_And_EnumerateHardLinks_Local_Success()
       {
-         AlphaFS_File_CreateHardlink_And_EnumerateHardlinks();
+         AlphaFS_File_CreateHardLink_And_EnumerateHardLinks();
       }
 
 
-      private void AlphaFS_File_CreateHardlink_And_EnumerateHardlinks()
+      private void AlphaFS_File_CreateHardLink_And_EnumerateHardLinks()
       {
          using (var tempRoot = new TemporaryDirectory())
          {
@@ -62,14 +62,14 @@ namespace AlphaFS.UnitTest
             {
                var newfile = System.IO.Path.Combine(hardlinkFolder, i + "-Hardlink-" + tempRoot.RandomTxtFileName);
 
-               Alphaleonis.Win32.Filesystem.File.CreateHardlink(newfile, file);
+               Alphaleonis.Win32.Filesystem.File.CreateHardLink(newfile, file);
 
                hardlinks.Add(newfile);
             }
 
 
             var cnt = 0;
-            foreach (var hardLink in Alphaleonis.Win32.Filesystem.File.EnumerateHardlinks(file))
+            foreach (var hardLink in Alphaleonis.Win32.Filesystem.File.EnumerateHardLinks(file))
                Console.WriteLine("\t\t#{0:000}\tHardlink: [{1}]", ++cnt, hardLink);
 
             Assert.AreEqual(numCreate + 1, cnt);

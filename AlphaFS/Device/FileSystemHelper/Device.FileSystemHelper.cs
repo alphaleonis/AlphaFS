@@ -22,7 +22,7 @@
 namespace Alphaleonis.Win32.Device
 {
    /// <summary>[AlphaFS] Provides static methods to retrieve device resource information from a local or remote host.</summary>
-   internal static partial class FileSystemHelper
+   internal static partial class FilesystemHelper
    {
       /// <summary>MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384</summary>
       private const int MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384;

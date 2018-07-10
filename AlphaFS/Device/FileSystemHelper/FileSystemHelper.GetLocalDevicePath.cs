@@ -25,7 +25,7 @@ using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Device
 {
-   internal static partial class FileSystemHelper
+   internal static partial class FilesystemHelper
    {
       /// <summary>Determines and retrieves the <see cref="DeviceInfo.DevicePath"/> such as: <c>\\.\C:</c> or <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></summary>
       /// <returns>Returns the <see cref="DeviceInfo.DevicePath"/> path string such as: <c>\\.\C:</c> or <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></returns>

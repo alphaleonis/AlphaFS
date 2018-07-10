@@ -19,31 +19,35 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+using System.Runtime.InteropServices;
 using System.Security;
-using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to compress.</param>      
+      /// <summary>Retrieves the encryption status of the specified file.</summary>
+      /// <param name="path">The name of the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static void CompressTransacted(KernelTransaction transaction, string path)
+      internal static FileEncryptionStatus GetEncryptionStatusCore(string path, PathFormat pathFormat)
       {
-         FilesystemHelper.ToggleCompressionCore(transaction, false, path, true, PathFormat.RelativePath);
-      }
+         if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
+            throw new ArgumentNullException("path");
 
+         var pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to compress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      [SecurityCritical]
-      public static void CompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         FilesystemHelper.ToggleCompressionCore(transaction, false, path, true, pathFormat);
+         FileEncryptionStatus status;
+
+         // FileEncryptionStatus()
+         // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+
+         if (!NativeMethods.FileEncryptionStatus(pathLp, out status))
+            NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
+
+         return status;
       }
    }
 }

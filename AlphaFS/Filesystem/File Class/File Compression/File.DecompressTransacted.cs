@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DecompressTransacted(KernelTransaction transaction, string path)
       {
-         FileSystemHelper.ToggleCompressionCore(transaction, false, path, false, PathFormat.RelativePath);
+         FilesystemHelper.ToggleCompressionCore(transaction, false, path, false, PathFormat.RelativePath);
       }
 
 
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DecompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         FileSystemHelper.ToggleCompressionCore(transaction, false, path, false, pathFormat);
+         FilesystemHelper.ToggleCompressionCore(transaction, false, path, false, pathFormat);
       }
    }
 }

@@ -29,7 +29,7 @@ using Microsoft.Win32.SafeHandles;
 namespace Alphaleonis.Win32.Device
 {
    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
-   internal static partial class FileSystemHelper
+   internal static partial class FilesystemHelper
    {
       /// <summary>[AlphaFS] Creates an NTFS directory junction (similar to CMD command: "MKLINK /J").</summary>
       internal static void CreateDirectoryJunction(SafeFileHandle safeFileHandle, string directoryPath)

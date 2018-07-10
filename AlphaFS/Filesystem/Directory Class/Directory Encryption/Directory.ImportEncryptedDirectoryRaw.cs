@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The path of the destination directory to restore to.</param>
       public static void ImportEncryptedDirectoryRaw(Stream inputStream, string destinationPath)
       {
-         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, PathFormat.RelativePath, false);
+         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, false, PathFormat.RelativePath);
       }
 
 
@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">The path format of the <paramref name="destinationPath"/> parameter.</param>
       public static void ImportEncryptedDirectoryRaw(Stream inputStream, string destinationPath, PathFormat pathFormat)
       {
-         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, pathFormat, false);
+         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, false, pathFormat);
       }
 
 
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="overwriteHidden">If set to <c>true</c> a hidden directory will be overwritten on import.</param>
       public static void ImportEncryptedDirectoryRaw(Stream inputStream, string destinationPath, bool overwriteHidden)
       {
-         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, PathFormat.RelativePath, overwriteHidden);
+         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, overwriteHidden, PathFormat.RelativePath);
       }
 
 
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">The path format of the <paramref name="destinationPath"/> parameter.</param>
       public static void ImportEncryptedDirectoryRaw(Stream inputStream, string destinationPath, bool overwriteHidden, PathFormat pathFormat)
       {
-         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, pathFormat, overwriteHidden);
+         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, overwriteHidden, pathFormat);
       }
    }
 }

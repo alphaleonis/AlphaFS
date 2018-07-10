@@ -27,7 +27,7 @@ using File = Alphaleonis.Win32.Filesystem.File;
 
 namespace Alphaleonis.Win32.Device
 {
-   internal static partial class FileSystemHelper
+   internal static partial class FilesystemHelper
    {
       /// <summary>[AlphaFS] Sets the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
       /// <param name="transaction">The transaction.</param>
