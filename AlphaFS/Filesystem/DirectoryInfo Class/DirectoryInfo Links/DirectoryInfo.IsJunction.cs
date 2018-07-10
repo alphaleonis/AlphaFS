@@ -19,17 +19,34 @@
  *  THE SOFTWARE. 
  */
 
+using System;
+using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public sealed partial class DirectoryInfo
    {
-      /// <summary>[AlphaFS] Refreshes the state of the <see cref="FileSystemEntryInfo"/> EntryInfo property.</summary>
+      /// <summary>[AlphaFS] Determines whether the current instance refers to an existing directory junction on disk.</summary>
+      /// <returns>
+      ///   <para>Returns <c>true</c> if the current instance refers to an existing directory junction.</para>
+      ///   <para>Returns <c>false</c> if the directory junction does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      ///   <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
+      ///   <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
+      ///   <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
-      public new void RefreshEntryInfo()
+      public bool IsJunction()
       {
-         base.RefreshEntryInfo();
+         return Directory.ExistsJunctionCore(Transaction, EntryInfo, null, PathFormat.LongFullPath);
       }
    }
 }
