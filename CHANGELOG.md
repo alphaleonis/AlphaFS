@@ -25,7 +25,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #472: Add property `IsJunction` and method `ExistsJunction` to `DirectoryInfo` class.
 - Issue #473: Change AlphaFS implementations of method `File.Copy` to return `CopyMoveResult` instance instead of `void`.
 - Added missing overloaded methods regarding timestamps and symbolic links.
-- Marked `Directory`/`DirectoryInfo.Copy` methods using parameters `overwrite` and `preserveDates` as obsolete. Use one of the `CopyOptions`.
+- Marked `Directory.Copy`/`DirectoryInfo.Copy` methods using parameters `overwrite` and `preserveDates` as obsolete. Use one of the `CopyOptions`.
 
 ### Breaking Changes
 
@@ -40,6 +40,7 @@ Version 2.2.4  (2018-XX-XX)
 
 - Issue #468: Method `Directory.CopyTimestamps` should throw `DirectoryNotFoundException`.
 - Issue #469: Method `Directory.GetFileIdInfo` should throw `DirectoryNotFoundException`.
+- Issue #474: Method `Directory.EnumerateAlternateDataStreams` should throw `DirectoryNotFoundException`.
 
 
 Version 2.2.3  (2018-06-14)
