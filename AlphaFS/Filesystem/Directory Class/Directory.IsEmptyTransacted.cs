@@ -25,28 +25,32 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      #region .NET
-
-      /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
-      /// <param name="path">The path for which to retrieve the parent directory.</param>
-      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <summary>[AlphaFS] Determines whether the given directory is empty; i.e. it contains no files and no subdirectories.</summary>
+      /// <returns>
+      ///   <para>Returns <c>true</c> when the directory contains no file system objects.</para>
+      ///   <para>Returns <c>false</c> when directory contains at least one file system object.</para>
+      /// </returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="directoryPath">The path to the directory.</param>
       [SecurityCritical]
-      public static DirectoryInfo GetParent(string path)
+      public static bool IsEmptyTransacted(KernelTransaction transaction, string directoryPath)
       {
-         return GetParentCore(null, path, PathFormat.RelativePath);
+         return IsEmptyCore(transaction, directoryPath, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
-      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
-      /// <param name="path">The path for which to retrieve the parent directory.</param>
+      /// <summary>[AlphaFS] Determines whether the given directory is empty; i.e. it contains no files and no subdirectories.</summary>
+      /// <returns>
+      ///   <para>Returns <c>true</c> when the directory contains no file system objects.</para>
+      ///   <para>Returns <c>false</c> when directory contains at least one file system object.</para>
+      /// </returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="directoryPath">The path to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DirectoryInfo GetParent(string path, PathFormat pathFormat)
+      public static bool IsEmptyTransacted(KernelTransaction transaction, string directoryPath, PathFormat pathFormat)
       {
-         return GetParentCore(null, path, pathFormat);
+         return IsEmptyCore(transaction, directoryPath, pathFormat);
       }
-
-      #endregion // .NET
    }
 }

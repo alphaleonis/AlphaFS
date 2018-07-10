@@ -142,6 +142,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
+      [SecurityCritical]
       public static void DeleteJunctionTransacted(KernelTransaction transaction, string junctionPath)
       {
          DeleteJunctionCore(transaction, null, junctionPath, false, PathFormat.RelativePath);
@@ -164,6 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
       public static void DeleteJunctionTransacted(KernelTransaction transaction, string junctionPath, PathFormat pathFormat)
       {
          DeleteJunctionCore(transaction, null, junctionPath, false, pathFormat);
@@ -186,6 +188,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
       /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
+      [SecurityCritical]
       public static void DeleteJunctionTransacted(KernelTransaction transaction, string junctionPath, bool removeDirectory)
       {
          DeleteJunctionCore(transaction, null, junctionPath, removeDirectory, PathFormat.RelativePath);
@@ -209,6 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="junctionPath">The path of the junction point to remove.</param>
       /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
       public static void DeleteJunctionTransacted(KernelTransaction transaction, string junctionPath, bool removeDirectory, PathFormat pathFormat)
       {
          DeleteJunctionCore(transaction, null, junctionPath, removeDirectory, pathFormat);

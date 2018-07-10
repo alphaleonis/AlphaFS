@@ -30,6 +30,8 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
+      #region .NET
+
       /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the specified directory.</summary>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
       /// <exception cref="IOException"/>
@@ -42,18 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
          return File.GetAccessControlCore<DirectorySecurity>(true, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.RelativePath);
       }
 
-      /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for a particular directory.</summary>
-      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="path"/> parameter. </returns>
-      /// <exception cref="IOException"/>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
-      /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
-      [SecurityCritical]
-      public static DirectorySecurity GetAccessControl(string path, AccessControlSections includeSections)
-      {
-         return File.GetAccessControlCore<DirectorySecurity>(true, path, includeSections, PathFormat.RelativePath);
-      }
+      #endregion // .NET
 
 
       /// <summary>[AlphaFS] Gets a <see cref="DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the specified directory.</summary>
@@ -68,6 +59,21 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.GetAccessControlCore<DirectorySecurity>(true, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, pathFormat);
       }
+
+
+      /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for a particular directory.</summary>
+      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="path"/> parameter. </returns>
+      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
+      /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
+      [SecurityCritical]
+      public static DirectorySecurity GetAccessControl(string path, AccessControlSections includeSections)
+      {
+         return File.GetAccessControlCore<DirectorySecurity>(true, path, includeSections, PathFormat.RelativePath);
+      }
+      
 
       /// <summary>[AlphaFS] Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for a particular directory.</summary>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="path"/> parameter. </returns>
@@ -95,6 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.GetAccessControlHandleCore<DirectorySecurity>(false, true, handle, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, SECURITY_INFORMATION.None);
       }
+
 
       /// <summary>[AlphaFS] Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for a particular directory handle.</summary>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="handle"/> parameter. </returns>
