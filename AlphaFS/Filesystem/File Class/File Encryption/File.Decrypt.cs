@@ -20,33 +20,38 @@
  */
 
 using System;
-using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public sealed partial class DirectoryInfo
+   public static partial class File
    {
-      /// <summary>[AlphaFS] Determines whether the current instance refers to an existing directory junction on disk.</summary>
-      /// <returns>
-      ///   <para>Returns <c>true</c> if the current instance refers to an existing directory junction.</para>
-      ///   <para>Returns <c>false</c> if the directory junction does not exist or an error occurs when trying to determine if the specified file exists.</para>
-      /// </returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      ///   <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
-      ///   <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
-      ///   <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
-      /// </remarks>
+      /// <summary>Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="IOException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">A path that describes a file to decrypt.</param>
       [SecurityCritical]
-      public bool IsJunction()
+      public static void Decrypt(string path)
       {
-         return Directory.ExistsJunctionCore(Transaction, EntryInfo, null, PathFormat.LongFullPath);
+         EncryptDecryptFileCore(false, path, false, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <param name="path">A path that describes a file to decrypt.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Decrypt(string path, PathFormat pathFormat)
+      {
+         EncryptDecryptFileCore(false, path, false, pathFormat);
       }
    }
 }

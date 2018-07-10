@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ImportEncryptedFileRaw"/>      
       public static void ExportEncryptedFileRaw(string fileName, Stream outputStream)
       {
-         ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, PathFormat.RelativePath, false);
+         ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, false, PathFormat.RelativePath);
       }
 
 
@@ -82,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ImportEncryptedFileRaw"/>
       public static void ExportEncryptedFileRaw(string fileName, Stream outputStream, PathFormat pathFormat)
       {
-         ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, pathFormat, false);
+         ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, false, pathFormat);
       }
    }
 }
