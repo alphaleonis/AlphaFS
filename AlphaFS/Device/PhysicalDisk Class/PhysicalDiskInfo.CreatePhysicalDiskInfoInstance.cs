@@ -44,9 +44,9 @@ namespace Alphaleonis.Win32.Device
          if (null != deviceInfo)
             devicePath = deviceInfo.DevicePath;
 
-         var localDevicePath = FileSystemHelper.GetValidatedDevicePath(getByDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : devicePath, out isDrive, out isVolume, out isDevice);
+         var localDevicePath = FilesystemHelper.GetValidatedDevicePath(getByDeviceNumber ? Path.PhysicalDrivePrefix + deviceNumber.ToString(CultureInfo.InvariantCulture) : devicePath, out isDrive, out isVolume, out isDevice);
 
-         localDevicePath = FileSystemHelper.GetLocalDevicePath(localDevicePath);
+         localDevicePath = FilesystemHelper.GetLocalDevicePath(localDevicePath);
 
 
          // The StorageDeviceInfo is always needed as it contains the device- and partition number.
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Device
          // If physicalDriveNumberPath != null, the drive is opened using: "\\.\PhysicalDriveX" path format
          // which is the device, not the volume/logical drive.
 
-         localDevicePath = FileSystemHelper.GetValidatedDevicePath(physicalDriveNumberPath ?? localDevicePath, out isDrive, out isVolume, out isDevice);
+         localDevicePath = FilesystemHelper.GetValidatedDevicePath(physicalDriveNumberPath ?? localDevicePath, out isDrive, out isVolume, out isDevice);
 
          
          AddDeviceInfoData(isElevated, isDevice, deviceNumber, localDevicePath);

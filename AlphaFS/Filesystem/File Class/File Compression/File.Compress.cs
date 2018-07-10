@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Compress(string path)
       {
-         Device.FileSystemHelper.ToggleCompressionCore(null, false, path, true, PathFormat.RelativePath);
+         Device.FilesystemHelper.ToggleCompressionCore(null, false, path, true, PathFormat.RelativePath);
       }
 
 
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Compress(string path, PathFormat pathFormat)
       {
-         Device.FileSystemHelper.ToggleCompressionCore(null, false, path, true, pathFormat);
+         Device.FilesystemHelper.ToggleCompressionCore(null, false, path, true, pathFormat);
       }
    }
 }

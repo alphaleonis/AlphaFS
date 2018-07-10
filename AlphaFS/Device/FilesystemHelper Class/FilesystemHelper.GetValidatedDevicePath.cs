@@ -24,7 +24,7 @@ using Alphaleonis.Win32.Filesystem;
 
 namespace Alphaleonis.Win32.Device
 {
-   internal static partial class FileSystemHelper
+   internal static partial class FilesystemHelper
    {
       /// <summary>Determines and retrieves the type of device path.</summary>
       /// <returns>The final device path with a <see cref="Path.DirectorySeparator"/>.</returns>

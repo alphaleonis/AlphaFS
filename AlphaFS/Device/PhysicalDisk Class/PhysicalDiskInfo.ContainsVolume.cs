@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Device
          bool isVolume;
          bool isDeviceInfo;
 
-         devicePath = FileSystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
+         devicePath = FilesystemHelper.GetValidatedDevicePath(devicePath, out isDrive, out isVolume, out isDeviceInfo);
 
 
          if (isDrive && null != LogicalDrives)

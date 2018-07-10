@@ -21,6 +21,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -177,6 +178,14 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
+
+
+      /// <summary>[AlphaFS] Determines whether the current instance refers to an existing directory junction on disk.</summary>
+      public bool IsJunction
+      {
+         [SecurityCritical]
+         get { return null != EntryInfo && EntryInfo.IsMountPoint; }
+      }
 
       #endregion // Properties
 

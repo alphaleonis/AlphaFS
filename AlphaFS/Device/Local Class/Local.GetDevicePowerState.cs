@@ -20,35 +20,28 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
-using Alphaleonis.Win32.Filesystem;
-using Microsoft.Win32.SafeHandles;
+using System.Security;
 
 namespace Alphaleonis.Win32.Device
 {
-   internal static partial class FileSystemHelper
+   public static partial class Local
    {
-      /// <summary>[AlphaFS] Deletes an NTFS directory junction.</summary>
-      internal static void DeleteDirectoryJunction(SafeFileHandle safeFileHandle)
+      /// <summary>[AlphaFS] Retrieves the current power state for the specified <paramref name="devicePath"/> storage device.</summary>
+      /// <returns>Returns <c>true</c> if the storage device is in the working state; otherwise, <c>false</c>.</returns>
+      /// <param name="devicePath">
+      ///    <para>A disk path such as: <c>\\.\PhysicalDrive0</c></para>
+      ///    <para>A drive path such as: <c>C</c>, <c>C:</c> or <c>C:\</c></para>
+      ///    <para>A volume <see cref="Guid"/> such as: <c>\\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</c></para>
+      ///    <para>A <see cref="Filesystem.DeviceInfo.DevicePath"/> string such as: <c>\\?\scsi#disk...{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}</c></para>
+      /// </param>
+      [SecurityCritical]
+      public static bool GetDevicePowerState(string devicePath)
       {
-         var reparseDataBuffer = new Filesystem.NativeMethods.REPARSE_DATA_BUFFER
+         using (var safeFileHandle = OpenDevice(FilesystemHelper.GetLocalDevicePath(devicePath), NativeMethods.FILE_ANY_ACCESS))
          {
-            ReparseTag = ReparsePointTag.MountPoint,
-            ReparseDataLength = 0,
-            PathBuffer = new byte[MAXIMUM_REPARSE_DATA_BUFFER_SIZE - 16] // 16368
-         };
+            bool isOn;
 
-
-         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(reparseDataBuffer)))
-         {
-            safeBuffer.StructureToPtr(reparseDataBuffer, false);
-
-            var success = NativeMethods.DeviceIoJunctions(safeFileHandle, NativeMethods.IoControlCode.FSCTL_DELETE_REPARSE_POINT, safeBuffer, REPARSE_DATA_BUFFER_HEADER_SIZE, IntPtr.Zero, 0, IntPtr.Zero, IntPtr.Zero);
-
-            var lastError = Marshal.GetLastWin32Error();
-
-            if (!success)
-               NativeError.ThrowException(lastError);
+            return NativeMethods.GetDevicePowerState(safeFileHandle, out isOn) && isOn;
          }
       }
    }

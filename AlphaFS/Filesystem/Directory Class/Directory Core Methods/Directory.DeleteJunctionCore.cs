@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Remove the directory junction.
          using (var safeHandle = OpenDirectoryJunction(transaction, fsEntryInfo.LongFullPath, pathFormat))
-            FileSystemHelper.DeleteDirectoryJunction(safeHandle);
+            FilesystemHelper.DeleteDirectoryJunction(safeHandle);
 
 
          // Optionally the folder itself, which should and must be empty.

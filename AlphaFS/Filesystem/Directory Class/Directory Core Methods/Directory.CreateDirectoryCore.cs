@@ -157,7 +157,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
                else if (compress)
-                  FileSystemHelper.ToggleCompressionCore(transaction, true, folderLp, true, pathFormat);
+                  FilesystemHelper.ToggleCompressionCore(transaction, true, folderLp, true, pathFormat);
             }
 
 

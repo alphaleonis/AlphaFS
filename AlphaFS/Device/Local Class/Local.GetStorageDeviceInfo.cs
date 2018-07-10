@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Device
       [SecurityCritical]
       internal static StorageDeviceInfo GetStorageDeviceInfo(bool isElevated, bool isDevice, int deviceNumber, string devicePath, out string localDevicePath)
       {
-         localDevicePath = FileSystemHelper.GetLocalDevicePath(devicePath);
+         localDevicePath = FilesystemHelper.GetLocalDevicePath(devicePath);
          var getByDeviceNumber = deviceNumber > -1;
          var retry = false;
 

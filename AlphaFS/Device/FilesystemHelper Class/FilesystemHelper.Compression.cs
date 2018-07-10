@@ -19,31 +19,28 @@
  *  THE SOFTWARE. 
  */
 
+using System.IO;
 using System.Security;
-using Alphaleonis.Win32.Device;
+using System.Security.AccessControl;
+using Alphaleonis.Win32.Filesystem;
+using File = Alphaleonis.Win32.Filesystem.File;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Device
 {
-   public static partial class File
+   internal static partial class FilesystemHelper
    {
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
+      /// <summary>[AlphaFS] Sets the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to compress.</param>      
+      /// <param name="isFolder">When <c>true</c> indicates the sources is a directory, <c>false</c> indicates a file.</param>
+      /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
+      /// <param name="compress"><c>true</c> = compress, <c>false</c> = decompress</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void CompressTransacted(KernelTransaction transaction, string path)
+      internal static void ToggleCompressionCore(KernelTransaction transaction, bool isFolder, string path, bool compress, PathFormat pathFormat)
       {
-         FilesystemHelper.ToggleCompressionCore(transaction, false, path, true, PathFormat.RelativePath);
-      }
+         using (var safeHandle = File.CreateFileCore(transaction, isFolder, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, false, pathFormat))
 
-
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to compress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      [SecurityCritical]
-      public static void CompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         FilesystemHelper.ToggleCompressionCore(transaction, false, path, true, pathFormat);
+         using (Local.InvokeDeviceIoData(safeHandle, NativeMethods.IoControlCode.FSCTL_SET_COMPRESSION, compress ? 1 : 0, path)) { }
       }
    }
 }

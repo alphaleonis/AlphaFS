@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void EnableCompression()
       {
-         FileSystemHelper.ToggleCompressionCore(Transaction, true, LongFullName, true, PathFormat.LongFullPath);
+         FilesystemHelper.ToggleCompressionCore(Transaction, true, LongFullName, true, PathFormat.LongFullPath);
       }
    }
 }

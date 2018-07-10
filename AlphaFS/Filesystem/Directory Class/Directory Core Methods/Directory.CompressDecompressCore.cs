@@ -59,12 +59,12 @@ namespace Alphaleonis.Win32.Filesystem
 
          foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, pathLp, searchPattern, null, options | DirectoryEnumerationOptions.AsLongPath, filters, PathFormat.LongFullPath))
 
-            FileSystemHelper.ToggleCompressionCore(transaction, fsei.IsDirectory, fsei.FullPath, compress, PathFormat.LongFullPath);
+            FilesystemHelper.ToggleCompressionCore(transaction, fsei.IsDirectory, fsei.FullPath, compress, PathFormat.LongFullPath);
 
 
          // Process the root directory, the given path.
 
-         FileSystemHelper.ToggleCompressionCore(transaction, true, pathLp, compress, PathFormat.LongFullPath);
+         FilesystemHelper.ToggleCompressionCore(transaction, true, pathLp, compress, PathFormat.LongFullPath);
       }
    }
 }

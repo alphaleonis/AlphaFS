@@ -19,31 +19,39 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Security;
-using Alphaleonis.Win32.Device;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to compress.</param>      
+      /// <summary>Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <param name="path">A path that describes a file to encrypt.</param>
       [SecurityCritical]
-      public static void CompressTransacted(KernelTransaction transaction, string path)
+      public static void Encrypt(string path)
       {
-         FilesystemHelper.ToggleCompressionCore(transaction, false, path, true, PathFormat.RelativePath);
+         EncryptDecryptFileCore(false, path, true, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to compress.</param>
+      /// <summary>[AlphaFS] Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <param name="path">A path that describes a file to encrypt.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void CompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void Encrypt(string path, PathFormat pathFormat)
       {
-         FilesystemHelper.ToggleCompressionCore(transaction, false, path, true, pathFormat);
+         EncryptDecryptFileCore(false, path, true, pathFormat);
       }
    }
 }
