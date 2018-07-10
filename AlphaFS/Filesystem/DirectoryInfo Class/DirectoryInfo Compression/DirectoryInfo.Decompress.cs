@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.IO;
 using System.Security;
 
@@ -26,30 +27,33 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public sealed partial class DirectoryInfo
    {
-      /// <summary>[AlphaFS] Deletes empty subdirectories from the <see cref="DirectoryInfo"/> instance.</summary>
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <remarks>This will only decompress the root items (non recursive).</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
-      public void DeleteEmptySubdirectories()
+      public void Decompress()
       {
-         Directory.DeleteEmptySubdirectoriesCore(EntryInfo, Transaction, null, false, false, PathFormat.LongFullPath);
+         Directory.CompressDecompressCore(Transaction, LongFullName, Path.WildcardStarMatchAll, null, null, false, PathFormat.LongFullPath);
       }
 
 
-      /// <summary>[AlphaFS] Deletes empty subdirectories from the <see cref="DirectoryInfo"/> instance.</summary>
-      /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public void DeleteEmptySubdirectories(bool recursive)
+      public void Decompress(DirectoryEnumerationOptions options)
       {
-         Directory.DeleteEmptySubdirectoriesCore(EntryInfo, Transaction, null, recursive, false, PathFormat.LongFullPath);
-      }
-
-
-      /// <summary>[AlphaFS] Deletes empty subdirectories from the <see cref="DirectoryInfo"/> instance.</summary>
-      /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
-      [SecurityCritical]
-      public void DeleteEmptySubdirectories(bool recursive, bool ignoreReadOnly)
-      {
-         Directory.DeleteEmptySubdirectoriesCore(EntryInfo, Transaction, null, recursive, ignoreReadOnly, PathFormat.LongFullPath);
+         Directory.CompressDecompressCore(Transaction, LongFullName, Path.WildcardStarMatchAll, options, null, false, PathFormat.LongFullPath);
       }
    }
 }
