@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory. May be <c>null</c> to indicate that no template should be used.</param>
       /// <param name="directorySecurity">The <see cref="DirectorySecurity"/> access control to apply to the directory, may be null.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <c>true</c> compresses the directory using NTFS compression.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       internal static DirectoryInfo CreateDirectoryCore(bool returnNull, KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, PathFormat pathFormat)
@@ -77,27 +77,25 @@ namespace Alphaleonis.Win32.Filesystem
          {
             // Return DirectoryInfo instance if the directory specified by path already exists.
 
-            if (File.ExistsCore(transaction, true, longPath, pathFormat))
+            if (File.ExistsCore(transaction, true, longPath, PathFormat.LongFullPath))
 
                // We are not always interested in a new DirectoryInfo instance.
-               return returnNull ? null : new DirectoryInfo(transaction, longPath, pathFormat);
+               return returnNull ? null : new DirectoryInfo(transaction, longPath, PathFormat.LongFullPath);
          }
 
 
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
-         if (File.ExistsCore(transaction, false, longPath, pathFormat))
+         if (File.ExistsCore(transaction, false, longPath, PathFormat.LongFullPath))
             NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, longPath);
 
 
          var templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
             ? null
             : Path.GetExtendedLengthPathCore(transaction, templatePath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         
 
-
-         string regularPath;
-         var list = ConstructFullPath(transaction, longPath, out regularPath);
-
-
+         var list = ConstructFullPath(transaction, longPath);
+         
          // Directory security.
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(directorySecurity))
          {
@@ -110,9 +108,13 @@ namespace Alphaleonis.Win32.Filesystem
                // 2013-01-13: MSDN confirms LongPath usage.
 
                if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
+
                   ? (templatePathLp == null
+
                      ? NativeMethods.CreateDirectory(folderLp, securityAttributes)
+
                      : NativeMethods.CreateDirectoryEx(templatePathLp, folderLp, securityAttributes))
+
                   : NativeMethods.CreateDirectoryTransacted(templatePathLp, folderLp, securityAttributes, transaction.SafeHandle)))
                {
                   var lastError = Marshal.GetLastWin32Error();
@@ -122,16 +124,16 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
                      case Win32Errors.ERROR_ALREADY_EXISTS:
-                        if (File.ExistsCore(transaction, false, longPath, pathFormat))
+                        if (File.ExistsCore(transaction, false, longPath, PathFormat.LongFullPath))
                            NativeError.ThrowException(lastError, longPath);
 
-                        if (File.ExistsCore(transaction, false, folderLp, pathFormat))
+                        if (File.ExistsCore(transaction, false, folderLp, PathFormat.LongFullPath))
                            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, null, folderLp);
                         break;
 
 
                      case Win32Errors.ERROR_BAD_NET_NAME:
-                        NativeError.ThrowException(lastError, longPath);
+                        NativeError.ThrowException(Win32Errors.ERROR_BAD_NET_NAME, longPath);
                         break;
 
 
@@ -149,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                      default:
-                        NativeError.ThrowException(lastError, folderLp);
+                        NativeError.ThrowException(lastError, true, folderLp);
                         break;
                   }
                }
@@ -160,12 +162,13 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             // We are not always interested in a new DirectoryInfo instance.
-            return returnNull ? null : new DirectoryInfo(transaction, longPath, pathFormat);
+
+            return returnNull ? null : new DirectoryInfo(transaction, longPath, PathFormat.LongFullPath);
          }
       }
 
 
-      private static Stack<string> ConstructFullPath(KernelTransaction transaction, string path, out string pathNew)
+      private static Stack<string> ConstructFullPath(KernelTransaction transaction, string path)
       {
          var longPathPrefix = Path.IsUncPathCore(path, false, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
          path = Path.GetRegularPathCore(path, GetFullPathOptions.None, false);
@@ -196,9 +199,6 @@ namespace Alphaleonis.Win32.Filesystem
                   --index;
             }
          }
-
-
-         pathNew = path;
 
          return list;
       }

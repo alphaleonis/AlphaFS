@@ -31,17 +31,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Creates a directory.</summary>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-
       [SecurityCritical]
       public void Create()
       {
          Directory.CreateDirectoryCore(true, Transaction, LongFullName, null, null, false, PathFormat.LongFullPath);
       }
 
-      /// <summary>Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
+
+      /// <summary>Creates a directory using a <see cref="DirectorySecurity"/> object.</summary>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity)
@@ -51,31 +50,27 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
 
-      #region AlphaFS
 
-      /// <summary>[AlphaFS] Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <summary>[AlphaFS] Creates a directory using a <see cref="DirectorySecurity"/> object.</summary>
+      /// <param name="compress">When <c>true</c> compresses the directory using NTFS compression.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public void Create(bool compress)
+      public DirectoryInfo Create(bool compress)
       {
-         Directory.CreateDirectoryCore(true, Transaction, LongFullName, null, null, compress, PathFormat.LongFullPath);
+         return Directory.CreateDirectoryCore(true, Transaction, LongFullName, null, null, compress, PathFormat.LongFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
+
+      /// <summary>[AlphaFS] Creates a directory using a <see cref="DirectorySecurity"/> object.</summary>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <c>true</c> compresses the directory using NTFS compression.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public void Create(DirectorySecurity directorySecurity, bool compress)
+      public DirectoryInfo Create(DirectorySecurity directorySecurity, bool compress)
       {
-         Directory.CreateDirectoryCore(true, Transaction, LongFullName, null, directorySecurity, compress, PathFormat.LongFullPath);
+         return Directory.CreateDirectoryCore(true, Transaction, LongFullName, null, directorySecurity, compress, PathFormat.LongFullPath);
       }
-
-      #endregion // AlphaFS
    }
 }

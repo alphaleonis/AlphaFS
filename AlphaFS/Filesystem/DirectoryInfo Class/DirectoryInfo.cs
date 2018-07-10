@@ -33,8 +33,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
-      /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
+      /// <summary>Initializes a new instance of the <see cref="DirectoryInfo"/> class on the specified path.</summary>
+      /// <param name="path">The path on which to create the <see cref="DirectoryInfo"/>.</param>
       /// <remarks>
       /// This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.
       /// The path parameter can be a file name, including a file on a Universal Naming Convention (UNC) share.
@@ -46,10 +46,8 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
 
-      #region AlphaFS
-
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
-      /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryInfo"/> class on the specified path.</summary>
+      /// <param name="path">The path on which to create the <see cref="DirectoryInfo"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
       public DirectoryInfo(string path, PathFormat pathFormat) : this(null, path, pathFormat)
@@ -58,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Special internal implementation.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="fullPath">The full path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
+      /// <param name="fullPath">The full path on which to create the <see cref="DirectoryInfo"/>.</param>
       /// <param name="junk1">Not used.</param>
       /// <param name="junk2">Not used.</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
@@ -81,18 +79,18 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Transactional
 
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryInfo"/> class on the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
+      /// <param name="path">The path on which to create the <see cref="DirectoryInfo"/>.</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
       public DirectoryInfo(KernelTransaction transaction, string path) : this(transaction, path, PathFormat.RelativePath)
       {
       }
 
 
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryInfo"/> class on the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
+      /// <param name="path">The path on which to create the <see cref="DirectoryInfo"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
       public DirectoryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
@@ -101,8 +99,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // Transactional
-
-      #endregion // AlphaFS
 
       #endregion // Constructors
 
@@ -149,12 +145,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public override string Name
       {
-         get
-         {
-            return FullPath.Length > 3
-               ? Path.GetFileName(Path.RemoveTrailingDirectorySeparator(FullPath), true)
-               : FullPath;
-         }
+         get { return FullPath.Length > 3 ? Path.GetFileName(Path.RemoveTrailingDirectorySeparator(FullPath), true) : FullPath; }
       }
 
 
@@ -171,7 +162,8 @@ namespace Alphaleonis.Win32.Filesystem
                path = Path.RemoveTrailingDirectorySeparator(FullPath);
 
             var dirName = Path.GetDirectoryName(path, false);
-            return dirName == null ? null : new DirectoryInfo(Transaction, dirName, true, true);
+
+            return null != dirName ? new DirectoryInfo(Transaction, dirName, true, true) : null;
          }
       }
 
