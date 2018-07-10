@@ -23,8 +23,9 @@ Version 2.3  (2018-XX-XX)
 - Issue #470: Change AlphaFS implementations of method `DirectoryInfo.Create` to return `DirectoryInfo` instance instead of void.
 - Issue #471: Add overloaded method `Directory.CountFileSystemObjects` supporting `DirectoryEnumerationFilters`.
 - Issue #472: Add methods `IsJunction` and `ExistsJunction` to DirectoryInfo class.
+- Issue #473: Change AlphaFS implementations of method `File.Copy` to return `CopyMoveResult` instance instead of `void`.
 - Added missing overloaded methods regarding timestamps and symbolic links.
-- Marked `Directory`/`DirectoryInfo.Copy` methods using parameters `overwrite` and `preserveDates` as obsolete. Use one of the `CopyOptions`;
+- Marked `Directory`/`DirectoryInfo.Copy` methods using parameters `overwrite` and `preserveDates` as obsolete. Use one of the `CopyOptions`.
 
 
 ### Breaking Changes

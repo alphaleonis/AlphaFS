@@ -42,26 +42,5 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Device.ToggleCompressionCore(null, false, path, false, pathFormat);
       }
-
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to decompress.</param>      
-      [SecurityCritical]
-      public static void DecompressTransacted(KernelTransaction transaction, string path)
-      {
-         Device.ToggleCompressionCore(transaction, false, path, false, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to decompress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      [SecurityCritical]
-      public static void DecompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         Device.ToggleCompressionCore(transaction, false, path, false, pathFormat);
-      }
    }
 }
