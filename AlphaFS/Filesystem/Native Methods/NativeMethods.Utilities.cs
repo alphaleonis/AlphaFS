@@ -133,7 +133,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
       /// <param name="handle">The current handle to check.</param>
       /// <param name="lastError">The result of Marshal.GetLastWin32Error()</param>
-      /// <param name="isFolder">When <c>true</c> indicates the sources is a directory, <c>false</c> indicates a file and <c>null</c> specifies a physical device.</param>
+      /// <param name="isFolder">When <c>true</c> indicates the source is a directory, <c>false</c> indicates a file and <c>null</c> specifies a physical device.</param>
       /// <param name="path">The path on which the Exception occurred.</param>
       /// <param name="throwException"><c>true</c> will throw an <exception cref="Resources.Handle_Is_Invalid_Win32Error"/>, <c>false</c> will not raise this exception..</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>

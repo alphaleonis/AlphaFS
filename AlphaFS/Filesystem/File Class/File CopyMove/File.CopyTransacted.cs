@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists,
@@ -117,7 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
@@ -189,7 +189,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
@@ -229,7 +229,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
@@ -263,7 +263,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = CopyOptions.FailIfExists
@@ -293,7 +293,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = CopyOptions.FailIfExists,
@@ -325,7 +325,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, int retry, int retryTimeout)
       {
-         return CopyMoveCore(null, true, new CopyMoveArguments
+         return CopyMoveCore(true, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -359,7 +359,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, int retry, int retryTimeout, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, true, new CopyMoveArguments
+         return CopyMoveCore(true, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -393,7 +393,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = CopyOptions.FailIfExists,
@@ -427,7 +427,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = CopyOptions.FailIfExists,
@@ -463,7 +463,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -501,7 +501,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -539,7 +539,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = copyOptions
@@ -571,7 +571,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = copyOptions,
@@ -605,7 +605,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, int retry, int retryTimeout)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -641,7 +641,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, int retry, int retryTimeout, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -679,7 +679,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = copyOptions,
@@ -717,7 +717,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
             CopyOptions = copyOptions,
@@ -757,7 +757,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -799,7 +799,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(null, false, new CopyMoveArguments
+         return CopyMoveCore(false, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,

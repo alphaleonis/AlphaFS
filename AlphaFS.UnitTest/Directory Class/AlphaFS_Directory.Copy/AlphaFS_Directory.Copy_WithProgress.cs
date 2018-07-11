@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_ExistingDirectory_WithProgress_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Copy_WithProgress_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_Copy_ExistingDirectory_WithProgress(false);
-         AlphaFS_Directory_Copy_ExistingDirectory_WithProgress(true);
+         AlphaFS_Directory_Copy_WithProgress(false);
+         AlphaFS_Directory_Copy_WithProgress(true);
       }
 
 
-      private void AlphaFS_Directory_Copy_ExistingDirectory_WithProgress(bool isNetwork)
+      private void AlphaFS_Directory_Copy_WithProgress(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
