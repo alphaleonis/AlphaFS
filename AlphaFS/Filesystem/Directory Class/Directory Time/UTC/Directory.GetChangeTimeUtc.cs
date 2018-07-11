@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.Win32.SafeHandles;
 using System;
 using System.Security;
 
@@ -33,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path)
       {
-         return File.GetChangeTimeCore(null, null, path, true, PathFormat.RelativePath);
+         return File.GetChangeTimeCore(null, null, true, path, true, PathFormat.RelativePath);
       }
 
 
@@ -44,17 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path, PathFormat pathFormat)
       {
-         return File.GetChangeTimeCore(null, null, path, true, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
-      /// <returns>A <see cref="DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
-      /// <param name="safeFileHandle">An open handle to the directory from which to retrieve information.</param>
-      [SecurityCritical]
-      public static DateTime GetChangeTimeUtc(SafeFileHandle safeFileHandle)
-      {
-         return File.GetChangeTimeCore(null, safeFileHandle, null, true, PathFormat.RelativePath);
+         return File.GetChangeTimeCore(null, null, true, path, true, pathFormat);
       }
    }
 }

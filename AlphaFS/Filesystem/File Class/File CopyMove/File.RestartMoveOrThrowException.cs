@@ -128,32 +128,33 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                   // Directory exists with the same name as the file.
+
                   if (dstExists && !isFolder && destIsFolder && !retry)
+
                      NativeError.ThrowException(lastError, false, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, destinationPathLp));
 
+                  
+                  // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
 
-                  if (isMove)
+                  if (isMove && IsReadOnlyOrHidden(attrs.dwFileAttributes))
                   {
-                     if (IsReadOnlyOrHidden(attrs.dwFileAttributes))
+                     if (HasReplaceExisting(cma.MoveOptions))
                      {
-                        // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
-                        if (HasReplaceExisting(cma.MoveOptions))
-                        {
-                           // Reset file system object attributes.
-                           SetAttributesCore(cma.Transaction, isFolder, destinationPathLp, FileAttributes.Normal, PathFormat.LongFullPath);
-
-                           restart = true;
-                           break;
-                        }
+                        // Reset attributes to Normal.
+                        SetAttributesCore(cma.Transaction, isFolder, destinationPathLp, FileAttributes.Normal, PathFormat.LongFullPath);
 
 
-                        // MSDN: .NET 3.5+: UnauthorizedAccessException: destinationPath is read-only.
-                        // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
-                        // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-
-                        if (!retry)
-                           throw new FileReadOnlyException(destinationPathLp);
+                        restart = true;
+                        break;
                      }
+
+
+                     // MSDN: .NET 3.5+: UnauthorizedAccessException: destinationPath is read-only.
+                     // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
+                     // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
+
+                     if (!retry)
+                        throw new FileReadOnlyException(destinationPathLp);
                   }
                }
 

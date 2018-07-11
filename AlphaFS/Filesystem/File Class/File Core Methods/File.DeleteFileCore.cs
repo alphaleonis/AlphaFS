@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      if (ignoreReadOnly)
                      {
-                        // Reset file attributes to Normal.
+                        // Reset attributes to Normal.
                         SetAttributesCore(transaction, false, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
 
                         goto startDeleteFile;
