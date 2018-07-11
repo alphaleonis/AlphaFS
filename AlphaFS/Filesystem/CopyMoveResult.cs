@@ -69,24 +69,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Initializes a CopyMoveResult instance for the Copy or Move action.
-      /// <remarks>Normally there is no need to manually call this constructor.</remarks>
-      /// </summary>
-      /// <param name="source">Indicates the full path to the source file or directory.</param>
-      /// <param name="destination">Indicates the full path to the destination file or directory.</param>
-      /// <param name="isCopy">>When <c>true</c> the action is a Copy, Move otherwise.</param>
-      /// <param name="isFolder">When <c>true</c> indicates the sources is a directory; file otherwise.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved; otherwise, <c>false</c>. This parameter is ignored for move operations.</param>
-      /// <param name="emulatedMove">When <c>true</c> indicates the Move action used a fallback of Copy + Delete actions.</param>
-      public CopyMoveResult(string source, string destination, bool isCopy, bool isFolder, bool preserveDates, bool emulatedMove) : this(source, destination)
+      internal CopyMoveResult(CopyMoveArguments cma, bool isFolder, string source, string destination) : this(source, destination)
       {
-         IsEmulatedMove = emulatedMove;
+         IsEmulatedMove = cma.EmulateMove;
 
-         IsCopy = isCopy;
+         IsCopy = cma.IsCopy;
 
          IsDirectory = isFolder;
 
-         TimestampsCopied = preserveDates;
+         TimestampsCopied = cma.CopyTimestamps;
       }
 
       #endregion // Constructors

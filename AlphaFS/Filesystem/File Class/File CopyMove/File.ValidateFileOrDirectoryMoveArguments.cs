@@ -25,7 +25,17 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      internal static CopyMoveArguments ValidateUpdateCopyMoveArguments(CopyMoveArguments cma, bool driveChecked, bool isFolder, string sourcePath, string destinationPath, out string sourcePathLp, out string destinationPathLp)
+      internal static CopyMoveArguments ValidateFileOrDirectoryMoveArguments(CopyMoveArguments cma, bool driveChecked, bool isFolder)
+      {
+         string unusedSourcePathLp;
+         string unusedDestinationPathLp;
+
+         return ValidateFileOrDirectoryMoveArguments(cma, driveChecked, isFolder, cma.SourcePath, cma.DestinationPath, out unusedSourcePathLp, out unusedDestinationPathLp);
+      }
+
+
+      /// <summary>Validates and updates the file/directory copy/move arguments and updates them accordingly. This happens only once per <see cref="CopyMoveArguments"/> instance.</summary>
+      private static CopyMoveArguments ValidateFileOrDirectoryMoveArguments(CopyMoveArguments cma, bool driveChecked, bool isFolder, string sourcePath, string destinationPath, out string sourcePathLp, out string destinationPathLp)
       {
          sourcePathLp = sourcePath;
          destinationPathLp = destinationPath;
@@ -34,11 +44,11 @@ namespace Alphaleonis.Win32.Filesystem
             return cma;
 
 
-         cma.IsCopy = IsCopyAction(cma.CopyOptions, cma.MoveOptions);
-         cma.EmulateMove = false;
+         cma.IsCopy = IsCopyAction(cma);
 
-         cma.DelayUntilReboot = !cma.IsCopy && VerifyDelayUntilReboot(sourcePath, cma.MoveOptions, cma.PathFormat);
-         
+         if (!cma.IsCopy)
+            cma.DelayUntilReboot = VerifyDelayUntilReboot(sourcePath, cma.MoveOptions, cma.PathFormat);
+
 
          if (cma.PathFormat != PathFormat.LongFullPath)
          {
@@ -50,6 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (!cma.DelayUntilReboot && null == destinationPath)
                throw new ArgumentNullException("destinationPath");
             
+
             if (sourcePath.Trim().Length == 0)
                throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "sourcePath");
 
@@ -85,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             sourcePathLp = Path.GetExtendedLengthPathCore(cma.Transaction, sourcePath, cma.PathFormat, fullPathOptions);
 
-            if (isFolder)
+            if (isFolder || !cma.IsCopy)
                cma.SourcePathLp = sourcePathLp;
 
 
@@ -99,25 +110,38 @@ namespace Alphaleonis.Win32.Filesystem
 
                destinationPathLp = Path.GetExtendedLengthPathCore(cma.Transaction, destinationPath, cma.PathFormat, fullPathOptions);
 
-               if (isFolder)
+
+               if (isFolder || !cma.IsCopy)
                {
                   cma.DestinationPathLp = destinationPathLp;
 
                   // Process Move action options, possible fallback to Copy action.
+
                   if (!cma.IsCopy)
-                     cma = Directory.ValidateUpdateCopyMoveArguments(cma);
+                     cma = Directory.ValidateMoveAction(cma);
+               }
+
+
+               if (cma.IsCopy)
+               {
+                  cma.CopyTimestamps = HasCopyTimestamps(cma.CopyOptions);
+
+                  if (cma.CopyTimestamps)
+
+                     // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile functions.
+
+                     cma.CopyOptions &= ~CopyOptions.CopyTimestamp;
                }
             }
 
 
-            if (!cma.CopyTimestamps)
+            // Setup callback function for progress notifications.
+
+            if (null == cma.Routine && null != cma.ProgressHandler)
             {
-               cma.CopyTimestamps = HasCopyTimestamps(cma.CopyOptions);
+               cma.Routine = (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, streamNumber, callbackReason, sourceFile, destinationFile, data) =>
 
-               // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile.
-
-               if (cma.CopyTimestamps)
-                  cma.CopyOptions &= ~CopyOptions.CopyTimestamp;
+                     cma.ProgressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, (int) streamNumber, callbackReason, cma.UserProgressData);
             }
 
 
@@ -125,19 +149,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             cma.PathsChecked = true;
          }
-
-         else
-         {
-            sourcePathLp = sourcePath;
-            destinationPathLp = destinationPath;
-
-            if (isFolder)
-            {
-               cma.SourcePathLp = sourcePath;
-               cma.DestinationPathLp = destinationPath;
-            }
-         }
-
+         
 
          return cma;
       }

@@ -47,47 +47,52 @@ namespace AlphaFS.UnitTest
             var share = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempRoot.CreateDirectory().FullName);
 
             var dstFile = System.IO.Path.Combine(drive, dstFileName);
-
-
-            Alphaleonis.Win32.Network.Host.ConnectDrive(drive, share);
-
-            Console.WriteLine("Mapped drive [{0}] to [{1}]\n", drive, share);
             
 
-            System.IO.File.AppendAllText(srcFile, new string('*', new Random().Next(1, 1024)));
+            try
+            {
+               Alphaleonis.Win32.Network.Host.ConnectDrive(drive, share);
 
-            const Alphaleonis.Win32.Filesystem.MoveOptions options = Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed | Alphaleonis.Win32.Filesystem.MoveOptions.WriteThrough | Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting;
-
-            Console.WriteLine("Src File Path: [{0}]", srcFile);
-            Console.WriteLine("Dst File Path: [{0}]", dstFile);
-
-
-            var cmr = Alphaleonis.Win32.Filesystem.Directory.Move(srcFile, dstFile, options);
-
-            UnitTestConstants.Dump(cmr);
+               Console.WriteLine("Mapped drive [{0}] to [{1}]\n", drive, share);
 
 
-            Assert.IsFalse(System.IO.Directory.Exists(dstFile));
+               System.IO.File.AppendAllText(srcFile, new string('*', new Random().Next(1, 1024)));
 
-            Assert.IsTrue(System.IO.File.Exists(dstFile));
+               var srcFileSize = new System.IO.FileInfo(srcFile).Length;
 
-            Assert.AreEqual(new System.IO.FileInfo(srcFile).Length, new System.IO.FileInfo(dstFile).Length);
+               const Alphaleonis.Win32.Filesystem.MoveOptions options = Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed | Alphaleonis.Win32.Filesystem.MoveOptions.WriteThrough | Alphaleonis.Win32.Filesystem.MoveOptions.ReplaceExisting;
 
-
-            Assert.IsTrue(cmr.IsCopy);
-            Assert.IsTrue(cmr.IsEmulatedMove);
-
-            Assert.IsTrue(cmr.IsFile);
-            Assert.IsFalse(cmr.IsDirectory);
-
-            Assert.IsFalse(cmr.IsCanceled);
-            Assert.AreEqual(0, cmr.TotalFolders);
-            Assert.AreEqual(1, cmr.TotalFiles);
+               Console.WriteLine("Src File Path: [{0}]", srcFile);
+               Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 
-            Alphaleonis.Win32.Network.Host.DisconnectDrive(drive);
+               var cmr = Alphaleonis.Win32.Filesystem.Directory.Move(srcFile, dstFile, options);
+
+               UnitTestConstants.Dump(cmr);
+
+
+               Assert.IsFalse(System.IO.Directory.Exists(dstFile));
+
+               Assert.IsTrue(System.IO.File.Exists(dstFile));
+
+               Assert.AreEqual(srcFileSize, new System.IO.FileInfo(dstFile).Length);
+
+
+               Assert.IsTrue(cmr.IsCopy);
+               Assert.IsTrue(cmr.IsEmulatedMove);
+
+               Assert.IsTrue(cmr.IsFile);
+               Assert.IsFalse(cmr.IsDirectory);
+
+               Assert.IsFalse(cmr.IsCanceled);
+               Assert.AreEqual(0, cmr.TotalFolders);
+               Assert.AreEqual(1, cmr.TotalFiles);
+            }
+            finally
+            {
+               Alphaleonis.Win32.Network.Host.DisconnectDrive(drive);
+            }
          }
-
 
          Console.WriteLine();
       }

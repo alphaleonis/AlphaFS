@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_Copy_UsingGlobalRootAsSourcePath_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Copy_3ExistingDirectories_FromVolumeShadowCopy_LocalAndNetwork_Success()
       {
-         AlphaFS_File_Copy_UsingGlobalRootAsSourcePath(false);
-         AlphaFS_File_Copy_UsingGlobalRootAsSourcePath(true);
+         AlphaFS_Directory_Copy_3ExistingDirectories_FromVolumeShadowCopy(false);
+         AlphaFS_Directory_Copy_3ExistingDirectories_FromVolumeShadowCopy(true);
       } 
 
 
-      private void AlphaFS_File_Copy_UsingGlobalRootAsSourcePath(bool isNetwork)
+      private void AlphaFS_Directory_Copy_3ExistingDirectories_FromVolumeShadowCopy(bool isNetwork)
       {
          var foundShadowCopy = false;
          
@@ -71,21 +71,24 @@ namespace AlphaFS.UnitTest
 
 
                var enumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.SkipReparsePoints;
+               var copyOptions = Alphaleonis.Win32.Filesystem.CopyOptions.None;
 
                var copyCount = 0;
-
-               foreach (var fileSource in dirInfo.EnumerateFiles(enumOptions))
+                  
+               foreach (var fsi in dirInfo.EnumerateDirectories(enumOptions))
                {
                   if (copyCount == 3)
                      break;
 
 
-                  var fileCopy = System.IO.Path.Combine(folder.FullName, System.IO.Path.GetFileName(fileSource.FullName));
+                  // Copy folders from "\Program Files".
 
-                  Console.WriteLine("Copy file #{0}.", copyCount + 1);
+                  var folderCopy = System.IO.Path.Combine(folder.FullName, System.IO.Path.GetFileName(fsi.FullName));
+
+                  Console.WriteLine("Copy directory #{0}.", copyCount + 1);
 
 
-                  var cmr = Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy, Alphaleonis.Win32.Filesystem.CopyOptions.None);
+                  var cmr = Alphaleonis.Win32.Filesystem.Directory.Copy(fsi.FullName, folderCopy, copyOptions);
 
 
                   UnitTestConstants.Dump(cmr);
@@ -104,7 +107,7 @@ namespace AlphaFS.UnitTest
 
 
          Console.WriteLine();
-         
+
 
          if (!foundShadowCopy)
             UnitTestAssert.InconclusiveBecauseFileNotFound("No volume shadow copy found.");

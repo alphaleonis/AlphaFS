@@ -158,7 +158,7 @@
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_RetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_NoStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_WithStreamsOnRootFolder.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ExistingDirectory_UsingGlobalRootAsSourcePath.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_3ExistingDirectories_FromVolumeShadowCopy.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_NullAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
@@ -169,7 +169,7 @@
     <Compile Include="DirectoryInfo Class\DirectoryInfo.CreateInstance\DirectoryInfo.CreateInstance_ExistingFileAsDirectoryName_PropertyExistsShouldBeFalse.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptySourceFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptyDestFileNameAsPath_ThrowsArgumentException.cs" />
-    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_UsingGlobalRootAsSourcePath.cs" />
+    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_3ExistingFiles_FromVolumeShadowCopy.cs" />
     <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_RetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_NullDestFileNameAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_NullSourceFileNameAsPath_ThrowsArgumentNullException.cs" />
@@ -264,7 +264,7 @@
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_SymbolicLinkDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.GetDriveFormat.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.EnumerateVolumes.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ExistingDirectory_WithProgress.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_WithProgress.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_DestinationFileAlreadyExists_ThrowsAlreadyExistsException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_NonExistingDestinationLogicalDrive_ThrowsDeviceNotReadyException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UserExplicitDenyOnDestinationFolder_ThrowsUnauthorizedAccessException.cs" />
