@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(string path, PathFormat pathFormat)
       {
-         return GetChangeTimeCore(null, null, path, false, pathFormat);
+         return GetChangeTimeCore(null, null, false, path, false, pathFormat);
       }
 
 
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(string path)
       {
-         return GetChangeTimeCore(null, null, path, false, PathFormat.RelativePath);
+         return GetChangeTimeCore(null, null, false, path, false, PathFormat.RelativePath);
       }
 
 
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(SafeFileHandle safeFileHandle)
       {
-         return GetChangeTimeCore(null, safeFileHandle, null, false, PathFormat.LongFullPath);
+         return GetChangeTimeCore(null, safeFileHandle, false, null, false, PathFormat.LongFullPath);
       }
    }
 }

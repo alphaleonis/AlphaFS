@@ -166,25 +166,13 @@ namespace Alphaleonis.Win32.Filesystem
          var lastError = Marshal.GetLastWin32Error();
          if (!success)
          {
-            switch ((uint) lastError)
-            {
-               // MSDN: .NET 3.5+: ArgumentException: FileSystemInfo().Attributes
-               case Win32Errors.ERROR_INVALID_PARAMETER:
-                  throw new ArgumentException(Resources.Invalid_File_Attribute, "fileAttributes");
+            // MSDN: .NET 3.5+: ArgumentException: FileSystemInfo().Attributes
+
+            if (lastError== Win32Errors.ERROR_INVALID_PARAMETER)
+               throw new ArgumentException(Resources.Invalid_File_Attribute, "fileAttributes");
 
 
-               case Win32Errors.ERROR_PATH_NOT_FOUND:
-               case Win32Errors.ERROR_FILE_NOT_FOUND:
-                  if (isFolder)
-                     lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
-
-                  // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid, (for example, it is on an unmapped drive).
-                  // MSDN: .NET 3.5+: FileNotFoundException: The file cannot be found.
-                  NativeError.ThrowException(lastError, path);
-                  break;
-            }
-
-            NativeError.ThrowException(lastError, path);
+            NativeError.ThrowException(lastError, isFolder, path);
          }
       }
    }

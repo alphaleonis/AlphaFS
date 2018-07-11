@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtcTransacted(KernelTransaction transaction, string path)
       {
-         return GetChangeTimeCore(transaction, null, path, true, PathFormat.RelativePath);
+         return GetChangeTimeCore(transaction, null, false, path, true, PathFormat.RelativePath);
       }
 
 
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetChangeTimeCore(transaction, null, path, true, pathFormat);
+         return GetChangeTimeCore(transaction, null, false, path, true, pathFormat);
       }
    }
 }
