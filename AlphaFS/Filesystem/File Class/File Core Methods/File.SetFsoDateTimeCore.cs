@@ -44,14 +44,23 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void SetFsoDateTimeCore(KernelTransaction transaction, bool isFolder, string path, DateTime? creationTimeUtc, DateTime? lastAccessTimeUtc, DateTime? lastWriteTimeUtc, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         // Because we already check here, use false for CreateFileCore() to prevent another check.
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, false, false);
 
-         var attributes = ExtendedFileAttributes.BackupSemantics;
+         var eaAttributes = ExtendedFileAttributes.BackupSemantics;
 
          if (modifyReparsePoint)
-            attributes |= ExtendedFileAttributes.OpenReparsePoint;
+            eaAttributes |= ExtendedFileAttributes.OpenReparsePoint;
+
+         
+         // TODO 2018-07-11
+         //// Prevent a System.UnauthorizedAccessException from being thrown.
+
+         //var isReadOnly = IsReadOnly((FileAttributes) eaAttributes);
+         //var isHidden = IsHidden((FileAttributes) eaAttributes);
+
+         //if (isReadOnly || isHidden)
+         //   SetAttributesCore(transaction, isFolder, path, FileAttributes.Normal, PathFormat.LongFullPath);
 
 
          using (var creationTime = SafeGlobalMemoryBufferHandle.FromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?) null))
@@ -60,13 +69,33 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (var lastWriteTime = SafeGlobalMemoryBufferHandle.FromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?) null))
 
-         using (var safeFileHandle = CreateFileCore(transaction, isFolder, path, attributes, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, false, pathFormat))
+         using (var safeFileHandle = CreateFileCore(transaction, isFolder, path, eaAttributes, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, false, pathFormat))
          {
             var success = NativeMethods.SetFileTime(safeFileHandle, creationTime, lastAccessTime, lastWriteTime);
 
             var lastError = Marshal.GetLastWin32Error();
-            if (!success)
-               NativeError.ThrowException(lastError, path);
+            
+            // Reset file system object attributes.
+
+            if (success)
+            {
+               //if (isReadOnly || isHidden)
+               //{
+               //   var fileAttributes = FileAttributes.Normal;
+
+               //   if (isReadOnly)
+               //      fileAttributes |= FileAttributes.ReadOnly;
+
+               //   if (isHidden)
+               //      fileAttributes |= FileAttributes.Hidden;
+
+               //   if (fileAttributes != FileAttributes.Normal)
+               //      SetAttributesCore(transaction, isFolder, path, fileAttributes, PathFormat.LongFullPath);
+               //}
+            }
+
+            else
+               NativeError.ThrowException(lastError, isFolder, path);
          }
       }
    }

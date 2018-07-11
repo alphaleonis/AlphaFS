@@ -59,7 +59,9 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.CopyMoveCore(new CopyMoveArguments
          {
             Transaction = Transaction,
+            SourcePathLp = LongFullName,
             SourcePath = LongFullName,
+            DestinationPathLp = longFullPath,
             DestinationPath = longFullPath,
             CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             DirectoryEnumerationFilters = filters,

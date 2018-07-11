@@ -32,8 +32,6 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Directory_SetTimestamps_LocalAndNetwork_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
-
          AlphaFS_Directory_SetTimestamps(false);
          AlphaFS_Directory_SetTimestamps(true);
       }
@@ -43,7 +41,7 @@ namespace AlphaFS.UnitTest
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.CreateDirectory();
+            var folder = tempRoot.CreateDirectoryRandomizedAttributes();
 
             var symlinkPath = System.IO.Path.Combine(tempRoot.Directory.FullName, tempRoot.RandomString) + "_symlink";
 

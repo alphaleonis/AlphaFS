@@ -548,7 +548,10 @@ namespace Alphaleonis.Win32.Filesystem
                using (var handle = FindFirstFile(InputPath, out win32FindData))
                {
                   if (null != handle)
-                     VerifyInstanceType(win32FindData);
+                  {
+                     if (!ContinueOnException)
+                        VerifyInstanceType(win32FindData);
+                  }
 
                   else
                      return (T) (object) null;
@@ -604,7 +607,8 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
 
-               VerifyInstanceType(win32FindData);
+               if (!ContinueOnException)
+                  VerifyInstanceType(win32FindData);
             }
 
 

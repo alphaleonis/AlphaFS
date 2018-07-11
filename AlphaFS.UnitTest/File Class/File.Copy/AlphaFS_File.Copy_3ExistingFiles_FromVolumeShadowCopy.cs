@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_ExistingDirectory_UsingGlobalRootAsSourcePath_LocalAndNetwork_Success()
+      public void AlphaFS_File_Copy_3ExistingFiles_FromVolumeShadowCopy_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_Copy_ExistingDirectory_UsingGlobalRootAsSourcePath(false);
-         AlphaFS_Directory_Copy_ExistingDirectory_UsingGlobalRootAsSourcePath(true);
+         AlphaFS_File_Copy_3ExistingFiles_FromVolumeShadowCopy(false);
+         AlphaFS_File_Copy_3ExistingFiles_FromVolumeShadowCopy(true);
       } 
 
 
-      private void AlphaFS_Directory_Copy_ExistingDirectory_UsingGlobalRootAsSourcePath(bool isNetwork)
+      private void AlphaFS_File_Copy_3ExistingFiles_FromVolumeShadowCopy(bool isNetwork)
       {
          var testOk = false;
          
@@ -71,24 +71,21 @@ namespace AlphaFS.UnitTest
 
 
                var enumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.SkipReparsePoints;
-               var copyOptions = Alphaleonis.Win32.Filesystem.CopyOptions.None;
 
                var copyCount = 0;
-                  
-               foreach (var fsi in dirInfo.EnumerateDirectories(enumOptions))
+
+               foreach (var fileSource in dirInfo.EnumerateFiles(enumOptions))
                {
                   if (copyCount == 3)
                      break;
 
 
-                  // Copy folders from "\Program Files".
+                  var fileCopy = System.IO.Path.Combine(folder.FullName, System.IO.Path.GetFileName(fileSource.FullName));
 
-                  var folderCopy = System.IO.Path.Combine(folder.FullName, System.IO.Path.GetFileName(fsi.FullName));
-
-                  Console.WriteLine("Copy directory #{0}.", copyCount + 1);
+                  Console.WriteLine("Copy file #{0}.", copyCount + 1);
 
 
-                  var cmr = Alphaleonis.Win32.Filesystem.Directory.Copy(fsi.FullName, folderCopy, copyOptions);
+                  var cmr = Alphaleonis.Win32.Filesystem.File.Copy(fileSource.FullName, fileCopy, Alphaleonis.Win32.Filesystem.CopyOptions.None);
 
 
                   UnitTestConstants.Dump(cmr);

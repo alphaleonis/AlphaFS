@@ -19,66 +19,12 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.IO;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>Checks if the <see cref="MoveOptions.CopyAllowed"/> flag is specified.</summary>
-      internal static bool HasCopyAllowed(MoveOptions? moveOptions)
-      {
-         return Utils.IsNotNull(moveOptions) && (moveOptions & MoveOptions.CopyAllowed) != 0;
-      }
-
-
-      /// <summary>Checks if the <see cref="CopyOptions.CopySymbolicLink"/> flag is specified.</summary>
-      internal static bool HasCopySymbolicLink(CopyOptions? copyOptions)
-      {
-         return Utils.IsNotNull(copyOptions) && (copyOptions & CopyOptions.CopySymbolicLink) != 0;
-      }
-
-
-      /// <summary>Checks if the <see cref="MoveOptions.DelayUntilReboot"/> flag is specified.</summary>
-      internal static bool HasDelayUntilReboot(MoveOptions? moveOptions)
-      {
-         return Utils.IsNotNull(moveOptions) && (moveOptions & MoveOptions.DelayUntilReboot) != 0;
-      }
-
-
-      /// <summary>Checks if the <see cref="CopyOptions.CopyTimestamp"/> flag is specified.</summary>
-      internal static bool HasCopyTimestamps(CopyOptions? copyOptions)
-      {
-         return Utils.IsNotNull(copyOptions) && (copyOptions & CopyOptions.CopyTimestamp) != 0;
-      }
-
-
-      /// <summary>Checks if the <see cref="MoveOptions.ReplaceExisting"/> flag is specified.</summary>
-      internal static bool HasReplaceExisting(MoveOptions? moveOptions)
-      {
-         return Utils.IsNotNull(moveOptions) && (moveOptions & MoveOptions.ReplaceExisting) != 0;
-      }
-
-
-      /// <summary>Determine the Copy or Move action.</summary>
-      /// <exception cref="NotSupportedException"/>
-      internal static bool IsCopyAction(CopyOptions? copyOptions, MoveOptions? moveOptions)
-      {
-         // Determine Copy or Move action.
-
-         var isMove = Utils.IsNotNull(moveOptions) && Equals(null, copyOptions);
-         var isCopy = !isMove && Utils.IsNotNull(copyOptions);
-
-         if (isCopy.Equals(isMove))
-            throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
-
-         return isCopy;
-      }
-      
-
-
-
       /// <summary>Checks that the <see cref="FileAttributes"/> instance is valid.</summary>
       internal static bool HasValidAttributes(FileAttributes fileAttributes)
       {
