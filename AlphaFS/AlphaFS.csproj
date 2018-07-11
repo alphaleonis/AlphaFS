@@ -276,7 +276,7 @@
     <Compile Include="Device\Volume Class\Volume.DefineDosDevice.cs" />
     <Compile Include="Device\Volume Class\Volume.EnumerateVolumes.cs" />
     <Compile Include="Filesystem\CopyMoveArguments.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.ValidateUpdateCopyMoveArguments.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.ValidateMoveAction.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateAlternateDataStreamsTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateDirectoriesTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Core Methods\Directory.EnumerateFileIdBothDirectoryInfoCore.cs" />
@@ -377,7 +377,7 @@
     <Compile Include="Filesystem\File Class\File Compression\File.DecompressTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Compression\File.GetCompressedSizeTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.GetCompressedSizeCore.cs" />
-    <Compile Include="Filesystem\File Class\File CopyMove\File.ValidateUpdateCopyMoveArguments.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.ValidateFileOrDirectoryMoveArguments.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.RestartMoveOrThrowException.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.CopyMoveCore.cs" />
@@ -400,6 +400,7 @@
     <Compile Include="Filesystem\File Class\File Core Methods\File.AppendTextCore.cs" />
     <Compile Include="Filesystem\File Class\File.AppendTextTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.CreateTextCore.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.CopyMoveLogic.cs" />
     <Compile Include="Filesystem\File Class\File.CreateTextTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.CreateTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.CreateFileStreamCore.cs" />
@@ -412,7 +413,7 @@
     <Compile Include="Filesystem\File Class\File.GetFileIdInfoCore.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfoTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfo.cs" />
-    <Compile Include="Filesystem\File Class\File.FileAttributeLogic.cs" />
+    <Compile Include="Filesystem\File Class\File.AttributeLogic.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.GetChangeTimeCore.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.GetChangeTimeTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Time\UTC\File.GetChangeTimeUtcTransacted.cs" />
