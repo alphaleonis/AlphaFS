@@ -117,7 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       startRemoveDirectory:
 
-         var success = transaction == null || !NativeMethods.IsAtLeastWindowsVista
+         var success = null == transaction || !NativeMethods.IsAtLeastWindowsVista
 
             // RemoveDirectory() / RemoveDirectoryTransacted()
             // 2014-09-09: MSDN confirms LongPath usage.
@@ -125,6 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
             // RemoveDirectory on a symbolic link will remove the link itself.
 
             ? NativeMethods.RemoveDirectory(pathLp)
+
             : NativeMethods.RemoveDirectoryTransacted(pathLp, transaction.SafeHandle);
 
 
@@ -168,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                      if (ignoreReadOnly)
                      {
-                        // Reset directory attributes to Normal.
+                        // Reset attributes to Normal.
                         File.SetAttributesCore(transaction, true, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
 
                         goto startRemoveDirectory;
