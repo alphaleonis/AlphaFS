@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Directory.Copy()
             case Win32Errors.ERROR_ALREADY_EXISTS: // On folders.
             case Win32Errors.ERROR_FILE_EXISTS:    // On files.
-               lastError = (int)(isFolder ? Win32Errors.ERROR_ALREADY_EXISTS : Win32Errors.ERROR_FILE_EXISTS);
+               lastError = (int) (isFolder ? Win32Errors.ERROR_ALREADY_EXISTS : Win32Errors.ERROR_FILE_EXISTS);
 
                if (!retry)
                   NativeError.ThrowException(lastError, isFolder, destinationPathLp);

@@ -25,18 +25,23 @@ namespace Alphaleonis.Win32.Filesystem
    {
       public int Retry;
       public int RetryTimeout;
+
       public KernelTransaction Transaction;
       public string SourcePath;
       public string DestinationPath;
+
       public bool CopyTimestamps;
+
       public CopyOptions? CopyOptions;
       public MoveOptions? MoveOptions;
+
       public CopyMoveProgressRoutine ProgressHandler;
       public object UserProgressData;
+
       public PathFormat PathFormat;
 
-      internal DirectoryEnumerationFilters DirectoryEnumerationFilters;
 
+      internal DirectoryEnumerationFilters DirectoryEnumerationFilters;
       internal string SourcePathLp;
       internal string DestinationPathLp;
       internal bool IsCopy;
@@ -48,6 +53,8 @@ namespace Alphaleonis.Win32.Filesystem
       internal bool DelayUntilReboot;
 
       internal bool DeleteOnStartup;
+
+      internal NativeMethods.NativeCopyMoveProgressRoutine Routine;
 
       internal bool PathsChecked;
    }

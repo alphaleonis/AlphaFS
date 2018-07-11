@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       [SecurityCritical]
-      private static bool CopyMoveNative(CopyMoveArguments cma, bool isMove, string sourcePathLp, string destinationPathLp, NativeMethods.NativeCopyMoveProgressRoutine routine, out bool cancel, out int lastError)
+      private static bool CopyMoveNative(CopyMoveArguments cma, bool isMove, string sourcePathLp, string destinationPathLp, out bool cancel, out int lastError)
       {
          cancel = false;
 
@@ -64,14 +64,14 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             ? isMove
-               ? NativeMethods.MoveFileWithProgress(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) cma.MoveOptions)
+               ? NativeMethods.MoveFileWithProgress(sourcePathLp, destinationPathLp, cma.Routine, IntPtr.Zero, (MoveOptions) cma.MoveOptions)
 
-               : NativeMethods.CopyFileEx(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) cma.CopyOptions)
+               : NativeMethods.CopyFileEx(sourcePathLp, destinationPathLp, cma.Routine, IntPtr.Zero, out cancel, (CopyOptions) cma.CopyOptions)
 
             : isMove
-               ? NativeMethods.MoveFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, (MoveOptions) cma.MoveOptions, cma.Transaction.SafeHandle)
+               ? NativeMethods.MoveFileTransacted(sourcePathLp, destinationPathLp, cma.Routine, IntPtr.Zero, (MoveOptions) cma.MoveOptions, cma.Transaction.SafeHandle)
 
-               : NativeMethods.CopyFileTransacted(sourcePathLp, destinationPathLp, routine, IntPtr.Zero, out cancel, (CopyOptions) cma.CopyOptions, cma.Transaction.SafeHandle);
+               : NativeMethods.CopyFileTransacted(sourcePathLp, destinationPathLp, cma.Routine, IntPtr.Zero, out cancel, (CopyOptions) cma.CopyOptions, cma.Transaction.SafeHandle);
 
 
          lastError = Marshal.GetLastWin32Error();

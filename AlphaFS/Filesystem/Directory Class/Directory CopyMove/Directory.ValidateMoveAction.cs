@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       [SecurityCritical]
-      internal static CopyMoveArguments ValidateUpdateCopyMoveArguments(CopyMoveArguments cma)
+      internal static CopyMoveArguments ValidateMoveAction(CopyMoveArguments cma)
       {
          // Determine if a Move action or Copy action-fallback is possible.
 

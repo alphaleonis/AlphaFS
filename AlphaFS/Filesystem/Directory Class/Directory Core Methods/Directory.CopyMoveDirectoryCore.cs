@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       [SecurityCritical]
-      internal static void CopyMoveDirectoryCore(ErrorHandler errorFilter, bool retry, CopyMoveArguments cma, CopyMoveResult copyMoveResult)
+      internal static void CopyMoveDirectoryCore(bool retry, CopyMoveArguments cma, CopyMoveResult copyMoveResult)
       {
          var dirs = new Queue<string>(NativeMethods.DefaultFileBufferSize);
 
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   // File count is done in File.CopyMoveCore method.
 
-                  File.CopyMoveCore(errorFilter, retry, cma, true, false, fseiSourcePath, fseiDestinationPath, copyMoveResult);
+                  File.CopyMoveCore(retry, cma, true, false, fseiSourcePath, fseiDestinationPath, copyMoveResult);
 
                   if (copyMoveResult.IsCanceled)
                   {

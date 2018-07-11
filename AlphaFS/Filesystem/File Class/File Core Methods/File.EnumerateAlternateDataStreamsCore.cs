@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file or directory.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="isFolder">When <c>true</c> indicates the sources is a directory; file otherwise.</param>
+      /// <param name="isFolder">When <c>true</c> indicates the source is a directory; file otherwise.</param>
       /// <param name="path">The path to the file or directory to enumerate streams of.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>An enumeration of <see cref="AlternateDataStreamInfo"/> instances.</returns>

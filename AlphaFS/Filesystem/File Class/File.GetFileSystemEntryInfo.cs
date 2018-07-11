@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetFileSystemEntryInfoCore(transaction, false, path, continueOnException, pathFormat);
       }
-      
+
 
 
 
@@ -140,7 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
+      /// <param name="isFolder">When <c>true</c> indicates the source is a directory; file otherwise. Use <c>false</c> if unknown.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="continueOnException">
       ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>

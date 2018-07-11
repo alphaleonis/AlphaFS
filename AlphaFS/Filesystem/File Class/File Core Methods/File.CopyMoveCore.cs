@@ -55,38 +55,23 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(ErrorHandler errorFilter, bool retry, CopyMoveArguments cma, bool driveChecked, bool isFolder, string sourceFilePath, string destinationFilePath, CopyMoveResult copyMoveResult)
+      internal static CopyMoveResult CopyMoveCore(bool retry, CopyMoveArguments cma, bool driveChecked, bool isFolder, string sourceFilePath, string destinationFilePath, CopyMoveResult copyMoveResult)
       {
          #region Setup
 
-         string sourcePathLp;
-         string destinationPathLp;
-
-         cma = ValidateUpdateCopyMoveArguments(cma, driveChecked, false, sourceFilePath, destinationFilePath, out sourcePathLp, out destinationPathLp);
-         
-         
-         // Setup callback function for progress notifications.
-
-         var raiseException = null == cma.ProgressHandler;
-         
-         var routine = !raiseException
-
-            ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, streamNumber, callbackReason, sourceFile, destinationFile, data) =>
-
-               cma.ProgressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, (int) streamNumber, callbackReason, cma.UserProgressData)
-
-            : (NativeMethods.NativeCopyMoveProgressRoutine) null;
+         cma = ValidateFileOrDirectoryMoveArguments(cma, driveChecked, false, sourceFilePath, destinationFilePath, out sourceFilePath, out destinationFilePath);
 
 
-         var copyMoveRes = copyMoveResult ?? new CopyMoveResult(sourceFilePath, destinationFilePath, cma.IsCopy, isFolder, cma.CopyTimestamps, cma.EmulateMove);
+         var copyMoveRes = copyMoveResult ?? new CopyMoveResult(cma, isFolder, sourceFilePath, destinationFilePath);
 
-         var isMove = !cma.IsCopy;
-
-         var isSingleFileAction = null == copyMoveResult && !isFolder || copyMoveRes.IsFile;
+         var isSingleFileAction = null == copyMoveResult && copyMoveRes.IsFile;
 
 
          var attempts = 1;
+
          var retryTimeout = 0;
+
+         var errorFilter = null != cma.DirectoryEnumerationFilters && null != cma.DirectoryEnumerationFilters.ErrorFilter ? cma.DirectoryEnumerationFilters.ErrorFilter : null;
 
          if (retry)
          {
@@ -135,20 +120,20 @@ namespace Alphaleonis.Win32.Filesystem
             {
                // Ensure the file's parent directory exists.
 
-               var parentFolder = Directory.GetParentCore(cma.Transaction, destinationPathLp, PathFormat.LongFullPath);
+               var parentFolder = Directory.GetParentCore(cma.Transaction, destinationFilePath, PathFormat.LongFullPath);
 
                if (null != parentFolder)
                   parentFolder.Create();
             }
 
 
-            if (CopyMoveNative(cma, isMove, sourcePathLp, destinationPathLp, routine, out cancel, out lastError))
+            if (CopyMoveNative(cma, !cma.IsCopy, sourceFilePath, destinationFilePath, out cancel, out lastError))
             {
                // We take an extra hit by getting the file size for a single file Copy or Move action.
 
                if (isSingleFileAction)
 
-                  copyMoveRes.TotalBytes = GetSizeCore(null, cma.Transaction, destinationPathLp, true, PathFormat.LongFullPath);
+                  copyMoveRes.TotalBytes = GetSizeCore(null, cma.Transaction, destinationFilePath, true, PathFormat.LongFullPath);
 
 
                if (!isFolder)
@@ -159,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   if (cma.CopyTimestamps)
 
-                     CopyTimestampsCore(cma.Transaction, false, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
+                     CopyTimestampsCore(cma.Transaction, false, sourceFilePath, destinationFilePath, false, PathFormat.LongFullPath);
                }
                
                break;
@@ -176,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Report the Exception back to the caller.
             if (null != errorFilter)
             {
-               var continueCopyMove = errorFilter(lastError, new Win32Exception(lastError).Message,Path.GetCleanExceptionPath(destinationPathLp));
+               var continueCopyMove = errorFilter(lastError, new Win32Exception(lastError).Message, Path.GetCleanExceptionPath(destinationFilePath));
 
                if (!continueCopyMove)
                {
@@ -191,11 +176,12 @@ namespace Alphaleonis.Win32.Filesystem
                if (retry)
                   copyMoveRes.Retries++;
 
-               retry = attempts > 0;
+               retry = attempts > 0 && retryTimeout > 0;
+
 
                // Remove any read-only/hidden attribute, which might also fail.
 
-               RestartMoveOrThrowException(retry, lastError, isFolder, isMove, cma, sourcePathLp, destinationPathLp);
+               RestartMoveOrThrowException(retry, lastError, isFolder, !cma.IsCopy, cma, sourceFilePath, destinationFilePath);
 
                if (retry)
                {
