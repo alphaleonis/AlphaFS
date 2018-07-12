@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams()
       {
-         return File.EnumerateAlternateDataStreamsCore(Transaction, LongFullName, PathFormat.LongFullPath);
+         return File.EnumerateAlternateDataStreamsCore(Transaction, true, LongFullName, PathFormat.LongFullPath);
       }
    }
 }

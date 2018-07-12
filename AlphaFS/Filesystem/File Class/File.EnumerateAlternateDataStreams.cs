@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path)
       {
-         return EnumerateAlternateDataStreamsCore(null, path, PathFormat.RelativePath);
+         return EnumerateAlternateDataStreamsCore(null, false, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file.</summary>
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path, PathFormat pathFormat)
       {
-         return EnumerateAlternateDataStreamsCore(null, path, pathFormat);
+         return EnumerateAlternateDataStreamsCore(null, false, path, pathFormat);
       }
 
       /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file.</summary>
@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path)
       {
-         return EnumerateAlternateDataStreamsCore(transaction, path, PathFormat.RelativePath);
+         return EnumerateAlternateDataStreamsCore(transaction, false, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file.</summary>
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return EnumerateAlternateDataStreamsCore(transaction, path, pathFormat);
+         return EnumerateAlternateDataStreamsCore(transaction, false, path, pathFormat);
       }
 
 
@@ -74,10 +74,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Enumerates the streams of type :$DATA from the specified file or directory.</summary>
       /// <param name="transaction">The transaction.</param>
+      /// <param name="isFolder">When <c>true</c> indicates the source is a directory; file otherwise.</param>
       /// <param name="path">The path to the file or directory to enumerate streams of.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The streams of type :$DATA in the specified file or directory.</returns>
-      internal static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsCore(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsCore(KernelTransaction transaction, bool isFolder, string path, PathFormat pathFormat)
       {
          using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
          {
@@ -116,7 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
                      if (lastError == Win32Errors.ERROR_HANDLE_EOF)
                         break;
 
-                     NativeError.ThrowException(lastError, pathLp);
+                     NativeError.ThrowException(lastError, isFolder, pathLp);
                   }
                }
             }
