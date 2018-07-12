@@ -24,6 +24,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #471: Add overloaded method `Directory.CountFileSystemObjects` supporting `DirectoryEnumerationFilters`.
 - Issue #472: Add method `DirectoryInfo.ExistsJunction`.
 - Issue #473: Change AlphaFS implementations of method `File.Copy` to return `CopyMoveResult` instance instead of `void`.
+- Issue #475: Prevent `File.SetFsoDateTimeCore` from throwing `UnauthorizedAccessException`.
 - Added missing overloaded methods regarding timestamps and symbolic links.
 - Marked `Directory.Copy`/`DirectoryInfo.Copy` methods using parameters `overwrite` and `preserveDates` as obsolete. Use one of the `CopyOptions`.
 - Fixed a `Directory.Move` unit test creating endless drive mappings on error.

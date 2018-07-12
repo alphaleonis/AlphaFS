@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteFileCore(null, path, false, PathFormat.RelativePath);
+         DeleteFileCore(null, path, false, 0, PathFormat.RelativePath);
       }
 
 
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, PathFormat pathFormat)
       {
-         DeleteFileCore(null, path, false, pathFormat);
+         DeleteFileCore(null, path, false, 0, pathFormat);
       }
 
 
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly)
       {
-         DeleteFileCore(null, path, ignoreReadOnly, PathFormat.RelativePath);
+         DeleteFileCore(null, path, ignoreReadOnly, 0, PathFormat.RelativePath);
       }
 
 
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteFileCore(null, path, ignoreReadOnly, pathFormat);
+         DeleteFileCore(null, path, ignoreReadOnly, 0, pathFormat);
       }
    }
 }

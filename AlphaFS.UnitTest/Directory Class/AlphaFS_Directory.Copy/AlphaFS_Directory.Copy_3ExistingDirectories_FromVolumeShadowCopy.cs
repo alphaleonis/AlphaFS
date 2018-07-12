@@ -110,7 +110,7 @@ namespace AlphaFS.UnitTest
 
 
          if (!testOk)
-            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseResourcesAreUnavailable();
       }
    }
 }
