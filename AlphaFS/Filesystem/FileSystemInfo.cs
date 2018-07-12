@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
    public abstract class FileSystemInfo : MarshalByRefObject, IEquatable<FileSystemInfo>
    {
       #region Fields
-      
+
       #region .NET
 
       /// <summary>Represents the fully qualified path of the file or directory.</summary>
@@ -49,10 +49,6 @@ namespace Alphaleonis.Win32.Filesystem
       protected string OriginalPath;
 
       #endregion // .NET
-
-
-      [NonSerialized]
-      private FileSystemEntryInfo _entryInfo;
 
 
       // We use this field in conjunction with the Refresh methods, if we succeed we store a zero,
@@ -332,7 +328,10 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>For files, gets the name of the file. For directories, gets the name of the last directory in the hierarchy if a hierarchy exists. Otherwise, the Name property gets the name of the directory.</summary>
+      /// <summary>
+      ///   For files, gets the name of the file. For directories, gets the name of the last directory in the hierarchy if a hierarchy exists.
+      ///   <para>Otherwise, the Name property gets the name of the directory.</para>
+      /// </summary>
       /// <remarks>
       ///   <para>For a directory, Name returns only the name of the parent directory, such as Dir, not c:\Dir.</para>
       ///   <para>For a subdirectory, Name returns only the name of the subdirectory, such as Sub1, not c:\Dir\Sub1.</para>
@@ -349,16 +348,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Returns the path as a string.</summary>
+      /// <summary>Returns the path as a string.</summary>
       protected internal string DisplayPath { get; protected set; }
 
-<<<<<<< HEAD
-      
-=======
 
       private FileSystemEntryInfo _entryInfo;
 
->>>>>>> PhysicalDriveInfo
       /// <summary>[AlphaFS] Gets the instance of the <see cref="FileSystemEntryInfo"/> class.</summary>
       public FileSystemEntryInfo EntryInfo
       {
@@ -392,10 +387,10 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] The initial "IsDirectory" indicator that was passed to the constructor.</summary>
-      protected internal bool IsDirectory { get; internal set; }
+      protected bool IsDirectory { get; set; }
 
 
-      /// <summary>[AlphaFS] The full path of the file system object in Unicode (LongPath) format.</summary>
+      /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>
       protected string LongFullName { get; set; }
 
 
