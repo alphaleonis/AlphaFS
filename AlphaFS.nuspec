@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
    <metadata>
       <id>AlphaFS</id>
-      <version>2.2.3</version>
+      <version>2.2.4</version>
       <title>AlphaFS</title>
       <authors>Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</authors>
       <owners>Peter Palotas</owners>
@@ -12,14 +12,15 @@
       <requireLicenseAcceptance>true</requireLicenseAcceptance>
       <description>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes. Features highlights: creating hardlinks, accessing hidden volumes, enumeration of volumes, transactional file operations and much more.</description>
       <releaseNotes>
-         ### Bugs Fixed
+         Bugs Fixed:
 
-         - Issue #456: Methods `Directory/File.Copy` throw `DeviceNotReadyException` when using `GLOBALROOT` source path.  (Thx VladimirK69)
-         - Issue #457: `FileInfo.Exists` is `true` when instance is created from a directory path.
-         - Issue #458: `Directory.Copy` sometimes does not create the file's parent folder, throwing `System.IO.DirectoryNotFoundException`.
+         - Issue #468: Method Directory.CopyTimestamps should throw DirectoryNotFoundException.
+         - Issue #469: Method Directory.GetFileIdInfo should throw DirectoryNotFoundException.
+         - Issue #474: Method Directory.EnumerateAlternateDataStreams should throw DirectoryNotFoundException.
+         - Issue #476: Method Directory.GetChangeTime should throw DirectoryNotFoundException.
       </releaseNotes>
       <copyright>Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</copyright>
-      <tags>Win32, Filesystem</tags>
+      <tags>Win32, Filesystem, long path, Directory, File, Copy, Move, NTFS</tags>
       <frameworkAssemblies>
          <frameworkAssembly assemblyName="System" targetFramework="" />
          <frameworkAssembly assemblyName="System.Transactions" targetFramework="" />
