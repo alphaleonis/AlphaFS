@@ -19,21 +19,48 @@
  *  THE SOFTWARE. 
  */
 
-using System.Globalization;
-using System.IO;
+using System;
 using System.Security;
-using System.Security.Cryptography;
-using System.Text;
 using Alphaleonis.Win32.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>
-      /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
-      /// </summary>
-      /// <param name="fileFullPath">The name of the file.</param>
+      #region Obsolete
+
+      /// <summary>[AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="fileFullPath">The path to the file.</param>
+      /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
+      /// <returns>The hash.</returns>
+      [Obsolete("Use GetHashTransacted method.")]
+      [SecurityCritical]
+      public static string GetHash(KernelTransaction transaction, string fileFullPath, HashType hashType)
+      {
+         return GetHashCore(transaction, fileFullPath, hashType, PathFormat.RelativePath);
+      }
+
+
+      /// <summary>[AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="fileFullPath">The path to the file.</param>
+      /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>The hash.</returns>
+      [Obsolete("Use GetHashTransacted method.")]
+      [SecurityCritical]
+      public static string GetHash(KernelTransaction transaction, string fileFullPath, HashType hashType, PathFormat pathFormat)
+      {
+         return GetHashCore(transaction, fileFullPath, hashType, pathFormat);
+      }
+
+
+      #endregion // Obsolete
+
+
+      /// <summary>[AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.</summary>
+      /// <param name="fileFullPath">The path to the file.</param>
       /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
       /// <returns>The hash.</returns>
       [SecurityCritical]
@@ -43,10 +70,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>
-      /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
-      /// </summary>
-      /// <param name="fileFullPath">The name of the file.</param>
+      /// <summary>[AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.</summary>
+      /// <param name="fileFullPath">The path to the file.</param>
       /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The hash.</returns>
@@ -54,120 +79,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static string GetHash(string fileFullPath, HashType hashType, PathFormat pathFormat)
       {
          return GetHashCore(null, fileFullPath, hashType, pathFormat);
-      }
-
-
-      /// <summary>
-      /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="fileFullPath">The name of the file.</param>
-      /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
-      /// <returns>The hash.</returns>
-      [SecurityCritical]
-      public static string GetHash(KernelTransaction transaction, string fileFullPath, HashType hashType)
-      {
-         return GetHashCore(transaction, fileFullPath, hashType, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>
-      /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="fileFullPath">The name of the file.</param>
-      /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The hash.</returns>
-      [SecurityCritical]
-      public static string GetHash(KernelTransaction transaction, string fileFullPath, HashType hashType, PathFormat pathFormat)
-      {
-         return GetHashCore(transaction, fileFullPath, hashType, pathFormat);
-      }
-
-
-      /// <summary>
-      /// [AlphaFS] Calculates the hash/checksum for the given <paramref name="fileFullPath"/>.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="fileFullPath">The name of the file.</param>
-      /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The hash core.</returns>
-      [SecurityCritical]
-      internal static string GetHashCore(KernelTransaction transaction, string fileFullPath, HashType hashType, PathFormat pathFormat)
-      {
-         const GetFullPathOptions options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
-         var fileNameLp = Path.GetExtendedLengthPathCore(transaction, fileFullPath, pathFormat, options);
-
-         byte[] hash = null;
-
-
-         using (var fs = OpenCore(transaction, fileNameLp, FileMode.Open, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath))
-         {
-            switch (hashType)
-            {
-               case HashType.CRC32:
-                  using (var hType = new Crc32())
-                     hash = hType.ComputeHash(fs);
-                  break;
-
-
-               case HashType.CRC64ISO3309:
-                  using (var hType = new Crc64())
-                     hash = hType.ComputeHash(fs);
-                  break;
-
-
-               case HashType.MD5:
-                  using (var hType = MD5.Create())
-                     hash = hType.ComputeHash(fs);
-                  break;
-
-
-               case HashType.RIPEMD160:
-                  using (var hType = RIPEMD160.Create())
-                     hash = hType.ComputeHash(fs);
-                  break;
-
-
-               case HashType.SHA1:
-                  using (var hType = SHA1.Create())
-                     hash = hType.ComputeHash(fs);
-                  break;
-
-
-               case HashType.SHA256:
-                  using (var hType = SHA256.Create())
-                     hash = hType.ComputeHash(fs);
-                  break;
-
-
-               case HashType.SHA384:
-                  using (var hType = SHA384.Create())
-                     hash = hType.ComputeHash(fs);
-                  break;
-
-
-               case HashType.SHA512:
-                  using (var hType = SHA512.Create())
-                     hash = hType.ComputeHash(fs);
-                  break;
-            }
-         }
-
-
-         if (null != hash)
-         {
-            var sb = new StringBuilder(hash.Length);
-
-            foreach (var b in hash)
-               sb.Append(b.ToString("X2", CultureInfo.InvariantCulture));
-
-            return sb.ToString().ToUpperInvariant();
-         }
-
-         return string.Empty;
       }
    }
 }

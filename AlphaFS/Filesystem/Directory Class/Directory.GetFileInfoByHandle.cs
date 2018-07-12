@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandle(string path)
       {
-         return File.GetFileInfoByHandleCore(null, path, PathFormat.RelativePath);
+         return File.GetFileInfoByHandleCore(null, true, path, PathFormat.RelativePath);
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandle(string path, PathFormat pathFormat)
       {
-         return File.GetFileInfoByHandleCore(null, path, pathFormat);
+         return File.GetFileInfoByHandleCore(null, true, path, pathFormat);
       }
 
 

@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandleTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetFileInfoByHandleCore(transaction, path, PathFormat.RelativePath);
+         return File.GetFileInfoByHandleCore(transaction, true, path, PathFormat.RelativePath);
       }
 
 
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandleTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetFileInfoByHandleCore(transaction, path, pathFormat);
+         return File.GetFileInfoByHandleCore(transaction, true, path, pathFormat);
       }
    }
 }

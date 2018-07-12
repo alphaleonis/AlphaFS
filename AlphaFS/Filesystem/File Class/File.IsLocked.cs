@@ -21,7 +21,6 @@
 
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -51,70 +50,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static bool IsLocked(string path, PathFormat pathFormat)
       {
          return IsLockedCore(null, path, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
-      /// <returns>Returns <c>true</c> if the specified file is in use (locked); otherwise, <c>false</c></returns>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"/>
-      /// <exception cref="Exception"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to check.</param>
-      [SecurityCritical]
-      public static bool IsLockedTransacted(KernelTransaction transaction, string path)
-      {
-         return IsLockedCore(transaction, path, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
-      /// <returns>Returns <c>true</c> if the specified file is in use (locked); otherwise, <c>false</c></returns>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"/>
-      /// <exception cref="Exception"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to check.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static bool IsLockedTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return IsLockedCore(transaction, path, pathFormat);
-      }
-
-
-
-
-      /// <summary>[AlphaFS] Determines whether the specified file is in use (locked).</summary>
-      /// <returns>Returns <c>true</c> if the specified file is in use (locked); otherwise, <c>false</c></returns>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"/>
-      /// <exception cref="Exception"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="filePath">The path to the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      internal static bool IsLockedCore(KernelTransaction transaction, string filePath, PathFormat pathFormat)
-      {
-         try
-         {
-            // Use FileAccess.Read since FileAccess.ReadWrite always fails when file is read-only.
-            using (OpenCore(transaction, filePath, FileMode.Open, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat)) {}
-         }
-         catch (IOException ex)
-         {
-            var lastError = Marshal.GetHRForException(ex) & NativeMethods.OverflowExceptionBitShift;
-            if (lastError == Win32Errors.ERROR_SHARING_VIOLATION || lastError == Win32Errors.ERROR_LOCK_VIOLATION)
-               return true;
-
-            throw;
-         }
-         catch (Exception ex)
-         {
-            NativeError.ThrowException(Marshal.GetHRForException(ex) & NativeMethods.OverflowExceptionBitShift, filePath);
-         }
-
-         return false;
       }
    }
 }

@@ -19,98 +19,34 @@
  *  THE SOFTWARE. 
  */
 
-using System.Globalization;
-using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      #region ReadAllBytes
+      #region .NET
 
       /// <summary>Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
-      /// <param name="path">The file to open for reading.</param>
       /// <returns>Returns a byte array containing the contents of the file.</returns>
+      /// <param name="path">The file to open for reading.</param>
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path)
       {
          return ReadAllBytesCore(null, path, PathFormat.RelativePath);
       }
 
+      #endregion // .NET
+
+
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
+      /// <returns>Returns a byte array containing the contents of the file.</returns>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a byte array containing the contents of the file.</returns>
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path, PathFormat pathFormat)
       {
          return ReadAllBytesCore(null, path, pathFormat);
       }
-
-
-      #region Transactional
-
-      /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to open for reading.</param>
-      /// <returns>Returns a byte array containing the contents of the file.</returns>
-      [SecurityCritical]
-      public static byte[] ReadAllBytesTransacted(KernelTransaction transaction, string path)
-      {
-         return ReadAllBytesCore(transaction, path, PathFormat.RelativePath);
-      }
-
-      /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to open for reading.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a byte array containing the contents of the file.</returns>
-      [SecurityCritical]
-      public static byte[] ReadAllBytesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return ReadAllBytesCore(transaction, path, pathFormat);
-      }
-
-      #endregion // Transacted
-
-      #endregion // ReadAllBytes
-
-      #region Internal Methods
-
-      /// <summary>Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
-      /// <exception cref="IOException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to open for reading.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a byte array containing the contents of the file.</returns>
-      [SecurityCritical]
-      internal static byte[] ReadAllBytesCore(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         byte[] buffer;
-
-         using (FileStream fs = OpenReadTransacted(transaction, path, pathFormat))
-         {
-            int offset = 0;
-            long length = fs.Length;
-
-            if (length > int.MaxValue)
-               throw new IOException(string.Format(CultureInfo.InvariantCulture, "File larger than 2GB: [{0}]", path));
-
-            int count = (int)length;
-            buffer = new byte[count];
-            while (count > 0)
-            {
-               int n = fs.Read(buffer, offset, count);
-               if (n == 0)
-                  throw new IOException("UNEXPECTED end of file found");
-               offset += n;
-               count -= n;
-            }
-         }
-         return buffer;
-      }
-
-      #endregion // Internal Methods
    }
 }
