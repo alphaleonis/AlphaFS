@@ -66,7 +66,7 @@ namespace AlphaFS.UnitTest
 
 
          if (deviceCount == 0)
-            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseResourcesAreUnavailable();
       }
    }
 }
