@@ -44,9 +44,9 @@ namespace AlphaFS.UnitTest
       }
 
 
-      public static void InconclusiveBecauseEnumerationIsEmpty()
+      public static void InconclusiveBecauseResourcesAreUnavailable()
       {
-         Inconclusive("The enumeration returned an empty collection, which is not expected.");
+         Inconclusive("No resources are available for this unit test.");
       }
 
 

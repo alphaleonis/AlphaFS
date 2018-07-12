@@ -20,6 +20,7 @@
  */
 
 using System.Collections.Generic;
+using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -81,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
                      copyMoveResult.TotalBytes += fseiSource.FileSize;
 
                      if (cma.EmulateMove)
-                        File.DeleteFileCore(cma.Transaction, fseiSourcePath, true, PathFormat.LongFullPath);
+                        File.DeleteFileCore(cma.Transaction, fseiSourcePath, true, fseiSource.Attributes, PathFormat.LongFullPath);
                   }
                }
             }

@@ -79,7 +79,7 @@ namespace AlphaFS.UnitTest
             UnitTestAssert.Inconclusive("Test ignored because the computer is either not connected to a domain or no DFS root exists.");
 
          else if (cnt == 0)
-            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseResourcesAreUnavailable();
 
 
          Console.WriteLine();

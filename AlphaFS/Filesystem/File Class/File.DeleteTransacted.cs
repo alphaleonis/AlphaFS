@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path)
       {
-         DeleteFileCore(transaction, path, false, PathFormat.RelativePath);
+         DeleteFileCore(transaction, path, false, 0, PathFormat.RelativePath);
       }
 
 
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         DeleteFileCore(transaction, path, false, pathFormat);
+         DeleteFileCore(transaction, path, false, 0, pathFormat);
       }
 
 
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
-         DeleteFileCore(transaction, path, ignoreReadOnly, PathFormat.RelativePath);
+         DeleteFileCore(transaction, path, ignoreReadOnly, 0, PathFormat.RelativePath);
       }
 
 
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteFileCore(transaction, path, ignoreReadOnly, pathFormat);
+         DeleteFileCore(transaction, path, ignoreReadOnly, 0, pathFormat);
       }
    }
 }
