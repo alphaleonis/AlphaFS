@@ -25,15 +25,11 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      #region AlphaFS
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
+      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>      
       [SecurityCritical]
-      public void Decompress()
+      public void Compress()
       {
-         Device.ToggleCompressionCore(Transaction, false, LongFullName, false, PathFormat.LongFullPath);
+         Device.ToggleCompressionCore(Transaction, false, LongFullName, true, PathFormat.LongFullPath);
       }
-
-      #endregion // AlphaFS
    }
 }

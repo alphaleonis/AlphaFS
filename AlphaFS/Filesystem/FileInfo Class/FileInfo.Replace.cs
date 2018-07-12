@@ -43,6 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
          return Replace(destinationFileName, destinationBackupFileName, false, PathFormat.RelativePath);
       }
 
+
       /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
       /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>
@@ -62,7 +63,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
 
-      #region AlphaFS
 
       /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
       /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
@@ -78,17 +78,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, PathFormat pathFormat)
       {
-         const GetFullPathOptions options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
-
-         string destinationFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationFileName, pathFormat, options);
-         string destinationBackupFileNameLp = destinationBackupFileName != null
-            ? Path.GetExtendedLengthPathCore(Transaction, destinationBackupFileName, pathFormat, options)
-            : null;
-
-         File.ReplaceCore(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, false, PathFormat.LongFullPath);
-
-         return new FileInfo(Transaction, destinationFileNameLp, PathFormat.LongFullPath);
+         return Replace(destinationFileName, destinationBackupFileName, false, pathFormat);
       }
+
 
       /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
       /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
@@ -107,8 +99,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          const GetFullPathOptions options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
-         string destinationFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationFileName, pathFormat, options);
-         string destinationBackupFileNameLp = destinationBackupFileName != null
+         var destinationFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationFileName, pathFormat, options);
+
+         var destinationBackupFileNameLp = destinationBackupFileName != null
             ? Path.GetExtendedLengthPathCore(Transaction, destinationBackupFileName, pathFormat, options)
             : null;
 
@@ -116,7 +109,5 @@ namespace Alphaleonis.Win32.Filesystem
 
          return new FileInfo(Transaction, destinationFileNameLp, PathFormat.LongFullPath);
       }
-
-      #endregion // AlphaFS
    }
 }

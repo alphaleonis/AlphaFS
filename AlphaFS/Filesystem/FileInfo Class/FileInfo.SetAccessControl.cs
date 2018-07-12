@@ -27,6 +27,8 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
+      #region .NET
+
       /// <summary>Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.</summary>
       /// <remarks>
       ///   The SetAccessControl method applies access control list (ACL) entries to the current file that represents the noninherited ACL
@@ -39,6 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.SetAccessControlCore(LongFullName, null, fileSecurity, AccessControlSections.All, PathFormat.LongFullPath);
       }
+
 
       /// <summary>Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.</summary>
       /// <remarks>
@@ -53,5 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.SetAccessControlCore(LongFullName, null, fileSecurity, includeSections, PathFormat.LongFullPath);
       }
+
+      #endregion // .NET
    }
 }
