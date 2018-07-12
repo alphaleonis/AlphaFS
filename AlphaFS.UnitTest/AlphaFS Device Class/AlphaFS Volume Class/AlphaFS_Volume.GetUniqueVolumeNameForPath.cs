@@ -36,7 +36,7 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.PrintUnitTestHeader(false);
 
 
-         var driveCount = 0;
+         var logicalDriveCount = 0;
          
          foreach (var driveInfo in System.IO.DriveInfo.GetDrives())
          {
@@ -50,7 +50,7 @@ namespace AlphaFS.UnitTest
 
             var deviceGuid = Alphaleonis.Win32.Filesystem.Volume.GetVolumeGuid(driveName);
 
-            Console.WriteLine("#{0:000}\tInput Path: [{1}]", ++driveCount, driveName);
+            Console.WriteLine("#{0:000}\tInput Path: [{1}]", ++logicalDriveCount, driveName);
 
 
             var volumeNameResult = Alphaleonis.Win32.Filesystem.Volume.GetUniqueVolumeNameForPath(driveName);
@@ -90,7 +90,7 @@ namespace AlphaFS.UnitTest
          }
 
 
-         if (driveCount == 0)
+         if (logicalDriveCount == 0)
             UnitTestAssert.InconclusiveBecauseResourcesAreUnavailable();
       }
    }
