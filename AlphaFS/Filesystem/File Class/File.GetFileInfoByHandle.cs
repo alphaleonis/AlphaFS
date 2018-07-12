@@ -19,11 +19,9 @@
  *  THE SOFTWARE. 
  */
 
-using System.IO;
 using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.AccessControl;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -36,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandle(string path)
       {
-         return GetFileInfoByHandleCore(null, path, PathFormat.RelativePath);
+         return GetFileInfoByHandleCore(null, false, path, PathFormat.RelativePath);
       }
 
 
@@ -48,37 +46,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandle(string path, PathFormat pathFormat)
       {
-         return GetFileInfoByHandleCore(null, path, pathFormat);
+         return GetFileInfoByHandleCore(null, false, path, pathFormat);
       }
-
-
-      /// <summary>[AlphaFS] Retrieves file information for the specified file.</summary>
-      /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
-      /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file.</param>
-      [SecurityCritical]
-      public static ByHandleFileInfo GetFileInfoByHandleTransacted(KernelTransaction transaction, string path)
-      {
-         return GetFileInfoByHandleCore(transaction, path, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Retrieves file information for the specified file.</summary>
-      /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
-      /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static ByHandleFileInfo GetFileInfoByHandleTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return GetFileInfoByHandleCore(transaction, path, pathFormat);
-      }
-
-
-
-
+      
+      
       /// <summary>[AlphaFS] Retrieves file information for the specified <see cref="SafeFileHandle"/>.</summary>
       /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
       /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
@@ -98,21 +69,6 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          return new ByHandleFileInfo(info);
-      }
-
-
-      /// <summary>[AlphaFS] Retrieves file information for the specified file.</summary>
-      /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
-      /// <remarks>File IDs are not guaranteed to be unique over time, because file systems are free to reuse them. In some cases, the file ID for a file can change over time.</remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      internal static ByHandleFileInfo GetFileInfoByHandleCore(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         using (var handle = CreateFileCore(transaction, false, path, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, pathFormat))
-
-            return GetFileInfoByHandle(handle);
       }
    }
 }
