@@ -91,7 +91,7 @@ namespace AlphaFS.UnitTest
 
 
          if (driveCount == 0)
-            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseResourcesAreUnavailable();
       }
    }
 }

@@ -312,13 +312,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       private T NewFileSystemEntryType<T>(bool isFolder, FileSystemEntryInfo fsei, string fileName, string pathLp, NativeMethods.WIN32_FIND_DATA win32FindData)
       {
-         // Determine yield, e.g. do not return files when only folders are requested and vice versa.
+         // Determine yield, e.g. don't return files when only folders are requested and vice versa.
+
          if (null != FileSystemObjectType && (!(bool) FileSystemObjectType || !isFolder) && (!(bool) !FileSystemObjectType || isFolder))
+
             return (T) (object) null;
 
 
          // Determine yield from name filtering.
+
          if (null != fileName && !(null == _nameFilter || null != _nameFilter && _nameFilter.IsMatch(fileName)))
+
             return (T) (object) null;
 
 
@@ -328,10 +332,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Return object instance FullPath property as string, optionally in long path format.
 
-         return AsString
-            ? null == InclusionFilter || InclusionFilter(fsei)
-               ? (T) (object) (AsLongPath ? fsei.LongFullPath : fsei.FullPath)
-               : (T) (object) null
+         return AsString ? null == InclusionFilter || InclusionFilter(fsei) ? (T) (object) (AsLongPath ? fsei.LongFullPath : fsei.FullPath) : (T) (object) null
 
 
             // Make sure the requested file system object type is returned.
@@ -410,8 +411,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var regularPath = Path.GetCleanExceptionPath(InputPath);
 
-         var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
-
+         var isFolder = File.IsDirectory(win32FindData.dwFileAttributes);
 
          if (IsDirectory)
          {
@@ -444,8 +444,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-            while (
-               dirs.Count > 0
+
+            while (dirs.Count > 0
 #if !NET35
                && !CancellationToken.IsCancellationRequested
 #endif
@@ -499,7 +499,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                      if (Equals(res, default(T)))
                         continue;
-                     
+
 
                      yield return res;
 
@@ -520,7 +520,7 @@ namespace Alphaleonis.Win32.Filesystem
 #endif
                   )
 
-                     ThrowPossibleException((uint) lastError, pathLp);
+                     ThrowPossibleException((uint)lastError, pathLp);
                }
             }
       }

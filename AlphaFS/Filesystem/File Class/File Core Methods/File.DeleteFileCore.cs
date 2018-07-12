@@ -38,9 +38,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
+      /// <param name="attributes"></param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void DeleteFileCore(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
+      internal static void DeleteFileCore(KernelTransaction transaction, string path, bool ignoreReadOnly, FileAttributes attributes, PathFormat pathFormat)
       {
          if (null == path)
             throw new ArgumentNullException("path");
@@ -50,49 +51,67 @@ namespace Alphaleonis.Win32.Filesystem
 
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
-         // If the path points to a symbolic link, the symbolic link is deleted, not the target.
+
+         // Reset attributes to Normal if we already know the facts.
+
+         if (ignoreReadOnly && IsReadOnlyOrHidden(attributes))
+
+            SetAttributesCore(transaction, false, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
 
 
       startDeleteFile:
 
-         if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
+         if (!(null == transaction || !NativeMethods.IsAtLeastWindowsVista
 
             // DeleteFile() / DeleteFileTransacted()
             // 2013-01-13: MSDN confirms LongPath usage.
+            //
+            // If the path points to a symbolic link, the symbolic link is deleted, not the target.
 
             ? NativeMethods.DeleteFile(pathLp)
+
             : NativeMethods.DeleteFileTransacted(pathLp, transaction.SafeHandle)))
          {
             var lastError = Marshal.GetLastWin32Error();
 
-            switch ((uint)lastError)
+
+            switch ((uint) lastError)
             {
                case Win32Errors.ERROR_FILE_NOT_FOUND:
                   // MSDN: .NET 3.5+: If the file to be deleted does not exist, no exception is thrown.
                   return;
+
 
                case Win32Errors.ERROR_PATH_NOT_FOUND:
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid (for example, it is on an unmapped drive).
                   NativeError.ThrowException(lastError, pathLp);
                   return;
 
+
                case Win32Errors.ERROR_SHARING_VIOLATION:
                   // MSDN: .NET 3.5+: IOException: The specified file is in use or there is an open handle on the file.
                   NativeError.ThrowException(lastError, pathLp);
                   break;
 
+
                case Win32Errors.ERROR_ACCESS_DENIED:
-                  var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-                  var dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref attrs, false, true);
+
+                  if (attributes == 0)
+                  {
+                     var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+
+                     if (FillAttributeInfoCore(transaction, pathLp, ref attrs, false, true) == Win32Errors.NO_ERROR)
+
+                        attributes = attrs.dwFileAttributes;
+                  }
 
 
-                  if (IsDirectory(attrs.dwFileAttributes))
-                     // MSDN: .NET 3.5+: UnauthorizedAccessException: Path is a directory.
-                     throw new UnauthorizedAccessException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}",
-                        Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, pathLp)));
+                  // MSDN: .NET 3.5+: UnauthorizedAccessException: Path is a directory.
+                  if (IsDirectory(attributes))
+                     throw new UnauthorizedAccessException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", lastError.ToString(CultureInfo.InvariantCulture), string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, pathLp)));
 
 
-                  if (IsReadOnly(attrs.dwFileAttributes))
+                  if (IsReadOnlyOrHidden(attributes))
                   {
                      if (ignoreReadOnly)
                      {
@@ -109,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   
                   // MSDN: .NET 3.5+: UnauthorizedAccessException: The caller does not have the required permission.
-                  if (dataInitialised == Win32Errors.ERROR_SUCCESS)
+                  if (attributes == 0)
                      NativeError.ThrowException(lastError, pathLp);
 
                   break;
@@ -119,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
             // The specified file is in use.
             // There is an open handle on the file, and the operating system is Windows XP or earlier.
 
-            NativeError.ThrowException(lastError, pathLp);
+            NativeError.ThrowException(lastError, IsDirectory(attributes), pathLp);
          }
       }
    }

@@ -39,21 +39,21 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Checks that the file system object is a hidden.</summary>
+      /// <summary>Checks that the file system object is hidden.</summary>
       internal static bool IsHidden(FileAttributes fileAttributes)
       {
          return HasValidAttributes(fileAttributes) && (fileAttributes & FileAttributes.Hidden) != 0;
       }
       
 
-      /// <summary>Checks that the file system object is a read-only.</summary>
+      /// <summary>Checks that the file system object is read-only.</summary>
       internal static bool IsReadOnly(FileAttributes fileAttributes)
       {
          return HasValidAttributes(fileAttributes) && (fileAttributes & FileAttributes.ReadOnly) != 0;
       }
 
 
-      /// <summary>Checks that the file system object is a read-only or hidden.</summary>
+      /// <summary>Checks that the file system object is read-only or hidden.</summary>
       internal static bool IsReadOnlyOrHidden(FileAttributes fileAttributes)
       {
          return IsReadOnly(fileAttributes) || IsHidden(fileAttributes);

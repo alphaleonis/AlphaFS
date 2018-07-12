@@ -55,12 +55,17 @@ namespace Alphaleonis.Win32.Filesystem
          var attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(null, path, pathFormat, true);
 
          var isReadOnly = IsReadOnly(attrs.dwFileAttributes);
+         var isHidden = IsHidden(attrs.dwFileAttributes);
 
-         if (isReadOnly)
+         if (isReadOnly || isHidden)
          {
-            var fileAttr = attrs.dwFileAttributes &= ~FileAttributes.ReadOnly; // Remove ReadOnly attribute..
+            if (isReadOnly)
+               attrs.dwFileAttributes &= ~FileAttributes.ReadOnly;
 
-            SetAttributesCore(null, isFolder, path, fileAttr, pathFormat);
+            if (isHidden)
+               attrs.dwFileAttributes &= ~FileAttributes.Hidden;
+
+            SetAttributesCore(null, isFolder, path, attrs.dwFileAttributes, pathFormat);
          }
 
 
@@ -68,21 +73,17 @@ namespace Alphaleonis.Win32.Filesystem
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
          var success = encrypt ? NativeMethods.EncryptFile(path) : NativeMethods.DecryptFile(path, 0);
+
          var lastError = Marshal.GetLastWin32Error();
 
 
-         if (isReadOnly)
+         if (isReadOnly || isHidden)
          {
-            var isHidden = IsHidden(attrs.dwFileAttributes);
-
-            // Get most current attributes.
-            attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(null, path, pathFormat, true);
-
-            attrs.dwFileAttributes |= FileAttributes.ReadOnly;
+            if (isReadOnly)
+               attrs.dwFileAttributes |= FileAttributes.ReadOnly;
 
             if (isHidden)
                attrs.dwFileAttributes |= FileAttributes.Hidden;
-
 
             SetAttributesCore(null, isFolder, path, attrs.dwFileAttributes, pathFormat);
          }
@@ -103,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_FILE_READ_ONLY:
 
-                  if (IsDirectory(attrs.dwFileAttributes))
+                  if (isFolder)
                      throw new DirectoryReadOnlyException(path);
 
                   else

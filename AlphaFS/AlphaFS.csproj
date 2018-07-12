@@ -251,6 +251,20 @@
     <Compile Include="Device\Volume Class\Volume.EnumerateVolumes.cs" />
     <Compile Include="Filesystem\CopyMoveArguments.cs" />
     <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.ValidateMoveAction.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Core Methods\Directory.DeleteDirectoryNative.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetChangeTimeUtc.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetChangeTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetCreationTimeUtc.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetCreationTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetLastAccessTimeUtc.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetLastAccessTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetLastWriteTimeUtc.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetLastWriteTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.SetCreationTimeUtc.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.SetCreationTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.SetLastAccessTimeUtc.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.SetLastWriteTimeUtc.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory Time\Directory.SetLastWriteTimeUtcTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateAlternateDataStreamsTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateDirectoriesTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Core Methods\Directory.EnumerateFileIdBothDirectoryInfoCore.cs" />
@@ -310,26 +324,12 @@
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateLogicalDrives.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetSize.cs" />
     <Compile Include="Device\Local Class\Local.OpenDevice.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.GetChangeTimeUtc.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.GetChangeTimeUtcTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetChangeTimeTransacted.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.GetCreationTimeUtcTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetCreationTimeTransacted.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.GetCreationTimeUtc.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.GetLastAccessTimeUtcTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetLastAccessTimeTransacted.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.GetLastAccessTimeUtc.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.GetLastWriteTimeUtcTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Time\Directory.GetLastWriteTimeTransacted.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.GetLastWriteTimeUtc.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.SetCreationTimeUtcTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Time\Directory.SetCreationTimeTransacted.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.SetCreationTimeUtc.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.SetLastAccessTimeUtcTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Time\Directory.SetLastAccessTimeTransacted.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.SetLastAccessTimeUtc.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.SetLastWriteTimeUtcTransacted.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Time\UTC\Directory.SetLastWriteTimeUtc.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Time\Directory.SetLastWriteTimeTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Core Methods\Directory.EncryptDecryptDirectoryCore.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Encryption\Directory.Encrypt.cs" />
@@ -372,6 +372,22 @@
     <Compile Include="Filesystem\File Class\File Core Methods\File.CopyTimestampsCore.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.CopyTimestampsTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.AppendTextCore.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.GetChangeTimeUtc.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.GetChangeTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.GetCreationTimeUtc.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.GetCreationTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.GetLastAccessTimeUtc.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.GetLastAccessTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.GetLastWriteTimeUtc.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.GetLastWriteTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.SetCreationTimeUtc.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.SetCreationTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.SetLastAccessTimeUtc.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.SetLastAccessTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.SetLastWriteTimeUtc.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.SetLastWriteTimeUtcTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.SetTimestampsUtc.cs" />
+    <Compile Include="Filesystem\File Class\File Time\File.SetTimestampsUtcTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.AppendTextTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.CreateTextCore.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyMoveLogic.cs" />
@@ -390,36 +406,21 @@
     <Compile Include="Filesystem\File Class\File.AttributeLogic.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.GetChangeTimeCore.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.GetChangeTimeTransacted.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.GetChangeTimeUtcTransacted.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.GetChangeTimeUtc.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.GetCreationTimeCore.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.GetCreationTimeUtcTransacted.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.GetCreationTimeUtc.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.GetCreationTimeTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.GetLastAccessTimeCore.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.GetLastAccessTimeUtcTransacted.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.GetLastAccessTimeUtc.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.GetLastAccessTimeTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.GetLastWriteTimeTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.GetLastWriteTimeCore.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.GetLastWriteTimeUtcTransacted.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.GetLastWriteTimeUtc.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.SetTimestampsTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.SetTimestamps.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.SetLastWriteTimeUtcTransacted.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.SetLastWriteTimeUtc.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.SetLastWriteTimeTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.SetLastWriteTime.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.SetLastAccessTimeUtcTransacted.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.SetLastAccessTimeUtc.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.SetLastAccessTimeTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.SetLastAccessTime.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.SetCreationTimeTransacted.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.SetCreationTimeUtc.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.SetCreationTime.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.SetFsoDateTimeCore.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.SetCreationTimeUtcTransacted.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.SetTimestampsUtcTransacted.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\Link Stream\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\Link Stream\BackupStreamInfo.cs" />
@@ -624,7 +625,6 @@
     <Compile Include="Filesystem\File Class\File.Replace.cs" />
     <Compile Include="Filesystem\File Class\File.SetAccessControl.cs" />
     <Compile Include="Filesystem\File Class\File.SetAttributes.cs" />
-    <Compile Include="Filesystem\File Class\File Time\UTC\File.SetTimestampsUtc.cs" />
     <Compile Include="Filesystem\File Class\File.WriteAllBytes.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.GetChangeTime.cs" />
     <Compile Include="Filesystem\File Class\File Compression\File.GetCompressedSize.cs" />
@@ -906,7 +906,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

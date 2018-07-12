@@ -59,7 +59,7 @@ namespace AlphaFS.UnitTest
             }
 
             if (cnt == 0)
-               UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
+               UnitTestAssert.InconclusiveBecauseResourcesAreUnavailable();
 
 
 
@@ -77,7 +77,7 @@ namespace AlphaFS.UnitTest
             }
 
             if (cnt == 0)
-               UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
+               UnitTestAssert.InconclusiveBecauseResourcesAreUnavailable();
          }
 
          Console.WriteLine();

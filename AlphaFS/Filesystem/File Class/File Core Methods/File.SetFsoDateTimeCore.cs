@@ -52,15 +52,15 @@ namespace Alphaleonis.Win32.Filesystem
          if (modifyReparsePoint)
             eaAttributes |= ExtendedFileAttributes.OpenReparsePoint;
 
-         
-         // TODO 2018-07-11
-         //// Prevent a System.UnauthorizedAccessException from being thrown.
 
+         //// Prevent a System.UnauthorizedAccessException from being thrown by resetting attributes to Normal.
+
+         //var fileAttributes = FileAttributes.Normal;
          //var isReadOnly = IsReadOnly((FileAttributes) eaAttributes);
          //var isHidden = IsHidden((FileAttributes) eaAttributes);
 
          //if (isReadOnly || isHidden)
-         //   SetAttributesCore(transaction, isFolder, path, FileAttributes.Normal, PathFormat.LongFullPath);
+         //   SetAttributesCore(transaction, isFolder, path, fileAttributes, PathFormat.LongFullPath);
 
 
          using (var creationTime = SafeGlobalMemoryBufferHandle.FromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?) null))
@@ -81,16 +81,15 @@ namespace Alphaleonis.Win32.Filesystem
             {
                //if (isReadOnly || isHidden)
                //{
-               //   var fileAttributes = FileAttributes.Normal;
-
                //   if (isReadOnly)
                //      fileAttributes |= FileAttributes.ReadOnly;
 
                //   if (isHidden)
                //      fileAttributes |= FileAttributes.Hidden;
 
-               //   if (fileAttributes != FileAttributes.Normal)
-               //      SetAttributesCore(transaction, isFolder, path, fileAttributes, PathFormat.LongFullPath);
+               //   fileAttributes &= ~FileAttributes.Normal;
+
+               //   SetAttributesCore(transaction, isFolder, path, fileAttributes, PathFormat.LongFullPath);
                //}
             }
 
