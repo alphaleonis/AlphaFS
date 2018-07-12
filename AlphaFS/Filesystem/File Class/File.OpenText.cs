@@ -28,6 +28,8 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
+      #region .NET
+
       /// <summary>Opens an existing UTF-8 encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
       /// <returns>Returns a <see cref="StreamReader"/> on the specified path.</returns>
@@ -38,6 +40,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return new StreamReader(OpenRead(path), NativeMethods.DefaultFileEncoding);
       }
+
+      #endregion // .NET
+
 
       /// <summary>[AlphaFS] Opens an existing UTF-8 encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
@@ -50,6 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return new StreamReader(OpenRead(path, pathFormat), NativeMethods.DefaultFileEncoding);
       }
+
 
       /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
@@ -75,54 +81,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static StreamReader OpenText(string path, Encoding encoding)
       {
          return new StreamReader(OpenRead(path), encoding);
-      }
-
-      /// <summary>[AlphaFS] Opens an existing UTF-8 encoded text file for reading.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <returns>Returns a <see cref="StreamReader"/> on the specified path.</returns>
-      /// <remarks>This method is equivalent to the <see cref="StreamReader"/>(String) constructor overload.</remarks>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenTextTransacted(KernelTransaction transaction, string path)
-      {
-         return new StreamReader(OpenReadTransacted(transaction, path), NativeMethods.DefaultFileEncoding);
-      }
-
-      /// <summary>[AlphaFS] Opens an existing UTF-8 encoded text file for reading.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a <see cref="StreamReader"/> on the specified path.</returns>
-      /// <remarks>This method is equivalent to the <see cref="StreamReader"/>(String) constructor overload.</remarks>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenTextTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return new StreamReader(OpenReadTransacted(transaction, path, pathFormat), NativeMethods.DefaultFileEncoding);
-      }
-
-      /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a <see cref="StreamReader"/> on the specified path.</returns>
-      /// <remarks>This method is equivalent to the <see cref="StreamReader"/>(String) constructor overload.</remarks>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenTextTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
-      {
-         return new StreamReader(OpenReadTransacted(transaction, path, pathFormat), encoding);
-      }
-
-      /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <returns>Returns a <see cref="StreamReader"/> on the specified path.</returns>
-      /// <remarks>This method is equivalent to the <see cref="StreamReader"/>(String) constructor overload.</remarks>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenTextTransacted(KernelTransaction transaction, string path, Encoding encoding)
-      {
-         return new StreamReader(OpenReadTransacted(transaction, path), encoding);
       }
    }
 }

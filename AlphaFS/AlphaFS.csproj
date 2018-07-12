@@ -356,6 +356,7 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateSubdirectoryCore.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.VerifyDelayUntilReboot.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.CopyMoveNative.cs" />
     <Compile Include="Filesystem\File Class\File Compression\File.CompressTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Compression\File.DecompressTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Compression\File.GetCompressedSizeTransacted.cs" />
@@ -365,7 +366,6 @@
     <Compile Include="Filesystem\File Class\File CopyMove\File.MoveTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.AppendTextCore.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.CopyMoveCore.cs" />
-    <Compile Include="Filesystem\File Class\File Core Methods\File.CopyMoveNative.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.CopyTimestampsCore.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.CreateFileCore.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.CreateFileStreamCore.cs" />
@@ -426,6 +426,8 @@
     <Compile Include="Filesystem\File Class\File Time\File.SetTimestampsTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.SetTimestampsUtc.cs" />
     <Compile Include="Filesystem\File Class\File Time\File.SetTimestampsUtcTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File.AppendAllLinesTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File.AppendAllTextTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.AppendTextTransacted.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyMoveLogic.cs" />
     <Compile Include="Filesystem\File Class\File.CreateTextTransacted.cs" />
@@ -433,10 +435,55 @@
     <Compile Include="Filesystem\File Class\File.cs" />
     <Compile Include="Filesystem\File Class\File.DeleteTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateAlternateDataStreamsTransacted.cs" />
-    <Compile Include="Filesystem\File Class\File.GetFileIdInfoCore.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.ExistsCore.cs" />
+    <Compile Include="Filesystem\File Class\File.ExistsTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.GetAccessControlCore.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.GetAttributesExCore.cs" />
+    <Compile Include="Filesystem\File Class\File.GetAttributesTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.GetFileIdInfoCore.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfoTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\File Class\File.AttributeLogic.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.GetFileInfoByHandleCore.cs" />
+    <Compile Include="Filesystem\File Class\File.GetFileInfoByHandleTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.GetFileSystemEntryInfoCore.cs" />
+    <Compile Include="Filesystem\File Class\File.GetFileSystemEntryInfoTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.GetHashCore.cs" />
+    <Compile Include="Filesystem\File Class\File.GetHashTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File.GetProcessForFileLockTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.GetProcessForFileLockCore.cs" />
+    <Compile Include="Filesystem\File Class\File.FindFirstStreamNative.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.FindAllStreamsCore.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.GetSizeCore.cs" />
+    <Compile Include="Filesystem\File Class\File.GetSizeTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.IsLockedCore.cs" />
+    <Compile Include="Filesystem\File Class\File.IsLockedTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.OpenCore.cs" />
+    <Compile Include="Filesystem\File Class\File.OpenBackupReadTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File.OpenReadTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File.OpenTextTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File.OpenTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File.OpenWriteTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.ReadAllBytesCore.cs" />
+    <Compile Include="Filesystem\File Class\File.ReadAllBytesTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.ReadAllLinesCore.cs" />
+    <Compile Include="Filesystem\File Class\File.ReadAllLinesTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.ReadAllTextCore.cs" />
+    <Compile Include="Filesystem\File Class\File.ReadAllTextTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.ReadLinesCore.cs" />
+    <Compile Include="Filesystem\File Class\File.ReadLinesTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.ReplaceCore.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.SetAccessControlCore.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.SetAttributesCore.cs" />
+    <Compile Include="Filesystem\File Class\File.SetAttributesTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.WriteAllBytesCore.cs" />
+    <Compile Include="Filesystem\File Class\File.WriteAllBytesTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.WriteAppendAllLinesCore.cs" />
+    <Compile Include="Filesystem\File Class\File.WriteAllLinesTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File.WriteAllTextTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File.WriteAllText.cs" />
+    <Compile Include="Filesystem\File Class\File.WriteAllLines.cs" />
+    <Compile Include="Filesystem\File Class\File.AppendAllText.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\Link Stream\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\Link Stream\BackupStreamInfo.cs" />
@@ -604,7 +651,7 @@
     <Compile Include="Filesystem\File Class\File CopyMove\File.Copy.cs" />
     <Compile Include="Filesystem\File Class\File.GetProcessForFileLock.cs" />
     <Compile Include="Filesystem\File Class\File.IsLocked.cs" />
-    <Compile Include="Filesystem\File Class\File.WriteText.cs" />
+    <Compile Include="Filesystem\File Class\File.AppendAllLines.cs" />
     <Compile Include="Filesystem\File Class\File.AppendText.cs" />
     <Compile Include="Filesystem\File Class\File.Create.cs" />
     <Compile Include="Device\Device.DeviceInfo.cs" />
@@ -907,7 +954,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

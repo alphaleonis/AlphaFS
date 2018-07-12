@@ -35,7 +35,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath` property.
 
 
-Version 2.2.4  (2018-XX-XX)
+Version 2.2.4  (2018-07-12)
 -------------
 
 ### Bugs Fixed
@@ -44,6 +44,7 @@ Version 2.2.4  (2018-XX-XX)
 - Issue #469: Method `Directory.GetFileIdInfo` should throw `DirectoryNotFoundException`.
 - Issue #474: Method `Directory.EnumerateAlternateDataStreams` should throw `DirectoryNotFoundException`.
 - Issue #476: Method `Directory.GetChangeTime` should throw `DirectoryNotFoundException`.
+
 
 Version 2.2.3  (2018-06-14)
 -------------

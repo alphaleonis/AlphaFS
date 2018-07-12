@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -73,86 +72,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool continueOnException, PathFormat pathFormat)
       {
          return GetFileSystemEntryInfoCore(null, false, path, continueOnException, pathFormat);
-      }
-
-
-
-      
-      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file.</returns>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file.</param>
-      [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path)
-      {
-         return GetFileSystemEntryInfoCore(transaction, false, path, false, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file.</returns>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return GetFileSystemEntryInfoCore(transaction, false, path, false, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or null on failure.</returns>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file.</param>
-      /// <param name="continueOnException">
-      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
-      ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
-      /// </param>
-      [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path, bool continueOnException)
-      {
-         return GetFileSystemEntryInfoCore(transaction, false, path, continueOnException, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or null on failure.</returns>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <param name="continueOnException">
-      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
-      ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
-      /// </param>
-      [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path, bool continueOnException, PathFormat pathFormat)
-      {
-         return GetFileSystemEntryInfoCore(transaction, false, path, continueOnException, pathFormat);
-      }
-
-
-
-
-      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> for a Non-/Transacted file or directory on the path.</summary>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory, or <c>null</c> on Exception when <paramref name="continueOnException"/> is <c>true</c>.</returns>
-      /// <remarks>BasicSearch <see cref="NativeMethods.FINDEX_INFO_LEVELS.Basic"/> and LargeCache <see cref="NativeMethods.FIND_FIRST_EX_FLAGS.LARGE_FETCH"/> are used by default, if possible.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="isFolder">When <c>true</c> indicates the source is a directory; file otherwise. Use <c>false</c> if unknown.</param>
-      /// <param name="path">The path to the file.</param>
-      /// <param name="continueOnException">
-      ///    <para><c>true</c> suppress any Exception that might be thrown as a result from a failure,</para>
-      ///    <para>such as ACLs protected filesor non-accessible reparse points.</para>
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      internal static FileSystemEntryInfo GetFileSystemEntryInfoCore(KernelTransaction transaction, bool isFolder, string path, bool continueOnException, PathFormat pathFormat)
-      {
-         var options = continueOnException ? DirectoryEnumerationOptions.ContinueOnException : DirectoryEnumerationOptions.None;
-
-         return new FindFileSystemEntryInfo(transaction, isFolder, path, Path.WildcardStarMatchAll, options, null, pathFormat, typeof(FileSystemEntryInfo)).Get<FileSystemEntryInfo>();
       }
    }
 }

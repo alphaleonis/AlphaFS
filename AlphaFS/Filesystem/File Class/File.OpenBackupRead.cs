@@ -37,6 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
          return OpenCore(null, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, pathFormat);
       }
 
+
       /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes. This method is simpler to use then BackupFileStream to read only file's data stream.</summary>
       /// <param name="path">The file path to open.</param>
       /// <returns>Returns a <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
@@ -44,27 +45,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static FileStream OpenBackupRead(string path)
       {
          return OpenCore(null, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, PathFormat.RelativePath);
-      }
-
-      /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file path to open.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
-      [SecurityCritical]
-      public static FileStream OpenBackupReadTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return OpenCore(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, pathFormat);
-      }
-
-      /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file path to open.</param>
-      /// <returns>Returns a <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
-      [SecurityCritical]
-      public static FileStream OpenBackupReadTransacted(KernelTransaction transaction, string path)
-      {
-         return OpenCore(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, PathFormat.RelativePath);
       }
    }
 }
