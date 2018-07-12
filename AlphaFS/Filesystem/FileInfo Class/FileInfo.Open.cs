@@ -38,6 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
          return File.OpenCore(Transaction, LongFullName, mode, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath);
       }
 
+
       /// <summary>Opens a file in the specified mode with read, write, or read/write access.</summary>
       /// <returns>A <see cref="FileStream"/> object opened in the specified mode and access, and unshared.</returns>
       /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
@@ -47,6 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.OpenCore(Transaction, LongFullName, mode, access, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath);
       }
+
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
       /// <returns>A <see cref="FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
@@ -61,7 +63,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
 
-      #region AlphaFS
 
       /// <summary>[AlphaFS] Opens a file in the specified mode with read, write, or read/write access.</summary>
       /// <returns>A <see cref="FileStream"/> object opened in the specified mode and access, and unshared.</returns>
@@ -73,6 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
          return File.OpenCore(Transaction, LongFullName, mode, rights, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath);
       }
 
+
       /// <summary>[AlphaFS] Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
       /// <returns>A <see cref="FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
       /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
@@ -83,7 +85,5 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.OpenCore(Transaction, LongFullName, mode, rights, share, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath);
       }
-
-      #endregion // AlphaFS
    }
 }

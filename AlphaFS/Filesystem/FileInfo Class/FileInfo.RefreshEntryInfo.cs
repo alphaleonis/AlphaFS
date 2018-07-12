@@ -25,15 +25,11 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      #region AlphaFS
-
-      /// <summary>Refreshes the state of the <see cref="FileSystemEntryInfo"/> EntryInfo property.</summary>
+      /// <summary>[AlphaFS] Refreshes the state of the <see cref="FileSystemEntryInfo"/> EntryInfo property.</summary>
       [SecurityCritical]
       public new void RefreshEntryInfo()
       {
          base.RefreshEntryInfo();
       }
-
-      #endregion // AlphaFS
    }
 }

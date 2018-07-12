@@ -25,8 +25,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      #region AlphaFS
-
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>      
       /// <returns>Returns <c>true</c> if the specified file is in use (locked); otherwise, <c>false</c></returns>
       [SecurityCritical]
@@ -34,7 +32,5 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.IsLockedCore(Transaction, LongFullName, PathFormat.LongFullPath);
       }
-
-      #endregion // AlphaFS
    }
 }

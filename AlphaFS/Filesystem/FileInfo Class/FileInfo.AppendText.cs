@@ -29,13 +29,14 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region .NET
 
-      /// <summary>Creates a <see cref="System.IO.StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
+      /// <summary>Creates a <see cref="StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
       /// <returns>A new <see cref="StreamWriter"/></returns>
       [SecurityCritical]
       public StreamWriter AppendText()
       {
          return File.AppendTextCore(Transaction, LongFullName, NativeMethods.DefaultFileEncoding, PathFormat.LongFullPath);
       }
+
 
       /// <summary>Creates a <see cref="StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>

@@ -27,8 +27,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      #region CopyTo
-
       #region .NET
 
       /// <summary>Copies an existing file to a new file, disallowing the overwriting of an existing file.</summary>
@@ -50,10 +48,14 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath)
       {
          string destinationPathLp;
+
          CopyToMoveToCore(destinationPath, CopyOptions.FailIfExists, null, false, null, null, out destinationPathLp, PathFormat.RelativePath);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
+
 
       /// <summary>Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
       /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
@@ -75,15 +77,16 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, bool overwrite)
       {
          string destinationPathLp;
+
          CopyToMoveToCore(destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, out destinationPathLp, PathFormat.RelativePath);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
 
-
-      #region AlphaFS
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, disallowing the overwriting of an existing file.</summary>
       /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
@@ -105,11 +108,13 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, PathFormat pathFormat)
       {
          string destinationPathLp;
+
          CopyToMoveToCore(destinationPath, CopyOptions.FailIfExists, null, false, null, null, out destinationPathLp, pathFormat);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
-
 
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
@@ -133,11 +138,13 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, bool overwrite, PathFormat pathFormat)
       {
          string destinationPathLp;
+
          CopyToMoveToCore(destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, false, null, null, out destinationPathLp, pathFormat);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
-
 
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
@@ -161,11 +168,15 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions)
       {
          string destinationPathLp;
+
          CopyToMoveToCore(destinationPath, copyOptions, null, false, null, null, out destinationPathLp, PathFormat.RelativePath);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
+      
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
       /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <remarks>
@@ -188,12 +199,14 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
+
          CopyToMoveToCore(destinationPath, copyOptions, null, false, null, null, out destinationPathLp, pathFormat);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
-
-
+      
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
       /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
@@ -217,10 +230,14 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
          string destinationPathLp;
+
          CopyToMoveToCore(destinationPath, copyOptions, null, preserveDates, null, null, out destinationPathLp, PathFormat.RelativePath);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
+
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
       /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
@@ -245,13 +262,15 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
          string destinationPathLp;
+
          CopyToMoveToCore(destinationPath, copyOptions, null, preserveDates, null, null, out destinationPathLp, pathFormat);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
-
-
+      
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
       /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
@@ -276,10 +295,14 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
+
          var cmr = CopyToMoveToCore(destinationPath, copyOptions, null, false, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return cmr;
       }
+
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
       /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
@@ -305,12 +328,14 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
+
          var cmr = CopyToMoveToCore(destinationPath, copyOptions, null, false, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return cmr;
       }
-
-
+      
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
       /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
@@ -337,10 +362,14 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
+
          var cmr = CopyToMoveToCore(destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return cmr;
       }
+
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.</summary>
       /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
@@ -368,259 +397,12 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
+
          var cmr = CopyToMoveToCore(destinationPath, copyOptions, null, preserveDates, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+
          UpdateDestinationPath(destinationPath, destinationPathLp);
+
          return cmr;
       }
-
-      #endregion // AlphaFS
-
-      #endregion // CopyTo
-
-
-      #region MoveTo
-
-      #region .NET
-
-      /// <summary>Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
-      /// <remarks>
-      ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
-      ///   <para>This method works across disk volumes.</para>
-      ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
-      [SecurityCritical]
-      public void MoveTo(string destinationPath)
-      {
-         string destinationPathLp;
-         CopyToMoveToCore(destinationPath, null, MoveOptions.CopyAllowed, false, null, null, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
-      }
-
-      #endregion // .NET
-
-
-      #region AlphaFS
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved.</returns>
-      /// <remarks>
-      ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
-      ///   <para>This method works across disk volumes.</para>
-      ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public FileInfo MoveTo(string destinationPath, PathFormat pathFormat)
-      {
-         string destinationPathLp;
-         CopyToMoveToCore(destinationPath, null, MoveOptions.CopyAllowed, false, null, null, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
-         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
-      }
-
-
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.</summary>
-      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved.</returns>
-      /// <remarks>
-      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>This method works across disk volumes.</para>
-      ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      [SecurityCritical]
-      public FileInfo MoveTo(string destinationPath, MoveOptions moveOptions)
-      {
-         string destinationPathLp;
-         CopyToMoveToCore(destinationPath, null, moveOptions, false, null, null, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
-         return null != destinationPathLp ? new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath) : null;
-      }
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.</summary>
-      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved.</returns>
-      /// <remarks>
-      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>This method works across disk volumes.</para>
-      ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public FileInfo MoveTo(string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
-      {
-         string destinationPathLp;
-         CopyToMoveToCore(destinationPath, null, moveOptions, false, null, null, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
-         return null != destinationPathLp ? new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath) : null;
-      }
-
-
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified,
-      /// and the possibility of notifying the application of its progress through a callback function.
-      /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <remarks>
-      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>This method works across disk volumes.</para>
-      ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      [SecurityCritical]
-      public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         // Reject DelayUntilReboot.
-         if ((moveOptions & MoveOptions.DelayUntilReboot) != 0)
-            throw new ArgumentException("The DelayUntilReboot flag is invalid for this method.", "moveOptions");
-
-         string destinationPathLp;
-         var cmr = CopyToMoveToCore(destinationPath, null, moveOptions, false, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
-         return cmr;
-      }
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <remarks>
-      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      ///   <para>This method works across disk volumes.</para>
-      ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         // Reject DelayUntilReboot.
-         if ((moveOptions & MoveOptions.DelayUntilReboot) != 0)
-            throw new ArgumentException("The DelayUntilReboot flag is invalid for this method.", "moveOptions");
-
-         string destinationPathLp;
-         var cmr = CopyToMoveToCore(destinationPath, null, moveOptions, false, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         UpdateDestinationPath(destinationPath, destinationPathLp);
-         return cmr;
-      }
-
-      #endregion // AlphaFS
-
-      #endregion // MoveTo
-
-
-      #region Internal Methods
-
-      /// <summary>Copy/move an existing file to a new file, allowing the overwriting of an existing file.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
-      /// <remarks>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <param name="destinationPath"><para>A full path string to the destination directory</para></param>
-      /// <param name="copyOptions"><para>This parameter can be <c>null</c>. Use <see cref="CopyOptions"/> to specify how the file is to be copied.</para></param>
-      /// <param name="moveOptions"><para>This parameter can be <c>null</c>. Use <see cref="MoveOptions"/> that specify how the file is to be moved.</para></param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
-      /// <param name="progressHandler"><para>This parameter can be <c>null</c>. A callback function that is called each time another portion of the file has been copied.</para></param>
-      /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
-      /// <param name="longFullPath">[out] Returns the retrieved long full path.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      [SecurityCritical]
-      private CopyMoveResult CopyToMoveToCore(string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
-      {
-         longFullPath = Path.GetExtendedLengthPathCore(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
-
-         return File.CopyMoveCore(false, new CopyMoveArguments
-         {
-            Transaction = Transaction,
-            CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
-            MoveOptions = moveOptions,
-            ProgressHandler = progressHandler,
-            UserProgressData = userProgressData,
-            PathFormat = PathFormat.LongFullPath
-
-         }, false, false, LongFullName, longFullPath, null);
-      }
-
-
-      /// <summary>Refreshes the current <see cref="FileInfo"/> instance with a new destination path.</summary>
-      private void UpdateDestinationPath(string destinationPath, string destinationPathLp)
-      {
-         _name = Path.GetFileName(destinationPathLp, true);
-
-         UpdateSourcePath(destinationPath, destinationPathLp);
-      }
-
-      #endregion // Internal Methods
    }
 }
