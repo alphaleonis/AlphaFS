@@ -12,11 +12,12 @@ The file system support in .NET is pretty good for most uses. However there are 
 
 * Support for extended length paths (longer than 260 characters)
 * Creating Junctions/Hardlinks
-* Accessing hidden volumes
+* Enumeration of folders and files with exception reporting and recovery, custom filtering.
 * Enumeration of volumes
+* Accessing hidden volumes
 * Transactional file operations
-* Support for NTFS Alternate Data Streams (files/folders)
-* Accessing network resources (SMB/DFS)
+* Support for NTFS Alternate Data Streams on files and folders
+* Accessing SMB and DFS network resources
 * Create and access folders/files that contain space(s) in their name.
 * Uses folder/file enumerator which can report and recover from access denied exceptions and supports custom filtering
 * ...and much more!
@@ -30,6 +31,9 @@ They also contain extensions to these, and there are many more features for seve
 
 When only  these `System.IO` classes are used, it is just a matter of replacing `using System.IO`
 with `using Alphaleonis.Win32.Filesystem`, which makes AlphaFS a **true** drop-in replacement.
+
+The ability to report and recover from, usually access denied, exceptions while enumerating files and folders is one of the
+shortcomings that AlphaFS tries to fix, together with the ability of custom filtering to get only the files and folders you need.
 
 Another thing AlphaFS brings to the table is support for transactional NTFS (TxF). Almost every method in
 these classes exist in two versions. One normal, and one that can work with transactions, more specifically the
