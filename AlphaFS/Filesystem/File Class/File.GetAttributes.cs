@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>
       ///   Calls NativeMethods.GetFileAttributesEx to retrieve WIN32_FILE_ATTRIBUTE_DATA.
-      ///   <para>Note that classes should use -1 as the uninitialized state for dataInitialized when relying on this method.</para>
+      ///   Note that classes should use -1 as the uninitialized state for dataInitialized when relying on this method.
       /// </summary>
       /// <remarks>No path (null, empty string) checking or normalization is performed.</remarks>
       /// <param name="transaction">.</param>
@@ -117,7 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static int FillAttributeInfoCore(KernelTransaction transaction, string pathLp, ref NativeMethods.WIN32_FILE_ATTRIBUTE_DATA win32AttrData, bool tryAgain, bool returnErrorOnNotFound)
       {
-         var lastError = (int) Win32Errors.ERROR_SUCCESS;
+         var lastError = (int) Win32Errors.NO_ERROR;
 
          #region Try Again
 
@@ -142,7 +142,7 @@ namespace Alphaleonis.Win32.Filesystem
                         if (!returnErrorOnNotFound)
                         {
                            // Return default value for backward compatibility.
-                           lastError = (int) Win32Errors.ERROR_SUCCESS;
+                           lastError = (int) Win32Errors.NO_ERROR;
 
                            win32AttrData.dwFileAttributes = NativeMethods.InvalidFileAttributes;
                         }
@@ -170,6 +170,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // 2013-01-13: MSDN confirms LongPath usage.
 
                   ? NativeMethods.GetFileAttributesEx(pathLp, NativeMethods.GET_FILEEX_INFO_LEVELS.GetFileExInfoStandard, out win32AttrData)
+
                   : NativeMethods.GetFileAttributesTransacted(pathLp, NativeMethods.GET_FILEEX_INFO_LEVELS.GetFileExInfoStandard, out win32AttrData, transaction.SafeHandle)))
                {
                   lastError = Marshal.GetLastWin32Error();
@@ -188,7 +189,7 @@ namespace Alphaleonis.Win32.Filesystem
                   if (!returnErrorOnNotFound)
                   {
                      // Return default value for backward compatibility.
-                     lastError = (int) Win32Errors.ERROR_SUCCESS;
+                     lastError = (int) Win32Errors.NO_ERROR;
 
                      win32AttrData.dwFileAttributes = NativeMethods.InvalidFileAttributes;
                   }
