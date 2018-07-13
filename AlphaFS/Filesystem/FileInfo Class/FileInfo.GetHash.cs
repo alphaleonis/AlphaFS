@@ -25,8 +25,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      #region AlphaFS
-
       /// <summary>[AlphaFS] Calculates the hash/checksum.</summary>
       /// <param name="hashType">One of the <see cref="HashType"/> values.</param>
       /// <returns>The hash/checksum of the file represented by this <see cref="FileInfo"/>.</returns>
@@ -34,7 +32,5 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.GetHashCore(Transaction, LongFullName, hashType, PathFormat.LongFullPath);
       }
-
-      #endregion // AlphaFS
    }
 }

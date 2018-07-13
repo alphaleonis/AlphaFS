@@ -345,7 +345,7 @@
     <Compile Include="Filesystem\Directory Class\Directory Encryption\Directory.Encrypt.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Encryption\Directory.DisableEncryption.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Encryption\Directory.EnableEncryption.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo CopyMove\DirectoryInfo.CopyToMoveToCore.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo CopyToMoveTo\DirectoryInfo.CopyToMoveToCore.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Compression\DirectoryInfo.EnableCompression.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Compression\DirectoryInfo.DisableCompression.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Compression\DirectoryInfo.Decompress.cs" />
@@ -484,6 +484,8 @@
     <Compile Include="Filesystem\File Class\File.WriteAllText.cs" />
     <Compile Include="Filesystem\File Class\File.WriteAllLines.cs" />
     <Compile Include="Filesystem\File Class\File.AppendAllText.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo CopyToMoveTo\FileInfo.MoveTo.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo CopyToMoveTo\FileInfo.CopyToMoveToCore.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.GetFileIdInfo.cs" />
     <Compile Include="Filesystem\Link Stream\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\Link Stream\BackupStreamInfo.cs" />
@@ -525,7 +527,7 @@
     <Compile Include="Filesystem\Directory Class\Directory.GetLinkTargetInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Junctions, Links\Directory.CreateSymbolicLink.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileSystemEntryInfo.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo CopyMove\DirectoryInfo.MoveTo.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo CopyToMoveTo\DirectoryInfo.MoveTo.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Junctions, Links\DirectoryInfo.DeleteJunction.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Junctions, Links\DirectoryInfo.CreateJunction.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.RefreshEntryInfo.cs" />
@@ -533,7 +535,7 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.DeleteEmptySubdirectories.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo Compression\DirectoryInfo.Compress.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CountFileSystemObjects.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo CopyMove\DirectoryInfo.CopyTo.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo CopyToMoveTo\DirectoryInfo.CopyTo.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.SetAccessControl.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileSystemInfos.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFiles.cs" />
@@ -690,9 +692,8 @@
     <Compile Include="Filesystem\FileInfo Class\FileInfo.GetHash.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.RefreshEntryInfo.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.EnumerateAlternateDataStreams.cs" />
-    <Compile Include="Filesystem\FileInfo Class\FileInfo.Decompress.cs" />
-    <Compile Include="Filesystem\FileInfo Class\FileInfo.Compress.cs" />
-    <Compile Include="Filesystem\FileInfo Class\FileInfo.ToString.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo Compression\FileInfo.Decompress.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo Compression\FileInfo.Compress.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.SetAccessControl.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.Replace.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.OpenWrite.cs" />
@@ -700,12 +701,12 @@
     <Compile Include="Filesystem\FileInfo Class\FileInfo.OpenRead.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.Open.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.GetAccessControl.cs" />
-    <Compile Include="Filesystem\FileInfo Class\FileInfo.Encrypt.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo Encryption\FileInfo.Encrypt.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.Delete.cs" />
-    <Compile Include="Filesystem\FileInfo Class\FileInfo.Decrypt.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo Encryption\FileInfo.Decrypt.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.CreateText.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.Create.cs" />
-    <Compile Include="Filesystem\FileInfo Class\FileInfo.CopyToMoveTo.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo CopyToMoveTo\FileInfo.CopyTo.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.AppendText.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.cs" />
     <Compile Include="Filesystem\FindFileSystemEntryInfo.cs" />

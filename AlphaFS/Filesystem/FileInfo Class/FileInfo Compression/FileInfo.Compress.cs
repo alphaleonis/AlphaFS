@@ -26,15 +26,11 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      #region AlphaFS
-
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>      
       [SecurityCritical]
       public void Compress()
       {
          FilesystemHelper.ToggleCompressionCore(Transaction, false, LongFullName, true, PathFormat.LongFullPath);
       }
-
-      #endregion // AlphaFS
    }
 }

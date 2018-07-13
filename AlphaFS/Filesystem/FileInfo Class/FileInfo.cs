@@ -52,8 +52,6 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
 
-      #region AlphaFS
-
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -63,8 +61,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transactional
-
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
@@ -72,6 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo(KernelTransaction transaction, string fileName) : this(transaction, fileName, PathFormat.RelativePath)
       {
       }
+
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -84,10 +81,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          _name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fileName), pathFormat != PathFormat.LongFullPath);
       }
-
-      #endregion // Transacted
-
-      #endregion // AlphaFS
 
       #endregion // Constructors
 
@@ -236,5 +229,17 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       #endregion // Properties
+
+
+      #region Methods
+
+      /// <summary>Returns the path as a string.</summary>
+      /// <returns>The path.</returns>
+      public override string ToString()
+      {
+         return DisplayPath;
+      }
+
+      #endregion // Methods
    }
 }
