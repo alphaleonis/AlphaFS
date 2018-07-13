@@ -20,22 +20,27 @@
  */
 
 using System;
+using System.Globalization;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
-      /// <returns>Regular form path string.</returns>
-      /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path.</param>
+      /// <summary>Adds a trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character to the string, when absent.</summary>
+      /// <returns>A text string with a trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
+      /// <param name="path">A text string to which the trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> is to be added, when absent.</param>
+      /// <param name="addAlternateSeparator">If <c>true</c> the <see cref="AltDirectorySeparatorChar"/> character will be added instead.</param>
       [SecurityCritical]
-      public static string GetRegularPath(string path)
+      internal static string AddTrailingDirectorySeparatorCore(string path, bool addAlternateSeparator)
       {
-         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
+         return null == path
+
+            ? null
+
+            : (addAlternateSeparator ? (!path.EndsWith(AltDirectorySeparatorChar.ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal) ? path + AltDirectorySeparatorChar : path)
+
+               : (!path.EndsWith(DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal) ? path + DirectorySeparatorChar : path));
       }
    }
 }

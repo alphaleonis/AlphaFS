@@ -26,16 +26,24 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
-      /// <returns>Regular form path string.</returns>
-      /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path.</param>
+      /// <summary>Determines if a path string is a valid Universal Naming Convention (UNC) path, optionally skip invalid path character check.</summary>
+      /// <returns><c>true</c> if the specified path is a Universal Naming Convention (UNC) path, <c>false</c> otherwise.</returns>
+      /// <param name="path">The path to check.</param>
+      /// <param name="isRegularPath">When <c>true</c> indicates that <paramref name="path"/> is already in regular path format.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      public static string GetRegularPath(string path)
+      internal static bool IsUncPathCore(string path, bool isRegularPath, bool checkInvalidPathChars)
       {
-         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
+         if (!isRegularPath)
+            path = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None, false);
+
+         else if (checkInvalidPathChars)
+            CheckInvalidPathChars(path, false, false);
+
+
+         Uri uri;
+
+         return Uri.TryCreate(path, UriKind.Absolute, out uri) && uri.IsUnc;
       }
    }
 }

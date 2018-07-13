@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentException(Resources.Not_A_Valid_Guid, "volumeGuid");
 
 
-         volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         volumeMountPoint = Path.GetFullPathCore(null, false, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
 
          // This string must be of the form "\\?\Volume{GUID}\"

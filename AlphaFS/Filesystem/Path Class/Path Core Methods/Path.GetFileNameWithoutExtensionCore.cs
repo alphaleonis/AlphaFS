@@ -26,16 +26,19 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
-      /// <returns>Regular form path string.</returns>
-      /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
+      /// <summary>Returns the file name of the specified path string without the extension.</summary>
+      /// <returns>The string returned by GetFileName, minus the last period (.) and all characters following it.</returns>
       /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path.</param>
+      /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      public static string GetRegularPath(string path)
+      internal static string GetFileNameWithoutExtensionCore(string path, bool checkInvalidPathChars)
       {
-         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
+         int pathIndex;
+
+         path = GetFileName(path, checkInvalidPathChars);
+         
+         return null != path ? ((pathIndex = path.LastIndexOf(ExtensionSeparatorChar)) == -1 ? path : path.Substring(0, pathIndex)) : null;
       }
    }
 }

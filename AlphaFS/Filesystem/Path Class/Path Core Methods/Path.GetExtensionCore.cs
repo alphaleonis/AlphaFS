@@ -26,28 +26,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      #region .NET
-
       /// <summary>Returns the extension of the specified path string.</summary>
-      /// <returns>
-      ///   <para>The extension of the specified path (including the period "."), or null, or <see cref="string.Empty"/>.</para>
-      ///   <para>If <paramref name="path"/> is null, this method returns null.</para>
-      ///   <para>If <paramref name="path"/> does not have extension information,
-      ///   this method returns <see cref="string.Empty"/>.</para>
-      /// </returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
-      [SecurityCritical]
-      public static string GetExtension(string path)
-      {
-         return GetExtensionCore(path, !Utils.IsNullOrWhiteSpace(path));
-      }
-
-      #endregion // .NET
-
-
-      /// <summary>[AlphaFS] Returns the extension of the specified path string.</summary>
       /// <returns>
       ///   <para>The extension of the specified path (including the period "."), or null, or <see cref="string.Empty"/>.</para>
       ///   <para>If <paramref name="path"/> is null, this method returns null.</para>
@@ -58,9 +37,29 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      public static string GetExtension(string path, bool checkInvalidPathChars)
+      internal static string GetExtensionCore(string path, bool checkInvalidPathChars)
       {
-         return GetExtensionCore(path, checkInvalidPathChars);
+         if (null == path)
+            return null;
+
+         if (checkInvalidPathChars)
+            CheckInvalidPathChars(path, false, true);
+
+         var length = path.Length;
+         var index = length;
+
+         while (--index >= 0)
+         {
+            var ch = path[index];
+
+            if (ch == ExtensionSeparatorChar)
+               return index != length - 1 ? path.Substring(index, length - index) : string.Empty;
+
+            if (IsDVsc(ch, null))
+               break;
+         }
+
+         return string.Empty;
       }
    }
 }

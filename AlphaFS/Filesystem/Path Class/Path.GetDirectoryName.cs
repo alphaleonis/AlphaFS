@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryName(string path)
       {
-         return GetDirectoryName(path, true);
+         return GetDirectoryNameCore(path, true);
       }
 
       #endregion // .NET
@@ -56,24 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryName(string path, bool checkInvalidPathChars)
       {
-         if (path != null)
-         {
-            var rootLength = GetRootLength(path, checkInvalidPathChars);
-
-            if (path.Length > rootLength)
-            {
-               var length = path.Length;
-
-               if (length == rootLength)
-                  return null;
-
-               while (length > rootLength && path[--length] != DirectorySeparatorChar && path[length] != AltDirectorySeparatorChar) { }
-
-               return path.Substring(0, length).Replace(AltDirectorySeparatorChar, DirectorySeparatorChar);
-            }
-         }
-
-         return null;
+         return GetDirectoryNameCore(path, checkInvalidPathChars);
       }
    }
 }

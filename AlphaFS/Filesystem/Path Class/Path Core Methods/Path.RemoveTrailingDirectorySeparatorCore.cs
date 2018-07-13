@@ -19,40 +19,20 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using System.Security;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Filesystem
 {
-   public partial class PathTest
+   public static partial class Path
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_Path_GetMappedUncName_Success()
+      /// <summary>Removes the trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character from the string, when present.</summary>
+      /// <returns>A text string where the trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character has been removed. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
+      /// <param name="path">A text string from which the trailing <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> is to be removed, when present.</param>
+      /// <param name="removeAlternateSeparator">If <c>true</c> the trailing <see cref="AltDirectorySeparatorChar"/> character will be removed instead.</param>
+      [SecurityCritical]
+      internal static string RemoveTrailingDirectorySeparatorCore(string path, bool removeAlternateSeparator)
       {
-         using (var tempRoot = new TemporaryDirectory(true))
-         {
-            // Randomly test the share where the local folder possibly has the read-only and/or hidden attributes set.
-
-            var folder = tempRoot.CreateDirectoryRandomizedAttributes();
-
-
-            using (var connection = new Alphaleonis.Win32.Network.DriveConnection(folder.FullName))
-            {
-               var driveName = connection.LocalName;
-
-               Console.WriteLine("Mapped drive letter [{0}] to [{1}]", driveName, folder.FullName);
-
-               UnitTestConstants.Dump(connection);
-
-
-               var connectionName = Alphaleonis.Win32.Filesystem.Path.GetMappedUncName(driveName);
-
-               Assert.AreEqual(folder.FullName, connectionName);
-            }
-         }
+         return null != path ? path.TrimEnd(removeAlternateSeparator ? AltDirectorySeparatorChar : DirectorySeparatorChar) : null;
       }
    }
 }
