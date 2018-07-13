@@ -39,6 +39,14 @@ Version 2.3  (2018-XX-XX)
 - Issue #478: Move method `Path.GetMappedUncName` to `Host` class.
 
 
+Version 2.2.5  (2018-XX-XX)
+-------------
+
+### Bugs Fixed
+
+- Issue #479: `File.Move` on a file opened with `FileShare.Delete` succeeds but throws `IOException`.  (Thx oguimbal)
+
+
 Version 2.2.4  (2018-07-12)
 -------------
 
