@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_Move_FileOpenedWithFileShareDeleteFlag_LocalAndNetwork_Success()
+      public void File_Move_FileOpenedWithFileShareDeleteFlag_LocalAndNetwork_Success()
       {
-         AlphaFS_File_Move_FileOpenedWithFileShareDeleteFlag(false);
-         AlphaFS_File_Move_FileOpenedWithFileShareDeleteFlag(true);
+         File_Move_FileOpenedWithFileShareDeleteFlag(false);
+         File_Move_FileOpenedWithFileShareDeleteFlag(true);
       }
 
 
-      private void AlphaFS_File_Move_FileOpenedWithFileShareDeleteFlag(bool isNetwork)
+      private void File_Move_FileOpenedWithFileShareDeleteFlag(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
