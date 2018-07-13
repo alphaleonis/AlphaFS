@@ -820,10 +820,6 @@
     <Compile Include="Device\Structures, Enumerations\StorageBusType.cs" />
     <Compile Include="Device\Structures, Enumerations\DeviceType.cs" />
     <Compile Include="Device\Structures, Enumerations\StorageMediaType.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\StreamAttribute.cs" />
-    <Compile Include="Filesystem\Structures, Enumerations\StreamId.cs" />
-    <Compile Include="Filesystem\Native Other\SymbolicLinkTarget.cs" />
-    <Compile Include="Filesystem\Native Other\SymbolicLinkType.cs" />
     <Compile Include="Filesystem\WpdFileSystemInfo.cs" />
     <Compile Include="OperatingSystem\IsAtLeast.cs" />
     <Compile Include="OperatingSystem\EnumOsName.cs" />
@@ -1031,7 +1027,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
