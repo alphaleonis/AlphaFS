@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
 
             var dstFile = System.IO.Path.Combine(folder.FullName, tempRoot.RandomString);
 
-            Console.WriteLine("Src File Path: [{0}]", dstFile);
+            Console.WriteLine("Src File Path: [{0}]", srcFile);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
 
