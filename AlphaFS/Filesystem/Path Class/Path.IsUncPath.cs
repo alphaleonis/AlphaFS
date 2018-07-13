@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -36,24 +35,14 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-
       /// <summary>Determines if a path string is a valid Universal Naming Convention (UNC) path, optionally skip invalid path character check.</summary>
       /// <returns><c>true</c> if the specified path is a Universal Naming Convention (UNC) path, <c>false</c> otherwise.</returns>
       /// <param name="path">The path to check.</param>
-      /// <param name="isRegularPath">When <c>true</c> indicates that <paramref name="path"/> is already in regular path format.</param>
       /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      internal static bool IsUncPathCore(string path, bool isRegularPath, bool checkInvalidPathChars)
+      internal static bool IsUncPath(string path, bool checkInvalidPathChars)
       {
-         if (!isRegularPath)
-            path = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None, false);
-
-         else if (checkInvalidPathChars)
-            CheckInvalidPathChars(path, false, false);
-
-
-         Uri uri;
-         return Uri.TryCreate(path, UriKind.Absolute, out uri) && uri.IsUnc;
+         return IsUncPathCore(path, false, checkInvalidPathChars);
       }
    }
 }

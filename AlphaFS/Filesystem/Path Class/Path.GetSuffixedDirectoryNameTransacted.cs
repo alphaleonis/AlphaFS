@@ -31,11 +31,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
       /// </returns>
       /// <remarks>This method is similar to calling Path.GetDirectoryName() + Path.AddTrailingDirectorySeparator()</remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       [SecurityCritical]
-      public static string GetSuffixedDirectoryName(string path)
+      public static string GetSuffixedDirectoryNameTransacted(KernelTransaction transaction, string path)
       {
-         return GetSuffixedDirectoryNameCore(null, path, PathFormat.RelativePath);
+         return GetSuffixedDirectoryNameCore(transaction, path, PathFormat.RelativePath);
       }
 
 
@@ -45,12 +46,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
       /// </returns>
       /// <remarks>This method is similar to calling Path.GetDirectoryName() + Path.AddTrailingDirectorySeparator()</remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static string GetSuffixedDirectoryName(string path, PathFormat pathFormat)
+      public static string GetSuffixedDirectoryNameTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetSuffixedDirectoryNameCore(null, path, pathFormat);
+         return GetSuffixedDirectoryNameCore(transaction, path, pathFormat);
       }
    }
 }

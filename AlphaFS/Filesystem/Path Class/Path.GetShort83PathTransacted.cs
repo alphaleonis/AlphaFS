@@ -20,26 +20,24 @@
  */
 
 using System;
-using System.IO;
-using System.Net.NetworkInformation;
 using System.Security;
-using Alphaleonis.Win32.Network;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Gets the network share name from the locally mapped path.</summary>
-      /// <returns>The network share connection name of <paramref name="path"/>.</returns>
+      /// <summary>[AlphaFS] Retrieves the short path form of the specified path.</summary>
+      /// <returns>A path that has the 8.3 path form.</returns>
+      /// <remarks>Will fail on NTFS volumes with disabled 8.3 name generation.</remarks>
+      /// <remarks>The path must actually exist to be able to get the short path name.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="PathTooLongException"/>
-      /// <exception cref="NetworkInformationException"/>
-      /// <param name="path">The local path with drive name.</param>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">An existing path to a folder or file.</param>
       [SecurityCritical]
-      public static string GetMappedUncName(string path)
+      public static string GetShort83PathTransacted(KernelTransaction transaction, string path)
       {
-         return Host.GetRemoteNameInfoCore(path, true).lpUniversalName;
+         return GetLongShort83PathCore(transaction, path, true);
       }
    }
 }

@@ -20,22 +20,25 @@
  */
 
 using System;
+using System.IO;
+using System.Net.NetworkInformation;
 using System.Security;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Network
 {
-   public static partial class Path
+   public static partial class Host
    {
-      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
-      /// <returns>Regular form path string.</returns>
-      /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
+      /// <summary>[AlphaFS] Gets the network share name from the locally mapped path.</summary>
+      /// <returns>The network share connection name of <paramref name="path"/>.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path.</param>
+      /// <exception cref="PathTooLongException"/>
+      /// <exception cref="NetworkInformationException"/>
+      /// <param name="path">The local path with drive name.</param>
       [SecurityCritical]
-      public static string GetRegularPath(string path)
+      public static string GetMappedUncName(string path)
       {
-         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
+         return GetRemoteNameInfoCore(path, true).lpUniversalName;
       }
    }
 }

@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeMountPoint");
 
          // The string must end with a trailing backslash ('\').
-         volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         volumeMountPoint = Path.GetFullPathCore(null, false, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          var volumeGuid = new StringBuilder(100);
          var uniqueName = new StringBuilder(100);

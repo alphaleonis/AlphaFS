@@ -20,22 +20,43 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
-      /// <returns>Regular form path string.</returns>
-      /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
+      /// <summary>Returns the file name and extension of the specified path string.</summary>
+      /// <returns>
+      ///   The characters after the last directory character in <paramref name="path"/>. If the last character of <paramref name="path"/> is a
+      ///   directory or volume separator character, this method returns <c>string.Empty</c>. If path is null, this method returns null.
+      /// </returns>
       /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path.</param>
+      /// <param name="path">The path string from which to obtain the file name and extension.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]
-      public static string GetRegularPath(string path)
+      internal static string GetFileNameCore(string path, bool checkInvalidPathChars)
       {
-         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
+         if (null == path)
+            return null;
+
+         if (checkInvalidPathChars)
+            CheckInvalidPathChars(path, false, true);
+
+         var length = path.Length;
+         var index = length;
+
+         while (--index >= 0)
+         {
+            var ch = path[index];
+
+            if (IsDVsc(ch, null))
+               return path.Substring(index + 1, length - index - 1);
+         }
+
+         return path;
       }
    }
 }

@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string RemoveTrailingDirectorySeparator(string path)
       {
-         return null == path ? null : path.TrimEnd(DirectorySeparatorChar, AltDirectorySeparatorChar);
+         return RemoveTrailingDirectorySeparatorCore(path, false);
       }
 
 
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string RemoveTrailingDirectorySeparator(string path, bool removeAlternateSeparator)
       {
-         return null == path ? null : path.TrimEnd(removeAlternateSeparator ? AltDirectorySeparatorChar : DirectorySeparatorChar);
+         return RemoveTrailingDirectorySeparatorCore(path, removeAlternateSeparator);
       }
    }
 }

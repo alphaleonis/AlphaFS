@@ -19,23 +19,31 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
-      /// <returns>Regular form path string.</returns>
-      /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
+      /// <summary>Returns the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
+      /// <returns>
+      ///   The suffixed directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character,
+      ///   or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").
+      /// </returns>
+      /// <remarks>This method is similar to calling Path.GetDirectoryName() + Path.AddTrailingDirectorySeparator()</remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static string GetRegularPath(string path)
+      internal static string GetSuffixedDirectoryNameCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
+         var parentFolder = Directory.GetParentCore(transaction, path, pathFormat);
+
+         return null != parentFolder && null != parentFolder.Parent && null != parentFolder.Name
+
+            ? AddTrailingDirectorySeparator(CombineCore(false, parentFolder.Parent.FullName, parentFolder.Name), false)
+
+            : null;
       }
    }
 }

@@ -20,26 +20,22 @@
  */
 
 using System;
-using System.IO;
-using System.Net.NetworkInformation;
 using System.Security;
-using Alphaleonis.Win32.Network;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Gets the connection name of the locally mapped drive.</summary>
-      /// <returns>The server and share as: \\servername\sharename.</returns>
+      /// <summary>[AlphaFS] Converts the specified existing path to its regular long form.</summary>
+      /// <returns>The regular full path.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="PathTooLongException"/>
-      /// <exception cref="NetworkInformationException"/>
-      /// <param name="path">The local path with drive name.</param>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">An existing path to a folder or file.</param>
       [SecurityCritical]
-      public static string GetMappedConnectionName(string path)
+      public static string GetLongFrom83ShortPathTransacted(KernelTransaction transaction, string path)
       {
-         return Host.GetRemoteNameInfoCore(path, true).lpConnectionName;
+         return GetLongShort83PathCore(transaction, path, false);
       }
    }
 }
