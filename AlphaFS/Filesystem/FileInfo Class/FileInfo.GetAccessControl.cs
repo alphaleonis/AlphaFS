@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current <see cref="FileInfo"/> object.</summary>
-      /// <returns>Returns <see cref="FileSecurity"/>A FileSecurity object that encapsulates the access control rules for the current file.</returns>
+      /// <returns><see cref="FileSecurity"/>A FileSecurity object that encapsulates the access control rules for the current file.</returns>
       [SecurityCritical]
       public FileSecurity GetAccessControl()
       {
@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>Gets a <see cref="FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</summary>
-      /// <returns>Returns <see cref="FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</returns>
+      /// <returns><see cref="FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</returns>
       /// <param name="includeSections">One of the <see cref="System.Security"/> values that specifies which group of access control entries to retrieve.</param>
       [SecurityCritical]
       public FileSecurity GetAccessControl(AccessControlSections includeSections)
