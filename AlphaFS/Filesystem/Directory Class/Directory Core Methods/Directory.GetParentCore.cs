@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DirectoryInfo GetParentCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
+         var pathLp = pathFormat == PathFormat.LongFullPath ? path : Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
 
          pathLp = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false);
 

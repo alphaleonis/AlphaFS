@@ -19,8 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Globalization;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -44,12 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string AddTrailingDirectorySeparator(string path, bool addAlternateSeparator)
       {
-         return null == path
-            ? null
-
-            : (addAlternateSeparator ? (!path.EndsWith(AltDirectorySeparatorChar.ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal) ? path + AltDirectorySeparatorChar : path)
-
-               : (!path.EndsWith(DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture), StringComparison.Ordinal) ? path + DirectorySeparatorChar : path));
+         return AddTrailingDirectorySeparatorCore(path, addAlternateSeparator);
       }
    }
 }

@@ -36,18 +36,5 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetLongShort83PathCore(null, path, false);
       }
-
-
-      /// <summary>[AlphaFS] Converts the specified existing path to its regular long form.</summary>
-      /// <returns>The regular full path.</returns>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">An existing path to a folder or file.</param>
-      [SecurityCritical]
-      public static string GetLongFrom83ShortPathTransacted(KernelTransaction transaction, string path)
-      {
-         return GetLongShort83PathCore(transaction, path, false);
-      }
    }
 }

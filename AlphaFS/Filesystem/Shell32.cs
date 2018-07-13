@@ -660,7 +660,7 @@ namespace Alphaleonis.Win32.Filesystem
          // PathFileExists()
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-         return !Utils.IsNullOrWhiteSpace(path) && NativeMethods.PathFileExists(Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck | GetFullPathOptions.ContinueOnNonExist));
+         return !Utils.IsNullOrWhiteSpace(path) && NativeMethods.PathFileExists(Path.GetFullPathCore(null, false, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck | GetFullPathOptions.ContinueOnNonExist));
       }
 
 

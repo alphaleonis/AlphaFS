@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             var volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode / 32);
-            var pathLp = Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
+            var pathLp = Path.GetFullPathCore(null, false, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
 
             // GetVolumePathName()

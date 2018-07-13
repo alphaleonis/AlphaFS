@@ -19,23 +19,21 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
-      /// <returns>Regular form path string.</returns>
-      /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path.</param>
+      /// <summary>Returns the path of the current user's temporary folder.</summary>
+      /// <param name="combinePath">The folder name to append to the temporary folder.</param>
+      /// <returns>The path to the temporary folder, combined with <paramref name="combinePath"/>.</returns>
       [SecurityCritical]
-      public static string GetRegularPath(string path)
+      internal static string GetTempPathCore(string combinePath)
       {
-         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
+         var tempPath = System.IO.Path.GetTempPath();
+
+         return !Utils.IsNullOrWhiteSpace(combinePath) ? CombineCore(false, tempPath, combinePath) : tempPath;
       }
    }
 }

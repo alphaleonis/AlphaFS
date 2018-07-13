@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsLongPath(string path)
       {
-         return !Utils.IsNullOrWhiteSpace(path) && path.StartsWith(LongPathPrefix, StringComparison.Ordinal);
+         return !Utils.IsNullOrWhiteSpace(path) && (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase) || path.StartsWith(LongPathPrefix, StringComparison.Ordinal));
       }
    }
 }

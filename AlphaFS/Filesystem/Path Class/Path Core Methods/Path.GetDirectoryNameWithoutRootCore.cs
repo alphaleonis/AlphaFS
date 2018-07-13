@@ -19,40 +19,26 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using System.Security;
 
-namespace AlphaFS.UnitTest
+namespace Alphaleonis.Win32.Filesystem
 {
-   public partial class PathTest
+   public static partial class Path
    {
-      // Pattern: <class>_<function>_<scenario>_<expected result>
-
-
-      [TestMethod]
-      public void AlphaFS_Path_GetMappedConnectionName_Success()
+      /// <summary>Returns the directory information for the specified path string without the root information, for example: "C:\Windows\system32" returns: "Windows".</summary>
+      /// <returns>The <paramref name="path"/>without the file name part and without the root information (if any), or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      internal static string GetDirectoryNameWithoutRootCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         using (var tempRoot = new TemporaryDirectory(true))
-         {
-            // Randomly test the share where the local folder possibly has the read-only and/or hidden attributes set.
+         if (null == path)
+            return null;
 
-            var folder = tempRoot.CreateDirectoryRandomizedAttributes();
+         var parentFolder = Directory.GetParentCore(transaction, path, pathFormat);
 
-
-            using (var connection = new Alphaleonis.Win32.Network.DriveConnection(folder.FullName))
-            {
-               var driveName = connection.LocalName;
-
-               Console.WriteLine("Mapped drive letter [{0}] to [{1}]", driveName, folder.FullName);
-
-               UnitTestConstants.Dump(connection);
-
-
-               var connectionName = Alphaleonis.Win32.Filesystem.Path.GetMappedConnectionName(driveName);
-
-               Assert.AreEqual(folder.FullName, connectionName);
-            }
-         }
+         return null != parentFolder && null != parentFolder.Parent ? parentFolder.Name : null;
       }
    }
 }
