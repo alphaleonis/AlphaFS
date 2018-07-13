@@ -26,16 +26,35 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
-      /// <returns>Regular form path string.</returns>
-      /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
+      /// <summary>Returns the directory information for the specified path string.</summary>
+      /// <returns>
+      ///   Directory information for <paramref name="path"/>, or <c>null</c> if <paramref name="path"/> denotes a root directory or is
+      ///   <c>null</c>. Returns <see cref="string.Empty"/> if <paramref name="path"/> does not contain directory information.
+      /// </returns>
       /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path.</param>
+      /// <param name="path">The path of a file or directory.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      public static string GetRegularPath(string path)
+      internal static string GetDirectoryNameCore(string path, bool checkInvalidPathChars)
       {
-         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
+         if (null != path)
+         {
+            var rootLength = GetRootLength(path, checkInvalidPathChars);
+
+            if (path.Length > rootLength)
+            {
+               var length = path.Length;
+
+               if (length == rootLength)
+                  return null;
+
+               while (length > rootLength && path[--length] != DirectorySeparatorChar && path[length] != AltDirectorySeparatorChar) { }
+
+               return path.Substring(0, length).Replace(AltDirectorySeparatorChar, DirectorySeparatorChar);
+            }
+         }
+
+         return null;
       }
    }
 }

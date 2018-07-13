@@ -38,6 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
             var tackle = GetRegularPathCore(path, GetFullPathOptions.None, false).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
 
             if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
+
                throw new ArgumentException(Resources.UNC_Path_Should_Match_Format, "path");
          }
       }
@@ -59,6 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
          var regularPath = GetRegularPathCore(path, GetFullPathOptions.None, false);
 
          var isArgumentException = regularPath[0] == VolumeSeparatorChar;
+
          var throwException = isArgumentException || regularPath.Length >= 2 && regularPath.IndexOf(VolumeSeparatorChar, 2) != -1;
 
          if (throwException)
@@ -83,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static void CheckInvalidPathChars(string path, bool checkAdditional, bool allowEmpty)
       {
-         if (path == null)
+         if (null == path)
             throw new ArgumentNullException("path");
 
          if (!allowEmpty && (path.Trim().Length == 0 || Utils.IsNullOrWhiteSpace(path)))
@@ -172,7 +174,7 @@ namespace Alphaleonis.Win32.Filesystem
                // .NET 3.5 the TrimEnd option has no effect.
                options = options & ~GetFullPathOptions.TrimEnd;
 #endif
-               return GetFullPathCore(transaction, path, GetFullPathOptions.AsLongPath | options);
+               return GetFullPathCore(transaction, false, path, GetFullPathOptions.AsLongPath | options);
 
             default:
                throw new ArgumentException("Invalid value: " + pathFormat, "pathFormat");

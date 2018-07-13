@@ -19,23 +19,40 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Security;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace AlphaFS.UnitTest
 {
-   public static partial class Path
+   public partial class AlphaFS_HostTest
    {
-      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
-      /// <returns>Regular form path string.</returns>
-      /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path.</param>
-      [SecurityCritical]
-      public static string GetRegularPath(string path)
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+
+      [TestMethod]
+      public void AlphaFS_Host_GetMappedUncName_Success()
       {
-         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
+         using (var tempRoot = new TemporaryDirectory(true))
+         {
+            // Randomly test the share where the local folder possibly has the read-only and/or hidden attributes set.
+
+            var folder = tempRoot.CreateDirectoryRandomizedAttributes();
+
+
+            using (var connection = new Alphaleonis.Win32.Network.DriveConnection(folder.FullName))
+            {
+               var driveName = connection.LocalName;
+
+               Console.WriteLine("Mapped drive letter [{0}] to [{1}]", driveName, folder.FullName);
+
+               UnitTestConstants.Dump(connection);
+
+
+               var connectionName = Alphaleonis.Win32.Network.Host.GetMappedUncName(driveName);
+
+               Assert.AreEqual(folder.FullName, connectionName);
+            }
+         }
       }
    }
 }

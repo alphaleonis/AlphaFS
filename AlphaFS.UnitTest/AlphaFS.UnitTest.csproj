@@ -362,8 +362,8 @@
     <Compile Include="Path Class\AlphaFS_Path.GetFinalPathNameByHandle\AlphaFS_Path.GetFinalPathNameByHandle.cs" />
     <Compile Include="Path Class\AlphaFS_Path.IsLongPath.cs" />
     <Compile Include="Path Class\AlphaFS_Path.GetRegularPath.cs" />
-    <Compile Include="Path Class\AlphaFS_Path_GetMappedName\AlphaFS_Path.GetMappedUncName.cs" />
-    <Compile Include="Path Class\AlphaFS_Path_GetMappedName\AlphaFS_Path.GetMappedConnectionName.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host.GetMappedUncName.cs" />
+    <Compile Include="AlphaFS Host Class\AlphaFS_Host.GetMappedConnectionName.cs" />
     <Compile Include="Path Class\AlphaFS_Path.GetShort83PathAndGetLongFrom83ShortPath_FromFile.cs" />
     <Compile Include="Path Class\Path.Combine.cs" />
     <Compile Include="Path Class\AlphaFS_Path_TrailingDirectorySeparator.cs" />

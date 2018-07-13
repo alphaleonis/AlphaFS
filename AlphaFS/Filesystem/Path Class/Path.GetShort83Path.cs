@@ -20,9 +20,7 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
 using System.Security;
-using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -39,69 +37,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static string GetShort83Path(string path)
       {
          return GetLongShort83PathCore(null, path, true);
-      }
-
-
-      /// <summary>[AlphaFS] Retrieves the short path form of the specified path.</summary>
-      /// <returns>A path that has the 8.3 path form.</returns>
-      /// <remarks>Will fail on NTFS volumes with disabled 8.3 name generation.</remarks>
-      /// <remarks>The path must actually exist to be able to get the short path name.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">An existing path to a folder or file.</param>
-      [SecurityCritical]
-      public static string GetShort83PathTransacted(KernelTransaction transaction, string path)
-      {
-         return GetLongShort83PathCore(transaction, path, true);
-      }
-
-
-
-      /// <summary>Retrieves the short path form, or the regular long form of the specified <paramref name="path"/>.</summary>
-      /// <returns>If <paramref name="getShort"/> is <c>true</c>, a path of the 8.3 form otherwise the regular long form.</returns>
-      /// <remarks>
-      ///   <para>Will fail on NTFS volumes with disabled 8.3 name generation.</para>
-      ///   <para>The path must actually exist to be able to get the short- or long path name.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">An existing path to a folder or file.</param>
-      /// <param name="getShort"><c>true</c> to retrieve the short path form, <c>false</c> to retrieve the regular long form from the 8.3 <paramref name="path"/>.</param>
-      [SecurityCritical]
-      private static string GetLongShort83PathCore(KernelTransaction transaction, string path, bool getShort)
-      {
-         var pathLp = GetFullPathCore(transaction, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
-
-         var buffer = new StringBuilder();
-         var actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint)path.Length;
-
-         while (actualLength > buffer.Capacity)
-         {
-            buffer = new StringBuilder((int)actualLength);
-            actualLength = getShort
-
-               // GetShortPathName()
-               // 2014-01-29: MSDN confirms LongPath usage.
-
-               // GetLongPathName()
-               // 2014-01-29: MSDN confirms LongPath usage.
-
-               ? NativeMethods.GetShortPathName(pathLp, buffer, (uint)buffer.Capacity)
-               : transaction == null || !NativeMethods.IsAtLeastWindowsVista
-
-                  ? NativeMethods.GetLongPathName(pathLp, buffer, (uint)buffer.Capacity)
-                  : NativeMethods.GetLongPathNameTransacted(pathLp, buffer, (uint)buffer.Capacity, transaction.SafeHandle);
-
-
-            var lastError = Marshal.GetLastWin32Error();
-
-            if (actualLength == 0)
-               NativeError.ThrowException(lastError, pathLp);
-         }
-
-         return GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None, false);
       }
    }
 }

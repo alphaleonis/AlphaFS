@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns><c>true</c> if name contains any invalid characters. Otherwise <c>false</c></returns>
       public static bool IsValidName(string name)
       {
-         if (name == null)
+         if (null == name)
             throw new ArgumentNullException("name");
 
          return name.IndexOfAny(GetInvalidFileNameChars()) < 0;

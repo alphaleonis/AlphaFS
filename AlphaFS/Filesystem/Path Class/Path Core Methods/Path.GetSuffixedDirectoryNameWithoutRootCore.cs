@@ -25,30 +25,42 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
+      /// <summary>Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
       ///   <para>The directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
       ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> is <c>null</c>.</para>
       /// </returns>
-      /// <param name="path">The path.</param>
-      [SecurityCritical]
-      public static string GetSuffixedDirectoryNameWithoutRoot(string path)
-      {
-         return GetSuffixedDirectoryNameWithoutRootCore(null, path, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
-      /// <returns>
-      ///   <para>The directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
-      ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> is <c>null</c>.</para>
-      /// </returns>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static string GetSuffixedDirectoryNameWithoutRoot(string path, PathFormat pathFormat)
+      private static string GetSuffixedDirectoryNameWithoutRootCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetSuffixedDirectoryNameWithoutRootCore(null, path, pathFormat);
+         var parentFolder = Directory.GetParentCore(transaction, path, pathFormat);
+
+         if (null == parentFolder || null == parentFolder.Parent)
+            return null;
+
+
+         var tmpParent = parentFolder;
+
+         string suffixedDirectoryNameWithoutRoot;
+         
+         do
+         {
+            suffixedDirectoryNameWithoutRoot = tmpParent.DisplayPath.Replace(parentFolder.Root.ToString(), string.Empty);
+
+            if (null != tmpParent.Parent)
+               tmpParent = parentFolder.Parent.Parent;
+
+         } while (null != tmpParent && null != tmpParent.Root.Parent && null != tmpParent.Parent && !Utils.IsNullOrWhiteSpace(tmpParent.Parent.ToString()));
+
+
+         return !Utils.IsNullOrWhiteSpace(suffixedDirectoryNameWithoutRoot)
+
+            ? AddTrailingDirectorySeparator(suffixedDirectoryNameWithoutRoot.TrimStart(DirectorySeparatorChar), false)
+
+            : null;
       }
    }
 }

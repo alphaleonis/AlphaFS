@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetTempPath()
       {
-         return System.IO.Path.GetTempPath();
+         return GetTempPathCore(null);
       }
 
       #endregion // .NET
@@ -44,11 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetTempPath(string combinePath)
       {
-         var tempPath = GetTempPath();
-
-         return !Utils.IsNullOrWhiteSpace(combinePath) ? CombineCore(false, tempPath, combinePath) : tempPath;
+         return GetTempPathCore(combinePath);
       }
-
-      
    }
 }

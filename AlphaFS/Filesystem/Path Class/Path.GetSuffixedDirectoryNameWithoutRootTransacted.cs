@@ -25,32 +25,32 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
+      /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
-      ///   <para>The suffixed directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
-      ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
+      ///   <para>The directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
+      ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> is <c>null</c>.</para>
       /// </returns>
-      /// <remarks>This method is similar to calling Path.GetDirectoryName() + Path.AddTrailingDirectorySeparator()</remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       [SecurityCritical]
-      public static string GetSuffixedDirectoryName(string path)
+      public static string GetSuffixedDirectoryNameWithoutRootTransacted(KernelTransaction transaction, string path)
       {
-         return GetSuffixedDirectoryNameCore(null, path, PathFormat.RelativePath);
+         return GetSuffixedDirectoryNameWithoutRootCore(transaction, path, PathFormat.RelativePath);
       }
 
 
-      /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
+      /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
-      ///   <para>The suffixed directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
-      ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
+      ///   <para>The directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
+      ///   <para>or <c>null</c> if <paramref name="path"/> is <c>null</c> or if <paramref name="path"/> is <c>null</c>.</para>
       /// </returns>
-      /// <remarks>This method is similar to calling Path.GetDirectoryName() + Path.AddTrailingDirectorySeparator()</remarks>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static string GetSuffixedDirectoryName(string path, PathFormat pathFormat)
+      public static string GetSuffixedDirectoryNameWithoutRootTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetSuffixedDirectoryNameCore(null, path, pathFormat);
+         return GetSuffixedDirectoryNameWithoutRootCore(transaction, path, pathFormat);
       }
    }
 }

@@ -25,6 +25,8 @@ Version 2.3  (2018-XX-XX)
 - Issue #472: Add method `DirectoryInfo.ExistsJunction`.
 - Issue #473: Change AlphaFS implementations of method `File.Copy` to return `CopyMoveResult` instance instead of `void`.
 - Issue #475: Prevent `File.SetFsoDateTimeCore` from throwing `UnauthorizedAccessException`.
+- Issue #477: Move method `Path.GetMappedConnectionName` to `Host` class.
+- Issue #478: Move method `Path.GetMappedUncName` to `Host` class.
 - Added missing overloaded methods regarding timestamps and symbolic links.
 - Marked `Directory.Copy`/`DirectoryInfo.Copy` methods using parameters `overwrite` and `preserveDates` as obsolete. Use one of the `CopyOptions`.
 - Fixed a `Directory.Move` unit test creating endless drive mappings on error.
@@ -33,6 +35,8 @@ Version 2.3  (2018-XX-XX)
 
 - Issue #426: Correct casing of enum `STREAM_ATTRIBUTES`
 - Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath` property.
+- Issue #477: Move method `Path.GetMappedConnectionName` to `Host` class.
+- Issue #478: Move method `Path.GetMappedUncName` to `Host` class.
 
 
 Version 2.2.4  (2018-07-12)

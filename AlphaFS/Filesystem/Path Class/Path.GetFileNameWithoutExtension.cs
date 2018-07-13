@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFileNameWithoutExtension(string path)
       {
-         return GetFileNameWithoutExtension(path, true);
+         return GetFileNameWithoutExtensionCore(path, true);
       }
 
       #endregion // .NET
@@ -49,11 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFileNameWithoutExtension(string path, bool checkInvalidPathChars)
       {
-         int pathIndex;
-
-         path = GetFileName(path, checkInvalidPathChars);
-         
-         return null != path ? ((pathIndex = path.LastIndexOf(ExtensionSeparatorChar)) == -1 ? path : path.Substring(0, pathIndex)) : null;
+         return GetFileNameWithoutExtensionCore(path, checkInvalidPathChars);
       }
    }
 }

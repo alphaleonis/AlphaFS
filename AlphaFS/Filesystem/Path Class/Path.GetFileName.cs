@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFileName(string path)
       {
-         return GetFileName(path, true);
+         return GetFileNameCore(path, true);
       }
 
       #endregion // .NET
@@ -56,24 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       public static string GetFileName(string path, bool checkInvalidPathChars)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            return path;
-
-         if (checkInvalidPathChars)
-            CheckInvalidPathChars(path, false, true);
-
-         var length = path.Length;
-         var index = length;
-
-         while (--index >= 0)
-         {
-            var ch = path[index];
-
-            if (IsDVsc(ch, null))
-               return path.Substring(index + 1, length - index - 1);
-         }
-
-         return path;
+         return GetFileNameCore(path, checkInvalidPathChars);
       }
    }
 }

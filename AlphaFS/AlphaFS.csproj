@@ -510,10 +510,36 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateSubdirectory.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Create.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateAlternateDataStreams.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.AddTrailingDirectorySeparatorCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.CombineCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetDirectoryNameCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetDirectoryNameWithoutRootCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetExtensionCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetFileNameCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetFileNameWithoutExtensionCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetFinalPathNameByHandleCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetFullPathCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetLongPathCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetLongShort83PathCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetPathRootCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetRegularPathCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetSuffixedDirectoryNameCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetSuffixedDirectoryNameWithoutRootCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.GetTempPathCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.IsPathRootedCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.IsUncPathCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.LocalToUncCore.cs" />
+    <Compile Include="Filesystem\Path Class\Path Core Methods\Path.RemoveTrailingDirectorySeparatorCore.cs" />
     <Compile Include="Filesystem\Path Class\Path.ChangeExtension.cs" />
     <Compile Include="Filesystem\Path Class\Path.AddTrailingDirectorySeparator.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetDirectoryNameWithoutRootTransacted.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetFullPathTransacted.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetLongFrom83ShortPathTransacted.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetShort83PathTransacted.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetSuffixedDirectoryNameTransacted.cs" />
+    <Compile Include="Filesystem\Path Class\Path.GetSuffixedDirectoryNameWithoutRootTransacted.cs" />
     <Compile Include="Filesystem\Path Class\Path.IsUncPath.cs" />
-    <Compile Include="Filesystem\Path Class\Path.GetMappedUncName.cs" />
+    <Compile Include="Network\Host Class\Host.GetMappedUncName.cs" />
     <Compile Include="Filesystem\Path Class\Path.IsValidName.cs" />
     <Compile Include="Filesystem\Path Class\Path.IsPathRooted.cs" />
     <Compile Include="Filesystem\Path Class\Path.HasExtension.cs" />
@@ -535,7 +561,7 @@
     <Compile Include="Filesystem\Path Class\Path.GetInvalidPathChars.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetRelativePath.cs" />
     <Compile Include="Filesystem\Path Class\Path.IsLogicalDrive.cs" />
-    <Compile Include="Filesystem\Path Class\Path.GetMappedConnectionName.cs" />
+    <Compile Include="Network\Host Class\Host.GetMappedConnectionName.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\DirectoryEnumerationFilters.cs" />
     <Compile Include="Filesystem\Structures, Enumerations\EncryptedFileRawMode.cs" />
     <Compile Include="Filesystem\Native Other\FINDEX_SEARCH_OPS.cs" />
@@ -881,7 +907,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
