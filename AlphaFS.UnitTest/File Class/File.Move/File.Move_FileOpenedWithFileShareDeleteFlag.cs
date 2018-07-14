@@ -53,7 +53,7 @@ namespace AlphaFS.UnitTest
 
             using (System.IO.File.Open(srcFile, System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite, System.IO.FileShare.ReadWrite | System.IO.FileShare.Delete))
             {
-               Alphaleonis.Win32.Filesystem.File.Move(srcFile, System.IO.Path.Combine(folder.FullName, dstFile));
+               Alphaleonis.Win32.Filesystem.File.Move(srcFile, dstFile);
 
 
                Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(srcFile));
