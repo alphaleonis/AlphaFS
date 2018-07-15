@@ -14,7 +14,7 @@
  *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
  *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
  *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING F_ROM, 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
  *  THE SOFTWARE. 
  */
@@ -23,6 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Threading;
 
 namespace AlphaFS.UnitTest
 {
@@ -32,14 +33,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException_LocalAndNetwork()
+      public void AlphaFS_Directory_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException_LocalAndNetwork()
       {
-         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException(false);
-         AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException(true);
+         AlphaFS_Directory_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(false);
+         AlphaFS_Directory_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(true);
       }
 
-      
-      private void AlphaFS_Directory_Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException(bool isNetwork)
+
+      private void AlphaFS_Directory_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -55,41 +56,53 @@ namespace AlphaFS.UnitTest
             System.IO.File.WriteAllText(existingFileSrc, DateTime.Now.ToString(CultureInfo.CurrentCulture));
             System.IO.File.WriteAllText(existingFileDst, DateTime.Now.ToString(CultureInfo.CurrentCulture));
 
+            
+            // Set destination file read-only attribute so that a System.UnauthorizedAccessException is triggered on folder copy.
 
-            // Set destination file hidden attribute so that a System.UnauthorizedAccessException is triggered on folder copy.
-
-            System.IO.File.SetAttributes(existingFileDst, System.IO.FileAttributes.Hidden);
+            System.IO.File.SetAttributes(existingFileDst, System.IO.FileAttributes.ReadOnly);
 
 
 
+
+            // Copy folder with retry enabled.
 
             var errorCount = 0;
 
-            var filters = new Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
+            using (var cancelSource = new CancellationTokenSource())
             {
-               ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
+               var filters = new Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
                {
-                  // Report Exception.
-                  Console.WriteLine("\tErrorFilter: Attempt #{0:N0}: ({1}) {2}: [{3}]", ++errorCount, errorCode, errorMessage, pathProcessed);
+                  // Used to abort the enumeration.
+                  CancellationToken = cancelSource.Token,
 
-                  // Return true to continue, false to throw the Exception.
-                  return true;
-               }
-            };
+                  ErrorRetry = 2,
+
+                  ErrorRetryTimeout = 3,
+
+                  ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
+                  {
+                     // Report Exception.
+                     Console.WriteLine("\tErrorFilter: Attempt #{0:N0}: ({1}) {2}: [{3}]", ++errorCount, errorCode, errorMessage, pathProcessed);
+
+                     // Return true to continue, false to throw the Exception.
+                     return true;
+                  }
+               };
                
 
-            var sw = Stopwatch.StartNew();
+               var sw = Stopwatch.StartNew();
 
-            UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.None, filters));
+               UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.None, filters));
 
-            sw.Stop();
+               sw.Stop();
 
 
-            var waitTime = filters.ErrorRetry * filters.ErrorRetryTimeout;
+               var waitTime = filters.ErrorRetry * filters.ErrorRetryTimeout;
 
-            Assert.AreEqual(0, waitTime, "The timeout is not what is expected.");
-            Assert.AreEqual(0, sw.Elapsed.Seconds, "The timeout is not what is expected.");
-            Assert.AreEqual(errorCount, 1 + filters.ErrorRetry);
+               Assert.AreEqual(6, waitTime, "The timeout is not what is expected.");
+               Assert.AreEqual(6, sw.Elapsed.Seconds, "The timeout is not what is expected.");
+               Assert.AreEqual(errorCount, 1 + filters.ErrorRetry);
+            }
          }
          
          Console.WriteLine();

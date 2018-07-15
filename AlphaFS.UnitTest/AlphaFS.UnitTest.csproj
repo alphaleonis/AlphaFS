@@ -145,14 +145,15 @@
     </Compile>
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_RegularDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_NoRetry_ThrowsUnauthorizedAccessException.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_RetryFails1Time_ThenSucceeds.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_UsingDirectoryEnumerationErrorFilter_RetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_NoRetry_ThrowsUnauthorizedAccessException.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_RetryFails1Time_ThenSucceeds.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_RetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_NoStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_WithStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_3ExistingDirectories_FromVolumeShadowCopy.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_NullAsPath_ThrowsArgumentNullException.cs" />
+    <Compile Include="Directory Class\Directory.Delete\Directory.Delete_ExistingDirectory.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_NullAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.CopyTimestamps.cs" />
@@ -213,7 +214,7 @@
     <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_ThrowDirectoryReadOnlyException_DirectoryIsReadOnly.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Directory_Delete_DirectoryHasDenyPermission_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete.DirectoryIsReadOnly_ThrowsDirectoryReadOnlyException.cs" />
-    <Compile Include="Directory Class\Directory.Delete\Directory.Delete.NonExistingDirectory_ThrowsDirectoryNotFoundException.cs" />
+    <Compile Include="Directory Class\Directory.Delete\Directory.Delete_NonExistingDirectory_ThrowsDirectoryNotFoundException.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeFileInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeDirectoryInfo.cs" />
     <Compile Include="AlphaFS FileSystemEntryInfo Class\AlphaFS_Directory.EnumerateFileSystemEntryInfos_TypeFileSystemEntryInfo.cs" />
@@ -472,7 +473,7 @@
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateOpenConnections.cs" />
     <Compile Include="AlphaFS Host Class\AlphaFS_Host.EnumerateShares.cs" />
     <Compile Include="UnitTests\AlphaFS_DfsInfoTest.cs" />
-    <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_And_Delete.cs" />
+    <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_And_Delete_CreatesStructureWithoutFiles.cs" />
     <Compile Include="Directory Class\Directory_GetFileSystemEntries_LongPathPrefix_ShouldReturnCorrectEntries.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_JunctionsLinksTest.cs" />
     <Compile Include="UnitTests\AlphaFS_OperatingSystemTest.cs" />

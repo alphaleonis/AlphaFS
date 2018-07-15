@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_And_Delete_LocalAndNetwork_Success()
+      public void Directory_CreateDirectory_And_Delete_CreatesStructureWithoutFiles_LocalAndNetwork_Success()
       {
-         Directory_CreateDirectory_And_Delete(false);
-         Directory_CreateDirectory_And_Delete(true);
+         Directory_CreateDirectory_And_Delete_CreatesStructureWithoutFiles(false);
+         Directory_CreateDirectory_And_Delete_CreatesStructureWithoutFiles(true);
       }
 
 
-      private void Directory_CreateDirectory_And_Delete(bool isNetwork)
+      private void Directory_CreateDirectory_And_Delete_CreatesStructureWithoutFiles(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
