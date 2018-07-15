@@ -33,7 +33,8 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_Host_EnumerateDrives_Network_Success()
       {
-         //UnitTestAssert.IsElevatedProcess(); // In User mode nothing is enumerated.
+         UnitTestAssert.IsElevatedProcess();
+
          UnitTestConstants.PrintUnitTestHeader(true);
          
 
@@ -59,8 +60,9 @@ namespace AlphaFS.UnitTest
          }
 
 
-         Assert.IsTrue(drives.Length > 0, "Nothing is enumerated, but it is expected.");
-
+         if (drives.Length == 0)
+            UnitTestAssert.InconclusiveBecauseResourcesAreUnavailable();
+         
 
          // \\localhost\C$
 

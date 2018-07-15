@@ -32,8 +32,6 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_SetTimestamps_LocalAndNetwork_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
-
          AlphaFS_File_SetTimestamps(false);
          AlphaFS_File_SetTimestamps(true);
       }
@@ -45,20 +43,14 @@ namespace AlphaFS.UnitTest
          {
             var file = tempRoot.CreateFile();
 
-            var symlinkPath = System.IO.Path.Combine(tempRoot.Directory.FullName, tempRoot.RandomString) + "_symlink";
-
-            Console.WriteLine("Input File Path   : [{0}]", file);
-            Console.WriteLine("Input SymLink Path: [{0}]", symlinkPath);
+            Console.WriteLine("Input File Path   : [{0}]", file.FullName);
 
 
-            Alphaleonis.Win32.Filesystem.File.CreateSymbolicLink(symlinkPath, file.FullName);
-
-
-            var rnd = new Random();
-
-            var creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            var lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            var lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+            file.Attributes |= System.IO.FileAttributes.ReadOnly | System.IO.FileAttributes.Hidden;
+            
+            var creationTime = tempRoot.GetRandomFileDate();
+            var lastAccessTime = tempRoot.GetRandomFileDate();
+            var lastWriteTime = tempRoot.GetRandomFileDate();
 
 
             Alphaleonis.Win32.Filesystem.File.SetTimestamps(file.FullName, creationTime, lastAccessTime, lastWriteTime);
@@ -67,33 +59,6 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(System.IO.File.GetCreationTime(file.FullName), creationTime);
             Assert.AreEqual(System.IO.File.GetLastAccessTime(file.FullName), lastAccessTime);
             Assert.AreEqual(System.IO.File.GetLastWriteTime(file.FullName), lastWriteTime);
-
-
-            // SymbolicLink
-            Alphaleonis.Win32.Filesystem.File.SetTimestamps(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, Alphaleonis.Win32.Filesystem.PathFormat.RelativePath);
-            Assert.AreEqual(System.IO.File.GetCreationTime(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetCreationTime(symlinkPath));
-            Assert.AreEqual(System.IO.File.GetLastAccessTime(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastAccessTime(symlinkPath));
-            Assert.AreEqual(System.IO.File.GetLastWriteTime(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastWriteTime(symlinkPath));
-
-
-            creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-            lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
-
-
-            Alphaleonis.Win32.Filesystem.File.SetTimestampsUtc(file.FullName, creationTime, lastAccessTime, lastWriteTime);
-
-
-            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(file.FullName), creationTime);
-            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(file.FullName), lastAccessTime);
-            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(file.FullName), lastWriteTime);
-
-
-            // SymbolicLink
-            Alphaleonis.Win32.Filesystem.File.SetTimestampsUtc(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, Alphaleonis.Win32.Filesystem.PathFormat.RelativePath);
-            Assert.AreEqual(System.IO.File.GetCreationTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetCreationTimeUtc(symlinkPath));
-            Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastAccessTimeUtc(symlinkPath));
-            Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(symlinkPath), Alphaleonis.Win32.Filesystem.File.GetLastWriteTimeUtc(symlinkPath));
          }
 
          Console.WriteLine();
