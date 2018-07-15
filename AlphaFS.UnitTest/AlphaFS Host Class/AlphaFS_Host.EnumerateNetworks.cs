@@ -60,7 +60,7 @@ namespace AlphaFS.UnitTest
 
 
          if (networkCount == 0)
-            UnitTestAssert.InconclusiveBecauseEnumerationIsEmpty();
+            UnitTestAssert.InconclusiveBecauseResourcesAreUnavailable();
       }
    }
 }
