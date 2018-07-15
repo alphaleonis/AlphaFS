@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Globalization;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -34,10 +33,10 @@ namespace AlphaFS.UnitTest
             Inconclusive("This unit test must be run elevated.");
       }
 
-      
+
       public static void Inconclusive(string errorMessage)
       {
-         Console.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0}{1}{0}", Environment.NewLine, errorMessage));
+         Console.WriteLine("{0}{1}{0}", Environment.NewLine, errorMessage);
 
          Assert.Inconclusive(errorMessage);
 
@@ -45,9 +44,9 @@ namespace AlphaFS.UnitTest
       }
 
 
-      public static void InconclusiveBecauseEnumerationIsEmpty()
+      public static void InconclusiveBecauseResourcesAreUnavailable()
       {
-         Inconclusive("The enumeration returned an empty collection, which is not expected.");
+         Inconclusive("No resources are available for this unit test.");
       }
 
 
