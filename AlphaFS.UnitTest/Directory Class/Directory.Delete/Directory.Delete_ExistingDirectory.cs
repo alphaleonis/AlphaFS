@@ -24,42 +24,29 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class MoveTest
+   public partial class DeleteTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_File_Move_FileOpenedWithFileShareDeleteFlag_LocalAndNetwork_Success()
+      public void Directory_Delete_ExistingDirectory_LocalAndNetwork_Success()
       {
-         AlphaFS_File_Move_FileOpenedWithFileShareDeleteFlag(false);
-         AlphaFS_File_Move_FileOpenedWithFileShareDeleteFlag(true);
+         Directory_Delete_ExistingDirectory(false);
+         Directory_Delete_ExistingDirectory(true);
       }
 
 
-      private void AlphaFS_File_Move_FileOpenedWithFileShareDeleteFlag(bool isNetwork)
+      private void Directory_Delete_ExistingDirectory(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.CreateDirectory();
+            var folder = tempRoot.CreateRecursiveRandomizedDatesAndAttributesTree(5);
 
-            var srcFile = System.IO.Path.Combine(folder.FullName, tempRoot.RandomString);
-
-            var dstFile = System.IO.Path.Combine(folder.FullName, tempRoot.RandomString);
-
-            Console.WriteLine("Src File Path: [{0}]", dstFile);
-            Console.WriteLine("Dst File Path: [{0}]", dstFile);
+            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
 
-            using (System.IO.File.Open(srcFile, System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite, System.IO.FileShare.ReadWrite | System.IO.FileShare.Delete))
-            {
-               Alphaleonis.Win32.Filesystem.File.Move(srcFile, dstFile);
-
-
-               Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(srcFile));
-
-               Assert.IsTrue(Alphaleonis.Win32.Filesystem.File.Exists(dstFile));
-            }
+            Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName, true, true);
          }
 
          Console.WriteLine();
