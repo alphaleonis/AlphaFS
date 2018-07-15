@@ -265,9 +265,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Methods
 
-      private SafeFindFileHandle FindFirstFile(string pathLp, out NativeMethods.WIN32_FIND_DATA win32FindData, bool suppressException = false)
+      private SafeFindFileHandle FindFirstFile(string pathLp, out NativeMethods.WIN32_FIND_DATA win32FindData, out int lastError, bool suppressException = false)
       {
-         int lastError;
+         lastError = (int) Win32Errors.NO_ERROR;
+
          var searchOption = null != FileSystemObjectType && (bool) FileSystemObjectType ? NativeMethods.FINDEX_SEARCH_OPS.SearchLimitToDirectories : NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch;
 
          var handle = FileSystemInfo.FindFirstFileNative(Transaction, pathLp, FindExInfoLevel, searchOption, LargeCache, out lastError, out win32FindData);
@@ -290,11 +291,6 @@ namespace Alphaleonis.Win32.Filesystem
 
                ThrowPossibleException((uint) lastError, pathLp);
             }
-
-            //// When the handle is null and we are still here, it means the ErrorHandler is active, preventing the Exception from being thrown.
-
-            //if (null != handle)
-            //   VerifyInstanceType(win32FindData);
          }
 
 
@@ -398,9 +394,11 @@ namespace Alphaleonis.Win32.Filesystem
             var regularPath = Path.GetCleanExceptionPath(pathLp);
 
             // Pass control to the ErrorHandler when set.
+
             if (null == ErrorHandler || !ErrorHandler((int) lastError, new Win32Exception((int) lastError).Message, regularPath))
             {
                // When the ErrorHandler returns false, thrown the Exception.
+
                NativeError.ThrowException(lastError, regularPath);
             }
          }
@@ -451,14 +449,18 @@ namespace Alphaleonis.Win32.Filesystem
 #endif
             )
             {
+               int lastError;
+
+               NativeMethods.WIN32_FIND_DATA win32FindData;
+
+
                // Removes the object at the beginning of your Queue.
                // The algorithmic complexity of this is O(1). It does not loop over elements.
 
                var pathLp = dirs.Dequeue();
-               NativeMethods.WIN32_FIND_DATA win32FindData;
+               
 
-
-               using (var handle = FindFirstFile(pathLp + Path.WildcardStarMatchAll, out win32FindData))
+               using (var handle = FindFirstFile(pathLp + Path.WildcardStarMatchAll, out win32FindData, out lastError))
                {
                   // When the handle is null and we are still here, it means the ErrorHandler is active.
                   // We hit an inaccessible folder, so break and continue with the next one.
@@ -467,6 +469,13 @@ namespace Alphaleonis.Win32.Filesystem
 
                   do
                   {
+                     if (lastError == (int) Win32Errors.ERROR_NO_MORE_FILES)
+                     {
+                        lastError = (int) Win32Errors.NO_ERROR;
+                        continue;
+                     }
+
+
                      // Skip reparse points here to cleanly separate regular directories from links.
                      if (SkipReparsePoints && (win32FindData.dwFileAttributes & FileAttributes.ReparsePoint) != 0)
                         continue;
@@ -476,8 +485,8 @@ namespace Alphaleonis.Win32.Filesystem
 
                      var isFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
 
-                     // Skip entries "." and ".."
-                     if (isFolder && (fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.Ordinal) || fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.Ordinal)))
+                     // Skip entries ".." and "."
+                     if (isFolder && (fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.Ordinal) || fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.Ordinal)))
                         continue;
 
 
@@ -503,24 +512,21 @@ namespace Alphaleonis.Win32.Filesystem
 
                      yield return res;
 
-
                   } while (
-
 #if !NET35
                      !CancellationToken.IsCancellationRequested &&
 #endif
                      NativeMethods.FindNextFile(handle, out win32FindData));
 
 
-                  var lastError = Marshal.GetLastWin32Error();
+                  lastError = Marshal.GetLastWin32Error();
 
                   if (!ContinueOnException
 #if !NET35
                       && !CancellationToken.IsCancellationRequested
 #endif
                   )
-
-                     ThrowPossibleException((uint)lastError, pathLp);
+                     ThrowPossibleException((uint) lastError, pathLp);
                }
             }
       }
@@ -538,13 +544,13 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             NativeMethods.WIN32_FIND_DATA win32FindData;
-
+            var lastError = 0;
 
             // Not explicitly set to be a folder.
 
             if (!IsDirectory)
             {
-               using (var handle = FindFirstFile(InputPath, out win32FindData))
+               using (var handle = FindFirstFile(InputPath, out win32FindData, out lastError))
                {
                   if (null != handle)
                   {
@@ -558,11 +564,10 @@ namespace Alphaleonis.Win32.Filesystem
 
                   return NewFileSystemEntryType<T>((win32FindData.dwFileAttributes & FileAttributes.Directory) != 0, null, null, InputPath, win32FindData);
                }
-
             }
 
 
-            using (var handle = FindFirstFile(InputPath, out win32FindData, true))
+            using (var handle = FindFirstFile(InputPath, out win32FindData, out lastError, true))
             {
                if (null == handle)
                {
@@ -570,7 +575,8 @@ namespace Alphaleonis.Win32.Filesystem
 
                   var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
 
-                  var lastError = File.FillAttributeInfoCore(Transaction, Path.GetRegularPathCore(InputPath, GetFullPathOptions.None, false), ref attrs, false, true);
+                  lastError = File.FillAttributeInfoCore(Transaction, Path.GetRegularPathCore(InputPath, GetFullPathOptions.None, false), ref attrs, false, true);
+
                   if (lastError != Win32Errors.NO_ERROR)
                   {
                      if (!ContinueOnException)
