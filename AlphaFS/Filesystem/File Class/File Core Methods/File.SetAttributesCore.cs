@@ -61,15 +61,18 @@ namespace Alphaleonis.Win32.Filesystem
             // 2013-01-13: MSDN confirms LongPath usage.
 
             ? NativeMethods.SetFileAttributes(path, fileAttributes)
+
             : NativeMethods.SetFileAttributesTransacted(path, fileAttributes, transaction.SafeHandle);
 
 
          var lastError = Marshal.GetLastWin32Error();
+
          if (!success)
          {
             // MSDN: .NET 3.5+: ArgumentException: FileSystemInfo().Attributes
 
-            if (lastError== Win32Errors.ERROR_INVALID_PARAMETER)
+            if (lastError == Win32Errors.ERROR_INVALID_PARAMETER)
+
                throw new ArgumentException(Resources.Invalid_File_Attribute, "fileAttributes");
 
 

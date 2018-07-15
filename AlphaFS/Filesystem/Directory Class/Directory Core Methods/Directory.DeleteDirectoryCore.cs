@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security;
+using System.Security.AccessControl;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -51,30 +52,15 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (null == path)
                throw new ArgumentNullException("path");
-
-
-            // MSDN: .NET 3.5+: DirectoryNotFoundException:
-            // Path does not exist or could not be found.
-            // Path refers to a file instead of a directory.
-            // The specified path is invalid (for example, it is on an unmapped drive). 
-
-            if (pathFormat == PathFormat.RelativePath)
-               Path.CheckSupportedPathFormat(path, true, true);
-
+            
             fsEntryInfo = File.GetFileSystemEntryInfoCore(transaction, true, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator), continueOnNotFound, pathFormat);
 
             if (null == fsEntryInfo)
                return;
          }
 
-         pathFormat = PathFormat.LongFullPath;
 
-
-         // Reset attributes to Normal if we already know the facts.
-
-         if (ignoreReadOnly && (fsEntryInfo.IsReadOnly || fsEntryInfo.IsHidden))
-
-            File.SetAttributesCore(transaction, fsEntryInfo.IsDirectory, fsEntryInfo.LongFullPath, FileAttributes.Normal, PathFormat.LongFullPath);
+         PrepareDirectoryForDelete(transaction, fsEntryInfo, ignoreReadOnly);
 
 
          // Do not follow mount points nor symbolic links, but do delete the reparse point itself.
@@ -82,37 +68,46 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (recursive && !fsEntryInfo.IsReparsePoint)
          {
-            var dirs = new Stack<string>(1000);
+            // The stack will contain the entire folder structure to prevent any open directory handles because of enumeration.
+            // The root folder is at the bottom of the stack.
 
-            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, SearchOption.AllDirectories, null, null, pathFormat))
+            var dirs = new Stack<string>(NativeMethods.DefaultFileBufferSize);
+            
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, null, DirectoryEnumerationOptions.Recursive, null, PathFormat.LongFullPath))
             {
-               if (fsei.IsDirectory)
-               {
-                  // Check to see if this is a mount point, and unmount it.
-                  // Now it is safe to delete the actual directory.
-                  if (fsei.IsMountPoint)
-                     DeleteJunctionCore(transaction, fsei, null, false, pathFormat);
+               PrepareDirectoryForDelete(transaction, fsei, ignoreReadOnly);
 
+               if (fsei.IsDirectory)
                   dirs.Push(fsei.LongFullPath);
-               }
 
                else
-                  File.DeleteFileCore(transaction, fsei.LongFullPath, ignoreReadOnly, fsei.Attributes, pathFormat);
+                  File.DeleteFileCore(transaction, fsei.LongFullPath, ignoreReadOnly, fsei.Attributes, PathFormat.LongFullPath);
             }
 
 
             while (dirs.Count > 0)
                DeleteDirectoryNative(transaction, dirs.Pop(), ignoreReadOnly, continueOnNotFound, 0);
          }
+         
+
+         DeleteDirectoryNative(transaction, fsEntryInfo.LongFullPath, ignoreReadOnly, continueOnNotFound, fsEntryInfo.Attributes);
+      }
 
 
-         // Check to see if this is a mount point, and unmount it.
-         // Now it is safe to delete the actual directory.
+      internal static void PrepareDirectoryForDelete(KernelTransaction transaction, FileSystemEntryInfo fsei, bool ignoreReadOnly)
+      {
+         // Check to see if the folder is a mount point and unmount it. Only then is it safe to delete the actual folder.
 
-         if (fsEntryInfo.IsMountPoint)
-            DeleteJunctionCore(transaction, fsEntryInfo, null, false, pathFormat);
+         if (fsei.IsMountPoint)
 
-         DeleteDirectoryNative(transaction, fsEntryInfo.LongFullPath, ignoreReadOnly, continueOnNotFound, 0);
+            DeleteJunctionCore(transaction, fsei, null, false, PathFormat.LongFullPath);
+
+
+         // Reset attributes to Normal if we already know the facts.
+
+         if (ignoreReadOnly && (fsei.IsReadOnly || fsei.IsHidden))
+
+            File.SetAttributesCore(transaction, fsei.IsDirectory, fsei.LongFullPath, FileAttributes.Normal, PathFormat.LongFullPath);
       }
    }
 }
