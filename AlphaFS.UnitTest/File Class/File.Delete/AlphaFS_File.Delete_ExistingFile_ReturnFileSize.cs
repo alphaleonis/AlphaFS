@@ -30,42 +30,36 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_ExistingDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_File_Delete_ExistingFile_ReturnFileSize_LocalAndNetwork_Success()
       {
-         Directory_Delete_ExistingDirectory(false);
-         Directory_Delete_ExistingDirectory(true);
+         AlphaFS_File_Delete_ExistingFile_ReturnFileSize(false);
+         AlphaFS_File_Delete_ExistingFile_ReturnFileSize(true);
       }
 
 
-      private void Directory_Delete_ExistingDirectory(bool isNetwork)
+      private void AlphaFS_File_Delete_ExistingFile_ReturnFileSize(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.CreateRecursiveRandomizedDatesAndAttributesTree(5);
+            var file = tempRoot.CreateFile();
 
-            Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
+            var fileSize = new System.IO.FileInfo(file.FullName).Length;
 
-
-            const Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
-
-            var props = Alphaleonis.Win32.Filesystem.Directory.GetProperties(folder.FullName, dirEnumOptions);
-
-            var fsoTotal = props["Total"];
-            var filesTotal = props["File"];
-            var foldersTotal = fsoTotal - filesTotal;
-            var sizeTotal = props["Size"];
-
-            Console.WriteLine("\n\tTotal size: [{0}]  Total Directories: [{1}]  Total Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sizeTotal), foldersTotal, filesTotal);
+            Console.WriteLine("Input File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileSize), file.FullName);
 
 
-            var deleteResult = Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName, true, true);
-
+            var deleteResult = Alphaleonis.Win32.Filesystem.File.Delete(new Alphaleonis.Win32.Filesystem.DeleteArguments {TargetFsoPath = file.FullName, GetSize = true});
+            
 
             UnitTestConstants.Dump(deleteResult);
+            
+            Assert.AreEqual(System.IO.File.Exists(file.FullName), Alphaleonis.Win32.Filesystem.File.Exists(file.FullName));
 
-            Assert.AreEqual(filesTotal, deleteResult.TotalFiles);
-            Assert.AreEqual(foldersTotal + 1, deleteResult.TotalFolders);
-            Assert.AreEqual(sizeTotal, deleteResult.TotalBytes);
+            Assert.AreEqual(1, deleteResult.TotalFiles);
+
+            Assert.AreEqual(0, deleteResult.TotalFolders);
+
+            Assert.AreEqual(fileSize, deleteResult.TotalBytes);
          }
 
          Console.WriteLine();

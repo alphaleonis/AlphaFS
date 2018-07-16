@@ -35,12 +35,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Use either <paramref name="path"/> or <paramref name="safeFileHandle"/>, not both.</remarks>
       /// <param name="safeFileHandle">The <see cref="SafeFileHandle"/> to the file.</param>
       /// <param name="transaction">The transaction.</param>
+      /// <param name="isFolder">When <c>true</c> indicates the source is a directory, <c>false</c> indicates a file.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="sizeOfAllStreams"><c>true</c> to retrieve the size of all alternate data streams, <c>false</c> to get the size of the first stream.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static long GetSizeCore(SafeFileHandle safeFileHandle, KernelTransaction transaction, string path, bool sizeOfAllStreams, PathFormat pathFormat)
+      internal static long GetSizeCore(SafeFileHandle safeFileHandle, KernelTransaction transaction, bool isFolder, string path, bool sizeOfAllStreams, PathFormat pathFormat)
       {
          var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
@@ -51,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
          var callerHandle = null != safeFileHandle;
 
          if (!callerHandle)
-            safeFileHandle = CreateFileCore(transaction, false, pathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, PathFormat.LongFullPath);
+            safeFileHandle = CreateFileCore(transaction, isFolder, pathLp, ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, false, PathFormat.LongFullPath);
          
          long fileSize;
 

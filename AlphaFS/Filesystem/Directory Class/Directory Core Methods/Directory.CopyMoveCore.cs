@@ -116,12 +116,11 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (isFolder && !cma.DelayUntilReboot && File.HasReplaceExisting(cma.MoveOptions))
 
-               DeleteDirectoryCore(cma.Transaction, null, cma.DestinationPathLp, true, true, true, PathFormat.LongFullPath);
+               // 2017-06-07: A large target directory will probably create a progress-less delay in UI.
+               // One way to get around this is to perform the delete in the File.CopyMove method.
 
-
-            // 2017-06-07: A large target directory will probably create a progress-less delay in UI.
-            // One way to get around this is to perform the delete in the File.CopyMove method.
-
+               DeleteDirectoryCore(cma.Transaction, null, cma.DestinationPathLp, true, true, true, null, PathFormat.LongFullPath);
+            
 
             // Moves a file or directory, including its children.
             // Copies an existing directory, including its children to a new directory.

@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path)
       {
-         return GetSizeCore(null, transaction, path, false, PathFormat.RelativePath);
+         return GetSizeCore(null, transaction, false, path, false, PathFormat.RelativePath);
       }
 
 
@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetSizeCore(null, transaction, path, false, pathFormat);
+         return GetSizeCore(null, transaction, false, path, false, pathFormat);
       }
 
 
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path, bool sizeOfAllStreams)
       {
-         return GetSizeCore(null, transaction, path, sizeOfAllStreams, PathFormat.RelativePath);
+         return GetSizeCore(null, transaction, false, path, sizeOfAllStreams, PathFormat.RelativePath);
       }
 
 
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path, bool sizeOfAllStreams, PathFormat pathFormat)
       {
-         return GetSizeCore(null, transaction, path, sizeOfAllStreams, pathFormat);
+         return GetSizeCore(null, transaction, false, path, sizeOfAllStreams, pathFormat);
       }
    }
 }

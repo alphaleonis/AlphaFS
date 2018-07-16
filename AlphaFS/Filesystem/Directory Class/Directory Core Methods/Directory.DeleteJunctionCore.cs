@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (removeDirectory)
 
-            DeleteDirectoryCore(transaction, fsEntryInfo, null, false, false, true, pathFormat);
+            DeleteDirectoryCore(transaction, fsEntryInfo, null, false, false, true, null, pathFormat);
       }
    }
 }

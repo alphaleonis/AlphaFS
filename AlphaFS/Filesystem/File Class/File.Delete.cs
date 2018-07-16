@@ -27,7 +27,9 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>Deletes the specified file.</summary>
+      #region .NET
+
+      /// <summary>[.NET] Deletes the specified file.</summary>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <exception cref="ArgumentException"/>
@@ -37,11 +39,17 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteFileCore(null, path, false, 0, PathFormat.RelativePath);
+         DeleteFileCore(new DeleteArguments
+         {
+            TargetFsoPath = path
+
+         }, null);
       }
 
+      #endregion // .NET
 
-      /// <summary>Deletes the specified file.</summary>
+
+      /// <summary>[AlphaFS] Deletes the specified file.</summary>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -50,9 +58,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static void Delete(string path, PathFormat pathFormat)
+      public static DeleteResult Delete(string path, PathFormat pathFormat)
       {
-         DeleteFileCore(null, path, false, 0, pathFormat);
+         return DeleteFileCore(new DeleteArguments
+         {
+            TargetFsoPath = path,
+            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
+            PathFormat = pathFormat
+
+         }, null);
       }
 
 
@@ -65,9 +79,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static void Delete(string path, bool ignoreReadOnly)
+      public static DeleteResult Delete(string path, bool ignoreReadOnly)
       {
-         DeleteFileCore(null, path, ignoreReadOnly, 0, PathFormat.RelativePath);
+         return DeleteFileCore(new DeleteArguments
+         {
+            TargetFsoPath = path,
+            IgnoreReadOnly = ignoreReadOnly
+
+         }, null);
       }
 
 
@@ -81,9 +100,30 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static void Delete(string path, bool ignoreReadOnly, PathFormat pathFormat)
+      public static DeleteResult Delete(string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteFileCore(null, path, ignoreReadOnly, 0, pathFormat);
+         return DeleteFileCore(new DeleteArguments
+         {
+            TargetFsoPath = path,
+            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
+            IgnoreReadOnly = ignoreReadOnly,
+            PathFormat = pathFormat
+
+         }, null);
+      }
+      
+
+      /// <summary>[AlphaFS] Deletes the specified file.</summary>
+      /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
+      /// <param name="deleteArguments"></param>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      [SecurityCritical]
+      public static DeleteResult Delete(DeleteArguments deleteArguments)
+      {
+         return DeleteFileCore(deleteArguments, null);
       }
    }
 }

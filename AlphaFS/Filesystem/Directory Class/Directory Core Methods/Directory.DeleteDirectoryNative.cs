@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       private static void DeleteDirectoryNative(KernelTransaction transaction, string pathLp, bool ignoreReadOnly, bool continueOnNotFound, FileAttributes attributes)
       {
 
-      startRemoveDirectory:
+      startDeleteDirectory:
 
          var success = null == transaction || !NativeMethods.IsAtLeastWindowsVista
 
@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // Reset attributes to Normal.
                         File.SetAttributesCore(transaction, true, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
 
-                        goto startRemoveDirectory;
+                        goto startDeleteDirectory;
                      }
 
 

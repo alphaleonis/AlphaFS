@@ -12,6 +12,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #465: Add overloaded methods for `File.Copy/Move` supporting retry.
 - Issue #466: Add properties `ErrorRetry` and `ErrorRetryTimeout` to `DirectoryEnumerationFilters` class.
 - Issue #467: Add property `CopyOptions.CopyTimestamp`.
+- Issue #481: Add overloaded methods `Directory.Delete` supporting `DirectoryEnumerationFilters`.
 
 ### Improvements
 
@@ -45,7 +46,6 @@ Version 2.2.5  (2018-XX-XX)
 ### Bugs Fixed
 
 - Issue #479: `File.Move` on a file opened with `FileShare.Delete` succeeds but throws `IOException`.  (Thx oguimbal)
-- Issue #480: `Directory.Delete(, true, true)` occasionally throws `DirectoryNotEmptyException`.
 
 
 Version 2.2.4  (2018-07-12)

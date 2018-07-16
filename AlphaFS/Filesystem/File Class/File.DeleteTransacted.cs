@@ -36,9 +36,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static void DeleteTransacted(KernelTransaction transaction, string path)
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path)
       {
-         DeleteFileCore(transaction, path, false, 0, PathFormat.RelativePath);
+         return DeleteFileCore(new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetFsoPath = path
+
+         }, null);
       }
 
 
@@ -52,9 +57,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static void DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         DeleteFileCore(transaction, path, false, 0, pathFormat);
+         return DeleteFileCore(new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetFsoPath = path,
+            PathFormat = pathFormat
+
+         }, null);
       }
 
 
@@ -68,9 +79,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly)
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
-         DeleteFileCore(transaction, path, ignoreReadOnly, 0, PathFormat.RelativePath);
+         return DeleteFileCore(new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetFsoPath = path,
+            IgnoreReadOnly = ignoreReadOnly
+
+         }, null);
       }
 
 
@@ -85,9 +102,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteFileCore(transaction, path, ignoreReadOnly, 0, pathFormat);
+         return DeleteFileCore(new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetFsoPath = path,
+            IgnoreReadOnly = ignoreReadOnly,
+            PathFormat = pathFormat
+
+         }, null);
       }
    }
 }

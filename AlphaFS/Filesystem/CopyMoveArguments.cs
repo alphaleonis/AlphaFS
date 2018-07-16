@@ -21,41 +21,101 @@
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   internal struct CopyMoveArguments
+   /// <summary>
+   /// 
+   /// </summary>
+
+   internal class CopyMoveArguments : BaseArguments
    {
-      public int Retry;
-      public int RetryTimeout;
-
-      public KernelTransaction Transaction;
-      public string SourcePath;
-      public string DestinationPath;
-
-      public bool CopyTimestamps;
-
-      public CopyOptions? CopyOptions;
-      public MoveOptions? MoveOptions;
-
-      public CopyMoveProgressRoutine ProgressHandler;
-      public object UserProgressData;
-
-      public PathFormat PathFormat;
+      /// <summary>
+      /// 
+      /// </summary>
+      public int Retry { get; set; }
 
 
-      internal DirectoryEnumerationFilters DirectoryEnumerationFilters;
-      internal string SourcePathLp;
-      internal string DestinationPathLp;
-      internal bool IsCopy;
+      /// <summary>
+      /// 
+      /// </summary>
+      public int RetryTimeout { get; set; }
+
       
+      /// <summary>
+      /// 
+      /// </summary>
+      public string SourcePath { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      public string DestinationPath { get; set; }
+      
+
+      /// <summary>
+      /// 
+      /// </summary>
+      public CopyOptions? CopyOptions { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      public MoveOptions? MoveOptions { get; set; }
+      
+
+      /// <summary>
+      /// 
+      /// </summary>
+      internal string SourcePathLp { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      internal string DestinationPathLp { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      public bool CopyTimestamps { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      internal bool IsCopy { get; set; }
+
+
       /// <summary>A Move action fallback using Copy + Delete.</summary>
-      internal bool EmulateMove;
+      internal bool EmulateMove { get; set; }
+
 
       /// <summary>A file/folder will be deleted or renamed on Computer startup.</summary>
-      internal bool DelayUntilReboot;
+      internal bool DelayUntilReboot { get; set; }
 
-      internal bool DeleteOnStartup;
 
-      internal NativeMethods.NativeCopyMoveProgressRoutine Routine;
+      /// <summary>
+      /// 
+      /// </summary>
+      internal bool DeleteOnStartup { get; set; }
 
-      internal bool PathsChecked;
+
+      /// <summary>
+      /// 
+      /// </summary>
+      public CopyMoveProgressRoutine ProgressHandler { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      public object UserProgressData { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      internal NativeMethods.NativeCopyMoveProgressRoutine Routine { get; set; }
    }
 }

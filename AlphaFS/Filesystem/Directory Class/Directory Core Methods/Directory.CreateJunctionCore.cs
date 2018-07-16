@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (overwrite)
             {
-               DeleteDirectoryCore(transaction, null, junctionPath, true, true, true, pathFormat);
+               DeleteDirectoryCore(transaction, null, junctionPath, true, true, true, null, pathFormat);
 
                CreateDirectoryCore(true, transaction, junctionPath, null, null, false, pathFormat);
             }

@@ -33,7 +33,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void File_Delete_NullAsPath_ThrowsArgumentNullException_Success()
       {
-         UnitTestAssert.ThrowsException<ArgumentNullException>(() => Alphaleonis.Win32.Filesystem.File.Delete(null));
+         UnitTestAssert.ThrowsException<ArgumentNullException>(() => Alphaleonis.Win32.Filesystem.File.Delete((string) null));
       }
    }
 }

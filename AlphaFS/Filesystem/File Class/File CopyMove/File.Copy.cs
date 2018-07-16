@@ -238,10 +238,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Obsolete
 
-      
+
       #region .NET
 
-      /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
+      /// <summary>[.NET] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
       /// <remarks>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -267,7 +267,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
+      /// <summary>[.NET] Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
       /// <remarks>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -342,8 +342,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy. </param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="overwrite"><c>true</c> if the destination file should ignoring the read-only and hidden attributes and overwrite; otherwise, <c>false</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, bool overwrite, PathFormat pathFormat)

@@ -58,7 +58,7 @@ namespace AlphaFS.UnitTest
             var sourceTotalFiles = props["File"];
             var sourceTotalSize = props["Size"];
 
-            Console.WriteLine("\n\tTotal size: [{0}] - Total Folders: [{1}] - Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
+            Console.WriteLine("\n\tTotal size: [{0}]  Total Directories: [{1}]  Total Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
 
             // Overwrite using MoveOptions.ReplaceExisting

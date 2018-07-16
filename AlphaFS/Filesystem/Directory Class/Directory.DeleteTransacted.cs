@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path)
       {
-         DeleteDirectoryCore(transaction, null, path, false, false, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(transaction, null, path, false, false, false, null, PathFormat.RelativePath);
       }
 
 
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         DeleteDirectoryCore(transaction, null, path, false, false, false, pathFormat);
+         DeleteDirectoryCore(transaction, null, path, false, false, false, null, pathFormat);
       }
 
 
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive)
       {
-         DeleteDirectoryCore(transaction, null, path, recursive, false, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(transaction, null, path, recursive, false, false, null, PathFormat.RelativePath);
       }
 
 
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
       {
-         DeleteDirectoryCore(transaction, null, path, recursive, false, false, pathFormat);
+         DeleteDirectoryCore(transaction, null, path, recursive, false, false, null, pathFormat);
       }
 
 
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteDirectoryCore(transaction, null, path, recursive, ignoreReadOnly, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(transaction, null, path, recursive, ignoreReadOnly, false, null, PathFormat.RelativePath);
       }
 
 
@@ -134,7 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteDirectoryCore(transaction, null, path, recursive, ignoreReadOnly, false, pathFormat);
+         DeleteDirectoryCore(transaction, null, path, recursive, ignoreReadOnly, false, null, pathFormat);
       }
    }
 }

@@ -51,17 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (modifyReparsePoint)
             eaAttributes |= ExtendedFileAttributes.OpenReparsePoint;
-
-
-         //// Prevent a System.UnauthorizedAccessException from being thrown by resetting attributes to Normal.
-
-         //var fileAttributes = FileAttributes.Normal;
-         //var isReadOnly = IsReadOnly((FileAttributes) eaAttributes);
-         //var isHidden = IsHidden((FileAttributes) eaAttributes);
-
-         //if (isReadOnly || isHidden)
-         //   SetAttributesCore(transaction, isFolder, path, fileAttributes, PathFormat.LongFullPath);
-
+         
 
          using (var creationTime = SafeGlobalMemoryBufferHandle.FromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?) null))
 
@@ -74,26 +64,8 @@ namespace Alphaleonis.Win32.Filesystem
             var success = NativeMethods.SetFileTime(safeFileHandle, creationTime, lastAccessTime, lastWriteTime);
 
             var lastError = Marshal.GetLastWin32Error();
-            
-            // Reset file system object attributes.
 
-            if (success)
-            {
-               //if (isReadOnly || isHidden)
-               //{
-               //   if (isReadOnly)
-               //      fileAttributes |= FileAttributes.ReadOnly;
-
-               //   if (isHidden)
-               //      fileAttributes |= FileAttributes.Hidden;
-
-               //   fileAttributes &= ~FileAttributes.Normal;
-
-               //   SetAttributesCore(transaction, isFolder, path, fileAttributes, PathFormat.LongFullPath);
-               //}
-            }
-
-            else
+            if (!success)
                NativeError.ThrowException(lastError, isFolder, path);
          }
       }

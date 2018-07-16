@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path)
       {
-         return GetSizeCore(null, null, path, false, PathFormat.RelativePath);
+         return GetSizeCore(null, null, false, path, false, PathFormat.RelativePath);
       }
 
 
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path, PathFormat pathFormat)
       {
-         return GetSizeCore(null, null, path, false, pathFormat);
+         return GetSizeCore(null, null, false, path, false, pathFormat);
       }
 
 
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path, bool sizeOfAllStreams)
       {
-         return GetSizeCore(null, null, path, sizeOfAllStreams, PathFormat.RelativePath);
+         return GetSizeCore(null, null, false, path, sizeOfAllStreams, PathFormat.RelativePath);
       }
 
 
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path, bool sizeOfAllStreams, PathFormat pathFormat)
       {
-         return GetSizeCore(null, null, path, sizeOfAllStreams, pathFormat);
+         return GetSizeCore(null, null, false, path, sizeOfAllStreams, pathFormat);
       }
 
 
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(SafeFileHandle handle)
       {
-         return GetSizeCore(handle, null, null, false, PathFormat.LongFullPath);
+         return GetSizeCore(handle, null, false, null, false, PathFormat.LongFullPath);
       }
    }
 }

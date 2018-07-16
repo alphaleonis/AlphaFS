@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>You cannot use the Move method to overwrite an existing file, unless
-      ///   <paramref name="cma.MoveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
+      ///   <paramref name="copyMoveArguments.MoveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
       ///   <para>This Move method works across disk volumes, and it does not throw an exception if the
       ///   source and destination are the same. </para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into
@@ -55,14 +55,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(bool retry, CopyMoveArguments cma, bool driveChecked, bool isFolder, string sourceFilePath, string destinationFilePath, CopyMoveResult copyMoveResult)
+      internal static CopyMoveResult CopyMoveCore(bool retry, CopyMoveArguments copyMoveArguments, bool driveChecked, bool isFolder, string sourceFilePath, string destinationFilePath, CopyMoveResult copyMoveResult)
       {
          #region Setup
 
-         cma = ValidateFileOrDirectoryMoveArguments(cma, driveChecked, false, sourceFilePath, destinationFilePath, out sourceFilePath, out destinationFilePath);
+         copyMoveArguments = ValidateFileOrDirectoryMoveArguments(copyMoveArguments, driveChecked, false, sourceFilePath, destinationFilePath, out sourceFilePath, out destinationFilePath);
 
 
-         var copyMoveRes = copyMoveResult ?? new CopyMoveResult(cma, isFolder, sourceFilePath, destinationFilePath);
+         var copyMoveRes = copyMoveResult ?? new CopyMoveResult(copyMoveArguments, isFolder, sourceFilePath, destinationFilePath);
 
          var isSingleFileAction = null == copyMoveResult && copyMoveRes.IsFile;
 
@@ -71,28 +71,28 @@ namespace Alphaleonis.Win32.Filesystem
 
          var retryTimeout = 0;
 
-         var errorFilter = null != cma.DirectoryEnumerationFilters && null != cma.DirectoryEnumerationFilters.ErrorFilter ? cma.DirectoryEnumerationFilters.ErrorFilter : null;
+         var errorFilter = null != copyMoveArguments.DirectoryEnumerationFilters && null != copyMoveArguments.DirectoryEnumerationFilters.ErrorFilter ? copyMoveArguments.DirectoryEnumerationFilters.ErrorFilter : null;
 
          if (retry)
          {
             if (null != errorFilter)
             {
-               attempts += cma.DirectoryEnumerationFilters.ErrorRetry;
+               attempts += copyMoveArguments.DirectoryEnumerationFilters.ErrorRetry;
 
-               retryTimeout = cma.DirectoryEnumerationFilters.ErrorRetryTimeout;
+               retryTimeout = copyMoveArguments.DirectoryEnumerationFilters.ErrorRetryTimeout;
             }
 
             else
             {
-               if (cma.Retry <= 0)
-                  cma.Retry = 2;
+               if (copyMoveArguments.Retry <= 0)
+                  copyMoveArguments.Retry = 2;
 
-               if (cma.RetryTimeout <= 0)
-                  cma.RetryTimeout = 10;
+               if (copyMoveArguments.RetryTimeout <= 0)
+                  copyMoveArguments.RetryTimeout = 10;
 
-               attempts += cma.Retry;
+               attempts += copyMoveArguments.Retry;
 
-               retryTimeout = cma.RetryTimeout;
+               retryTimeout = copyMoveArguments.RetryTimeout;
             }
          }
 
@@ -116,24 +116,23 @@ namespace Alphaleonis.Win32.Filesystem
             int lastError;
 
             
-            if (!cma.DelayUntilReboot)
+            if (!copyMoveArguments.DelayUntilReboot)
             {
                // Ensure the file's parent directory exists.
 
-               var parentFolder = Directory.GetParentCore(cma.Transaction, destinationFilePath, PathFormat.LongFullPath);
+               var parentFolder = Directory.GetParentCore(copyMoveArguments.Transaction, destinationFilePath, PathFormat.LongFullPath);
 
                if (null != parentFolder)
                   parentFolder.Create();
             }
 
 
-            if (CopyMoveNative(cma, !cma.IsCopy, sourceFilePath, destinationFilePath, out cancel, out lastError))
+            if (CopyMoveNative(copyMoveArguments, !copyMoveArguments.IsCopy, sourceFilePath, destinationFilePath, out cancel, out lastError))
             {
                // We take an extra hit by getting the file size for a single file Copy or Move action.
 
                if (isSingleFileAction)
-
-                  copyMoveRes.TotalBytes = GetSizeCore(null, cma.Transaction, destinationFilePath, true, PathFormat.LongFullPath);
+                  copyMoveRes.TotalBytes = GetSizeCore(null, copyMoveArguments.Transaction, false, destinationFilePath, true, PathFormat.LongFullPath);
 
 
                if (!isFolder)
@@ -142,9 +141,8 @@ namespace Alphaleonis.Win32.Filesystem
 
                   // Only set timestamps for files.
 
-                  if (cma.CopyTimestamps)
-
-                     CopyTimestampsCore(cma.Transaction, false, sourceFilePath, destinationFilePath, false, PathFormat.LongFullPath);
+                  if (copyMoveArguments.CopyTimestamps)
+                     CopyTimestampsCore(copyMoveArguments.Transaction, false, sourceFilePath, destinationFilePath, false, PathFormat.LongFullPath);
                }
                
                break;
@@ -181,13 +179,13 @@ namespace Alphaleonis.Win32.Filesystem
 
                // Remove any read-only/hidden attribute, which might also fail.
 
-               RestartMoveOrThrowException(retry, lastError, isFolder, !cma.IsCopy, cma, sourceFilePath, destinationFilePath);
+               RestartMoveOrThrowException(retry, lastError, isFolder, !copyMoveArguments.IsCopy, copyMoveArguments, sourceFilePath, destinationFilePath);
 
                if (retry)
                {
-                  if (null != errorFilter && null != cma.DirectoryEnumerationFilters.CancellationToken)
+                  if (null != errorFilter && null != copyMoveArguments.DirectoryEnumerationFilters.CancellationToken)
                   {
-                     if (cma.DirectoryEnumerationFilters.CancellationToken.WaitHandle.WaitOne(retryTimeout * 1000))
+                     if (copyMoveArguments.DirectoryEnumerationFilters.CancellationToken.WaitHandle.WaitOne(retryTimeout * 1000))
                      {
                         copyMoveRes.IsCanceled = true;
                         break;

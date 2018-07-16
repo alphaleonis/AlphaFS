@@ -20,7 +20,6 @@
  */
 
 using System.Collections.Generic;
-using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -28,11 +27,22 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       [SecurityCritical]
-      internal static void CopyMoveDirectoryCore(bool retry, CopyMoveArguments cma, CopyMoveResult copyMoveResult)
+      internal static void CopyMoveDirectoryCore(bool retry, CopyMoveArguments copyMoveArguments, CopyMoveResult copyMoveResult)
       {
+         var deleteArguments = new DeleteArguments
+         {
+            Transaction = copyMoveArguments.Transaction,
+            DirectoryEnumerationFilters = copyMoveArguments.DirectoryEnumerationFilters,
+            PathFormat = PathFormat.LongFullPath,
+            PathsChecked = true
+         };
+
+         var deleteResult = new DeleteResult(true, copyMoveArguments.SourcePathLp);
+         
+
          var dirs = new Queue<string>(NativeMethods.DefaultFileBufferSize);
 
-         dirs.Enqueue(cma.SourcePathLp);
+         dirs.Enqueue(copyMoveArguments.SourcePathLp);
 
 
          while (dirs.Count > 0)
@@ -40,13 +50,13 @@ namespace Alphaleonis.Win32.Filesystem
             var srcLp = dirs.Dequeue();
 
             // TODO 2018-01-09: Not 100% yet with local + UNC paths.
-            var dstLp = srcLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);
+            var dstLp = srcLp.Replace(copyMoveArguments.SourcePathLp, copyMoveArguments.DestinationPathLp);
             
 
             // Traverse the source folder, processing files and folders.
             // No recursion is applied; a Queue is used instead.
 
-            foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, cma.Transaction, srcLp, Path.WildcardStarMatchAll, null, null, cma.DirectoryEnumerationFilters, PathFormat.LongFullPath))
+            foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, copyMoveArguments.Transaction, srcLp, Path.WildcardStarMatchAll, null, null, copyMoveArguments.DirectoryEnumerationFilters, PathFormat.LongFullPath))
             {
                var fseiSourcePath = fseiSource.LongFullPath;
 
@@ -54,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (fseiSource.IsDirectory)
                {
-                  CreateDirectoryCore(true, cma.Transaction, fseiDestinationPath, null, null, false, PathFormat.LongFullPath);
+                  CreateDirectoryCore(true, copyMoveArguments.Transaction, fseiDestinationPath, null, null, false, PathFormat.LongFullPath);
 
                   copyMoveResult.TotalFolders++;
 
@@ -65,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   // File count is done in File.CopyMoveCore method.
 
-                  File.CopyMoveCore(retry, cma, true, false, fseiSourcePath, fseiDestinationPath, copyMoveResult);
+                  File.CopyMoveCore(retry, copyMoveArguments, true, false, fseiSourcePath, fseiDestinationPath, copyMoveResult);
 
                   if (copyMoveResult.IsCanceled)
                   {
@@ -81,8 +91,13 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      copyMoveResult.TotalBytes += fseiSource.FileSize;
 
-                     if (cma.EmulateMove)
-                        File.DeleteFileCore(cma.Transaction, fseiSourcePath, true, fseiSource.Attributes, PathFormat.LongFullPath);
+                     if (copyMoveArguments.EmulateMove)
+                     {
+                        deleteArguments.TargetFsoPathLp = fseiSourcePath;
+                        deleteArguments.Attributes = fseiSource.Attributes;
+
+                        File.DeleteFileCore(deleteArguments, deleteResult);
+                     }
                   }
                }
             }
@@ -91,11 +106,11 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!copyMoveResult.IsCanceled && copyMoveResult.ErrorCode == Win32Errors.NO_ERROR)
          {
-            if (cma.CopyTimestamps)
-               CopyFolderTimestamps(cma);
+            if (copyMoveArguments.CopyTimestamps)
+               CopyFolderTimestamps(copyMoveArguments);
 
-            if (cma.EmulateMove)
-               DeleteDirectoryCore(cma.Transaction, null, cma.SourcePathLp, true, true, true, PathFormat.LongFullPath);
+            if (copyMoveArguments.EmulateMove)
+               DeleteDirectoryCore(copyMoveArguments.Transaction, null, copyMoveArguments.SourcePathLp, true, true, true, null, PathFormat.LongFullPath);
          }
       }
    }

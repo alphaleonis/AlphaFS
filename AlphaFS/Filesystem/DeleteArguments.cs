@@ -23,41 +23,40 @@ using System.IO;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   partial class FileInfo
+   /// <summary>
+   /// 
+   /// </summary>
+   public class DeleteArguments : BaseArguments
    {
-      #region .NET
-
-      /// <summary>[.NET] Permanently deletes a file.</summary>
-      /// <remarks>If the file does not exist, this method does nothing.</remarks>
-      /// <exception cref="IOException"/>
-      public override void Delete()
-      {
-         File.DeleteFileCore(new DeleteArguments
-         {
-            Transaction = Transaction,
-            TargetFsoPathLp = LongFullName,
-            PathFormat = PathFormat.LongFullPath
-
-         }, null);
-      }
-
-      #endregion // .NET
+      /// <summary>The path to the file or folder to delete.</summary>
+      public string TargetFsoPath { get; set; }
 
 
-      /// <summary>[AlphaFS] Permanently deletes a file.</summary>
-      /// <remarks>If the file does not exist, this method does nothing.</remarks>
-      /// <exception cref="IOException"/>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>      
-      public DeleteResult Delete(bool ignoreReadOnly)
-      {
-         return File.DeleteFileCore(new DeleteArguments
-         {
-            Transaction = Transaction,
-            TargetFsoPathLp = LongFullName,
-            IgnoreReadOnly = ignoreReadOnly,
-            PathFormat = PathFormat.LongFullPath
+      /// <summary>The path to the file or folder to delete in <see cref="PathFormat.LongFullPath"/> format.</summary>
+      internal string TargetFsoPathLp { get; set; }
 
-         }, null);
-      }
+
+      /// <summary>
+      /// 
+      /// </summary>
+      internal FileAttributes Attributes { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      internal bool IgnoreReadOnly { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      internal bool GetSize { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      public bool IsDirectory { get; set; }
    }
 }

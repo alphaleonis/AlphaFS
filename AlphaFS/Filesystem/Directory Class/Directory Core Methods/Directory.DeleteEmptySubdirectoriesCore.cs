@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                // Ensure the directory is empty.
                if (IsEmptyCore(transaction, fsei.LongFullPath, pathFormat))
-                  DeleteDirectoryCore(transaction, fsei, null, false, ignoreReadOnly, true, PathFormat.LongFullPath);
+                  DeleteDirectoryCore(transaction, fsei, null, false, ignoreReadOnly, true, null, PathFormat.LongFullPath);
 
                else if (recursive)
                   dirs.Push(fsei.LongFullPath);

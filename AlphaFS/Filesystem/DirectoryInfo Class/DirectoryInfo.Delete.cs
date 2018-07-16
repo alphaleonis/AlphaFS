@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public override void Delete()
       {
-         Directory.DeleteDirectoryCore(Transaction, EntryInfo, null, false, false, false, PathFormat.LongFullPath);
+         Directory.DeleteDirectoryCore(Transaction, EntryInfo, null, false, false, false, null, PathFormat.LongFullPath);
       }
 
 
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Delete(bool recursive)
       {
-         Directory.DeleteDirectoryCore(Transaction, EntryInfo, null, recursive, false, false, PathFormat.LongFullPath);
+         Directory.DeleteDirectoryCore(Transaction, EntryInfo, null, recursive, false, false, null, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly)
       {
-         Directory.DeleteDirectoryCore(Transaction, EntryInfo, null, recursive, ignoreReadOnly, false, PathFormat.LongFullPath);
+         Directory.DeleteDirectoryCore(Transaction, EntryInfo, null, recursive, ignoreReadOnly, false, null, PathFormat.LongFullPath);
       }
 
 
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly, bool continueOnNotFound)
       {
-         Directory.DeleteDirectoryCore(Transaction, EntryInfo, null, recursive, ignoreReadOnly, continueOnNotFound, PathFormat.LongFullPath);
+         Directory.DeleteDirectoryCore(Transaction, EntryInfo, null, recursive, ignoreReadOnly, continueOnNotFound, null, PathFormat.LongFullPath);
       }
    }
 }

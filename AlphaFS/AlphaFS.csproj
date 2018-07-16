@@ -219,7 +219,10 @@
     <Compile Include="Device\Volume\Volume.DeleteVolumeMountPoint.cs" />
     <Compile Include="Device\Volume\Volume.DefineDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.EnumerateVolumes.cs" />
+    <Compile Include="Filesystem\BaseArguments.cs" />
+    <Compile Include="Filesystem\DeleteArguments.cs" />
     <Compile Include="Filesystem\CopyMoveArguments.cs" />
+    <Compile Include="Filesystem\DeleteResult.cs" />
     <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.ValidateMoveAction.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Core Methods\Directory.DeleteDirectoryNative.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateAlternateDataStreamsTransacted.cs" />
@@ -320,6 +323,7 @@
     <Compile Include="Filesystem\File Class\File Compression\File.CompressTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Compression\File.DecompressTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Compression\File.GetCompressedSizeTransacted.cs" />
+    <Compile Include="Filesystem\File Class\File Core Methods\File.DeleteFileNative.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.GetCompressedSizeCore.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.ValidateFileOrDirectoryMoveArguments.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.RestartMoveOrThrowException.cs" />
@@ -907,7 +911,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

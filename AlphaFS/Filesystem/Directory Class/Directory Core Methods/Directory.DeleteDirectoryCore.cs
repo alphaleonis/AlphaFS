@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security;
-using System.Security.AccessControl;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -44,10 +43,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><c>true</c> to remove all files and subdirectories recursively; <c>false</c> otherwise only the top level empty directory.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only attribute of files and directories.</param>
       /// <param name="continueOnNotFound">When <c>true</c> does not throw an <see cref="DirectoryNotFoundException"/> when the directory does not exist.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void DeleteDirectoryCore(KernelTransaction transaction, FileSystemEntryInfo fsEntryInfo, string path, bool recursive, bool ignoreReadOnly, bool continueOnNotFound, PathFormat pathFormat)
+      internal static DeleteResult DeleteDirectoryCore(KernelTransaction transaction, FileSystemEntryInfo fsEntryInfo, string path, bool recursive, bool ignoreReadOnly, bool continueOnNotFound, DirectoryEnumerationFilters filters, PathFormat pathFormat)
       {
+         #region Setup
+
          if (null == fsEntryInfo)
          {
             if (null == path)
@@ -56,11 +58,33 @@ namespace Alphaleonis.Win32.Filesystem
             fsEntryInfo = File.GetFileSystemEntryInfoCore(transaction, true, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator), continueOnNotFound, pathFormat);
 
             if (null == fsEntryInfo)
-               return;
+               return null;
          }
 
 
-         PrepareDirectoryForDelete(transaction, fsEntryInfo, ignoreReadOnly);
+         var deleteResult = new DeleteResult(fsEntryInfo.IsDirectory, fsEntryInfo.FullPath);
+
+         var errorFilter = null != filters && null != filters.ErrorFilter ? filters.ErrorFilter : null;
+
+         var retry = null != errorFilter && (filters.ErrorRetry > 0 || filters.ErrorRetryTimeout > 0);
+
+         if (retry)
+         {
+            if (filters.ErrorRetry <= 0)
+               filters.ErrorRetry = 2;
+
+            if (filters.ErrorRetryTimeout <= 0)
+               filters.ErrorRetryTimeout = 10;
+         }
+
+
+         // Calling start on a running Stopwatch is a no-op.
+         deleteResult.Stopwatch.Start();
+
+         #endregion // Setup
+
+
+         PrepareFseiForDelete(transaction, fsEntryInfo, ignoreReadOnly);
 
 
          // Do not follow mount points nor symbolic links, but do delete the reparse point itself.
@@ -72,33 +96,60 @@ namespace Alphaleonis.Win32.Filesystem
             // The root folder is at the bottom of the stack.
 
             var dirs = new Stack<string>(NativeMethods.DefaultFileBufferSize);
-            
-            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, null, DirectoryEnumerationOptions.Recursive, null, PathFormat.LongFullPath))
+
+            var deleteArguments = new DeleteArguments
             {
-               PrepareDirectoryForDelete(transaction, fsei, ignoreReadOnly);
+               Transaction = transaction,
+               DirectoryEnumerationFilters = filters,
+               PathFormat = PathFormat.LongFullPath,
+               PathsChecked = true
+            };
+
+
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, null, DirectoryEnumerationOptions.Recursive, filters, PathFormat.LongFullPath))
+            {
+               PrepareFseiForDelete(transaction, fsei, ignoreReadOnly);
 
                if (fsei.IsDirectory)
                   dirs.Push(fsei.LongFullPath);
 
                else
-                  File.DeleteFileCore(transaction, fsei.LongFullPath, ignoreReadOnly, fsei.Attributes, PathFormat.LongFullPath);
+               {
+                  deleteArguments.TargetFsoPathLp = fsei.LongFullPath;
+                  deleteArguments.Attributes = fsei.Attributes;
+
+                  File.DeleteFileCore(deleteArguments, deleteResult);
+
+                  deleteResult.TotalBytes += fsei.FileSize;
+               }
             }
 
 
             while (dirs.Count > 0)
+            {
                DeleteDirectoryNative(transaction, dirs.Pop(), ignoreReadOnly, continueOnNotFound, 0);
+
+               deleteResult.TotalFolders++;
+            }
          }
          
 
          DeleteDirectoryNative(transaction, fsEntryInfo.LongFullPath, ignoreReadOnly, continueOnNotFound, fsEntryInfo.Attributes);
+
+         deleteResult.TotalFolders++;
+
+
+         deleteResult.Stopwatch.Stop();
+
+         return deleteResult;
       }
 
 
-      internal static void PrepareDirectoryForDelete(KernelTransaction transaction, FileSystemEntryInfo fsei, bool ignoreReadOnly)
+      private static void PrepareFseiForDelete(KernelTransaction transaction, FileSystemEntryInfo fsei, bool ignoreReadOnly)
       {
          // Check to see if the folder is a mount point and unmount it. Only then is it safe to delete the actual folder.
 
-         if (fsei.IsMountPoint)
+         if (fsei.IsDirectory && fsei.IsMountPoint)
 
             DeleteJunctionCore(transaction, fsei, null, false, PathFormat.LongFullPath);
 

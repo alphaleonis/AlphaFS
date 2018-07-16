@@ -20,9 +20,7 @@
  */
 
 using System;
-using System.Globalization;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -35,111 +33,59 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file to be deleted.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
-      /// <param name="attributes"></param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="deleteArguments"></param>
+      /// <param name="deleteResult"></param>
       [SecurityCritical]
-      internal static void DeleteFileCore(KernelTransaction transaction, string path, bool ignoreReadOnly, FileAttributes attributes, PathFormat pathFormat)
+      internal static DeleteResult DeleteFileCore(DeleteArguments deleteArguments, DeleteResult deleteResult)
       {
-         if (null == path)
-            throw new ArgumentNullException("path");
+         #region Setup
 
-         if (pathFormat == PathFormat.RelativePath)
-            Path.CheckSupportedPathFormat(path, true, true);
-
-         var pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         if (null == deleteArguments)
+            throw new ArgumentNullException("deleteArguments");
 
 
-         // Reset attributes to Normal if we already know the facts.
+         var pathLp = deleteArguments.TargetFsoPathLp ?? deleteArguments.TargetFsoPath;
 
-         if (ignoreReadOnly && IsReadOnlyOrHidden(attributes))
-
-            SetAttributesCore(transaction, false, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
-
-
-      startDeleteFile:
-
-         if (!(null == transaction || !NativeMethods.IsAtLeastWindowsVista
-
-            // DeleteFile() / DeleteFileTransacted()
-            // 2013-01-13: MSDN confirms LongPath usage.
-            //
-            // If the path points to a symbolic link, the symbolic link is deleted, not the target.
-
-            ? NativeMethods.DeleteFile(pathLp)
-
-            : NativeMethods.DeleteFileTransacted(pathLp, transaction.SafeHandle)))
+         if (!deleteArguments.PathsChecked)
          {
-            var lastError = Marshal.GetLastWin32Error();
+            if (deleteArguments.PathFormat == PathFormat.RelativePath)
+               Path.CheckSupportedPathFormat(pathLp, true, true);
 
+            pathLp = Path.GetExtendedLengthPathCore(deleteArguments.Transaction, pathLp, deleteArguments.PathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
-            switch ((uint) lastError)
-            {
-               case Win32Errors.ERROR_FILE_NOT_FOUND:
-                  // MSDN: .NET 3.5+: If the file to be deleted does not exist, no exception is thrown.
-                  return;
+            if (null == pathLp)
+               throw new ArgumentNullException("deleteArguments.TargetFsoPath");
 
-
-               case Win32Errors.ERROR_PATH_NOT_FOUND:
-                  // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid (for example, it is on an unmapped drive).
-                  NativeError.ThrowException(lastError, pathLp);
-                  return;
-
-
-               case Win32Errors.ERROR_SHARING_VIOLATION:
-                  // MSDN: .NET 3.5+: IOException: The specified file is in use or there is an open handle on the file.
-                  NativeError.ThrowException(lastError, pathLp);
-                  break;
-
-
-               case Win32Errors.ERROR_ACCESS_DENIED:
-
-                  if (attributes == 0)
-                  {
-                     var attrs = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-
-                     if (FillAttributeInfoCore(transaction, pathLp, ref attrs, false, true) == Win32Errors.NO_ERROR)
-
-                        attributes = attrs.dwFileAttributes;
-                  }
-
-
-                  // MSDN: .NET 3.5+: UnauthorizedAccessException: Path is a directory.
-                  if (IsDirectory(attributes))
-                     throw new UnauthorizedAccessException(string.Format(CultureInfo.InvariantCulture, "({0}) {1}", lastError.ToString(CultureInfo.InvariantCulture), string.Format(CultureInfo.InvariantCulture, Resources.Target_File_Is_A_Directory, pathLp)));
-
-
-                  if (IsReadOnlyOrHidden(attributes))
-                  {
-                     if (ignoreReadOnly)
-                     {
-                        // Reset attributes to Normal.
-                        SetAttributesCore(transaction, false, pathLp, FileAttributes.Normal, PathFormat.LongFullPath);
-
-                        goto startDeleteFile;
-                     }
-
-
-                     // MSDN: .NET 3.5+: UnauthorizedAccessException: Path specified a read-only file.
-                     throw new FileReadOnlyException(pathLp);
-                  }
-
-                  
-                  // MSDN: .NET 3.5+: UnauthorizedAccessException: The caller does not have the required permission.
-                  if (attributes == 0)
-                     NativeError.ThrowException(lastError, pathLp);
-
-                  break;
-            }
-
-            // MSDN: .NET 3.5+: IOException:
-            // The specified file is in use.
-            // There is an open handle on the file, and the operating system is Windows XP or earlier.
-
-            NativeError.ThrowException(lastError, IsDirectory(attributes), pathLp);
+            deleteArguments.PathsChecked = true;
          }
+         
+
+         var isSingleFileAction = null == deleteResult;
+
+         deleteResult = deleteResult ?? new DeleteResult(false, pathLp);
+
+         // Calling start on a running Stopwatch is a no-op.
+         deleteResult.Stopwatch.Start();
+
+
+         // We take an extra hit by getting the file size for a single file delete action.
+
+         if (isSingleFileAction && deleteArguments.GetSize)
+            deleteResult.TotalBytes = GetSizeCore(null, deleteArguments.Transaction, false, pathLp, true, PathFormat.LongFullPath);
+
+         #endregion // Setup
+
+
+         DeleteFileNative(pathLp, deleteArguments);
+
+         deleteResult.TotalFiles++;
+
+
+         if (isSingleFileAction)
+            deleteResult.Stopwatch.Stop();
+
+
+         return deleteResult;
       }
    }
 }

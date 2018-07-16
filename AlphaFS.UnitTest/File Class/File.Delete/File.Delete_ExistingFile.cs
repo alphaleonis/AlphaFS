@@ -43,11 +43,19 @@ namespace AlphaFS.UnitTest
          {
             var file = tempRoot.CreateFile();
 
-            Console.WriteLine("Input File Path: [{0}]", file);
-            
-            Alphaleonis.Win32.Filesystem.File.Delete(file.FullName);
+            Console.WriteLine("Input File Path: [{0}]", file.FullName);
 
-            Assert.IsFalse(Alphaleonis.Win32.Filesystem.File.Exists(file.FullName), "The file exists, but is expected not to.");
+
+            var deleteResult = Alphaleonis.Win32.Filesystem.File.Delete(file.FullName, false);
+            
+
+            UnitTestConstants.Dump(deleteResult);
+
+            Assert.AreEqual(System.IO.File.Exists(file.FullName), Alphaleonis.Win32.Filesystem.File.Exists(file.FullName));
+
+            Assert.AreEqual(1, deleteResult.TotalFiles);
+            Assert.AreEqual(0, deleteResult.TotalFolders);
+            Assert.AreEqual(0, deleteResult.TotalBytes);
          }
 
          Console.WriteLine();
