@@ -25,39 +25,43 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      internal static CopyMoveArguments ValidateFileOrDirectoryMoveArguments(CopyMoveArguments cma, bool driveChecked, bool isFolder)
+      internal static CopyMoveArguments ValidateFileOrDirectoryMoveArguments(CopyMoveArguments copyMoveArguments, bool driveChecked, bool isFolder)
       {
          string unusedSourcePathLp;
          string unusedDestinationPathLp;
 
-         return ValidateFileOrDirectoryMoveArguments(cma, driveChecked, isFolder, cma.SourcePath, cma.DestinationPath, out unusedSourcePathLp, out unusedDestinationPathLp);
+         return ValidateFileOrDirectoryMoveArguments(copyMoveArguments, driveChecked, isFolder, copyMoveArguments.SourcePath, copyMoveArguments.DestinationPath, out unusedSourcePathLp, out unusedDestinationPathLp);
       }
 
 
       /// <summary>Validates and updates the file/directory copy/move arguments and updates them accordingly. This happens only once per <see cref="CopyMoveArguments"/> instance.</summary>
-      private static CopyMoveArguments ValidateFileOrDirectoryMoveArguments(CopyMoveArguments cma, bool driveChecked, bool isFolder, string sourcePath, string destinationPath, out string sourcePathLp, out string destinationPathLp)
+      private static CopyMoveArguments ValidateFileOrDirectoryMoveArguments(CopyMoveArguments copyMoveArguments, bool driveChecked, bool isFolder, string sourcePath, string destinationPath, out string sourcePathLp, out string destinationPathLp)
       {
+         if (null == copyMoveArguments)
+            throw new ArgumentNullException("copyMoveArguments");
+         
+
          sourcePathLp = sourcePath;
          destinationPathLp = destinationPath;
          
-         if (cma.PathsChecked)
-            return cma;
+         if (copyMoveArguments.PathsChecked)
+            return copyMoveArguments;
 
 
-         cma.IsCopy = IsCopyAction(cma);
+         copyMoveArguments.IsCopy = IsCopyAction(copyMoveArguments);
 
-         if (!cma.IsCopy)
-            cma.DelayUntilReboot = VerifyDelayUntilReboot(sourcePath, cma.MoveOptions, cma.PathFormat);
+         if (!copyMoveArguments.IsCopy)
+            copyMoveArguments.DelayUntilReboot = VerifyDelayUntilReboot(sourcePath, copyMoveArguments.MoveOptions, copyMoveArguments.PathFormat);
 
 
-         if (cma.PathFormat != PathFormat.LongFullPath)
+         if (copyMoveArguments.PathFormat != PathFormat.LongFullPath)
          {
             if (null == sourcePath)
                throw new ArgumentNullException("sourcePath");
             
             // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
 
-            if (!cma.DelayUntilReboot && null == destinationPath)
+            if (!copyMoveArguments.DelayUntilReboot && null == destinationPath)
                throw new ArgumentNullException("destinationPath");
             
 
@@ -79,12 +83,12 @@ namespace Alphaleonis.Win32.Filesystem
             {
                // Check for local or network drives, such as: "C:" or "\\server\c$" (but not for "\\?\GLOBALROOT\").
                if (!sourcePath.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
-                  Directory.ExistsDriveOrFolderOrFile(cma.Transaction, sourcePath, isFolder, (int) Win32Errors.NO_ERROR, true, false);
+                  Directory.ExistsDriveOrFolderOrFile(copyMoveArguments.Transaction, sourcePath, isFolder, (int) Win32Errors.NO_ERROR, true, false);
 
 
                // File Move action: destinationPath is allowed to be null when MoveOptions.DelayUntilReboot is specified.
-               if (!cma.DelayUntilReboot)
-                  Directory.ExistsDriveOrFolderOrFile(cma.Transaction, destinationPath, isFolder, (int) Win32Errors.NO_ERROR, true, false);
+               if (!copyMoveArguments.DelayUntilReboot)
+                  Directory.ExistsDriveOrFolderOrFile(copyMoveArguments.Transaction, destinationPath, isFolder, (int) Win32Errors.NO_ERROR, true, false);
             }
 
 
@@ -94,64 +98,64 @@ namespace Alphaleonis.Win32.Filesystem
             const GetFullPathOptions fullPathOptions = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
 
 
-            sourcePathLp = Path.GetExtendedLengthPathCore(cma.Transaction, sourcePath, cma.PathFormat, fullPathOptions);
+            sourcePathLp = Path.GetExtendedLengthPathCore(copyMoveArguments.Transaction, sourcePath, copyMoveArguments.PathFormat, fullPathOptions);
 
-            if (isFolder || !cma.IsCopy)
-               cma.SourcePathLp = sourcePathLp;
+            if (isFolder || !copyMoveArguments.IsCopy)
+               copyMoveArguments.SourcePathLp = sourcePathLp;
 
 
             // When destinationPath is null, the file/folder needs to be removed on Computer startup.
 
-            cma.DeleteOnStartup = cma.DelayUntilReboot && null == destinationPath;
+            copyMoveArguments.DeleteOnStartup = copyMoveArguments.DelayUntilReboot && null == destinationPath;
             
-            if (!cma.DeleteOnStartup)
+            if (!copyMoveArguments.DeleteOnStartup)
             {
                Path.CheckSupportedPathFormat(destinationPath, true, true);
 
-               destinationPathLp = Path.GetExtendedLengthPathCore(cma.Transaction, destinationPath, cma.PathFormat, fullPathOptions);
+               destinationPathLp = Path.GetExtendedLengthPathCore(copyMoveArguments.Transaction, destinationPath, copyMoveArguments.PathFormat, fullPathOptions);
 
 
-               if (isFolder || !cma.IsCopy)
+               if (isFolder || !copyMoveArguments.IsCopy)
                {
-                  cma.DestinationPathLp = destinationPathLp;
+                  copyMoveArguments.DestinationPathLp = destinationPathLp;
 
                   // Process Move action options, possible fallback to Copy action.
 
-                  if (!cma.IsCopy)
-                     cma = Directory.ValidateMoveAction(cma);
+                  if (!copyMoveArguments.IsCopy)
+                     copyMoveArguments = Directory.ValidateMoveAction(copyMoveArguments);
                }
 
 
-               if (cma.IsCopy)
+               if (copyMoveArguments.IsCopy)
                {
-                  cma.CopyTimestamps = HasCopyTimestamps(cma.CopyOptions);
+                  copyMoveArguments.CopyTimestamps = HasCopyTimestamps(copyMoveArguments.CopyOptions);
 
-                  if (cma.CopyTimestamps)
+                  if (copyMoveArguments.CopyTimestamps)
 
                      // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile functions.
 
-                     cma.CopyOptions &= ~CopyOptions.CopyTimestamp;
+                     copyMoveArguments.CopyOptions &= ~CopyOptions.CopyTimestamp;
                }
             }
 
 
             // Setup callback function for progress notifications.
 
-            if (null == cma.Routine && null != cma.ProgressHandler)
+            if (null == copyMoveArguments.Routine && null != copyMoveArguments.ProgressHandler)
             {
-               cma.Routine = (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, streamNumber, callbackReason, sourceFile, destinationFile, data) =>
+               copyMoveArguments.Routine = (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, streamNumber, callbackReason, sourceFile, destinationFile, data) =>
 
-                     cma.ProgressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, (int) streamNumber, callbackReason, cma.UserProgressData);
+                     copyMoveArguments.ProgressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, (int) streamNumber, callbackReason, copyMoveArguments.UserProgressData);
             }
 
 
-            cma.PathFormat = PathFormat.LongFullPath;
+            copyMoveArguments.PathFormat = PathFormat.LongFullPath;
 
-            cma.PathsChecked = true;
+            copyMoveArguments.PathsChecked = true;
          }
          
 
-         return cma;
+         return copyMoveArguments;
       }
    }
 }

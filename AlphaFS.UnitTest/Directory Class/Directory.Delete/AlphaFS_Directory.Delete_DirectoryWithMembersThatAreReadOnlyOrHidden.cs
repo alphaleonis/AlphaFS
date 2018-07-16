@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_ExistingDirectory_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_DirectoryWithMembersThatAreReadOnlyOrHidden_LocalAndNetwork_Success()
       {
-         Directory_Delete_ExistingDirectory(false);
-         Directory_Delete_ExistingDirectory(true);
+         AlphaFS_Directory_Delete_DirectoryWithMembersThatAreReadOnlyOrHidden(false);
+         AlphaFS_Directory_Delete_DirectoryWithMembersThatAreReadOnlyOrHidden(true);
       }
 
 
-      private void Directory_Delete_ExistingDirectory(bool isNetwork)
+      private void AlphaFS_Directory_Delete_DirectoryWithMembersThatAreReadOnlyOrHidden(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -63,8 +63,13 @@ namespace AlphaFS.UnitTest
 
             UnitTestConstants.Dump(deleteResult);
 
+
+            Assert.AreEqual(System.IO.Directory.Exists(folder.FullName), Alphaleonis.Win32.Filesystem.Directory.Exists(folder.FullName));
+
             Assert.AreEqual(filesTotal, deleteResult.TotalFiles);
+
             Assert.AreEqual(foldersTotal + 1, deleteResult.TotalFolders);
+
             Assert.AreEqual(sizeTotal, deleteResult.TotalBytes);
          }
 

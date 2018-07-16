@@ -20,8 +20,9 @@
  */
 
 using System;
-using System.IO;
+using System.ComponentModel;
 using System.Security;
+using System.Threading;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -33,10 +34,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
+      /// <param name="retry"></param>
       /// <param name="deleteArguments"></param>
       /// <param name="deleteResult"></param>
       [SecurityCritical]
-      internal static DeleteResult DeleteFileCore(DeleteArguments deleteArguments, DeleteResult deleteResult)
+      internal static DeleteResult DeleteFileCore(bool retry, DeleteArguments deleteArguments, DeleteResult deleteResult)
       {
          #region Setup
 
@@ -48,21 +50,53 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!deleteArguments.PathsChecked)
          {
+            if (null == pathLp)
+               throw new ArgumentNullException("deleteArguments.TargetFsoPath");
+
             if (deleteArguments.PathFormat == PathFormat.RelativePath)
                Path.CheckSupportedPathFormat(pathLp, true, true);
 
             pathLp = Path.GetExtendedLengthPathCore(deleteArguments.Transaction, pathLp, deleteArguments.PathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
-
-            if (null == pathLp)
-               throw new ArgumentNullException("deleteArguments.TargetFsoPath");
-
+            
             deleteArguments.PathsChecked = true;
          }
          
 
          var isSingleFileAction = null == deleteResult;
 
-         deleteResult = deleteResult ?? new DeleteResult(false, pathLp);
+         if (null == deleteResult)
+            deleteResult = new DeleteResult(false, pathLp);
+
+
+         var attempts = 1;
+
+         var retryTimeout = 0;
+
+         var errorFilter = null != deleteArguments.DirectoryEnumerationFilters && null != deleteArguments.DirectoryEnumerationFilters.ErrorFilter ? deleteArguments.DirectoryEnumerationFilters.ErrorFilter : null;
+
+         if (retry)
+         {
+            if (null != errorFilter)
+            {
+               attempts += deleteArguments.DirectoryEnumerationFilters.ErrorRetry;
+
+               retryTimeout = deleteArguments.DirectoryEnumerationFilters.ErrorRetryTimeout;
+            }
+
+            else
+            {
+               if (deleteArguments.Retry <= 0)
+                  deleteArguments.Retry = 2;
+
+               if (deleteArguments.RetryTimeout <= 0)
+                  deleteArguments.RetryTimeout = 10;
+
+               attempts += deleteArguments.Retry;
+
+               retryTimeout = deleteArguments.RetryTimeout;
+            }
+         }
+
 
          // Calling start on a running Stopwatch is a no-op.
          deleteResult.Stopwatch.Start();
@@ -74,11 +108,53 @@ namespace Alphaleonis.Win32.Filesystem
             deleteResult.TotalBytes = GetSizeCore(null, deleteArguments.Transaction, false, pathLp, true, PathFormat.LongFullPath);
 
          #endregion // Setup
+         
+
+         while (attempts-- > 0)
+         {
+            deleteResult.ErrorCode = (int) Win32Errors.NO_ERROR;
 
 
-         DeleteFileNative(pathLp, deleteArguments);
+            int lastError;
 
-         deleteResult.TotalFiles++;
+            if (DeleteFileNative(null != errorFilter, pathLp, deleteArguments, out lastError))
+            {
+               deleteResult.ErrorCode = lastError;
+               deleteResult.TotalFiles++;
+            }
+            
+            else
+            {
+               deleteResult.ErrorCode = lastError;
+
+
+               // Report the Exception back to the caller.
+               if (null != errorFilter)
+               {
+                  var continueDelete = errorFilter(lastError, new Win32Exception(lastError).Message, Path.GetCleanExceptionPath(pathLp));
+
+                  if (!continueDelete)
+                     break;
+               }
+
+               if (retry)
+                  deleteResult.Retries++;
+
+               retry = attempts > 0 && retryTimeout > 0;
+
+               if (retry)
+               {
+                  if (null != errorFilter && null != deleteArguments.DirectoryEnumerationFilters.CancellationToken)
+                  {
+                     if (deleteArguments.DirectoryEnumerationFilters.CancellationToken.WaitHandle.WaitOne(retryTimeout * 1000))
+                        break;
+                  }
+
+                  else
+                     Utils.Sleep(retryTimeout);
+               }
+            }
+         }
 
 
          if (isSingleFileAction)

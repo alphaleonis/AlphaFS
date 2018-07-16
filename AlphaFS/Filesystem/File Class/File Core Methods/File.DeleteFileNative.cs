@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
       [SecurityCritical]
-      internal static void DeleteFileNative(string pathLp, DeleteArguments deleteArguments, FileAttributes attributes = 0)
+      internal static bool DeleteFileNative(bool continueOnException, string pathLp, DeleteArguments deleteArguments, out int lastError)
       {
 
       startDeleteFile:
@@ -47,26 +47,32 @@ namespace Alphaleonis.Win32.Filesystem
             : NativeMethods.DeleteFileTransacted(pathLp, deleteArguments.Transaction.SafeHandle);
 
 
-         var lastError = Marshal.GetLastWin32Error();
+         lastError = Marshal.GetLastWin32Error();
 
          if (!success)
          {
+            var attributes = deleteArguments.Attributes;
+
+
             switch ((uint) lastError)
             {
                case Win32Errors.ERROR_FILE_NOT_FOUND:
                   // MSDN: .NET 3.5+: If the file to be deleted does not exist, no exception is thrown.
-                  return;
+                  success = true;
+                  break;
 
 
                case Win32Errors.ERROR_PATH_NOT_FOUND:
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid (for example, it is on an unmapped drive).
-                  NativeError.ThrowException(lastError, pathLp);
-                  return;
+                  if (!continueOnException)
+                     NativeError.ThrowException(lastError, pathLp);
+                  break;
 
 
                case Win32Errors.ERROR_SHARING_VIOLATION:
                   // MSDN: .NET 3.5+: IOException: The specified file is in use or there is an open handle on the file.
-                  NativeError.ThrowException(lastError, pathLp);
+                  if (!continueOnException)
+                     NativeError.ThrowException(lastError, pathLp);
                   break;
 
 
@@ -99,13 +105,17 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                      // MSDN: .NET 3.5+: UnauthorizedAccessException: Path specified a read-only file.
-                     throw new FileReadOnlyException(pathLp);
+                     if (!continueOnException)
+                        throw new FileReadOnlyException(pathLp);
                   }
 
                   
                   // MSDN: .NET 3.5+: UnauthorizedAccessException: The caller does not have the required permission.
                   if (attributes == 0)
-                     NativeError.ThrowException(lastError, pathLp);
+                  {
+                     if (!continueOnException)
+                        NativeError.ThrowException(lastError, pathLp);
+                  }
 
                   break;
             }
@@ -114,8 +124,12 @@ namespace Alphaleonis.Win32.Filesystem
             // The specified file is in use.
             // There is an open handle on the file, and the operating system is Windows XP or earlier.
 
-            NativeError.ThrowException(lastError, IsDirectory(attributes), pathLp);
+            if (!success && !continueOnException)
+               NativeError.ThrowException(lastError, IsDirectory(attributes), pathLp);
          }
+
+
+         return success;
       }
    }
 }

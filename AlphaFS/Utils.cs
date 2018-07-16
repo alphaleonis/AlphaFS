@@ -23,6 +23,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Threading;
 
 namespace Alphaleonis
 {
@@ -136,6 +137,14 @@ namespace Alphaleonis
       public static int CombineHashCodesOf<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
       {
          return CombineHashCodesOf(CombineHashCodesOf(arg1, arg2), CombineHashCodesOf(arg3, arg4));
+      }
+
+
+      public static void Sleep(int timeoutInSeconds)
+      {
+         using (var waitEvent = new ManualResetEvent(false))
+
+            waitEvent.WaitOne(timeoutInSeconds * 1000);
       }
    }
 }

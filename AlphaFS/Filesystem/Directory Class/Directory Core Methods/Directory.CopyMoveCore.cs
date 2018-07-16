@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="cma.moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="copyMoveArguments.moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
       /// </remarks>
       /// <exception cref="ArgumentException"/>
@@ -44,32 +44,36 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="PlatformNotSupportedException">The operating system is older than Windows Vista.</exception>
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(CopyMoveArguments cma)
+      internal static CopyMoveResult CopyMoveCore(CopyMoveArguments copyMoveArguments)
       {
          #region Setup
-         
-         var fsei = File.GetFileSystemEntryInfoCore(cma.Transaction, false, cma.SourcePath, true, cma.PathFormat);
+
+         if (null == copyMoveArguments)
+            throw new ArgumentNullException("copyMoveArguments");
+
+
+         var fsei = File.GetFileSystemEntryInfoCore(copyMoveArguments.Transaction, true, copyMoveArguments.SourcePath, true, copyMoveArguments.PathFormat);
 
          var isFolder = null == fsei || fsei.IsDirectory;
 
          // Directory.Move is applicable to both files and folders.
 
-         cma = File.ValidateFileOrDirectoryMoveArguments(cma, false, isFolder);
+         File.ValidateFileOrDirectoryMoveArguments(copyMoveArguments, false, isFolder);
 
 
-         var copyMoveResult = new CopyMoveResult(cma, isFolder);
+         var copyMoveResult = new CopyMoveResult(copyMoveArguments, isFolder);
 
-         var errorFilter = null != cma.DirectoryEnumerationFilters && null != cma.DirectoryEnumerationFilters.ErrorFilter ? cma.DirectoryEnumerationFilters.ErrorFilter : null;
+         var errorFilter = null != copyMoveArguments.DirectoryEnumerationFilters && null != copyMoveArguments.DirectoryEnumerationFilters.ErrorFilter ? copyMoveArguments.DirectoryEnumerationFilters.ErrorFilter : null;
 
-         var retry = null != errorFilter && (cma.DirectoryEnumerationFilters.ErrorRetry > 0 || cma.DirectoryEnumerationFilters.ErrorRetryTimeout > 0);
+         var retry = null != errorFilter && (copyMoveArguments.DirectoryEnumerationFilters.ErrorRetry > 0 || copyMoveArguments.DirectoryEnumerationFilters.ErrorRetryTimeout > 0);
 
          if (retry)
          {
-            if (cma.DirectoryEnumerationFilters.ErrorRetry <= 0)
-               cma.DirectoryEnumerationFilters.ErrorRetry = 2;
+            if (copyMoveArguments.DirectoryEnumerationFilters.ErrorRetry <= 0)
+               copyMoveArguments.DirectoryEnumerationFilters.ErrorRetry = 2;
 
-            if (cma.DirectoryEnumerationFilters.ErrorRetryTimeout <= 0)
-               cma.DirectoryEnumerationFilters.ErrorRetryTimeout = 10;
+            if (copyMoveArguments.DirectoryEnumerationFilters.ErrorRetryTimeout <= 0)
+               copyMoveArguments.DirectoryEnumerationFilters.ErrorRetryTimeout = 10;
          }
 
 
@@ -79,18 +83,18 @@ namespace Alphaleonis.Win32.Filesystem
          #endregion // Setup
 
 
-         if (cma.IsCopy)
+         if (copyMoveArguments.IsCopy)
          {
             // Copy folder SymbolicLinks.
             // Cannot be done by CopyFileEx() so emulate this.
 
-            if (File.HasCopySymbolicLink(cma.CopyOptions))
+            if (File.HasCopySymbolicLink(copyMoveArguments.CopyOptions))
             {
-               var lvi = File.GetLinkTargetInfoCore(cma.Transaction, cma.SourcePathLp, true, PathFormat.LongFullPath);
+               var lvi = File.GetLinkTargetInfoCore(copyMoveArguments.Transaction, copyMoveArguments.SourcePathLp, true, PathFormat.LongFullPath);
 
                if (null != lvi)
                {
-                  File.CreateSymbolicLinkCore(cma.Transaction, cma.DestinationPathLp, lvi.SubstituteName, SymbolicLinkTarget.Directory, PathFormat.LongFullPath);
+                  File.CreateSymbolicLinkCore(copyMoveArguments.Transaction, copyMoveArguments.DestinationPathLp, lvi.SubstituteName, SymbolicLinkTarget.Directory, PathFormat.LongFullPath);
 
                   copyMoveResult.TotalFolders = 1;
                }
@@ -99,10 +103,10 @@ namespace Alphaleonis.Win32.Filesystem
             else
             {
                if (isFolder)
-                  CopyMoveDirectoryCore(retry, cma, copyMoveResult);
+                  CopyMoveDirectoryCore(retry, copyMoveArguments, copyMoveResult);
 
                else
-                  File.CopyMoveCore(retry, cma, true, false, cma.SourcePathLp, cma.DestinationPathLp, copyMoveResult);
+                  File.CopyMoveCore(retry, copyMoveArguments, true, false, copyMoveArguments.SourcePathLp, copyMoveArguments.DestinationPathLp, copyMoveResult);
             }
          }
 
@@ -114,18 +118,18 @@ namespace Alphaleonis.Win32.Filesystem
             // AlphaFS feature to overcome a MoveFileXxx limitation.
             // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
 
-            if (isFolder && !cma.DelayUntilReboot && File.HasReplaceExisting(cma.MoveOptions))
+            if (isFolder && !copyMoveArguments.DelayUntilReboot && File.HasReplaceExisting(copyMoveArguments.MoveOptions))
 
                // 2017-06-07: A large target directory will probably create a progress-less delay in UI.
                // One way to get around this is to perform the delete in the File.CopyMove method.
 
-               DeleteDirectoryCore(cma.Transaction, null, cma.DestinationPathLp, true, true, true, null, PathFormat.LongFullPath);
+               DeleteDirectoryCore(copyMoveArguments.Transaction, null, copyMoveArguments.DestinationPathLp, true, true, true, null, PathFormat.LongFullPath);
             
 
             // Moves a file or directory, including its children.
             // Copies an existing directory, including its children to a new directory.
 
-            File.CopyMoveCore(retry, cma, true, isFolder, cma.SourcePathLp, cma.DestinationPathLp, copyMoveResult);
+            File.CopyMoveCore(retry, copyMoveArguments, true, isFolder, copyMoveArguments.SourcePathLp, copyMoveArguments.DestinationPathLp, copyMoveResult);
 
 
             // If the move happened on the same drive, we have no knowledge of the number of files/folders.

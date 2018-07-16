@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
                   deleteArguments.TargetFsoPathLp = fsei.LongFullPath;
                   deleteArguments.Attributes = fsei.Attributes;
 
-                  File.DeleteFileCore(deleteArguments, deleteResult);
+                  File.DeleteFileCore(false, deleteArguments, deleteResult);
 
                   deleteResult.TotalBytes += fsei.FileSize;
                }

@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteFileCore(new DeleteArguments
+         DeleteFileCore(false, new DeleteArguments
          {
             TargetFsoPath = path
 
@@ -60,9 +60,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, PathFormat pathFormat)
       {
-         return DeleteFileCore(new DeleteArguments
+         return DeleteFileCore(false, new DeleteArguments
          {
-            TargetFsoPath = path,
+            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
             TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
             PathFormat = pathFormat
 
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, bool ignoreReadOnly)
       {
-         return DeleteFileCore(new DeleteArguments
+         return DeleteFileCore(false, new DeleteArguments
          {
             TargetFsoPath = path,
             IgnoreReadOnly = ignoreReadOnly
@@ -102,9 +102,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         return DeleteFileCore(new DeleteArguments
+         return DeleteFileCore(false, new DeleteArguments
          {
-            TargetFsoPath = path,
+            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
             TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
             IgnoreReadOnly = ignoreReadOnly,
             PathFormat = pathFormat
@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(DeleteArguments deleteArguments)
       {
-         return DeleteFileCore(deleteArguments, null);
+         return DeleteFileCore(false, deleteArguments, null);
       }
    }
 }

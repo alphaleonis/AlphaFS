@@ -153,7 +153,7 @@
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_3ExistingDirectories_FromVolumeShadowCopy.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_NullAsPath_ThrowsArgumentNullException.cs" />
-    <Compile Include="Directory Class\Directory.Delete\Directory.Delete_ExistingDirectory.cs" />
+    <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_DirectoryWithMembersThatAreReadOnlyOrHidden.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_NullAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.CopyTimestamps.cs" />

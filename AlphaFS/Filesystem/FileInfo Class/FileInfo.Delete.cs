@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       public override void Delete()
       {
-         File.DeleteFileCore(new DeleteArguments
+         File.DeleteFileCore(false, new DeleteArguments
          {
             Transaction = Transaction,
             TargetFsoPathLp = LongFullName,
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>      
       public DeleteResult Delete(bool ignoreReadOnly)
       {
-         return File.DeleteFileCore(new DeleteArguments
+         return File.DeleteFileCore(false, new DeleteArguments
          {
             Transaction = Transaction,
             TargetFsoPathLp = LongFullName,

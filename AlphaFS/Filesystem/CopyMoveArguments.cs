@@ -30,18 +30,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       /// 
       /// </summary>
-      public int Retry { get; set; }
-
-
-      /// <summary>
-      /// 
-      /// </summary>
-      public int RetryTimeout { get; set; }
-
-      
-      /// <summary>
-      /// 
-      /// </summary>
       public string SourcePath { get; set; }
 
 

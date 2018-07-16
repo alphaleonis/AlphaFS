@@ -59,12 +59,12 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         copyMoveArguments = ValidateFileOrDirectoryMoveArguments(copyMoveArguments, driveChecked, false, sourceFilePath, destinationFilePath, out sourceFilePath, out destinationFilePath);
+         ValidateFileOrDirectoryMoveArguments(copyMoveArguments, driveChecked, isFolder, sourceFilePath, destinationFilePath, out sourceFilePath, out destinationFilePath);
 
+         var isSingleFileAction = null == copyMoveResult || copyMoveResult.IsFile;
 
-         var copyMoveRes = copyMoveResult ?? new CopyMoveResult(copyMoveArguments, isFolder, sourceFilePath, destinationFilePath);
-
-         var isSingleFileAction = null == copyMoveResult && copyMoveRes.IsFile;
+         if (null == copyMoveResult)
+            copyMoveResult = new CopyMoveResult(copyMoveArguments, isFolder, sourceFilePath, destinationFilePath);
 
 
          var attempts = 1;
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Calling start on a running Stopwatch is a no-op.
-         copyMoveRes.Stopwatch.Start();
+         copyMoveResult.Stopwatch.Start();
 
          #endregion // Setup
 
@@ -109,9 +109,9 @@ namespace Alphaleonis.Win32.Filesystem
             // Otherwise, the copy/move operation will continue to completion.
             bool cancel;
 
-            copyMoveRes.ErrorCode = (int) Win32Errors.NO_ERROR;
+            copyMoveResult.ErrorCode = (int) Win32Errors.NO_ERROR;
 
-            copyMoveRes.IsCanceled = false;
+            copyMoveResult.IsCanceled = false;
 
             int lastError;
 
@@ -132,12 +132,12 @@ namespace Alphaleonis.Win32.Filesystem
                // We take an extra hit by getting the file size for a single file Copy or Move action.
 
                if (isSingleFileAction)
-                  copyMoveRes.TotalBytes = GetSizeCore(null, copyMoveArguments.Transaction, false, destinationFilePath, true, PathFormat.LongFullPath);
+                  copyMoveResult.TotalBytes = GetSizeCore(null, copyMoveArguments.Transaction, false, destinationFilePath, true, PathFormat.LongFullPath);
 
 
                if (!isFolder)
                {
-                  copyMoveRes.TotalFiles++;
+                  copyMoveResult.TotalFiles++;
 
                   // Only set timestamps for files.
 
@@ -151,9 +151,9 @@ namespace Alphaleonis.Win32.Filesystem
 
             // The Copy/Move action failed or is canceled.
 
-            copyMoveRes.ErrorCode = lastError;
+            copyMoveResult.ErrorCode = lastError;
 
-            copyMoveRes.IsCanceled = cancel;
+            copyMoveResult.IsCanceled = cancel;
 
             
             // Report the Exception back to the caller.
@@ -163,7 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (!continueCopyMove)
                {
-                  copyMoveRes.IsCanceled = true;
+                  copyMoveResult.IsCanceled = true;
                   break;
                }
             }
@@ -172,7 +172,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (!cancel)
             {
                if (retry)
-                  copyMoveRes.Retries++;
+                  copyMoveResult.Retries++;
 
                retry = attempts > 0 && retryTimeout > 0;
 
@@ -187,23 +187,20 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      if (copyMoveArguments.DirectoryEnumerationFilters.CancellationToken.WaitHandle.WaitOne(retryTimeout * 1000))
                      {
-                        copyMoveRes.IsCanceled = true;
+                        copyMoveResult.IsCanceled = true;
                         break;
                      }
                   }
 
                   else
-                     using (var waitEvent = new ManualResetEvent(false))
-                        waitEvent.WaitOne(retryTimeout * 1000);
+                     Utils.Sleep(retryTimeout);
                }
             }
          }
 
          
          if (isSingleFileAction)
-            copyMoveRes.Stopwatch.Stop();
-
-         copyMoveResult = copyMoveRes;
+            copyMoveResult.Stopwatch.Stop();
 
          return copyMoveResult;
       }

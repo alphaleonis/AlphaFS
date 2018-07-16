@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path)
       {
-         return DeleteFileCore(new DeleteArguments
+         return DeleteFileCore(false, new DeleteArguments
          {
             Transaction = transaction,
             TargetFsoPath = path
@@ -59,10 +59,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return DeleteFileCore(new DeleteArguments
+         return DeleteFileCore(false, new DeleteArguments
          {
             Transaction = transaction,
-            TargetFsoPath = path,
+            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
+            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
             PathFormat = pathFormat
 
          }, null);
@@ -81,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
-         return DeleteFileCore(new DeleteArguments
+         return DeleteFileCore(false, new DeleteArguments
          {
             Transaction = transaction,
             TargetFsoPath = path,
@@ -104,10 +105,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         return DeleteFileCore(new DeleteArguments
+         return DeleteFileCore(false, new DeleteArguments
          {
             Transaction = transaction,
-            TargetFsoPath = path,
+            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
+            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
             IgnoreReadOnly = ignoreReadOnly,
             PathFormat = pathFormat
 
