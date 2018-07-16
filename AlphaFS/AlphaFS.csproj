@@ -266,10 +266,10 @@
     <Compile Include="Filesystem\Directory Class\Directory Compression\Directory.DecompressTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Core Methods\Directory.DeleteDirectoryCore.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Core Methods\Directory.DeleteEmptySubdirectoriesCore.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.DeleteEmptySubdirectoriesTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.Delete\Directory.DeleteEmptySubdirectoriesTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Core Methods\Directory.DeleteJunctionCore.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Junctions, Links\Directory.DeleteJunctionTransacted.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.DeleteTransacted.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.Delete\Directory.DeleteTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Compression\Directory.DisableCompressionTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Compression\Directory.EnableCompressionTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Encryption\Directory.Decrypt.cs" />
@@ -457,8 +457,8 @@
     <Compile Include="Filesystem\Directory Class\Directory Junctions, Links\Directory.ExistsJunction.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Junctions, Links\Directory.DeleteJunction.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Junctions, Links\Directory.CreateJunction.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.DeleteEmptySubdirectories.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.Delete.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.Delete\Directory.DeleteEmptySubdirectories.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.Delete\Directory.Delete.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CreateDirectory.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateDirectories.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFiles.cs" />
@@ -911,7 +911,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

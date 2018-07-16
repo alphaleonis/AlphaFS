@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region .NET
 
-      /// <summary>Deletes an empty directory from a specified path.</summary>
+      /// <summary>[.NET] Deletes an empty directory from a specified path.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
+      /// <summary>[.NET] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
