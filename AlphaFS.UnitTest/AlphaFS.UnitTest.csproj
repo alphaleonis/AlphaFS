@@ -157,7 +157,7 @@
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_NullAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.CopyTimestamps.cs" />
-    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.SetTimestamps_SymbolicLink.cs" />
+    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.SetTimestamps_OnSymbolicLink.cs" />
     <Compile Include="File Class\AlphaFS_File_GetSize\AlphaFS_File.GetSize_AllStreams.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_ExistingFileAsDirectoryeName_PropertyExistsShouldbeFalse.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptySourceFileNameAsPath_ThrowsArgumentException.cs" />
@@ -176,6 +176,7 @@
     <Compile Include="File Class\File.Move\File.Move_NullDestFileNameAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\File.Move\File.Move_NullSourceFileNameAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\FileTest.cs" />
+    <Compile Include="File Class\File_Timestamps\AlphaFS_File.SetTimestamps_OnSymbolicLink.cs" />
     <Compile Include="FileInfo Class\FileInfo.InitializeInstance\FileInfo.InitializeInstance_ExistingDirectoryAsFileName_PropertyExistsShouldbeFalse.cs" />
     <Compile Include="Path Class\PathTest.cs" />
     <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
@@ -357,7 +358,7 @@
     <Compile Include="Directory Class\Directory.Exists\AlphaFS_Directory.Exists_WithLeadingOrTrailingSpace.cs" />
     <Compile Include="Directory Class\Directory_AccessControl\Directory.GetAccessControl.cs" />
     <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.Copy_UsingCopyOptionsCopyTimestampFlag.cs" />
-    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.SetTimestamps.cs" />
+    <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.SetTimestamps_FilesHasReadOnlyAndHiddenAttributes.cs" />
     <Compile Include="Directory Class\Directory_Timestamps\Directory_Timestamps_CompareTimestamps_NonExistingDirectory.cs" />
     <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.GetChangeTime.cs" />
     <Compile Include="Directory Class\Directory_AccessControl\Directory.SetAccessControl.cs" />
@@ -442,7 +443,7 @@
     <Compile Include="UnitTests\CopyTest.cs" />
     <Compile Include="File Class\File_Timestamps\AlphaFS_File.GetChangeTime.cs" />
     <Compile Include="File Class\File_Timestamps\AlphaFS_File.CopyTimestamps.cs" />
-    <Compile Include="File Class\File_Timestamps\AlphaFS_File.SetTimestamps.cs" />
+    <Compile Include="File Class\File_Timestamps\AlphaFS_File.SetTimestamps_FilesHasReadOnlyAndHiddenAttributes.cs" />
     <Compile Include="File Class\AlphaFS_File_Lock\AlphaFS_File.IsLocked.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.CreateSymbolicLink_And_GetLinkTargetInfo.cs" />
     <Compile Include="AlphaFS Junctions, Links\AlphaFS_File.CreateHardLink_And_EnumerateHardLinks.cs" />

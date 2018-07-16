@@ -19,58 +19,49 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class EnumerationTest
+   public partial class TimestampsTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Host_EnumerateDrives_Network_Success()
+      public void AlphaFS_File_SetTimestamps_LocalAndNetwork_Success()
       {
-         UnitTestAssert.IsElevatedProcess();
+         AlphaFS_File_SetTimestamps_FilesHasReadOnlyAndHiddenAttributes(false);
+         AlphaFS_File_SetTimestamps_FilesHasReadOnlyAndHiddenAttributes(true);
+      }
 
-         UnitTestConstants.PrintUnitTestHeader(true);
 
-
-         var host = Environment.MachineName;
-
-         var drives = Alphaleonis.Win32.Network.Host.EnumerateDrives(host, true).ToArray();
-
-         foreach (var driveInfo in drives)
+      private void AlphaFS_File_SetTimestamps_FilesHasReadOnlyAndHiddenAttributes(bool isNetwork)
+      {
+         using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            Console.WriteLine("Host Local Drive: [{0}]", driveInfo.Name);
+            var file = tempRoot.CreateFile();
 
-            UnitTestConstants.Dump(driveInfo);
+            Console.WriteLine("Input File Path   : [{0}]", file.FullName);
 
-            UnitTestConstants.Dump(driveInfo.DiskSpaceInfo, true);
 
-            UnitTestConstants.Dump(driveInfo.VolumeInfo, true);
+            file.Attributes |= System.IO.FileAttributes.ReadOnly | System.IO.FileAttributes.Hidden;
 
-            Assert.IsNull(driveInfo.DosDeviceName);
+            var creationTime = tempRoot.GetRandomFileDate();
+            var lastAccessTime = tempRoot.GetRandomFileDate();
+            var lastWriteTime = tempRoot.GetRandomFileDate();
 
-            Assert.IsNull(driveInfo.VolumeInfo.Guid);
 
-            Console.WriteLine();
+            Alphaleonis.Win32.Filesystem.File.SetTimestamps(file.FullName, creationTime, lastAccessTime, lastWriteTime);
+
+
+            Assert.AreEqual(System.IO.File.GetCreationTime(file.FullName), creationTime);
+            Assert.AreEqual(System.IO.File.GetLastAccessTime(file.FullName), lastAccessTime);
+            Assert.AreEqual(System.IO.File.GetLastWriteTime(file.FullName), lastWriteTime);
          }
 
-
-         if (drives.Length == 0)
-            UnitTestAssert.InconclusiveBecauseResourcesAreUnavailable();
-
-
-         // \\localhost\C$
-
-         host = Alphaleonis.Win32.Network.Host.GetUncName() + Alphaleonis.Win32.Filesystem.Path.DirectorySeparator +
-                UnitTestConstants.SysDrive[0] + Alphaleonis.Win32.Filesystem.Path.NetworkDriveSeparator +
-                Alphaleonis.Win32.Filesystem.Path.DirectorySeparator;
-
-         Assert.AreEqual(drives[0].Name, host);
+         Console.WriteLine();
       }
    }
 }
