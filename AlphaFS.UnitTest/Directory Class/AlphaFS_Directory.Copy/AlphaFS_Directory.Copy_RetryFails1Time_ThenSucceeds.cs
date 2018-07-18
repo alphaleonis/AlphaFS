@@ -77,7 +77,7 @@ namespace AlphaFS.UnitTest
                   
                   ErrorRetry = 2,
 
-                  ErrorRetryTimeout = 3,
+                  ErrorRetryTimeout = 1,
 
                   ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
                   {
@@ -109,15 +109,13 @@ namespace AlphaFS.UnitTest
 
                UnitTestConstants.Dump(cmr);
 
+
                Assert.IsNotNull(cmr);
+
                Assert.AreEqual(0, cmr.ErrorCode);
+
                Assert.AreEqual(2, cmr.Retries);
-
-
-               var waitTime = filters.ErrorRetry * filters.ErrorRetryTimeout;
-
-               Assert.AreEqual(6, waitTime, "The timeout is not what is expected.");
-               Assert.AreEqual(6, sw.Elapsed.Seconds, "The timeout is not what is expected.");
+               
                Assert.AreEqual(2, errorCount);
             }
          }

@@ -71,17 +71,23 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          var dirs = new Stack<string>(1000);
+
          dirs.Push(fsEntryInfo.LongFullPath);
+
 
          while (dirs.Count > 0)
          {
             foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, transaction, dirs.Pop(), Path.WildcardStarMatchAll, null, DirectoryEnumerationOptions.ContinueOnException, null, PathFormat.LongFullPath))
             {
                // Ensure the directory is empty.
-               if (IsEmptyCore(transaction, fsei.LongFullPath, pathFormat))
-                  DeleteDirectoryCore(transaction, fsei, null, false, ignoreReadOnly, true, null, PathFormat.LongFullPath);
+
+               if (IsEmptyCore(transaction, fsei.LongFullPath, PathFormat.LongFullPath))
+
+                  DeleteDirectoryCore(true, fsei, new DeleteArguments {IgnoreReadOnly = ignoreReadOnly}, null);
+
 
                else if (recursive)
+
                   dirs.Push(fsei.LongFullPath);
             }
          }

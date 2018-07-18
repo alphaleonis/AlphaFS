@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
                         deleteArguments.TargetFsoPathLp = fseiSourcePath;
                         deleteArguments.Attributes = fseiSource.Attributes;
 
-                        File.DeleteFileCore(false, deleteArguments, deleteResult);
+                        File.DeleteFileCore(deleteArguments, deleteResult);
                      }
                   }
                }
@@ -110,7 +110,17 @@ namespace Alphaleonis.Win32.Filesystem
                CopyFolderTimestamps(copyMoveArguments);
 
             if (copyMoveArguments.EmulateMove)
-               DeleteDirectoryCore(copyMoveArguments.Transaction, null, copyMoveArguments.SourcePathLp, true, true, true, null, PathFormat.LongFullPath);
+
+               DeleteDirectoryCore(true, null, new DeleteArguments
+               {
+                  Transaction = copyMoveArguments.Transaction,
+                  TargetFsoPathLp = copyMoveArguments.SourcePathLp,
+                  Recursive = true,
+                  IgnoreReadOnly = true,
+                  DirectoryEnumerationFilters = copyMoveArguments.DirectoryEnumerationFilters,
+                  PathFormat = PathFormat.LongFullPath
+
+               }, null);
          }
       }
    }

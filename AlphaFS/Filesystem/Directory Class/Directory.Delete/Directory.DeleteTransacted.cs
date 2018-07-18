@@ -27,77 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
-      [SecurityCritical]
-      public static void DeleteTransacted(KernelTransaction transaction, string path)
-      {
-         DeleteDirectoryCore(transaction, null, path, false, false, false, null, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static void DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         DeleteDirectoryCore(transaction, null, path, false, false, false, null, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      [SecurityCritical]
-      public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive)
-      {
-         DeleteDirectoryCore(transaction, null, path, recursive, false, false, null, PathFormat.RelativePath);
-      }
-
-
-      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
-      {
-         DeleteDirectoryCore(transaction, null, path, recursive, false, false, null, pathFormat);
-      }
-
+      #region Obsolete
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <exception cref="ArgumentException"/>
@@ -111,10 +41,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory to remove.</param>
       /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
+      [Obsolete("Argument recursive and ignoreReadOnly are obsolete. Use overload that supports the DirectoryEnumerationFilters argument.")]
       [SecurityCritical]
-      public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteDirectoryCore(transaction, null, path, recursive, ignoreReadOnly, false, null, PathFormat.RelativePath);
+         return DeleteDirectoryCore(false, null, new DeleteArguments { Transaction = transaction, TargetFsoPath = path, Recursive = recursive, IgnoreReadOnly = ignoreReadOnly }, null);
       }
 
 
@@ -131,10 +62,85 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [Obsolete("Argument recursive and ignoreReadOnly are obsolete. Use overload that supports the DirectoryEnumerationFilters argument.")]
       [SecurityCritical]
-      public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteDirectoryCore(transaction, null, path, recursive, ignoreReadOnly, false, null, pathFormat);
+         return DeleteDirectoryCore(false, null, new DeleteArguments { Transaction = transaction, TargetFsoPath = path, Recursive = recursive, IgnoreReadOnly = ignoreReadOnly, PathFormat = pathFormat }, null);
+      }
+
+      #endregion // Obsolete
+      
+
+      /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
+      [SecurityCritical]
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path)
+      {
+         return DeleteDirectoryCore(false, null, new DeleteArguments {Transaction = transaction, TargetFsoPath = path}, null);
+      }
+
+      
+      /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         return DeleteDirectoryCore(false, null, new DeleteArguments {Transaction = transaction, TargetFsoPath = path, PathFormat = pathFormat}, null);
+      }
+
+
+      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the directory to remove.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      [SecurityCritical]
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive)
+      {
+         return DeleteDirectoryCore(false, null, new DeleteArguments {Transaction = transaction, TargetFsoPath = path, Recursive = recursive}, null);
+      }
+
+
+      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the directory to remove.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
+      {
+         return DeleteDirectoryCore(false, null, new DeleteArguments { Transaction = transaction, TargetFsoPath = path, Recursive = recursive, PathFormat = pathFormat }, null);
       }
    }
 }

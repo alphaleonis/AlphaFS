@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.CodeDom;
 using System.ComponentModel;
 using System.Security;
 using System.Threading;
@@ -34,19 +35,23 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
-      /// <param name="retry"></param>
       /// <param name="deleteArguments"></param>
       /// <param name="deleteResult"></param>
       [SecurityCritical]
-      internal static DeleteResult DeleteFileCore(bool retry, DeleteArguments deleteArguments, DeleteResult deleteResult)
+      internal static DeleteResult DeleteFileCore(DeleteArguments deleteArguments, DeleteResult deleteResult)
       {
          #region Setup
 
          if (null == deleteArguments)
             throw new ArgumentNullException("deleteArguments");
 
+         DirectoryEnumerationFilters filters = null;
+         ErrorHandler errorFilter = null;
+         var errorFilterActive = false;
+
 
          var pathLp = deleteArguments.TargetFsoPathLp ?? deleteArguments.TargetFsoPath;
+         
 
          if (!deleteArguments.PathsChecked)
          {
@@ -57,30 +62,42 @@ namespace Alphaleonis.Win32.Filesystem
                Path.CheckSupportedPathFormat(pathLp, true, true);
 
             pathLp = Path.GetExtendedLengthPathCore(deleteArguments.Transaction, pathLp, deleteArguments.PathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
-            
+
+            if (null == pathLp)
+               return null;
+
+
+            filters = deleteArguments.DirectoryEnumerationFilters;
+
+            errorFilter = null != filters && null != filters.ErrorFilter ? filters.ErrorFilter : null;
+
+            errorFilterActive = null != errorFilter;
+
+
             deleteArguments.PathsChecked = true;
          }
-         
 
+         
          var isSingleFileAction = null == deleteResult;
 
          if (null == deleteResult)
             deleteResult = new DeleteResult(false, pathLp);
-
-
+         
+         
          var attempts = 1;
 
          var retryTimeout = 0;
 
-         var errorFilter = null != deleteArguments.DirectoryEnumerationFilters && null != deleteArguments.DirectoryEnumerationFilters.ErrorFilter ? deleteArguments.DirectoryEnumerationFilters.ErrorFilter : null;
+
+         var retry = null != filters && (filters.ErrorRetry > 0 || filters.ErrorRetryTimeout > 0);
 
          if (retry)
          {
-            if (null != errorFilter)
+            if (errorFilterActive)
             {
-               attempts += deleteArguments.DirectoryEnumerationFilters.ErrorRetry;
+               attempts += filters.ErrorRetry;
 
-               retryTimeout = deleteArguments.DirectoryEnumerationFilters.ErrorRetryTimeout;
+               retryTimeout = filters.ErrorRetryTimeout;
             }
 
             else
@@ -96,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
                retryTimeout = deleteArguments.RetryTimeout;
             }
          }
-
+         
 
          // Calling start on a running Stopwatch is a no-op.
          deleteResult.Stopwatch.Start();
@@ -108,16 +125,17 @@ namespace Alphaleonis.Win32.Filesystem
             deleteResult.TotalBytes = GetSizeCore(null, deleteArguments.Transaction, false, pathLp, true, PathFormat.LongFullPath);
 
          #endregion // Setup
-         
 
+         
          while (attempts-- > 0)
          {
             deleteResult.ErrorCode = (int) Win32Errors.NO_ERROR;
 
 
             int lastError;
+            
 
-            if (DeleteFileNative(null != errorFilter, pathLp, deleteArguments, out lastError))
+            if (DeleteFileNative(errorFilterActive, pathLp, deleteArguments, out lastError))
             {
                deleteResult.ErrorCode = lastError;
                deleteResult.TotalFiles++;
@@ -129,14 +147,14 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                // Report the Exception back to the caller.
-               if (null != errorFilter)
+               if (errorFilterActive)
                {
-                  var continueDelete = errorFilter(lastError, new Win32Exception(lastError).Message, Path.GetCleanExceptionPath(pathLp));
+                  var continueDelete = errorFilter(lastError, new Win32Exception(lastError).Message + (retry ? " Retry active: " + retry.ToString() + " , attempts." + deleteResult.Retries : string.Empty), Path.GetCleanExceptionPath(pathLp));
 
                   if (!continueDelete)
                      break;
                }
-
+               
                if (retry)
                   deleteResult.Retries++;
 
@@ -144,9 +162,9 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (retry)
                {
-                  if (null != errorFilter && null != deleteArguments.DirectoryEnumerationFilters.CancellationToken)
+                  if (errorFilterActive)
                   {
-                     if (deleteArguments.DirectoryEnumerationFilters.CancellationToken.WaitHandle.WaitOne(retryTimeout * 1000))
+                     if (filters.CancellationToken.WaitHandle.WaitOne(retryTimeout * 1000))
                         break;
                   }
 

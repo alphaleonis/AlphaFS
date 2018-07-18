@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteFileCore(false, new DeleteArguments
+         DeleteFileCore(new DeleteArguments
          {
             TargetFsoPath = path
 
@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, PathFormat pathFormat)
       {
-         return DeleteFileCore(false, new DeleteArguments
+         return DeleteFileCore(new DeleteArguments
          {
             TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
             TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, bool ignoreReadOnly)
       {
-         return DeleteFileCore(false, new DeleteArguments
+         return DeleteFileCore(new DeleteArguments
          {
             TargetFsoPath = path,
             IgnoreReadOnly = ignoreReadOnly
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         return DeleteFileCore(false, new DeleteArguments
+         return DeleteFileCore(new DeleteArguments
          {
             TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
             TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(DeleteArguments deleteArguments)
       {
-         return DeleteFileCore(false, deleteArguments, null);
+         return DeleteFileCore(deleteArguments, null);
       }
    }
 }

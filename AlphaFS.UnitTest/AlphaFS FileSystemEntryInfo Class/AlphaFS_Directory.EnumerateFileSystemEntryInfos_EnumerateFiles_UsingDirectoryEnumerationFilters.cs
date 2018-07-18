@@ -85,7 +85,7 @@ namespace AlphaFS.UnitTest
          var abortEnumeration = false;
 
 
-         var filters = new Alphaleonis.Win32.Filesystem.DirectoryEnumerationFilters
+         var filters = new Alphaleonis.Win32.Filesystem.Filters
          {
             // Filter to decide whether to recurse into subdirectories.
             RecursionFilter = fsei =>

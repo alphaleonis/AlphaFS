@@ -58,5 +58,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// 
       /// </summary>
       public bool IsDirectory { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      public bool Recursive { get; set; }
    }
 }

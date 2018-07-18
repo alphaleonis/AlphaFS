@@ -55,8 +55,8 @@ namespace AlphaFS.UnitTest
 
             // Copy file with retry enabled.
 
-            var retry = 2;
-            var retryTimeout = 3;
+            const int retry = 2;
+            const int retryTimeout = 2;
             
             var sw = Stopwatch.StartNew();
 

@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path)
       {
-         return DeleteFileCore(false, new DeleteArguments
+         return DeleteFileCore(new DeleteArguments
          {
             Transaction = transaction,
             TargetFsoPath = path
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return DeleteFileCore(false, new DeleteArguments
+         return DeleteFileCore(new DeleteArguments
          {
             Transaction = transaction,
             TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
@@ -82,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
-         return DeleteFileCore(false, new DeleteArguments
+         return DeleteFileCore(new DeleteArguments
          {
             Transaction = transaction,
             TargetFsoPath = path,
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         return DeleteFileCore(false, new DeleteArguments
+         return DeleteFileCore(new DeleteArguments
          {
             Transaction = transaction,
             TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,

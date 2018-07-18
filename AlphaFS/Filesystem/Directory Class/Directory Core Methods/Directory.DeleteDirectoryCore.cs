@@ -37,45 +37,94 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="fsEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fsEntryInfo"/> or <paramref name="path"/>, not both.</param>
-      /// <param name="path">The name of the directory to remove. Use either <paramref name="path"/> or <paramref name="fsEntryInfo"/>, not both.</param>
-      /// <param name="recursive"><c>true</c> to remove all files and subdirectories recursively; <c>false</c> otherwise only the top level empty directory.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only attribute of files and directories.</param>
-      /// <param name="continueOnNotFound">When <c>true</c> does not throw an <see cref="DirectoryNotFoundException"/> when the directory does not exist.</param>
-      /// <param name="filters">The specification of custom filters to be used in the process.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="continueOnNotFound"></param>
+      /// <param name="fsEntryInfo"></param>
+      /// <param name="deleteArguments"></param>
+      /// <param name="deleteResult"></param>
       [SecurityCritical]
-      internal static DeleteResult DeleteDirectoryCore(KernelTransaction transaction, FileSystemEntryInfo fsEntryInfo, string path, bool recursive, bool ignoreReadOnly, bool continueOnNotFound, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      internal static DeleteResult DeleteDirectoryCore(bool continueOnNotFound, FileSystemEntryInfo fsEntryInfo, DeleteArguments deleteArguments, DeleteResult deleteResult)
       {
          #region Setup
+         
+         if (null == deleteArguments)
+            throw new ArgumentNullException("deleteArguments");
 
-         if (null == fsEntryInfo)
+         DirectoryEnumerationFilters filters = null;
+         ErrorHandler errorFilter;
+         var errorFilterActive = false;
+
+
+         var pathLp = deleteArguments.TargetFsoPathLp ?? deleteArguments.TargetFsoPath;
+
+
+         if (!deleteArguments.PathsChecked)
          {
-            if (null == path)
-               throw new ArgumentNullException("path");
-            
-            fsEntryInfo = File.GetFileSystemEntryInfoCore(transaction, true, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator), continueOnNotFound, pathFormat);
+            if (null == pathLp && null == fsEntryInfo)
+               throw new ArgumentNullException("deleteArguments.TargetFsoPath");
 
             if (null == fsEntryInfo)
-               return null;
+            {
+               if (deleteArguments.PathFormat == PathFormat.RelativePath)
+                  Path.CheckSupportedPathFormat(pathLp, true, true);
+
+               pathLp = Path.GetExtendedLengthPathCore(deleteArguments.Transaction, pathLp, deleteArguments.PathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+
+               if (null == pathLp)
+                  return null;
+
+
+               fsEntryInfo = File.GetFileSystemEntryInfoCore(deleteArguments.Transaction, true, pathLp, false, PathFormat.LongFullPath);
+
+               if (null == fsEntryInfo)
+                  return null;
+            }
+            
+
+            filters = deleteArguments.DirectoryEnumerationFilters;
+
+            errorFilter = null != filters && null != filters.ErrorFilter ? filters.ErrorFilter : null;
+
+            errorFilterActive = null != errorFilter;
+            
+
+            deleteArguments.PathsChecked = true;
          }
 
+         else if (null == fsEntryInfo)
+            return null;
 
-         var deleteResult = new DeleteResult(fsEntryInfo.IsDirectory, fsEntryInfo.FullPath);
 
-         var errorFilter = null != filters && null != filters.ErrorFilter ? filters.ErrorFilter : null;
+         if (null == deleteResult)
+            deleteResult = new DeleteResult(fsEntryInfo.IsDirectory, fsEntryInfo.FullPath);
+         
 
-         var retry = null != errorFilter && (filters.ErrorRetry > 0 || filters.ErrorRetryTimeout > 0);
+         var attempts = 1;
 
-         if (retry)
-         {
-            if (filters.ErrorRetry <= 0)
-               filters.ErrorRetry = 2;
+         var retryTimeout = 0;
 
-            if (filters.ErrorRetryTimeout <= 0)
-               filters.ErrorRetryTimeout = 10;
-         }
+
+         //if (retry)
+         //{
+            if (errorFilterActive)
+            {
+               attempts += filters.ErrorRetry;
+
+               retryTimeout = filters.ErrorRetryTimeout;
+            }
+
+            else
+            {
+               if (deleteArguments.Retry <= 0)
+                  deleteArguments.Retry = 2;
+
+               if (deleteArguments.RetryTimeout <= 0)
+                  deleteArguments.RetryTimeout = 10;
+
+               attempts += deleteArguments.Retry;
+
+               retryTimeout = deleteArguments.RetryTimeout;
+            }
+         //}
 
 
          // Calling start on a running Stopwatch is a no-op.
@@ -84,31 +133,22 @@ namespace Alphaleonis.Win32.Filesystem
          #endregion // Setup
 
 
-         PrepareFseiForDelete(transaction, fsEntryInfo, ignoreReadOnly);
+         PrepareDirectoryForDelete(deleteArguments.Transaction, fsEntryInfo, deleteArguments.IgnoreReadOnly);
 
 
          // Do not follow mount points nor symbolic links, but do delete the reparse point itself.
          // If directory is reparse point, disable recursion.
 
-         if (recursive && !fsEntryInfo.IsReparsePoint)
+         if (deleteArguments.Recursive && !fsEntryInfo.IsReparsePoint)
          {
             // The stack will contain the entire folder structure to prevent any open directory handles because of enumeration.
             // The root folder is at the bottom of the stack.
 
             var dirs = new Stack<string>(NativeMethods.DefaultFileBufferSize);
-
-            var deleteArguments = new DeleteArguments
+            
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, deleteArguments.Transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, null, DirectoryEnumerationOptions.Recursive, filters, PathFormat.LongFullPath))
             {
-               Transaction = transaction,
-               DirectoryEnumerationFilters = filters,
-               PathFormat = PathFormat.LongFullPath,
-               PathsChecked = true
-            };
-
-
-            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(null, transaction, fsEntryInfo.LongFullPath, Path.WildcardStarMatchAll, null, DirectoryEnumerationOptions.Recursive, filters, PathFormat.LongFullPath))
-            {
-               PrepareFseiForDelete(transaction, fsei, ignoreReadOnly);
+               PrepareDirectoryForDelete(deleteArguments.Transaction, fsei, deleteArguments.IgnoreReadOnly);
 
                if (fsei.IsDirectory)
                   dirs.Push(fsei.LongFullPath);
@@ -118,7 +158,7 @@ namespace Alphaleonis.Win32.Filesystem
                   deleteArguments.TargetFsoPathLp = fsei.LongFullPath;
                   deleteArguments.Attributes = fsei.Attributes;
 
-                  File.DeleteFileCore(false, deleteArguments, deleteResult);
+                  File.DeleteFileCore(deleteArguments, deleteResult);
 
                   deleteResult.TotalBytes += fsei.FileSize;
                }
@@ -127,14 +167,14 @@ namespace Alphaleonis.Win32.Filesystem
 
             while (dirs.Count > 0)
             {
-               DeleteDirectoryNative(transaction, dirs.Pop(), ignoreReadOnly, continueOnNotFound, 0);
+               DeleteDirectoryNative(deleteArguments.Transaction, dirs.Pop(), deleteArguments.IgnoreReadOnly, continueOnNotFound, 0);
 
                deleteResult.TotalFolders++;
             }
          }
-         
 
-         DeleteDirectoryNative(transaction, fsEntryInfo.LongFullPath, ignoreReadOnly, continueOnNotFound, fsEntryInfo.Attributes);
+
+         DeleteDirectoryNative(deleteArguments.Transaction, fsEntryInfo.LongFullPath, deleteArguments.IgnoreReadOnly, continueOnNotFound, fsEntryInfo.Attributes);
 
          deleteResult.TotalFolders++;
 
@@ -145,11 +185,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      private static void PrepareFseiForDelete(KernelTransaction transaction, FileSystemEntryInfo fsei, bool ignoreReadOnly)
+      private static void PrepareDirectoryForDelete(KernelTransaction transaction, FileSystemEntryInfo fsei, bool ignoreReadOnly)
       {
          // Check to see if the folder is a mount point and unmount it. Only then is it safe to delete the actual folder.
 
-         if (fsei.IsDirectory && fsei.IsMountPoint)
+         if (fsei.IsMountPoint)
 
             DeleteJunctionCore(transaction, fsei, null, false, PathFormat.LongFullPath);
 
