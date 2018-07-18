@@ -38,9 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       public int RetryTimeout { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
+      /// <summary>The specification of custom filters to be used in the process. Not applicable to files.</summary>
       internal DirectoryEnumerationFilters DirectoryEnumerationFilters { get; set; }
 
 

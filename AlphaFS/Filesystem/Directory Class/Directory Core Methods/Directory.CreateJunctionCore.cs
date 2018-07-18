@@ -90,13 +90,12 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (overwrite)
             {
-               DeleteDirectoryCore(true, null, new DeleteArguments
+               DeleteDirectoryCore(null, new DeleteArguments(junctionPath, pathFormat)
                {
                   Transaction = transaction,
-                  TargetFsoPath = junctionPath,
+                  ContinueOnNotFound = true,
                   Recursive = true,
-                  IgnoreReadOnly = true,
-                  PathFormat = pathFormat
+                  IgnoreReadOnly = true
 
                }, null);
 

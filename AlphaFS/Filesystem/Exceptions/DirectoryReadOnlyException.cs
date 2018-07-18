@@ -20,8 +20,6 @@
  */
 
 using System;
-using System.ComponentModel;
-using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -30,18 +28,23 @@ namespace Alphaleonis.Win32.Filesystem
    [Serializable]
    public class DirectoryReadOnlyException : UnauthorizedAccessException
    {
-      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int) Win32Errors.ERROR_FILE_READ_ONLY).Message.Trim().TrimEnd('.').Trim());
-
-
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
-      public DirectoryReadOnlyException() : base(string.Format(CultureInfo.InvariantCulture, "{0}.", ErrorText))
+      public DirectoryReadOnlyException() : base(NativeError.ErrorMessage((int) Win32Errors.ERROR_FILE_READ_ONLY))
       {
       }
 
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
       /// <param name="path">The path to the directory.</param>
-      public DirectoryReadOnlyException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path))
+      public DirectoryReadOnlyException(string path) : base(NativeError.ErrorMessage((int) Win32Errors.ERROR_FILE_READ_ONLY, path))
+      {
+      }
+
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
+      /// <param name="path">The path to the directory.</param>
+      /// <param name="lastError">The Marshal.GetLastWin32Error() return code.</param>
+      public DirectoryReadOnlyException(string path, int lastError) : base(NativeError.ErrorMessage(lastError, path))
       {
       }
 
@@ -49,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
       /// <param name="path">The path to the directory.</param>
       /// <param name="innerException">The inner exception.</param>
-      public DirectoryReadOnlyException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, path), innerException)
+      public DirectoryReadOnlyException(string path, Exception innerException) : base(NativeError.ErrorMessage((int) Win32Errors.ERROR_FILE_READ_ONLY, path), innerException)
       {
       }
 

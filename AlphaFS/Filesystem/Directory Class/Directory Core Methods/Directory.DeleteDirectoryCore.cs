@@ -37,12 +37,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="continueOnNotFound"></param>
       /// <param name="fsEntryInfo"></param>
       /// <param name="deleteArguments"></param>
       /// <param name="deleteResult"></param>
       [SecurityCritical]
-      internal static DeleteResult DeleteDirectoryCore(bool continueOnNotFound, FileSystemEntryInfo fsEntryInfo, DeleteArguments deleteArguments, DeleteResult deleteResult)
+      internal static DeleteResult DeleteDirectoryCore(FileSystemEntryInfo fsEntryInfo, DeleteArguments deleteArguments, DeleteResult deleteResult)
       {
          #region Setup
          
@@ -158,23 +157,24 @@ namespace Alphaleonis.Win32.Filesystem
                   deleteArguments.TargetFsoPathLp = fsei.LongFullPath;
                   deleteArguments.Attributes = fsei.Attributes;
 
-                  File.DeleteFileCore(deleteArguments, deleteResult);
+                  if (deleteArguments.GetSize)
+                     deleteResult.TotalBytes += File.GetSizeCore(null, deleteArguments.Transaction, false, fsei.LongFullPath, true, PathFormat.LongFullPath);
 
-                  deleteResult.TotalBytes += fsei.FileSize;
+                  File.DeleteFileCore(deleteArguments, deleteResult);
                }
             }
 
 
             while (dirs.Count > 0)
             {
-               DeleteDirectoryNative(deleteArguments.Transaction, dirs.Pop(), deleteArguments.IgnoreReadOnly, continueOnNotFound, 0);
+               DeleteDirectoryNative(deleteArguments.Transaction, dirs.Pop(), deleteArguments.IgnoreReadOnly, deleteArguments.ContinueOnNotFound, 0);
 
                deleteResult.TotalFolders++;
             }
          }
 
 
-         DeleteDirectoryNative(deleteArguments.Transaction, fsEntryInfo.LongFullPath, deleteArguments.IgnoreReadOnly, continueOnNotFound, fsEntryInfo.Attributes);
+         DeleteDirectoryNative(deleteArguments.Transaction, fsEntryInfo.LongFullPath, deleteArguments.IgnoreReadOnly, deleteArguments.ContinueOnNotFound, fsEntryInfo.Attributes);
 
          deleteResult.TotalFolders++;
 
@@ -191,7 +191,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (fsei.IsMountPoint)
 
-            DeleteJunctionCore(transaction, fsei, null, false, PathFormat.LongFullPath);
+            DeleteJunctionCore(fsei, transaction, null, false, PathFormat.LongFullPath);
 
 
          // Reset attributes to Normal if we already know the facts.

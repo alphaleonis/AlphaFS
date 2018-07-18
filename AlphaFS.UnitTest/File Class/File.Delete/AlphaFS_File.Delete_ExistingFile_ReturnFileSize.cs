@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileSize), file.FullName);
 
 
-            var deleteResult = Alphaleonis.Win32.Filesystem.File.Delete(new Alphaleonis.Win32.Filesystem.DeleteArguments {TargetFsoPath = file.FullName, GetSize = true});
+            var deleteResult = Alphaleonis.Win32.Filesystem.File.Delete(new Alphaleonis.Win32.Filesystem.DeleteArguments(file.FullName) {GetSize = true});
             
 
             UnitTestConstants.Dump(deleteResult);

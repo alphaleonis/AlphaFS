@@ -38,13 +38,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotAReparsePointException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
       /// <param name="fsEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fsEntryInfo"/> or <paramref name="junctionPath"/>, not both.</param>
+      /// <param name="transaction">The transaction.</param>
       /// <param name="junctionPath">The path of the junction point to remove.</param>
       /// <param name="removeDirectory">When <c>true</c>, also removes the directory and all its contents.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void DeleteJunctionCore(KernelTransaction transaction, FileSystemEntryInfo fsEntryInfo, string junctionPath, bool removeDirectory, PathFormat pathFormat)
+      internal static void DeleteJunctionCore(FileSystemEntryInfo fsEntryInfo, KernelTransaction transaction, string junctionPath, bool removeDirectory, PathFormat pathFormat)
       {
          if (null == fsEntryInfo)
          {
@@ -79,7 +79,12 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (removeDirectory)
 
-            DeleteDirectoryCore(true, fsEntryInfo, null, null);
+            DeleteDirectoryCore(fsEntryInfo, new DeleteArguments
+            {
+               Transaction = transaction,
+               ContinueOnNotFound = true
+
+            }, null);
       }
    }
 }

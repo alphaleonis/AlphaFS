@@ -30,18 +30,18 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Delete_DirectoryWithMembersThatAreReadOnlyOrHidden_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_ExistingDirectory_ReturnFileSize_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_Delete_DirectoryWithMembersThatAreReadOnlyOrHidden(false);
-         AlphaFS_Directory_Delete_DirectoryWithMembersThatAreReadOnlyOrHidden(true);
+         AlphaFS_Directory_Delete_ExistingDirectory_ReturnFileSize(false);
+         AlphaFS_Directory_Delete_ExistingDirectory_ReturnFileSize(true);
       }
 
 
-      private void AlphaFS_Directory_Delete_DirectoryWithMembersThatAreReadOnlyOrHidden(bool isNetwork)
+      private void AlphaFS_Directory_Delete_ExistingDirectory_ReturnFileSize(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
-            var folder = tempRoot.CreateRecursiveRandomizedDatesAndAttributesTree(5);
+            var folder = tempRoot.CreateRecursiveTree(5);
 
             Console.WriteLine("Input Directory Path: [{0}]", folder.FullName);
 
@@ -58,10 +58,11 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}]  Total Directories: [{1}]  Total Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sizeTotal), foldersTotal, filesTotal);
 
 
-            var deleteResult = Alphaleonis.Win32.Filesystem.Directory.Delete( new Alphaleonis.Win32.Filesystem.DeleteArguments(folder.FullName)
+            var deleteResult = Alphaleonis.Win32.Filesystem.Directory.Delete(new Alphaleonis.Win32.Filesystem.DeleteArguments(folder.FullName)
                {
                   Recursive = true,
                   IgnoreReadOnly = true,
+                  GetSize = true
                });
 
 
@@ -74,7 +75,7 @@ namespace AlphaFS.UnitTest
 
             Assert.AreEqual(foldersTotal + 1, deleteResult.TotalFolders);
 
-            Assert.AreEqual(0, deleteResult.TotalBytes);
+            Assert.AreEqual(sizeTotal, deleteResult.TotalBytes);
          }
 
          Console.WriteLine();

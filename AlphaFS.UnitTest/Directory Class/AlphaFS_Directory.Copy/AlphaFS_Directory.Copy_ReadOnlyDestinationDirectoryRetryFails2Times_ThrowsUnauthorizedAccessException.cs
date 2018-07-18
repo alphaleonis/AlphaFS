@@ -33,14 +33,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException_LocalAndNetwork()
+      public void AlphaFS_Directory_Copy_ReadOnlyDestinationDirectoryRetryFails2Times_ThrowsUnauthorizedAccessException_LocalAndNetwork()
       {
-         AlphaFS_Directory_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(false);
-         AlphaFS_Directory_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(true);
+         AlphaFS_Directory_Copy_ReadOnlyDestinationDirectoryRetryFails2Times_ThrowsUnauthorizedAccessException(false);
+         AlphaFS_Directory_Copy_ReadOnlyDestinationDirectoryRetryFails2Times_ThrowsUnauthorizedAccessException(true);
       }
 
 
-      private void AlphaFS_Directory_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(bool isNetwork)
+      private void AlphaFS_Directory_Copy_ReadOnlyDestinationDirectoryRetryFails2Times_ThrowsUnauthorizedAccessException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

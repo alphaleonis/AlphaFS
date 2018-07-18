@@ -83,7 +83,15 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (IsEmptyCore(transaction, fsei.LongFullPath, PathFormat.LongFullPath))
 
-                  DeleteDirectoryCore(true, fsei, new DeleteArguments {IgnoreReadOnly = ignoreReadOnly}, null);
+                  DeleteDirectoryCore(fsei, new DeleteArguments(fsei)
+                  {
+                     Transaction = transaction,
+
+                     IgnoreReadOnly = ignoreReadOnly,
+
+                     ContinueOnNotFound = true
+
+                  }, null);
 
 
                else if (recursive)

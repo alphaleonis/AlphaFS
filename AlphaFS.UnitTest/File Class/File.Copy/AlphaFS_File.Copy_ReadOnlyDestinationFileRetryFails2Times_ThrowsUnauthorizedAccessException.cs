@@ -31,14 +31,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException_LocalAndNetwork()
+      public void AlphaFS_File_Copy_ReadOnlyDestinationFileRetryFails2Times_ThrowsUnauthorizedAccessException_LocalAndNetwork()
       {
-         AlphaFS_File_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(false);
-         AlphaFS_File_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(true);
+         AlphaFS_File_Copy_ReadOnlyDestinationFileRetryFails2Times_ThrowsUnauthorizedAccessException(false);
+         AlphaFS_File_Copy_ReadOnlyDestinationFileRetryFails2Times_ThrowsUnauthorizedAccessException(true);
       }
 
 
-      private void AlphaFS_File_Copy_RetryFails2Times_ThrowsUnauthorizedAccessException(bool isNetwork)
+      private void AlphaFS_File_Copy_ReadOnlyDestinationFileRetryFails2Times_ThrowsUnauthorizedAccessException(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

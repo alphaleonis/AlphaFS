@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteJunction(KernelTransaction transaction, string junctionPath)
       {
-         DeleteJunctionCore(transaction, null, junctionPath, false, PathFormat.RelativePath);
+         DeleteJunctionCore(null, transaction, junctionPath, false, PathFormat.RelativePath);
       }
 
 
@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteJunction(KernelTransaction transaction, string junctionPath, PathFormat pathFormat)
       {
-         DeleteJunctionCore(transaction, null, junctionPath, false, pathFormat);
+         DeleteJunctionCore(null, transaction, junctionPath, false, pathFormat);
       }
 
 
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteJunction(KernelTransaction transaction, string junctionPath, bool removeDirectory)
       {
-         DeleteJunctionCore(transaction, null, junctionPath, removeDirectory, PathFormat.RelativePath);
+         DeleteJunctionCore(null, transaction, junctionPath, removeDirectory, PathFormat.RelativePath);
       }
 
 
@@ -121,7 +121,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteJunction(KernelTransaction transaction, string junctionPath, bool removeDirectory, PathFormat pathFormat)
       {
-         DeleteJunctionCore(transaction, null, junctionPath, removeDirectory, pathFormat);
+         DeleteJunctionCore(null, transaction, junctionPath, removeDirectory, pathFormat);
       }
 
       #endregion // Obsolete
@@ -145,7 +145,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteJunctionTransacted(KernelTransaction transaction, string junctionPath)
       {
-         DeleteJunctionCore(transaction, null, junctionPath, false, PathFormat.RelativePath);
+         DeleteJunctionCore(null, transaction, junctionPath, false, PathFormat.RelativePath);
       }
 
 
@@ -168,7 +168,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteJunctionTransacted(KernelTransaction transaction, string junctionPath, PathFormat pathFormat)
       {
-         DeleteJunctionCore(transaction, null, junctionPath, false, pathFormat);
+         DeleteJunctionCore(null, transaction, junctionPath, false, pathFormat);
       }
 
 
@@ -191,7 +191,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteJunctionTransacted(KernelTransaction transaction, string junctionPath, bool removeDirectory)
       {
-         DeleteJunctionCore(transaction, null, junctionPath, removeDirectory, PathFormat.RelativePath);
+         DeleteJunctionCore(null, transaction, junctionPath, removeDirectory, PathFormat.RelativePath);
       }
 
 
@@ -215,7 +215,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteJunctionTransacted(KernelTransaction transaction, string junctionPath, bool removeDirectory, PathFormat pathFormat)
       {
-         DeleteJunctionCore(transaction, null, junctionPath, removeDirectory, pathFormat);
+         DeleteJunctionCore(null, transaction, junctionPath, removeDirectory, pathFormat);
       }
    }
 }

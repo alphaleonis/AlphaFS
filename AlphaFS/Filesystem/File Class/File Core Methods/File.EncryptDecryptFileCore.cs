@@ -105,10 +105,10 @@ namespace Alphaleonis.Win32.Filesystem
                case Win32Errors.ERROR_FILE_READ_ONLY:
 
                   if (isFolder)
-                     throw new DirectoryReadOnlyException(path);
+                     throw new DirectoryReadOnlyException(path, lastError);
 
                   else
-                     throw new FileReadOnlyException(path);
+                     throw new FileReadOnlyException(path, lastError);
 
 
                default:

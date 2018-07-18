@@ -33,14 +33,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_RetryFails1Time_ThenSucceeds_LocalAndNetwork()
+      public void AlphaFS_Directory_Copy_ReadOnlyDestinationDirectoryRetryFails1TimeThenSucceeds_LocalAndNetwork()
       {
-         AlphaFS_Directory_Copy_RetryFails1Time_ThenSucceeds(false);
-         AlphaFS_Directory_Copy_RetryFails1Time_ThenSucceeds(true);
+         AlphaFS_Directory_Copy_ReadOnlyDestinationDirectoryRetryFails1TimeThenSucceeds(false);
+         AlphaFS_Directory_Copy_ReadOnlyDestinationDirectoryRetryFails1TimeThenSucceeds(true);
       }
 
 
-      private void AlphaFS_Directory_Copy_RetryFails1Time_ThenSucceeds(bool isNetwork)
+      private void AlphaFS_Directory_Copy_ReadOnlyDestinationDirectoryRetryFails1TimeThenSucceeds(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

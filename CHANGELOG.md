@@ -31,6 +31,7 @@ Version 2.3  (2018-XX-XX)
 - Added missing overloaded methods regarding timestamps and symbolic links.
 - Marked `Directory.Copy`/`DirectoryInfo.Copy` methods using parameters `overwrite` and `preserveDates` as obsolete. Use one of the `CopyOptions`.
 - Fixed a `Directory.Move` unit test creating endless drive mappings on error.
+- The `DirectoryReadOnlyException` message is now created from the Marshal.GetLastWin32Error() code instead of always using Win32 error `6009` (`ERROR_FILE_READ_ONLY`).
 
 ### Breaking Changes
 

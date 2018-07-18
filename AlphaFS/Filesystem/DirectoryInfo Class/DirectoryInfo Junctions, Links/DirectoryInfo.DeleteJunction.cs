@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DeleteJunction()
       {
-         Directory.DeleteJunctionCore(Transaction, null, LongFullName, false, PathFormat.LongFullPath);
+         Directory.DeleteJunctionCore(null, Transaction, LongFullName, false, PathFormat.LongFullPath);
 
          RefreshEntryInfo();
       }
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DeleteJunction(bool removeDirectory)
       {
-         Directory.DeleteJunctionCore(Transaction, null, LongFullName, removeDirectory, PathFormat.LongFullPath);
+         Directory.DeleteJunctionCore(null, Transaction, LongFullName, removeDirectory, PathFormat.LongFullPath);
 
          RefreshEntryInfo();
       }

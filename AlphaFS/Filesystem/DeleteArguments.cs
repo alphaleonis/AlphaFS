@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.IO;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -28,12 +29,71 @@ namespace Alphaleonis.Win32.Filesystem
    /// </summary>
    public class DeleteArguments : BaseArguments
    {
+      internal DeleteArguments()
+      {
+      }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="path"></param>
+      public DeleteArguments(string path) : this(path, PathFormat.RelativePath)
+      {
+      }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="path"></param>
+      /// <param name="pathFormat"></param>
+      public DeleteArguments(string path, PathFormat pathFormat)
+      {
+         if (null == path)
+            throw new ArgumentNullException("path");
+
+         PathFormat = pathFormat;
+
+         TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null;
+
+         TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null;
+      }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="entryInfo"></param>
+      public DeleteArguments(FileSystemEntryInfo entryInfo)
+      {
+         if (null == entryInfo)
+            throw new ArgumentNullException("entryInfo");
+
+         EntryInfo = entryInfo;
+
+         PathFormat = PathFormat.LongFullPath;
+
+         TargetFsoPath = entryInfo.FullPath;
+
+         TargetFsoPathLp = entryInfo.LongFullPath;
+      }
+
+
+
+
       /// <summary>The path to the file or folder to delete.</summary>
       public string TargetFsoPath { get; set; }
 
 
       /// <summary>The path to the file or folder to delete in <see cref="PathFormat.LongFullPath"/> format.</summary>
       internal string TargetFsoPathLp { get; set; }
+
+      
+      /// <summary>
+      /// 
+      /// </summary>
+      public FileSystemEntryInfo EntryInfo { get; set; }
 
 
       /// <summary>
@@ -48,9 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal bool IgnoreReadOnly { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
+      /// <summary>Gets the size of the file. Only applicable to filese.</summary>
       internal bool GetSize { get; set; }
 
 
@@ -64,5 +122,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// 
       /// </summary>
       public bool Recursive { get; set; }
+
+
+      /// <summary>
+      /// 
+      /// </summary>
+      public bool ContinueOnNotFound { get; set; }
    }
 }

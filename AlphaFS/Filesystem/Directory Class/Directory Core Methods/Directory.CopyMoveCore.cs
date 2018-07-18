@@ -123,14 +123,13 @@ namespace Alphaleonis.Win32.Filesystem
                // 2017-06-07: A large target directory will probably create a progress-less delay in UI.
                // One way to get around this is to perform the delete in the File.CopyMove method.
 
-               DeleteDirectoryCore(true, null, new DeleteArguments
+               DeleteDirectoryCore(null, new DeleteArguments(copyMoveArguments.DestinationPathLp, PathFormat.LongFullPath)
                {
                   Transaction = copyMoveArguments.Transaction,
-                  TargetFsoPathLp = copyMoveArguments.DestinationPathLp,
+                  ContinueOnNotFound = true,
                   Recursive = true,
                   IgnoreReadOnly = true,
-                  DirectoryEnumerationFilters = copyMoveArguments.DirectoryEnumerationFilters,
-                  PathFormat = PathFormat.LongFullPath
+                  DirectoryEnumerationFilters = copyMoveArguments.DirectoryEnumerationFilters
 
                }, null);
             

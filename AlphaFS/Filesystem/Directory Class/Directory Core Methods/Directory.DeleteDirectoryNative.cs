@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                      // MSDN: .NET 3.5+: IOException: The directory is read-only.
-                     throw new DirectoryReadOnlyException(pathLp);
+                     throw new DirectoryReadOnlyException(pathLp, lastError);
                   }
 
 

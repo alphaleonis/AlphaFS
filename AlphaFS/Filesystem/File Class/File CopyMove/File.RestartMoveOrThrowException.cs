@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
 
                      if (!retry)
-                        throw new FileReadOnlyException(destinationPathLp);
+                        throw new FileReadOnlyException(destinationPathLp, lastError);
                   }
                }
 

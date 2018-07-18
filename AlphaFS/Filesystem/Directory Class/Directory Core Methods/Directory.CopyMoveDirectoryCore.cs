@@ -111,14 +111,13 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (copyMoveArguments.EmulateMove)
 
-               DeleteDirectoryCore(true, null, new DeleteArguments
+               DeleteDirectoryCore(null, new DeleteArguments(copyMoveArguments.SourcePathLp, PathFormat.LongFullPath)
                {
                   Transaction = copyMoveArguments.Transaction,
-                  TargetFsoPathLp = copyMoveArguments.SourcePathLp,
+                  ContinueOnNotFound = true,
                   Recursive = true,
                   IgnoreReadOnly = true,
-                  DirectoryEnumerationFilters = copyMoveArguments.DirectoryEnumerationFilters,
-                  PathFormat = PathFormat.LongFullPath
+                  DirectoryEnumerationFilters = copyMoveArguments.DirectoryEnumerationFilters
 
                }, null);
          }

@@ -31,6 +31,12 @@ namespace Alphaleonis.Win32
 {
    internal static class NativeError
    {
+      internal static string ErrorMessage(int lastError, string path = null)
+      {
+         return string.Format(CultureInfo.InvariantCulture, "({0}) {1}: [{2}]", lastError, new Win32Exception(lastError).Message.Trim().TrimEnd('.').Trim(), path ?? "null");
+      }
+
+
       public static void ThrowException(int errorCode)
       {
          ThrowException((uint) errorCode, null, null);

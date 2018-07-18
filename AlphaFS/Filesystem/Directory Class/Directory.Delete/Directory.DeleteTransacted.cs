@@ -45,7 +45,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
-         return DeleteDirectoryCore(false, null, new DeleteArguments { Transaction = transaction, TargetFsoPath = path, Recursive = recursive, IgnoreReadOnly = ignoreReadOnly }, null);
+         return DeleteDirectoryCore(null, new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetFsoPath = path,
+            Recursive = recursive,
+            IgnoreReadOnly = ignoreReadOnly
+
+         }, null);
       }
 
 
@@ -66,7 +73,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         return DeleteDirectoryCore(false, null, new DeleteArguments { Transaction = transaction, TargetFsoPath = path, Recursive = recursive, IgnoreReadOnly = ignoreReadOnly, PathFormat = pathFormat }, null);
+         return DeleteDirectoryCore(null, new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetFsoPath = path,
+            Recursive = recursive,
+            IgnoreReadOnly = ignoreReadOnly,
+            PathFormat = pathFormat
+
+         }, null);
       }
 
       #endregion // Obsolete
@@ -85,7 +100,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path)
       {
-         return DeleteDirectoryCore(false, null, new DeleteArguments {Transaction = transaction, TargetFsoPath = path}, null);
+         return DeleteDirectoryCore(null, new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetFsoPath = path
+
+         }, null);
       }
 
       
@@ -103,7 +123,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return DeleteDirectoryCore(false, null, new DeleteArguments {Transaction = transaction, TargetFsoPath = path, PathFormat = pathFormat}, null);
+         return DeleteDirectoryCore(null, new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetFsoPath = path,
+            PathFormat = pathFormat
+
+         }, null);
       }
 
 
@@ -121,7 +147,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive)
       {
-         return DeleteDirectoryCore(false, null, new DeleteArguments {Transaction = transaction, TargetFsoPath = path, Recursive = recursive}, null);
+         return DeleteDirectoryCore(null, new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetFsoPath = path,
+            Recursive = recursive
+
+         }, null);
       }
 
 
@@ -140,7 +172,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
       {
-         return DeleteDirectoryCore(false, null, new DeleteArguments { Transaction = transaction, TargetFsoPath = path, Recursive = recursive, PathFormat = pathFormat }, null);
+         return DeleteDirectoryCore(null, new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetFsoPath = path,
+            Recursive = recursive,
+            PathFormat = pathFormat
+
+         }, null);
       }
    }
 }

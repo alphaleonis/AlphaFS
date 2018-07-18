@@ -146,13 +146,14 @@
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_RegularDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_NoRetry_ThrowsUnauthorizedAccessException.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_RetryFails1Time_ThenSucceeds.cs" />
-    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_RetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ReadOnlyDestinationDirectoryRetryFails1TimeThenSucceeds.cs" />
+    <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_ReadOnlyDestinationDirectoryRetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_NoStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.GetSize\AlphaFS_Directory.GetSize_WithStreamsOnRootFolder.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_3ExistingDirectories_FromVolumeShadowCopy.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_NullAsPath_ThrowsArgumentNullException.cs" />
+    <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_ExistingDirectory_ReturnFileSize.cs" />
     <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_DirectoryWithMembersThatAreReadOnlyOrHidden.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.Delete\Directory.Delete_NullAsPath_ThrowsArgumentNullException.cs" />
@@ -163,7 +164,7 @@
     <Compile Include="File Class\File.Copy\File.Copy_EmptySourceFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptyDestFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_3ExistingFiles_FromVolumeShadowCopy.cs" />
-    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_RetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
+    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_ReadOnlyDestinationFileRetryFails2Times_ThrowsUnauthorizedAccessException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_NullDestFileNameAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_NullSourceFileNameAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_EmptyAsPath_ThrowsArgumentException.cs" />

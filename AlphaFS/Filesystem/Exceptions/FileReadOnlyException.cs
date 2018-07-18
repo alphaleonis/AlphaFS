@@ -20,8 +20,6 @@
  */
 
 using System;
-using System.ComponentModel;
-using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -30,18 +28,23 @@ namespace Alphaleonis.Win32.Filesystem
    [Serializable]
    public class FileReadOnlyException : UnauthorizedAccessException
    {
-      private static readonly string ErrorText = string.Format(CultureInfo.InvariantCulture, "({0}) {1}", Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int) Win32Errors.ERROR_FILE_READ_ONLY).Message.Trim().TrimEnd('.').Trim());
-
-
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
-      public FileReadOnlyException() : base(string.Format(CultureInfo.InvariantCulture, "{0}.", ErrorText))
+      public FileReadOnlyException() : base(NativeError.ErrorMessage((int) Win32Errors.ERROR_FILE_READ_ONLY))
       {
       }
 
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="path">The path to the file.</param>
-      public FileReadOnlyException(string path) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, Path.GetCleanExceptionPath(path)))
+      public FileReadOnlyException(string path) : base(NativeError.ErrorMessage((int) Win32Errors.ERROR_FILE_READ_ONLY, path))
+      {
+      }
+
+
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
+      /// <param name="path">The path to the file.</param>
+      /// <param name="lastError">The Marshal.GetLastWin32Error() return code.</param>
+      public FileReadOnlyException(string path, int lastError) : base(NativeError.ErrorMessage(lastError, path))
       {
       }
 
@@ -49,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="path">The path to the file.</param>
       /// <param name="innerException">The inner exception.</param>
-      public FileReadOnlyException(string path, Exception innerException) : base(string.Format(CultureInfo.InvariantCulture, "{0}: [{1}]", ErrorText, Path.GetCleanExceptionPath(path)), innerException)
+      public FileReadOnlyException(string path, Exception innerException) : base(NativeError.ErrorMessage((int) Win32Errors.ERROR_FILE_READ_ONLY, path), innerException)
       {
       }
 
