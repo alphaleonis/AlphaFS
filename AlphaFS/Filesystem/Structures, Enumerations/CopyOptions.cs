@@ -64,7 +64,11 @@ namespace Alphaleonis.Win32.Filesystem
       NoBuffering = NativeMethods.COPY_FILE_FLAGS.COPY_FILE_NO_BUFFERING,
 
 
-      /// <summary>The original source timestamp is preserved.</summary>
-      CopyTimestamp = 8192
+      /// <summary>[AlphaFS] The original source timestamp is preserved.</summary>
+      CopyTimestamp = 8192,
+
+
+      /// <summary>[AlphaFS] Retrieves the size of the file or directory. The returned size is the sum of all streams.</summary>
+      GetSizes = 16384
    }
 }

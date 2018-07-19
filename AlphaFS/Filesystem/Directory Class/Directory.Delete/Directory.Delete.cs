@@ -27,69 +27,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Directory
    {
-      #region Obsolete
-      
-      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
-      [Obsolete("Argument recursive and ignoreReadOnly are obsolete. Use overload that supports the DeleteArguments argument.")]
-      [SecurityCritical]
-      public static DeleteResult Delete(string path, bool recursive, bool ignoreReadOnly)
-      {
-         return DeleteDirectoryCore(null, new DeleteArguments
-         {
-            TargetFsoPath = path,
-
-            Recursive = recursive,
-
-            IgnoreReadOnly = ignoreReadOnly,
-
-         }, null);
-      }
-
-
-      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [Obsolete("Argument recursive and ignoreReadOnly are obsolete. Use overload that supports the DeleteArguments argument.")]
-      [SecurityCritical]
-      public static DeleteResult Delete(string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
-      {
-         return DeleteDirectoryCore(null, new DeleteArguments
-         {
-            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
-
-            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
-
-            Recursive = recursive,
-
-            IgnoreReadOnly = ignoreReadOnly,
-
-            PathFormat = pathFormat
-
-         }, null);
-      }
-
-      #endregion // Obsolete
-
-
       #region .NET
 
       /// <summary>[.NET] Deletes an empty directory from a specified path.</summary>
@@ -104,11 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteDirectoryCore(null, new DeleteArguments
-         {
-            TargetFsoPath = path
-
-         }, null);
+         DeleteDirectoryCore(new DeleteArguments {TargetPath = path});
       }
 
 
@@ -125,19 +58,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool recursive)
       {
-         DeleteDirectoryCore(null, new DeleteArguments
-         {
-            TargetFsoPath = path,
-
-            Recursive = recursive
-
-         }, null);
+         DeleteDirectoryCore(new DeleteArguments {TargetPath = path, Recursive = recursive});
       }
 
       #endregion // .NET
 
 
       /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -150,19 +78,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, PathFormat pathFormat)
       {
-         return DeleteDirectoryCore(null, new DeleteArguments
-         {
-            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
-
-            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
-
-            PathFormat = pathFormat
-
-         }, null);
+         return DeleteDirectoryCore(new DeleteArguments {TargetPath = path, PathFormat = pathFormat});
       }
 
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -176,21 +97,17 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, bool recursive, PathFormat pathFormat)
       {
-         return DeleteDirectoryCore(null, new DeleteArguments
+         return DeleteDirectoryCore(new DeleteArguments
          {
-            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
-
-            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
-
+            TargetPath = path,
             Recursive = recursive,
-
             PathFormat = pathFormat
-
-         }, null);
+         });
       }
 
 
-      /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
+      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -198,106 +115,62 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="DirectoryReadOnlyException"/>
+      /// <param name="path">The name of the directory to remove.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
+      [SecurityCritical]
+      public static DeleteResult Delete(string path, bool recursive, bool ignoreReadOnly)
+      {
+         return DeleteDirectoryCore(new DeleteArguments
+         {
+            TargetPath = path,
+            Recursive = recursive,
+            IgnoreReadOnly = ignoreReadOnly
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <param name="path">The name of the directory to remove.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static DeleteResult Delete(string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
+      {
+         return DeleteDirectoryCore(new DeleteArguments
+         {
+            TargetPath = path,
+            Recursive = recursive,
+            IgnoreReadOnly = ignoreReadOnly,
+            PathFormat = pathFormat
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <param name="path">The name of the directory to remove.</param>
       /// <param name="deleteArguments"></param>
       [SecurityCritical]
       public static DeleteResult Delete(DeleteArguments deleteArguments)
       {
-         return DeleteDirectoryCore(null, deleteArguments, null);
-      }
-
-      
-
-
-      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      [SecurityCritical]
-      public static DeleteResult Delete(string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
-      {
-         return DeleteDirectoryCore(null, new DeleteArguments
-         {
-            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
-
-            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
-
-            ContinueOnNotFound = (options & DirectoryEnumerationOptions.ContinueOnException) != 0,
-
-            Recursive = (options & DirectoryEnumerationOptions.Recursive) != 0,
-
-            PathFormat = pathFormat
-
-         }, null);
-      }
-
-
-      /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <param name="filters">The specification of custom filters to be used in the process.</param>
-      [SecurityCritical]
-      public static DeleteResult Delete(string path, DirectoryEnumerationFilters filters, PathFormat pathFormat)
-      {
-         return DeleteDirectoryCore(null, new DeleteArguments
-         {
-            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
-
-            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
-
-            DirectoryEnumerationFilters = filters,
-
-            PathFormat = pathFormat
-
-         }, null);
-      }
-
-
-      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="DirectoryReadOnlyException"/>
-      /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      /// <param name="filters">The specification of custom filters to be used in the process.</param>
-      [SecurityCritical]
-      public static DeleteResult Delete(string path, DirectoryEnumerationOptions options, DirectoryEnumerationFilters filters, PathFormat pathFormat)
-      {
-         return DeleteDirectoryCore(null, new DeleteArguments
-         {
-            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
-
-            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
-
-            ContinueOnNotFound = (options & DirectoryEnumerationOptions.ContinueOnException) != 0,
-
-            Recursive = (options & DirectoryEnumerationOptions.Recursive) != 0,
-
-            DirectoryEnumerationFilters = filters,
-
-            PathFormat = pathFormat
-
-         }, null);
+         return DeleteDirectoryCore(deleteArguments);
       }
    }
 }

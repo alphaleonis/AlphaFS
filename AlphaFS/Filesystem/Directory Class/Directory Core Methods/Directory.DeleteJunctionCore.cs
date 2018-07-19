@@ -63,14 +63,11 @@ namespace Alphaleonis.Win32.Filesystem
             if (!fsEntryInfo.IsMountPoint)
                throw new NotAReparsePointException(string.Format(CultureInfo.InvariantCulture, Resources.Directory_Is_Not_A_MountPoint, fsEntryInfo.LongFullPath), (int) Win32Errors.ERROR_NOT_A_REPARSE_POINT);
          }
-         
-
-         pathFormat = PathFormat.LongFullPath;
 
 
          // Remove the directory junction.
 
-         using (var safeHandle = OpenDirectoryJunction(transaction, fsEntryInfo.LongFullPath, pathFormat))
+         using (var safeHandle = OpenDirectoryJunction(transaction, fsEntryInfo.LongFullPath, PathFormat.LongFullPath))
 
             Device.DeleteDirectoryJunction(safeHandle);
 
@@ -79,12 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (removeDirectory)
 
-            DeleteDirectoryCore(fsEntryInfo, new DeleteArguments
-            {
-               Transaction = transaction,
-               ContinueOnNotFound = true
-
-            }, null);
+            DeleteDirectoryCore(new DeleteArguments(fsEntryInfo) {Transaction = transaction, ContinueOnNotFound = true});
       }
    }
 }

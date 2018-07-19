@@ -58,11 +58,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}]  Total Directories: [{1}]  Total Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sizeTotal), foldersTotal, filesTotal);
 
 
-            var deleteResult = Alphaleonis.Win32.Filesystem.Directory.Delete( new Alphaleonis.Win32.Filesystem.DeleteArguments(folder.FullName)
-               {
-                  Recursive = true,
-                  IgnoreReadOnly = true,
-               });
+            var deleteResult = Alphaleonis.Win32.Filesystem.Directory.Delete(folder.FullName, true, true);
 
 
             UnitTestConstants.Dump(deleteResult);

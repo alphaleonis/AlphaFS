@@ -45,8 +45,6 @@ namespace AlphaFS.UnitTest
 
             var dstFile = System.IO.Path.Combine(tempRoot.Directory.FullName, srcFile.Name + "-Moved.File");
 
-            var fileLength = srcFile.Length;
-
             Console.WriteLine("Src File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(srcFile.Length), srcFile.FullName);
             Console.WriteLine("Dst File Path: [{0}]", dstFile);
 
@@ -63,7 +61,7 @@ namespace AlphaFS.UnitTest
             Assert.IsFalse(moveResult.IsDirectory);
             Assert.IsTrue(moveResult.IsFile);
 
-            Assert.AreEqual(fileLength, moveResult.TotalBytes);
+            Assert.AreEqual(0, moveResult.TotalBytes);
 
             Assert.AreEqual(1, moveResult.TotalFiles);
             Assert.AreEqual(0, moveResult.TotalFolders);
@@ -71,10 +69,6 @@ namespace AlphaFS.UnitTest
 
             Assert.IsFalse(System.IO.File.Exists(srcFile.FullName), "The file does exists, but is expected not to.");
             Assert.IsTrue(System.IO.File.Exists(dstFile), "The file does not exists, but is expected to.");
-
-            var fileLen = new System.IO.FileInfo(dstFile).Length;
-            Assert.AreEqual(fileLength, fileLen, "The file copy is: {0} bytes, but is expected to be: {1} bytes.", fileLen, fileLength);
-
 
             Assert.IsFalse(System.IO.File.Exists(srcFile.FullName), "The original file exists, but is expected not to.");
          }

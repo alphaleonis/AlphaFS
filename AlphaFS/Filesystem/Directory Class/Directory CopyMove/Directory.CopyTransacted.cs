@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Obsolete
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -162,7 +162,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -194,7 +194,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -228,7 +228,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -264,7 +264,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -302,7 +302,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -334,7 +334,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -369,7 +369,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -406,7 +406,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -444,7 +444,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -478,7 +478,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -515,7 +515,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -554,7 +554,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -596,7 +596,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -624,7 +624,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -654,7 +654,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -686,7 +686,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -720,7 +720,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -750,7 +750,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -782,7 +782,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -816,7 +816,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
@@ -854,7 +854,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -884,7 +884,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -917,7 +917,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -952,7 +952,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -988,7 +988,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -1020,7 +1020,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -1055,7 +1055,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -1092,7 +1092,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>

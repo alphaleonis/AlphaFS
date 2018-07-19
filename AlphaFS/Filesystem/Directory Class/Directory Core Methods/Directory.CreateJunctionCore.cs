@@ -64,8 +64,6 @@ namespace Alphaleonis.Win32.Filesystem
 
             directoryPath = Path.GetExtendedLengthPathCore(transaction, directoryPath, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
             junctionPath = Path.GetExtendedLengthPathCore(transaction, junctionPath, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
-
-            pathFormat = PathFormat.LongFullPath;
          }
 
 
@@ -81,31 +79,34 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Check for existing file.
-         File.ThrowIOExceptionIfFsoExist(transaction, false, directoryPath, pathFormat);
-         File.ThrowIOExceptionIfFsoExist(transaction, false, junctionPath, pathFormat);
+         File.ThrowIOExceptionIfFsoExist(transaction, false, directoryPath, PathFormat.LongFullPath);
+         File.ThrowIOExceptionIfFsoExist(transaction, false, junctionPath, PathFormat.LongFullPath);
 
 
          // Check for existing directory junction folder.
-         if (File.ExistsCore(transaction, true, junctionPath, pathFormat))
+         if (File.ExistsCore(transaction, true, junctionPath, PathFormat.LongFullPath))
          {
             if (overwrite)
             {
-               DeleteDirectoryCore(null, new DeleteArguments(junctionPath, pathFormat)
+               DeleteDirectoryCore(new DeleteArguments
                {
-                  Transaction = transaction,
-                  ContinueOnNotFound = true,
+                  IsDirectory = true,
                   Recursive = true,
-                  IgnoreReadOnly = true
+                  ContinueOnNotFound = true,
+                  IgnoreReadOnly = true,
 
-               }, null);
+                  Transaction = transaction,
+                  TargetPathLongPath = junctionPath,
+                  PathFormat = PathFormat.LongFullPath
+               });
 
-               CreateDirectoryCore(true, transaction, junctionPath, null, null, false, pathFormat);
+               CreateDirectoryCore(true, transaction, junctionPath, null, null, false, PathFormat.LongFullPath);
             }
 
             else
             {
                // Ensure the folder is empty.
-               if (!IsEmptyCore(transaction, junctionPath, pathFormat))
+               if (!IsEmptyCore(transaction, junctionPath, PathFormat.LongFullPath))
                   throw new DirectoryNotEmptyException(junctionPath, true);
 
                throw new AlreadyExistsException(junctionPath, true);
@@ -114,15 +115,15 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Create the folder and convert it to a directory junction.
-         CreateDirectoryCore(true, transaction, junctionPath, null, null, false, pathFormat);
+         CreateDirectoryCore(true, transaction, junctionPath, null, null, false, PathFormat.LongFullPath);
 
-         using (var safeHandle = OpenDirectoryJunction(transaction, junctionPath, pathFormat))
+         using (var safeHandle = OpenDirectoryJunction(transaction, junctionPath, PathFormat.LongFullPath))
             Device.CreateDirectoryJunction(safeHandle, directoryPath);
 
 
          // Copy the target date and time stamps to the directory junction.
          if (copyTargetTimestamps)
-            File.CopyTimestampsCore(transaction, true, directoryPath, junctionPath, true, pathFormat);
+            File.CopyTimestampsCore(transaction, true, directoryPath, junctionPath, true, PathFormat.LongFullPath);
 
 
          return junctionPath;

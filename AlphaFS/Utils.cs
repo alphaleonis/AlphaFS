@@ -23,12 +23,41 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 
 namespace Alphaleonis
 {
    internal static class Utils
    {
+      internal static T CopyFrom<T>(T source) where T : new()
+      {
+         var destination = new T();
+
+         CopyTo(source, destination);
+
+         return destination;
+      }
+
+
+      internal static void CopyTo<T>(T source, T destination)
+      {
+         //var excludedProps = new[] {"propToExclude"};
+         //var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite && !excludedProps.Any(prop => prop.Equals(x.Name))).ToArray();
+
+         var srcProps = typeof(T).GetProperties().Where(x => x.CanRead && x.CanWrite).ToArray();
+
+         var dstProps = srcProps.ToArray();
+
+         foreach (var srcProp in srcProps)
+         {
+            var dstProp = dstProps.First(x => x.Name.Equals(srcProp.Name));
+
+            dstProp.SetValue(destination, srcProp.GetValue(source, null), null);
+         }
+      }
+
+
       /// <summary>Gets an attribute on an enum field value.</summary>
       /// <returns>The description belonging to the enum option, as a string</returns>
       /// <param name="enumValue">One of the <see cref="Alphaleonis.Win32.Filesystem.DeviceGuid"/> enum types.</param>
@@ -140,11 +169,11 @@ namespace Alphaleonis
       }
 
 
-      public static void Sleep(int timeoutInSeconds)
+      public static void Sleep(int seconds)
       {
          using (var waitEvent = new ManualResetEvent(false))
 
-            waitEvent.WaitOne(timeoutInSeconds * 1000);
+            waitEvent.WaitOne(TimeSpan.FromSeconds(seconds));
       }
    }
 }

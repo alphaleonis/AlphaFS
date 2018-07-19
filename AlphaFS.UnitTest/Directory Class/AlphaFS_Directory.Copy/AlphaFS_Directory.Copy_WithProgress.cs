@@ -66,7 +66,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine();
 
 
-            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.FailIfExists, callback, null);
+            var copyOptions = Alphaleonis.Win32.Filesystem.CopyOptions.FailIfExists | Alphaleonis.Win32.Filesystem.CopyOptions.GetSizes;
+
+            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst, copyOptions, callback, null);
 
             UnitTestConstants.Dump(copyResult);
 

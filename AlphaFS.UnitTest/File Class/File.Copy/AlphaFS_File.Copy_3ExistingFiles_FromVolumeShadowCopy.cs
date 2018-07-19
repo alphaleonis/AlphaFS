@@ -64,7 +64,7 @@ namespace AlphaFS.UnitTest
 
                var dirInfo = new Alphaleonis.Win32.Filesystem.DirectoryInfo(globalRoot);
 
-               Console.WriteLine("Input GlobalRoot Path: [{0}]\n", dirInfo.FullName);
+               Console.WriteLine("Input VolumeShadowCopy Path: [{0}]\n", dirInfo.FullName);
 
                if (!dirInfo.Exists)
                   UnitTestAssert.InconclusiveBecauseFileNotFound("No volume shadow copy found.");

@@ -29,35 +29,11 @@ namespace Alphaleonis.Win32.Filesystem
    /// </summary>
    public class DeleteArguments : BaseArguments
    {
-      internal DeleteArguments()
-      {
-      }
-
-
       /// <summary>
       /// 
       /// </summary>
-      /// <param name="path"></param>
-      public DeleteArguments(string path) : this(path, PathFormat.RelativePath)
+      public DeleteArguments()
       {
-      }
-
-
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="path"></param>
-      /// <param name="pathFormat"></param>
-      public DeleteArguments(string path, PathFormat pathFormat)
-      {
-         if (null == path)
-            throw new ArgumentNullException("path");
-
-         PathFormat = pathFormat;
-
-         TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null;
-
-         TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null;
       }
 
 
@@ -74,49 +50,49 @@ namespace Alphaleonis.Win32.Filesystem
 
          PathFormat = PathFormat.LongFullPath;
 
-         TargetFsoPath = entryInfo.FullPath;
+         TargetPath = entryInfo.FullPath;
 
-         TargetFsoPathLp = entryInfo.LongFullPath;
+         TargetPathLongPath = entryInfo.LongFullPath;
+
+         Attributes = entryInfo.Attributes;
+
+         IsDirectory = entryInfo.IsDirectory;
       }
 
 
 
 
+      /// <summary>
+      /// 
+      /// </summary>
+      public bool IsDirectory { get; internal set; }
+
+
       /// <summary>The path to the file or folder to delete.</summary>
-      public string TargetFsoPath { get; set; }
+      public string TargetPath { get; internal set; }
 
 
       /// <summary>The path to the file or folder to delete in <see cref="PathFormat.LongFullPath"/> format.</summary>
-      internal string TargetFsoPathLp { get; set; }
+      public string TargetPathLongPath { get; internal set; }
 
       
       /// <summary>
       /// 
       /// </summary>
-      public FileSystemEntryInfo EntryInfo { get; set; }
+      internal FileSystemEntryInfo EntryInfo { get; private set; }
 
 
       /// <summary>
       /// 
       /// </summary>
-      internal FileAttributes Attributes { get; set; }
+      public FileAttributes Attributes { get; set; }
 
 
       /// <summary>
       /// 
       /// </summary>
-      internal bool IgnoreReadOnly { get; set; }
-
-
-      /// <summary>Gets the size of the file. Only applicable to filese.</summary>
-      internal bool GetSize { get; set; }
-
-
-      /// <summary>
-      /// 
-      /// </summary>
-      public bool IsDirectory { get; set; }
-
+      public bool IgnoreReadOnly { get; set; }
+      
 
       /// <summary>
       /// 

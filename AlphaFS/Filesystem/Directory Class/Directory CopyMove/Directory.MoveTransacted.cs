@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -191,7 +191,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>

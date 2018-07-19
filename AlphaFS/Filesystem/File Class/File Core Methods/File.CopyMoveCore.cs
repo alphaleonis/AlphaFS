@@ -63,6 +63,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          var isSingleFileAction = null == copyMoveResult || copyMoveResult.IsFile;
 
+         var getSize = isSingleFileAction && copyMoveArguments.GetSize;
+         
          if (null == copyMoveResult)
             copyMoveResult = new CopyMoveResult(copyMoveArguments, isFolder, sourceFilePath, destinationFilePath);
 
@@ -131,7 +133,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                // We take an extra hit by getting the file size for a single file Copy or Move action.
 
-               if (isSingleFileAction)
+               if (getSize)
                   copyMoveResult.TotalBytes = GetSizeCore(null, copyMoveArguments.Transaction, false, destinationFilePath, true, PathFormat.LongFullPath);
 
 

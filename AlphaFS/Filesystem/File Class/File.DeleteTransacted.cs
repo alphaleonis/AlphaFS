@@ -28,92 +28,106 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path)
       {
-         return DeleteFileCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetFsoPath = path
-
-         }, null);
+         return DeleteFileCore(new DeleteArguments {Transaction = transaction, TargetPath = path});
       }
 
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return DeleteFileCore(new DeleteArguments
          {
             Transaction = transaction,
-            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
-            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
+            TargetPath = path,
             PathFormat = pathFormat
-
-         }, null);
+         });
       }
 
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>      
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
          return DeleteFileCore(new DeleteArguments
          {
             Transaction = transaction,
-            TargetFsoPath = path,
+            TargetPath = path,
             IgnoreReadOnly = ignoreReadOnly
-
-         }, null);
+         });
       }
 
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
          return DeleteFileCore(new DeleteArguments
          {
             Transaction = transaction,
-            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
-            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
+            TargetPath = path,
             IgnoreReadOnly = ignoreReadOnly,
             PathFormat = pathFormat
+         });
+      }
 
-         }, null);
+
+      /// <summary>[AlphaFS] Deletes the specified file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
+      /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
+      /// <param name="deleteArguments">A <see cref="DeleteArguments"/> instance.</param>
+      [SecurityCritical]
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, DeleteArguments deleteArguments)
+      {
+         deleteArguments.Transaction = transaction;
+         deleteArguments.TargetPath = path;
+
+         return DeleteFileCore(deleteArguments);
       }
    }
 }

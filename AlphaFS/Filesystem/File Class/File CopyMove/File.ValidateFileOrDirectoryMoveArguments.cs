@@ -122,7 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // Process Move action options, possible fallback to Copy action.
 
                   if (!copyMoveArguments.IsCopy)
-                     copyMoveArguments = Directory.ValidateMoveAction(copyMoveArguments);
+                     Directory.ValidateMoveAction(copyMoveArguments);
                }
 
 
@@ -130,11 +130,25 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   copyMoveArguments.CopyTimestamps = HasCopyTimestamps(copyMoveArguments.CopyOptions);
 
+                  // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile functions.
                   if (copyMoveArguments.CopyTimestamps)
-
-                     // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile functions.
-
                      copyMoveArguments.CopyOptions &= ~CopyOptions.CopyTimestamp;
+
+
+                  copyMoveArguments.GetSize = HasCopyOptionsGetSize(copyMoveArguments.CopyOptions);
+                  
+                  // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile functions.
+                  if (copyMoveArguments.GetSize)
+                     copyMoveArguments.CopyOptions &= ~CopyOptions.GetSizes;
+               }
+
+               else
+               {
+                  copyMoveArguments.GetSize = HasMoveOptionsGetSize(copyMoveArguments.MoveOptions);
+
+                  // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile functions.
+                  if (copyMoveArguments.GetSize)
+                     copyMoveArguments.MoveOptions &= ~MoveOptions.GetSizes;
                }
             }
 

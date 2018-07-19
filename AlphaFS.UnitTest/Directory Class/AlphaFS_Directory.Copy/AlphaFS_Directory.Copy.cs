@@ -57,9 +57,11 @@ namespace AlphaFS.UnitTest
             var sourceTotalSize = props["Size"];
             
             Console.WriteLine("\n\tTotal size: [{0}]  Total Directories: [{1}]  Total Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
-            
 
-            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst, Alphaleonis.Win32.Filesystem.CopyOptions.FailIfExists);
+
+            var copyOptions = Alphaleonis.Win32.Filesystem.CopyOptions.FailIfExists | Alphaleonis.Win32.Filesystem.CopyOptions.GetSizes;
+
+            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst, copyOptions);
 
             UnitTestConstants.Dump(copyResult);
 

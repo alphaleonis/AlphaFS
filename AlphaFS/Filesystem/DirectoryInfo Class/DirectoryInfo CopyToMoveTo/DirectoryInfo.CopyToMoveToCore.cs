@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Copy/move a Non-/Transacted file or directory including its children to a new location,
       /// <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified, and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy or Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy or Move action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>

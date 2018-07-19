@@ -35,16 +35,16 @@ namespace Alphaleonis.Win32.Filesystem
          File.DeleteFileCore(new DeleteArguments
          {
             Transaction = Transaction,
-            TargetFsoPathLp = LongFullName,
+            TargetPathLongPath = LongFullName,
             PathFormat = PathFormat.LongFullPath
-
-         }, null);
+         });
       }
 
       #endregion // .NET
 
 
       /// <summary>[AlphaFS] Permanently deletes a file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>If the file does not exist, this method does nothing.</remarks>
       /// <exception cref="IOException"/>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>      
@@ -52,12 +52,11 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.DeleteFileCore(new DeleteArguments
          {
-            Transaction = Transaction,
-            TargetFsoPathLp = LongFullName,
             IgnoreReadOnly = ignoreReadOnly,
+            Transaction = Transaction,
+            TargetPathLongPath = LongFullName,
             PathFormat = PathFormat.LongFullPath
-
-         }, null);
+         });
       }
    }
 }

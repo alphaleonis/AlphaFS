@@ -27,23 +27,23 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       [SecurityCritical]
-      internal static CopyMoveArguments ValidateMoveAction(CopyMoveArguments cma)
+      internal static void ValidateMoveAction(CopyMoveArguments copyMoveArguments)
       {
          // Determine if a Move action or Copy action-fallback is possible.
 
-         cma.IsCopy = false;
-         cma.EmulateMove = false;
+         copyMoveArguments.IsCopy = false;
+         copyMoveArguments.EmulateMove = false;
          
 
          // Compare the root part of both paths.
 
-         var equalRootPaths = Path.GetPathRoot(cma.SourcePathLp, false).Equals(Path.GetPathRoot(cma.DestinationPathLp, false), StringComparison.OrdinalIgnoreCase);
+         var equalRootPaths = Path.GetPathRoot(copyMoveArguments.SourcePathLp, false).Equals(Path.GetPathRoot(copyMoveArguments.DestinationPathLp, false), StringComparison.OrdinalIgnoreCase);
          
 
          // Method Volume.IsSameVolume() returns true when both paths refer to the same volume, even if one of the paths is a UNC path.
          // For example, src = C:\TempSrc and dst = \\localhost\C$\TempDst
 
-         var isSameVolume = equalRootPaths || Volume.IsSameVolume(cma.SourcePathLp, cma.DestinationPathLp);
+         var isSameVolume = equalRootPaths || Volume.IsSameVolume(copyMoveArguments.SourcePathLp, copyMoveArguments.DestinationPathLp);
          
          var isMove = isSameVolume && equalRootPaths;
 
@@ -51,13 +51,13 @@ namespace Alphaleonis.Win32.Filesystem
          {
             // A Move() can be emulated by using Copy() and Delete(), but only if the MoveOptions.CopyAllowed flag is set.
 
-            isMove = File.HasCopyAllowed(cma.MoveOptions);
+            isMove = File.HasCopyAllowed(copyMoveArguments.MoveOptions);
 
 
             // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
 
             if (!isMove)
-               NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, cma.SourcePathLp, cma.DestinationPathLp);
+               NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, copyMoveArguments.SourcePathLp, copyMoveArguments.DestinationPathLp);
          }
 
 
@@ -68,8 +68,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (isMove)
          {
-            var srcIsUncPath = Path.IsUncPathCore(cma.SourcePathLp, false, false);
-            var dstIsUncPath = Path.IsUncPathCore(cma.DestinationPathLp, false, false);
+            var srcIsUncPath = Path.IsUncPathCore(copyMoveArguments.SourcePathLp, false, false);
+            var dstIsUncPath = Path.IsUncPathCore(copyMoveArguments.DestinationPathLp, false, false);
 
             isMove = srcIsUncPath == dstIsUncPath;
          }
@@ -81,15 +81,13 @@ namespace Alphaleonis.Win32.Filesystem
          // Emulate Move().
          if (!isMove)
          {
-            cma.MoveOptions = null;
+            copyMoveArguments.IsCopy = true;
+            copyMoveArguments.EmulateMove = true;
 
-            cma.IsCopy = true;
-            cma.EmulateMove = true;
-            cma.CopyOptions = CopyOptions.None;
+            copyMoveArguments.CopyOptions = File.HasMoveOptionsGetSize(copyMoveArguments.MoveOptions) ? CopyOptions.GetSizes : CopyOptions.None;
+            
+            copyMoveArguments.MoveOptions = null;
          }
-
-
-         return cma;
       }
    }
 }

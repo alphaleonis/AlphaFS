@@ -29,13 +29,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void CopyMoveDirectoryCore(bool retry, CopyMoveArguments copyMoveArguments, CopyMoveResult copyMoveResult)
       {
-         var deleteArguments = new DeleteArguments
+         var delArgsTemplate = new DeleteArguments
          {
-            Transaction = copyMoveArguments.Transaction,
             DirectoryEnumerationFilters = copyMoveArguments.DirectoryEnumerationFilters,
-            PathFormat = PathFormat.LongFullPath,
-            PathsChecked = true
+            Transaction = copyMoveArguments.Transaction,
+            PathFormat = PathFormat.LongFullPath
          };
+
 
          var deleteResult = new DeleteResult(true, copyMoveArguments.SourcePathLp);
          
@@ -89,14 +89,16 @@ namespace Alphaleonis.Win32.Filesystem
 
                   if (copyMoveResult.ErrorCode == Win32Errors.NO_ERROR)
                   {
-                     copyMoveResult.TotalBytes += fseiSource.FileSize;
+                     if (copyMoveArguments.GetSize)
+                        copyMoveResult.TotalBytes += File.GetSizeCore(null, copyMoveArguments.Transaction, false, fseiDestinationPath, true, PathFormat.LongFullPath);
+                        //copyMoveResult.TotalBytes += fseiSource.FileSize;
 
                      if (copyMoveArguments.EmulateMove)
                      {
-                        deleteArguments.TargetFsoPathLp = fseiSourcePath;
-                        deleteArguments.Attributes = fseiSource.Attributes;
+                        delArgsTemplate.TargetPathLongPath = fseiSourcePath;
+                        delArgsTemplate.Attributes = fseiSource.Attributes;
 
-                        File.DeleteFileCore(deleteArguments, deleteResult);
+                        File.DeleteFileCore(delArgsTemplate, deleteResult);
                      }
                   }
                }
@@ -109,17 +111,22 @@ namespace Alphaleonis.Win32.Filesystem
             if (copyMoveArguments.CopyTimestamps)
                CopyFolderTimestamps(copyMoveArguments);
 
+
             if (copyMoveArguments.EmulateMove)
-
-               DeleteDirectoryCore(null, new DeleteArguments(copyMoveArguments.SourcePathLp, PathFormat.LongFullPath)
+            {
+               DeleteDirectoryCore(new DeleteArguments
                {
-                  Transaction = copyMoveArguments.Transaction,
-                  ContinueOnNotFound = true,
+                  IsDirectory = true,
                   Recursive = true,
+                  ContinueOnNotFound = true,
                   IgnoreReadOnly = true,
-                  DirectoryEnumerationFilters = copyMoveArguments.DirectoryEnumerationFilters
 
-               }, null);
+                  DirectoryEnumerationFilters = copyMoveArguments.DirectoryEnumerationFilters,
+                  Transaction = copyMoveArguments.Transaction,
+                  TargetPathLongPath = copyMoveArguments.SourcePathLp,
+                  PathFormat = PathFormat.LongFullPath
+               });
+            }
          }
       }
    }

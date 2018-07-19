@@ -64,7 +64,10 @@ namespace AlphaFS.UnitTest
 
 
 
-            var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst, Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed);
+            var moveOptions = Alphaleonis.Win32.Filesystem.MoveOptions.CopyAllowed | Alphaleonis.Win32.Filesystem.MoveOptions.GetSizes;
+
+            var moveResult = Alphaleonis.Win32.Filesystem.Directory.Move(folderSrc.FullName, folderDst, moveOptions);
+
 
             UnitTestConstants.Dump(moveResult);
 

@@ -39,7 +39,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public override void Delete()
       {
-         Directory.DeleteDirectoryCore(EntryInfo, new DeleteArguments(), null);
+         Directory.DeleteDirectoryCore(new DeleteArguments
+         {
+            Transaction = Transaction,
+            TargetPathLongPath = LongFullName,
+            PathFormat = PathFormat.LongFullPath
+         });
       }
 
 
@@ -58,13 +63,21 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Delete(bool recursive)
       {
-         Directory.DeleteDirectoryCore(EntryInfo, new DeleteArguments {Recursive = recursive}, null);
+         Directory.DeleteDirectoryCore(new DeleteArguments
+         {
+            Recursive = recursive,
+
+            Transaction = Transaction,
+            TargetPathLongPath = LongFullName,
+            PathFormat = PathFormat.LongFullPath
+         });
       }
 
       #endregion // .NET
 
 
       /// <summary>[AlphaFS] Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>
       ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <c>false</c>.</para>
       ///   <para>Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.</para>
@@ -80,16 +93,20 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DeleteResult Delete(bool recursive, bool ignoreReadOnly)
       {
-         return Directory.DeleteDirectoryCore(EntryInfo, new DeleteArguments
+         return Directory.DeleteDirectoryCore(new DeleteArguments
          {
             Recursive = recursive,
-            IgnoreReadOnly = ignoreReadOnly
+            IgnoreReadOnly = ignoreReadOnly,
 
-         }, null);
+            Transaction = Transaction,
+            TargetPathLongPath = LongFullName,
+            PathFormat = PathFormat.LongFullPath
+         });
       }
 
 
       /// <summary>[AlphaFS] Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>
       ///   <para>If the <see cref="DirectoryInfo"/> has no files and no subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <c>false</c>.</para>
       ///   <para>Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.</para>
@@ -106,13 +123,16 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DeleteResult DeleteResult(bool recursive, bool ignoreReadOnly, bool continueOnNotFound)
       {
-         return Directory.DeleteDirectoryCore(EntryInfo, new DeleteArguments
+         return Directory.DeleteDirectoryCore(new DeleteArguments
          {
             Recursive = recursive,
+            IgnoreReadOnly = ignoreReadOnly,
             ContinueOnNotFound = continueOnNotFound,
-            IgnoreReadOnly = ignoreReadOnly
 
-         }, null);
+            Transaction = Transaction,
+            TargetPathLongPath = LongFullName,
+            PathFormat = PathFormat.LongFullPath
+         });
       }
    }
 }

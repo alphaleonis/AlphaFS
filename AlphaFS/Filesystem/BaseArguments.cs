@@ -38,6 +38,10 @@ namespace Alphaleonis.Win32.Filesystem
       public int RetryTimeout { get; set; }
 
 
+      /// <summary>Retrieves the size of the file or directory. The returned size is the sum of all streams.</summary>
+      public bool GetSize { get; set; }
+
+
       /// <summary>The specification of custom filters to be used in the process. Not applicable to files.</summary>
       internal DirectoryEnumerationFilters DirectoryEnumerationFilters { get; set; }
 
@@ -54,9 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       public PathFormat PathFormat { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public KernelTransaction Transaction { get; set; }
+      /// <summary>The <see cref="KernelTransaction"/> instance.</summary>
+      internal KernelTransaction Transaction { get; set; }
    }
 }

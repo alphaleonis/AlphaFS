@@ -54,13 +54,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       /// 
       /// </summary>
-      internal string SourcePathLp { get; set; }
+      public string SourcePathLp { get; set; }
 
 
       /// <summary>
       /// 
       /// </summary>
-      internal string DestinationPathLp { get; set; }
+      public string DestinationPathLp { get; set; }
 
 
       /// <summary>
@@ -72,21 +72,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       /// 
       /// </summary>
-      internal bool IsCopy { get; set; }
+      public bool IsCopy { get; set; }
 
 
       /// <summary>A Move action fallback using Copy + Delete.</summary>
-      internal bool EmulateMove { get; set; }
+      public bool EmulateMove { get; set; }
 
 
       /// <summary>A file/folder will be deleted or renamed on Computer startup.</summary>
-      internal bool DelayUntilReboot { get; set; }
+      public bool DelayUntilReboot { get; set; }
 
 
       /// <summary>
       /// 
       /// </summary>
-      internal bool DeleteOnStartup { get; set; }
+      public bool DeleteOnStartup { get; set; }
 
 
       /// <summary>
@@ -104,6 +104,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       /// 
       /// </summary>
-      internal NativeMethods.NativeCopyMoveProgressRoutine Routine { get; set; }
+      public NativeMethods.NativeCopyMoveProgressRoutine Routine { get; set; }
    }
 }

@@ -39,17 +39,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteFileCore(new DeleteArguments
-         {
-            TargetFsoPath = path
-
-         }, null);
+         DeleteFileCore(new DeleteArguments {TargetPath = path});
       }
 
       #endregion // .NET
 
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -60,17 +57,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, PathFormat pathFormat)
       {
-         return DeleteFileCore(new DeleteArguments
-         {
-            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
-            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
-            PathFormat = pathFormat
-
-         }, null);
+         return DeleteFileCore(new DeleteArguments {TargetPath = path, PathFormat = pathFormat});
       }
 
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>      
@@ -81,16 +73,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, bool ignoreReadOnly)
       {
-         return DeleteFileCore(new DeleteArguments
-         {
-            TargetFsoPath = path,
-            IgnoreReadOnly = ignoreReadOnly
-
-         }, null);
+         return DeleteFileCore(new DeleteArguments {TargetPath = path, IgnoreReadOnly = ignoreReadOnly});
       }
 
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
@@ -104,26 +92,28 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return DeleteFileCore(new DeleteArguments
          {
-            TargetFsoPath = pathFormat != PathFormat.LongFullPath ? path : null,
-            TargetFsoPathLp = pathFormat == PathFormat.LongFullPath ? path : null,
+            TargetPath = path,
             IgnoreReadOnly = ignoreReadOnly,
             PathFormat = pathFormat
-
-         }, null);
+         });
       }
-      
+
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
-      /// <param name="deleteArguments"></param>
+      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
+      /// <param name="deleteArguments">A <see cref="DeleteArguments"/> instance.</param>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static DeleteResult Delete(DeleteArguments deleteArguments)
+      public static DeleteResult Delete(string path, DeleteArguments deleteArguments)
       {
-         return DeleteFileCore(deleteArguments, null);
+         deleteArguments.TargetPath = path;
+
+         return DeleteFileCore(deleteArguments);
       }
    }
 }

@@ -53,6 +53,20 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+      /// <summary>Checks if the <see cref="CopyOptions.GetSizes"/> flag is specified.</summary>
+      internal static bool HasCopyOptionsGetSize(CopyOptions? copyOptions)
+      {
+         return Utils.IsNotNull(copyOptions) && (copyOptions & CopyOptions.GetSizes) != 0;
+      }
+
+
+      /// <summary>Checks if the <see cref="MoveOptions.GetSizes"/> flag is specified.</summary>
+      internal static bool HasMoveOptionsGetSize(MoveOptions? moveOptions)
+      {
+         return Utils.IsNotNull(moveOptions) && (moveOptions & MoveOptions.GetSizes) != 0;
+      }
+
+
       /// <summary>Checks if the <see cref="MoveOptions.ReplaceExisting"/> flag is specified.</summary>
       internal static bool HasReplaceExisting(MoveOptions? moveOptions)
       {

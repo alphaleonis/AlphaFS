@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory, allowing the overwriting of an existing directory, <see cref="CopyOptions"/> can be specified.
       /// and the possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
@@ -198,7 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory, allowing the overwriting of an existing directory, <see cref="CopyOptions"/> can be specified.
       /// and the possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
@@ -356,7 +356,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Copies an existing directory to a new directory, allowing the overwriting of an existing directory, <see cref="CopyOptions"/> can be specified
       /// and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
@@ -388,7 +388,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory, allowing the overwriting of an existing directory, <see cref="CopyOptions"/> can be specified
       /// and the possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>

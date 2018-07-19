@@ -24,20 +24,20 @@ using System;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class DeleteTest
+   public partial class SizeTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Delete_ExistingDirectory_ReturnFileSize_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Delete_ExistingDirectory_ReturnTotalBytes_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_Delete_ExistingDirectory_ReturnFileSize(false);
-         AlphaFS_Directory_Delete_ExistingDirectory_ReturnFileSize(true);
+         AlphaFS_Directory_Delete_ExistingDirectory_ReturnTotalBytes(false);
+         AlphaFS_Directory_Delete_ExistingDirectory_ReturnTotalBytes(true);
       }
 
 
-      private void AlphaFS_Directory_Delete_ExistingDirectory_ReturnFileSize(bool isNetwork)
+      private void AlphaFS_Directory_Delete_ExistingDirectory_ReturnTotalBytes(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -58,12 +58,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}]  Total Directories: [{1}]  Total Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sizeTotal), foldersTotal, filesTotal);
 
 
-            var deleteResult = Alphaleonis.Win32.Filesystem.Directory.Delete(new Alphaleonis.Win32.Filesystem.DeleteArguments(folder.FullName)
-               {
-                  Recursive = true,
-                  IgnoreReadOnly = true,
-                  GetSize = true
-               });
+            var deleteArgs = new Alphaleonis.Win32.Filesystem.DeleteArguments {TargetPath = folder.FullName, Recursive = true, IgnoreReadOnly = true, GetSize = true};
+            
+            var deleteResult = Alphaleonis.Win32.Filesystem.Directory.Delete(deleteArgs);
 
 
             UnitTestConstants.Dump(deleteResult);

@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>MOVE_FILE_COPY_ALLOWED
       /// <para>If the file is to be moved to a different volume, the function simulates the move by using the CopyFile and DeleteFile functions.</para>
-      /// <para>This value cannot be used with <see cref="MoveOptions.DelayUntilReboot"/>.</para>
+      /// <para>This value cannot be used with <see cref="DelayUntilReboot"/>.</para>
       /// </summary>
       CopyAllowed = NativeMethods.MOVE_FILE_FLAGS.MOVE_FILE_COPY_ALLOWED,
 
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Setting this value guarantees that a move performed as a copy and delete operation is flushed to disk before the function returns.
       /// The flush occurs at the end of the copy operation.
       /// </para>
-      /// <para>This value has no effect if <see cref="MoveOptions.DelayUntilReboot"/> is set.</para>
+      /// <para>This value has no effect if <see cref="DelayUntilReboot"/> is set.</para>
       /// </summary>
       WriteThrough = NativeMethods.MOVE_FILE_FLAGS.MOVE_FILE_WRITE_THROUGH,
 
@@ -84,6 +84,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>This situation can occur if the destination is a volume formatted with the FAT file system.</para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Trackable")]
-      FailIfNotTrackable = NativeMethods.MOVE_FILE_FLAGS.MOVE_FILE_FAIL_IF_NOT_TRACKABLE
+      FailIfNotTrackable = NativeMethods.MOVE_FILE_FLAGS.MOVE_FILE_FAIL_IF_NOT_TRACKABLE,
+
+
+      /// <summary>[AlphaFS] Retrieves the size of the file or directory. The returned size is the sum of all streams.</summary>
+      GetSizes = 16384
    }
 }

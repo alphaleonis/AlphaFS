@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Moves a specified file to a new location, providing the option to specify a new file name.</summary>
-      /// <returns>A <see cref="CopyMoveResult"/> class with details of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
       /// <remarks>
       ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
       ///   <para>This method works across disk volumes.</para>

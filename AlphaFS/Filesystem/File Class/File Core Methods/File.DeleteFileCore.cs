@@ -20,16 +20,15 @@
  */
 
 using System;
-using System.CodeDom;
 using System.ComponentModel;
 using System.Security;
-using System.Threading;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
       /// <summary>Deletes a Non-/Transacted file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
@@ -38,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="deleteArguments"></param>
       /// <param name="deleteResult"></param>
       [SecurityCritical]
-      internal static DeleteResult DeleteFileCore(DeleteArguments deleteArguments, DeleteResult deleteResult)
+      internal static DeleteResult DeleteFileCore(DeleteArguments deleteArguments, DeleteResult deleteResult = null)
       {
          #region Setup
 
@@ -49,14 +48,13 @@ namespace Alphaleonis.Win32.Filesystem
          ErrorHandler errorFilter = null;
          var errorFilterActive = false;
 
+         var pathLp = deleteArguments.TargetPathLongPath ?? deleteArguments.TargetPath;
 
-         var pathLp = deleteArguments.TargetFsoPathLp ?? deleteArguments.TargetFsoPath;
-         
 
          if (!deleteArguments.PathsChecked)
          {
             if (null == pathLp)
-               throw new ArgumentNullException("deleteArguments.TargetFsoPath");
+               throw new ArgumentNullException("deleteArguments.TargetPath");
 
             if (deleteArguments.PathFormat == PathFormat.RelativePath)
                Path.CheckSupportedPathFormat(pathLp, true, true);
@@ -80,9 +78,12 @@ namespace Alphaleonis.Win32.Filesystem
          
          var isSingleFileAction = null == deleteResult;
 
+         var getSize = isSingleFileAction && deleteArguments.GetSize;
+
+
          if (null == deleteResult)
             deleteResult = new DeleteResult(false, pathLp);
-         
+
          
          var attempts = 1;
 
@@ -117,35 +118,33 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Calling start on a running Stopwatch is a no-op.
          deleteResult.Stopwatch.Start();
-
-
-         // We take an extra hit by getting the file size for a single file delete action.
-
-         if (isSingleFileAction && deleteArguments.GetSize)
-            deleteResult.TotalBytes = GetSizeCore(null, deleteArguments.Transaction, false, pathLp, true, PathFormat.LongFullPath);
-
+         
          #endregion // Setup
 
-         
+
          while (attempts-- > 0)
          {
             deleteResult.ErrorCode = (int) Win32Errors.NO_ERROR;
 
+            
+            // We take an extra hit by getting the file size for a single file delete action.
+
+            if (getSize)
+               deleteResult.TotalBytes = GetSizeCore(null, deleteArguments.Transaction, false, pathLp, true, PathFormat.LongFullPath);
+
 
             int lastError;
+
+            var success = DeleteFileNative(errorFilterActive, pathLp, deleteArguments, out lastError);
+
+            deleteResult.ErrorCode = lastError;
             
 
-            if (DeleteFileNative(errorFilterActive, pathLp, deleteArguments, out lastError))
-            {
-               deleteResult.ErrorCode = lastError;
+            if (success)
                deleteResult.TotalFiles++;
-            }
             
             else
             {
-               deleteResult.ErrorCode = lastError;
-
-
                // Report the Exception back to the caller.
                if (errorFilterActive)
                {
@@ -155,8 +154,10 @@ namespace Alphaleonis.Win32.Filesystem
                      break;
                }
                
+
                if (retry)
                   deleteResult.Retries++;
+
 
                retry = attempts > 0 && retryTimeout > 0;
 
@@ -164,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   if (errorFilterActive)
                   {
-                     if (filters.CancellationToken.WaitHandle.WaitOne(retryTimeout * 1000))
+                     if (filters.CancellationToken.WaitHandle.WaitOne(TimeSpan.FromSeconds(retryTimeout)))
                         break;
                   }
 

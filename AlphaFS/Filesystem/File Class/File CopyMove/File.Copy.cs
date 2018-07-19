@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -135,7 +135,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -170,7 +170,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -207,7 +207,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -302,7 +302,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -331,7 +331,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -361,7 +361,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -392,7 +392,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -420,7 +420,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed. Possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -451,7 +451,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed. Possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -484,7 +484,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed. Possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -519,7 +519,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed. Possibility of notifying the application of its progress through a callback function.</summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <remarks>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -564,7 +564,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -593,7 +593,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -624,7 +624,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -657,7 +657,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -694,7 +694,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -729,7 +729,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -766,7 +766,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -805,7 +805,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with details of the Copy action.</returns>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> instance with details of the Copy action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
