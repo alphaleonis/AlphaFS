@@ -21,6 +21,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -36,6 +37,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="FileReadOnlyException"/>
       /// <param name="deleteArguments"></param>
       /// <param name="deleteResult"></param>
+      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+      [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
       [SecurityCritical]
       internal static DeleteResult DeleteFileCore(DeleteArguments deleteArguments, DeleteResult deleteResult = null)
       {

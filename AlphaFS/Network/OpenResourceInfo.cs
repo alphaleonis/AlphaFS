@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Alphaleonis.Win32.Filesystem;
 
@@ -71,7 +72,7 @@ namespace Alphaleonis.Win32.Network
       #region Properties
 
       /// <summary>The local or remote Host.</summary>
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+      [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       [Obsolete("Use HostName")]
       public string Host { get; private set; }
 

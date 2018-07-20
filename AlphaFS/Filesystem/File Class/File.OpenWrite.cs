@@ -19,11 +19,13 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
+   [SuppressMessage("Microsoft.Naming", "CA1708:IdentifiersShouldDifferByMoreThanCase")]
    public static partial class File
    {
       #region .NET

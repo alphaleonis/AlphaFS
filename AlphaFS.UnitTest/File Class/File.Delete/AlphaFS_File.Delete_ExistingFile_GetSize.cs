@@ -43,9 +43,7 @@ namespace AlphaFS.UnitTest
          {
             var file = tempRoot.CreateFile();
 
-            var fileSize = new System.IO.FileInfo(file.FullName).Length;
-
-            Console.WriteLine("Input File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileSize), file.FullName);
+            Console.WriteLine("Input File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(file.Length), file.FullName);
 
 
             var deleteResult = Alphaleonis.Win32.Filesystem.File.Delete(file.FullName, false, true);
@@ -59,7 +57,7 @@ namespace AlphaFS.UnitTest
 
             Assert.AreEqual(0, deleteResult.TotalFolders);
 
-            Assert.AreEqual(fileSize, deleteResult.TotalBytes);
+            Assert.AreEqual(file.Length, deleteResult.TotalBytes);
          }
 
          Console.WriteLine();

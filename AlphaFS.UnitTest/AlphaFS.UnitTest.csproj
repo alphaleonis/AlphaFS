@@ -171,6 +171,7 @@
     <Compile Include="File Class\File.Delete\AlphaFS_File.Delete_ExistingFile_GetSize.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_NullAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_NonExistingFile_NoException.cs" />
+    <Compile Include="File Class\File.Move\AlphaFS_File.Move_DelayUntilRebootFlag_GetSize.cs" />
     <Compile Include="File Class\File.Move\AlphaFS_File.Move_DelayUntilRebootFlag.cs" />
     <Compile Include="File Class\File.Move\File.Move_EmptyDestFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Move\File.Move_EmptySourceFileNameAsPath_ThrowsArgumentException.cs" />

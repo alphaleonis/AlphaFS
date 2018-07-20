@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
       /// <param name="pathFormat">Indicates the format of the path parameter.</param>
       /// <param name="fullPathOptions">Options for controlling the full path retrieval.</param>
-      [Obsolete]
+      [Obsolete("The fullPathOptions argument is obsolete. Use one of the overloaded methods.")]
       [SecurityCritical]
       public static string LocalToUnc(string localPath, PathFormat pathFormat, GetFullPathOptions fullPathOptions)
       {

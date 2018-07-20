@@ -51,9 +51,6 @@ namespace AlphaFS.UnitTest
             Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst);
 
 
-            var dirEnumOptions = Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.FilesAndFolders | Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive;
-
-
             UnitTestAssert.ThrowsException<Alphaleonis.Win32.Filesystem.AlreadyExistsException>(() => Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst));
 
             Assert.IsTrue(System.IO.Directory.Exists(folderDst), "The directory does not exist, but is expected to.");
