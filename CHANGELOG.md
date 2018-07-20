@@ -13,6 +13,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #466: Add properties `ErrorRetry` and `ErrorRetryTimeout` to `DirectoryEnumerationFilters` class.
 - Issue #467: Add property `CopyOptions.CopyTimestamp`.
 - Issue #481: Add overloaded methods `Directory.Delete` supporting `DirectoryEnumerationFilters`.
+- Issue #486: Add overloads for `Directory/File.Delete` to return a DeleteResult instance.
 
 ### Improvements
 
@@ -28,6 +29,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #475: Prevent `File.SetFsoDateTimeCore` from throwing `UnauthorizedAccessException`.
 - Issue #477: Move method `Path.GetMappedConnectionName` to `Host` class.
 - Issue #478: Move method `Path.GetMappedUncName` to `Host` class.
+- Issue #485: Disable retrieving file size by default for `Directory/File.Copy/Move` methods.
 - Added missing overloaded methods regarding timestamps and symbolic links.
 - Marked `Directory.Copy`/`DirectoryInfo.Copy` methods using parameters `overwrite` and `preserveDates` as obsolete. Use one of the `CopyOptions`.
 - Fixed a `Directory.Move` unit test creating endless drive mappings on error.
@@ -40,7 +42,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath` property.
 - Issue #477: Move method `Path.GetMappedConnectionName` to `Host` class.
 - Issue #478: Move method `Path.GetMappedUncName` to `Host` class.
-- Disable retrieving file size by default for `Directory/File.Copy/Move` methods.
+- Issue #485: Disable retrieving file size by default for `Directory/File.Copy/Move` methods.
 
 
 Version 2.2.5  (2018-XX-XX)
