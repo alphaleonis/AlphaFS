@@ -46,7 +46,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath)
       {
-         CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, MoveOptions = MoveOptions.None});
+         CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = MoveOptions.None
+         });
       }
 
       #endregion // .NET
@@ -71,8 +76,208 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, MoveOptions = MoveOptions.None, PathFormat = pathFormat});
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            PathFormat = pathFormat,
+            MoveOptions = MoveOptions.None
+         });
       }
+
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location and the possibility of notifying the application of its progress through a callback function.</summary>
+      /// <remarks>
+      ///   <para>This method does not work across disk volumes.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            MoveOptions = MoveOptions.None
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location and the possibility of notifying the application of its progress through a callback function.</summary>
+      /// <remarks>
+      ///   <para>This method does not work across disk volumes.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = pathFormat,
+            MoveOptions = MoveOptions.None
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
+      /// <remarks>
+      ///   <para>This method does not work across disk volumes.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourcePath, string destinationPath, DirectoryEnumerationFilters filters)
+      {
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            DirectoryEnumerationFilters = filters,
+            MoveOptions = MoveOptions.None
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
+      /// <remarks>
+      ///   <para>This method does not work across disk volumes.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourcePath, string destinationPath, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      {
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            DirectoryEnumerationFilters = filters,
+            PathFormat = pathFormat,
+            MoveOptions = MoveOptions.None
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location and the possibility of notifying the application of its progress through a callback function.</summary>
+      /// <remarks>
+      ///   <para>This method does not work across disk volumes.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourcePath, string destinationPath, DirectoryEnumerationFilters filters, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            DirectoryEnumerationFilters = filters,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            MoveOptions = MoveOptions.None
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location and the possibility of notifying the application of its progress through a callback function.</summary>
+      /// <remarks>
+      ///   <para>This method does not work across disk volumes.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourcePath, string destinationPath, DirectoryEnumerationFilters filters, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            DirectoryEnumerationFilters = filters,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = pathFormat,
+            MoveOptions = MoveOptions.None
+         });
+      }
+      
+
 
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.</summary>
@@ -94,7 +299,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
-         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, MoveOptions = moveOptions});
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = moveOptions
+         });
       }
 
 
@@ -118,7 +328,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, MoveOptions = moveOptions, PathFormat = pathFormat});
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = moveOptions,
+            PathFormat = pathFormat
+         });
       }
 
 
@@ -185,6 +401,142 @@ namespace Alphaleonis.Win32.Filesystem
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
             MoveOptions = moveOptions,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData,
+            PathFormat = pathFormat
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, DirectoryEnumerationFilters filters)
+      {
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = moveOptions,
+            DirectoryEnumerationFilters = filters
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, DirectoryEnumerationFilters filters, PathFormat pathFormat)
+      {
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = moveOptions,
+            DirectoryEnumerationFilters = filters,
+            PathFormat = pathFormat
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
+      /// <remarks>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, DirectoryEnumerationFilters filters, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = moveOptions,
+            DirectoryEnumerationFilters = filters,
+            ProgressHandler = progressHandler,
+            UserProgressData = userProgressData
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
+      ///   and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
+      /// <remarks>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <returns>A <see cref="CopyMoveResult"/> instance with details of the Move action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="filters">The specification of custom filters to be used in the process.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, DirectoryEnumerationFilters filters, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            MoveOptions = moveOptions,
+            DirectoryEnumerationFilters = filters,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat

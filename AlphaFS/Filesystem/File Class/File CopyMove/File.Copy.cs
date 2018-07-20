@@ -318,8 +318,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(false, new CopyMoveArguments
          {
-            CopyOptions = CopyOptions.FailIfExists,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -412,8 +412,8 @@ namespace Alphaleonis.Win32.Filesystem
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
-            CopyOptions = CopyOptions.FailIfExists,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -442,9 +442,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(false, new CopyMoveArguments
          {
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData
+            UserProgressData = userProgressData,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -474,10 +474,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(false, new CopyMoveArguments
          {
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -510,9 +510,9 @@ namespace Alphaleonis.Win32.Filesystem
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData
+            UserProgressData = userProgressData,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -546,10 +546,10 @@ namespace Alphaleonis.Win32.Filesystem
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -642,9 +642,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(true, new CopyMoveArguments
          {
+            CopyOptions = copyOptions,
             Retry = retry,
-            RetryTimeout = retryTimeout,
-            CopyOptions = copyOptions
+            RetryTimeout = retryTimeout
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -676,9 +676,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(true, new CopyMoveArguments
          {
+            CopyOptions = copyOptions,
             Retry = retry,
             RetryTimeout = retryTimeout,
-            CopyOptions = copyOptions,
             PathFormat = pathFormat
 
          }, false, false, sourcePath, destinationPath, null);
@@ -786,9 +786,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(true, new CopyMoveArguments
          {
+            CopyOptions = copyOptions,
             Retry = retry,
             RetryTimeout = retryTimeout,
-            CopyOptions = copyOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
 
@@ -826,9 +826,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(true, new CopyMoveArguments
          {
+            CopyOptions = copyOptions,
             Retry = retry,
             RetryTimeout = retryTimeout,
-            CopyOptions = copyOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat

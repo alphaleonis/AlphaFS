@@ -296,8 +296,8 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
-            CopyOptions = CopyOptions.FailIfExists,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -364,8 +364,8 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = CopyOptions.FailIfExists,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -396,9 +396,9 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData
+            UserProgressData = userProgressData,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -430,10 +430,10 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveCore(false, new CopyMoveArguments
          {
             Transaction = transaction,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -468,9 +468,9 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData
+            UserProgressData = userProgressData,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -506,10 +506,10 @@ namespace Alphaleonis.Win32.Filesystem
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -607,10 +607,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(false, new CopyMoveArguments
          {
+            Transaction = transaction,
+            CopyOptions = copyOptions,
             Retry = retry,
             RetryTimeout = retryTimeout,
-            Transaction = transaction,
-            CopyOptions = copyOptions
 
          }, false, false, sourcePath, destinationPath, null);
       }
@@ -643,10 +643,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(false, new CopyMoveArguments
          {
-            Retry = retry,
-            RetryTimeout = retryTimeout,
             Transaction = transaction,
             CopyOptions = copyOptions,
+            Retry = retry,
+            RetryTimeout = retryTimeout,
             PathFormat = pathFormat
 
          }, false, false, sourcePath, destinationPath, null);
@@ -759,10 +759,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(false, new CopyMoveArguments
          {
-            Retry = retry,
-            RetryTimeout = retryTimeout,
             Transaction = transaction,
             CopyOptions = copyOptions,
+            Retry = retry,
+            RetryTimeout = retryTimeout,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
 
@@ -801,10 +801,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CopyMoveCore(false, new CopyMoveArguments
          {
-            Retry = retry,
-            RetryTimeout = retryTimeout,
             Transaction = transaction,
             CopyOptions = copyOptions,
+            Retry = retry,
+            RetryTimeout = retryTimeout,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat

@@ -647,8 +647,8 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
 
@@ -678,9 +678,9 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData
+            UserProgressData = userProgressData,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
 
@@ -711,10 +711,10 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
 
@@ -743,8 +743,8 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists,
-            DirectoryEnumerationFilters = filters
+            DirectoryEnumerationFilters = filters,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
 
@@ -774,9 +774,9 @@ namespace Alphaleonis.Win32.Filesystem
             Transaction = transaction,
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists,
             DirectoryEnumerationFilters = filters,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
 
@@ -808,9 +808,9 @@ namespace Alphaleonis.Win32.Filesystem
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
             DirectoryEnumerationFilters = filters,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData
+            UserProgressData = userProgressData,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
 
@@ -843,10 +843,10 @@ namespace Alphaleonis.Win32.Filesystem
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
             DirectoryEnumerationFilters = filters,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
       
@@ -871,7 +871,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions)
+      public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
          return CopyMoveCore(new CopyMoveArguments
          {

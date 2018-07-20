@@ -572,7 +572,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath)
       {
-         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, CopyOptions = CopyOptions.FailIfExists});
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = CopyOptions.FailIfExists
+         });
       }
       
 
@@ -594,7 +599,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, CopyOptions = CopyOptions.FailIfExists, PathFormat = pathFormat});
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
+         });
       }
 
 
@@ -621,9 +632,9 @@ namespace Alphaleonis.Win32.Filesystem
          {
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData
+            UserProgressData = userProgressData,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
 
@@ -652,10 +663,10 @@ namespace Alphaleonis.Win32.Filesystem
          {
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
 
@@ -682,8 +693,8 @@ namespace Alphaleonis.Win32.Filesystem
          {
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists,
-            DirectoryEnumerationFilters = filters
+            DirectoryEnumerationFilters = filters,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
 
@@ -711,9 +722,9 @@ namespace Alphaleonis.Win32.Filesystem
          {
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists,
             DirectoryEnumerationFilters = filters,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
       
@@ -743,9 +754,9 @@ namespace Alphaleonis.Win32.Filesystem
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
             DirectoryEnumerationFilters = filters,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
-            UserProgressData = userProgressData
+            UserProgressData = userProgressData,
+            CopyOptions = CopyOptions.FailIfExists
          });
       }
 
@@ -776,10 +787,10 @@ namespace Alphaleonis.Win32.Filesystem
             SourcePath = sourcePath,
             DestinationPath = destinationPath,
             DirectoryEnumerationFilters = filters,
-            CopyOptions = CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
-            PathFormat = pathFormat
+            PathFormat = pathFormat,
+            CopyOptions = CopyOptions.FailIfExists,
          });
       }
       
@@ -805,7 +816,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, CopyOptions = copyOptions});
+         return CopyMoveCore(new CopyMoveArguments
+         {
+            SourcePath = sourcePath,
+            DestinationPath = destinationPath,
+            CopyOptions = copyOptions
+         });
       }
 
 

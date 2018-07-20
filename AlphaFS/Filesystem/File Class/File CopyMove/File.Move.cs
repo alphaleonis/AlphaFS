@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
+      /// <param name="retry">The number of retries on failed moves.</param>
       /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, int retry, int retryTimeout)
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
+      /// <param name="retry">The number of retries on failed moves.</param>
       /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -247,7 +247,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
+      /// <param name="retry">The number of retries on failed moves.</param>
       /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -285,7 +285,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
+      /// <param name="retry">The number of retries on failed moves.</param>
       /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -389,7 +389,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
+      /// <param name="retry">The number of retries on failed moves.</param>
       /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, int retry, int retryTimeout)
@@ -423,7 +423,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
+      /// <param name="retry">The number of retries on failed moves.</param>
       /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -530,7 +530,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The name of the file to move.</param>
       /// <param name="destinationPath">The new path for the file.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
+      /// <param name="retry">The number of retries on failed moves.</param>
       /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -571,7 +571,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
+      /// <param name="retry">The number of retries on failed moves.</param>
       /// <param name="retryTimeout">The wait time in seconds between retries.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]

@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Copy_LocalAndNetwork_Success()
+      public void AlphaFS_Directory_Copy_ExistingDirectory_LocalAndNetwork_Success()
       {
-         AlphaFS_Directory_Copy(false);
-         AlphaFS_Directory_Copy(true);
+         AlphaFS_Directory_Copy_ExistingDirectory(false);
+         AlphaFS_Directory_Copy_ExistingDirectory(true);
       }
 
 
-      private void AlphaFS_Directory_Copy(bool isNetwork)
+      private void AlphaFS_Directory_Copy_ExistingDirectory(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -59,9 +59,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tTotal size: [{0}]  Total Directories: [{1}]  Total Files: [{2}]", Alphaleonis.Utils.UnitSizeToText(sourceTotalSize), sourceTotal - sourceTotalFiles, sourceTotalFiles);
 
 
-            var copyOptions = Alphaleonis.Win32.Filesystem.CopyOptions.FailIfExists | Alphaleonis.Win32.Filesystem.CopyOptions.GetSizes;
-
-            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst, copyOptions);
+            var copyResult = Alphaleonis.Win32.Filesystem.Directory.Copy(folderSrc.FullName, folderDst);
 
             UnitTestConstants.Dump(copyResult);
 
@@ -77,7 +75,7 @@ namespace AlphaFS.UnitTest
 
             Assert.AreEqual(sourceTotal, copyResult.TotalFolders + copyResult.TotalFiles, "The number of total file system objects do not match.");
             Assert.AreEqual(sourceTotalFiles, copyResult.TotalFiles, "The number of total files do not match.");
-            Assert.AreEqual(sourceTotalSize, copyResult.TotalBytes, "The total file size does not match.");
+            Assert.AreEqual(0, copyResult.TotalBytes);
             Assert.IsTrue(copyResult.IsCopy);
             Assert.IsFalse(copyResult.IsMove);
             Assert.IsTrue(copyResult.IsDirectory);
