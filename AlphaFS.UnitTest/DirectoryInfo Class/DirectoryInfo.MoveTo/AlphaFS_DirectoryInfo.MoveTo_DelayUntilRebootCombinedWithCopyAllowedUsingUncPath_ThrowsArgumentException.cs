@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_DirectoryInfo_MoveTo_DelayUntilRebootFlagCombinedWithCopyAllowedFlagUsingUncPath_ThrowsArgumentException_Network_Success()
+      public void AlphaFS_DirectoryInfo_MoveTo_DelayUntilRebootCombinedWithCopyAllowedUsingUncPath_ThrowsArgumentException_Network_Success()
       {
          AlphaFS_DirectoryInfo_MoveTo_DelayUntilReboot(true);
       }

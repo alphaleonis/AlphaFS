@@ -812,15 +812,16 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (isSingleFileAction)
                // We take an extra hit by getting the file size for a single file Copy or Move action.
-               cmr.TotalBytes = GetSizeCore(transaction, null, destinationPathLp, PathFormat.LongFullPath);
+               cmr.TotalBytes = GetSizeCore(transaction, null, delayUntilReboot ? sourcePathLp : destinationPathLp, PathFormat.LongFullPath);
 
 
-            if (preserveDates)
+            if (preserveDates && !delayUntilReboot)
                CopyTimestampsCore(transaction, false, sourcePathLp, destinationPathLp, false, PathFormat.LongFullPath);
          }
-
+         
 
          // Copy/Move action failed or canceled.
+
          else
          {
             // MSDN: If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,

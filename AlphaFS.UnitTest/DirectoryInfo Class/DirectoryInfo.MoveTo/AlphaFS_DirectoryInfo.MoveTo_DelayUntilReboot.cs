@@ -60,32 +60,7 @@ namespace AlphaFS.UnitTest
                folder.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot);
 
 
-               // Verify DelayUntilReboot in registry.
-
-               var pendingList = (string[]) Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager", "PendingFileRenameOperations", null);
-
-
-               Assert.IsNotNull(pendingList, "The PendingFileRenameOperations is null, but is not expected to.");
-
-
-               var found = false;
-
-               foreach (var line in pendingList)
-               {
-                  found = !Alphaleonis.Utils.IsNullOrWhiteSpace(line) && line.Replace(pendingEntry, string.Empty).Equals(Alphaleonis.Win32.Filesystem.Path.NonInterpretedPathPrefix, StringComparison.Ordinal);
-
-                  if (found)
-                  {
-                     Console.WriteLine("\n\tPending entry found in registry: [{0}]", line);
-
-                     // TODO: Remove unit test entry from registry.
-
-                     break;
-                  }
-               }
-
-
-               Assert.IsTrue(found, "Registry does not contain pending entry, but is expected to.");
+               UnitTestAssert.RegistryContainsPendingEntry(pendingEntry);
             }
          }
 
