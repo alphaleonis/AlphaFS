@@ -32,6 +32,7 @@ Version 2.3  (2018-XX-XX)
 - Marked `Directory.Copy`/`DirectoryInfo.Copy` methods using parameters `overwrite` and `preserveDates` as obsolete. Use one of the `CopyOptions`.
 - Fixed a `Directory.Move` unit test creating endless drive mappings on error.
 - The `DirectoryReadOnlyException` message is now created from the Marshal.GetLastWin32Error() code instead of always using Win32 error `6009` (`ERROR_FILE_READ_ONLY`).
+- Added `Directory/File.Delete` overloads to report the file/directory size in returned `DeleteResult` instance.
 
 ### Breaking Changes
 
@@ -39,6 +40,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #461: Remove text `:$DATA` from `AlternateDataStream.FullPath` property.
 - Issue #477: Move method `Path.GetMappedConnectionName` to `Host` class.
 - Issue #478: Move method `Path.GetMappedUncName` to `Host` class.
+- Disable retrieving file size by default for `Directory/File.Copy/Move` methods.
 
 
 Version 2.2.5  (2018-XX-XX)

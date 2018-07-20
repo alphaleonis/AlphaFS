@@ -156,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
+      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -166,11 +166,47 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="DirectoryReadOnlyException"/>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="deleteArguments"></param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
+      /// <param name="getSize"><c>true</c> to retrieve the directory size; the sum of all streams.</param>
       [SecurityCritical]
-      public static DeleteResult Delete(DeleteArguments deleteArguments)
+      public static DeleteResult Delete(string path, bool recursive, bool ignoreReadOnly, bool getSize)
       {
-         return DeleteDirectoryCore(deleteArguments);
+         return DeleteDirectoryCore(new DeleteArguments
+         {
+            TargetPath = path,
+            Recursive = recursive,
+            IgnoreReadOnly = ignoreReadOnly,
+            GetSize = getSize
+         });
+      }
+
+
+      /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="DirectoryReadOnlyException"/>
+      /// <param name="path">The name of the directory to remove.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
+      /// <param name="getSize"><c>true</c> to retrieve the directory size; the sum of all streams.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static DeleteResult Delete(string path, bool recursive, bool ignoreReadOnly, bool getSize, PathFormat pathFormat)
+      {
+         return DeleteDirectoryCore(new DeleteArguments
+         {
+            TargetPath = path,
+            Recursive = recursive,
+            IgnoreReadOnly = ignoreReadOnly,
+            GetSize = getSize,
+            PathFormat = pathFormat
+         });
       }
    }
 }

@@ -20,9 +20,7 @@
  */
 
 using System;
-using System.Security.AccessControl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Win32;
 
 namespace AlphaFS.UnitTest
 {
@@ -32,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_Move_DelayUntilReboot_LocalAndNetwork_Success()
+      public void AlphaFS_File_Move_DelayUntilRebootFlag_LocalAndNetwork_Success()
       {
-         AlphaFS_File_Move_DelayUntilReboot(false);
-         AlphaFS_File_Move_DelayUntilReboot(true);
+         AlphaFS_File_Move_DelayUntilRebootFlag(false);
+         AlphaFS_File_Move_DelayUntilRebootFlag(true);
       }
 
 
-      private void AlphaFS_File_Move_DelayUntilReboot(bool isNetwork)
+      private void AlphaFS_File_Move_DelayUntilRebootFlag(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {

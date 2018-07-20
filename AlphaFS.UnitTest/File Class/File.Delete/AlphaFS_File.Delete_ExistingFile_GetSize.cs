@@ -30,14 +30,14 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void AlphaFS_File_Delete_ExistingFile_ReturnTotalBytes_LocalAndNetwork_Success()
+      public void AlphaFS_File_Delete_ExistingFile_GetSize_LocalAndNetwork_Success()
       {
-         AlphaFS_File_Delete_ExistingFile_ReturnTotalBytes(false);
-         AlphaFS_File_Delete_ExistingFile_ReturnTotalBytes(true);
+         AlphaFS_File_Delete_ExistingFile_GetSize(false);
+         AlphaFS_File_Delete_ExistingFile_GetSize(true);
       }
 
 
-      private void AlphaFS_File_Delete_ExistingFile_ReturnTotalBytes(bool isNetwork)
+      private void AlphaFS_File_Delete_ExistingFile_GetSize(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -48,7 +48,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("Input File Path: [{0}] [{1}]", Alphaleonis.Utils.UnitSizeToText(fileSize), file.FullName);
 
 
-            var deleteResult = Alphaleonis.Win32.Filesystem.File.Delete(file.FullName, new Alphaleonis.Win32.Filesystem.DeleteArguments {GetSize = true});
+            var deleteResult = Alphaleonis.Win32.Filesystem.File.Delete(file.FullName, false, true);
             
 
             UnitTestConstants.Dump(deleteResult);

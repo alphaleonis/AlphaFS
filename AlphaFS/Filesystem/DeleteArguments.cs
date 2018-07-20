@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// <summary>
    /// 
    /// </summary>
-   public class DeleteArguments : BaseArguments
+   internal class DeleteArguments : BaseArguments
    {
       /// <summary>
       /// 

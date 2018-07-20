@@ -103,17 +103,45 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
-      /// <param name="deleteArguments">A <see cref="DeleteArguments"/> instance.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>      
+      /// <param name="getSize"><c>true</c> to retrieve the file size; the sum of all streams.</param>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="FileReadOnlyException"/>
       [SecurityCritical]
-      public static DeleteResult Delete(string path, DeleteArguments deleteArguments)
+      public static DeleteResult Delete(string path, bool ignoreReadOnly, bool getSize)
       {
-         deleteArguments.TargetPath = path;
+         return DeleteFileCore(new DeleteArguments
+         {
+            TargetPath = path,
+            IgnoreReadOnly = ignoreReadOnly,
+            GetSize = getSize
+         });
+      }
 
-         return DeleteFileCore(deleteArguments);
+
+      /// <summary>[AlphaFS] Deletes the specified file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
+      /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
+      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
+      /// <param name="getSize"><c>true</c> to retrieve the file size; the sum of all streams.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      [SecurityCritical]
+      public static DeleteResult Delete(string path, bool ignoreReadOnly, bool getSize, PathFormat pathFormat)
+      {
+         return DeleteFileCore(new DeleteArguments
+         {
+            TargetPath = path,
+            IgnoreReadOnly = ignoreReadOnly,
+            GetSize = getSize,
+            PathFormat = pathFormat
+         });
       }
    }
 }
