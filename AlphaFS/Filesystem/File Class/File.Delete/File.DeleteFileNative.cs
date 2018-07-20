@@ -49,7 +49,13 @@ namespace Alphaleonis.Win32.Filesystem
 
          lastError = Marshal.GetLastWin32Error();
 
-         if (!success)
+         if (success)
+         {
+            if (lastError == Win32Errors.ERROR_NO_MORE_FILES)
+               lastError = 0;
+         }
+
+         else
          {
             var attributes = deleteArguments.Attributes;
 

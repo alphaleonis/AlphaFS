@@ -13,7 +13,7 @@ Version 2.3  (2018-XX-XX)
 - Issue #466: Add properties `ErrorRetry` and `ErrorRetryTimeout` to `DirectoryEnumerationFilters` class.
 - Issue #467: Add property `CopyOptions.CopyTimestamp`.
 - Issue #481: Add overloaded methods `Directory.Delete` supporting `DirectoryEnumerationFilters`.
-- Issue #486: Add overloads for `Directory/File.Delete` to return a DeleteResult instance.
+- Issue #486: Add overloads for `Directory/File.Delete` to return a `DeleteResult` instance.
 
 ### Improvements
 
