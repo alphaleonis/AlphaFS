@@ -31,15 +31,15 @@ namespace AlphaFS.UnitTest
 
       
       [TestMethod]
-      public void AlphaFS_DirectoryInfo_MoveTo_DelayUntilReboot_Local_Success()
+      public void AlphaFS_DirectoryInfo_MoveTo_DelayUntilRebootFlag_Local_Success()
       {
          UnitTestAssert.IsElevatedProcess();
 
-         AlphaFS_DirectoryInfo_MoveTo_DelayUntilReboot(false);
+         AlphaFS_DirectoryInfo_MoveTo_DelayUntilRebootFlag(false);
       }
 
       
-      private void AlphaFS_DirectoryInfo_MoveTo_DelayUntilReboot(bool isNetwork)
+      private void AlphaFS_DirectoryInfo_MoveTo_DelayUntilRebootFlag(bool isNetwork)
       {
          using (var tempRoot = new TemporaryDirectory(isNetwork))
          {
@@ -60,32 +60,7 @@ namespace AlphaFS.UnitTest
                folder.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot);
 
 
-               // Verify DelayUntilReboot in registry.
-
-               var pendingList = (string[]) Registry.GetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager", "PendingFileRenameOperations", null);
-
-
-               Assert.IsNotNull(pendingList, "The PendingFileRenameOperations is null, but is not expected to.");
-
-
-               var found = false;
-
-               foreach (var line in pendingList)
-               {
-                  found = !Alphaleonis.Utils.IsNullOrWhiteSpace(line) && line.Replace(pendingEntry, string.Empty).Equals(Alphaleonis.Win32.Filesystem.Path.NonInterpretedPathPrefix, StringComparison.Ordinal);
-
-                  if (found)
-                  {
-                     Console.WriteLine("\n\tPending entry found in registry: [{0}]", line);
-
-                     // TODO: Remove unit test entry from registry.
-
-                     break;
-                  }
-               }
-
-
-               Assert.IsTrue(found, "Registry does not contain pending entry, but is expected to.");
+               UnitTestAssert.RegistryContainsPendingEntry(pendingEntry);
             }
          }
 

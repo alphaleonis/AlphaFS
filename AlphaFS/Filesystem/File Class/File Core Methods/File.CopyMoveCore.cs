@@ -134,7 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
                // We take an extra hit by getting the file size for a single file Copy or Move action.
 
                if (getSize)
-                  copyMoveResult.TotalBytes = GetSizeCore(null, copyMoveArguments.Transaction, false, destinationFilePath, true, PathFormat.LongFullPath);
+                  copyMoveResult.TotalBytes = GetSizeCore(null, copyMoveArguments.Transaction, false, copyMoveArguments.DelayUntilReboot ? sourceFilePath : destinationFilePath, true, PathFormat.LongFullPath);
 
 
                if (!isFolder)
@@ -143,7 +143,8 @@ namespace Alphaleonis.Win32.Filesystem
 
                   // Only set timestamps for files.
 
-                  if (copyMoveArguments.CopyTimestamps)
+                  if (copyMoveArguments.CopyTimestamps && !copyMoveArguments.DelayUntilReboot)
+
                      CopyTimestampsCore(copyMoveArguments.Transaction, false, sourceFilePath, destinationFilePath, false, PathFormat.LongFullPath);
                }
                

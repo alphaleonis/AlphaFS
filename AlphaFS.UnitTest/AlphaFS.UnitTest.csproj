@@ -171,6 +171,7 @@
     <Compile Include="File Class\File.Delete\AlphaFS_File.Delete_ExistingFile_ReturnTotalBytes.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_NullAsPath_ThrowsArgumentNullException.cs" />
     <Compile Include="File Class\File.Delete\File.Delete_NonExistingFile_NoException.cs" />
+    <Compile Include="File Class\File.Move\AlphaFS_File.Move_DelayUntilReboot.cs" />
     <Compile Include="File Class\File.Move\File.Move_EmptyDestFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Move\File.Move_EmptySourceFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Move\File.Move_FileOpenedWithFileShareDeleteFlag.cs" />
@@ -393,7 +394,7 @@
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_AnalyzeDirectoryInfoSecurity.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\DirectoryInfo.MoveTo_FolderToEmptyFolder.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\DirectoryInfo.MoveTo_Rename.cs" />
-    <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\AlphaFS_DirectoryInfo.MoveTo_DelayUntilReboot.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\AlphaFS_DirectoryInfo.MoveTo_DelayUntilRebootFlag.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_FolderNameGreaterThan255Characters_ThrowsPathTooLongException.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.FolderName255Characters.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.MoveTo\AlphaFS_DirectoryInfo.MoveTo_DelayUntilRebootFlagCombinedWithCopyAllowedFlagUsingUncPath_ThrowsArgumentException.cs" />
