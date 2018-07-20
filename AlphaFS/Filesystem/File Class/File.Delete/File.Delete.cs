@@ -90,12 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         return DeleteFileCore(new DeleteArguments
-         {
-            TargetPath = path,
-            IgnoreReadOnly = ignoreReadOnly,
-            PathFormat = pathFormat
-         });
+         return DeleteFileCore(new DeleteArguments {TargetPath = path, IgnoreReadOnly = ignoreReadOnly, PathFormat = pathFormat});
       }
 
 
@@ -112,12 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, bool ignoreReadOnly, bool getSize)
       {
-         return DeleteFileCore(new DeleteArguments
-         {
-            TargetPath = path,
-            IgnoreReadOnly = ignoreReadOnly,
-            GetSize = getSize
-         });
+         return DeleteFileCore(new DeleteArguments {TargetPath = path, IgnoreReadOnly = ignoreReadOnly, GetSize = getSize});
       }
 
 
@@ -135,13 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult Delete(string path, bool ignoreReadOnly, bool getSize, PathFormat pathFormat)
       {
-         return DeleteFileCore(new DeleteArguments
-         {
-            TargetPath = path,
-            IgnoreReadOnly = ignoreReadOnly,
-            GetSize = getSize,
-            PathFormat = pathFormat
-         });
+         return DeleteFileCore(new DeleteArguments {TargetPath = path, IgnoreReadOnly = ignoreReadOnly, GetSize = getSize, PathFormat = pathFormat});
       }
    }
 }

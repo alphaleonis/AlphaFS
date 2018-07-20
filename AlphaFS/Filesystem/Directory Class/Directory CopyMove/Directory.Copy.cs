@@ -51,12 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, bool overwrite)
       {
-         return CopyMoveCore(new CopyMoveArguments
-         {
-            SourcePath = sourcePath,
-            DestinationPath = destinationPath,
-            CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists
-         });
+         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists});
       }
 
 
@@ -80,13 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, bool overwrite, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments
-         {
-            SourcePath = sourcePath,
-            DestinationPath = destinationPath,
-            CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists,
-            PathFormat = pathFormat
-         });
+         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists, PathFormat = pathFormat});
       }
 
 
@@ -583,12 +572,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath)
       {
-         return CopyMoveCore(new CopyMoveArguments
-         {
-            SourcePath = sourcePath,
-            DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists
-         });
+         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, CopyOptions = CopyOptions.FailIfExists});
       }
       
 
@@ -610,13 +594,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments
-         {
-            SourcePath = sourcePath,
-            DestinationPath = destinationPath,
-            CopyOptions = CopyOptions.FailIfExists,
-            PathFormat = pathFormat
-         });
+         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, CopyOptions = CopyOptions.FailIfExists, PathFormat = pathFormat});
       }
 
 
@@ -827,12 +805,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         return CopyMoveCore(new CopyMoveArguments
-         {
-            SourcePath = sourcePath,
-            DestinationPath = destinationPath,
-            CopyOptions = copyOptions
-         });
+         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, CopyOptions = copyOptions});
       }
 
 

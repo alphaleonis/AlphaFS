@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Directory.Move is applicable to both files and folders.
 
-         File.ValidateFileOrDirectoryMoveArguments(copyMoveArguments, false, isFolder);
+         File.ValidateCopyMoveArguments(copyMoveArguments, false, isFolder);
 
 
          var copyMoveResult = new CopyMoveResult(copyMoveArguments, isFolder);

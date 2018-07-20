@@ -29,11 +29,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void CopyMoveDirectoryCore(bool retry, CopyMoveArguments copyMoveArguments, CopyMoveResult copyMoveResult)
       {
-         var delArgsTemplate = new DeleteArguments
+         var delArgsFileTemplate = new DeleteArguments
          {
             DirectoryEnumerationFilters = copyMoveArguments.DirectoryEnumerationFilters,
             Transaction = copyMoveArguments.Transaction,
-            PathFormat = PathFormat.LongFullPath
+            PathFormat = PathFormat.LongFullPath,
+            PathsChecked = true
          };
 
 
@@ -95,10 +96,10 @@ namespace Alphaleonis.Win32.Filesystem
 
                      if (copyMoveArguments.EmulateMove)
                      {
-                        delArgsTemplate.TargetPathLongPath = fseiSourcePath;
-                        delArgsTemplate.Attributes = fseiSource.Attributes;
+                        delArgsFileTemplate.TargetPathLongPath = fseiSourcePath;
+                        delArgsFileTemplate.Attributes = fseiSource.Attributes;
 
-                        File.DeleteFileCore(delArgsTemplate, deleteResult);
+                        File.DeleteFileCore(delArgsFileTemplate, deleteResult);
                      }
                   }
                }

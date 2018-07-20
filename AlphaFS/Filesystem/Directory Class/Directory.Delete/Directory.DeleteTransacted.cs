@@ -60,12 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return DeleteDirectoryCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            PathFormat = pathFormat
-         });
+         return DeleteDirectoryCore(new DeleteArguments {Transaction = transaction, TargetPath = path, PathFormat = pathFormat});
       }
 
 
@@ -84,12 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive)
       {
-         return DeleteDirectoryCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            Recursive = recursive
-         });
+         return DeleteDirectoryCore(new DeleteArguments {Transaction = transaction, TargetPath = path, Recursive = recursive});
       }
 
 
@@ -109,13 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
       {
-         return DeleteDirectoryCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            Recursive = recursive,
-            PathFormat = pathFormat
-         });
+         return DeleteDirectoryCore(new DeleteArguments {Transaction = transaction, TargetPath = path, Recursive = recursive, PathFormat = pathFormat});
       }
 
 
@@ -135,13 +119,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
-         return DeleteDirectoryCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            Recursive = recursive,
-            IgnoreReadOnly = ignoreReadOnly
-         });
+         return DeleteDirectoryCore(new DeleteArguments {Transaction = transaction, TargetPath = path, Recursive = recursive, IgnoreReadOnly = ignoreReadOnly});
       }
 
 
@@ -162,14 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         return DeleteDirectoryCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            Recursive = recursive,
-            IgnoreReadOnly = ignoreReadOnly,
-            PathFormat = pathFormat
-         });
+         return DeleteDirectoryCore(new DeleteArguments {Transaction = transaction, TargetPath = path, Recursive = recursive, IgnoreReadOnly = ignoreReadOnly, PathFormat = pathFormat});
       }
 
 
@@ -190,14 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool getSize)
       {
-         return DeleteDirectoryCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            Recursive = recursive,
-            IgnoreReadOnly = ignoreReadOnly,
-            GetSize = getSize
-         });
+         return DeleteDirectoryCore(new DeleteArguments {Transaction = transaction, TargetPath = path, Recursive = recursive, IgnoreReadOnly = ignoreReadOnly, GetSize = getSize});
       }
 
 
@@ -219,15 +183,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool getSize, PathFormat pathFormat)
       {
-         return DeleteDirectoryCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            Recursive = recursive,
-            IgnoreReadOnly = ignoreReadOnly,
-            GetSize = getSize,
-            PathFormat = pathFormat
-         });
+         return DeleteDirectoryCore(new DeleteArguments {Transaction = transaction, TargetPath = path, Recursive = recursive, IgnoreReadOnly = ignoreReadOnly, GetSize = getSize, PathFormat = pathFormat});
       }
    }
 }

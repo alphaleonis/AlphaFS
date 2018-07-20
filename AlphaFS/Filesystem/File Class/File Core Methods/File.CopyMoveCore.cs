@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         ValidateFileOrDirectoryMoveArguments(copyMoveArguments, driveChecked, isFolder, sourceFilePath, destinationFilePath, out sourceFilePath, out destinationFilePath);
+         ValidateCopyMoveArguments(copyMoveArguments, driveChecked, isFolder, sourceFilePath, destinationFilePath, out sourceFilePath, out destinationFilePath);
 
          var isSingleFileAction = null == copyMoveResult || copyMoveResult.IsFile;
 

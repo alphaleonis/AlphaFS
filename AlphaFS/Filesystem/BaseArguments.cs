@@ -22,7 +22,7 @@
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Class with base method arguments that are used by methods.</summary>
-   internal abstract class BaseArguments
+   public abstract class BaseArguments
    {
       internal int Retry { get; set; }
 

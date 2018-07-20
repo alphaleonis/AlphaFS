@@ -39,12 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public override void Delete()
       {
-         Directory.DeleteDirectoryCore(new DeleteArguments
-         {
-            Transaction = Transaction,
-            TargetPathLongPath = LongFullName,
-            PathFormat = PathFormat.LongFullPath
-         });
+         Directory.DeleteDirectoryCore(new DeleteArguments {Transaction = Transaction, TargetPathLongPath = LongFullName, PathFormat = PathFormat.LongFullPath});
       }
 
 
@@ -63,14 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Delete(bool recursive)
       {
-         Directory.DeleteDirectoryCore(new DeleteArguments
-         {
-            Recursive = recursive,
-
-            Transaction = Transaction,
-            TargetPathLongPath = LongFullName,
-            PathFormat = PathFormat.LongFullPath
-         });
+         Directory.DeleteDirectoryCore(new DeleteArguments {Transaction = Transaction, TargetPathLongPath = LongFullName, Recursive = recursive, PathFormat = PathFormat.LongFullPath});
       }
 
       #endregion // .NET
@@ -95,11 +83,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return Directory.DeleteDirectoryCore(new DeleteArguments
          {
-            Recursive = recursive,
-            IgnoreReadOnly = ignoreReadOnly,
-
             Transaction = Transaction,
             TargetPathLongPath = LongFullName,
+            Recursive = recursive,
+            IgnoreReadOnly = ignoreReadOnly,
             PathFormat = PathFormat.LongFullPath
          });
       }
@@ -125,12 +112,11 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return Directory.DeleteDirectoryCore(new DeleteArguments
          {
+            Transaction = Transaction,
+            TargetPathLongPath = LongFullName,
             Recursive = recursive,
             IgnoreReadOnly = ignoreReadOnly,
             ContinueOnNotFound = continueOnNotFound,
-
-            Transaction = Transaction,
-            TargetPathLongPath = LongFullName,
             PathFormat = PathFormat.LongFullPath
          });
       }

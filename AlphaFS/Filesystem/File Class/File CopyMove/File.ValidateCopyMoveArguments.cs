@@ -26,18 +26,18 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      internal static CopyMoveArguments ValidateFileOrDirectoryMoveArguments(CopyMoveArguments copyMoveArguments, bool driveChecked, bool isFolder)
+      internal static CopyMoveArguments ValidateCopyMoveArguments(CopyMoveArguments copyMoveArguments, bool driveChecked, bool isFolder)
       {
          string unusedSourcePathLp;
          string unusedDestinationPathLp;
 
-         return ValidateFileOrDirectoryMoveArguments(copyMoveArguments, driveChecked, isFolder, copyMoveArguments.SourcePath, copyMoveArguments.DestinationPath, out unusedSourcePathLp, out unusedDestinationPathLp);
+         return ValidateCopyMoveArguments(copyMoveArguments, driveChecked, isFolder, copyMoveArguments.SourcePath, copyMoveArguments.DestinationPath, out unusedSourcePathLp, out unusedDestinationPathLp);
       }
 
 
       /// <summary>Validates and updates the file/directory copy/move arguments and updates them accordingly. This happens only once per <see cref="CopyMoveArguments"/> instance.</summary>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-      private static CopyMoveArguments ValidateFileOrDirectoryMoveArguments(CopyMoveArguments copyMoveArguments, bool driveChecked, bool isFolder, string sourcePath, string destinationPath, out string sourcePathLp, out string destinationPathLp)
+      private static CopyMoveArguments ValidateCopyMoveArguments(CopyMoveArguments copyMoveArguments, bool driveChecked, bool isFolder, string sourcePath, string destinationPath, out string sourcePathLp, out string destinationPathLp)
       {
          if (null == copyMoveArguments)
             throw new ArgumentNullException("copyMoveArguments");
@@ -136,22 +136,16 @@ namespace Alphaleonis.Win32.Filesystem
                // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile functions.
                if (copyMoveArguments.CopyTimestamps)
                   copyMoveArguments.CopyOptions &= ~CopyOptions.CopyTimestamp;
-
-
-               copyMoveArguments.GetSize = HasCopyOptionsGetSize(copyMoveArguments.CopyOptions);
-                  
-               // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile functions.
-               if (copyMoveArguments.GetSize)
-                  copyMoveArguments.CopyOptions &= ~CopyOptions.GetSizes;
             }
 
-            else
-            {
-               copyMoveArguments.GetSize = HasMoveOptionsGetSize(copyMoveArguments.MoveOptions);
 
-               // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile functions.
-               if (copyMoveArguments.GetSize)
-                  copyMoveArguments.MoveOptions &= ~MoveOptions.GetSizes;
+            copyMoveArguments.GetSize = HasCopyOptionsGetSize(copyMoveArguments.CopyOptions) || HasMoveOptionsGetSize(copyMoveArguments.MoveOptions);
+
+            // Remove the AlphaFS flag since it is unknown to the native Win32 CopyFile/MoveFile functions.
+            if (copyMoveArguments.GetSize)
+            {
+               copyMoveArguments.CopyOptions &= ~CopyOptions.GetSizes;
+               copyMoveArguments.MoveOptions &= ~MoveOptions.GetSizes;
             }
 
 

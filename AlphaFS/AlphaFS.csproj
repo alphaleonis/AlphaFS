@@ -324,7 +324,7 @@
     <Compile Include="Filesystem\File Class\File Compression\File.DecompressTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Compression\File.GetCompressedSizeTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.GetCompressedSizeCore.cs" />
-    <Compile Include="Filesystem\File Class\File CopyMove\File.ValidateFileOrDirectoryMoveArguments.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.ValidateCopyMoveArguments.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.RestartMoveOrThrowException.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.CopyTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.CopyMoveCore.cs" />
@@ -349,7 +349,7 @@
     <Compile Include="Filesystem\File Class\File.AppendAllTextTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.AppendTextTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.CreateTextCore.cs" />
-    <Compile Include="Filesystem\File Class\File CopyMove\File.CopyMoveLogic.cs" />
+    <Compile Include="Filesystem\File Class\File CopyMove\File.HasCopyMoveFlag.cs" />
     <Compile Include="Filesystem\File Class\File.CreateTextTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.CreateTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.CreateFileStreamCore.cs" />

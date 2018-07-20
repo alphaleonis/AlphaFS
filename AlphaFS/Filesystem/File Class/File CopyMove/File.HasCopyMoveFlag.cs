@@ -25,27 +25,13 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      /// <summary>Checks if the <see cref="MoveOptions.CopyAllowed"/> flag is specified.</summary>
-      internal static bool HasCopyAllowed(MoveOptions? moveOptions)
-      {
-         return Utils.IsNotNull(moveOptions) && (moveOptions & MoveOptions.CopyAllowed) != 0;
-      }
-
-
       /// <summary>Checks if the <see cref="CopyOptions.CopySymbolicLink"/> flag is specified.</summary>
       internal static bool HasCopySymbolicLink(CopyOptions? copyOptions)
       {
          return Utils.IsNotNull(copyOptions) && (copyOptions & CopyOptions.CopySymbolicLink) != 0;
       }
 
-
-      /// <summary>Checks if the <see cref="MoveOptions.DelayUntilReboot"/> flag is specified.</summary>
-      internal static bool HasDelayUntilReboot(MoveOptions? moveOptions)
-      {
-         return Utils.IsNotNull(moveOptions) && (moveOptions & MoveOptions.DelayUntilReboot) != 0;
-      }
-
-
+      
       /// <summary>Checks if the <see cref="CopyOptions.CopyTimestamp"/> flag is specified.</summary>
       internal static bool HasCopyTimestamps(CopyOptions? copyOptions)
       {
@@ -53,10 +39,26 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
+
+
       /// <summary>Checks if the <see cref="CopyOptions.GetSizes"/> flag is specified.</summary>
       internal static bool HasCopyOptionsGetSize(CopyOptions? copyOptions)
       {
          return Utils.IsNotNull(copyOptions) && (copyOptions & CopyOptions.GetSizes) != 0;
+      }
+
+
+      /// <summary>Checks if the <see cref="MoveOptions.CopyAllowed"/> flag is specified.</summary>
+      internal static bool HasCopyAllowed(MoveOptions? moveOptions)
+      {
+         return Utils.IsNotNull(moveOptions) && (moveOptions & MoveOptions.CopyAllowed) != 0;
+      }
+
+
+      /// <summary>Checks if the <see cref="MoveOptions.DelayUntilReboot"/> flag is specified.</summary>
+      internal static bool HasDelayUntilReboot(MoveOptions? moveOptions)
+      {
+         return Utils.IsNotNull(moveOptions) && (moveOptions & MoveOptions.DelayUntilReboot) != 0;
       }
 
 

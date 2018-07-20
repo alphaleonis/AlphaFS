@@ -56,12 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return DeleteFileCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            PathFormat = pathFormat
-         });
+         return DeleteFileCore(new DeleteArguments {Transaction = transaction, TargetPath = path, PathFormat = pathFormat});
       }
 
 
@@ -78,12 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
-         return DeleteFileCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            IgnoreReadOnly = ignoreReadOnly
-         });
+         return DeleteFileCore(new DeleteArguments {Transaction = transaction, TargetPath = path, IgnoreReadOnly = ignoreReadOnly});
       }
 
 
@@ -101,13 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         return DeleteFileCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            IgnoreReadOnly = ignoreReadOnly,
-            PathFormat = pathFormat
-         });
+         return DeleteFileCore(new DeleteArguments {Transaction = transaction, TargetPath = path, IgnoreReadOnly = ignoreReadOnly, PathFormat = pathFormat});
       }
 
 
@@ -125,13 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, bool getSize)
       {
-         return DeleteFileCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            IgnoreReadOnly = ignoreReadOnly,
-            GetSize = getSize
-         });
+         return DeleteFileCore(new DeleteArguments {Transaction = transaction, TargetPath = path, IgnoreReadOnly = ignoreReadOnly, GetSize = getSize});
       }
 
 
@@ -150,14 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, bool getSize, PathFormat pathFormat)
       {
-         return DeleteFileCore(new DeleteArguments
-         {
-            Transaction = transaction,
-            TargetPath = path,
-            IgnoreReadOnly = ignoreReadOnly,
-            GetSize = getSize,
-            PathFormat = pathFormat
-         });
+         return DeleteFileCore(new DeleteArguments {Transaction = transaction, TargetPath = path, IgnoreReadOnly = ignoreReadOnly, GetSize = getSize, PathFormat = pathFormat});
       }
    }
 }

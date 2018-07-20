@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region .NET
 
-      /// <summary>Moves a file or a directory and its contents to a new location.</summary>
+      /// <summary>[.NET] Moves a file or a directory and its contents to a new location.</summary>
       /// <remarks>
       ///   <para>This method does not work across disk volumes.</para>
       ///   <para>Whenever possible, avoid using short file names (such as <c>XXXXXX~1.XXX</c>) with this method.</para>
@@ -46,12 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath)
       {
-         CopyMoveCore(new CopyMoveArguments
-         {
-            SourcePath = sourcePath,
-            DestinationPath = destinationPath,
-            MoveOptions = MoveOptions.None
-         });
+         CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, MoveOptions = MoveOptions.None});
       }
 
       #endregion // .NET
@@ -76,13 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments
-         {
-            SourcePath = sourcePath,
-            DestinationPath = destinationPath,
-            MoveOptions = MoveOptions.None,
-            PathFormat = pathFormat
-         });
+         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, MoveOptions = MoveOptions.None, PathFormat = pathFormat});
       }
 
 
@@ -105,12 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
-         return CopyMoveCore(new CopyMoveArguments
-         {
-            SourcePath = sourcePath,
-            DestinationPath = destinationPath,
-            MoveOptions = moveOptions
-         });
+         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, MoveOptions = moveOptions});
       }
 
 
@@ -134,13 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(new CopyMoveArguments
-         {
-            SourcePath = sourcePath,
-            DestinationPath = destinationPath,
-            MoveOptions = moveOptions,
-            PathFormat = pathFormat
-         });
+         return CopyMoveCore(new CopyMoveArguments {SourcePath = sourcePath, DestinationPath = destinationPath, MoveOptions = moveOptions, PathFormat = pathFormat});
       }
 
 
