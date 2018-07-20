@@ -85,14 +85,13 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          if (null == deleteResult)
-            deleteResult = new DeleteResult(false, pathLp);
+            deleteResult = new DeleteResult(false, Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false));
 
          
          var attempts = 1;
 
          var retryTimeout = 0;
-
-
+         
          var retry = null != filters && (filters.ErrorRetry > 0 || filters.ErrorRetryTimeout > 0);
 
          if (retry)
@@ -138,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             int lastError;
 
-            var success = DeleteFileNative(errorFilterActive, pathLp, deleteArguments, out lastError);
+            var success = DeleteFileNative(pathLp, errorFilterActive, deleteArguments, out lastError);
 
             deleteResult.ErrorCode = lastError;
             

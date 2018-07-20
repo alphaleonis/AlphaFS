@@ -21,41 +21,27 @@
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>
-   /// 
-   /// </summary>
-   public abstract class BaseArguments
+   /// <summary>Class with base method arguments that are used by methods.</summary>
+   internal abstract class BaseArguments
    {
-      /// <summary>
-      /// 
-      /// </summary>
-      public int Retry { get; set; }
+      internal int Retry { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public int RetryTimeout { get; set; }
+      internal int RetryTimeout { get; set; }
 
 
       /// <summary>Retrieves the size of the file or directory. The returned size is the sum of all streams.</summary>
-      public bool GetSize { get; set; }
+      internal bool GetSize { get; set; }
 
 
       /// <summary>The specification of custom filters to be used in the process. Not applicable to files.</summary>
       internal DirectoryEnumerationFilters DirectoryEnumerationFilters { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
       internal bool PathsChecked { get; set; }
-      
-      
-      /// <summary>
-      /// 
-      /// </summary>
-      public PathFormat PathFormat { get; set; }
+
+
+      internal PathFormat PathFormat { get; set; }
 
 
       /// <summary>The <see cref="KernelTransaction"/> instance.</summary>

@@ -161,6 +161,7 @@
     <Compile Include="Directory Class\Directory_Timestamps\AlphaFS_Directory.SetTimestamps_OnSymbolicLink.cs" />
     <Compile Include="File Class\AlphaFS_File_GetSize\AlphaFS_File.GetSize_AllStreams.cs" />
     <Compile Include="DirectoryInfo Class\DirectoryInfo.InitializeInstance\DirectoryInfo.InitializeInstance_ExistingFileAsDirectoryeName_PropertyExistsShouldbeFalse.cs" />
+    <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_ExistingFiles_GetSize.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptySourceFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Copy\File.Copy_EmptyDestFileNameAsPath_ThrowsArgumentException.cs" />
     <Compile Include="File Class\File.Copy\AlphaFS_File.Copy_3ExistingFiles_FromVolumeShadowCopy.cs" />

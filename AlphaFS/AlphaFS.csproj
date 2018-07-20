@@ -224,7 +224,7 @@
     <Compile Include="Filesystem\CopyMoveArguments.cs" />
     <Compile Include="Filesystem\DeleteResult.cs" />
     <Compile Include="Filesystem\Directory Class\Directory CopyMove\Directory.ValidateMoveAction.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory Core Methods\Directory.DeleteDirectoryNative.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.Delete\Directory.DeleteDirectoryNative.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateAlternateDataStreamsTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateDirectoriesTransacted.cs" />
     <Compile Include="Filesystem\Directory Class\Directory Core Methods\Directory.EnumerateFileIdBothDirectoryInfoCore.cs" />
@@ -323,7 +323,6 @@
     <Compile Include="Filesystem\File Class\File Compression\File.CompressTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Compression\File.DecompressTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Compression\File.GetCompressedSizeTransacted.cs" />
-    <Compile Include="Filesystem\File Class\File Core Methods\File.DeleteFileNative.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.GetCompressedSizeCore.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.ValidateFileOrDirectoryMoveArguments.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.RestartMoveOrThrowException.cs" />
@@ -357,8 +356,10 @@
     <Compile Include="Filesystem\File Class\File Core Methods\File.CreateFileCore.cs" />
     <Compile Include="Filesystem\File Class\File.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.DeleteFileCore.cs" />
-    <Compile Include="Filesystem\File Class\File.DeleteTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.EnumerateAlternateDataStreamsCore.cs" />
+    <Compile Include="Filesystem\File Class\File.Delete\File.Delete.cs" />
+    <Compile Include="Filesystem\File Class\File.Delete\File.DeleteFileNative.cs" />
+    <Compile Include="Filesystem\File Class\File.Delete\File.DeleteTransacted.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateAlternateDataStreamsTransacted.cs" />
     <Compile Include="Filesystem\File Class\File Core Methods\File.ExistsCore.cs" />
     <Compile Include="Filesystem\File Class\File.ExistsTransacted.cs" />
@@ -588,7 +589,6 @@
     <Compile Include="Filesystem\File Class\File Junctions, Links\File.CreateSymbolicLink.cs" />
     <Compile Include="Filesystem\File Class\File Junctions, Links\File.CreateHardLink.cs" />
     <Compile Include="Filesystem\File Class\File Compression\File.Compress.cs" />
-    <Compile Include="Filesystem\File Class\File.Delete.cs" />
     <Compile Include="Filesystem\File Class\File Encryption\File.Encrypt.cs" />
     <Compile Include="Filesystem\File Class\File.CreateText.cs" />
     <Compile Include="Filesystem\File Class\File CopyMove\File.Copy.cs" />
@@ -911,7 +911,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

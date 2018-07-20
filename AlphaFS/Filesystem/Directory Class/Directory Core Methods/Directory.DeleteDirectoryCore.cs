@@ -105,8 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
          var attempts = 1;
 
          var retryTimeout = 0;
-
-
+         
          var retry = null != filters && (filters.ErrorRetry > 0 || filters.ErrorRetryTimeout > 0);
 
          if (retry)

@@ -146,7 +146,7 @@ namespace Alphaleonis.Win32.Filesystem
             // If the move happened on the same drive, we have no knowledge of the number of files/folders.
             // However, we do know that the one folder was moved successfully.
             
-            if (copyMoveResult.ErrorCode == Win32Errors.NO_ERROR && isFolder)
+            if (isFolder && copyMoveResult.ErrorCode == Win32Errors.NO_ERROR)
 
                copyMoveResult.TotalFolders = 1;
          }

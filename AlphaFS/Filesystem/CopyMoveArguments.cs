@@ -21,89 +21,51 @@
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>
-   /// 
-   /// </summary>
+   /// <summary>Class with method arguments that are used by the Directory/File Copy and Move methods.</summary>
 
    internal class CopyMoveArguments : BaseArguments
    {
-      /// <summary>
-      /// 
-      /// </summary>
-      public string SourcePath { get; set; }
+      internal string SourcePath { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public string DestinationPath { get; set; }
+      internal string DestinationPath { get; set; }
       
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public CopyOptions? CopyOptions { get; set; }
+      internal CopyOptions? CopyOptions { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public MoveOptions? MoveOptions { get; set; }
+      internal MoveOptions? MoveOptions { get; set; }
       
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public string SourcePathLp { get; set; }
+      internal string SourcePathLp { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public string DestinationPathLp { get; set; }
+      internal string DestinationPathLp { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public bool CopyTimestamps { get; set; }
+      internal bool CopyTimestamps { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public bool IsCopy { get; set; }
+      internal bool IsCopy { get; set; }
 
 
       /// <summary>A Move action fallback using Copy + Delete.</summary>
-      public bool EmulateMove { get; set; }
+      internal bool EmulateMove { get; set; }
 
 
       /// <summary>A file/folder will be deleted or renamed on Computer startup.</summary>
-      public bool DelayUntilReboot { get; set; }
+      internal bool DelayUntilReboot { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public bool DeleteOnStartup { get; set; }
+      internal bool DeleteOnStartup { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public CopyMoveProgressRoutine ProgressHandler { get; set; }
+      internal CopyMoveProgressRoutine ProgressHandler { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public object UserProgressData { get; set; }
+      internal object UserProgressData { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public NativeMethods.NativeCopyMoveProgressRoutine Routine { get; set; }
+      internal NativeMethods.NativeCopyMoveProgressRoutine Routine { get; set; }
    }
 }

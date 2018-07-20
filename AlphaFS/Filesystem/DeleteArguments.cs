@@ -24,24 +24,15 @@ using System.IO;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>
-   /// 
-   /// </summary>
+   /// <summary>Class with method arguments that are used by the Directory/File Delete methods.</summary>
    internal class DeleteArguments : BaseArguments
    {
-      /// <summary>
-      /// 
-      /// </summary>
       public DeleteArguments()
       {
       }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      /// <param name="entryInfo"></param>
-      public DeleteArguments(FileSystemEntryInfo entryInfo)
+      internal DeleteArguments(FileSystemEntryInfo entryInfo)
       {
          if (null == entryInfo)
             throw new ArgumentNullException("entryInfo");
@@ -59,50 +50,30 @@ namespace Alphaleonis.Win32.Filesystem
          IsDirectory = entryInfo.IsDirectory;
       }
 
-
-
-
-      /// <summary>
-      /// 
-      /// </summary>
-      public bool IsDirectory { get; internal set; }
+      
+      internal bool IsDirectory { get; set; }
 
 
       /// <summary>The path to the file or folder to delete.</summary>
-      public string TargetPath { get; internal set; }
+      internal string TargetPath { get; set; }
 
 
       /// <summary>The path to the file or folder to delete in <see cref="PathFormat.LongFullPath"/> format.</summary>
-      public string TargetPathLongPath { get; internal set; }
+      internal string TargetPathLongPath { get; set; }
 
       
-      /// <summary>
-      /// 
-      /// </summary>
-      internal FileSystemEntryInfo EntryInfo { get; private set; }
+      internal FileSystemEntryInfo EntryInfo { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public FileAttributes Attributes { get; set; }
+      internal FileAttributes Attributes { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public bool IgnoreReadOnly { get; set; }
+      internal bool IgnoreReadOnly { get; set; }
       
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public bool Recursive { get; set; }
+      internal bool Recursive { get; set; }
 
 
-      /// <summary>
-      /// 
-      /// </summary>
-      public bool ContinueOnNotFound { get; set; }
+      internal bool ContinueOnNotFound { get; set; }
    }
 }

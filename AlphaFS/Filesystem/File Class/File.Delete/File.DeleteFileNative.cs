@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
       [SecurityCritical]
-      internal static bool DeleteFileNative(bool continueOnException, string pathLp, DeleteArguments deleteArguments, out int lastError)
+      internal static bool DeleteFileNative(string pathLp, bool continueOnException, DeleteArguments deleteArguments, out int lastError)
       {
 
       startDeleteFile:
