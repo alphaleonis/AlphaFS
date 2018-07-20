@@ -57,10 +57,7 @@ namespace AlphaFS.UnitTest
             else
             {
                // Trigger DelayUntilReboot.
-               var moveResult = folder.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot);
-
-
-               UnitTestConstants.Dump(moveResult);
+               folder.MoveTo(null, Alphaleonis.Win32.Filesystem.MoveOptions.DelayUntilReboot);
 
 
                UnitTestAssert.RegistryContainsPendingEntry(pendingEntry);
