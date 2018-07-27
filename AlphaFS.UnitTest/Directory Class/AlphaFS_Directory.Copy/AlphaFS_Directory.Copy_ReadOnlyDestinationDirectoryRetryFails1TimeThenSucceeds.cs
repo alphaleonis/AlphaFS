@@ -27,7 +27,7 @@ using System.Threading;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class CopyTest
+   public partial class RetryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -66,6 +66,7 @@ namespace AlphaFS.UnitTest
 
             // Copy folder with retry enabled.
 
+            const int retryCount = 2;
             var errorCount = 0;
 
             using (var cancelSource = new CancellationTokenSource())
@@ -74,17 +75,15 @@ namespace AlphaFS.UnitTest
                {
                   // Used to abort the enumeration.
                   CancellationToken = cancelSource.Token,
-                  
-                  ErrorRetry = 2,
 
-                  ErrorRetryTimeout = 1,
+                  RetryArguments = new Alphaleonis.Win32.Filesystem.RetryArguments(retryCount, TimeSpan.FromSeconds(1), cancelSource.Token.WaitHandle),
 
                   ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
                   {
                      // Report Exception.
                      Console.WriteLine("\tErrorFilter: Attempt #{0:N0}: ({1}) {2}: [{3}]", ++errorCount, errorCode, errorMessage, pathProcessed);
 
-                     if (errorCount == 2)
+                     if (errorCount == retryCount)
                      {
                         System.IO.File.SetAttributes(pathProcessed, System.IO.FileAttributes.Normal);
                      }
@@ -114,9 +113,9 @@ namespace AlphaFS.UnitTest
 
                Assert.AreEqual(0, cmr.ErrorCode);
 
-               Assert.AreEqual(2, cmr.Retries);
+               Assert.AreEqual(retryCount, cmr.Retries);
                
-               Assert.AreEqual(2, errorCount);
+               Assert.AreEqual(retryCount, errorCount);
             }
          }
          

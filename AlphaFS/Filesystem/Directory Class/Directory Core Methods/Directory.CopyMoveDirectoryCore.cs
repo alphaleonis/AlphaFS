@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Directory
    {
       [SecurityCritical]
-      internal static void CopyMoveDirectoryCore(bool retry, CopyMoveArguments copyMoveArguments, CopyMoveResult copyMoveResult)
+      internal static void CopyMoveDirectoryCore(bool retry, CopyMoveArguments copyMoveArguments, RetryArguments retryArguments = null, CopyMoveResult copyMoveResult = null)
       {
          var delArgsFileTemplate = new DeleteArguments
          {
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   // File count is done in File.CopyMoveCore method.
 
-                  File.CopyMoveCore(retry, copyMoveArguments, true, false, fseiSourcePath, fseiDestinationPath, copyMoveResult);
+                  File.CopyMoveCore(false, true, fseiSourcePath, fseiDestinationPath, copyMoveArguments, retryArguments, copyMoveResult);
 
                   if (copyMoveResult.IsCanceled)
                   {
@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
                         delArgsFileTemplate.TargetPathLongPath = fseiSourcePath;
                         delArgsFileTemplate.Attributes = fseiSource.Attributes;
 
-                        File.DeleteFileCore(delArgsFileTemplate, deleteResult);
+                        File.DeleteFileCore(delArgsFileTemplate, null, deleteResult);
                      }
                   }
                }
@@ -126,7 +126,8 @@ namespace Alphaleonis.Win32.Filesystem
                   Transaction = copyMoveArguments.Transaction,
                   TargetPathLongPath = copyMoveArguments.SourcePathLp,
                   PathFormat = PathFormat.LongFullPath
-               });
+
+               }, retryArguments);
             }
          }
       }

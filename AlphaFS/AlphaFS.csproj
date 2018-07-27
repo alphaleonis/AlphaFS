@@ -220,6 +220,7 @@
     <Compile Include="Device\Volume\Volume.DefineDosDevice.cs" />
     <Compile Include="Device\Volume\Volume.EnumerateVolumes.cs" />
     <Compile Include="Filesystem\BaseArguments.cs" />
+    <Compile Include="Filesystem\RetryArguments.cs" />
     <Compile Include="Filesystem\DeleteArguments.cs" />
     <Compile Include="Filesystem\CopyMoveArguments.cs" />
     <Compile Include="Filesystem\DeleteResult.cs" />
@@ -911,7 +912,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

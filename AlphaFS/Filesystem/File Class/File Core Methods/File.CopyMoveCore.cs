@@ -24,7 +24,6 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security;
-using System.Threading;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -55,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveCore(bool retry, CopyMoveArguments copyMoveArguments, bool driveChecked, bool isFolder, string sourceFilePath, string destinationFilePath, CopyMoveResult copyMoveResult)
+      internal static CopyMoveResult CopyMoveCore(bool isFolder, bool driveChecked, string sourceFilePath, string destinationFilePath, CopyMoveArguments copyMoveArguments, RetryArguments retryArguments = null, CopyMoveResult copyMoveResult = null)
       {
          #region Setup
 
@@ -66,36 +65,25 @@ namespace Alphaleonis.Win32.Filesystem
          var getSize = isSingleFileAction && copyMoveArguments.GetSize;
          
          if (null == copyMoveResult)
-            copyMoveResult = new CopyMoveResult(copyMoveArguments, isFolder, sourceFilePath, destinationFilePath);
+            copyMoveResult = new CopyMoveResult(isFolder, sourceFilePath, destinationFilePath, copyMoveArguments);
+
+
+         var filters = null != copyMoveArguments.DirectoryEnumerationFilters;
+
+         var errorFilter = filters && null != copyMoveArguments.DirectoryEnumerationFilters.ErrorFilter ? copyMoveArguments.DirectoryEnumerationFilters.ErrorFilter : null;
+
+         if (null == retryArguments && filters && null != copyMoveArguments.DirectoryEnumerationFilters.RetryArguments)
+            retryArguments = copyMoveArguments.DirectoryEnumerationFilters.RetryArguments;
 
 
          var attempts = 1;
+         var retryTimeout = TimeSpan.Zero;
 
-         var retryTimeout = 0;
-
-         var errorFilter = null != copyMoveArguments.DirectoryEnumerationFilters && null != copyMoveArguments.DirectoryEnumerationFilters.ErrorFilter ? copyMoveArguments.DirectoryEnumerationFilters.ErrorFilter : null;
-
+         var retry = null != retryArguments && retryArguments.Retry > 0;
          if (retry)
          {
-            if (null != errorFilter)
-            {
-               attempts += copyMoveArguments.DirectoryEnumerationFilters.ErrorRetry;
-
-               retryTimeout = copyMoveArguments.DirectoryEnumerationFilters.ErrorRetryTimeout;
-            }
-
-            else
-            {
-               if (copyMoveArguments.Retry <= 0)
-                  copyMoveArguments.Retry = 2;
-
-               if (copyMoveArguments.RetryTimeout <= 0)
-                  copyMoveArguments.RetryTimeout = 10;
-
-               attempts += copyMoveArguments.Retry;
-
-               retryTimeout = copyMoveArguments.RetryTimeout;
-            }
+            attempts += retryArguments.Retry;
+            retryTimeout = retryArguments.RetryTimeout;
          }
 
 
@@ -158,7 +146,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             copyMoveResult.IsCanceled = cancel;
 
-            
+
             // Report the Exception back to the caller.
             if (null != errorFilter)
             {
@@ -177,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (retry)
                   copyMoveResult.Retries++;
 
-               retry = attempts > 0 && retryTimeout > 0;
+               retry = attempts > 0 && retryTimeout.Seconds > 0;
 
 
                // Remove any read-only/hidden attribute, which might also fail.
@@ -188,7 +176,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   if (null != errorFilter && null != copyMoveArguments.DirectoryEnumerationFilters.CancellationToken)
                   {
-                     if (copyMoveArguments.DirectoryEnumerationFilters.CancellationToken.WaitHandle.WaitOne(retryTimeout * 1000))
+                     if (copyMoveArguments.DirectoryEnumerationFilters.CancellationToken.WaitHandle.WaitOne(retryTimeout.Seconds * 1000))
                      {
                         copyMoveResult.IsCanceled = true;
                         break;

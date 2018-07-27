@@ -25,7 +25,7 @@ using System.Diagnostics;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class CopyTest
+   public partial class RetryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -55,17 +55,18 @@ namespace AlphaFS.UnitTest
 
             // Copy file with retry enabled.
 
-            const int retry = 2;
-            const int retryTimeout = 2;
+            var retryArguments = new Alphaleonis.Win32.Filesystem.RetryArguments(2);
             
             var sw = Stopwatch.StartNew();
 
-            UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.File.Copy(fileSrc, fileDst, Alphaleonis.Win32.Filesystem.CopyOptions.None, retry, retryTimeout));
+            UnitTestAssert.ThrowsException<UnauthorizedAccessException>(() => Alphaleonis.Win32.Filesystem.File.Copy(fileSrc, fileDst, Alphaleonis.Win32.Filesystem.CopyOptions.None, retryArguments));
 
             sw.Stop();
 
+            Console.WriteLine("Time elapsed: {0}", sw.Elapsed.TotalSeconds);
 
-            var waitTime = retry * retryTimeout;
+
+            var waitTime = retryArguments.Retry * retryArguments.RetryTimeout.Seconds;
 
             Assert.AreEqual(waitTime, sw.Elapsed.Seconds, "The timeout is not what is expected.");
          }

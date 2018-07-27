@@ -49,12 +49,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Transaction = transaction,
             MoveOptions = MoveOptions.CopyAllowed
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -81,13 +80,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Transaction = transaction,
             MoveOptions = MoveOptions.CopyAllowed,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -115,14 +113,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, int retry, int retryTimeout)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
             MoveOptions = MoveOptions.CopyAllowed
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -151,15 +148,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, int retry, int retryTimeout, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
             MoveOptions = MoveOptions.CopyAllowed,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -187,14 +183,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Transaction = transaction,
             MoveOptions = MoveOptions.CopyAllowed,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -223,15 +218,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Transaction = transaction,
             MoveOptions = MoveOptions.CopyAllowed,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -261,7 +255,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -269,8 +263,7 @@ namespace Alphaleonis.Win32.Filesystem
             MoveOptions = MoveOptions.CopyAllowed,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -301,7 +294,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -310,8 +303,7 @@ namespace Alphaleonis.Win32.Filesystem
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -340,12 +332,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Transaction = transaction,
             MoveOptions = moveOptions
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -373,13 +364,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Transaction = transaction,
             MoveOptions = moveOptions,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -408,14 +398,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, int retry, int retryTimeout)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
             MoveOptions = moveOptions
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -445,15 +434,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, int retry, int retryTimeout, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
             Transaction = transaction,
             MoveOptions = moveOptions,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -482,14 +470,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Transaction = transaction,
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -519,15 +506,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Transaction = transaction,
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -558,7 +544,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -566,8 +552,7 @@ namespace Alphaleonis.Win32.Filesystem
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -599,7 +584,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -608,8 +593,7 @@ namespace Alphaleonis.Win32.Filesystem
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
    }
 }

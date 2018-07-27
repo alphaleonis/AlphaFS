@@ -130,5 +130,59 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return DeleteFileCore(new DeleteArguments {Transaction = transaction, TargetPath = path, IgnoreReadOnly = ignoreReadOnly, GetSize = getSize, PathFormat = pathFormat});
       }
+
+
+      /// <summary>[AlphaFS] Deletes the specified file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
+      /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>      
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
+      /// <param name="getSize"><c>true</c> to retrieve the file size; the sum of all streams.</param>
+      /// <param name="retryArguments">An instance specifying the retry options.</param>
+      [SecurityCritical]
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, bool getSize, RetryArguments retryArguments)
+      {
+         return DeleteFileCore(new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetPath = path,
+            IgnoreReadOnly = ignoreReadOnly,
+            GetSize = getSize
+
+         }, retryArguments);
+      }
+
+
+      /// <summary>[AlphaFS] Deletes the specified file.</summary>
+      /// <returns>A <see cref="DeleteResult"/> instance with details of the Delete action.</returns>
+      /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="FileReadOnlyException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
+      /// <param name="getSize"><c>true</c> to retrieve the file size; the sum of all streams.</param>
+      /// <param name="retryArguments">An instance specifying the retry options.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static DeleteResult DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, bool getSize, RetryArguments retryArguments, PathFormat pathFormat)
+      {
+         return DeleteFileCore(new DeleteArguments
+         {
+            Transaction = transaction,
+            TargetPath = path,
+            IgnoreReadOnly = ignoreReadOnly,
+            GetSize = getSize,
+            PathFormat = pathFormat
+
+         }, retryArguments);
+      }
    }
 }

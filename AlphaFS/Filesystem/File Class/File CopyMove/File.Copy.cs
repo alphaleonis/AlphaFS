@@ -52,13 +52,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, bool overwrite, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -86,14 +85,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, bool overwrite, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
       
 
@@ -120,11 +118,10 @@ namespace Alphaleonis.Win32.Filesystem
       [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -152,12 +149,11 @@ namespace Alphaleonis.Win32.Filesystem
       [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -188,13 +184,12 @@ namespace Alphaleonis.Win32.Filesystem
       [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -226,14 +221,13 @@ namespace Alphaleonis.Win32.Filesystem
       [Obsolete("Use other overload and add CopyOptions.CopyTimestamp enum flag.")]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
       #endregion // Obsolete
@@ -259,11 +253,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourcePath, string destinationPath)
       {
-         CopyMoveCore(false, new CopyMoveArguments
-         {
-            CopyOptions = CopyOptions.FailIfExists
-
-         }, false, false, sourcePath, destinationPath, null);
+         CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments {CopyOptions = CopyOptions.FailIfExists});
       }
 
 
@@ -286,11 +276,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourcePath, string destinationPath, bool overwrite)
       {
-         CopyMoveCore(false, new CopyMoveArguments
+         CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
       #endregion // .NET
@@ -316,12 +305,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             PathFormat = pathFormat,
             CopyOptions = CopyOptions.FailIfExists
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -346,12 +334,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, bool overwrite, PathFormat pathFormat)
       {
-         return CopyMoveCore(true, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = overwrite ? CopyOptions.None : CopyOptions.FailIfExists,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -371,18 +358,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory or an existing file.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
+      /// <param name="retryArguments">An instance specifying the retry options.</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, int retry, int retryTimeout)
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, RetryArguments retryArguments)
       {
-         return CopyMoveCore(true, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
-            Retry = retry,
-            RetryTimeout = retryTimeout,
+            RetryArguments = retryArguments,
             CopyOptions = CopyOptions.FailIfExists
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -402,20 +386,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The file to copy. </param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
+      /// <param name="retryArguments">An instance specifying the retry options.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, int retry, int retryTimeout, PathFormat pathFormat)
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, RetryArguments retryArguments, PathFormat pathFormat)
       {
-         return CopyMoveCore(true, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
-            Retry = retry,
-            RetryTimeout = retryTimeout,
+            RetryArguments = retryArguments,
             PathFormat = pathFormat,
             CopyOptions = CopyOptions.FailIfExists
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -440,13 +421,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             CopyOptions = CopyOptions.FailIfExists
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -472,14 +452,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat,
             CopyOptions = CopyOptions.FailIfExists
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -499,22 +478,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The file to copy. </param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
+      /// <param name="retryArguments">An instance specifying the retry options.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, RetryArguments retryArguments, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
-            Retry = retry,
-            RetryTimeout = retryTimeout,
+            RetryArguments = retryArguments,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             CopyOptions = CopyOptions.FailIfExists
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -534,24 +510,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The file to copy. </param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
+      /// <param name="retryArguments">An instance specifying the retry options.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, RetryArguments retryArguments, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
-            Retry = retry,
-            RetryTimeout = retryTimeout,
+            RetryArguments = retryArguments,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat,
             CopyOptions = CopyOptions.FailIfExists
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
       
 
@@ -578,11 +551,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
-         {
-            CopyOptions = copyOptions
-
-         }, false, false, sourcePath, destinationPath, null);
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments {CopyOptions = copyOptions});
       }
 
 
@@ -608,14 +577,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = copyOptions,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
-      
+
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
       /// <remarks>
@@ -635,18 +603,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
+      /// <param name="retryArguments">An instance specifying the retry options.</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, int retry, int retryTimeout)
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, RetryArguments retryArguments)
       {
-         return CopyMoveCore(true, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = copyOptions,
-            Retry = retry,
-            RetryTimeout = retryTimeout
-
-         }, false, false, sourcePath, destinationPath, null);
+            RetryArguments = retryArguments
+         });
       }
 
 
@@ -668,20 +633,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
+      /// <param name="retryArguments">An instance specifying the retry options.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, int retry, int retryTimeout, PathFormat pathFormat)
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, RetryArguments retryArguments, PathFormat pathFormat)
       {
-         return CopyMoveCore(true, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = copyOptions,
-            Retry = retry,
-            RetryTimeout = retryTimeout,
+            RetryArguments = retryArguments,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
       
 
@@ -710,13 +672,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = copyOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -746,16 +707,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = copyOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
-      
+
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.
@@ -777,22 +737,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
+      /// <param name="retryArguments">An instance specifying the retry options.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, RetryArguments retryArguments, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(true, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = copyOptions,
-            Retry = retry,
-            RetryTimeout = retryTimeout,
+            RetryArguments = retryArguments,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -816,24 +773,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The file to copy.</param>
       /// <param name="destinationPath">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="retry">The number of retries on failed copies.</param>
-      /// <param name="retryTimeout">The wait time in seconds between retries.</param>
+      /// <param name="retryArguments">An instance specifying the retry options.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      public static CopyMoveResult Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, RetryArguments retryArguments, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(true, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             CopyOptions = copyOptions,
-            Retry = retry,
-            RetryTimeout = retryTimeout,
+            RetryArguments = retryArguments,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
    }
 }

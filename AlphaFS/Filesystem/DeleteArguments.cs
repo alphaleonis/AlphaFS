@@ -61,7 +61,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The path to the file or folder to delete in <see cref="PathFormat.LongFullPath"/> format.</summary>
       internal string TargetPathLongPath { get; set; }
 
-      
+
+      internal RetryArguments RetryArguments { get; set; }
+
+
       internal FileSystemEntryInfo EntryInfo { get; set; }
 
 

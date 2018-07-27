@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      internal CopyMoveResult(CopyMoveArguments cma, bool isFolder) : this(cma.SourcePath, cma.DestinationPath)
+      internal CopyMoveResult(bool isFolder, CopyMoveArguments cma) : this(cma.SourcePath, cma.DestinationPath)
       {
          IsEmulatedMove = cma.EmulateMove;
 
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      internal CopyMoveResult(CopyMoveArguments cma, bool isFolder, string source, string destination) : this(source, destination)
+      internal CopyMoveResult(bool isFolder, string source, string destination, CopyMoveArguments cma) : this(source, destination)
       {
          IsEmulatedMove = cma.EmulateMove;
 

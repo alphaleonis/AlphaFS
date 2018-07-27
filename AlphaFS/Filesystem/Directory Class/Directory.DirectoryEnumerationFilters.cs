@@ -69,12 +69,16 @@ namespace Alphaleonis.Win32.Filesystem
       public ErrorHandler ErrorFilter { get; set; }
 
 
-      /// <summary>The number of retries, excluding the first (default) attempt. Default is <c>0</c>.</summary>
-      public int ErrorRetry { get; set; }
+      /// <summary>Gets or sets the retry arguments for the  and other method calls.</summary>
+      public RetryArguments RetryArguments { get; set; }
 
 
-      /// <summary>The wait time in seconds between retries. Default is <c>10</c> seconds.</summary>
-      public int ErrorRetryTimeout { get; set; }
+      ///// <summary>The number of retries, excluding the first (default) attempt. Default is <c>0</c>.</summary>
+      //public int ErrorRetry { get; set; }
+
+
+      ///// <summary>The wait time in seconds between retries. Default is <c>10</c> seconds.</summary>
+      //public int ErrorRetryTimeout { get; set; }
 
 
 #if !NET35

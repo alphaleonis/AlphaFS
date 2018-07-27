@@ -214,6 +214,7 @@
     <Compile Include="AlphaFS Crc Class\AlphaFS_Crc32_StaticDefaultSeedAndPolynomialWithShortAsciiString.cs" />
     <Compile Include="AlphaFS ByHandleFileInfo Class\AlphaFS_File.GetFileInfoByHandle.cs" />
     <Compile Include="AlphaFS FileIdInfo Class\AlphaFS_FileIdInfoTest.cs" />
+    <Compile Include="UnitTests\RetryTest.cs" />
     <Compile Include="UnitTests\SizeTest.cs" />
     <Compile Include="UnitTests\DeleteTest.cs" />
     <Compile Include="Directory Class\Directory.Delete\AlphaFS_Directory.Delete_NonExistingLogicalDrive_ThrowsDeviceNotReadyException.cs" />

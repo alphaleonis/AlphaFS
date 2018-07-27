@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          longFullPath = Path.GetExtendedLengthPathCore(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         return File.CopyMoveCore(false, new CopyMoveArguments
+         return File.CopyMoveCore(false, false, LongFullName, longFullPath, new CopyMoveArguments
          {
             Transaction = Transaction,
             CopyOptions = preserveDates ? copyOptions | CopyOptions.CopyTimestamp : copyOptions & ~CopyOptions.CopyTimestamp,
@@ -61,8 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = PathFormat.LongFullPath
-
-         }, false, false, LongFullName, longFullPath, null);
+         });
       }
 
 

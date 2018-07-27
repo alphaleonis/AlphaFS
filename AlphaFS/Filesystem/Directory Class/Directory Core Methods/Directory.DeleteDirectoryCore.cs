@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -41,12 +40,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="DirectoryReadOnlyException"/>
       /// <param name="deleteArguments"></param>
+      /// <param name="retryArguments">An instance specifying the retry options.</param>
       /// <param name="deleteResult"></param>
       [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "retryTimeout")]
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
       [SecurityCritical]
-      internal static DeleteResult DeleteDirectoryCore(DeleteArguments deleteArguments, DeleteResult deleteResult = null)
+      internal static DeleteResult DeleteDirectoryCore(DeleteArguments deleteArguments, RetryArguments retryArguments = null, DeleteResult deleteResult = null)
       {
          #region Setup
          
@@ -104,33 +104,16 @@ namespace Alphaleonis.Win32.Filesystem
          
          var attempts = 1;
 
-         var retryTimeout = 0;
-         
-         var retry = null != filters && (filters.ErrorRetry > 0 || filters.ErrorRetryTimeout > 0);
+         var retryTimeout = TimeSpan.Zero;
+
+         var retry = null != retryArguments && retryArguments.Retry > 0;
 
          if (retry)
          {
-            if (errorFilterActive)
-            {
-               attempts += filters.ErrorRetry;
-
-               retryTimeout = filters.ErrorRetryTimeout;
-            }
-
-            else
-            {
-               if (deleteArguments.Retry <= 0)
-                  deleteArguments.Retry = 2;
-
-               if (deleteArguments.RetryTimeout <= 0)
-                  deleteArguments.RetryTimeout = 10;
-
-               attempts += deleteArguments.Retry;
-
-               retryTimeout = deleteArguments.RetryTimeout;
-            }
+            if (retryArguments.RetryTimeout.Seconds <= 0)
+               retryArguments = new RetryArguments(retryArguments.Retry);
          }
-         
+
 
          // Calling start on a running Stopwatch is a no-op.
          deleteResult.Stopwatch.Start();
@@ -171,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   delArgs.Attributes = fsei.Attributes;
                   
-                  File.DeleteFileCore(delArgs, deleteResult);
+                  File.DeleteFileCore(delArgs, null, deleteResult);
                }
             }
 

@@ -169,11 +169,11 @@ namespace Alphaleonis
       }
 
 
-      public static void Sleep(int seconds)
+      public static void Sleep(TimeSpan timeSpan)
       {
          using (var waitEvent = new ManualResetEvent(false))
 
-            waitEvent.WaitOne(TimeSpan.FromSeconds(seconds));
+            waitEvent.WaitOne(timeSpan);
       }
    }
 }

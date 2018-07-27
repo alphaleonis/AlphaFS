@@ -27,7 +27,7 @@ using System.Threading;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class CopyTest
+   public partial class RetryTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
@@ -75,9 +75,7 @@ namespace AlphaFS.UnitTest
                   // Used to abort the enumeration.
                   CancellationToken = cancelSource.Token,
 
-                  ErrorRetry = 2,
-
-                  ErrorRetryTimeout = 1,
+                  RetryArguments = new Alphaleonis.Win32.Filesystem.RetryArguments(2, TimeSpan.FromSeconds(1), cancelSource.Token.WaitHandle),
 
                   ErrorFilter = delegate(int errorCode, string errorMessage, string pathProcessed)
                   {

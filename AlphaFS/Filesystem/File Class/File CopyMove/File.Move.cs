@@ -50,11 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath)
       {
-         CopyMoveCore(false, new CopyMoveArguments
-         {
-            MoveOptions = MoveOptions.CopyAllowed
-
-         }, false, false, sourcePath, destinationPath, null);
+         CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments {MoveOptions = MoveOptions.CopyAllowed});
       }
 
       #endregion // .NET
@@ -82,12 +78,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             MoveOptions = MoveOptions.CopyAllowed,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -115,13 +110,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, int retry, int retryTimeout)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
             MoveOptions = MoveOptions.CopyAllowed
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -149,14 +143,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, int retry, int retryTimeout, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
             MoveOptions = MoveOptions.CopyAllowed,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -183,13 +176,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             MoveOptions = MoveOptions.CopyAllowed,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -218,14 +210,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             MoveOptions = MoveOptions.CopyAllowed,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -254,15 +245,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
             MoveOptions = MoveOptions.CopyAllowed,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -293,7 +283,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -301,8 +291,7 @@ namespace Alphaleonis.Win32.Filesystem
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -330,11 +319,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
-         {
-            MoveOptions = moveOptions
-
-         }, false, false, sourcePath, destinationPath, null);
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments {MoveOptions = moveOptions});
       }
 
 
@@ -361,12 +346,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             MoveOptions = moveOptions,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -394,13 +378,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, int retry, int retryTimeout)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
             MoveOptions = moveOptions
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -429,14 +412,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, int retry, int retryTimeout, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
             MoveOptions = moveOptions,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -464,13 +446,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -500,14 +481,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -537,15 +517,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
             MoveOptions = moveOptions,
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
 
 
@@ -577,7 +556,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourcePath, string destinationPath, MoveOptions moveOptions, int retry, int retryTimeout, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveCore(false, new CopyMoveArguments
+         return CopyMoveCore(false, false, sourcePath, destinationPath, new CopyMoveArguments
          {
             Retry = retry,
             RetryTimeout = retryTimeout,
@@ -585,8 +564,7 @@ namespace Alphaleonis.Win32.Filesystem
             ProgressHandler = progressHandler,
             UserProgressData = userProgressData,
             PathFormat = pathFormat
-
-         }, false, false, sourcePath, destinationPath, null);
+         });
       }
    }
 }

@@ -67,5 +67,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       internal NativeMethods.NativeCopyMoveProgressRoutine Routine { get; set; }
+
+
+      internal RetryArguments RetryArguments { get; set; }
    }
 }
