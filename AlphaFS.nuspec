@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
    <metadata>
       <id>AlphaFS</id>
-      <version>2.2.4</version>
+      <version>2.2.5</version>
       <title>AlphaFS</title>
       <authors>Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</authors>
       <owners>Peter Palotas</owners>
@@ -14,13 +14,11 @@
       <releaseNotes>
          Bugs Fixed:
 
-         - Issue #468: Method Directory.CopyTimestamps should throw DirectoryNotFoundException.
-         - Issue #469: Method Directory.GetFileIdInfo should throw DirectoryNotFoundException.
-         - Issue #474: Method Directory.EnumerateAlternateDataStreams should throw DirectoryNotFoundException.
-         - Issue #476: Method Directory.GetChangeTime should throw DirectoryNotFoundException.
+         - Issue #479: File.Move on a file opened with FileShare.Delete succeeds but throws IOException. (Thx oguimbal)
+         - Issue #484: DirectoryNotFoundException with MoveOptions.DelayUntilReboot (Thx 0x084E)
       </releaseNotes>
       <copyright>Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</copyright>
-      <tags>Win32, Filesystem, long path, Directory, File, Copy, Move, NTFS</tags>
+      <tags>Win32, Filesystem, long path, Directory, File, Copy, Move, DirectoryInfo, FileInfo, NTFS</tags>
       <frameworkAssemblies>
          <frameworkAssembly assemblyName="System" targetFramework="" />
          <frameworkAssembly assemblyName="System.Transactions" targetFramework="" />

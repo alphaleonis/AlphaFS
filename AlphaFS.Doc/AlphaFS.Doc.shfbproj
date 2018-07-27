@@ -17,7 +17,20 @@
     <!-- SHFB properties -->
     <OutputPath>..\Bin\Documentation\</OutputPath>
     <HtmlHelpName>AlphaFS</HtmlHelpName>
-    <ProjectSummary>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes. Features highlights: creating hardlinks, accessing hidden volumes, enumeration of volumes, transactional file operations and much more. </ProjectSummary>
+    <ProjectSummary>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes.
+
+Feature Highlights:
+
+    Support for extended length paths %28longer than 260 characters%29
+    Creating Junctions/Hardlinks
+    Enumeration of folders and files with exception reporting and recovery, custom filtering.
+    Enumeration of volumes
+    Accessing hidden volumes
+    Transactional file operations
+    Support for NTFS Alternate Data Streams on files and folders
+    Accessing SMB and DFS network resources
+    Create and access folders/files that contain space%28s%29 in their name.
+    ...and much more!</ProjectSummary>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter, AutoDocumentDispose</MissingTags>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected, ProtectedInternalAsProtected, EditorBrowsableNever, NonBrowsable</VisibleItems>
     <HtmlHelp1xCompilerPath>
