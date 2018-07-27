@@ -41,13 +41,11 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Create an OpenConnectionInfo instance.</summary>
       internal OpenConnectionInfo(string hostName, NativeMethods.CONNECTION_INFO_1 connectionInfo)
       {
-         Host = hostName;
          HostName = hostName;
          Id = connectionInfo.coni1_id;
          ShareType = connectionInfo.coni1_type;
          TotalOpenFiles = connectionInfo.coni1_num_opens;
          TotalUsers = connectionInfo.coni1_num_users;
-         ConnectedSeconds = connectionInfo.coni1_time;
          ConnectedTime = TimeSpan.FromSeconds(connectionInfo.coni1_time);
          UserName = connectionInfo.coni1_username;
          NetName = connectionInfo.oni1_netname;

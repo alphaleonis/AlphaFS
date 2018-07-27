@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using Microsoft.Win32;
 
 namespace AlphaFS.UnitTest
 {

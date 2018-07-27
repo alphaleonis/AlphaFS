@@ -20,9 +20,7 @@
  */
 
 using System;
-using System.Security.AccessControl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Win32;
 
 namespace AlphaFS.UnitTest
 {
@@ -34,6 +32,8 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_File_Move_DelayUntilReboot_LocalAndNetwork_Success()
       {
+         UnitTestAssert.IsElevatedProcess();
+         
          AlphaFS_File_Move_DelayUntilReboot(false);
          AlphaFS_File_Move_DelayUntilReboot(true);
       }

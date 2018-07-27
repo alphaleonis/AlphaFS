@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using Microsoft.Win32.SafeHandles;
 using System.IO;
 using System.Security;

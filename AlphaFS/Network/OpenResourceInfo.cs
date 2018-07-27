@@ -34,7 +34,6 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Create an OpenResourceInfo instance.</summary>
       internal OpenResourceInfo(string hostName, NativeMethods.FILE_INFO_3 fileInfo)
       {
-         Host = hostName;
          HostName = hostName;
          Id = fileInfo.fi3_id;
          Permissions = fileInfo.fi3_permissions;
