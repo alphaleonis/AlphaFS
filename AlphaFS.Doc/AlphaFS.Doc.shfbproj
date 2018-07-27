@@ -18,19 +18,21 @@
     <OutputPath>..\Bin\Documentation\</OutputPath>
     <HtmlHelpName>AlphaFS</HtmlHelpName>
     <ProjectSummary>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes.
-
-Feature Highlights:
-
-    Support for extended length paths %28longer than 260 characters%29
-    Creating Junctions/Hardlinks
-    Enumeration of folders and files with exception reporting and recovery, custom filtering.
-    Enumeration of volumes
-    Accessing hidden volumes
-    Transactional file operations
-    Support for NTFS Alternate Data Streams on files and folders
-    Accessing SMB and DFS network resources
-    Create and access folders/files that contain space%28s%29 in their name.
-    ...and much more!</ProjectSummary>
+&amp;lt%3bbr /&amp;gt%3b&amp;lt%3bbr /&amp;gt%3bFeature Highlights:
+&amp;lt%3bbr /&amp;gt%3b&amp;lt%3bbr /&amp;gt%3b
+&amp;lt%3bul&amp;gt%3b
+    &amp;lt%3bli&amp;gt%3bSupport for extended length paths %28longer than 260 characters%29&amp;lt%3b/li&amp;gt%3b
+    &amp;lt%3bli&amp;gt%3bCreating Junctions/Hardlinks&amp;lt%3b/li&amp;gt%3b
+    &amp;lt%3bli&amp;gt%3bEnumeration of folders and files with exception reporting and recovery, custom filtering.&amp;lt%3b/li&amp;gt%3b
+    &amp;lt%3bli&amp;gt%3bEnumeration of volumes&amp;lt%3b/li&amp;gt%3b
+    &amp;lt%3bli&amp;gt%3bAccessing hidden volumes&amp;lt%3b/li&amp;gt%3b
+    &amp;lt%3bli&amp;gt%3bTransactional file operations&amp;lt%3b/li&amp;gt%3b
+    &amp;lt%3bli&amp;gt%3bSupport for NTFS Alternate Data Streams on files and folders&amp;lt%3b/li&amp;gt%3b
+    &amp;lt%3bli&amp;gt%3bAccessing SMB and DFS network resources&amp;lt%3b/li&amp;gt%3b
+    &amp;lt%3bli&amp;gt%3bCreate and access folders/files that contain space%28s%29 in their name&amp;lt%3b/li&amp;gt%3b
+    &amp;lt%3bli&amp;gt%3b...and much more!&amp;lt%3b/li&amp;gt%3b
+&amp;lt%3b/ul&amp;gt%3b 
+&amp;lt%3bbr /&amp;gt%3bServing along the Path for 10 years.</ProjectSummary>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter, AutoDocumentDispose</MissingTags>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected, ProtectedInternalAsProtected, EditorBrowsableNever, NonBrowsable</VisibleItems>
     <HtmlHelp1xCompilerPath>
