@@ -97,11 +97,10 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Handle "Path.GlobalRootPrefix" and "Path.VolumePrefix".
          if (pathRp.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
-            pathRp = pathRp.Replace(GlobalRootPrefix, string.Empty);
+            pathRp = pathRp.CaseAwareReplace(GlobalRootPrefix, string.Empty, StringComparison.OrdinalIgnoreCase);
 
          if (pathRp.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
-            pathRp = pathRp.Replace(VolumePrefix, string.Empty);
-
+            pathRp = pathRp.CaseAwareReplace(VolumePrefix, string.Empty, StringComparison.OrdinalIgnoreCase);
 
          for (int index = 0, l = pathRp.Length; index < l; ++index)
          {
@@ -124,6 +123,21 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
+      private static string CaseAwareReplace(this string str, string oldStr, string newStr, StringComparison comparison)
+      {
+         newStr = newStr ?? string.Empty;
+         
+         if (string.IsNullOrEmpty(str) || string.IsNullOrEmpty(oldStr) || oldStr.Equals(newStr, comparison))
+            return str;
+
+         int foundAt = 0;
+         while ((foundAt = str.IndexOf(oldStr, foundAt, comparison)) != -1)
+         {
+            str = str.Remove(foundAt, oldStr.Length).Insert(foundAt, newStr);
+            foundAt += newStr.Length;
+         }
+         return str;
+      }
 
       [SecurityCritical]
       internal static string GetCleanExceptionPath(string path)
