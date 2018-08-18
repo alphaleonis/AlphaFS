@@ -23,11 +23,83 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Text;
 
 namespace Alphaleonis
 {
    internal static class Utils
    {
+      // Source: https://stackoverflow.com/questions/6275980/string-replace-ignoring-case/45756981#45756981
+
+
+      /// <summary>Returns a new string in which all occurrences of a specified string in the current instance are replaced with another specified string, ignoring any casing difference.</summary>
+      internal static string ReplaceIgnoreCase(this string str, string oldValue, string newValue)
+      {
+         if (null == str)
+            throw new ArgumentNullException("str");
+
+         if (str.Trim().Length == 0)
+            return str;
+
+         if (null == oldValue)
+            throw new ArgumentNullException("oldValue");
+
+         if (oldValue.Trim().Length == 0)
+            throw new ArgumentException("String cannot be of zero length.");
+
+
+         // Prepare string builder for storing the processed string.
+         var resultStringBuilder = new StringBuilder(str.Length);
+
+         // Analyze the replacement: replace or remove.
+         var isReplacementNullOrWhiteSpace = IsNullOrWhiteSpace(newValue);
+
+
+         int foundAt;
+         const int valueNotFound = -1;
+         var startSearchFromIndex = 0;
+
+         while ((foundAt = str.IndexOf(oldValue, startSearchFromIndex, StringComparison.OrdinalIgnoreCase)) != valueNotFound)
+         {
+            // Append all characters until the found replacement.
+            var charsUntilReplacment = foundAt - startSearchFromIndex;
+
+            var isNothingToAppend = charsUntilReplacment == 0;
+
+            if (!isNothingToAppend)
+               resultStringBuilder.Append(str, startSearchFromIndex, charsUntilReplacment);
+
+            if (!isReplacementNullOrWhiteSpace)
+               resultStringBuilder.Append(newValue);
+
+
+            // Prepare start index for the next search.
+            // This needed to prevent infinite loop, otherwise method always start search 
+            // from the start of the string. For example: if an oldValue == "EXAMPLE", newValue == "example"
+            // and comparisonType == "any ignore case" will conquer to replacing:
+            // "EXAMPLE" to "example" to "example" to "example" … infinite loop.
+            startSearchFromIndex = foundAt + oldValue.Length;
+
+            if (startSearchFromIndex == str.Length)
+            {
+               // It is end of the input string: no more space for the next search.
+               // The input string ends with a value that has already been replaced. 
+               // Therefore, the string builder with the result is complete and no further action is required.
+               return resultStringBuilder.ToString();
+            }
+         }
+
+
+         // Append the last part to the result.
+         var charsUntilStringEnd = str.Length - startSearchFromIndex;
+
+         resultStringBuilder.Append(str, startSearchFromIndex, charsUntilStringEnd);
+
+
+         return resultStringBuilder.ToString();
+      }
+
+
       /// <summary>Gets an attribute on an enum field value.</summary>
       /// <returns>The description belonging to the enum option, as a string</returns>
       /// <param name="enumValue">One of the <see cref="Alphaleonis.Win32.Filesystem.DeviceGuid"/> enum types.</param>
