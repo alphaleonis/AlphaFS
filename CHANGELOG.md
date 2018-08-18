@@ -39,7 +39,19 @@ Version 2.3  (2018-XX-XX)
 - Issue #478: Move method `Path.GetMappedUncName` to `Host` class.
 
 
-Version 2.2.5  (2018-XX-XX)
+Version 2.2.6  (2018-XX-XX)
+-------------
+
+### Bugs Fixed
+
+- Issue #488: `Path.CheckInvalidPathChars` in `Path.Helpers.cs` should be case insensitive  (Thx GuyTe)
+
+### Improvements
+
+- Issue #487: Ensure replace is done case-insensitive  (Thx Genbox)
+
+
+Version 2.2.5  (2018-07-27)
 -------------
 
 ### Bugs Fixed

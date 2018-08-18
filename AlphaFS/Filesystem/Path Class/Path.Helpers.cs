@@ -95,12 +95,12 @@ namespace Alphaleonis.Win32.Filesystem
          var pathRp = GetRegularPathCore(path, GetFullPathOptions.None, allowEmpty);
 
 
-         // Handle "Path.GlobalRootPrefix" and "Path.VolumePrefix".
+         // Handle "\\?\GlobalRoot\" and "\\?\Volume" prefixes.
          if (pathRp.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
-            pathRp = pathRp.Replace(GlobalRootPrefix, string.Empty);
+            pathRp = pathRp.ReplaceIgnoreCase(GlobalRootPrefix, string.Empty);
 
          if (pathRp.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
-            pathRp = pathRp.Replace(VolumePrefix, string.Empty);
+            pathRp = pathRp.ReplaceIgnoreCase(VolumePrefix, string.Empty);
 
 
          for (int index = 0, l = pathRp.Length; index < l; ++index)
@@ -108,10 +108,10 @@ namespace Alphaleonis.Win32.Filesystem
             int num = pathRp[index];
             switch (num)
             {
-               case 34:    // "  (quote)
-               case 60:    // <  (less than)
-               case 62:    // >  (greater than)
-               case 124:   // |  (pipe)
+               case 34: // "  (quote)
+               case 60: // <  (less than)
+               case 62: // >  (greater than)
+               case 124: // |  (pipe)
                   throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Illegal_Characters_In_Path, (char) num), "path");
 
                default:
@@ -235,7 +235,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? c == DirectorySeparatorChar || c == AltDirectorySeparatorChar || c == VolumeSeparatorChar
 
             // Check for some separator characters.
-            : ((bool)checkSeparatorChar
+            : ((bool) checkSeparatorChar
                ? c == VolumeSeparatorChar
                : c == DirectorySeparatorChar || c == AltDirectorySeparatorChar);
       }
@@ -296,7 +296,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (currentChar == DirectorySeparatorChar || currentChar == AltDirectorySeparatorChar)
             {
                // If we have a path like "123.../foo", remove the trailing dots.
-               // However, if we found "c:\temp\..\bar" or "c:\temp\...\bar", don't.
+               // However, if we found "c:\temp\..\bar" or "c:\temp\...\bar", do not.
                // Also remove trailing spaces from both files & directory names.
                // This was agreed on with the OS team to fix undeletable directory
                // names ending in spaces.
@@ -333,7 +333,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                numDots = 0;
-               numSpaces = 0;  // Suppress trailing spaces
+               numSpaces = 0; // Suppress trailing spaces
 
                if (!fixupDirectorySeparator)
                {
@@ -355,85 +355,86 @@ namespace Alphaleonis.Win32.Filesystem
                lastDirectorySeparatorPos = thisPos;
             } // if (Found directory separator)
 
-            else switch (currentChar)
-            {
-               case CurrentDirectoryPrefixChar:
-                  // Reduce only multiple .'s only after slash to 2 dots. For
-                  // instance a...b is a valid file name.
-                  numDots++;
-                  // Don't flush out non-terminal spaces here, because they may in
-                  // the end not be significant.  Turn "c:\ . .\foo" -> "c:\foo"
-                  // which is the conclusion of removing trailing dots & spaces,
-                  // as well as folding multiple '\' characters.
-                  break;
-               
-               case ' ':
-                  numSpaces++;
-                  break;
+            else
+               switch (currentChar)
+               {
+                  case CurrentDirectoryPrefixChar:
+                     // Reduce only multiple .'s only after slash to 2 dots. For
+                     // instance a...b is a valid file name.
+                     numDots++;
+                     // Don't flush out non-terminal spaces here, because they may in
+                     // the end not be significant.  Turn "c:\ . .\foo" -> "c:\foo"
+                     // which is the conclusion of removing trailing dots & spaces,
+                     // as well as folding multiple '\' characters.
+                     break;
 
-               default: // Normal character logic
-                  fixupDirectorySeparator = false;
+                  case ' ':
+                     numSpaces++;
+                     break;
 
-                  // To reject strings like "C:...\foo" and "C  :\foo"
-                  if (firstSegment && currentChar == VolumeSeparatorChar)
-                  {
-                     // Only accept "C:", not "c :" or ":"
-                     // Get a drive letter or ' ' if index is 0.
-                     var driveLetter = index > 0 ? path[index - 1] : ' ';
+                  default: // Normal character logic
+                     fixupDirectorySeparator = false;
 
-                     var validPath = numDots == 0 && numSigChars >= 1 && driveLetter != ' ';
-
-                     if (!validPath)
-                        throw new ArgumentException(path, "path");
-
-
-                     startedWithVolumeSeparator = true;
-                     // We need special logic to make " c:" work, we should not fix paths like "  foo::$DATA"
-                     if (numSigChars > 1)
+                     // To reject strings like "C:...\foo" and "C  :\foo"
+                     if (firstSegment && currentChar == VolumeSeparatorChar)
                      {
-                        // Common case, simply do nothing.
-                        var spaceCount = 0; // How many spaces did we write out, numSpaces has already been reset.
+                        // Only accept "C:", not "c :" or ":"
+                        // Get a drive letter or ' ' if index is 0.
+                        var driveLetter = index > 0 ? path[index - 1] : ' ';
 
-                        while (spaceCount < newBuffer.Length && newBuffer[spaceCount] == ' ')
-                           spaceCount++;
+                        var validPath = numDots == 0 && numSigChars >= 1 && driveLetter != ' ';
 
-                        if (numSigChars - spaceCount == 1)
+                        if (!validPath)
+                           throw new ArgumentException(path, "path");
+
+
+                        startedWithVolumeSeparator = true;
+                        // We need special logic to make " c:" work, we should not fix paths like "  foo::$DATA"
+                        if (numSigChars > 1)
                         {
-                           newBuffer.Length = 0;
-                           newBuffer.Append(driveLetter);
-                           // Overwrite spaces, we need a special case to not break "  foo" as a relative path.
+                           // Common case, simply do nothing.
+                           var spaceCount = 0; // How many spaces did we write out, numSpaces has already been reset.
+
+                           while (spaceCount < newBuffer.Length && newBuffer[spaceCount] == ' ')
+                              spaceCount++;
+
+                           if (numSigChars - spaceCount == 1)
+                           {
+                              newBuffer.Length = 0;
+                              newBuffer.Append(driveLetter);
+                              // Overwrite spaces, we need a special case to not break "  foo" as a relative path.
+                           }
                         }
+
+                        numSigChars = 0;
                      }
 
-                     numSigChars = 0;
-                  }
-
-                  else
-                     numSigChars += 1 + numDots + numSpaces;
+                     else
+                        numSigChars += 1 + numDots + numSpaces;
 
 
-                  // Copy any spaces & dots since the last significant character to here.
-                  // Note we only counted the number of dots & spaces, and don't know what order they're in.  Hence the copy.
+                     // Copy any spaces & dots since the last significant character to here.
+                     // Note we only counted the number of dots & spaces, and don't know what order they're in.  Hence the copy.
 
-                  if (numDots > 0 || numSpaces > 0)
-                  {
-                     var numCharsToCopy = lastSigChar >= 0 ? index - lastSigChar - 1 : index;
-
-                     if (numCharsToCopy > 0)
+                     if (numDots > 0 || numSpaces > 0)
                      {
-                        for (var i = 0; i < numCharsToCopy; i++)
+                        var numCharsToCopy = lastSigChar >= 0 ? index - lastSigChar - 1 : index;
 
-                           newBuffer.Append(path[lastSigChar + 1 + i]);
+                        if (numCharsToCopy > 0)
+                        {
+                           for (var i = 0; i < numCharsToCopy; i++)
+
+                              newBuffer.Append(path[lastSigChar + 1 + i]);
+                        }
+
+                        numDots = 0;
+                        numSpaces = 0;
                      }
 
-                     numDots = 0;
-                     numSpaces = 0;
-                  }
-
-                  newBuffer.Append(currentChar);
-                  lastSigChar = index;
-                  break;
-            }
+                     newBuffer.Append(currentChar);
+                     lastSigChar = index;
+                     break;
+               }
 
             index++;
          }
@@ -468,7 +469,8 @@ namespace Alphaleonis.Win32.Filesystem
          {
             var newBufferString = newBuffer.ToString();
 
-            if (newBufferString.StartsWith(Uri.UriSchemeHttp + ":", StringComparison.OrdinalIgnoreCase) || newBufferString.StartsWith(Uri.UriSchemeFile + ":", StringComparison.OrdinalIgnoreCase))
+            if (newBufferString.StartsWith(Uri.UriSchemeHttp + ":", StringComparison.OrdinalIgnoreCase) ||
+                newBufferString.StartsWith(Uri.UriSchemeFile + ":", StringComparison.OrdinalIgnoreCase))
                throw new ArgumentException(path, "path");
          }
 
@@ -509,7 +511,7 @@ namespace Alphaleonis.Win32.Filesystem
       private static StringBuilder NormalizePathDotSpaceHandler(string path, int lastSigChar, uint numDots, bool startedWithVolumeSeparator)
       {
          var newBuffer = new StringBuilder(NativeMethods.MaxPathUnicode);
-         
+
          // Look for ".[space]*" or "..[space]*".
 
          var start = lastSigChar + 1;
