@@ -1,12 +1,13 @@
 Changelog
 =========
 
-Version 2.2.6  (2018-XX-XX)
+Version 2.2.6  (2018-08-18)
 -------------
 
 ### Bugs Fixed
 
 - Issue #488: `Path.CheckInvalidPathChars` in `Path.Helpers.cs` should be case insensitive  (Thx GuyTe)
+- Issue #489: `File.Copy` fails with `DirectoryNotFoundException` on long path  (Thx CyberSinh)
 
 ### Improvements
 

@@ -1066,7 +1066,7 @@ namespace Alphaleonis.Win32.Filesystem
          deleteOnStartup = delayUntilReboot && null == destinationPath;
 
 
-         if (pathFormat == PathFormat.RelativePath)
+         if (pathFormat != PathFormat.LongFullPath)
          {
             if (Utils.IsNullOrWhiteSpace(sourcePath))
                throw new ArgumentNullException("sourcePath");

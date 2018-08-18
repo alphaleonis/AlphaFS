@@ -25,7 +25,7 @@ namespace AlphaFS.UnitTest
 {
    /// <summary>This is a test class for all Utils class Unit Tests.</summary>
    [TestClass]
-   public partial class UtilsTest
+   public partial class AlphaFS_UtilsTest
    {
    }
 }
