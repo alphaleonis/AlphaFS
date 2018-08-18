@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
    <metadata>
       <id>AlphaFS</id>
-      <version>2.2.5</version>
+      <version>2.2.6</version>
       <title>AlphaFS</title>
       <authors>Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</authors>
       <owners>Peter Palotas</owners>
@@ -14,8 +14,8 @@
       <releaseNotes>
          Bugs Fixed:
 
-         - Issue #479: File.Move on a file opened with FileShare.Delete succeeds but throws IOException. (Thx oguimbal)
-         - Issue #484: DirectoryNotFoundException with MoveOptions.DelayUntilReboot (Thx 0x084E)
+         - Issue #488: Path.CheckInvalidPathChars in Path.Helpers.cs should be case insensitive
+         - Issue #489: File.Copy fails with `DirectoryNotFoundException` on long path
       </releaseNotes>
       <copyright>Copyright (C) 2008-2018 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</copyright>
       <tags>Win32, Filesystem, long path, Directory, File, Copy, Move, DirectoryInfo, FileInfo, NTFS</tags>
