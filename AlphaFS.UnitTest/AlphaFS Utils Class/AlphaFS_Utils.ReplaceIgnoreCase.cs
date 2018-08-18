@@ -25,7 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
 {
-   public partial class UtilsTest
+   public partial class AlphaFS_UtilsTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
