@@ -27,6 +27,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Text;
 using Alphaleonis.Win32;
 using Alphaleonis.Win32.Device;
 using Alphaleonis.Win32.Security;
@@ -74,7 +75,7 @@ namespace Alphaleonis
             safeBuffer.Close();
 
 
-         switch ((uint) lastError)
+         switch ((uint)lastError)
          {
             case Win32Errors.ERROR_MORE_DATA:
             case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
@@ -88,7 +89,7 @@ namespace Alphaleonis
 
             //case Win32Errors.ERROR_INVALID_PARAMETER:
             //case Win32Errors.ERROR_INVALID_FUNCTION:
-               //break
+            //break
 
 
             default:
@@ -111,7 +112,7 @@ namespace Alphaleonis
 
          var fi = enumValue.GetType().GetField(enumValueString);
 
-         var attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+         var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
 
          return attributes.Length > 0 ? attributes[0].Description : enumValueString;
       }
@@ -130,7 +131,7 @@ namespace Alphaleonis
          var enumValArray = Enum.GetValues(enumType).Cast<T>().ToArray();
          var enumValList = new List<T>(enumValArray.Length);
 
-         enumValList.AddRange(enumValArray.Select(val => (T) Enum.Parse(enumType, val.ToString())));
+         enumValList.AddRange(enumValArray.Select(val => (T)Enum.Parse(enumType, val.ToString())));
 
          return enumValList.ToArray();
       }
@@ -245,7 +246,7 @@ namespace Alphaleonis
       /// <summary>Converts a number of type T to string formated using the specified <paramref name="cultureInfo"/>, suffixed with a unit size.</summary>
       internal static string UnitSizeToText<T>(T numberOfBytes, CultureInfo cultureInfo)
       {
-         var sizeFormats = new[] {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
+         var sizeFormats = new[] { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
          const int kb = 1024;
          var index = 0;
 
@@ -253,7 +254,7 @@ namespace Alphaleonis
 
          if (bytes < 0)
             bytes = 0;
-         
+
          else
             while (bytes > kb)
             {
@@ -305,40 +306,110 @@ namespace Alphaleonis
 
       internal static uint GetHighOrderDword(long highPart)
       {
-         return (uint) ((highPart >> 32) & 0xFFFFFFFF);
+         return (uint)((highPart >> 32) & 0xFFFFFFFF);
       }
 
 
       internal static uint GetLowOrderDword(long lowPart)
       {
-         return (uint) (lowPart & 0xFFFFFFFF);
+         return (uint)(lowPart & 0xFFFFFFFF);
       }
 
 
       internal static long LuidToLong(LUID luid)
       {
-         var high = (ulong) luid.HighPart << 32;
-         var low = (ulong) luid.LowPart & 0x00000000FFFFFFFF;
+         var high = (ulong)luid.HighPart << 32;
+         var low = (ulong)luid.LowPart & 0x00000000FFFFFFFF;
 
-         return unchecked((long) (high | low));
+         return unchecked((long)(high | low));
       }
 
 
       internal static LUID LongToLuid(long lluid)
       {
-         return new LUID {HighPart = (uint) (lluid >> 32), LowPart = (uint) (lluid & 0xFFFFFFFF)};
+         return new LUID { HighPart = (uint)(lluid >> 32), LowPart = (uint)(lluid & 0xFFFFFFFF) };
       }
 
 
       internal static long ToLong(uint highPart, uint lowPart)
       {
-         return ((long) highPart << 32) | ((long) lowPart & 0xFFFFFFFF);
+         return ((long)highPart << 32) | ((long)lowPart & 0xFFFFFFFF);
       }
 
       #endregion // Bitmasking
+
+
       public static int CombineHashCodesOf<T1, T2, T3, T4>(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
       {
          return CombineHashCodesOf(CombineHashCodesOf(arg1, arg2), CombineHashCodesOf(arg3, arg4));
+      }
+
+
+      /// <summary>Returns a new string in which all occurrences of a specified string in the current instance are replaced with another specified string, ignoring any casing difference.</summary>
+      internal static string ReplaceIgnoreCase(this string str, string oldValue, string newValue)
+      {
+         if (null == str)
+            throw new ArgumentNullException("str");
+
+         if (str.Trim().Length == 0)
+            return str;
+
+         if (null == oldValue)
+            throw new ArgumentNullException("oldValue");
+
+         if (oldValue.Trim().Length == 0)
+            throw new ArgumentException("String cannot be of zero length.");
+
+
+         // Prepare string builder for storing the processed string.
+         var resultStringBuilder = new StringBuilder(str.Length);
+
+         // Analyze the replacement: replace or remove.
+         var isReplacementNullOrWhiteSpace = IsNullOrWhiteSpace(newValue);
+
+
+         int foundAt;
+         const int valueNotFound = -1;
+         var startSearchFromIndex = 0;
+
+         while ((foundAt = str.IndexOf(oldValue, startSearchFromIndex, StringComparison.OrdinalIgnoreCase)) != valueNotFound)
+         {
+            // Append all characters until the found replacement.
+            var charsUntilReplacment = foundAt - startSearchFromIndex;
+
+            var isNothingToAppend = charsUntilReplacment == 0;
+
+            if (!isNothingToAppend)
+               resultStringBuilder.Append(str, startSearchFromIndex, charsUntilReplacment);
+
+            if (!isReplacementNullOrWhiteSpace)
+               resultStringBuilder.Append(newValue);
+
+
+            // Prepare start index for the next search.
+            // This needed to prevent infinite loop, otherwise method always start search 
+            // from the start of the string. For example: if an oldValue == "EXAMPLE", newValue == "example"
+            // and comparisonType == "any ignore case" will conquer to replacing:
+            // "EXAMPLE" to "example" to "example" to "example" … infinite loop.
+            startSearchFromIndex = foundAt + oldValue.Length;
+
+            if (startSearchFromIndex == str.Length)
+            {
+               // It is end of the input string: no more space for the next search.
+               // The input string ends with a value that has already been replaced. 
+               // Therefore, the string builder with the result is complete and no further action is required.
+               return resultStringBuilder.ToString();
+            }
+         }
+
+
+         // Append the last part to the result.
+         var charsUntilStringEnd = str.Length - startSearchFromIndex;
+
+         resultStringBuilder.Append(str, startSearchFromIndex, charsUntilStringEnd);
+
+
+         return resultStringBuilder.ToString();
       }
    }
 }

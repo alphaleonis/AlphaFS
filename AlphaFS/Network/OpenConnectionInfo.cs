@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Network
       {
          get { return _netName; }
 
-         set { _netName = null != value ? value.Replace(Path.LongPathUncPrefix, string.Empty).Replace(Path.UncPrefix, string.Empty).Trim('[', ']') : null; }
+         set { _netName = null != value ? value.ReplaceIgnoreCase(Path.LongPathUncPrefix, string.Empty).Replace(Path.UncPrefix, string.Empty).Trim('[', ']') : null; }
       }
 
       #endregion // Properties

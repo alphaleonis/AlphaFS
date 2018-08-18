@@ -167,7 +167,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                foreach (var devNt in Volume.QueryAllDosDevices().Where(device => device.StartsWith(path, StringComparison.OrdinalIgnoreCase)).ToArray())
 
-                  return dosDevice.Replace(devNt, deviceReplacement ?? path);
+                  return dosDevice.ReplaceIgnoreCase(devNt, deviceReplacement ?? path);
             }
             catch
             {
