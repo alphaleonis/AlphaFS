@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
             var srcLp = dirs.Dequeue();
 
             // TODO 2018-01-09: Not 100% yet with local + UNC paths.
-            var dstLp = srcLp.Replace(cma.SourcePathLp, cma.DestinationPathLp);
+            var dstLp = srcLp.ReplaceIgnoreCase(cma.SourcePathLp, cma.DestinationPathLp);
             
 
             // Traverse the source folder, processing files and folders.

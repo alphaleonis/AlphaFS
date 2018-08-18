@@ -19,29 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-namespace Alphaleonis.Win32.Filesystem
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace AlphaFS.UnitTest
 {
-   public static partial class Directory
+   /// <summary>This is a test class for all Utils class Unit Tests.</summary>
+   [TestClass]
+   public partial class AlphaFS_UtilsTest
    {
-      private static void CopyFolderTimestamps(CopyMoveArguments cma)
-      {
-         // TODO 2018-01-09: Not 100% yet with local + UNC paths.
-         var dstLp = cma.SourcePathLp.ReplaceIgnoreCase(cma.SourcePathLp, cma.DestinationPathLp);
-
-
-         // Traverse the source folder, processing only folders.
-
-         foreach (var fseiSource in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(true, cma.Transaction, cma.SourcePathLp, Path.WildcardStarMatchAll, null, null, cma.DirectoryEnumerationFilters, PathFormat.LongFullPath))
-
-            File.CopyTimestampsCore(cma.Transaction, true, fseiSource.LongFullPath, Path.CombineCore(false, dstLp, fseiSource.FileName), false, PathFormat.LongFullPath);
-
-         
-         // Process the root directory, the given path.
-
-         File.CopyTimestampsCore(cma.Transaction, true, cma.SourcePathLp, cma.DestinationPathLp, false, PathFormat.LongFullPath);
-
-
-         // TODO: When enabled on Computer, FindFirstFile will change the last accessed time.
-      }
    }
 }
