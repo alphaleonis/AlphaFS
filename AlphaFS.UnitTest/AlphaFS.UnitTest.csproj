@@ -145,6 +145,7 @@
     </Compile>
     <Compile Include="AlphaFS Device Class\AlphaFS Volume Class\AlphaFS_Volume.DefineDosDevice_RegularDriveMapping.cs" />
     <Compile Include="AlphaFS Device Class\AlphaFS_Device.EnumerateDevices.cs" />
+    <Compile Include="AlphaFS Utils Class\UtilsTest.cs" />
     <Compile Include="Directory Class\AlphaFS_Directory.Copy\AlphaFS_Directory.Copy_3ExistingDirectories_FromVolumeShadowCopy.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_EmptyAsPath_ThrowsArgumentException.cs" />
     <Compile Include="Directory Class\Directory.CreateDirectory\Directory.CreateDirectory_NullAsPath_ThrowsArgumentNullException.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="File Class\FileTest.cs" />
     <Compile Include="File Class\File_Timestamps\AlphaFS_File.SetTimestampsOnSymbolicLink.cs" />
     <Compile Include="FileInfo Class\FileInfo.InitializeInstance\FileInfo.InitializeInstance_ExistingDirectoryAsFileName_PropertyExistsShouldbeFalse.cs" />
+    <Compile Include="AlphaFS Utils Class\AlphaFS_Utils.ReplaceIgnoreCase.cs" />
     <Compile Include="Path Class\PathTest.cs" />
     <Compile Include="UnitTest Utility\DirectoryAssert.cs" />
     <Compile Include="UnitTest Utility\Dump.cs" />

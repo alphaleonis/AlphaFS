@@ -782,7 +782,7 @@ namespace Alphaleonis.Win32.Filesystem
             var srcLp = dirs.Dequeue();
 
             // TODO 2018-01-09: Not 100% yet with local + UNC paths.
-            var dstLp = srcLp.Replace(sourcePathLp, destinationPathLp);
+            var dstLp = srcLp.ReplaceIgnoreCase(sourcePathLp, destinationPathLp);
 
 
             // Traverse the source folder, processing files and folders.
@@ -849,7 +849,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (preserveDates)
             {
                // TODO 2018-01-09: Not 100% yet with local + UNC paths.
-               var dstLp = sourcePathLp.Replace(sourcePathLp, destinationPathLp);
+               var dstLp = sourcePathLp.ReplaceIgnoreCase(sourcePathLp, destinationPathLp);
 
 
                // Traverse the source folder, processing subfolders.
