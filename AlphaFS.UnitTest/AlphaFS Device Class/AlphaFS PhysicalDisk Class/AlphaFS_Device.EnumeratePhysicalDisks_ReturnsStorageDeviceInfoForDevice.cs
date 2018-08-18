@@ -30,6 +30,27 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
 
+      /*
+Test method AlphaFS.UnitTest.EnumerationTest.AlphaFS_Device_EnumeratePhysicalDisks_ReturnsStorageDeviceInfoForDevice threw exception: 
+
+System.IO.IOException: (998) Invalid access to memory location: [Buffer size: 2048. Path: \\?\pcistor#disk&ven_rsper&prod_rts5208lun0&rev_1.00#0000#{53f56307-b6bf-11d0-94f2-00a0c91efb8b}]
+
+    at Alphaleonis.Win32.NativeError.ThrowException(UInt32 errorCode, String readPath, String writePath) in C:\Users\jjangli\Documents\GitHub\AlphaFS\AlphaFS\NativeError.cs:line 189
+   at Alphaleonis.Win32.NativeError.ThrowException(Int32 errorCode, String readPath) in C:\Users\jjangli\Documents\GitHub\AlphaFS\AlphaFS\NativeError.cs:line 50
+   at Alphaleonis.Utils.IsValidHandle(SafeHandle handle, Int32 lastError, String path, Boolean throwException) in C:\Users\jjangli\Documents\GitHub\AlphaFS\AlphaFS\Utils.cs:line 228
+   at Alphaleonis.Utils.GetDoubledBufferSizeOrThrowException(SafeHandle safeBuffer, Int32 lastError, Int32 bufferSize, String pathForException) in C:\Users\jjangli\Documents\GitHub\AlphaFS\AlphaFS\Utils.cs:line 96
+   at Alphaleonis.Win32.Device.Local.InvokeDeviceIoData[T](SafeFileHandle safeFileHandle, IoControlCode controlCode, T anyObject, String pathForException, Int32 size) in C:\Users\jjangli\Documents\GitHub\AlphaFS\AlphaFS\Device\Local Class\Local.InvokeDeviceIoData.cs:line 67
+   at Alphaleonis.Win32.Device.Local.SetStorageDeviceInfoData(Boolean isElevated, SafeFileHandle safeFileHandle, String pathForException, StorageDeviceInfo storageDeviceInfo) in C:\Users\jjangli\Documents\GitHub\AlphaFS\AlphaFS\Device\Local Class\Local.SetStorageDeviceInfoData.cs:line 39
+   at Alphaleonis.Win32.Device.Local.GetStorageDeviceInfo(Boolean isElevated, Boolean isDevice, Int32 deviceNumber, String devicePath, String& localDevicePath) in C:\Users\jjangli\Documents\GitHub\AlphaFS\AlphaFS\Device\Local Class\Local.GetStorageDeviceInfo.cs:line 60
+   at Alphaleonis.Win32.Device.Local.<EnumeratePhysicalDisksCore>d__25.MoveNext() in C:\Users\jjangli\Documents\GitHub\AlphaFS\AlphaFS\Device\Local Class\Local.EnumeratePhysicalDisks.cs:line 60
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.OrderedEnumerable`1.<GetEnumerator>d__1.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at AlphaFS.UnitTest.EnumerationTest.AlphaFS_Device_EnumeratePhysicalDisks_ReturnsStorageDeviceInfoForDevice() in C:\Users\jjangli\Documents\GitHub\AlphaFS\AlphaFS.UnitTest\AlphaFS Device Class\AlphaFS PhysicalDisk Class\AlphaFS_Device.EnumeratePhysicalDisks_ReturnsStorageDeviceInfoForDevice.cs:line 44
+       */
+
+
       [TestMethod]
       public void AlphaFS_Device_EnumeratePhysicalDisks_ReturnsStorageDeviceInfoForDevice()
       {
